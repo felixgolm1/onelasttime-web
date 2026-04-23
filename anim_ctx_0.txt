@@ -1,0 +1,13 @@
+tamente el estado final de la carta.
+      logoImg.classList.add('visible', 'green');
+      cardInner.style.transform = 'translateY(calc(-50% - 30px))';
+      cardText.classList.add('visible');
+      animReady = true;
+      if (pendingGltf) buildScene(pendingGltf);
+      // _runIntroAnim null → el callback del GLTF no arrancará la animación
+      window._runIntroAnim = null;
+      return;
+    }
+
+    // ── Primera carga (savedProg=0): exponer función que activa la animación ──
+    // Esta función la llama startL

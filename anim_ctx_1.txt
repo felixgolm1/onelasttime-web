@@ -1,0 +1,17 @@
+er.style.transform = 'translateY(calc(-50% - 30px))';
+        cardText.classList.add('visible');
+      }, 1850);
+
+      // 4. Animación completa → construir escena 3D
+      setTimeout(() => {
+        animReady = true;
+        if (pendingGltf) buildScene(pendingGltf);
+      }, 2550);
+    };
+  })();
+
+  const cssRenderer = new THREE.CSS3DRenderer();
+  cssRenderer.setSize(window.innerWidth, window.innerHeight);
+  document.getElementById('css-container').appendChild(cssRenderer.domElement);
+
+  const scene  = new THR

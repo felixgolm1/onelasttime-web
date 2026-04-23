@@ -1,0 +1,10 @@
+morph-group: contiene SVG + card div superpuestos ─ */
+    #card-morph-group {
+      position: relative;
+      width: 380px;
+      height: 234px;
+      flex-shrink: 0;
+    }
+    
+    /* Grosor simulado: canto lateral 3D ─ JS escribe el gradiente directo */
+   

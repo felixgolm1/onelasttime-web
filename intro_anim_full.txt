@@ -1,0 +1,87 @@
+(function startIntroAnim() {
+    const introLine = document.getElementById('intro-card-line');
+    const logoImg   = document.getElementById('intro-logo-img');
+    const cardInner = document.getElementById('intro-card-inner');
+    const cardText  = document.getElementById('intro-card-text');
+
+    const savedProg = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
+    if (savedProg > 0) {
+      // Reload con scroll previo: saltamos la animación de borde completamente.
+      // La animación está en paused → la línea es invisible (fill-mode:both, t=delay).
+      // Mostramos directamente el estado final de la carta.
+      logoImg.classList.add('visible', 'green');
+      cardInner.style.transform = 'translateY(calc(-50% - 30px))';
+      cardText.classList.add('visible');
+      animReady = true;
+      if (pendingGltf) buildScene(pendingGltf);
+      // _runIntroAnim null → el callback del GLTF no arrancará la animación
+      window._runIntroAnim = null;
+      return;
+    }
+
+    // ── Primera carga (savedProg=0): exponer función que activa la animación ──
+    // Esta función la llama startLoading() cuando el GLTF termina de parsearse.
+    // En ese momento el main thread está libre → la animación corre sin saltos.
+    window._runIntroAnim = function () {
+      // 1. Despausa la animación CSS ahora que el thread está libre
+      introLine.style.animationPlayState = 'running';
+
+      // 2. Logo blanco aparece a mitad de la animación de borde
+      setTimeout(() => { logoImg.classList.add('visible'); }, 900);
+
+      // 3. Borde completo: logo sube, se vuelve verde, aparece el texto
+      setTimeout(() => {
+        logoImg.classList.add('green');
+        cardInner.style.transform = 'translateY(calc(-50% - 30px))';
+        cardText.classList.add('visible');
+      }, 1850);
+
+      // 4. Animación completa → construir escena 3D
+      setTimeout(() => {
+        animReady = true;
+        if (pendingGltf) buildScene(pendingGltf);
+      }, 2550);
+    };
+  })();
+
+  const cssRenderer = new THREE.CSS3DRenderer();
+  cssRenderer.setSize(window.innerWidth, window.innerHeight);
+  document.getElementById('css-container').appendChild(cssRenderer.domElement);
+
+  const scene  = new THREE.Scene();
+  // Sin background — el canvas es transparente fuera de los objetos 3D (alpha:true)
+  scene.fog    = new THREE.FogExp2(0x0d0b09, 0.028);
+
+  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(-0.3, 12, 3);
+  camera.lookAt(0, 0, 0);
+
+  // ── PARALLAX DE RATÓN ─────────────────────────────────────────────────────
+  // Posición base de la cámara (sin parallax)
+  const CAM_BASE = { x: -0.3, y: 12, z: 3 };
+  const CAM_LOOK = { x: 0, y: 0, z: 0 };
+  // Valores actuales suavizados (lerp)
+  let mouseNX = 0, mouseNY = 0;   // normalizado -1..+1, con lerp
+  let mouseRawX = 0, mouseRawY = 0; // raw del evento
+  window.addEventListener('pointermove', (e) => {
+    mouseRawX = (e.clientX / window.innerWidth)  * 2 - 1;  // -1 izq, +1 der
+    mouseRawY = (e.clientY / window.innerHeight) * 2 - 1;  // -1 arr, +1 abj
+  });
+
+  // ── ENV MAP PROCEDURAL (simula HDRI de restaurante oscuro) ──────────
+  // Genera un cubeRenderTarget con gradiente cálido para que plates+cubiertos
+  // tengan algo que reflejar (sin esto, los metales alta-roughness salen planos)
+  function buildEnvMap() {
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+
+    // Creamos una textura equirectangular sintética de 64×32 con gradiente oscuro-cálido
+    const w = 64, h = 32;
+    const data = new Uint8Array(w * h * 4);
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const i = (y * w + x) * 4;
+        const t = y / h; // 0 = zenith, 1 = nadir
+        // Cielo del restaurante: techo oscuro con calor ámbar suave
+        const r = Math.round(t < 0.45 ? 30 + t * 120 : 80 + (t - 0.45) * 80);
+        const g = Math.round(t < 0.45 ? 20 + t * 70  : 50 + (t - 

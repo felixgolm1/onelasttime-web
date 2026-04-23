@@ -1,0 +1,6 @@
+ carta 3D.
+    const _introSvgEl = document.querySelector('#card-morph-group > svg');
+    if (_introSvgEl) {
+      const _svgWrap = document.createElement('div');
+      _svgWrap.id = 'intro-card-svg-wrap';
+      // position:fixed centrado con left/top 50% + GS

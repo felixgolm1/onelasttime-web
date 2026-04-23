@@ -1,0 +1,71 @@
+--- 0 ---
+ vW / 2, ndcY * vH / 2, -DIST);
+          if (globalGlbCard._baseScaleFact) {
+            globalGlbCard.scale.setScalar(globalGlbCard._baseScaleFact * gSY * 0.60);
+          }
+          globalGlbCard.rotation.set(0, -gRY * Math.PI / 180, -gRZ * Math.PI / 180);
+          glo
+
+--- 1 ---
+) {
+            globalGlbCard.scale.setScalar(globalGlbCard._baseScaleFact * gSY * 0.60);
+          }
+          globalGlbCard.rotation.set(0, -gRY * Math.PI / 180, -gRZ * Math.PI / 180);
+          globalGlbCard.visible = true;
+        }
+
+        // ── Step 1: borde desapare
+
+--- 2 ---
+distorsión de bounding box)
+              if (globalGlbCard._baseScaleFact && gSY > 0) {
+                  globalGlbCard.scale.setScalar(globalGlbCard._baseScaleFact * gSY * 0.90);
+              }
+
+
+              const rx = gsap.getProperty(mgEl, 'rotationX') || 0;
+        
+
+--- 3 ---
+                globalGlbCard.scale.setScalar(globalGlbCard._baseScaleFact * gSY * 0.90);
+              }
+
+
+              const rx = gsap.getProperty(mgEl, 'rotationX') || 0;
+              const ry = gsap.getProperty(mgEl, 'rotationY') || 0;
+              const rz = gsap.ge
+
+--- 4 ---
+           // Replica exactamente la fórmula de !inScatter: _baseScaleFact * |gSY| * 0.90
+                  // Funciona en cold-load porque globalGlbCard._baseScaleFact siempre está disponible
+                  // tras la carga del GLB (independiente de si !inScatter ha cor
+
+--- 5 ---
+              // Funciona en cold-load porque globalGlbCard._baseScaleFact siempre está disponible
+                  // tras la carga del GLB (independiente de si !inScatter ha corrido)
+                  const _snapScale = (globalGlbCard._baseScaleFact > 0)
+                
+
+--- 6 ---
+orrido)
+                  const _snapScale = (globalGlbCard._baseScaleFact > 0)
+                      ? (globalGlbCard._baseScaleFact * _gSY2 * 0.90)
+                      : Math.abs(globalGlbCard.scale.x);   // fallback solo si el GLB aún no ha cargado
+                  sm
+
+--- 7 ---
+._baseScaleFact > 0)
+                      ? (globalGlbCard._baseScaleFact * _gSY2 * 0.90)
+                      : Math.abs(globalGlbCard.scale.x);   // fallback solo si el GLB aún no ha cargado
+                  smoothScrollLoop._lockedCard = {
+                      rotBas
+
+--- 8 ---
+ar referencia para scaling dinámico en cada frame
+    pivot._baseScaleFact = scaleFact;
+    pivot._basePxH       = basePxH;
+
+    globalGlbCard = pivot;
+    console.log('[Card3D] GLB W:', size.x.toFixed(3), 'H:', size.z.toFixed(3),
+                'T:', size.y.toFixed(3), '|
+

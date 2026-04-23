@@ -1,0 +1,7 @@
+-group')) {
+          const mgEl = document.getElementById('card-morph-group');
+
+          mgEl.style.opacity = '0'; // CSS card siempre oculta — reemplazada por la 3D
+
+          // ── CROSSFADE carta ↔ caja ──
+          // Cuando mainDeck es display:'block', 

@@ -1,0 +1,11 @@
+exactamente el tamaño de la carta — viewBox 380×234 */
+    #card-morph-group svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 380px;
+      height: 234px;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* ─ Intro card animation sys

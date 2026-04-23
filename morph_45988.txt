@@ -1,0 +1,6 @@
+->
+    <div id="intro-card" class="visible">
+      <div id="card-morph-group">
+        <!-- SVG: viewBox exactamente 380×234 para que la silueta = tamaño real -->
+        <svg viewBox="0 0 380 234" xmlns="http://www.w3.org/2000/svg">
+          <rect id="intro-

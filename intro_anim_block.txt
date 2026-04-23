@@ -1,0 +1,76 @@
+      globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
+                  }
+              }
+
+
+              if (!inFlipBack) {
+                  // ── SCATTER normal (4 pasos / macro-cámara) ──
+                  const boardRotDeg = gsap.getProperty(scBoard, 'rotation') || 0;
+                  const totalRz     = lc.rotBaseZ + boardRotDeg * Math.PI / 180;
+                  globalGlbCard.rotation.set(0, Math.PI, totalRz, 'XYZ');
+
+                  const boardScale = gsap.getProperty(scBoard, 'scaleX') || 1;
+                  globalGlbCard.scale.setScalar(lc.scale * boardScale);
+
+              } else {
+                  // ── FLIP-BACK + BOX PHASE: carta 3D sigue el giro de scBoard ──
+                  // rotation.y continúa desde PI (scatter) hasta PI-335°/rad.
+                  // El crossfade de mainDeck gestiona la opacidad: no hay que ocultar aquí.
+                  globalGlbCard.visible = true;
+                  const scBoardScale = gsap.getProperty(scBoard, 'scaleX') || 0.66;
+                  const scIntroRot2D = scIntroEl ? (gsap.getProperty(scIntroEl, 'rotation') || 0) : -90;
+
+                  globalGlbCard.rotation.set(
+                      0,
+                      -Math.PI + scBoardRY * Math.PI / 180,        // dirección contraria → sincroniza con la caja
+                      lc.rotBaseZ + scIntroRot2D * Math.PI / 180,
+                      'XYZ'
+                  );
+                  globalGlbCard.scale.setScalar(lc.scale * scBoardScale);
+              }
+
+          }   // ── fin else scatter ──
+      }   // ── fin if (globalGlbCard) ──
+
+      requestAnimationFrame(smoothScrollLoop);
+    }
+
+    smoothScrollLoop();
+
+    window.addEventListener('wheel', e => {
+      e.preventDefault();
+      const dir = e.deltaY > 0 ? 1 : -1;
+      const cappedDY = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60);
+      const divisor  = targetProg < 0.08 ? 8000 : 1200;
+      targetProg = Math.max(0, Math.min(maxProg, targetProg + cappedDY / divisor));
+      updateBoxState(dir);
+    }, { passive: false });
+    
+    let touchY = 0;
+    window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; });
+    window.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const dy = touchY - e.touches[0].clientY;
+      const dir = dy > 0 ? 1 : -1;
+      touchY = e.touches[0].clientY;
+      const cappedDY = Math.sign(dy) * Math.min(Math.abs(dy), 30);
+      const divisorT = targetProg < 0.08 ? 4000 : 600;
+      targetProg = Math.max(0, Math.min(maxProg, targetProg + cappedDY / divisorT));
+      updateBoxState(dir);
+    }, { passive: false });
+  }
+
+  // ── INTRO CARD ANIMATION ────────────────────────────────────────
+  // La animación CSS (stroke-dashoffset) NO es compositable: requiere main thread.
+  // Si arrancamos antes de que GLTFLoader.parse() termine, el thread estará bloqueado
+  // y la animación se congelará mostrando dos estados distintos ("dos cartas").
+  // SOLUCIÓN: la animación empieza en paused (CSS). window._runIntroAnim() la activa
+  // desde el callback del GLTF loader — justo cuando el thread queda libre.
+  (function startIntroAnim() {
+    const introLine = document.getElementById('intro-card-line');
+    const logoImg   = document.getElementById('intro-logo-img');
+    const cardInner = document.getElementById('intro-card-inner');
+    const cardText  = document.getElementById('intro-card-text');
+
+    const savedProg = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
+    if (savedProg >

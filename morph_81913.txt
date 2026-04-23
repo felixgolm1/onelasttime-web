@@ -1,0 +1,6 @@
+ader');
+        const morphGroup = document.getElementById('card-morph-group');
+        const realCard   = document.getElementById('intro-real-card');
+        const introLine  = document.getElementById('intro-card-line');
+
+        if (!realCard || !morphGroup)

@@ -1,0 +1,4 @@
+{
+                  const _mgEl2 = document.getElementById('card-morph-group');
+                  const _gSY2  = Math.abs(gsap.getProperty(_mgEl2, 'scaleY') || 1);
+                  // Replica exactamente la fórmula de !inScatter: _baseScaleFact * |gSY| * 0.90

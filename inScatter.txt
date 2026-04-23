@@ -1,0 +1,43 @@
+vas');
+
+        // Helper: posiciona la 3D card para que coincida con morphGroup (misma lógica que !inScatter)
+        function syncCard3DToMorphGroup() {
+          if (!globalGlbCard || !cardCanvasEl) return;
+          const gx  = gsap.getProperty(morphGroup, 'x') || 0;
+          const gy  = gsap.getProperty(morphGroup, 'y') || 0;
+          const gSY = Math.abs(gsap.getProperty(morphGroup, 'scaleY') || 1);
+          const gRY = gsap.getProperty(morphGroup, 'rotationY') || 0;
+          const gRZ = gsap.getProperty(morphGroup, 'rotation')  || 0;
+          const DIST = 6.0;
+          const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
+          const vW   = vH * (window.innerWidth / window.innerHeight);
+          const ndcX = ((window.innerWidth  / 2 + gx) / window.innerWidth ) * 2 - 1;
+          const ndcY = -((window.innerHeight / 2 + gy) / window.innerHeight) * 2 + 1;
+          globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
+          if (globalGlbCard._baseScaleFact) {
+            globalGlbCard.scale.setScalar(globalGlbCard._baseScaleFact * gSY * 0.60);
+          }
+          globalGlbCard.rotation.set(0, -gRY * Math.PI / 180, -gRZ * Math.PI / 180);
+          globalGlbCard.visible = true;
+        }
+
+        // ── Step 1: borde desaparece + ocultar wrapper del SVG ──────────
+        if (introLine) {
+          introLine.style.transition = 'stroke 0.25s ease';
+          introLine.style.stroke = 'rgba(255,255,255,0)';
+        }
+        setTimeout(() => {
+          const svgWrap = document.getElementById('intro-card-svg-wrap');
+          if (svgWrap) {
+            svgWrap.style.transition = 'opacity 0.3s ease';
+            svgWrap.style.opacity    = '0';
+            setTimeout(() => { svgWrap.style.display = 'none'; }, 350);
+          }
+        }, 280); // tras el fade de 0.25s del borde
+
+        // ── Step 2: carta morfea a color oscuro ─────────────────────────
+        setTimeout(() => {
+          realCard.classList.add('morphed');
+
+          // ── Step 3: vuela + encoge — 3D card trackea via onUpdate ────
+          setTimeout(() => requestA

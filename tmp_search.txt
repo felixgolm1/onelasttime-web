@@ -1,0 +1,3 @@
+t" id="c1-input" placeholder="Escribe tu reflexión para ser analizada..." autocomplete="off">
+      </div>
+   
