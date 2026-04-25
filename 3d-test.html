@@ -214,6 +214,71 @@
       opacity: 0;
       transition: opacity 0.65s ease;
     }
+    /* Estilo para los recuadros de detalle en el scatter */
+    .sc-detail-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 540px;
+      padding: 18px 24px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 4px;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      z-index: 10005; /* Must be higher than .sc-board's 10001 */
+      pointer-events: none;
+      opacity: 0;
+      display: grid;
+      align-items: center;
+    }
+    .sc-step-text-wrapper {
+      grid-area: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .sc-detail-mask {
+      overflow: hidden;
+      width: 100%;
+    }
+    .sc-detail-p {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      font-weight: 400;
+      color: rgba(255,255,255,0.9);
+      margin: 0;
+    }
+    
+    @keyframes magicPulse {
+      0%, 100% { transform: scale(0.9) rotate(0deg); filter: drop-shadow(0 0 2px rgba(255,255,255,0.2)); }
+      50% { transform: scale(1.15) rotate(15deg); filter: drop-shadow(0 0 10px rgba(255,255,255,0.9)); }
+    }
+    .magic-icon {
+      display: inline-block;
+      vertical-align: middle;
+      animation: magicPulse 2.5s ease-in-out infinite;
+      color: #fff;
+      margin-left: 4px;
+      overflow: visible;
+    }
+    .sc-detail-num {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+    }
+    .sc-detail-line {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+      margin: 5px 0;
+    }
+
     #intro-card-text.visible { opacity: 1; }
     .irc-level, .irc-name {
       font-family: 'Poppins', sans-serif;
@@ -273,28 +338,20 @@
     #card-name-input {
       background: transparent;
       border: none;
-      border-bottom: 1.5px solid rgba(255,255,255,0.30);
+      border-bottom: 2px solid #ccff00;
       color: #ccff00;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.63rem, 3.73vw, 2.8rem);
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      line-height: 0.95;
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: 32px;
+      width: 120px;
       text-align: center;
       outline: none;
-      width: 160px;
-      max-width: 70%;
-      padding: 2px 4px 4px;
-      caret-color: #ccff00;
-      transition: border-color 0.3s ease, width 0.2s ease;
       pointer-events: auto;
+      margin-left: 8px;
+      padding: 0 5px;
+      letter-spacing: 2px;
     }
     #card-name-input::placeholder {
-      color: rgba(255,255,255,0.25);
-    }
-    #card-name-input:focus {
-      border-bottom-color: #ccff00;
+      color: rgba(204, 255, 0, 0.3);
     }
 
     /* ── SCENE OVERLAY ───────────────────────────────────────── */
@@ -326,6 +383,10 @@
       position: fixed; inset: 0;
       pointer-events: none; z-index: 10002; opacity: 0;
     }
+
+    /* Ocultar el resaltado de selección nativo (azul/verde) del input invisible */
+    #neon-html-input::selection { background: transparent; color: transparent; }
+    #neon-html-input::-moz-selection { background: transparent; color: transparent; }
     .sc-board {
       position: absolute; top: 50%; left: 50%;
       width: 0; height: 0;
@@ -350,7 +411,7 @@
     }
     .sc-num {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem; color: #ccff00;
+      font-size: 2.8rem; color: #ffffff;
       line-height: 0.85; margin-bottom: 0.6rem;
     }
     .sc-desc {
@@ -359,7 +420,7 @@
       color: rgba(255,255,255,0.9); line-height: 1.5;
       max-width: 260px;
     }
-    .sc-desc b, .sc-desc strong { color: #ccff00; font-weight: 700; }
+    .sc-desc b, .sc-desc strong { color: #ffffff; font-weight: 700; }
     .sc-note {
       font-family: 'Permanent Marker', cursive;
       font-size: 0.58rem; color: rgba(255,255,255,0.6);
@@ -1271,20 +1332,22 @@
     <div class="sc-board" id="sc-board">
       <div class="sc-card" id="sc-1">
         <div class="sc-num">1</div>
-        <div class="sc-desc">Dinos <b>dónde, cuándo y con quién</b> quieres tener una cena transformadora</div>
-        <div class="sc-note">PSSST, PUEDE SER CONTIGO MISMX A SOLAS ;)</div>
+        <div class="sc-desc">Escoge cartas <b>físicas o digitales</b></div>
       </div>
+      
+      <!-- Recuadro de detalle para el Paso 1 -->
+      <!-- Movido a steps-overlay para quedar por encima de todo (incluido WebGL) -->
       <div class="sc-card" id="sc-2">
         <div class="sc-num">2</div>
-        <div class="sc-desc">Dinos el <b>objetivo de la cena</b> y personalizaremos la experiencia para ayudaros a conseguirlo</div>
+        <div class="sc-desc">Dinos <b>dónde, cuando y con quien</b> quieres usarlas</div>
       </div>
       <div class="sc-card" id="sc-3">
         <div class="sc-num">3</div>
-        <div class="sc-desc"><b>Nosotrxs hacemos la magia</b> para que todo esté listo antes de que llegues a la mesa</div>
+        <div class="sc-desc">Dinos tu <b>objetivo</b> y haremos matemáticamente imposible que no lo consigas</div>
       </div>
       <div class="sc-card" id="sc-4">
         <div class="sc-num">4</div>
-        <div class="sc-desc"><b>Disfruta</b> de una de las mejores cenas que has tenido jamás</div>
+        <div class="sc-desc"><b>Relájate y experimenta</b> una de las mejores cenas que has tenido jamás</div>
       </div>
       <!-- Carta central Hola [nombre] -->
       <div class="sc-card" id="sc-intro" style="background:rgba(21,21,21,1);z-index:10; backface-visibility: hidden; transform: translate(-50%, -50%) scale(1.2) rotate(-2.5deg); pointer-events: auto;">
@@ -1304,13 +1367,43 @@
         <div style="position: absolute; top: 70px; left: 0; right: 0; display: flex; justify-content: center;">
           <img src="assets/img/logo one last time verde.png" alt="One Last Time" style="height: 28.3px; width: auto; opacity: 1;">
         </div>
-        <div style="position: absolute; top: 122px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
-          <p style="font-family: 'Poppins', sans-serif; font-size: 11.7px; font-weight: 600; color: #ffffff; margin: 0; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;">SI LAS CONVERSACIONES NOS UNEN,</p>
-          <p style="font-family: 'Poppins', sans-serif; font-size: 11.7px; font-weight: 600; color: #ffffff; margin: 0; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;">HAGÁMOSLAS INOLVIDABLES</p>
+        <div id="sc-intro-back-inner" style="position: absolute; top: 122px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+          <!-- Content will be injected by JS -->
         </div>
       </div><!-- end sc-intro-back -->
     </div><!-- end sc-board -->
+
   </div><!-- end steps-overlay -->
+
+  <!-- Recuadro de detalle GLOBAL (visible en todos los pasos) -->
+  <div id="sc-detail-global" class="sc-detail-box">
+    
+    <!-- Texto Paso 1 -->
+    <div class="sc-step-text-wrapper" id="sc-text-1" style="text-align: left;">
+      <p class="sc-detail-p">Las digitales las recibirás inmediatamente después de pedirlas.</p>
+      <p class="sc-detail-p">Y las físicas te las encontrarás en la mesa al llegar. En serio.</p>
+      <p class="sc-detail-p" style="font-size: 0.85em; opacity: 0.7;">Solo necesitamos tu pedido con 4 horas de antelación en Barcelona ciudad o 48 horas en cualquier otro punto de España.</p>
+    </div>
+
+    <!-- Texto Paso 2 -->
+    <div class="sc-step-text-wrapper" id="sc-text-2" style="text-align: right;">
+      <p class="sc-detail-p">Pareja, amigxs, familia, primeras citas, lxs del running club, a solas...</p>
+      <p class="sc-detail-p">Sea quien sea, nadie se irá sin recordar este momento durante muuucho tiempo.</p>
+    </div>
+
+    <!-- Texto Paso 3 -->
+    <div class="sc-step-text-wrapper" id="sc-text-3" style="text-align: left;">
+      <p class="sc-detail-p">¿Quieres conectar más? ¿Romper la monotonía? ¿Asegurar esa 2ª cita? ¿Mejorar vuestra comunicación? ¿Salir de un bache o tener la conversación más profunda de vuestras vidas?</p>
+      <p class="sc-detail-p">Ultra-personalizamos cada carta para que sea matemáticamente imposible no conseguir tu propósito. Es nuestra especialidad.</p>
+    </div>
+
+    <!-- Texto Paso 4 -->
+    <div class="sc-step-text-wrapper" id="sc-text-4" style="text-align: right;">
+      <p class="sc-detail-p">Olvídate de "otra cena más" o de regresar a casa con menos energía de la que saliste.</p>
+      <p class="sc-detail-p">Pon el móvil en silencio y disfruta de una de las cenas más auténticas, honestas y sin filtro que has tenido.</p>
+    </div>
+
+  </div>
 
 
   <!-- Automated TRUE CSS 3D Box — fuera del steps-overlay para escapar de su stacking context -->
@@ -1467,6 +1560,20 @@
     </a>
   </div>
 
+  <!-- OPCION B: Input HTML visible perfectamente sincronizado con WebGL -->
+  <div id="visible-input-overlay" style="position: fixed; inset: 0; pointer-events: none; z-index: 10050; display: flex; align-items: center; justify-content: center;">
+    <div id="visible-input-group" style="width: 380px; height: 234px; pointer-events: none; transform-style: preserve-3d; opacity: 0;">
+      <!-- scaleX(-1) deshace el espejo cuando rotationY llega a -180 o -540 -->
+      <div style="position: absolute; inset: 0; transform: scaleX(-1); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto;">
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <!-- Texto Hola transparente para ocupar el mismo espacio que en WebGL y empujar el input a la derecha -->
+          <span style="font-family:'Poppins',sans-serif; font-weight:600; font-size:32px; color:transparent; pointer-events:none; user-select:none; -webkit-user-select:none;">Hola</span>
+          <input type="text" id="neon-html-input" maxlength="15" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" data-gramm="false" style="pointer-events: auto; background: transparent; border: none; color: transparent; font-family: 'Poppins', sans-serif; font-weight:600; font-size: 32px; width: 300px; text-align: left; outline: none; margin-left: 8px; caret-color: transparent; padding-top: 5px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scroll indicator separado: z-index bajo para quedar detras de las cartas -->
   <div class="scroll-indicator">
     <div class="oryzo-scroll-icon">
@@ -1489,7 +1596,7 @@
      1. Cada color = misma longitud de arc en el perímetro
      2. El espectro se usa UNA sola vez por vuelta (sin repetición en lados opuestos)
      3. Transiciones suaves: stop cada 50px + lerp RGB continuo
-     4. Ola de brillo independiente: viaja a diferente velocidad
+     4. Ola de brillo independiente: viaje a diferente velocidad
   ═════════════════════════════════════════════════════════════ */
   (function() {
     var cv  = document.getElementById('edge-glow');
@@ -1899,13 +2006,23 @@
   function setupScrollAnim() {
     const mg        = introMorphGroup;
     if (!mg) return;
+    const visGroup  = document.getElementById('visible-input-group');
     const scOverlay = document.getElementById('scene-overlay');
     const stOverlay = document.getElementById('steps-overlay');
     const scBoard   = document.getElementById('sc-board');
     const scIntro   = document.getElementById('sc-intro');
+    const scIntroBack = document.getElementById('sc-intro-back');
     const scTitle   = document.getElementById('sc-title');
     const scCta     = document.getElementById('sc-cta');
-    const scIntroBack = document.getElementById('sc-intro-back');
+    const scIntroBackInner = scIntroBack.querySelector('div:last-child'); // El contenedor de los párrafos
+
+    // ── Diccionario de textos para los giros ──
+    const stepTexts = [
+      "4 PASOS",                                   // Inicio (Front)
+      "Hola ",                                     // 1er Giro (Back)
+      "Bienvenido a una de las experiéncias más profundas que has tenido hasta ahora...", // 2do Giro (Front)
+      "4 PASOS"                                    // 3er Giro (Back)
+    ];
     const sc1       = document.getElementById('sc-1');
     const sc2       = document.getElementById('sc-2');
     const sc3       = document.getElementById('sc-3');
@@ -2013,8 +2130,27 @@
     let glowTSwap = 0; // expuesto al bucle de scroll — se rellena al construir el timeline
     const scrollTl = gsap.timeline({ paused: true });
 
+    // ── Reset state at the very beginning (for scroll back) ──────────
+    scrollTl.call(() => {
+      // Restaurar texturas originales de la carta WebGL
+      if (typeof window.update3DCardTexture === 'function') {
+        window.update3DCardTexture('front'); // Vuelve al logo "One Last Time"
+        window.update3DCardTexture('back', stepTexts[0]); // Vuelve a "4 PASOS"
+      }
+      // Asegurar que el input interactivo está oculto y sin foco
+      if (neonGroup) {
+        neonGroup.style.opacity = '0';
+        neonGroup.style.pointerEvents = 'none';
+      }
+      if (neonInput) neonInput.blur();
+      
+      // Reset de opacidad del contenido HTML del dorso por si acaso
+      const cbi = document.getElementById('card-back-inner');
+      if (cbi) cbi.style.opacity = '1';
+    }, null, 0);
+
     // ─ Fase 1 (0→0.16): Zoom + oscurecimiento suave ──────────────────
-    scrollTl.to(mg, {
+    scrollTl.to([mg, visGroup], {
       x: 0, y: 0, scaleX: 1.22, scaleY: 1.22,
       rotation: -2, rotationY: -30,
       duration: 0.08, ease: 'power2.inOut'
@@ -2044,17 +2180,173 @@
 
     // Un único movimiento continuo y cinemático para girar 3 veces (3 x 180 = 540)
     // Acaba enseñando la cara de "4 PASOS" (-540°). Duración subida a 0.80 para ser muy lento de scrollear
-    scrollTl.to(mg, {
+    scrollTl.to([mg, visGroup], {
       rotationY: -540, rotation: -2.5,
       duration: 0.80, ease: 'linear'
     }, 0.08);
+
+    // Helper to sync WebGL text when visible input changes
+    const neonInput = document.getElementById('neon-html-input');
+    const neonGroup = document.getElementById('visible-input-group');
+    
+    let isNeonFocused = false;
+    let cursorState = { alpha: 0 };
+    let blinkTween = null;
+
+    // Helper para detectar género en nombres españoles comunes
+    function getGenderedWelcome(name) {
+      if (!name) return "Bienvenido";
+      const n = name.trim().toLowerCase().split(' ')[0]; // Usar solo el primer nombre
+      const lastChar = n.charAt(n.length - 1);
+      const lastTwo = n.slice(-2);
+      
+      // Excepciones masculinas comunes que terminan en 'a'
+      const maleExceptions = ['borja', 'luca', 'andrea', 'nicola', 'bautista', 'mariah'];
+      // Excepciones femeninas comunes que no terminan en 'a'
+      const femaleExceptions = [
+        'isabel', 'carmen', 'raquel', 'pilar', 'dolores', 'mercedes', 'ines', 'inés', 'ester', 'esther', 
+        'belen', 'belén', 'concepcion', 'concepción', 'miriam', 'míriam', 'iris', 'sol', 'nieve', 'nieves', 'paz'
+      ];
+      
+      if (maleExceptions.includes(n)) return "Bienvenido";
+      if (femaleExceptions.includes(n)) return "Bienvenida";
+      
+      // Heurística básica: termina en 'a' -> Femenino, otros -> Masculino
+      if (lastChar === 'a' || lastChar === 'á') return "Bienvenida";
+      return "Bienvenido";
+    }
+
+    const updateNeonTex = () => {
+      if (!mg) return;
+      const ry = gsap.getProperty(mg, 'rotationY');
+      
+      // SOLO actualizar la textura del dorso con el input si estamos en el primer flip
+      // (entre la mesa y el segundo giro). Si pasamos de -270, ya estamos en el 2do flip (Front).
+      // Si pasamos de -450, estamos en el 3er flip (Back) que debe decir "4 PASOS".
+      if (ry < -45 && ry > -275) {
+        let val = neonInput ? neonInput.value : '';
+        let selS = neonInput ? neonInput.selectionStart : val.length;
+        let selE = neonInput ? neonInput.selectionEnd : val.length;
+        if (typeof window.update3DCardTexture === 'function') {
+          window.update3DCardTexture('back', { 
+            type: 'name_input', 
+            val: val, 
+            selS: selS,
+            selE: selE,
+            cursorAlpha: cursorState.alpha, 
+            focused: isNeonFocused || val.length === 0
+          });
+        }
+      }
+    };
+
+    // Animación de parpadeo suave, infinita y global
+    gsap.to(cursorState, {
+      alpha: 1,
+      duration: 0.6,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+      onUpdate: updateNeonTex
+    });
+
+    if (neonInput) {
+      neonInput.addEventListener('input', updateNeonTex);
+      neonInput.addEventListener('focus', () => { 
+        isNeonFocused = true; 
+        updateNeonTex(); 
+      });
+      neonInput.addEventListener('blur', () => { 
+        isNeonFocused = false; 
+        updateNeonTex(); 
+      });
+      // Capturar movimiento de cursor por teclado o click
+      neonInput.addEventListener('keydown', () => setTimeout(updateNeonTex, 0));
+      neonInput.addEventListener('keyup', updateNeonTex);
+      neonInput.addEventListener('mousedown', () => setTimeout(updateNeonTex, 0));
+      neonInput.addEventListener('mousemove', (e) => { if (e.buttons > 0) updateNeonTex(); });
+      neonInput.addEventListener('click', updateNeonTex);
+    }
+
+    // Cambiazos invisibles (cuando la carta está de canto)
+    // 90° (-90) -> Cambiar la cara trasera (que aún no se ve)
+    // 90° (-90) -> Cambiar la cara trasera (que aún no se ve)
+    scrollTl.call(() => {
+      const txt = stepTexts[1];
+      if (scIntroBackInner) {
+        scIntroBackInner.innerHTML = `<p style="font-family:'Poppins',sans-serif; font-size:18px; font-weight:800; color:#fff; letter-spacing:1px; text-transform:uppercase;">${txt}</p>`;
+      }
+      
+      // Reset de la cara FRONTAL al logo original mientras no se ve
+      if (typeof window.update3DCardTexture === 'function') {
+        window.update3DCardTexture('front'); 
+        // Preservar el valor actual del input
+        const currentVal = neonInput ? neonInput.value : '';
+        const currentSelS = neonInput ? neonInput.selectionStart : 0;
+        const currentSelE = neonInput ? neonInput.selectionEnd : 0;
+        window.update3DCardTexture('back', { 
+          type: 'name_input', 
+          val: currentVal, 
+          selS: currentSelS,
+          selE: currentSelE,
+          cursorAlpha: 0, 
+          focused: false 
+        });
+      }
+
+      if (neonGroup) neonGroup.style.pointerEvents = 'auto';
+      
+      // Auto-focus
+      if (neonInput) {
+        setTimeout(() => {
+          if (gsap.getProperty(mg, 'rotationY') < -45) { // Solo si seguimos en el flip
+             neonInput.focus({ preventScroll: true });
+          }
+        }, 400);
+      }
+    }, null, 0.08 + (0.80 * 90/540));
+
+    // Revelación del input integrada en el timeline (para que se revierta al hacer scroll back)
+    scrollTl.to([neonGroup, '#card-back-inner'], {
+      opacity: 1,
+      duration: 0.1,
+      ease: 'power2.out'
+    }, 0.08 + (0.80 * 90/540));
+
+    // 270° (-270) -> Cambiar la cara frontal (que ahora está oculta)
+    scrollTl.call(() => {
+      const name = neonInput ? neonInput.value : '';
+      const greeting = getGenderedWelcome(name);
+      const fullTxt = `${greeting} a una de las experiéncias más profundas que has tenido hasta ahora...`;
+      
+      if (scTitle) scTitle.textContent = fullTxt;
+      if (neonGroup) neonGroup.style.pointerEvents = 'none';
+      if (neonInput) neonInput.blur();
+      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front', fullTxt);
+    }, null, 0.08 + (0.80 * 270/540));
+
+    // Ocultar input al pasar al siguiente flip
+    scrollTl.to([neonGroup, '#card-back-inner'], {
+      opacity: 0,
+      duration: 0.05
+    }, 0.08 + (0.80 * 270/540));
+
+    // 450° (-450) -> Cambiar la cara trasera de nuevo para el paso final
+    scrollTl.call(() => {
+      const txt = stepTexts[3]; // "4 PASOS"
+      if (scIntroBackInner) {
+        // Usar la tipografía de impacto para "4 PASOS" también en la versión HTML
+        scIntroBackInner.innerHTML = `<p style="font-family:'Bebas Neue',sans-serif; font-size:60px; font-weight:800; color:#fff; margin-top:10px;">${txt}</p>`;
+      }
+      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('back', txt);
+    }, null, 0.08 + (0.80 * 450/540));
 
     // ─ Zoom in/out continuo durante toda la secuencia de flips (+20%) ──────────
     // Curva de campana suave: sine.in sube acelerando, sine.out baja desacelerando.
     // Los dos se encadenan con velocidad máxima en el pico (t=0.38) → sin costura.
     // 1.22 × 1.20 = 1.464 en el pico
-    scrollTl.to(mg, { scaleX: 1.464, scaleY: 1.464, duration: 0.30, ease: 'sine.in'  }, 0.08);
-    scrollTl.to(mg, { scaleX: 1.22,  scaleY: 1.22,  duration: 0.30, ease: 'sine.out' }, 0.38);
+    scrollTl.to([mg, visGroup], { scaleX: 1.464, scaleY: 1.464, duration: 0.30, ease: 'sine.in'  }, 0.08);
+    scrollTl.to([mg, visGroup], { scaleX: 1.22,  scaleY: 1.22,  duration: 0.30, ease: 'sine.out' }, 0.38);
 
 
     // Título "Cómo funciona" aparece justo cuando desaparecen los textos laterales (t=0.60)
@@ -2136,19 +2428,101 @@
     // El CTA original desaparece justo antes del scatter
     scrollTl.to('#heroCta', { autoAlpha: 0, scale: 0.95, duration: 0.06, ease: 'power2.inOut' }, 0.84);
 
-    // La carta central desaparece MIENTRAS hace el último grado del giro (overlap a los 0.93)
+    // La carta central desaparece MIENTRAS hace el último grado del giro
     scrollTl.to(mg, { opacity: 0, duration: 0.03 }, 0.85);
+    scrollTl.to('#sc-intro', { opacity: 0, duration: 0.03 }, 0.85);
 
     // Hacemos que aparezcan de golpe las cartas en pleno movimiento en t=0.94
     scrollTl.set(sCards, { opacity: 1 }, 0.86);
 
-    // Esparción empieza en t=0.94, robándole la energía al final del flip extendido (no hay zona muerta)
+    // Esparción empieza en t=0.86, robándole la energía al final del flip extendido (no hay zona muerta)
     sData.forEach(({ el, x, y, r }) => {
       scrollTl.to(el, {
         x, y, rotation: r,
         duration: 0.05, ease: 'none'
       }, 0.86);
     });
+
+    // Detalle del Paso 1: aparece con desvanecimiento al entrar en el Paso 1 y desaparece al pasar al 2
+    const detail1 = document.getElementById('sc-detail-1');
+    const detailGlobal = document.getElementById('sc-detail-global');
+    const detailStepTexts = [];
+
+    if (detailGlobal) {
+      // position:fixed → posicionamos directamente en el viewport
+      gsap.set(detailGlobal, { 
+        x: '45.5vw', xPercent: -50, 
+        y: '70vh', yPercent: -50,
+        rotation: 0, opacity: 0 
+      });
+      
+      // Función para fragmentar el texto en líneas reales para los 4 pasos
+      [1, 2, 3, 4].forEach(stepNum => {
+        const wrapper = document.getElementById(`sc-text-${stepNum}`);
+        const linesForStep = [];
+        const wordsForStep = [];
+        if (wrapper) {
+          wrapper.querySelectorAll('.sc-detail-p').forEach(p => {
+            if (p.querySelector('.sc-detail-mask')) return;
+            const words = p.innerText.split(' ');
+            p.innerHTML = '';
+            words.forEach(word => {
+              const span = document.createElement('span');
+              if (word === '[MAGIC]') {
+                span.innerHTML = `<svg class="magic-icon" xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg> `;
+              } else {
+                span.textContent = word + ' ';
+              }
+              p.appendChild(span);
+            });
+            let currentTop = null;
+            let lines = [];
+            let currentLine = [];
+            Array.from(p.children).forEach(span => {
+              if (currentTop === null || span.offsetTop === currentTop) {
+                currentLine.push(span);
+                currentTop = span.offsetTop;
+              } else {
+                lines.push(currentLine);
+                currentLine = [span];
+                currentTop = span.offsetTop;
+              }
+            });
+            if (currentLine.length > 0) lines.push(currentLine);
+
+            p.innerHTML = '';
+            lines.forEach(lineSpans => {
+              const mask = document.createElement('span');
+              mask.className = 'sc-detail-mask';
+              mask.style.display = 'block';
+              mask.style.overflow = 'hidden';
+              
+              const inner = document.createElement('span');
+              inner.className = 'sc-detail-line-inner';
+              inner.style.display = 'block';
+              
+              lineSpans.forEach(span => {
+                // Removing inline-block so natural spaces aren't collapsed
+                inner.appendChild(span);
+                wordsForStep.push(span);
+              });
+              
+              mask.appendChild(inner);
+              p.appendChild(mask);
+              linesForStep.push(inner);
+            });
+          });
+          gsap.set(linesForStep, { y: '110%', opacity: 0 });
+        }
+        detailStepTexts.push({ wrapper, lines: linesForStep, words: wordsForStep });
+      });
+
+      // Fade in de la caja contenedora GLOBAL al inicio del Paso 1
+      scrollTl.to(detailGlobal, {
+        opacity: 1, duration: 0.05, ease: 'none'
+      }, 0.93);
+    }
+
     scrollTl.to(scTitle, { y: 0, duration: 0.05, ease: 'none' }, 0.86);
     scrollTl.to(scCta,   { autoAlpha: 1, duration: 0.05, ease: 'none' }, 0.88);
 
@@ -2156,17 +2530,75 @@
     const PAN  = 0.05;
     const HOLD = 0.025;
     let t = 0.92;
-    panData.forEach(({ x, y, r }) => {
+    // sCards[i] corresponds to which card is the FOCUS of each panData step
+    // panData[0] → sc1 focused, panData[1] → sc2, panData[2] → sc3, panData[3] → sc4
+    const focusOrder = [sc1, sc2, sc3, sc4];
+    panData.forEach(({ x, y, r }, i) => {
       scrollTl.to(scBoard, { x, y, rotation: r, scale: focusZoom,
         duration: PAN, ease: 'power1.inOut' }, t);
       scrollTl.to(sIntroProxy, { opacity: 0.25, duration: PAN,
         ease: 'power1.inOut', onUpdate: updateIntroOpacity }, t);
+      // Apagar todas las cartas menos la que está en foco
+      const focusedCard = focusOrder[i];
+      const otherCards = focusOrder.filter(c => c !== focusedCard);
+      scrollTl.to(focusedCard, { opacity: 1, duration: PAN, ease: 'power1.inOut' }, t);
+      scrollTl.to(otherCards,  { opacity: 0.15, duration: PAN, ease: 'power1.inOut' }, t);
+      
+      // Animar el texto del recuadro global correspondiente a este paso
+      const stepTextData = detailStepTexts[i];
+      if (stepTextData && stepTextData.lines.length > 0) {
+        // Hacer el contenedor seleccionable solo cuando está activo
+        scrollTl.set(stepTextData.wrapper, { pointerEvents: 'auto' }, t + 0.035);
+
+        // Slide up LÍNEAS INDIVIDUALES (empieza después del fade out del anterior: t + 0.035)
+        scrollTl.to(stepTextData.lines, {
+          y: '0%',
+          opacity: 1,
+          duration: 0.015,
+          ease: 'power2.out',
+          stagger: 0.002
+        }, t + 0.035);
+
+        // Desvanecer PALABRA A PALABRA en cascada desde abajo a la derecha hacia arriba a la izquierda
+        scrollTl.to(stepTextData.words, {
+          opacity: 0,
+          duration: 0.015,
+          ease: 'none',
+          stagger: { each: 0.0005, from: 'end' } // Ultra-rápido para desaparecer completamente antes de 0.035s
+        }, t + PAN + HOLD);
+
+        // Desactivar la selección del contenedor al terminar su turno
+        scrollTl.set(stepTextData.wrapper, { pointerEvents: 'none' }, t + PAN + HOLD);
+      }
+      
+      // Centrar el recuadro bajo la carta 2 (moviéndolo más a la derecha)
+      if (i === 1 && detailGlobal) {
+        scrollTl.to(detailGlobal, { x: '55vw', duration: PAN, ease: 'power1.inOut' }, t);
+      }
+      
+      // Mover el recuadro global hacia arriba y al centro-izquierda al pasar del paso 2 al 3 para no tapar las cartas inferiores
+      if (i === 2 && detailGlobal) {
+        scrollTl.to(detailGlobal, { x: '46vw', y: '32vh', duration: PAN, ease: 'power1.inOut' }, t);
+      }
+      
+      // Mover el recuadro más a la derecha en el paso 4 para no tapar la carta
+      if (i === 3 && detailGlobal) {
+        scrollTl.to(detailGlobal, { x: '55vw', duration: PAN, ease: 'power1.inOut' }, t);
+      }
+      
       t += PAN + HOLD;
     });
+    
+    // Fade out de la caja GLOBAL al abandonar el Paso 4
+    if (detailGlobal) {
+      scrollTl.to(detailGlobal, { opacity: 0, duration: PAN, ease: 'none' }, t);
+    }
     scrollTl.to(scBoard, { x: 0, y: 0, rotation: 0, scale: 1,
       duration: PAN, ease: 'power2.inOut' }, t);
     scrollTl.to(sIntroProxy, { opacity: 1, duration: PAN,
       ease: 'power2.inOut', onUpdate: updateIntroOpacity }, t);
+    // Restaurar opacidad de todas las cartas al volver al overview
+    scrollTl.to(focusOrder, { opacity: 1, duration: PAN, ease: 'power2.inOut' }, t);
 
 
     let t2 = t + PAN; // ~1.18
@@ -3492,57 +3924,237 @@
     ctx.restore();
   }
 
-  function makeCardFrontTex() {
+  function makeCardFrontTex(text1 = 'CONEXIONES SIGNIFICATIVAS', text2 = 'PARA PERSONAS QUE IMPORTAN') {
     const W = 760, H = 468;
     const c = document.createElement('canvas');
     c.width = W; c.height = H;
     const ctx = c.getContext('2d');
     ctx.fillStyle = '#151515';
     ctx.fillRect(0, 0, W, H);
-    // Logo PNG verde directamente, sin recolorear (el PNG ya tiene el color correcto)
-    if (LOGO_VERDE_IMG.naturalWidth > 0) {
+
+    // ── Logo (Solo si el texto es corto) ───────────────────────
+    if (text1.length <= 30 && LOGO_VERDE_IMG.naturalWidth > 0) {
       const lH = 68;
       const lW = LOGO_VERDE_IMG.naturalWidth * lH / LOGO_VERDE_IMG.naturalHeight;
       ctx.drawImage(LOGO_VERDE_IMG, (W - lW) / 2, 140, lW, lH);
     }
+    
+    // ── Texto ──────────────────────────────────────────────────
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = 'bold 28px Arial, sans-serif';
-    ctx.fillText('CONEXIONES SIGNIFICATIVAS', W / 2, 290);
-    ctx.fillText('PARA PERSONAS QUE IMPORTAN', W / 2, 330);
+    
+    if (text1.length > 30) {
+      // MODO TEXTO LARGO (Poppins 600 envuelto)
+      ctx.font = '600 38px "Poppins", sans-serif';
+      const words = text1.split(' ');
+      let line = '';
+      let lines = [];
+      const maxWidth = W * 0.85;
+      
+      for (let n = 0; n < words.length; n++) {
+        let testLine = line + words[n] + ' ';
+        let metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+          lines.push(line);
+          line = words[n] + ' ';
+        } else {
+          line = testLine;
+        }
+      }
+      lines.push(line);
+      
+      const lineHeight = 52;
+      const startY = (H / 2) - ((lines.length - 1) * lineHeight) / 2;
+      lines.forEach((l, i) => {
+        ctx.fillText(l.trim(), W / 2, startY + i * lineHeight);
+      });
+    } else if (!text2) {
+      // Single line mode for flips
+      ctx.font = 'bold 45px "Bebas Neue", Impact, sans-serif';
+      ctx.fillText(text1, W / 2, 310);
+    } else {
+      // Two line mode for initial state
+      ctx.font = 'bold 28px Arial, sans-serif';
+      ctx.fillText(text1, W / 2, 290);
+      ctx.fillText(text2, W / 2, 330);
+    }
+    
     const tex = new THREE.CanvasTexture(c);
-    tex.minFilter  = THREE.LinearFilter;   // sin blur de mipmaps al girar
+    tex.minFilter  = THREE.LinearFilter;
     tex.magFilter  = THREE.LinearFilter;
     tex.anisotropy = 16;
     tex.needsUpdate = true;
     return tex;
   }
 
-    // Global map for dynamic texture update
-    function makeCardBackTex() {
+  const globalBackCanvas = document.createElement('canvas');
+  globalBackCanvas.width = 760; globalBackCanvas.height = 468;
+  const globalBackCtx = globalBackCanvas.getContext('2d');
+  const globalBackTex = new THREE.CanvasTexture(globalBackCanvas);
+  globalBackTex.minFilter  = THREE.LinearFilter;
+  globalBackTex.magFilter  = THREE.LinearFilter;
+  globalBackTex.anisotropy = 16;
+
+  // Global map for dynamic texture update
+  function makeCardBackTex(data = '4 PASOS') {
     const W = 760, H = 468;
-    const c = document.createElement('canvas');
-    c.width = W; c.height = H;
-    const ctx = c.getContext('2d');
+    const ctx = globalBackCtx;
     ctx.fillStyle = '#0d0d0d';
     ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#ffffff';
-    ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = 'bold 126px "Bebas Neue", Impact, sans-serif';
-    ctx.fillText('4 PASOS', W / 2, H / 2);
-    // Añadir el mismo borde sutil que la carta CSS
+    
+    if (typeof data === 'object' && data.type === 'name_input') {
+      const val = data.val;
+      const cursorAlpha = data.cursorAlpha;
+      const focused = data.focused;
+      const selS = data.selS || 0;
+      const selE = data.selE || 0;
+      
+      ctx.font = '600 64px "Poppins", sans-serif';
+      
+      if (val.length === 0) {
+        // Siempre mostrar placeholder gris: "Hola tu nombre"
+        const t1 = "Hola ";
+        const t2 = "tu nombre";
+        const w1 = ctx.measureText(t1).width;
+        const w2 = ctx.measureText(t2).width;
+        const totalW = w1 + w2;
+        const startX = W / 2 - totalW / 2;
+        
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(t1, startX, H / 2);
+        
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)'; // Gris elegante
+        ctx.fillText(t2, startX + w1, H / 2);
+        
+        // Si está en focus, dibujar el cursor justo antes de "Nombre"
+        if (focused && cursorAlpha > 0 && selS === selE) {
+          const cursorX = startX + w1;
+          ctx.fillStyle = `rgba(204, 255, 0, ${cursorAlpha})`;
+          ctx.save(); ctx.translate(cursorX, H / 2); ctx.scale(0.7, 1.0); ctx.fillText('|', 0, 0); ctx.restore();
+        }
+      } else if (val.length > 8) {
+        // MODO MULTILINEA: Hola arriba, Nombre abajo
+        const y1 = H / 2 - 42;
+        const y2 = H / 2 + 42;
+        
+        ctx.textAlign = 'center';
+        
+        // Dibujar Selección si existe
+        if (focused && selS !== selE) {
+          ctx.save();
+          const textBefore = val.substring(0, Math.min(selS, selE));
+          const selectedText = val.substring(Math.min(selS, selE), Math.max(selS, selE));
+          const fullW = ctx.measureText(val).width;
+          const startX = (W / 2 - fullW / 2) + ctx.measureText(textBefore).width;
+          const selW = ctx.measureText(selectedText).width;
+          ctx.fillStyle = 'rgba(193, 255, 0, 0.4)';
+          ctx.fillRect(startX, y2 - 40, selW, 80);
+          ctx.restore();
+        }
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText("Hola", W / 2, y1);
+        ctx.fillText(val, W / 2, y2);
+        
+        if (focused && cursorAlpha > 0 && selS === selE) {
+          const textBeforeCursor = val.substring(0, selS);
+          const fullTextWidth = ctx.measureText(val).width;
+          const textBeforeWidth = ctx.measureText(textBeforeCursor).width;
+          const cursorX = (W / 2 - fullTextWidth / 2) + textBeforeWidth + 2;
+          
+          ctx.fillStyle = `rgba(193, 255, 0, ${cursorAlpha})`;
+          ctx.textAlign = 'left';
+          ctx.save(); ctx.translate(cursorX, y2); ctx.scale(0.7, 1.0); ctx.fillText('|', 0, 0); ctx.restore();
+        }
+      } else {
+        // MODO UNA LINEA
+        const baseText = "Hola " + val;
+        ctx.textAlign = 'center';
+
+        // 1. Dibujar texto base blanco
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(baseText, W / 2, H / 2);
+        
+        // 2. Si hay selección, dibujar bloque sólido + texto negro clipeado
+        if (focused && selS !== selE) {
+          const tS = Math.min(selS, selE);
+          const tE = Math.max(selS, selE);
+          const textBefore = "Hola " + val.substring(0, tS);
+          const selectedText = val.substring(tS, tE);
+          const fullW = ctx.measureText(baseText).width;
+          const startX = (W / 2 - fullW / 2) + ctx.measureText(textBefore).width;
+          const selW = ctx.measureText(selectedText).width;
+          
+          ctx.save();
+          // Bloque verde sólido
+          ctx.fillStyle = '#c1ff00';
+          ctx.fillRect(startX, H / 2 - 40, selW, 80);
+          
+          // Clipear para dibujar el texto negro SOLO dentro del bloque verde
+          ctx.beginPath();
+          ctx.rect(startX, H / 2 - 40, selW, 80);
+          ctx.clip();
+          
+          ctx.fillStyle = '#000000';
+          ctx.fillText(baseText, W / 2, H / 2);
+          ctx.restore();
+        }
+
+        if (focused && cursorAlpha > 0 && selS === selE) {
+          const textBeforeCursor = "Hola " + val.substring(0, selS);
+          const fullTextWidth = ctx.measureText(baseText).width;
+          const textBeforeWidth = ctx.measureText(textBeforeCursor).width;
+          const cursorX = (W / 2 - fullTextWidth / 2) + textBeforeWidth + 2;
+          
+          ctx.fillStyle = '#c1ff00';
+          ctx.textAlign = 'left';
+          ctx.save(); ctx.translate(cursorX, H / 2); ctx.scale(0.7, 1.0); ctx.fillText('|', 0, 0); ctx.restore();
+        }
+      }
+    } else {
+      // String estandar (ej. "4 PASOS", "3. DISFRUTA...")
+      const text = typeof data === 'string' ? data : '';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 100px "Bebas Neue", Impact, sans-serif';
+      ctx.fillText(text, W / 2, H / 2);
+    }
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(0, 1); ctx.lineTo(W, 1); ctx.stroke();
-    const tex = new THREE.CanvasTexture(c);
-    tex.minFilter  = THREE.LinearFilter;   // sin blur de mipmaps al girar
-    tex.magFilter  = THREE.LinearFilter;
-    tex.anisotropy = 16;
-    tex.needsUpdate = true;
-    return tex;
+    
+    globalBackTex.needsUpdate = true;
+    return globalBackTex;
   }
+
+  // Global function to update the 3D card text dynamically
+  let cachedFrontDefault = null;
+  window.update3DCardTexture = function(face, arg1, arg2) {
+    if (!globalGlbCard) return;
+    const meshName = face === 'front' ? 'cardFrontMesh' : 'cardBackMesh';
+    const targetMesh = globalGlbCard.children.find(child => child.name === meshName);
+    if (targetMesh && targetMesh.material) {
+      if (face === 'front') {
+        // Optimización: si pedimos el default y ya lo tenemos, no recrear
+        if (!arg1 && !arg2) {
+          if (!cachedFrontDefault) cachedFrontDefault = makeCardFrontTex();
+          if (targetMesh.material.map === cachedFrontDefault) return;
+          targetMesh.material.map = cachedFrontDefault;
+        } else {
+          const oldTex = targetMesh.material.map;
+          targetMesh.material.map = makeCardFrontTex(arg1, arg2);
+          // Ojo: no disparamos dispose del cachedFrontDefault
+          if (oldTex && oldTex !== cachedFrontDefault) oldTex.dispose();
+        }
+      } else {
+        targetMesh.material.map = makeCardBackTex(arg1);
+      }
+      targetMesh.material.needsUpdate = true;
+    }
+  };
   // Textura de grano procedural para simular superficie de carta (bump)
   function makeCardGrainTex() {
     const sz = 256;
@@ -3685,6 +4297,7 @@
     );
     frontMesh.position.set(0, 0, halfT + 0.0001);
     frontMesh.renderOrder = 2;
+    frontMesh.name = 'cardFrontMesh'; // Name it for easy lookup
     pivot.add(frontMesh);
 
     // Cara TRASERA — ShapeGeometry redondeada, rotada 180° en Y
@@ -3695,6 +4308,7 @@
     backMesh.position.set(0, 0, -(halfT + 0.0001));
     backMesh.rotation.y = Math.PI;
     backMesh.renderOrder = 2;
+    backMesh.name = 'cardBackMesh'; // Name it for easy lookup
     pivot.add(backMesh);
 
     const applyDesign = () => {
