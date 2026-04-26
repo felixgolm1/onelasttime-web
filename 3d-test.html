@@ -28,7 +28,7 @@
     @media (min-width: 768px) {
       .drag-hint { left: calc(50% + 145px); top: calc(50% - 250px); }
     }
-    body, html { width:100%; height:100%; background: radial-gradient(circle at 0% 50%, rgba(204,255,0,0.18) 0%, #000000 80%); background-color: #000; overflow:hidden; }
+    body, html { width:100%; height:100%; background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); overflow:hidden; }
     canvas { display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; opacity:0; transition: opacity 1.4s cubic-bezier(0.4,0,0.2,1); pointer-events: none !important; }
 
     /* Sombra de persona sobre la mesa */
@@ -79,7 +79,7 @@
     #loader {
       position:fixed; inset:0; display:flex; flex-direction:column;
       align-items:center; justify-content:center; z-index:10001;
-      background: radial-gradient(circle at 0% 50%, rgba(204,255,0,0.18) 0%, #000000 80%); background-color: #000; gap:1.2rem;
+      background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); gap:1.2rem;
       font-family:'Poppins',sans-serif;
       transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -266,6 +266,25 @@
       margin-left: 4px;
       overflow: visible;
     }
+    .sc-step-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      color: #ffffff;
+      box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+    }
+    .sc-step-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 1.25;
+    }
     .sc-detail-num {
       font-size: 48px;
       font-weight: 700;
@@ -357,7 +376,7 @@
     /* ── SCENE OVERLAY ───────────────────────────────────────── */
     #scene-overlay {
       position: fixed; inset: 0;
-      background: radial-gradient(circle at 0% 50%, rgba(204,255,0,0.18) 0%, #000000 80%); background-color: #000;
+      background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
       opacity: 0;
       pointer-events: none; z-index: 10000;
     }
@@ -743,6 +762,12 @@
       border-right: 1px solid #b2d400 !important;
     }
 
+    .interior-card.black-card {
+      background: #0a0a0a !important;
+      border-top: 1px solid #333 !important;
+      border-right: 1px solid #1a1a1a !important;
+    }
+
     body.is-drawn .interior-card:nth-child(1) { transform: translateZ(6px) translateY(-35px) !important; }
     body.is-drawn .interior-card:nth-child(2) { transform: translateZ(8px) translateY(-28px) !important; }
     body.is-drawn .interior-card:nth-child(3) { transform: translateZ(10px) translateY(-20px) !important; }
@@ -1081,6 +1106,7 @@
       pointer-events: auto !important;
       cursor: grab !important;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 16px;
     }
     @media(min-width: 768px) { .card-wrap { width: 350px; height: 198px; } }
     .card-wrap:active { cursor: grabbing; transition: none; }
@@ -1245,6 +1271,84 @@
     }
     .sc-name-field::placeholder { color: rgba(255,255,255,0.25); }
     .sc-name-field:focus { border-bottom-color: #ccff00; }
+
+    /* Tooltips Interactivos */
+    #card1-tooltip, #card2-tooltip {
+      position: fixed;
+      width: 350px;
+      padding: 16px 20px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      text-align: center;
+      z-index: 2147483647 !important;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      top: 0; left: 0;
+      will-change: transform;
+    }
+    #card1-tooltip.is-visible, #card2-tooltip.is-visible {
+      opacity: 1;
+    }
+    #card1-tooltip::after, #card2-tooltip::after {
+      content: '';
+      position: absolute;
+      top: var(--arrow-top, auto);
+      bottom: var(--arrow-bottom, -8px);
+      left: var(--arrow-left, 50%);
+      right: var(--arrow-right, auto);
+      transform: var(--arrow-transform, translateX(-50%));
+      border-width: var(--arrow-border, 8px 8px 0 8px);
+      border-style: solid;
+      border-color: var(--arrow-color, rgba(255,255,255,0.18) transparent transparent transparent);
+      transition: all 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+    }
+
+    /* Glow Animado Tooltip */
+    .glow-container {
+      position: absolute;
+      inset: -1px;
+      border-radius: 8px;
+      padding: 1px;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .glow-container::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 300%; height: 300%;
+      background: conic-gradient(from 0deg, transparent 0%, #ccff00 20%, transparent 40%);
+      animation: tooltip-glow-spin 3s linear infinite;
+    }
+    @keyframes tooltip-glow-spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(-360deg); }
+    }
+
+    /* Subrayado irregular (hand-drawn SVG) */
+    .hand-underline {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 6 C 20 5, 40 7, 60 5.5 S 80 6.5, 100 5' stroke='rgba(255,255,255,0.9)' stroke-width='1.5' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-size: 100% 12px;
+      background-position: bottom -1px left 0;
+      background-repeat: no-repeat;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      padding-bottom: 2px;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -1332,22 +1436,22 @@
     <div class="sc-board" id="sc-board">
       <div class="sc-card" id="sc-1">
         <div class="sc-num">1</div>
-        <div class="sc-desc">Escoge cartas <b>físicas o digitales</b></div>
+        <div class="sc-desc">Escoge cartas <b style="color: #ccff00;">físicas o digitales</b></div>
       </div>
       
       <!-- Recuadro de detalle para el Paso 1 -->
       <!-- Movido a steps-overlay para quedar por encima de todo (incluido WebGL) -->
       <div class="sc-card" id="sc-2">
         <div class="sc-num">2</div>
-        <div class="sc-desc">Dinos <b>dónde, cuando y con quien</b> quieres usarlas</div>
+        <div class="sc-desc">Dinos <b style="color: #ccff00;">dónde, cuando y con quien</b> quieres usarlas</div>
       </div>
       <div class="sc-card" id="sc-3">
         <div class="sc-num">3</div>
-        <div class="sc-desc">Dinos tu <b>objetivo</b> y haremos matemáticamente imposible que no lo consigas</div>
+        <div class="sc-desc">Dinos <b style="color: #ccff00;">tu objetivo</b> y haremos matemáticamente imposible que no lo consigas</div>
       </div>
       <div class="sc-card" id="sc-4">
         <div class="sc-num">4</div>
-        <div class="sc-desc"><b>Relájate y experimenta</b> una de las mejores cenas que has tenido jamás</div>
+        <div class="sc-desc"><b style="color: #ccff00;">Relájate y experimenta</b> una de las mejores cenas que has tenido jamás</div>
       </div>
       <!-- Carta central Hola [nombre] -->
       <div class="sc-card" id="sc-intro" style="background:rgba(21,21,21,1);z-index:10; backface-visibility: hidden; transform: translate(-50%, -50%) scale(1.2) rotate(-2.5deg); pointer-events: auto;">
@@ -1380,6 +1484,7 @@
     
     <!-- Texto Paso 1 -->
     <div class="sc-step-text-wrapper" id="sc-text-1" style="text-align: left;">
+      <p class="sc-detail-p">[ICON_1]</p>
       <p class="sc-detail-p">Las digitales las recibirás inmediatamente después de pedirlas.</p>
       <p class="sc-detail-p">Y las físicas te las encontrarás en la mesa al llegar. En serio.</p>
       <p class="sc-detail-p" style="font-size: 0.85em; opacity: 0.7;">Solo necesitamos tu pedido con 4 horas de antelación en Barcelona ciudad o 48 horas en cualquier otro punto de España.</p>
@@ -1387,20 +1492,23 @@
 
     <!-- Texto Paso 2 -->
     <div class="sc-step-text-wrapper" id="sc-text-2" style="text-align: right;">
+      <p class="sc-detail-p">[ICON_2]</p>
       <p class="sc-detail-p">Pareja, amigxs, familia, primeras citas, lxs del running club, a solas...</p>
-      <p class="sc-detail-p">Sea quien sea, nadie se irá sin recordar este momento durante muuucho tiempo.</p>
+      <p class="sc-detail-p">Sea quien sea, [GREEN_START] nadie se irá sin recordar este momento durante muuucho tiempo. [GREEN_END]</p>
     </div>
 
     <!-- Texto Paso 3 -->
     <div class="sc-step-text-wrapper" id="sc-text-3" style="text-align: left;">
+      <p class="sc-detail-p">[ICON_3]</p>
       <p class="sc-detail-p">¿Quieres conectar más? ¿Romper la monotonía? ¿Asegurar esa 2ª cita? ¿Mejorar vuestra comunicación? ¿Salir de un bache o tener la conversación más profunda de vuestras vidas?</p>
-      <p class="sc-detail-p">Ultra-personalizamos cada carta para que sea matemáticamente imposible no conseguir tu propósito. Es nuestra especialidad.</p>
+      <p class="sc-detail-p">[GREEN_START] Ultra-personalizamos cada carta con todo el contexto que tu quieras para que sea matemáticamente imposible no conseguir tu propósito. [GREEN_END] Es nuestra especialidad.</p>
     </div>
 
     <!-- Texto Paso 4 -->
     <div class="sc-step-text-wrapper" id="sc-text-4" style="text-align: right;">
+      <p class="sc-detail-p">[ICON_4]</p>
       <p class="sc-detail-p">Olvídate de "otra cena más" o de regresar a casa con menos energía de la que saliste.</p>
-      <p class="sc-detail-p">Pon el móvil en silencio y disfruta de una de las cenas más auténticas, honestas y sin filtro que has tenido.</p>
+      <p class="sc-detail-p">Pon el móvil en silencio y [GREEN_START] disfruta de una de las cenas más auténticas, honestas y sin filtro que has tenido. [GREEN_END]</p>
     </div>
 
   </div>
@@ -1413,11 +1521,11 @@
         <div class="face-back"></div>
         
         <div class="interior-cards">
-          <!-- The backmost planes are white -->
-          <div class="interior-card" style="transform: translateZ(6px);"></div>
+          <!-- La 2a carta es negra, así que la primera capa levantada es negra -->
+          <div class="interior-card black-card" style="transform: translateZ(6px);"></div>
           <div class="interior-card" style="transform: translateZ(8px);"></div>
           <div class="interior-card" style="transform: translateZ(10px);"></div>
-          <!-- Dense white core with 2px spacing and slight organic Y-offsets -->
+          <!-- Dense core -->
           <div class="interior-card" style="transform: translateZ(12px);"></div>
           <div class="interior-card" style="transform: translateZ(14px) translateY(-0.5px);"></div>
           <div class="interior-card" style="transform: translateZ(16px);"></div>
@@ -1447,27 +1555,32 @@
         </div>
 
         <!-- Cartas reales extraíbles — heredan perspectiva 3D del volumen -->
-        <div class="card-wrap card-n1 card-in-deck" data-rot="-4.5">
+        <div class="card-wrap card-n1 card-in-deck" data-rot="0">
           <div class="card-face">
-            <div class="card-question">¿Qué es lo que más te apasiona en este momento de tu vida?</div>
+            <div class="card-question">ANNA, ¿QUÉ HARIAS SI SUPIERAS QUE NO VAS A FRACASAR?</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
           </div>
         </div>
-        <div class="card-wrap card-n2 card-in-deck" data-rot="5.8">
+        <div class="card-wrap card-n2 card-in-deck" data-rot="0">
+          <div class="card-face" style="background: #0a0a0a; background-image: none; box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 8px 24px rgba(0,0,0,0.35), 0 20px 60px rgba(0,0,0,0.4), inset 0 0 0 1.5px #0a0a0a;">
+            <div class="card-question" style="color: #ffffff; font-size: clamp(0.5rem, 1vw, 0.65rem); text-transform: none; text-align: center; margin-bottom: 1.5rem; line-height: 1.4;">
+              <p style="margin: 0 0 6px 0;">Si vivimos cada día como si fuera el último, algún día estaremos en lo cierto.</p>
+              <p style="margin: 0 0 6px 0;">Y aunque probablemente hoy no será este día, esta será la última vez que tengamos para vivir este preciso instante.</p>
+              <p style="margin: 0 0 6px 0;">Así que aprovechémoslo para seguir construyendo nuestra relación y convertir estos 5 años juntos en muchos más.</p>
+              <p style="margin: 0; font-weight: 600;">De Sergi para Laura. Gracias por todo. Te amo.</p>
+            </div>
+            <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo" style="filter: brightness(0) saturate(100%) invert(89%) sepia(33%) saturate(1210%) hue-rotate(21deg) brightness(108%) contrast(108%); opacity: 0.9;"></div>
+          </div>
+        </div>
+        <div class="card-wrap card-n3 card-in-deck" data-rot="0">
           <div class="card-face">
-            <div class="card-question">¿Cuál ha sido tu mayor aprendizaje del último año?</div>
+            <div class="card-question">TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÁL ES EL MENSAJE?</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
           </div>
         </div>
-        <div class="card-wrap card-n3 card-in-deck" data-rot="-2.7">
+        <div class="card-wrap card-n4 card-in-deck" data-rot="0">
           <div class="card-face">
-            <div class="card-question">¿Qué miedo te está impidiendo ser la versión de ti mismx que deseas?</div>
-            <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
-          </div>
-        </div>
-        <div class="card-wrap card-n4 card-in-deck" data-rot="4.5">
-          <div class="card-face">
-            <div class="card-question">¿Cuándo fue la última vez que te sentiste verdaderamente vivx?</div>
+            <div class="card-question" style="font-size: clamp(0.6rem, 1vw, 0.8rem); line-height: 1.6;">PARA CADA UNA DE LAS PERSONAS PRESENTES DI...<br><br>1 COSA QUE APRECIAS<br>1 COSA QUE CREES QUE PUEDE MEJORAR<br>1 COSA QUE HARÁS PARA ÉL O ELLA</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
           </div>
         </div>
@@ -2220,6 +2333,18 @@
       if (!mg) return;
       const ry = gsap.getProperty(mg, 'rotationY');
       
+      let val = neonInput ? neonInput.value : '';
+      
+      // Actualizar texto de la carta interactiva
+      const card1Question = document.querySelector('.card-n1 .card-question');
+      if (card1Question) {
+        let nameToUse = val.trim().toUpperCase() || 'ANNA';
+        let newText = `${nameToUse}, ¿QUÉ HARIAS SI SUPIERAS QUE NO VAS A FRACASAR?`;
+        if (card1Question.textContent !== newText) {
+          card1Question.textContent = newText;
+        }
+      }
+      
       // SOLO actualizar la textura del dorso con el input si estamos en el primer flip
       // (entre la mesa y el segundo giro). Si pasamos de -270, ya estamos en el 2do flip (Front).
       // Si pasamos de -450, estamos en el 3er flip (Back) que debe decir "4 PASOS".
@@ -2461,15 +2586,36 @@
         const wrapper = document.getElementById(`sc-text-${stepNum}`);
         const linesForStep = [];
         const wordsForStep = [];
+        const iconsForStep = [];
         if (wrapper) {
           wrapper.querySelectorAll('.sc-detail-p').forEach(p => {
             if (p.querySelector('.sc-detail-mask')) return;
             const words = p.innerText.split(' ');
             p.innerHTML = '';
+            let inGreen = false;
             words.forEach(word => {
+              if (word === '[GREEN_START]') {
+                inGreen = true;
+                return;
+              }
+              if (word === '[GREEN_END]') {
+                inGreen = false;
+                return;
+              }
               const span = document.createElement('span');
+              if (inGreen) {
+                span.style.color = '#ccff00';
+              }
               if (word === '[MAGIC]') {
                 span.innerHTML = `<svg class="magic-icon" xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg> `;
+              } else if (word === '[ICON_1]') {
+                span.innerHTML = `<span class="sc-step-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><defs><mask id="mask-card-a"><rect x="0" y="0" width="24" height="24" fill="white" stroke="none" /><rect x="6" y="12" width="16" height="9" rx="1.5" transform="rotate(-5 14 16.5)" fill="black" stroke="black" stroke-width="2.5" /></mask></defs><rect x="2" y="3" width="16" height="9" rx="1.5" transform="rotate(10 10 7.5)" mask="url(#mask-card-a)" /><rect x="6" y="12" width="16" height="9" rx="1.5" transform="rotate(-5 14 16.5)" /></svg></span> `;
+              } else if (word === '[ICON_2]') {
+                span.innerHTML = `<span class="sc-step-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> `;
+              } else if (word === '[ICON_3]') {
+                span.innerHTML = `<span class="sc-step-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg></span> `;
+              } else if (word === '[ICON_4]') {
+                span.innerHTML = `<span class="sc-step-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M 12 1 Q 12 7 18 7 Q 12 7 12 13 Q 12 7 6 7 Q 12 7 12 1 Z" fill="currentColor" stroke="none"/><path d="M 6 12 Q 6 17 11 17 Q 6 17 6 22 Q 6 17 1 17 Q 6 17 6 12 Z" fill="currentColor" stroke="none"/><path d="M 18 11 Q 18 16 23 16 Q 18 16 18 21 Q 18 16 13 16 Q 18 16 18 11 Z" fill="currentColor" stroke="none"/></svg></span> `;
               } else {
                 span.textContent = word + ' ';
               }
@@ -2501,20 +2647,29 @@
               inner.className = 'sc-detail-line-inner';
               inner.style.display = 'block';
               
+              let isIconLine = false;
               lineSpans.forEach(span => {
                 // Removing inline-block so natural spaces aren't collapsed
                 inner.appendChild(span);
-                wordsForStep.push(span);
+                if (span.querySelector('.sc-step-icon')) isIconLine = true;
+                else wordsForStep.push(span);
               });
               
               mask.appendChild(inner);
               p.appendChild(mask);
-              linesForStep.push(inner);
+              
+              if (isIconLine) {
+                iconsForStep.push(inner);
+                mask.style.overflow = 'visible';
+              } else {
+                linesForStep.push(inner);
+              }
             });
           });
           gsap.set(linesForStep, { y: '110%', opacity: 0 });
+          gsap.set(iconsForStep, { opacity: 0 });
         }
-        detailStepTexts.push({ wrapper, lines: linesForStep, words: wordsForStep });
+        detailStepTexts.push({ wrapper, lines: linesForStep, words: wordsForStep, icons: iconsForStep });
       });
 
       // Fade in de la caja contenedora GLOBAL al inicio del Paso 1
@@ -2547,17 +2702,31 @@
       // Animar el texto del recuadro global correspondiente a este paso
       const stepTextData = detailStepTexts[i];
       if (stepTextData && stepTextData.lines.length > 0) {
-        // Hacer el contenedor seleccionable solo cuando está activo
-        scrollTl.set(stepTextData.wrapper, { pointerEvents: 'auto' }, t + 0.035);
+        // Ajustar la aparición del texto en el Paso 3.
+        // El Paso 2 tiene ~24 palabras. Su fade out tarda 0.015s + (24 * 0.0005s de stagger) = 0.027s.
+        // Empezamos justo en 0.028s para no solaparnos ni dejar huecos.
+        let textDelay = (i === 2) ? 0.028 : 0.035;
 
-        // Slide up LÍNEAS INDIVIDUALES (empieza después del fade out del anterior: t + 0.035)
+        // Hacer el contenedor seleccionable solo cuando está activo
+        scrollTl.set(stepTextData.wrapper, { pointerEvents: 'auto' }, t + textDelay);
+
+        // Slide up LÍNEAS INDIVIDUALES (empieza después del fade out del anterior)
         scrollTl.to(stepTextData.lines, {
           y: '0%',
           opacity: 1,
           duration: 0.015,
           ease: 'power2.out',
           stagger: 0.002
-        }, t + 0.035);
+        }, t + textDelay);
+
+        // Fade in ICONO (sin slide)
+        if (stepTextData.icons && stepTextData.icons.length > 0) {
+          scrollTl.to(stepTextData.icons, {
+            opacity: 1,
+            duration: 0.015,
+            ease: 'power2.out'
+          }, t + textDelay);
+        }
 
         // Desvanecer PALABRA A PALABRA en cascada desde abajo a la derecha hacia arriba a la izquierda
         scrollTl.to(stepTextData.words, {
@@ -2566,6 +2735,15 @@
           ease: 'none',
           stagger: { each: 0.0005, from: 'end' } // Ultra-rápido para desaparecer completamente antes de 0.035s
         }, t + PAN + HOLD);
+
+        // Fade Out ICONO
+        if (stepTextData.icons && stepTextData.icons.length > 0) {
+          scrollTl.to(stepTextData.icons, {
+            opacity: 0,
+            duration: 0.015,
+            ease: 'none'
+          }, t + PAN + HOLD);
+        }
 
         // Desactivar la selección del contenedor al terminar su turno
         scrollTl.set(stepTextData.wrapper, { pointerEvents: 'none' }, t + PAN + HOLD);
@@ -2591,7 +2769,9 @@
     
     // Fade out de la caja GLOBAL al abandonar el Paso 4
     if (detailGlobal) {
-      scrollTl.to(detailGlobal, { opacity: 0, duration: PAN, ease: 'none' }, t);
+      // El texto del paso 4 tiene 38 palabras. Su fade out tarda 0.015s + (38 * 0.0005s) = 0.034s.
+      // Hacemos que la caja global complete su fade out en el mismo milisegundo exacto.
+      scrollTl.to(detailGlobal, { opacity: 0, duration: 0.034, ease: 'none' }, t);
     }
     scrollTl.to(scBoard, { x: 0, y: 0, rotation: 0, scale: 1,
       duration: PAN, ease: 'power2.inOut' }, t);
@@ -4787,8 +4967,124 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     cssRenderer.setSize(window.innerWidth, window.innerHeight);
   });
-</script>
 
+  // --- Tooltip Lógica (Refactorizada para escalabilidad) ---
+  function setupCardTooltip(cardSelector, tooltipId, tooltipHTML) {
+    let tooltipEl = document.getElementById(tooltipId);
+    if (!tooltipEl) {
+      tooltipEl = document.createElement('div');
+      tooltipEl.id = tooltipId;
+      tooltipEl.innerHTML = tooltipHTML;
+      document.body.appendChild(tooltipEl);
+    }
+
+    const cardEl = document.querySelector(cardSelector);
+    if (!tooltipEl || !cardEl) return;
+
+    cardEl.addEventListener('pointerenter', () => {
+      if (!cardEl.classList.contains('card-on-table')) return;
+      tooltipEl.classList.add('is-visible');
+    });
+    cardEl.addEventListener('pointerleave', () => {
+      tooltipEl.classList.remove('is-visible');
+    });
+    cardEl.addEventListener('pointermove', (e) => {
+      if (!cardEl.classList.contains('card-on-table')) {
+        tooltipEl.classList.remove('is-visible');
+        return;
+      }
+      tooltipEl.classList.add('is-visible');
+      const tooltipW = 350;
+      const tooltipH = tooltipEl.offsetHeight || 120;
+      const offset = 20;
+      
+      const rect = cardEl.getBoundingClientRect();
+      const dTop = e.clientY - rect.top;
+      const dBottom = rect.bottom - e.clientY;
+      const dLeft = e.clientX - rect.left;
+      const dRight = rect.right - e.clientX;
+      const minD = Math.min(dTop, dBottom, dLeft, dRight);
+      
+      let targetX, targetY;
+      let aTop = 'auto', aBottom = 'auto', aLeft = 'auto', aRight = 'auto';
+      let aBorder = '', aColor = '', aTrans = '';
+      
+      if (minD === dTop) {
+         targetX = e.clientX;
+         targetY = rect.top - tooltipH - offset;
+         aBottom = '-8px'; aLeft = '50%';
+         aBorder = '8px 8px 0 8px';
+         aColor = 'rgba(255,255,255,0.18) transparent transparent transparent';
+         aTrans = 'translateX(-50%)';
+      } else if (minD === dBottom) {
+         targetX = e.clientX;
+         targetY = rect.bottom + offset;
+         aTop = '-8px'; aLeft = '50%';
+         aBorder = '0 8px 8px 8px';
+         aColor = 'transparent transparent rgba(255,255,255,0.18) transparent';
+         aTrans = 'translateX(-50%)';
+      } else if (minD === dLeft) {
+         targetX = rect.left - tooltipW - offset;
+         targetY = e.clientY - tooltipH / 2;
+         aRight = '-8px'; aTop = '50%';
+         aBorder = '8px 0 8px 8px';
+         aColor = 'transparent transparent transparent rgba(255,255,255,0.18)';
+         aTrans = 'translateY(-50%)';
+      } else {
+         targetX = rect.right + offset;
+         targetY = e.clientY - tooltipH / 2;
+         aLeft = '-8px'; aTop = '50%';
+         aBorder = '8px 8px 8px 0';
+         aColor = 'transparent rgba(255,255,255,0.18) transparent transparent';
+         aTrans = 'translateY(-50%)';
+      }
+      
+      if (minD === dTop || minD === dBottom) {
+        if (targetX - tooltipW / 2 < 10) {
+          const overflow = 10 - (targetX - tooltipW / 2);
+          targetX += overflow;
+          aLeft = `${50 - (overflow / tooltipW * 100)}%`;
+        } else if (targetX + tooltipW / 2 > window.innerWidth - 10) {
+          const overflow = (targetX + tooltipW / 2) - (window.innerWidth - 10);
+          targetX -= overflow;
+          aLeft = `${50 + (overflow / tooltipW * 100)}%`;
+        }
+      }
+      
+      if (minD === dLeft || minD === dRight) {
+        if (targetY < 10) {
+          const overflow = 10 - targetY;
+          targetY += overflow;
+          aTop = `${50 - (overflow / tooltipH * 100)}%`;
+        } else if (targetY + tooltipH > window.innerHeight - 10) {
+          const overflow = (targetY + tooltipH) - (window.innerHeight - 10);
+          targetY -= overflow;
+          aTop = `${50 + (overflow / tooltipH * 100)}%`;
+        }
+      }
+      
+      tooltipEl.style.setProperty('--arrow-top', aTop);
+      tooltipEl.style.setProperty('--arrow-bottom', aBottom);
+      tooltipEl.style.setProperty('--arrow-left', aLeft);
+      tooltipEl.style.setProperty('--arrow-right', aRight);
+      tooltipEl.style.setProperty('--arrow-border', aBorder);
+      tooltipEl.style.setProperty('--arrow-color', aColor);
+      tooltipEl.style.setProperty('--arrow-transform', aTrans);
+      
+      if (minD === dTop || minD === dBottom) {
+        tooltipEl.style.transform = `translate(${targetX - tooltipW/2}px, ${targetY}px)`;
+      } else {
+        tooltipEl.style.transform = `translate(${targetX}px, ${targetY}px)`;
+      }
+    });
+  }
+
+  const htmlCard1 = '<div class="glow-container"></div><div style="font-weight: 600; color: #fff; margin-bottom: 6px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Notas</div><span class="hand-underline">La generamos para Sara y sus amigxs de baile</span> que quisieron tener una conversación con un tono profundo para conocerse más.<br><br>Y como gustó mucho, <span class="hand-underline">la hemos reusado incluso para convertir primeras citas en segundas</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width: 1em; height: 1em; display: inline-block; vertical-align: -0.15em; margin-left: 2px;"><path d="M 12 1 Q 12 7 18 7 Q 12 7 12 13 Q 12 7 6 7 Q 12 7 12 1 Z" fill="currentColor" stroke="none"/><path d="M 6 12 Q 6 17 11 17 Q 6 17 6 22 Q 6 17 1 17 Q 6 17 6 12 Z" fill="currentColor" stroke="none"/><path d="M 18 11 Q 18 16 23 16 Q 18 16 18 21 Q 18 16 13 16 Q 18 16 18 11 Z" fill="currentColor" stroke="none"/></svg><br><br>¿Con quién te imaginas usándola tú?';
+  const htmlCard2 = '<div class="glow-container"></div><div style="font-weight: 600; color: #fff; margin-bottom: 6px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Notas</div>Esta fue la carta de introducción que Sergi nos pidió para la cena de aniversario de <span class="hand-underline">5 años juntos con Laura</span>.<br><br>Nos pidió crear una atmósfera íntima con un objetivo: construir una relación aún más fuerte recordando sus mejores momentos y <span class="hand-underline">rompiendo tabúes en su comunicación</span>.<br><br>Fortalecer vínculos, incluso entre amigos, familia y equipos, está entre lo más demandado, y nos encanta <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1em; height: 1.1em; display: inline-block; vertical-align: -0.2em; margin-left: 2px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><br><br>¿Con quién te gustaría fortalecer tu vínculo?';
+
+  setupCardTooltip('.card-n1', 'card1-tooltip', htmlCard1);
+  setupCardTooltip('.card-n2', 'card2-tooltip', htmlCard2);
+</script>
 
 
 
