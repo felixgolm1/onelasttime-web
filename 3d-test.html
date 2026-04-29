@@ -2263,6 +2263,10 @@
     }, null, 0);
 
     // ─ Fase 1 (0→0.16): Zoom + oscurecimiento suave ──────────────────
+    scrollTl.to('#headline', { borderColor: 'rgba(255,255,255,0)', backdropFilter: 'blur(0px)', css: { webkitBackdropFilter: 'blur(0px)' }, duration: 0.08, ease: 'power2.inOut' }, 0);
+    scrollTl.to('#subheadline', { opacity: 0, backdropFilter: 'blur(0px)', css: { webkitBackdropFilter: 'blur(0px)' }, duration: 0.05, ease: 'power2.inOut' }, 0);
+    scrollTl.to('.hero-info', { opacity: 0, duration: 0.05, ease: 'power2.inOut' }, 0);
+
     scrollTl.to([mg, visGroup], {
       x: 0, y: 0, scaleX: 1.22, scaleY: 1.22,
       rotation: -2, rotationY: -30,
@@ -4955,8 +4959,8 @@
     renderer.render(scene, camera);
     cssRenderer.render(scene, camera);
 
-    // Render separado de la carta GLB en su canvas transparente
-    if (cardRenderer2 && cardScene2 && cardCam2 && globalGlbCard && globalGlbCard.visible) {
+    // Render separado de las cartas GLB en su canvas transparente
+    if (cardRenderer2 && cardScene2 && cardCam2 && typeof globalGlbCard !== 'undefined' && globalGlbCard && globalGlbCard.visible) {
       cardRenderer2.render(cardScene2, cardCam2);
     }
   })();
@@ -4968,7 +4972,7 @@
     cssRenderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  // --- Tooltip Lógica (Refactorizada para escalabilidad) ---
+  // --- Tooltip Lógica (Refactorizada) ---
   function setupCardTooltip(cardSelector, tooltipId, tooltipHTML) {
     let tooltipEl = document.getElementById(tooltipId);
     if (!tooltipEl) {
@@ -4981,65 +4985,42 @@
     const cardEl = document.querySelector(cardSelector);
     if (!tooltipEl || !cardEl) return;
 
-    cardEl.addEventListener('pointerenter', () => {
-      if (!cardEl.classList.contains('card-on-table')) return;
-      tooltipEl.classList.add('is-visible');
-    });
-    cardEl.addEventListener('pointerleave', () => {
-      tooltipEl.classList.remove('is-visible');
-    });
-    cardEl.addEventListener('pointermove', (e) => {
-      if (!cardEl.classList.contains('card-on-table')) {
-        tooltipEl.classList.remove('is-visible');
-        return;
-      }
-      tooltipEl.classList.add('is-visible');
-      const tooltipW = 350;
-      const tooltipH = tooltipEl.offsetHeight || 120;
-      const offset = 20;
+    let isHovering = false;
+
+    // Attach to the document to ensure we catch events reliably, regardless of DOM re-parenting
+    document.addEventListener('pointermove', (e) => {
+      // Find if we are hovering over the card or its children
+      const isOverCard = cardEl.contains(e.target) || e.target === cardEl;
       
-      const rect = cardEl.getBoundingClientRect();
-      const dTop = e.clientY - rect.top;
-      const dBottom = rect.bottom - e.clientY;
-      const dLeft = e.clientX - rect.left;
-      const dRight = rect.right - e.clientX;
-      const minD = Math.min(dTop, dBottom, dLeft, dRight);
-      
-      let targetX, targetY;
-      let aTop = 'auto', aBottom = 'auto', aLeft = 'auto', aRight = 'auto';
-      let aBorder = '', aColor = '', aTrans = '';
-      
-      if (minD === dTop) {
-         targetX = e.clientX;
-         targetY = rect.top - tooltipH - offset;
-         aBottom = '-8px'; aLeft = '50%';
-         aBorder = '8px 8px 0 8px';
-         aColor = 'rgba(255,255,255,0.18) transparent transparent transparent';
-         aTrans = 'translateX(-50%)';
-      } else if (minD === dBottom) {
-         targetX = e.clientX;
-         targetY = rect.bottom + offset;
-         aTop = '-8px'; aLeft = '50%';
-         aBorder = '0 8px 8px 8px';
-         aColor = 'transparent transparent rgba(255,255,255,0.18) transparent';
-         aTrans = 'translateX(-50%)';
-      } else if (minD === dLeft) {
-         targetX = rect.left - tooltipW - offset;
-         targetY = e.clientY - tooltipH / 2;
-         aRight = '-8px'; aTop = '50%';
-         aBorder = '8px 0 8px 8px';
-         aColor = 'transparent transparent transparent rgba(255,255,255,0.18)';
-         aTrans = 'translateY(-50%)';
-      } else {
-         targetX = rect.right + offset;
-         targetY = e.clientY - tooltipH / 2;
-         aLeft = '-8px'; aTop = '50%';
-         aBorder = '8px 8px 8px 0';
-         aColor = 'transparent rgba(255,255,255,0.18) transparent transparent';
-         aTrans = 'translateY(-50%)';
-      }
-      
-      if (minD === dTop || minD === dBottom) {
+      // Only show tooltip if the card is extracted ('card-on-table')
+      if (isOverCard && cardEl.classList.contains('card-on-table')) {
+        if (!isHovering) {
+          isHovering = true;
+          tooltipEl.classList.add('is-visible');
+        }
+        
+        const tooltipW = 350;
+        const tooltipH = tooltipEl.offsetHeight || 120;
+        const offset = 20;
+        
+        const rect = cardEl.getBoundingClientRect();
+        
+        let targetX = e.clientX;
+        let targetY = rect.top - tooltipH - offset;
+        let aBottom = '-8px', aTop = 'auto', aLeft = '50%', aBorder = '8px 8px 0 8px';
+        let aColor = 'rgba(255,255,255,0.18) transparent transparent transparent';
+        let aTrans = 'translateX(-50%)';
+        
+        // Evitar que el tooltip se salga por arriba
+        if (targetY < 10) {
+          targetY = rect.bottom + offset;
+          aTop = '-8px';
+          aBottom = 'auto';
+          aBorder = '0 8px 8px 8px';
+          aColor = 'transparent transparent rgba(255,255,255,0.18) transparent';
+        }
+        
+        // Evitar que el tooltip se salga por los lados
         if (targetX - tooltipW / 2 < 10) {
           const overflow = 10 - (targetX - tooltipW / 2);
           targetX += overflow;
@@ -5049,32 +5030,21 @@
           targetX -= overflow;
           aLeft = `${50 + (overflow / tooltipW * 100)}%`;
         }
-      }
-      
-      if (minD === dLeft || minD === dRight) {
-        if (targetY < 10) {
-          const overflow = 10 - targetY;
-          targetY += overflow;
-          aTop = `${50 - (overflow / tooltipH * 100)}%`;
-        } else if (targetY + tooltipH > window.innerHeight - 10) {
-          const overflow = (targetY + tooltipH) - (window.innerHeight - 10);
-          targetY -= overflow;
-          aTop = `${50 + (overflow / tooltipH * 100)}%`;
-        }
-      }
-      
-      tooltipEl.style.setProperty('--arrow-top', aTop);
-      tooltipEl.style.setProperty('--arrow-bottom', aBottom);
-      tooltipEl.style.setProperty('--arrow-left', aLeft);
-      tooltipEl.style.setProperty('--arrow-right', aRight);
-      tooltipEl.style.setProperty('--arrow-border', aBorder);
-      tooltipEl.style.setProperty('--arrow-color', aColor);
-      tooltipEl.style.setProperty('--arrow-transform', aTrans);
-      
-      if (minD === dTop || minD === dBottom) {
+        
+        tooltipEl.style.setProperty('--arrow-top', aTop);
+        tooltipEl.style.setProperty('--arrow-bottom', aBottom);
+        tooltipEl.style.setProperty('--arrow-left', aLeft);
+        tooltipEl.style.setProperty('--arrow-border', aBorder);
+        tooltipEl.style.setProperty('--arrow-color', aColor);
+        tooltipEl.style.setProperty('--arrow-transform', aTrans);
+        
         tooltipEl.style.transform = `translate(${targetX - tooltipW/2}px, ${targetY}px)`;
+        
       } else {
-        tooltipEl.style.transform = `translate(${targetX}px, ${targetY}px)`;
+        if (isHovering) {
+          isHovering = false;
+          tooltipEl.classList.remove('is-visible');
+        }
       }
     });
   }
