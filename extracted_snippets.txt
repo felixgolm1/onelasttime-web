@@ -1,0 +1,32 @@
+=== SNIPPET 0 ===
+"    .or-story {\n      font-family: 'Inter', sans-serif;\n      font-size: clamp(0.9rem, 1.2vw, 1.2rem);\n      font-weight: 400;\n      line-height: 1.6;\n      color: #ffffff;\n    }"
+
+=== SNIPPET 1 ===
+"  <div id=\"oryzo-review\">\n    <div class=\"or-header\">\n      <div class=\"or-h-item\">LA HISTORIA DE ESTA CARTA</div>\n      <div class=\"or-h-item or-h-center\">"
+
+=== SNIPPET 2 ===
+"          // Efecto guiado de lectura de la historia (izquierda)\n          const storyChars = revOryzo.querySelectorAll('.or-story-char');\n          if (storyChars.length > 0) {\n            // Al estar físicamente más arriba (a la altura de las estre
+<truncated 413 bytes>
+
+=== SNIPPET 3 ===
+"            // Al estar físicamente más arriba empieza pronto, pero le damos un mínimo respiro (0.08)\n            // Le damos hasta el 0.35 para que el barrido tenga tiempo de leerlo todo\n            let storyP = mapRange(scrollP, 0.08, 0.35, 0, 1);"
+
+=== SNIPPET 4 ===
+"      // Lógica de la nueva reseña estilo Oryzo (Elsa)\n      const revOryzo = document.getElementById('oryzo-review');\n      if (revOryzo) {\n        if (prog > 3.2 && prog < 4.5) {\n          let scrollP = mapRange(prog, 3.2, 4.5, 0, 1);"
+
+=== SNIPPET 5 ===
+"            storyChars.forEach((c, i) => {\n              c.style.opacity = i < litStory ? '1' : '0.3';\n            });\n          }\n\n          // Efecto de vídeo ligado al scroll\n          const elsaVideo = document.getElementById('elsa-scroll-video
+<truncated 397 bytes>
+
+=== SNIPPET 6 ===
+"    #elsa-scroll-video {\n      width: clamp(100px, 15vw, 200px); /* 300% más pequeño */\n      height: auto;\n      border-radius: 8px;\n      margin-top: 3vh;\n      filter: grayscale(10%) contrast(1.05);\n      opacity: 0; /* JS se encargará del fad
+<truncated 79 bytes>
+
+=== SNIPPET 7 ===
+"          // Efecto de vídeo ligado al scroll\n          const elsaVideo = document.getElementById('elsa-scroll-video');\n          if (elsaVideo && elsaVideo.readyState >= 1 && !isNaN(elsaVideo.duration) && elsaVideo.duration > 0) {\n            // Fund
+<truncated 656 bytes>
+
+=== SNIPPET 8 ===
+"    });\n    \n    // Kickstart del video de scroll (trick para forzar al navegador a cargar los frames para el scrub)\n    document.body.addEventListener('pointerdown', function initVideo() {\n       const v = document.getElementById('elsa-scroll-video')
+<truncated 218 bytes>
+
