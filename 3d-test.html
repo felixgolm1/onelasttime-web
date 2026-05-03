@@ -29,6 +29,13 @@
       .drag-hint { left: calc(50% + 145px); top: calc(50% - 250px); }
     }
     body, html { width:100%; height:100%; background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); overflow:hidden; }
+    /* CSS Scrollbar removido, se usa DOM custom abajo */
+    #custom-scroll-track {
+      position: fixed; top: 0; right: 0; width: 16px; height: 100vh; z-index: 10050; pointer-events: none;
+    }
+    #custom-scroll-thumb {
+      position: absolute; top: 0; right: 0; width: 100%; height: 29vh; background: #f5eedf; pointer-events: auto;
+    }
     canvas { display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; opacity:0; transition: opacity 1.4s cubic-bezier(0.4,0,0.2,1); pointer-events: none !important; }
 
     /* Sombra de persona sobre la mesa */
@@ -204,7 +211,7 @@
     #magazine-scene {
       position: fixed;
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) scale(0.85); /* Ajustado para maximizar el espacio libre */
       width: 480px;
       height: 640px;
       z-index: 10003;
@@ -227,44 +234,121 @@
       position: absolute;
       top: 7px; left: 7px;
       width: calc(100% - 14px); height: calc(100% - 14px);
-      background: #181512;
+      background: radial-gradient(circle at 50% 40%, #e6d3ba 0%, #7b583f 40%, #291810 100%);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       align-items: center;
-      padding: 40px 20px;
+      padding: 15px;
       box-sizing: border-box;
       overflow: hidden;
+      color: white;
     }
-    .magazine-title {
-      font-family: 'Times New Roman', serif;
-      font-size: 6rem;
-      font-weight: 400;
-      color: #ede8e4;
-      margin: 0;
-      letter-spacing: -2px;
-      line-height: 0.9;
-      z-index: 1;
-    }
-    .magazine-subtitle {
+    .mag-top-bar {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
       font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      color: rgba(237, 232, 228, 0.7);
-      text-align: center;
-      max-width: 80%;
+      font-size: 0.45rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      z-index: 1;
-      margin-top: 20px;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+      z-index: 2;
     }
-    .magazine-brain {
-      width: 90%;
-      max-width: 350px;
-      object-fit: contain;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
-      z-index: 1;
-      margin-top: -40px;
+    .mag-top-left { text-align: left; line-height: 1.2; }
+    .mag-top-right { text-align: right; text-transform: none; }
+    .mag-main-title {
+      font-family: 'Times New Roman', serif;
+      font-size: 4.8rem;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      margin: 5px 0 0 0;
+      width: 100%;
+      text-align: center;
+      line-height: 0.85;
+      z-index: 2;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+      transform: scaleY(1.15);
     }
+    .mag-main-title span { color: #a5a5a5; font-size: 3.5rem; letter-spacing: -0.02em; }
+    .mag-brain-img {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110%;
+      height: 60%;
+      object-fit: cover;
+      z-index: 1;
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%);
+      mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%);
+    }
+    .mag-badge {
+      position: absolute;
+      top: 18%;
+      right: 3%;
+      background: #e5007e;
+      color: white;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.45rem;
+      line-height: 1.1;
+      z-index: 3;
+      transform: rotate(10deg);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .mag-badge strong { font-size: 0.55rem; margin-bottom: 2px; text-transform: uppercase; }
+    .mag-article-section {
+      width: 100%;
+      z-index: 2;
+      margin-top: auto;
+      padding-bottom: 10px;
+    }
+    .mag-serie {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 5px;
+      opacity: 0.9;
+    }
+    .mag-article-title {
+      font-family: 'Times New Roman', serif;
+      font-size: 3.8rem;
+      font-weight: 900;
+      line-height: 0.9;
+      margin: 0;
+      letter-spacing: -0.03em;
+      text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+      color: #fff8e1;
+    }
+    .mag-article-subtitle {
+      font-family: 'Times New Roman', serif;
+      font-size: 0.9rem;
+      color: #dfd4c4;
+      line-height: 1.2;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+      text-align: left;
+    }
+    .mag-footer-columns {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.4rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      padding-top: 8px;
+      z-index: 2;
+    }
+    .mag-col { width: 30%; line-height: 1.3; color: #ccc; }
+    .mag-col strong { color: #f5cf87; font-size: 0.5rem; display: block; margin-bottom: 2px; text-transform: uppercase; }
     @media (max-width: 768px) {
       #magazine-scene { width: 90vw; height: 130vw; }
       .magazine-title { font-size: 4.5rem; }
@@ -1415,24 +1499,75 @@
       <line id="mag-line-l" x1="0%" y1="50%" x2="0%" y2="50%" />
       <line id="mag-line-r" x1="100%" y1="50%" x2="100%" y2="50%" />
     </svg>
-    <div class="magazine-content">
-      <!-- Title -->
-      <h1 class="magazine-title" style="margin-top: 1rem;">SENSIBLES</h1>
-      <!-- Central Brain Placeholder -->
-      <div style="font-size: 6rem; text-align: center; filter: drop-shadow(0 0 20px rgba(204,255,0,0.4)); transform: scale(1.2);">
-        🧠
+    <div class="carousel-track" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
+      <!-- Slide 0 -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/amigacartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
-      <!-- Bottom card text / subtitle -->
-      <div style="text-align: center; max-width: 85%;">
-        <p style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #ede8e4; opacity: 0.8; letter-spacing: 0.05em; line-height: 1.4; margin: 0;">
-          THE NEUROSCIENCE OF CONNECTION
-        </p>
-        <p style="font-family: 'Inter', sans-serif; font-size: 0.65rem; color: #ccff00; opacity: 0.9; letter-spacing: 0.1em; margin-top: 0.5rem; text-transform: uppercase;">
-          Interactive Brain Map
-        </p>
+      <!-- Slide 1 -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/annacartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+      </div>
+      <!-- Slide 2 -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/anna-felix-jugando.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+      </div>
+      <!-- Slide 3 -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/amiccartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+      </div>
+      <!-- Slide 4 (Magazine) -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <div class="magazine-content">
+          <!-- Background Brain Image -->
+      <img src="assets/img/magazine_brain.png" class="mag-brain-img" alt="Cerebro">
+      
+      <!-- Top Bar -->
+      <div class="mag-top-bar">
+        <div class="mag-top-left">INVESTIGACIÓN<br>Y CIENCIA</div>
+        <div class="mag-top-right">Revista de psicología y neurociencias<br>Enero / Febrero 2018 | N.º 75 | 6,90 €</div>
+      </div>
+      
+      <!-- Main Title -->
+      <h1 class="mag-main-title">Mente<span>&amp;</span>Cerebro</h1>
+      
+      <!-- Pink Badge -->
+      <div class="mag-badge">
+        <strong>YIHADISMO</strong>
+        Claves<br>psicológicas del<br>reclutamiento
+      </div>
+
+      <!-- Bottom Article Section -->
+      <div class="mag-article-section">
+        <div class="mag-serie">NUEVA SERIE</div>
+        <div style="display: flex; flex-direction: column;">
+          <h2 class="mag-article-title" style="margin-bottom: -5px;">Estimulación</h2>
+          <div style="display: flex; align-items: flex-end; gap: 10px;">
+            <h2 class="mag-article-title" style="margin-bottom: 0;">cerebral</h2>
+            <p class="mag-article-subtitle" style="margin-bottom: 5px;">Electricidad,<br>campos magnéticos<br>y ultrasonidos</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Columns -->
+      <div class="mag-footer-columns">
+        <div class="mag-col">
+          <strong>Memoria</strong>
+          La importancia<br>de la neurogénesis
+        </div>
+        <div class="mag-col">
+          <strong>Aprendizaje</strong>
+          Desarrollo del lenguaje<br>en los bebés
+        </div>
+        <div class="mag-col">
+          <strong>Emociones</strong>
+          Cómo regulamos<br>los sentimientos
+        </div>
       </div>
     </div>
-  </div>
+      </div> <!-- close carousel-item 4 -->
+    </div> <!-- close carousel-track -->
+  </div> <!-- close magazine-scene -->
 
 
   <div id="loader">
@@ -1743,6 +1878,11 @@
 
   <div id="css-container" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:5;"></div>
   <canvas id="c"></canvas>
+  
+  <!-- Indicador de scroll estilo Oryzo -->
+  <div id="custom-scroll-track">
+    <div id="custom-scroll-thumb"></div>
+  </div>
   <!-- Subheadline derecha -->
   <div id="subheadline">
     <p>¿Otra cena más con tu pareja, amigxs, familia, cita, compañerxs de trabajo...?<br>Nah, hagámosla inolvidable</p>
@@ -3326,8 +3466,8 @@
     }
 
     // ── Drivers ──────────────────────────────────────────────────
-    // Ampliado maxProg para permitir toda la transición de la revista
-    const maxProg = 12.0;
+    // Ampliado maxProg para permitir toda la transición del carrusel y la revista
+    const maxProg = 16.0;
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // ── SPAWN CARD LOGIC (De index.html) ──────────────────────────
@@ -4543,6 +4683,7 @@
       // --- TRANSICIÓN A LA REVISTA ---
       const magazineScene = document.getElementById('magazine-scene');
       const magazineContent = magazineScene ? magazineScene.querySelector('.magazine-content') : null;
+      const heroCta = document.getElementById('heroCta');
       const lineT = document.getElementById('mag-line-t');
       const lineB = document.getElementById('mag-line-b');
       const lineL = document.getElementById('mag-line-l');
@@ -4562,6 +4703,13 @@
         let boxRotY = mapRange(transP, 0, 1, 335, 515);
         if (volume) volume.style.transform = `rotateY(${boxRotY}deg) rotateX(0deg) rotateZ(0deg)`;
 
+        if (heroCta) {
+          // Desvanece el CTA suavemente desde el inicio del flip (0.0 a 0.2)
+          let ctaOp = mapRange(transP, 0.0, 0.20, 1, 0);
+          heroCta.style.opacity = ctaOp;
+          heroCta.style.pointerEvents = ctaOp > 0 ? 'auto' : 'none';
+        }
+
         // CROSS-BLUR: Empieza a los 0.65 (después de ver el mensaje) y llega al máximo en 0.80
         let boxBlur = mapRange(transP, 0.65, 0.80, 0, 40);
         mainDeck.style.filter = `blur(${boxBlur}px)`;
@@ -4573,20 +4721,24 @@
            // La escena global (que incluye el SVG) debe ser visible desde el principio (transP = 0)
            magazineScene.style.opacity = 1;
            
-           if (magazineContent) {
-             // El contenido interno (foto, titulo) es lo que hace el fundido cruzado
-             magazineContent.style.opacity = mapRange(transP, 0.75, 0.85, 0, 1);
+           const carouselTrack = document.querySelector('.carousel-track');
+           if (carouselTrack) {
+             // El track entero (con las 5 imagenes) hace el fundido cruzado
+             carouselTrack.style.opacity = mapRange(transP, 0.75, 0.85, 0, 1);
              
              // El blur del contenido baja gradualmente hasta revelar la imagen nítida al final
              let revBlur = mapRange(transP, 0.75, 1.0, 40, 0);
              let scaleVal = mapRange(transP, 0.75, 1.0, 0.9, 1);
-             magazineContent.style.filter = `blur(${revBlur}px)`;
-             magazineContent.style.transform = `scale(${scaleVal})`;
+             carouselTrack.style.filter = `blur(${revBlur}px)`;
+             carouselTrack.style.transform = `scale(${scaleVal})`;
            }
         }
 
         // Dibujo del marco exterior: empieza justo con el flip (0.0) y termina con la opacidad 100% de la revista (0.85)
         if (lineT && lineB && lineL && lineR) {
+           const magBorderSvg = document.getElementById('magazine-border-svg');
+           if (magBorderSvg) magBorderSvg.style.opacity = mapRange(transP, 0.0, 0.30, 0, 1);
+           
            let dashP = mapRange(transP, 0.0, 0.85, 0, 1);
            
            // Línea Superior: de Derecha a Izquierda
@@ -4610,10 +4762,50 @@
           magazineScene.style.display = 'none';
           magazineScene.style.opacity = 0;
         }
+        if (heroCta) {
+          heroCta.style.opacity = '';
+          heroCta.style.pointerEvents = '';
+        }
         // RESTAURAR ESTADO FINAL DE GSAP EXACTO PARA EVITAR BUGS AL SUBIR EL SCROLL
         if (volume) volume.style.transform = `rotateY(335deg) rotateX(0deg) rotateZ(0deg)`;
         mainDeck.style.opacity = 1;
         mainDeck.style.filter = 'none';
+      }
+
+      // --- COVERFLOW CAROUSEL LOGIC ---
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      if (carouselItems.length > 0) {
+        if (prog > 9.62) {
+          // currIndex va de 0 a 4 entre prog 10.62 y 14.62
+          let currIndex = Math.max(0, Math.min(4, prog - 10.62));
+          
+          carouselItems.forEach((item, i) => {
+            let d = i - currIndex;
+            let absD = Math.abs(d);
+            
+            // Escala: 1.0 en el centro, baja a 0.65 para los de los lados (como Oryzo)
+            let scale = 1.0 - Math.min(absD, 1.0) * 0.35;
+            
+            // Opacidad y brillo
+            let opacity = 1.0 - Math.min(absD, 1.0) * 0.4;
+            let brightness = 1.0 - Math.min(absD, 1.0) * 0.4;
+            
+            // Translación X: 
+            // Si d=0 -> 0
+            // Si d=1 -> aprox 380px a la derecha
+            let translateX = d * 380;
+            
+            // Z-index: la carta del centro debe estar arriba
+            let zIndex = Math.round(100 - absD * 10);
+            
+            item.style.transform = `translateX(${translateX}px) scale(${scale})`;
+            item.style.opacity = opacity;
+            item.style.filter = `brightness(${brightness})`;
+            item.style.zIndex = zIndex;
+            // Solo interactivo si está casi en el centro
+            item.style.pointerEvents = absD < 0.1 ? 'auto' : 'none';
+          });
+        }
       }
     }
 
@@ -4865,6 +5057,14 @@
         }
       }
       
+      // Actualizar posición de la barra de scroll custom estilo Oryzo
+      const scrollThumb = document.getElementById('custom-scroll-thumb');
+      if (scrollThumb && !window.isDraggingThumb) {
+        const scrollPercent = Math.max(0, Math.min(1, prog / maxProg));
+        // Asumimos un track de 100vh y thumb de 29vh, nos queda 71vh de recorrido libre
+        scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
+      }
+      
       // Llamar incondicionalmente a updateBoxState en cada fotograma para que
       // la inercia secundaria de cardExtractP pueda completarse aunque prog ya haya terminado
       updateBoxState();
@@ -4986,7 +5186,13 @@
               const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
               const vW   = vH * (window.innerWidth / window.innerHeight);
               if (inFlipBack) {
-                  globalGlbCard.position.set(0, 0, -DIST); // centro exacto = mainDeck
+                  let tP = 0;
+                  if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
+                  
+                  // Interpolamos la posición hacia la esquina inferior derecha
+                  let endX = vW * 0.28;
+                  let endY = -vH * 0.22;
+                  globalGlbCard.position.set(tP * endX, tP * endY, -DIST);
               } else if (scIntroEl) {
                   const scRect = scIntroEl.getBoundingClientRect();
                   if (scRect.width > 0 && scRect.height > 0) {
@@ -5009,20 +5215,40 @@
                   globalGlbCard.scale.setScalar(lc.scale * boardScale);
 
               } else {
-                  // ── FLIP-BACK + BOX PHASE: carta 3D sigue el giro de scBoard ──
-                  // rotation.y continúa desde PI (scatter) hasta PI-335°/rad.
-                  // El crossfade de mainDeck gestiona la opacidad: no hay que ocultar aquí.
                   globalGlbCard.visible = true;
                   const scBoardScale = gsap.getProperty(scBoard, 'scaleX') || 0.66;
                   const scIntroRot2D = scIntroEl ? (gsap.getProperty(scIntroEl, 'rotation') || 0) : -90;
 
+                  let tP = 0;
+                  if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
+
+                  // Modificador de escala para que desaparezca durante el carrusel y reaparezca
+                  let scaleMod = 1.0;
+                  if (prog > 9.62 && prog <= 10.62) {
+                      scaleMod = 1.0 - (prog - 9.62);
+                  } else if (prog > 10.62 && prog <= 13.62) {
+                      scaleMod = 0.001; // oculto
+                  } else if (prog > 13.62) {
+                      scaleMod = tP;
+                  }
+
+                  // Rotación: De giro de caja a plana contra la revista (ligeramente torcida Z=15deg)
+                  let startRotY = -Math.PI + scBoardRY * Math.PI / 180;
+                  let endRotY = -Math.PI;
+                  let startRotZ = lc.rotBaseZ + scIntroRot2D * Math.PI / 180;
+                  let endRotZ = 12 * Math.PI / 180;
+
                   globalGlbCard.rotation.set(
                       0,
-                      -Math.PI + scBoardRY * Math.PI / 180,        // dirección contraria → sincroniza con la caja
-                      lc.rotBaseZ + scIntroRot2D * Math.PI / 180,
+                      startRotY + tP * (endRotY - startRotY),
+                      startRotZ + tP * (endRotZ - startRotZ),
                       'XYZ'
                   );
-                  globalGlbCard.scale.setScalar(lc.scale * scBoardScale);
+
+                  // Escala: Se encoge a tamaño de imagen impresa
+                  let startScale = lc.scale * scBoardScale;
+                  let endScale = startScale * 0.45;
+                  globalGlbCard.scale.setScalar((startScale + tP * (endScale - startScale)) * scaleMod);
               }
 
           }   // ── fin else scatter ──
@@ -5039,6 +5265,43 @@
       const divisor  = targetProg < 0.08 ? 8000 : 1200;
       targetProg = Math.max(0, Math.min(maxProg, targetProg + cappedDY / divisor));
     }, { passive: false });
+    
+    // --- Lógica de arrastre del scrollbar (Drag) ---
+    window.isDraggingThumb = false;
+    const customScrollThumb = document.getElementById('custom-scroll-thumb');
+    const customScrollTrack = document.getElementById('custom-scroll-track');
+    
+    if (customScrollThumb && customScrollTrack) {
+      customScrollThumb.addEventListener('pointerdown', (e) => {
+        window.isDraggingThumb = true;
+        customScrollThumb.setPointerCapture(e.pointerId);
+        customScrollThumb.style.transition = 'none'; // quitar suavizado CSS
+      });
+
+      customScrollThumb.addEventListener('pointermove', (e) => {
+        if (!window.isDraggingThumb) return;
+        const trackRect = customScrollTrack.getBoundingClientRect();
+        const thumbRect = customScrollThumb.getBoundingClientRect();
+        
+        // Calcular la posición Y del ratón relativa a la pista, centrando el ratón en el pulgar
+        let newY = e.clientY - trackRect.top - (thumbRect.height / 2);
+        let maxMove = trackRect.height - thumbRect.height;
+        newY = Math.max(0, Math.min(newY, maxMove));
+        
+        // Actualizar visualmente al instante para que siga el ratón perfecto
+        customScrollThumb.style.transform = `translateY(${newY}px)`;
+        
+        // Actualizar targetProg para que el loop lo alcance suavemente
+        let scrollPercent = newY / maxMove;
+        targetProg = scrollPercent * maxProg;
+      });
+
+      customScrollThumb.addEventListener('pointerup', (e) => {
+        window.isDraggingThumb = false;
+        customScrollThumb.releasePointerCapture(e.pointerId);
+        customScrollThumb.style.transition = 'background-color 0.2s'; // restaurar
+      });
+    }
     
     let touchY = 0;
     window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; });
