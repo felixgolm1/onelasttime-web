@@ -1,0 +1,7 @@
+ de la carga.
+    const mgEl0    = document.getElementById('card-morph-group');
+    const mgRect0  = mgEl0 ? mgEl0.getBoundingClientRect() : null;
+    const basePxH  = (mgRect0 && mgRect0.height > 0) ? mgRect0.height : 234;
+
+    const dist      = 6.0;
+    cons

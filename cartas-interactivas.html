@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sensibles - Prueba de Cartas Interactivas (MVP Style)</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lime: #ccff00;
+    --black: #050505;
+    --white: #ffffff;
+    --blue: #0000ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: #fcfcfc; /* MVP background color */
+    color: #111827;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    user-select: none;
+  }
+
+  .title-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.1; /* Dark on white bg */
+  }
+  .title-bg h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    color: #000;
+    letter-spacing: 0.05em;
+  }
+  .title-bg p {
+    font-size: 1.5rem;
+    color: #000;
+  }
+
+  .canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+  }
+
+  /* MVP STYLED CARDS */
+  .card-wrap {
+    position: absolute;
+    width: 280px; height: 160px; /* Horizontal aspect ratio 3.5/1.98 approx */
+    touch-action: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  @media(min-width: 768px) { .card-wrap { width: 350px; height: 198px; } }
+  
+  .card-wrap:hover { z-index: 200 !important; }
+  .card-wrap:active { cursor: grabbing; transition: none; }
+
+  .card-face {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+    border-radius: 16px; border: none;
+    padding: 1.5rem 2rem;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.08), 0 12px 24px rgba(0,0,0,0.1), inset 0 0 0 1.5px rgba(255,255,255,1);
+    pointer-events: auto; position: relative; overflow: hidden;
+  }
+
+
+
+  .card-question { font-size: clamp(0.8rem, 1.8vw, 1.0rem); font-weight: 500; line-height: 1.4; color: #1f2937; margin-top: 0; margin-bottom: 2rem; }
+
+  .card-footer {
+    position: absolute; bottom: 1rem; left: 1.5rem; right: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: #9ca3af; font-weight: 500;
+  }
+  .card-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: #e5e7eb; letter-spacing: 0.05em; }
+
+</style>
+</head>
+<body>
+
+<div class="title-bg">
+  <h1>ESPACIO SENSIBLES</h1>
+  <p>Haz clic y arrastra las cartas libremente</p>
+</div>
+
+<div class="canvas" id="canvas">
+  
+  <div class="card-wrap card-n1" data-rot="-3.6" style="top: 20%; left: 15%; transform: rotate(-3.6deg);">
+    <div class="card-face">
+      <div class="card-question">¿Qué es lo que más te apasiona en este momento de tu vida?</div>
+      <div class="card-footer"><span>01/50</span><span class="card-logo">SENSIBLES</span></div>
+    </div>
+  </div>
+
+  <div class="card-wrap card-n2" data-rot="8.5" style="top: 15%; left: 50%; transform: rotate(8.5deg) translateX(-50%);">
+    <div class="card-face">
+      <div class="card-question">¿Cuál ha sido tu mayor aprendizaje del último año?</div>
+      <div class="card-footer"><span>15/50</span><span class="card-logo">SENSIBLES</span></div>
+    </div>
+  </div>
+
+  <div class="card-wrap card-n3" data-rot="5.8" style="top: 40%; left: 60%; transform: rotate(5.8deg);">
+    <div class="card-face">
+      <div class="card-question">¿Qué miedo te está impidiendo ser la versión de ti mismx que deseas?</div>
+      <div class="card-footer"><span>34/50</span><span class="card-logo">SENSIBLES</span></div>
+    </div>
+  </div>
+
+  <div class="card-wrap card-n4" data-rot="-10.8" style="top: 60%; left: 30%; transform: rotate(-10.8deg);">
+    <div class="card-face">
+      <div class="card-question">Reto: Mantén contacto visual en silencio durante 30 seg.</div>
+      <div class="card-footer"><span>Extra</span><span class="card-logo">SENSIBLES</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let highestZIndex = 100;
+  const cards = document.querySelectorAll('.card-wrap');
+
+  cards.forEach(card => {
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+    const baseRot = card.getAttribute('data-rot') || 0;
+
+    card.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      highestZIndex++;
+      card.style.zIndex = highestZIndex;
+      
+      // MVP hover shadows
+      card.style.boxShadow = "0 8px 16px rgba(0,0,0,0.12), 0 24px 48px rgba(0,0,0,0.16)";
+      card.style.transform = `rotate(${baseRot}deg) scale(1.05)`;
+
+      startX = e.clientX;
+      startY = e.clientY;
+      initialLeft = card.offsetLeft;
+      initialTop = card.offsetTop;
+
+      card.dataset.cwW = window.innerWidth;
+      card.dataset.cwH = window.innerHeight;
+      card.dataset.cW = card.offsetWidth;
+      card.dataset.cH = card.offsetHeight;
+      
+      card.setPointerCapture(e.pointerId);
+    });
+
+    card.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      
+      const currentX = e.clientX;
+      const currentY = e.clientY;
+      
+      const dx = currentX - startX;
+      const dy = currentY - startY;
+
+      let newLeft = initialLeft + dx;
+      let newTop = initialTop + dy;
+
+      const cW = Number(card.dataset.cW) || 280;
+      const cH = Number(card.dataset.cH) || 160;
+      const cwW = Number(card.dataset.cwW) || window.innerWidth;
+      const cwH = Number(card.dataset.cwH) || window.innerHeight;
+      
+      const minLeft = -(cW / 2);
+      const maxLeft = cwW - (cW / 2);
+      const minTop = -(cH / 2);
+      const maxTop = cwH - (cH / 2);
+
+      if (newLeft < minLeft) newLeft = minLeft;
+      if (newLeft > maxLeft) newLeft = maxLeft;
+      if (newTop < minTop) newTop = minTop;
+      if (newTop > maxTop) newTop = maxTop;
+
+      card.style.left = `${newLeft}px`;
+      card.style.top = `${newTop}px`;
+      card.style.transform = `rotate(${baseRot}deg) scale(1.05)`;
+    });
+
+    card.addEventListener('pointerup', (e) => {
+      isDragging = false;
+      card.releasePointerCapture(e.pointerId);
+      card.style.boxShadow = "";
+      card.style.transform = `rotate(${baseRot}deg) scale(1)`;
+      card.style.left = card.style.left;
+      card.style.top = card.style.top;
+    });
+
+    card.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
+  });
+</script>
+</body>
+</html>

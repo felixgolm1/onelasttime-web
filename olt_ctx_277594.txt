@@ -1,0 +1,9 @@
+ect — nodo DOM en el espacio 3D
+    const div = document.createElement('div');
+    div.className = 'olt-card-div'; // used by tryReveal to find top card
+    // Mismo estilo y tamaño que la .olt-hover-card de index.html
+    div.style.width = '380px';
+    div.style.height = '234px';
+    div.style.background = '#151515';
+    div.style.borderRadius = '20px';
+    div.style.borderTop = '1px solid rgba(2

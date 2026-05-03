@@ -1,0 +1,13 @@
+px;
+    }
+    #intro-card.visible { opacity: 1; }
+
+    /* ─ card-morph-group: contiene SVG + card div superpuestos ─ */
+    #card-morph-group {
+      position: relative;
+      width: 380px;
+      height: 234px;
+      flex-shrink: 0;
+    }
+    
+    /* Grosor si

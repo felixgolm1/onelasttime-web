@@ -1,0 +1,9 @@
+= document.getElementById('intro-card-line');
+
+        const cardDivs = document.querySelectorAll('.olt-card-div');
+        const topDiv   = cardDivs[cardDivs.length - 1];
+        if (!topDiv || !realCard || !morphGroup) return;
+        const targetRect = topDiv.getBoundingClientRect();
+
+        // El crossfade CSS→3D se hace en Step 2 (carta ya negra), no aquí.
+        const cardCanvasEl = docume

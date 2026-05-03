@@ -1,0 +1,5294 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensibles — Experimenta la cena más transformadora de tu vida</title>
+  <meta name="description"
+    content="Experimenta la cena más transformadora que has tenido jamás en tu restaurante favorito. Garantizado por nuestra Garantía Anti-Superficialidad del 110%.">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500&display=swap"
+    rel="stylesheet">
+  <style>
+    /* --- LENIS & GSAP INIT --- */
+    html.lenis,
+    html.lenis body {
+      height: auto;
+      width: 100vw;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+
+    .gsap-reveal,
+    .hero-bg video,
+    .hero-logo-img,
+    .hero-body h1,
+    .hero-sub,
+    .hero-cta-area,
+    .hero-body img {
+      visibility: hidden;
+    }
+
+    /* DRAG HINT */
+    .drag-hint {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 0.5s ease;
+      will-change: transform;
+    }
+
+    .drag-hint.is-visible {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    @media (max-width: 768px) {
+      .drag-hint span {
+        font-size: 1.4rem !important;
+      }
+
+      .drag-hint svg {
+        width: 45px;
+        height: 60px;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --bg-pale: #fbfceb;
+      /* Pale yellow/green from CF */
+      --lime: #ccff00;
+      /* The vibrant lime from CF */
+      --btn-blue: #0000ff;
+      /* Extremely bright responsive blue */
+      --btn-blue-hover: #0000d1;
+      --gray: #4b5563;
+      --gray-light: #9ca3af;
+      --border: #e5e7eb;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-pale);
+      color: var(--black);
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.6;
+      font-size: 20px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    /* LAYOUT */
+    .wrap {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem
+    }
+
+    .wrap-wide {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem
+    }
+
+    /* TYPOGRAPHY */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      line-height: 0.95;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      letter-spacing: 0.02em
+    }
+
+    h2 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      letter-spacing: 0.01em
+    }
+
+    h3 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.01em
+    }
+
+    p {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #111;
+      margin-bottom: 1.5rem;
+    }
+
+    .hl {
+      background: var(--lime);
+      color: var(--black);
+      font-weight: 700;
+      padding: 0 4px;
+      display: inline;
+    }
+
+    /* ANIMATIONS & REVEALS */
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.03);
+      }
+    }
+
+
+
+    /* Scroll Reveal Classes */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-100 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-200 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-300 {
+      transition-delay: 0.3s;
+    }
+
+    /* NAV - Clean/hidden to match CF typical pages */
+    nav {
+      display: none;
+    }
+
+    .canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* MVP Styled Cards */
+    .card-wrap {
+      position: absolute;
+      width: 280px;
+      height: 160px;
+      /* Horizontal format */
+      touch-action: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: auto;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transform-style: preserve-3d;
+      perspective: 1200px;
+    }
+
+    @media(min-width: 768px) {
+      .card-wrap {
+        width: 350px;
+        height: 198px;
+      }
+    }
+
+
+
+    .card-wrap:active {
+      cursor: grabbing;
+      transition: none;
+    }
+
+    .card-face {
+      width: 100%;
+      height: 100%;
+      /* Premium Uncoated Paper Texture */
+      background:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+        linear-gradient(135deg, #fdfcfa 0%, #f4f2ea 100%);
+      border-radius: 16px;
+      border: none;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.08), 0 12px 24px rgba(0, 0, 0, 0.1), inset 0 0 0 1.5px rgba(255, 255, 255, 0.8);
+      pointer-events: auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-question {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(0.7rem, 1.3vw, 0.95rem);
+      font-weight: 500;
+      line-height: 1.4;
+      color: #1f2937;
+      margin-top: 0;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .card-footer {
+      position: absolute;
+      bottom: 1rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .footer-logo {
+      max-width: 80px;
+      opacity: 0.8;
+    }
+
+    .pos-1 {
+      top: 20%;
+      left: 5%;
+    }
+
+    .pos-2 {
+      top: 45%;
+      left: 15%;
+    }
+
+    .pos-3 {
+      top: 70%;
+      left: 5%;
+    }
+
+    @media(min-width: 768px) {
+      .pos-1 {
+        top: 25%;
+        left: 8%;
+      }
+
+      .pos-2 {
+        top: 20%;
+        left: 60%;
+      }
+
+      .pos-3 {
+        top: 50%;
+        left: 35%;
+      }
+    }
+
+    .card-on-table {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    /* TRUE 3D ENGINE */
+    .box-3d-wrapper {
+      width: 176px;
+      height: 255px;
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      margin-top: -127px;
+      margin-left: -88px;
+      /* Offset fixed locally */
+      perspective: 1200px;
+      z-index: 50;
+      touch-action: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .box-3d-wrapper:active {
+      cursor: grabbing;
+    }
+
+    @media(min-width: 768px) {
+      .box-3d-wrapper {
+        width: 207px;
+        height: 301px;
+        top: 60%;
+        margin-top: -150px;
+        margin-left: -103.5px;
+      }
+    }
+
+    .box-3d-volume {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      /* Levantamos la caja para que aparezca "de pie" con leve picado (-15deg) e isométrica (-25deg) */
+      transform: rotateX(-15deg) rotateY(-25deg) rotateZ(0deg) translateZ(0px);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .box-shadow-cast {
+      position: absolute;
+      top: 96%;
+      left: 5%;
+      right: -5%;
+      height: 35px;
+      background: rgba(0, 0, 0, 0.7);
+      filter: blur(20px);
+      border-radius: 50%;
+      transform: translateZ(-20px);
+    }
+
+    .face-back,
+    .face-left,
+    .face-right,
+    .face-bottom,
+    .face-front {
+      position: absolute;
+    }
+
+    .face-back {
+      inset: 0;
+      background: #3a4700;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+      border: 1px solid #3a4700;
+    }
+
+    .face-left {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 82px;
+      background: #a3cc00;
+      transform-origin: left;
+      transform: rotateY(-90deg);
+      transform-style: preserve-3d;
+      border: 1px solid #a3cc00;
+    }
+
+    .face-right {
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 82px;
+      background: #a3cc00;
+      transform-origin: right;
+      transform: rotateY(90deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transform-style: preserve-3d;
+      border: 1px solid #a3cc00;
+    }
+
+    .face-right span {
+      display: inline-block;
+      transform: rotate(-90deg);
+      width: max-content;
+      flex-shrink: 0;
+      text-align: center;
+      opacity: 0.85;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+
+    .face-bottom {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 82px;
+      background: #799900;
+      transform-origin: bottom;
+      transform: rotateX(-90deg);
+      border: 1px solid #799900;
+    }
+
+    .face-front {
+      inset: 0;
+      background: #ccff00;
+      transform: translateZ(82px);
+      /* Roof of the box */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid #ccff00;
+    }
+
+    /* Interior cards stack */
+    .interior-cards {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .interior-card {
+      position: absolute;
+      top: 1.5%;
+      bottom: 1.5%;
+      left: 3%;
+      right: 3%;
+      border-radius: 9px;
+      /* Very subtle edge definition */
+      box-shadow: 0 -0.5px 1px rgba(0, 0, 0, 0.05), 0.5px 0 1px rgba(0, 0, 0, 0.05);
+      transition: transform 2.4s cubic-bezier(0.15, 1, 0.3, 1);
+    }
+
+    /* Warm paper tones for realistic edge stack */
+    .interior-card:nth-child(even) {
+      background: #f4f3ef;
+      border-top: 1px solid #dcdad0;
+      border-right: 1px solid #dcdad0;
+    }
+
+    .interior-card:nth-child(odd) {
+      background: #fdfcfa;
+      border-top: 1px solid #e5e3d9;
+      border-right: 1px solid #e5e3d9;
+    }
+
+    .interior-card.gold-card {
+      background: #798c2f !important;
+      border-top: 1px solid #5d6c23 !important;
+      border-right: 1px solid #5d6c23 !important;
+    }
+
+    .interior-card.green-card {
+      background: #ccff00 !important;
+      border-top: 1px solid #b2d400 !important;
+      border-right: 1px solid #b2d400 !important;
+    }
+
+    /* Efecto arrastre escalonado (fricción) */
+    body.is-drawn .interior-card:nth-child(1) {
+      transform: translateZ(6px) translateY(-35px) !important;
+    }
+
+    body.is-drawn .interior-card:nth-child(2) {
+      transform: translateZ(8px) translateY(-28px) !important;
+    }
+
+    body.is-drawn .interior-card:nth-child(3) {
+      transform: translateZ(10px) translateY(-20px) !important;
+    }
+
+    body.is-drawn .interior-card:nth-child(4) {
+      transform: translateZ(12px) translateY(-12px) !important;
+    }
+
+    body.is-drawn .interior-card:nth-child(5) {
+      transform: translateZ(14px) translateY(-6px) !important;
+    }
+
+    body.is-drawn .interior-card:nth-child(6) {
+      transform: translateZ(16px) translateY(-2px) !important;
+    }
+
+    .box-flap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 82px;
+      transform-origin: top;
+      pointer-events: none !important;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0.3s;
+      /* Closing wait */
+      transform: translateZ(0px) rotateX(90deg);
+      /* Acts as the top face */
+    }
+
+    .flap-front,
+    .flap-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+    }
+
+    .flap-front {
+      background: #ccff00;
+      box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #222;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .flap-front span {
+      transform: rotate(180deg);
+    }
+
+    .flap-back {
+      background: #ccff00;
+      transform: rotateY(180deg);
+    }
+
+    body.is-open .box-flap {
+      transform: translateZ(0px) rotateX(180deg);
+      /* Se queda recta hacia arriba, paralela a la parte trasera */
+      transition-delay: 0s;
+      /* Opening wait */
+    }
+
+    /* Tuck lip */
+    .tuck-lip {
+      position: absolute;
+      bottom: -28px;
+      left: 0;
+      right: 0;
+      height: 28px;
+      transform-origin: top;
+      transform-style: preserve-3d;
+      transform: rotateX(-92deg);
+      /* Tucked in */
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s;
+      /* Closes first */
+    }
+
+    body.is-open .tuck-lip {
+      transform: rotateX(-5deg);
+      /* Flattens out to clear the front wall smoothly */
+      transition-delay: 0.15s;
+      /* Opens after main flap lifts > 45 deg */
+    }
+
+    .lip-front,
+    .lip-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .lip-front {
+      background: #ccff00;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .lip-back {
+      background: #ccff00;
+      transform: rotateY(180deg);
+      box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Dust flaps */
+    .dust-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 82px;
+      pointer-events: none !important;
+      transform-origin: top;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s;
+      /* Closes immediately */
+    }
+
+    .dust-flap.left {
+      transform: rotateX(-90deg);
+    }
+
+    .dust-flap.right {
+      transform: rotateX(-90deg);
+    }
+
+    body.is-open .dust-flap {
+      transform: rotateX(-180deg);
+      /* Se quedan rectas hacia arriba */
+      transition-delay: 0.5s;
+      /* Opens after main flap clears */
+    }
+
+    .dust-front,
+    .dust-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+    }
+
+    /* Symmetrical die-cut shapes that mimic realistic tuck box dust flaps */
+    .dust-flap.left .dust-front,
+    .dust-flap.right .dust-front {
+      clip-path: polygon(0 0, 100% 0, 100% 25%, 80% 100%, 20% 100%, 0 25%);
+    }
+
+    .dust-flap.left .dust-back,
+    .dust-flap.right .dust-back {
+      transform: rotateY(180deg);
+      clip-path: polygon(0 0, 100% 0, 100% 25%, 80% 100%, 20% 100%, 0 25%);
+    }
+
+    .dust-front {
+      background: #a3cc00;
+    }
+
+    .dust-back {
+      background: #a3cc00;
+    }
+
+    /* Cards inside 3D volume */
+    .card-n1.card-in-deck {
+      --scrub-y: 15px;
+      transform: translate(-50%, calc(-50% + var(--scrub-y))) translateZ(4px) rotate(-90deg) scale(0.85) !important;
+      transition: none !important;
+      /* Deshabilitamos el lag para scrub completo GSAP */
+    }
+
+    .card-in-deck {
+      top: 50% !important;
+      bottom: auto !important;
+      left: 50% !important;
+      /* Centered slightly lower (+15px) inside that prevents poking out, placed at the very back of the deck (Z=4px) */
+      transform: translate(-50%, calc(-50% + 15px)) translateZ(4px) rotate(-90deg) scale(0.85);
+      opacity: 1 !important;
+      /* Físicamente presente en la caja, sin "fade in" */
+      pointer-events: none !important;
+      /* Rápido pero con un freno muy suave al final */
+      transition: transform 2.4s cubic-bezier(0.15, 1, 0.3, 1) !important;
+    }
+
+    .card-peeking {
+      top: 50% !important;
+      /* Permanecemos en 50% para animar solo el transform */
+      bottom: auto !important;
+      left: 50% !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transition: transform 2.4s cubic-bezier(0.15, 1, 0.3, 1);
+    }
+
+    .hero-logo-img {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      max-width: 200px;
+      z-index: 10;
+      filter: brightness(0) invert(1);
+    }
+
+    .hero {
+      position: relative;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+      padding-bottom: 6rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5
+    }
+
+    .hero-body {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem 1.5rem 6rem;
+      min-height: 90vh;
+      /* Better spacing for hero alone */
+    }
+
+    .hero-body h1 {
+      color: #fff;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      max-width: 100%;
+      margin: 0 auto 1.5rem;
+      white-space: nowrap;
+    }
+
+    .hero-body h1 em {
+      font-style: normal;
+      color: var(--lime)
+    }
+
+    .hero-sub {
+      margin: 0 auto 2.5rem;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      max-width: 900px;
+    }
+
+    .hero-cta-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* OPTION 7: SCATTERED DESK STEPS */
+    .steps-scatter-section {
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      color: #fff;
+      /* overflow: hidden; Removed to allow cards 3 and 4 to gracefully bleed over the next white section */
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+    }
+
+    .scatter-title-wrap {
+      position: absolute;
+      top: 10vh;
+      left: 0;
+      width: 100vw;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      padding: 0 1.5rem;
+      opacity: 1;
+      /* GSAP lo desvanecerá al hacer scroll */
+    }
+
+    .scatter-title-wrap h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      line-height: 0.9;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      text-shadow: 0 5px 30px rgba(0, 0, 0, 0.8);
+      letter-spacing: 0.02em;
+    }
+
+    .scatter-title-wrap h2 em {
+      color: var(--lime);
+      font-style: normal;
+    }
+
+    .scatter-board {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      /* Origen macroscópico virtual */
+      z-index: 5;
+      will-change: transform;
+    }
+
+    .scatter-card {
+      position: absolute;
+      width: 90vw;
+      max-width: 480px;
+      /* 5% shorter */
+      aspect-ratio: 291 / 176;
+      /* -5% horizontal stretch from 306/176 */
+      background: #151515;
+      /* Maintain elevated styling */
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      /* Premium 3D border */
+      border-left: 1px solid rgba(255, 255, 255, 0.04);
+      border-right: 1px solid rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+      background-image: radial-gradient(circle at top right, rgba(204, 255, 0, 0.04), transparent 60%);
+      will-change: transform, filter;
+      /* GSAP ancla cada una al board centro */
+    }
+
+    .scatter-card.intro-card {
+      /* RGBA calculations bound to GSAP proxy to allow the parent background to become physically transparent */
+      background: rgba(21, 21, 21, var(--intro-alpha, 1));
+      border-top: 1px solid rgba(255, 255, 255, calc(var(--intro-alpha, 1) * 0.08));
+      border-left: 1px solid rgba(255, 255, 255, calc(var(--intro-alpha, 1) * 0.04));
+      border-right: 1px solid rgba(0, 0, 0, calc(var(--intro-alpha, 1) * 0.6));
+      border-bottom: 1px solid rgba(0, 0, 0, calc(var(--intro-alpha, 1) * 0.8));
+      box-shadow: 0 20px 40px rgba(0, 0, 0, calc(var(--intro-alpha, 1) * 0.5)), inset 0 1px 0 rgba(255, 255, 255, calc(var(--intro-alpha, 1) * 0.02));
+      background-image: radial-gradient(circle at top right, rgba(204, 255, 0, calc(var(--intro-alpha, 1) * 0.04)), transparent 60%);
+    }
+
+    .scatter-card.intro-card>h2 {
+      opacity: var(--intro-alpha, 1);
+    }
+
+    .scatter-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      /* -30% smaller */
+      color: var(--lime);
+      line-height: 0.8;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+    }
+
+    .scatter-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.85rem;
+      color: #fff;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .scatter-desc {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      /* +30% larger */
+      color: rgba(255, 255, 255, 0.95);
+      line-height: 1.5;
+      max-width: 380px;
+      /* Ensanchada proporcionalmente */
+      margin: 0 auto;
+    }
+
+    .scatter-desc b,
+    .scatter-desc strong {
+      color: var(--lime);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .scatter-note {
+      font-family: 'Permanent Marker', cursive;
+      color: #fff;
+      font-size: 0.75rem;
+      position: absolute;
+      right: 1.5rem;
+      bottom: 0.5rem;
+      transform: rotate(-8deg);
+      opacity: 0.8;
+      text-align: right;
+      line-height: 1.3;
+      pointer-events: none;
+      width: auto;
+      max-width: 160px;
+    }
+
+    @media(max-width: 768px) {
+      .scatter-card {
+        max-width: 85vw;
+        aspect-ratio: 291 / 176;
+        padding: 2rem 1.5rem;
+      }
+
+      .scatter-title {
+        font-size: 1.2rem;
+      }
+
+      .scatter-desc {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* BUTTONS */
+    @keyframes glassPulseCTA {
+      0% {
+        box-shadow: 0 8px 32px 0 rgba(204, 255, 0, 0.15), inset 0 2px 5px rgba(255, 255, 255, 0.1);
+      }
+
+      50% {
+        box-shadow: 0 12px 40px 0 rgba(204, 255, 0, 0.3), inset 0 2px 10px rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      100% {
+        box-shadow: 0 8px 32px 0 rgba(204, 255, 0, 0.15), inset 0 2px 5px rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 3.5rem;
+      border-radius: 100px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border: none;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::after {
+      content: ' >';
+      margin-left: 10px;
+      font-weight: 900;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover::after {
+      transform: translateX(5px);
+    }
+
+    /* PREMIUM GLASSMORPHISM LIME CTA */
+    .btn-blue {
+      background: rgba(204, 255, 0, 0.08);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(204, 255, 0, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(204, 255, 0, 0.15);
+      padding: 0;
+      height: 105px;
+      border-radius: 100px;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-decoration: none;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #ccff00;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.1rem, 3.8vw, 1.8rem);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .btn-blue:hover {
+      background: rgba(204, 255, 0, 0.2);
+      border-color: rgba(204, 255, 0, 0.8);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7), inset 0 0 50px rgba(204, 255, 0, 0.25);
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .mini-marquee-container {
+      display: flex;
+      white-space: nowrap;
+      animation: giantScroll 15s linear infinite;
+      padding: 0 1rem;
+      flex-shrink: 0;
+      width: max-content;
+    }
+
+    .mini-marquee-container span {
+      padding-right: 0;
+    }
+
+    .btn-full {
+      width: 100%;
+      max-width: 950px;
+      margin: 0 auto;
+      white-space: nowrap;
+      line-height: normal;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      color: var(--gray-light);
+      display: block;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    /* TESTIMONIALS (ASI SON LAS CONVERSACIONES) */
+    .testimonials-section {
+      background: var(--bg-pale);
+      padding: 5rem 1.5rem;
+      min-height: 100vh;
+      /* Prevent GSAP height collapse on load */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* HISTORICAL CARDS (ARCHIVE VOICE NOTES) */
+    .vn-section {
+      width: 100%;
+      background: #000;
+      padding: 25vh 0 9rem 0;
+      /* Padding inferior con espacio para respirar entre el joystick y el tablero */
+      position: relative;
+    }
+
+    .vn-header {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      text-align: center;
+      margin-bottom: 3rem;
+      /* Text Reveal Setup */
+      background: linear-gradient(to right, #ffffff 45%, rgba(255, 255, 255, 0.2) 55%);
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      will-change: background-position;
+    }
+
+    .vn-wrapper {
+      width: 100vw;
+      max-width: 100%;
+      overflow-x: auto;
+      /* scroll-behavior gestionado por JS — no CSS smooth para evitar conflictos con el bucle infinito */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding: 0 5vw 1rem;
+      /* Reducida la franja inferior interna de la caja de scroll de 4rem a 1rem */
+      mask-image: linear-gradient(to right, transparent, black 3.5vw, black calc(100% - 3.5vw), transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 3.5vw, black calc(100% - 3.5vw), transparent);
+      margin-bottom: 0rem;
+      /* Eliminado la franja blanca extra debajo de las cartas */
+    }
+
+    .vn-wrapper::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari */
+    }
+
+    .vn-container {
+      display: grid;
+      grid-auto-columns: 420px;
+      grid-template-rows: repeat(2, auto);
+      /* 2 Pisos */
+      grid-auto-flow: column;
+      /* Organiza por columnas para llenarlas primero verticalmente */
+      gap: 2.5rem;
+      width: max-content;
+    }
+
+    /* VN JOYSTICK SCRUBBER */
+    .vn-nav-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      pointer-events: none;
+      z-index: 200;
+      position: absolute;
+      bottom: -60px;
+      /* Oculto inicialmente por si se recarga la página por encima de la nav */
+      left: 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .vn-nav-container.is-fixed {
+      position: fixed;
+      bottom: 40px;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .vn-nav-container.is-hiding {
+      position: fixed;
+      bottom: 40px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+
+    .vn-nav-container.is-docked {
+      position: absolute;
+      bottom: 6rem;
+      /* Joystick cerca del borde inferior de las cartas, dentro del padding de respiro */
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .vn-joystick {
+      position: relative;
+      width: 180px;
+      height: 44px;
+      background: rgba(20, 20, 20, 0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      cursor: grab;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .vn-joystick:active {
+      cursor: grabbing;
+    }
+
+    /* Track arrows */
+    .vn-joystick::before,
+    .vn-joystick::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.5;
+    }
+
+    .vn-joystick::before {
+      left: 14px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 18l-6-6 6-6'/%3E%3C/svg%3E");
+    }
+
+    .vn-joystick::after {
+      right: 14px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E");
+    }
+
+    .vn-joystick-knob {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      /* Spring snap back */
+      will-change: transform;
+    }
+
+    .vn-joystick-knob.is-dragging {
+      transition: none;
+      /* Sin transición mientras arrastra */
+    }
+
+    .vn-slider-wrapper {
+      width: 50%;
+      min-width: 300px;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      /* Sticky physics natively achieved by absolute/fixed swap via JS */
+      position: absolute;
+      top: 50vh;
+      z-index: 100;
+      padding: 1rem;
+      background: rgba(242, 244, 243, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 50px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .vn-slider-wrapper.is-fixed {
+      position: fixed;
+      top: 85vh;
+      /* Stick to bottom area */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .vn-slider-wrapper.is-docked {
+      position: absolute;
+      top: auto;
+      bottom: -60px;
+      /* Dock right below the wrapper */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .vn-slider {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(0, 0, 0, 0.1);
+      height: 4px;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .vn-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      cursor: grabbing;
+    }
+
+    @media (max-width: 768px) {
+      .vn-container {
+        grid-auto-columns: 320px;
+        gap: 1.5rem;
+      }
+
+      .vn-wrapper {
+        padding: 0 5vw 2rem;
+        -webkit-mask-image: none;
+      }
+
+      .vn-slider-wrapper {
+        display: none;
+      }
+    }
+
+    .hc-card {
+      background: #1a1a1a;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0;
+      color: #fff;
+      box-shadow: 0 40px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+
+      /* Animación base oculta lista para GSAP */
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .hc-media-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hc-media-layer img,
+    .hc-media-layer video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* No transform aqui — el zoom se aplica al wrapper para compatibilidad con video */
+    }
+
+    .hc-media-layer {
+      transition: transform 1.2s ease-out;
+      will-change: transform;
+    }
+
+    .hc-card:hover .hc-media-layer {
+      transform: scale(1.08);
+      /* Cinematographic zoom – funciona tanto con img como con video */
+    }
+
+    .hc-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(10, 10, 10, 0.98) 0%, rgba(10, 10, 10, 0.85) 40%, rgba(10, 10, 10, 0.5) 100%);
+      pointer-events: none;
+    }
+
+    .hc-content {
+      position: relative;
+      z-index: 1;
+      padding: 2.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .hc-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      line-height: 1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hc-time {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .hc-player {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: rgba(0, 0, 0, 0.15);
+      /* Crystalline black */
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      /* Soft white border */
+      border-radius: 50px;
+      padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .hc-play {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      /* Evita que el exceso de barras lo aplaste a un óvalo */
+      border-radius: 50%;
+      background: var(--lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 1.2rem;
+      padding-left: 3px;
+      /* Optically center triangle */
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(204, 255, 0, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .hc-play:hover {
+      transform: scale(1.05);
+    }
+
+    .hc-wave {
+      flex-grow: 1;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow: hidden;
+      /* Corta el exceso de barras */
+      position: relative;
+    }
+
+    .hc-bar {
+      flex: 0 0 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .hc-bar.played {
+      background: var(--lime);
+    }
+
+    /* Input Range Overlay (Bolita) */
+    .hc-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .hc-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+
+    .hc-slider::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      border: none;
+    }
+
+    .hc-dur {
+      flex-shrink: 0;
+      /* Evita que el empuje de las barras lo oculte */
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .hc-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.95);
+      /* Base blanca casi pura para legibilidad extrema */
+      font-style: italic;
+    }
+
+    .hc-text strong {
+      color: var(--lime);
+      font-weight: 700;
+      font-style: normal;
+    }
+
+
+
+    /* LETTER */
+    .letter-section {
+      background: var(--bg-pale);
+    }
+
+    .letter-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .letter-salutation {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 2rem
+    }
+
+    .letter-salutation strong {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-top: 0.5rem;
+    }
+
+    .letter-body p {
+      margin-bottom: 1.5rem;
+    }
+
+    .letter-body strong {
+      color: var(--black);
+      font-weight: 800;
+    }
+
+    .letter-signature {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem
+    }
+
+    .sig-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lime), #a8d400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .sig-name {
+      font-size: 24px;
+      font-weight: 800
+    }
+
+    .sig-role {
+      font-size: 16px;
+      color: var(--gray)
+    }
+
+    /* SCIENCE & FOUNDERS */
+    .science-section {
+      background: #fff;
+      padding: 6rem 0;
+    }
+
+    .science-blockquote {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-style: italic;
+      font-weight: 800;
+      border-left: 5px solid var(--lime);
+      padding-left: 2rem;
+      margin: 3rem 0;
+      line-height: 1.4;
+      color: var(--black)
+    }
+
+    /* MISTAKES */
+    .mistakes-section {
+      background: var(--bg-pale);
+      padding: 6rem 0;
+    }
+
+    .mistake-list {
+      list-style: none;
+      margin-top: 3rem
+    }
+
+    .mistake-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 2rem 0;
+      border-bottom: 2px solid var(--border)
+    }
+
+    .mistake-item:last-child {
+      border-bottom: none
+    }
+
+    .mistake-icon {
+      font-size: 35px;
+      color: #ef4444;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 5px;
+      font-weight: 900;
+    }
+
+    .mistake-body strong {
+      display: block;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .mistake-body span {
+      font-size: 20px;
+      color: var(--gray);
+      line-height: 1.6
+    }
+
+    /* LIME TRICK CARDS SECTION */
+    .tricks-section {
+      padding: 7rem 0;
+      background: var(--lime)
+    }
+
+    .tricks-section h2 {
+      color: #000;
+    }
+
+    .tricks-section .section-label {
+      color: #000;
+      font-weight: bold;
+    }
+
+    .tricks-section p {
+      color: #000;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .tricks-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .trick-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      border: 4px solid #000;
+      box-shadow: 8px 8px 0 #000;
+      transform: rotate(-1deg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .trick-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(204, 255, 0, 0.5),
+          transparent 40%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .trick-card:hover::before {
+      opacity: 1;
+    }
+
+    .trick-card:nth-child(even) {
+      transform: rotate(1deg);
+    }
+
+    .trick-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      color: #fff;
+      background: #000;
+      padding: 0.3rem 1.2rem;
+      border-radius: 99px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .trick-text {
+      font-size: 22px;
+      line-height: 1.6;
+      color: #000;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* FILM GRAIN */
+    .film-grain {
+      display: none;
+      /* User test: removed to see if background looks cleaner/techier */
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+    }
+
+    /* INFINITE MARQUEE */
+    .marquee-section {
+      background: #000;
+      overflow: hidden;
+      padding: 2.5rem 0;
+      margin: 6rem 0;
+      transform: rotate(-2deg) scale(1.05);
+      z-index: 10;
+      position: relative;
+      cursor: grab;
+    }
+
+    .marquee-section:active {
+      cursor: grabbing;
+    }
+
+    .marquee-inner {
+      width: fit-content;
+      display: flex;
+    }
+
+    .marquee-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 3rem;
+    }
+
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.8rem;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--lime);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    .marquee-item.filled {
+      color: var(--lime);
+      -webkit-text-stroke: 0;
+    }
+
+    .marquee-item.marker {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 3.5rem;
+      color: var(--lime);
+      -webkit-text-stroke: 0;
+      text-transform: none;
+      transform: translateY(-0.4rem);
+      padding: 0 1rem;
+    }
+
+    .marquee-sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 0.4rem;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    /* OFFER BOX */
+    .offer-section {
+      background: #fff;
+      padding: 7rem 0;
+      border-top: 5px solid #000;
+      border-bottom: 5px solid #000;
+    }
+
+    .offer-section h2 {
+      color: #000;
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 860px;
+      margin: 4rem auto 0;
+    }
+
+    .offer-product {
+      background: var(--bg-pale);
+      border: 4px solid #000;
+      padding: 4rem 3rem;
+      border-radius: 24px;
+      position: relative;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      color: var(--lime);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      padding: 0.5rem 2rem;
+      white-space: nowrap;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .offer-product h3 {
+      text-align: left;
+      color: #000;
+      font-size: 3rem;
+      margin-bottom: 1rem
+    }
+
+    .offer-includes {
+      list-style: none;
+      margin-bottom: 3rem
+    }
+
+    .offer-includes li {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      font-size: 20px;
+      color: #000;
+      font-weight: 600;
+    }
+
+    .check {
+      color: var(--btn-blue);
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .price-area {
+      text-align: center;
+      margin-top: 3rem
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 0.5rem
+    }
+
+    .price-old {
+      font-size: 2.5rem;
+      color: var(--gray-light);
+      text-decoration: line-through;
+      font-weight: 800;
+    }
+
+    .price-new {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 6rem;
+      color: #000;
+      line-height: 1
+    }
+
+    .price-detail {
+      font-size: 18px;
+      color: #000;
+      font-weight: 600;
+      margin-bottom: 2.5rem
+    }
+
+    .scarcity {
+      color: #ef4444;
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-top: 1.5rem;
+    }
+
+    /* GUARANTEE */
+    .guarantee-section {
+      background: #000;
+      padding: 7rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .guarantee-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      background: rgba(214, 255, 0, 0.03);
+      border: 3px solid var(--lime);
+      padding: 5rem 3rem;
+      border-radius: 24px;
+      box-shadow: 0 0 60px rgba(214, 255, 0, 0.15);
+      text-align: center;
+    }
+
+    .guarantee-badge {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 6rem;
+      color: var(--lime);
+      margin-bottom: 1rem;
+      line-height: 0.9;
+      text-shadow: 0 0 30px rgba(214, 255, 0, 0.4);
+    }
+
+    .guarantee-section h2 {
+      color: var(--lime);
+      font-size: clamp(3rem, 8vw, 5rem);
+    }
+
+    .guarantee-section p {
+      color: #fff;
+      font-size: 24px;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 7rem 0;
+      background: var(--bg-pale)
+    }
+
+    .faq-list {
+      margin-top: 4rem;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .faq-item {
+      background: #fff;
+      border: 3px solid #000;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .faq-btn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      color: #000;
+      line-height: 1;
+    }
+
+    .faq-icon {
+      color: var(--btn-blue);
+      font-size: 36px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      transition: transform .3s;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease
+    }
+
+    .faq-item.open .faq-body {
+      max-height: 800px
+    }
+
+    .faq-body-inner {
+      padding: 0 2rem 2rem;
+      font-size: 18px;
+      color: var(--gray);
+      line-height: 1.7
+    }
+
+    .faq-body-inner strong {
+      color: #000;
+      font-weight: 800;
+    }
+
+    /* P.D SECTION */
+    .pd-section {
+      background: #fff;
+      padding: 6rem 0;
+      text-align: center
+    }
+
+    .pd-text {
+      font-size: 26px;
+      color: #000;
+      max-width: 860px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-family: 'Bebas Neue', sans-serif;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #000;
+      padding: 4rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-logo {
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      margin-bottom: 1rem
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem
+    }
+
+    .footer-links a {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.3)
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:768px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .step-banner {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .step-col {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1)
+      }
+
+      .offer-product,
+      .guarantee-inner,
+      .trick-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .btn {
+        font-size: 18px;
+        padding: 1.2rem 2rem;
+      }
+
+      .letter-inner {
+        padding: 0 1rem;
+      }
+
+      p {
+        font-size: 18px;
+      }
+    }
+
+    @media(max-width:480px) {
+      .step-banner {
+        grid-template-columns: 1fr
+      }
+
+      .step-col {
+        border-right: none;
+      }
+    }
+
+    /* GIANT GLASSMORPHISM MARQUEE CTA */
+    .giant-glass-cta {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, calc(-50% + 30px));
+      opacity: 0;
+      pointer-events: none;
+      width: 90vw;
+      max-width: 1200px;
+      height: 140px;
+      border-radius: 200px;
+      background: rgba(204, 255, 0, 0.08);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(204, 255, 0, 0.3);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(204, 255, 0, 0.1);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      z-index: 1;
+      /* Debajo de toda la baraja y las cartas */
+      text-decoration: none;
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .giant-glass-cta.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%);
+    }
+
+    .giant-glass-cta:hover {
+      background: rgba(204, 255, 0, 0.2);
+      border-color: rgba(204, 255, 0, 0.8);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 0 80px rgba(204, 255, 0, 0.25);
+      transform: translate(-50%, calc(-50% - 5px)) scale(1.02);
+    }
+
+    .giant-glass-marquee {
+      display: flex;
+      white-space: nowrap;
+      animation: giantScroll 25s linear infinite;
+      flex-shrink: 0;
+      width: max-content;
+      color: #ccff00;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 5.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      text-transform: uppercase;
+      opacity: 0.95;
+    }
+
+    .giant-glass-marquee span {
+      padding-right: 0;
+    }
+
+    @keyframes giantScroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* MARQUEE DRAWN MARKERS */
+    .draw-wrapper {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .marker-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 115%;
+      height: 150%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .marker-underline {
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 25px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .marker-exclamation {
+      position: absolute;
+      top: -30px;
+      right: -25px;
+      width: 40px;
+      height: 60px;
+      pointer-events: none;
+      z-index: 2;
+      transform: rotate(15deg);
+    }
+
+    .marker-circle path,
+    .marker-underline path,
+    .marker-exclamation path {
+      stroke-dasharray: 130;
+      stroke-dashoffset: 130;
+      opacity: 0;
+    }
+
+    .draw-now .marker-circle path {
+      animation: sketchDrawOnce 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    .draw-now .marker-underline path {
+      animation: sketchDrawOnce 0.85s ease-in-out forwards;
+    }
+
+    .draw-now .marker-slow path {
+      animation-duration: 1.4s;
+    }
+
+    .marker-text-anim {
+      clip-path: inset(-20% -20% 120% -20%);
+    }
+
+    .draw-now.marker-text-anim,
+    .draw-now .marker-text-anim {
+      animation: wipeDownText 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes wipeDownText {
+      to {
+        clip-path: inset(-20% -20% -20% -20%);
+      }
+    }
+
+    .draw-now .marker-exclamation path:nth-child(1) {
+      animation: sketchDrawOnce 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0s;
+    }
+
+    .draw-now .marker-exclamation path:nth-child(2) {
+      animation: sketchDrawOnce 0.1s ease-in forwards 0.4s;
+    }
+
+    .draw-now .marker-exclamation path:nth-child(3) {
+      animation: sketchDrawOnce 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.6s;
+    }
+
+    .draw-now .marker-exclamation path:nth-child(4) {
+      animation: sketchDrawOnce 0.1s ease-in forwards 1.0s;
+    }
+
+    @keyframes sketchDrawOnce {
+      0% {
+        stroke-dashoffset: 130;
+        opacity: 0.9;
+      }
+
+      100% {
+        stroke-dashoffset: 0;
+        opacity: 0.9;
+      }
+    }
+
+    @media(max-width: 768px) {
+      .giant-glass-cta {
+        height: 80px;
+        width: 95vw;
+        bottom: 5%;
+      }
+
+      .giant-glass-marquee {
+        font-size: 3.5rem;
+      }
+    }
+
+    /* QUIEN NECESITA ESTO */
+    .who-needs-section {
+      background: #fff;
+      padding: 6rem 0;
+    }
+
+    .who-needs-list {
+      list-style: none;
+      max-width: 800px;
+      margin: 2rem auto 0;
+    }
+
+    .who-needs-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 18px;
+    }
+
+    .who-needs-list li::before {
+      content: '✔';
+      color: var(--lime);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    /* Hover Champagne Backdrop */
+    #champagne-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      overflow: hidden;
+    }
+
+    .olt-hover-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 380px;
+      height: 234px;
+      margin-left: -190px;
+      margin-top: -117px;
+      background: #151515;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 1px solid rgba(255, 255, 255, 0.04);
+      border-right: 1px solid rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 95;
+      /* Behind CTA and H1 */
+      opacity: 0;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform, opacity;
+      transform-origin: center center;
+    }
+
+    .olt-card-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 24px 24px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .olt-card-logo {
+      color: #ccff00;
+      font-size: 35px;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .olt-card-co {
+      font-size: 10px;
+      border: 1px solid #ccff00;
+      border-radius: 50%;
+      padding: 3px 5px;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .olt-card-level {
+      color: #fff;
+      font-size: 19px;
+      margin-top: 22px;
+      font-weight: 600;
+    }
+
+    .olt-card-desc {
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 22px;
+      font-weight: 600;
+    }
+
+    /* CURSOR PORTAL FOR VOICE NOTES */
+    #hc-cursor-portal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 350px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-1000px, -1000px);
+      /* Oculto inicialmente por fuera */
+    }
+
+    .hc-portal-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      will-change: transform, opacity;
+    }
+
+    @media (max-width: 768px) {
+      #hc-cursor-portal {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="film-grain"></div>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <div class="nav-logo">One Last Time<sup>Co.</sup></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="assets/img/logo one last time.png" alt="One Last Time" class="hero-logo-img">
+    <div class="hero-bg">
+      <video src="assets/img/hero-section-video.mp4" autoplay loop muted playsinline class="hero-img" id="heroVideo"
+        style="opacity: 0.35; object-position: center 85%;"></video>
+    </div>
+    <div class="hero-body fade-up">
+      <h1 style="font-size:clamp(1.2rem, 5.5vw, 6.5rem);line-height:1;margin-bottom:2.75rem;">EXPERIMENTA <span
+          style="position:relative; display:inline-block;" class="hero-draw-1">LA CENA MÁS<svg class="marker-underline"
+            viewBox="0 0 100 20" preserveAspectRatio="none">
+            <path pathLength="100" filter="url(#marker-rough)" d="M 2,16 C 25,8 60,18 97,12" stroke="#ffffff"
+              stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9" />
+          </svg></span> <br>
+        <span style="position:relative; display:inline-block;" class="hero-draw-1b"><em
+            style="font-style:normal; color:#fff;">TRANSFORMADORA</em><svg class="marker-underline" viewBox="0 0 100 20"
+            preserveAspectRatio="none">
+            <path pathLength="100" filter="url(#marker-rough)" d="M 2,15 Q 30,5 50,13 T 98,10" stroke="#ffffff"
+              stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9" />
+          </svg></span> QUE HAS TENIDO <br>JAMÁS
+        <span style="position:relative; display:inline-block;" class="hero-draw-2">EN TU RESTAURANTE FAVORITO<svg
+            class="marker-underline marker-slow" viewBox="0 0 100 20" preserveAspectRatio="none">
+            <path pathLength="100" filter="url(#marker-rough)" d="M 2,15 Q 30,5 50,13 T 98,10" stroke="#ffffff"
+              stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9" />
+          </svg></span>
+      </h1>
+      <div
+        style="display:flex;align-items:center;justify-content:center;gap:0.75rem;margin:0 auto 2.75rem;max-width:1000px;">
+
+        <img src="assets/img/hoja laurel izquierda blanca.png" alt="Laurel"
+          style="width:30px;height:auto;filter:drop-shadow(0 4px 6px rgba(0,0,0,0.5));">
+        <p class="hero-sub"
+          style="font-weight:800;letter-spacing:0.05em;margin:0;font-size:clamp(0.7rem, 1.5vw, 0.9rem);">Garantizado por
+          nuestra Garantía <span style="position:relative; display:inline-block;">Anti-Superficialidad del 110%</span>
+        </p>
+        <img src="assets/img/hoja laurel derecha blanca.png" alt="Laurel"
+          style="width:30px;height:auto;filter:drop-shadow(0 4px 6px rgba(0,0,0,0.5));">
+      </div>
+      <div class="hero-cta-area">
+        <a href="wizard.html" class="btn btn-blue btn-full btn-floating" id="heroCta">
+          <div class="mini-marquee-container">
+            <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+              TRANSFORMADORA AHORA • </span>
+            <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+              TRANSFORMADORA AHORA • </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTION 7: SCATTERED DESK -->
+  <section class="steps-scatter-section" id="stepsScatter">
+    <!-- Título EL CAOS DEL ORDEN eliminado a petición del usuario -->
+
+    <!-- El Tablero Virtual Móvil -->
+    <div class="scatter-board" id="scatterBoard">
+      <div class="scatter-card" id="scat-1">
+        <div class="scatter-number">1</div>
+        <div class="scatter-desc">Dinos <b>dónde, cuando y con quien</b> quieres tener una cena transformadora</div>
+        <div class="scatter-note">PSSST, PUEDE SER CONTIGO MISMX A SOLAS ;)</div>
+      </div>
+      <div class="scatter-card" id="scat-2">
+        <div class="scatter-number">2</div>
+        <div class="scatter-desc">Dinos el <b>objetivo de la cena</b> y personalizaremos la experiencia para ayudaros a
+          conseguirlo</div>
+      </div>
+      <div class="scatter-card" id="scat-3">
+        <div class="scatter-number">3</div>
+        <div class="scatter-desc"><b>Nosotrxs hacemos la mágia</b> para que todo esté listo antes de que llegues a la
+          mesa</div>
+      </div>
+      <div class="scatter-card" id="scat-4">
+        <div class="scatter-number">4</div>
+        <div class="scatter-desc"><b>Disfruta</b> de una de las mejores cenas que has tenido jamás</div>
+      </div>
+      <div class="scatter-card intro-card" id="scat-intro">
+        <h2 id="stepsTitle"
+          style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 6.4vw, 4.8rem); font-weight: 400; letter-spacing: 0.02em; color: #fff; text-transform: uppercase; line-height: 0.95; margin: 0 0 1rem 0; text-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+          4 pasos</h2>
+
+        <div class="hero-cta-area" id="stepsCtaArea"
+          style="position: relative; z-index: 10; transform: scale(0.85); width: 115%; margin: 10px -7.5% 0 -7.5%; opacity: 0; pointer-events: none;">
+          <a href="wizard.html" class="btn btn-blue btn-full" style="padding: 0.85rem 2rem !important; height: auto;">
+            <div class="mini-marquee-container">
+              <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+                TRANSFORMADORA AHORA • </span>
+              <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+                TRANSFORMADORA AHORA • </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTION A: ESFERA ORIGINAL -->
+  <section class="vn-section" id="voiceNotes" style="min-height: 280vh; overflow-x: clip; position: relative; padding-top: 40vh; padding-bottom: 30vh; user-select: none; -webkit-user-select: none;">
+    <!-- Capa 1: Header 2D por encima -->
+    <div class="vn-header" id="vnHeaderTitle" style="position: relative; margin-bottom: 54vh; z-index: 100; pointer-events: none;">ELLXS YA LO HAN VIVIDO</div>
+
+    <!-- Capa 2: Mundo 3D aislado por debajo -->
+    <div id="vnSphereWrapper" style="position: relative; width: 100%; height: 100vh; perspective: 1800px; z-index: 1; pointer-events: none;">
+      <div class="vn-container" id="vnSphere" style="transform-style: preserve-3d; position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: auto;">
+        <div class="hc-card">
+          <div class="hc-media-layer"><img
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Testimonio">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">MARILÓ REYES</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  marilo.reyes
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">0:42</div><audio class="hc-audio" src="assets/audio/testimonial test.ogg"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"El otro día probé las cartas con mis amigos de la universidad y la verdad es que fue
+              brutal porque hacía tiempo que no nos veíamos. <strong>Así que fue muy especial.</strong>"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><img
+              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Guillem">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">GUILLEM GIRBAU</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  guillem.girbau
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">1:15</div><audio class="hc-audio" src="assets/audio/testimonio-2.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Es muy buena forma de <strong>darle la vuelta a un mundo de conversaciones
+                vacías</strong>, prisas y relaciones superficiales"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><video
+              src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" autoplay loop muted
+              playsinline></video>
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">LAIA PALA</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  laia.pala
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">0:28</div><audio class="hc-audio" src="assets/audio/testimonio-3.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Terminas conociendo a quienes creías conocer. <strong>Momentos absolutamente
+                inolvidables...</strong>"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><video src="assets/img/hero-section-video.mp4" autoplay loop muted
+              playsinline></video>
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">MICHAEL SANTS</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  michael.sants
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">2:10</div><audio class="hc-audio" src="assets/audio/testimonio-4.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Sencillo, pero brutal. <strong>Perfecto para abrir el corazón.</strong> Lloramos de la
+              risa y también nos abrazamos mucho."</div>
+          </div>
+        </div>
+
+        <!-- Bloque Duplicado 5-8 -->
+        <div class="hc-card">
+          <div class="hc-media-layer">
+            <img src="assets/img/candidates/anna-felix-jugando.jpg" alt="Fèlix Gol">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">FÈLIX GOL</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  felix.gol
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">0:42</div><audio class="hc-audio" src="assets/audio/testimonial test.ogg"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"El otro día probé las cartas con mis amigos de la universidad y la verdad es que fue
+              brutal porque hacía tiempo que no nos veíamos y no teníamos ni idea de qué ocurría ni en nuestras vidas.
+              <strong>Así que fue muy especial.</strong>"
+            </div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><img
+              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Testimonio">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">JAVI MARTÍN</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  javi.martin
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">1:15</div><audio class="hc-audio" src="assets/audio/testimonio-2.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Es muy buena forma de <strong>darle la vuelta a un mundo de conversaciones
+                vacías</strong>, prisas y relaciones superficiales"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><img
+              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Testimonio">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">CARMEN S.</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  carmen.s.
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">0:28</div><audio class="hc-audio" src="assets/audio/testimonio-3.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Terminas conociendo a quienes creías conocer. <strong>Momentos absolutamente
+                inolvidables...</strong>"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Testimonio">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">ANDRÉS L.</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  andrés.l.
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">2:10</div><audio class="hc-audio" src="assets/audio/testimonio-4.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Sencillo, pero brutal. <strong>Perfecto para abrir el corazón.</strong> Lloramos de la
+              risa y también nos abrazamos mucho."</div>
+          </div>
+        </div>
+
+        <!-- Bloque Duplicado 9-12 -->
+        <div class="hc-card">
+          <div class="hc-media-layer"><img
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Testimonio">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">LUCÍA G.</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  lucia.g.
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">0:42</div><audio class="hc-audio" src="assets/audio/testimonial test.ogg"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"El otro día probé las cartas con mis amigos de la universidad y la verdad es que fue
+              brutal porque hacía tiempo que no nos veíamos. <strong>Así que fue muy especial.</strong>"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><img
+              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Testimonio">
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">MARCOS D.</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  marcos.d.
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">1:15</div><audio class="hc-audio" src="assets/audio/testimonio-2.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Es muy buena forma de <strong>darle la vuelta a un mundo de conversaciones
+                vacías</strong>, prisas y relaciones superficiales"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><video src="assets/img/pocas-horas-de-vida.mp4" autoplay loop muted
+              playsinline></video>
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">SARA T.</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  sara.t.
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">0:28</div><audio class="hc-audio" src="assets/audio/testimonio-3.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Terminas conociendo a quienes creías conocer. <strong>Momentos absolutamente
+                inolvidables...</strong>"</div>
+          </div>
+        </div>
+
+        <div class="hc-card">
+          <div class="hc-media-layer"><video
+              src="https://videos.pexels.com/video-files/853844/853844-hd_1920_1080_25fps.mp4" autoplay loop muted
+              playsinline></video>
+            <div class="hc-overlay"></div>
+          </div>
+          <div class="hc-content">
+            <div class="hc-top">
+              <div class="hc-name-group" style="display:flex;flex-direction:column;gap:0.1rem;">
+                <div class="hc-name">PABLO R.</div>
+                <div class="hc-insta"
+                  style="display:flex;align-items:center;gap:6px;font-family:\'Bebas Neue\',sans-serif;font-size:1.15rem;color:rgba(255,255,255,0.85);letter-spacing:0.04em;line-height:1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:14px;height:14px;margin-bottom:2px;">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  pablo.r.
+                </div>
+              </div>
+            </div>
+            <div class="hc-player">
+              <div class="hc-play">▶</div>
+              <div class="hc-wave"></div>
+              <div class="hc-dur">2:10</div><audio class="hc-audio" src="assets/audio/testimonio-4.mp3"
+                preload="metadata"></audio>
+            </div>
+            <div class="hc-text">"Sencillo, pero brutal. <strong>Perfecto para abrir el corazón.</strong> Lloramos de la
+              risa y también nos abrazamos mucho."</div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- SALES LETTER -->
+
+  <!-- INTERACTIVE CARDS DEMO -->
+  <section class="interactive-demo-section" id="interactiveSection"
+    style="background:#050505; color:#fff; position:relative; overflow:hidden; min-height: 150vh; z-index: 10; border-top-left-radius: 50vw 100px; border-top-right-radius: 50vw 100px; padding-top: 5rem;">
+    <div
+      style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); text-align: center; z-index: 5; pointer-events: none; width: 100%;">
+      <h2
+        style="font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--lime); letter-spacing: 0.05em; margin-bottom: 0.5rem; text-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+        EL TABLERO ES TUYO</h2>
+      <p style="font-size: 1.2rem; color: rgba(255,255,255,0.6);" id="deckInstruction">Sigue bajando para abrir la
+        caja... ↓</p>
+    </div>
+
+    <!-- Puntero "Coge la carta" Marker -->
+    <div class="drag-hint" id="dragHint">
+      <span
+        style="font-family: 'Permanent Marker', cursive; font-size: 1.8rem; color: #ccff00; line-height: 1.1; text-align: center; max-width: 300px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Coge
+        la carta</span>
+      <svg width="60" height="80" viewBox="0 0 100 100" fill="none" stroke="#ccff00" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round"
+        style="margin-top: 30px; transform: rotate(15deg); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">
+        <path d="M80,10 Q50,60 20,80 M20,80 L40,75 M20,80 L25,55" />
+      </svg>
+    </div>
+
+    <div class="canvas" id="interactiveCanvas"></div>
+
+    <!-- Automated TRUE CSS 3D Box -->
+    <div class="box-3d-wrapper" id="mainDeck" style="cursor: pointer;">
+      <div class="box-3d-volume">
+        <div class="box-shadow-cast"></div>
+        <div class="face-back"></div>
+
+        <div class="interior-cards">
+          <!-- The backmost planes are white -->
+          <div class="interior-card" style="transform: translateZ(6px);"></div>
+          <div class="interior-card" style="transform: translateZ(8px);"></div>
+          <div class="interior-card" style="transform: translateZ(10px);"></div>
+          <!-- Dense white core with 2px spacing and slight organic Y-offsets -->
+          <div class="interior-card" style="transform: translateZ(12px);"></div>
+          <div class="interior-card" style="transform: translateZ(14px) translateY(-0.5px);"></div>
+          <div class="interior-card" style="transform: translateZ(16px);"></div>
+          <div class="interior-card" style="transform: translateZ(18px);"></div>
+          <div class="interior-card" style="transform: translateZ(20px);"></div>
+          <div class="interior-card" style="transform: translateZ(22px) translateY(0.5px);"></div>
+          <div class="interior-card" style="transform: translateZ(24px);"></div>
+          <div class="interior-card" style="transform: translateZ(26px);"></div>
+          <!-- Front of the deck mixed with gold and brand green -->
+          <div class="interior-card gold-card" style="transform: translateZ(28px);"></div>
+          <div class="interior-card" style="transform: translateZ(30px) translateY(-1px);"></div>
+          <div class="interior-card green-card" style="transform: translateZ(32px);"></div>
+          <div class="interior-card" style="transform: translateZ(34px);"></div>
+          <div class="interior-card gold-card" style="transform: translateZ(36px);"></div>
+          <div class="interior-card" style="transform: translateZ(38px) translateY(0.5px);"></div>
+          <div class="interior-card green-card" style="transform: translateZ(40px);"></div>
+          <div class="interior-card" style="transform: translateZ(42px);"></div>
+          <div class="interior-card gold-card" style="transform: translateZ(44px);"></div>
+          <div class="interior-card" style="transform: translateZ(46px);"></div>
+          <div class="interior-card green-card" style="transform: translateZ(48px) translateY(-0.5px);"></div>
+          <div class="interior-card" style="transform: translateZ(50px);"></div>
+          <div class="interior-card gold-card" style="transform: translateZ(52px);"></div>
+          <div class="interior-card" style="transform: translateZ(54px);"></div>
+          <div class="interior-card green-card" style="transform: translateZ(56px) translateY(0.5px);"></div>
+          <div class="interior-card" style="transform: translateZ(58px);"></div>
+          <div class="interior-card gold-card" style="transform: translateZ(60px);"></div>
+        </div>
+
+        <div class="face-left">
+          <div class="dust-flap left">
+            <div class="dust-front"></div>
+            <div class="dust-back"></div>
+          </div>
+        </div>
+        <div class="face-right">
+          <span>Si las conversaciones nos conectan,<br>hagámoslas inolvidables</span>
+          <div class="dust-flap right">
+            <div class="dust-front"></div>
+            <div class="dust-back"></div>
+          </div>
+        </div>
+        <div class="face-bottom"></div>
+
+        <!-- Las cartas ocultas van DENTRO del volumen 3D para heredar la perspectiva -->
+        <div class="card-wrap card-n1 card-in-deck" data-rot="-4.5">
+          <div class="card-face">
+            <div class="card-question">¿QUÉ ES LO QUE MÁS TE APASIONA EN ESTE MOMENTO DE TU VIDA?</div>
+            <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time"
+                class="footer-logo"></div>
+          </div>
+        </div>
+        <div class="card-wrap card-n2 card-in-deck" data-rot="5.8">
+          <div class="card-face">
+            <div class="card-question">¿CUÁL HA SIDO TU MAYOR APRENDIZAJE DEL ÚLTIMO AÑO?</div>
+            <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time"
+                class="footer-logo"></div>
+          </div>
+        </div>
+        <div class="card-wrap card-n3 card-in-deck" data-rot="-2.7">
+          <div class="card-face">
+            <div class="card-question">¿QUÉ MIEDO TE ESTÁ IMPIDIENDO SER LA VERSIÓN DE TI MISMX QUE DESEAS?</div>
+            <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time"
+                class="footer-logo"></div>
+          </div>
+        </div>
+        <div class="card-wrap card-n4 card-in-deck" data-rot="4.5">
+          <div class="card-face">
+            <div class="card-question">¿CUÁNDO FUE LA ÚLTIMA VEZ QUE TE SENTISTE VERDADERAMENTE VIVX?</div>
+            <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time"
+                class="footer-logo"></div>
+          </div>
+        </div>
+
+        <div class="box-flap">
+          <div class="flap-front"><span>ABRE PARA CONECTAR</span></div>
+          <div class="flap-back"></div>
+          <div class="tuck-lip">
+            <div class="lip-front"></div>
+            <div class="lip-back"></div>
+          </div>
+        </div>
+
+        <div class="face-front">
+          <img src="assets/img/logo one last time.png" alt="One Last Time"
+            style="max-width: 118px; margin-bottom: 0.6rem; filter: brightness(0); opacity: 0.9;">
+          <div
+            style="font-family:'Poppins', sans-serif; font-size:0.65rem; font-weight:600; text-transform:uppercase; text-align:center; color:rgba(0,0,0,0.9); padding: 0 0.2rem; line-height:1.2; letter-spacing: 0;">
+            Preguntas significativas<br>para personas que importan</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GIANT GLASSMORPHISM CTA -->
+    <a href="wizard.html" class="giant-glass-cta">
+      <div class="giant-glass-marquee">
+        <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+          TRANSFORMADORA AHORA • </span>
+        <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+          TRANSFORMADORA AHORA • </span>
+      </div>
+    </a>
+  </section>
+
+  <!-- TRICKS & DETAILS -->
+  <section class="letter-section" style="padding-bottom:6rem;">
+    <div class="wrap">
+      <div class="letter-inner">
+        <h2 class="letter-salutation" style="text-align: center; font-size: 2rem; line-height: 1.3;">
+          "posiblemente el juego con más impacto para ti y las personas que amas que vayas a jugar nunca..."
+        </h2>
+        <div class="letter-body text-left" style="text-align: left; margin-top:2rem;">
+          <p><strong>Estimadx Sensible.</strong></p>
+          <p>Si quieres conectar más con las personas que te importan.</p>
+          <p>A menudo te encuentras con conversaciones que no te llenan.</p>
+          <p>Sientes que al quedar con gente a veces tu energía se agota.</p>
+          <p>Y quieres vivir una vida con más significado.</p>
+          <p><strong>Entonces estas serán las cartas más importantes con las que vas a jugar nunca.</strong></p>
+          <h3
+            style="text-align:left; font-family:'Poppins', sans-serif; font-size:1.5rem; margin-top:3rem; font-weight:800; text-transform:none;">
+            Y aquí está el porqué:</h3>
+
+          <p>Anna y Fèlix, (lxs fundadorxs) estábamos cansadxs de estar rodeados de personas que, aunque amábamos, no
+            conseguíamos disfrutar de verdad. Cansadxs de conversaciones vacías. Que nos hacían volver a casa con la
+            sensación de no haber compartido nada significativo.</p>
+          <p>Así que empezamos a preguntarnos...</p>
+          <p><strong>¿Qué hace que algunas veces regresemos a casa después de quedar con alguien con más energía de la
+              que habíamos salido?</strong></p>
+          <p>¡Descubrimos la clave! Creamos un primer prototipo en forma de juego de cartas con preguntas profundas.</p>
+
+          <div
+            style="background:#fff;border:3px solid #000;padding:2.5rem;margin:3rem 0;border-radius:12px;box-shadow:6px 6px 0 #000;">
+            <h4
+              style="text-align:center;color:#000;font-size:1.4rem;font-family:'Bebas Neue',sans-serif;letter-spacing:0.02em;margin-bottom:1.5rem;">
+              Resultados del testeo</h4>
+            <ul style="list-style-type:none;font-size:1.1rem;line-height:1.6;">
+              <li style="margin-bottom:1rem;">👉 <strong>Personas:</strong> amigos, conocidos, padres, abuelos,
+                desconocidxs e incluso primeras citas.</li>
+              <li style="margin-bottom:1rem;">👉 <strong>Situaciones:</strong> desde conversaciones individuales hasta
+                grupos grandes de 15 personas.</li>
+              <li style="margin-bottom:1rem;">👉 La atmósfera cambiaba de inmediato; te hace perder la noción del
+                tiempo.</li>
+              <li>👉 <strong>Funciona con todo tipo de personas:</strong> Extrovertidxs, Introvertidxs, Espontánexs,
+                Reservadas, Divertidxs, Tímidxs, Reflexivxs, Impulsivxs, Emocionales, Racionales, Anaíticxs, Curiosxs,
+                Empáticxs, Observadorxs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO NEEDS IT -->
+  <section class="who-needs-section" style="background:var(--lime);">
+    <div class="wrap">
+      <h2 style="color:#000;">¿QUIÉN NECESITA ESTA HERRAMIENTA?</h2>
+      <ul class="who-needs-list">
+        <li>Quieres conectar más con las personas que te importan (amigos, familia, pareja, citas).</li>
+        <li>Quieres aprender sobre cómo otrxs gestionan sus emociones y energía.</li>
+        <li>Te gustaría conocerte más a ti mismx y vivir con más propósito.</li>
+        <li>Quieres divertirte de una forma más significativa.</li>
+        <li>Hay personas con las que te cuesta conectar porque nunca se abren.</li>
+        <li>Has probado juegos similares pero tienen preguntas superficiales o clichés.</li>
+      </ul>
+      <div class="text-center" style="margin-top: 3rem; text-align:center;">
+        <a href="wizard.html" class="btn btn-blue btn-full">
+          <div class="mini-marquee-container">
+            <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+              TRANSFORMADORA AHORA • </span>
+            <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+              TRANSFORMADORA AHORA • </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCIENCE -->
+  <section class="science-section">
+    <div class="wrap text-center" style="max-width:860px;margin:0 auto;text-align:center;">
+      <h2>EL SECRETO: LA CIENCIA DE LA OXITOCINA</h2>
+      <blockquote class="science-blockquote">
+        "Solemos pensar que la perfección es lo que atrae más a las personas, pero es exactamente lo contrario."
+      </blockquote>
+      <p style="text-align:left;margin-top:2rem;">La única cosa que todxs lxs humanxs compartimos son nuestras emociones
+        imperfectas. La <strong>oxitocina</strong> es la hormona encargada de generar vínculos sociales y aumentar
+        nuestra felicidad.</p>
+      <p style="text-align:left;">Cuando hablas sin miedo de las emociones, tu cerebro libera oxitocina, reduciendo el
+        estrés y activando zonas de seguridad.</p>
+    </div>
+  </section>
+
+  <!-- INFINITE MARQUEE -->
+  <section class="marquee-section">
+    <div class="marquee-inner">
+      <div style="display: flex; align-items: center;">
+        <div class="marquee-block">
+          <span class="marquee-item">LLORAMOS DE LA RISA ✦</span>
+          <span class="marquee-sub">"Marta y sus amigas tras 3 años sin verse"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item filled">RECONECTAMOS DE NUEVO ✦</span>
+          <span class="marquee-sub">"Laura y Fran usando las cartas para conocerse aún más"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item marker">No más silencios incómodos ✦</span>
+          <span class="marquee-sub">"Juan durante una de sus citas de Bumble"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item filled">EXPERIENCIA TRANSFORMADORA ✦</span>
+          <span class="marquee-sub">"Carlos en la cena de aniversario con sus padres"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item marker">La mejor sobremesa del año ✦</span>
+          <span class="marquee-sub">"El grupo de la uni tras 5 horas charlando"</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <div class="marquee-block">
+          <span class="marquee-item">LLORAMOS DE LA RISA ✦</span>
+          <span class="marquee-sub">"Marta y sus amigas tras 3 años sin verse"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item filled">RECONECTAMOS DE NUEVO ✦</span>
+          <span class="marquee-sub">"Laura y Fran usando las cartas para conocerse aún más"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item marker">No más silencios incómodos ✦</span>
+          <span class="marquee-sub">"Juan durante una de sus citas de Bumble"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item filled">EXPERIENCIA TRANSFORMADORA ✦</span>
+          <span class="marquee-sub">"Carlos en la cena de aniversario con sus padres"</span>
+        </div>
+        <div class="marquee-block">
+          <span class="marquee-item marker">La mejor sobremesa del año ✦</span>
+          <span class="marquee-sub">"El grupo de la uni tras 5 horas charlando"</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO BOX GALLERY -->
+  <style>
+    .bento-section {
+      padding: 7rem 0 2rem 0;
+      background: var(--bg-pale);
+      color: #000;
+      overflow: hidden;
+      min-height: 100vh;
+      /* Prevent GSAP trigger teleportation collapse */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .bento-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .bento-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 8vw, 6rem);
+      color: var(--black);
+      line-height: 0.9;
+      margin-top: 0.5rem;
+    }
+
+    .bento-scroller-wrap {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bento-scroller {
+      display: flex;
+      gap: 1.5rem;
+      padding-right: 1.5rem;
+      /* El gap de la segunda vuelta para que el bucle encaje perfecto */
+      width: max-content;
+      animation: scrollBento 40s linear infinite;
+      will-change: transform;
+    }
+
+    .bento-scroller:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollBento {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 320px);
+      grid-template-rows: repeat(2, 340px);
+      gap: 1.5rem;
+    }
+
+    .bento-item {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s cubic-bezier(0.15, 1, 0.3, 1), box-shadow 0.4s ease;
+      will-change: transform;
+    }
+
+    .bento-item:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .bento-item img,
+    .bento-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      opacity: 0.8;
+    }
+
+    .bento-item:hover img,
+    .bento-item:hover video {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+
+    .bento-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .bento-tag {
+      font-family: 'Permanent Marker', cursive;
+      color: var(--lime);
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      transform: rotate(-3deg);
+    }
+
+    .bento-text {
+      font-size: 1.05rem;
+      color: #fff;
+      font-weight: 500;
+      line-height: 1.4;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Asignación Asimétrica de Cuadrículas Extensa (6x2) */
+    .bento-item:nth-child(1) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    /* Hero 2x2 */
+    .bento-item:nth-child(2) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    /* 1x1 */
+    .bento-item:nth-child(3) {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    /* Vertical 1x2 */
+    .bento-item:nth-child(4) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    /* 1x1 */
+    .bento-item:nth-child(5) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    /* Horizontal 2x1 */
+    .bento-item:nth-child(6) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    /* 1x1 */
+    .bento-item:nth-child(7) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    /* 1x1 */
+
+    @media(max-width: 768px) {
+      .bento-grid {
+        grid-template-columns: repeat(6, 260px);
+        grid-template-rows: repeat(2, 280px);
+        gap: 1rem;
+      }
+
+      .bento-scroller {
+        gap: 1rem;
+        padding-right: 1rem;
+      }
+
+      .bento-item:nth-child(1) {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      .bento-item:nth-child(2) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      .bento-item:nth-child(3) {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      .bento-item:nth-child(4) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      .bento-item:nth-child(5) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      .bento-item:nth-child(6) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      .bento-item:nth-child(7) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+  </style>
+
+  <section class="bento-section">
+    <div class="bento-header">
+      <span class="section-label">Así lo viven</span>
+      <h2>MOMENTOS REALES</h2>
+    </div>
+
+    <div class="bento-scroller-wrap">
+      <div class="bento-scroller">
+        <!-- GRUPO 1 -->
+        <div class="bento-grid">
+          <div class="bento-item">
+            <video src="assets/img/pocas-horas-de-vida.mp4" autoplay loop muted playsinline></video>
+            <div class="bento-overlay">
+              <div class="bento-tag">"¿Y si me muero mañana?"</div>
+              <div class="bento-text">Risas, lágrimas y honestidad brutal alrededor de la mesa.</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?auto=format&fit=crop&q=80&w=800&h=800"
+              alt="Sobremesa">
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(4deg);">Sobremesa</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <video src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" autoplay loop
+              muted playsinline></video>
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(-5deg);">1ª Cita</div>
+              <div class="bento-text">Conectando a un nivel que ni en 5 años de relación.</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img
+              src="https://images.unsplash.com/photo-1529156069898-49953eb1b5b6?auto=format&fit=crop&q=80&w=800&h=800"
+              alt="Amigos">
+            <div class="bento-overlay">
+              <div class="bento-tag">A calzón quitado</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img
+              src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1200&h=600"
+              alt="Cena en familia">
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(2deg);">Cena en familia</div>
+              <div class="bento-text">Descubriendo historias de mis padres que jamás me habían contado.</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <video src="https://videos.pexels.com/video-files/853844/853844-hd_1920_1080_25fps.mp4" autoplay loop muted
+              playsinline></video>
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(-3deg);">Cena Empresa</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800&h=800"
+              alt="Equipo">
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(4deg);">Icebreaker</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRUPO 2 (Clon exacto para el loop infinito perfecto al llegar a -50%) -->
+        <div class="bento-grid">
+          <div class="bento-item">
+            <video src="assets/img/pocas-horas-de-vida.mp4" autoplay loop muted playsinline></video>
+            <div class="bento-overlay">
+              <div class="bento-tag">"¿Y si me muero mañana?"</div>
+              <div class="bento-text">Risas, lágrimas y honestidad brutal alrededor de la mesa.</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?auto=format&fit=crop&q=80&w=800&h=800"
+              alt="Sobremesa">
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(4deg);">Sobremesa</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <video src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" autoplay loop
+              muted playsinline></video>
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(-5deg);">1ª Cita</div>
+              <div class="bento-text">Conectando a un nivel que ni en 5 años de relación.</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img
+              src="https://images.unsplash.com/photo-1529156069898-49953eb1b5b6?auto=format&fit=crop&q=80&w=800&h=800"
+              alt="Amigos">
+            <div class="bento-overlay">
+              <div class="bento-tag">A calzón quitado</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img
+              src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1200&h=600"
+              alt="Cena en familia">
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(2deg);">Cena en familia</div>
+              <div class="bento-text">Descubriendo historias de mis padres que jamás me habían contado.</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <video src="https://videos.pexels.com/video-files/853844/853844-hd_1920_1080_25fps.mp4" autoplay loop muted
+              playsinline></video>
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(-3deg);">Cena Empresa</div>
+            </div>
+          </div>
+          <div class="bento-item">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800&h=800"
+              alt="Equipo">
+            <div class="bento-overlay">
+              <div class="bento-tag" style="transform: rotate(4deg);">Icebreaker</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tricks-section" style="background:var(--black);color:#fff;padding:6rem 0;">
+    <div class="wrap">
+      <h2 style="color:var(--lime);">CARACTERÍSTICAS DEL JUEGO</h2>
+
+      <div class="tricks-grid">
+        <div class="trick-card" style="transform:none; border-color:var(--lime); box-shadow:8px 8px 0 var(--lime);">
+          <div class="trick-text" style="color:#333;"><strong>🎯 50 preguntas cautivadoras:</strong> Para perder la
+            noción del tiempo durante horas.</div>
+        </div>
+        <div class="trick-card" style="transform:none; border-color:var(--lime); box-shadow:8px 8px 0 var(--lime);">
+          <div class="trick-text" style="color:#333;"><strong>🌊 3 niveles de profundidad:</strong> Adaptables a cada
+            momento y relación.</div>
+        </div>
+        <div class="trick-card" style="transform:none; border-color:var(--lime); box-shadow:8px 8px 0 var(--lime);">
+          <div class="trick-text" style="color:#333;"><strong>🎁 2 BONUS EXTRA:</strong> Dinámicas que van más allá de
+            las conversaciones.</div>
+        </div>
+        <div class="trick-card" style="transform:none; border-color:var(--lime); box-shadow:8px 8px 0 var(--lime);">
+          <div class="trick-text" style="color:#333;"><strong>✨ Sin clichés:</strong> Cero preguntas fáciles, cliché o
+            "picantes" superficiales.</div>
+        </div>
+        <div class="trick-card" style="transform:none; border-color:var(--lime); box-shadow:8px 8px 0 var(--lime);">
+          <div class="trick-text" style="color:#333;"><strong>🤝 Sin ganadores ni perdedores:</strong> Solo personas
+            generando conexiones.</div>
+        </div>
+        <div class="trick-card" style="transform:none; border-color:var(--lime); box-shadow:8px 8px 0 var(--lime);">
+          <div class="trick-text" style="color:#333;"><strong>🧠 Creado por Psicólogxs PAS:</strong> Personas Altamente
+            Sensibles (Personas Anti-Superficialidad).</div>
+        </div>
+      </div>
+
+      <div
+        style="background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);padding:3rem;margin-top:4rem;border-radius:12px;text-align:left;">
+        <h3 style="color:#fff;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:1rem;">
+          CONTENIDO DE LA BARAJA (64 CARTAS EN TOTAL)</h3>
+        <ul style="list-style:none;font-size:18px;line-height:2;">
+          <li>➔ <strong>10</strong> de Nivel 1 (Romper el hielo)</li>
+          <li>➔ <strong>15</strong> de Nivel 2 (Profundizar)</li>
+          <li>➔ <strong>25</strong> de Nivel 3 (Profundas/Valores/Emociones)</li>
+          <li>➔ <strong>4</strong> cartas de dinámicas/reglas/bienvenida</li>
+          <li>➔ <strong>10</strong> cartas Bonus <em>(5 retos de zona de confort + 5 secretos para generar espacios
+              excepcionales)</em></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDERS & RISK -->
+  <section class="founders-section" style="background:#fff;padding:6rem 0;">
+    <div class="wrap text-center" style="max-width:860px;margin:0 auto;text-align:left;">
+      <h2 style="text-align:center;">SOBRE ANNA Y FÈLIX</h2>
+      <div style="display:flex;gap:2rem;margin-top:3rem;align-items:center;">
+        <div
+          style="width:120px;height:120px;border-radius:50%;background:var(--btn-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;flex-shrink:0;">
+          A & F</div>
+        <div>
+          <p><strong>Anna Riera (@annarierapsico):</strong> Psicóloga, viaja en camper y educa a una comunidad de 33.2k
+            seguidores.</p>
+          <p><strong>Fèlix Gol (@felixgm4):</strong> Creador de una comunidad para amistades significativas.</p>
+          <p>Reconectaron 10 años después de estudiar Psicología en la universidad al darse cuenta de que ambos
+            trabajaban por separado en la misma misión de conexiones significativas.</p>
+        </div>
+      </div>
+
+      <hr style="margin:4rem 0;border:none;border-top:2px dashed #ddd;">
+
+      <h2 style="text-align:center;">EL RIESGO DE NO ABRIRSE</h2>
+      <blockquote class="science-blockquote" style="border-color:#ef4444;text-align:center;">
+        "El mayor riesgo no es abrirse, es negar la oportunidad de conectar realmente con las personas."
+      </blockquote>
+      <h4 style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.2rem;margin-top:2rem;">Beneficios de
+        abrirse:</h4>
+      <ol style="margin-left:1.5rem;font-size:18px;line-height:1.8;margin-bottom:2rem;">
+        <li>Demuestras compromiso con la relación.</li>
+        <li>Das ejemplo para que los demás se abran.</li>
+        <li>El tiempo juntxs se vuelve más significativo.</li>
+      </ol>
+      <div style="background:var(--bg-pale);padding:2rem;border-radius:12px;border:2px solid var(--border);">
+        <p style="margin-bottom:0.5rem;font-weight:800;">💡 Prueba a empezar frases con:</p>
+        <ul style="list-style:none;font-style:italic;">
+          <li>"Para serte totalmente honestx..."</li>
+          <li>"Nunca te lo había dicho, pero me siento..."</li>
+          <li>"Aunque no suela decirlo, aprecio de ti que..."</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFER -->
+  <section class="offer-section" id="oferta">
+    <div class="wrap">
+      <h2>RESERVA AHORA UNA DE LAS <span style="text-decoration:underline;color:#ef4444;">SOLO 100 UNIDADES</span> DE
+        ESTE PRELANZAMIENTO ANTES QUE SE AGOTEN</h2>
+      <div class="offer-grid">
+        <div class="offer-product">
+          <div class="offer-badge">LO QUE INCLUYE TU OFERTA</div>
+          <ul class="offer-includes mt-2">
+            <li><span class="check">✓</span> Selección personalizada de cartas según tu contexto exacto (quién, cuándo,
+              dónde, objetivo)</li>
+            <li><span class="check">✓</span> 3 niveles de profundidad: de romper el hielo a conversaciones
+              transformadoras</li>
+            <li><span class="check">✓</span> Filtro de tono personalizado: emocional, divertido, íntimo o una mezcla
+            </li>
+            <li><span class="check">✓</span> Entrega física (enviamos al restaurante) o digital en 24h</li>
+            <li><span class="check">✓</span> Garantía Anti-Superficialidad del 110%</li>
+          </ul>
+          <div class="price-area">
+            <div class="price-row"><span class="price-old">59,99€</span><span class="price-new">40€</span></div>
+            <p class="price-detail"
+              style="font-size:1.2rem;background:var(--lime);display:inline-block;padding:0.5rem 1rem;border-radius:4px;">
+              40€ + ENVÍO (19,99€) = <strong style="font-weight:900;">ENVÍO GRATIS</strong></p>
+            <a href="wizard.html" class="btn btn-blue btn-full mt-4" id="offerCta" style="margin-top:2rem;">
+              <div class="mini-marquee-container">
+                <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+                  TRANSFORMADORA AHORA • </span>
+                <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+                  TRANSFORMADORA AHORA • </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEE -->
+  <section class="guarantee-section">
+    <div class="wrap">
+      <div class="guarantee-inner">
+        <div class="guarantee-badge">GARANTÍA ANTI-SUPERFICIALIDAD 110%</div>
+        <h2>RECUERDA TODO LO QUE PODRÍAS GANAR CON RIESGO LITERALMENTE BAJO 0 GRACIAS A LA GARANTÍA DEL 110%</h2>
+        <p style="margin-top:2rem;">Si no te sientes más conectado o sientes superficialidad, te devuelven el 110% de tu
+          dinero y asumen los costes de envío de ida y vuelta (dentro de los 30 días posteriores).</p>
+        <div class="text-center" style="margin-top:4rem;">
+          <a href="wizard.html" class="btn btn-blue btn-full" id="guaranteeCta">
+            <div class="mini-marquee-container">
+              <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+                TRANSFORMADORA AHORA • </span>
+              <span>RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA TRANSFORMADORA AHORA • RESERVAR MI CENA
+                TRANSFORMADORA AHORA • </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="wrap">
+      <h2 class="text-center">PREGUNTAS FRECUENTES</h2>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-btn">¿PARA QUIÉN SON ESTAS CARTAS?<span class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Son eficaces con amigos, familia, pareja o citas, ya sean introvertidxs,
+              extrovertidxs o cualquier tipo de persona dispuesta a abrirse.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿EL ENVÍO ES GRATIS HASTA DONDE YO VIVO?<span class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Sí, para las primeras 100 unidades del prelanzamiento cubrimos el envío de
+              19,99€ haciéndolo completamente gratis (Península y Baleares).</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿CÓMO FUNCIONA EL PRELANZAMIENTO?<span class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Estamos testeando la logística, por lo que hemos limitado la primera tirada a
+              100 unidades al precio de coste de 40€.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿QUÉ RECIBO EXACTAMENTE AL COMPRAR UNA BARAJA?<span class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">64 cartas en total distribuidas en 3 niveles de profundidad y dinámicas bonus
+              extras para generar espacios excepcionales.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿CUÁNDO RECIBIRÉ LAS CARTAS?<span class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Si compras antes de las 14:00, las enviaremos el mismo día. La entrega estándar
+              es en 24-48 horas laborables.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿PUEDO CANCELAR O DEVOLVER MI COMPRA SI ME LO REPIENSO?<span
+              class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Por supuesto, tienes la Garantía del 110% durante 30 días, sin tener que dar
+              ninguna explicación.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿EN SERIO ESTÁN CUBIERTAS POR UNA GARANTÍA DEL 110%?<span
+              class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Sí. Si no mejora tu nivel de conexión, te reembolsamos el precio de las cartas
+              más un 10% adicional por tu tiempo, y pagamos el envío de vuelta.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿QUÉ HACE A ESTAS CARTAS DISTINTAS A CUALQUIER OTRA?<span
+              class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Fueron creadas por dos psicólogos (PAS) con un sistema filtrado libre de clichés
+              y validado en cientos de testeos.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿QUIÉN HAY DETRÁS DE SENSIBLES?<span class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Anna Riera (Psicóloga y educadora digital) y Fèlix Gol (creador de comunidades
+              de amistades significativas), quienes unieron fuerzas tras reencontrarse 10 años después.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-btn">¿Y SI TENGO MÁS PREGUNTAS QUE NO APARECEN AQUÍ?<span
+              class="faq-icon">+</span></button>
+          <div class="faq-body">
+            <div class="faq-body-inner">Escríbenos directamente a hola@sensibles.co o nuestro Instagram y te
+              responderemos personalmente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+    <div class="footer-logo">SENSIBLES CO.</div>
+    <div class="footer-links">
+      <a href="#">Política de Privacidad</a>
+      <a href="#">Términos y Condiciones</a>
+      <a href="#">Garantía Anti-Superficialidad</a>
+      <a href="mailto:hola@sensibles.co">hola@sensibles.co</a>
+    </div>
+    <div class="footer-copy">© 2026 Sensibles Co.</div>
+  </footer>
+
+  <!-- GSAP & Lenis CDN -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // SCROLL REVEAL OBSERVER (Premium Fade-in Effects) replaced with GSAP + Lenis
+    document.addEventListener("DOMContentLoaded", () => {
+      // 0. Inject Marquee Drawn Markers
+      const marqueeSpans = document.querySelectorAll('.mini-marquee-container span, .giant-glass-marquee span');
+      // Create organic wobbly paths with a subtle filter to mimic a marker
+      const filterSvg = `<svg width="0" height="0" style="position:absolute;z-index:-1;"><filter id="marker-rough"><feTurbulence type="fractalNoise" baseFrequency="0.2" numOctaves="2" result="noise" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" /></filter><filter id="thin-text"><feMorphology operator="erode" radius="0.8" in="SourceGraphic" /></filter></svg>`;
+      document.body.insertAdjacentHTML('afterbegin', filterSvg);
+
+      const modifiedPhrase = `&nbsp;&nbsp;RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;`;
+      marqueeSpans.forEach(span => {
+        span.innerHTML = modifiedPhrase + modifiedPhrase + modifiedPhrase;
+      });
+
+      function checkMarqueeDraws() {
+        const wrappers = document.querySelectorAll('.draw-wrapper');
+        const now = Date.now();
+
+        wrappers.forEach(wrap => {
+          const cta = wrap.closest('.btn, .giant-glass-cta');
+          if (!cta) return;
+          const wrapRect = wrap.getBoundingClientRect();
+          const ctaRect = cta.getBoundingClientRect();
+          const wrapTarget = wrapRect.right;
+          const triggerLine = ctaRect.right - 20; // 20px de margen tras asomar por la derecha
+
+          // 1. Activar dibujo en cuanto la cola de la frase asome 20px por la derecha del botón
+          // (Banda de captura de 50px para interceptarlo sin fallar a 60FPS)
+          if (wrapTarget <= triggerLine && wrapTarget > triggerLine - 50) {
+            // Ignorar las palabras que, al cargar la página por primera vez, ya aparecieron a la izquierda del visor
+            if (wrap.dataset.loadedPastCenter === "true") return;
+
+            if (!wrap.classList.contains('draw-now')) {
+              wrap.classList.add('draw-now');
+            }
+          }
+
+          // 2. Borrar dibujo SOLAMENTE si la palabra ha sido teletransportada
+          //    fuera por la DERECHA al reiniciarse el loop infinito del CSS.
+          //    Si sale por la izquierda conservamos el trazado para un loop "sin salto".
+          if (wrapRect.left > ctaRect.right) {
+            wrap.dataset.loadedPastCenter = "false"; // Limpiamos la bandera de bloqueo inicial
+            if (wrap.classList.contains('draw-now')) wrap.classList.remove('draw-now');
+          }
+        });
+        requestAnimationFrame(checkMarqueeDraws);
+      }
+
+      // Inicializar el estado de las palabras que empiezan pre-cargadas en la mitad izquierda
+      // para que no se dibujen de golpe al cargar, sino que esperen a dar la vuelta y pasar por el medio.
+      document.querySelectorAll('.draw-wrapper').forEach(wrap => {
+        const cta = wrap.closest('.btn, .giant-glass-cta');
+        if (!cta) return;
+        const wrapTarget = wrap.getBoundingClientRect().right;
+        const triggerLine = cta.getBoundingClientRect().right - 20;
+        if (wrapTarget <= triggerLine) {
+          wrap.dataset.loadedPastCenter = "true";
+        }
+      });
+
+      requestAnimationFrame(checkMarqueeDraws);
+
+      // 1. Setup Lenis Smooth Scroll
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Connect Lenis to ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0, 0);
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Unhide GSAP elements
+      gsap.set('.gsap-reveal, .hero-bg video, .hero-logo-img, .hero-body h1, .hero-sub, .hero-cta-area, .hero-body img', { visibility: 'visible' });
+
+      // 2. HERO ANIMATIONS (On Load)
+      const heroTl = gsap.timeline();
+
+      heroTl.from('.hero-bg video', {
+        scale: 1.05,
+        opacity: 0,
+        duration: 2.5,
+        ease: 'power2.out'
+      })
+        .from('.hero-logo-img', {
+          y: -20,
+          opacity: 0,
+          duration: 1.4,
+          ease: 'power3.out'
+        }, "-=2.2")
+        .from('.hero-body h1', {
+          y: 40,
+          opacity: 0,
+          duration: 1.5,
+          ease: 'power4.out'
+        }, "<")
+        .from('.hero-sub', {
+          y: 20,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power3.out'
+        }, "<")
+        .from('.hero-body img:not(.hero-logo-img)', { // Laurels
+          y: 15,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 1.2,
+          ease: 'power3.out'
+        }, "<")
+        .from('.hero-cta-area', {
+          y: 30,
+          opacity: 0,
+          scale: 0.98,
+          duration: 1.2,
+          ease: 'power3.out'
+        }, "<")
+        .add(() => {
+          const w1 = document.querySelector('.hero-draw-1');
+          if (w1) w1.classList.add('draw-now');
+        }, "<0.4")
+        .add(() => {
+          const w1b = document.querySelector('.hero-draw-1b');
+          if (w1b) w1b.classList.add('draw-now');
+        }, "<0.7")
+        .add(() => {
+          const w2 = document.querySelector('.hero-draw-2');
+          if (w2) w2.classList.add('draw-now');
+        }, "<1.0");
+
+      // Hero Parallax on Scroll
+      gsap.to('.hero-bg video', {
+        yPercent: 25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      // 3. SCROLL-DRIVEN ANIMATIONS
+
+      // Option 7: Scattered Desk Camera Engine
+      const sBoard = document.getElementById('scatterBoard');
+      const sCards = gsap.utils.toArray('.scatter-card:not(.intro-card)');
+      const sIntro = document.querySelector('.intro-card');
+
+      if (sBoard && sCards.length === 4 && sIntro) {
+        // 1. Apilamos fuertemente todas las cartas en el centro absoluto (0, 0)
+        gsap.set(sCards, { xPercent: -50, yPercent: -50, x: 0, y: 0, rotation: 0, zIndex: 5 });
+        gsap.set(sIntro, { xPercent: -50, yPercent: -50, x: 0, y: 0, rotation: -3, zIndex: 10 }); // Intro card is slightly rotated and ON TOP
+
+        // 2. Definimos las coordenadas de dispersión caóticas vectorizadas
+        const sData = [
+          { x: -26, y: -24, r: -16 },
+          { x: 26, y: -20, r: 9 },
+          { x: -24, y: 26, r: 18 },
+          { x: 26, y: 24, r: -12 }
+        ];
+
+        const isM = window.innerWidth <= 768;
+        const focusZoom = isM ? 1.05 : 1.35;
+
+        // Centra visualmente "4 pasos" contrarrestando la caja invisible del CTA
+        gsap.set('#stepsTitle', { y: 40 });
+
+        const scrTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#stepsScatter',
+            start: () => 'top top',
+            end: () => '+=6000',
+            pin: true,
+            scrub: 1,
+            refreshPriority: 1,
+            invalidateOnRefresh: true,
+            onUpdate: function () {
+              const el = document.getElementById('stepsCtaArea');
+              if (el) el.style.pointerEvents = parseFloat(el.style.opacity) > 0.05 ? 'auto' : 'none';
+            },
+            onRefresh: function () {
+              const el = document.getElementById('stepsCtaArea');
+              if (el) el.style.pointerEvents = parseFloat(el.style.opacity) > 0.05 ? 'auto' : 'none';
+            }
+          }
+        });
+
+        // FASE 0: "The Throw". Extrema fuerza centrífuga para despejar el tablero central
+        sCards.forEach((card, i) => {
+          scrTl.to(card, {
+            x: `${sData[i].x}vw`,
+            y: `${sData[i].y}vh`,
+            rotation: sData[i].r,
+            filter: "drop-shadow(0 15px 25px rgba(0,0,0,0.4))",
+            duration: 10,
+            ease: "power2.out"
+          }, 0);
+        });
+
+        // Animamos opacity en el tween
+        scrTl.to("#stepsCtaArea", { opacity: 1, duration: 10, ease: "power2.inOut" }, 0);
+        scrTl.to("#stepsTitle", { y: 0, duration: 10, ease: "power2.inOut" }, 0);
+
+        let t = 10;
+
+        // Proxy for intro card opacity to allow independent hover overrides
+        const sIntroProxy = { opacity: 1 };
+        const updateSIntroOpacity = () => {
+          // Map to CSS variables for true background transparency calculations
+          sIntro.style.setProperty('--intro-alpha', sIntroProxy.opacity);
+
+          const cta = document.getElementById('stepsCtaArea');
+          const title = document.getElementById('stepsTitle');
+
+          if (!sIntro.isHovered) {
+            if (cta) cta.style.opacity = sIntroProxy.opacity;
+            if (title) title.style.opacity = sIntroProxy.opacity;
+          }
+
+          // Activar pointer-events del CTA sólo cuando su opacity real (del scroll) sea visible
+          // Nota: el CTA tiene su PROPIA tween de opacidad (0→1) separada del sIntroProxy.
+          // Lo controlamos desde la tween del CTA con onUpdate.
+        };
+
+        // Hover Logic — solo activo cuando el CTA ya es visible por scroll
+        const stepsCtaArea = document.getElementById('stepsCtaArea');
+        if (stepsCtaArea) {
+          stepsCtaArea.addEventListener('mouseenter', () => {
+            // Comprobar la opacity REAL del CTA (animada por GSAP con scroll)
+            const ctaOpacity = parseFloat(stepsCtaArea.style.opacity) || 0;
+            if (ctaOpacity <= 0.05) return; // CTA aún no revelado — ignorar
+            sIntro.isHovered = true;
+            gsap.to(stepsCtaArea, { opacity: 1, duration: 0.3, overwrite: "auto" });
+          });
+          stepsCtaArea.addEventListener('mouseleave', () => {
+            sIntro.isHovered = false;
+            gsap.to(stepsCtaArea, { opacity: sIntroProxy.opacity, duration: 0.3, overwrite: "auto" });
+          });
+        }
+
+        // Asegurarse de que sIntro nunca se cambie de opacidad globalmente
+        sIntro.style.opacity = 1;
+
+        // Desactiva la carta central simulada mediante proxy al iniciar el paneo macro
+        scrTl.to(sIntroProxy, { opacity: 0.3, duration: 10, ease: "power1.inOut", onUpdate: updateSIntroOpacity }, t);
+
+        // FASES 1 a 4: Paneo Cenital "Macro Camera Lens"
+        sCards.forEach((card, i) => {
+          scrTl.to(sBoard, {
+            x: `${-sData[i].x}vw`,
+            y: `${-sData[i].y}vh`,
+            rotation: -sData[i].r,
+            scale: focusZoom,
+            duration: 15,
+            ease: "power1.inOut"
+          }, t);
+
+          t += 15;
+          t += 5; // Hold
+        });
+        // FASE FINAL: "The Overview". La cámara se retira para mostrar la mesa completa con las cartas dispersas. No se recogen.
+        scrTl.to(sBoard, { x: "0vw", y: "0vh", rotation: 0, scale: 1, duration: 15, ease: "power2.inOut" }, t);
+        scrTl.to(sIntroProxy, { opacity: 1, duration: 15, ease: "power2.inOut", onUpdate: updateSIntroOpacity }, t);
+      }
+
+      // --- ESFERA ORIGINAL RESTAURADA ---
+      const vnSec = document.getElementById('voiceNotes');
+      const vnSphere = document.getElementById('vnSphere');
+      
+      if (vnSec) {
+        // Header Text Fill/Reveal on Scroll
+        gsap.to('#vnHeaderTitle', {
+          scrollTrigger: { trigger: '#vnHeaderTitle', start: "top bottom", end: "center 15%", scrub: 0.5 },
+          backgroundPosition: "0% 0%", ease: "none"
+        });
+
+        if (vnSphere) {
+          const originalCards = vnSphere.innerHTML;
+          vnSphere.innerHTML = originalCards + originalCards; // 12 -> 24 densidad
+          
+          const cards = gsap.utils.toArray(vnSphere.querySelectorAll('.hc-card'));
+          const N = cards.length;
+          
+          const baseR = window.innerWidth > 768 ? 450 : 250;
+          const maxR = window.innerWidth > 768 ? 634 : 383;
+          const maxZ = -(maxR - baseR);
+
+          vnSec.style.setProperty('--globe-r', baseR);
+          vnSec.style.setProperty('--sphere-z', 0);
+          
+          gsap.timeline({
+              scrollTrigger: {
+                  trigger: '#vnSphereWrapper',
+                  start: "top 120%",
+                  end: "center center",
+                  scrub: true
+              }
+          }).to(vnSec, { "--globe-r": maxR, "--sphere-z": maxZ, ease: "none" });
+          
+          cards.forEach((card, i) => {
+              const wrapper = document.createElement('div');
+              wrapper.style.position = 'absolute';
+              wrapper.style.top = '50%';
+              wrapper.style.left = '50%';
+              wrapper.style.transformStyle = 'preserve-3d';
+              card.parentNode.insertBefore(wrapper, card);
+              wrapper.appendChild(card);
+
+              const y = 1 - (i / (N - 1)) * 2; 
+              const lat = Math.asin(y) * (180 / Math.PI); 
+              const lon = i * 137.5; 
+              
+              wrapper.style.transform = `translate(-50%, -50%) rotateY(${lon}deg) rotateX(${lat}deg) translateZ(calc(var(--globe-r) * 1px))`;
+              
+              card.style.width = '420px'; 
+              card.style.zoom = '0.8';
+              card.style.flexShrink = '0';
+              card.style.transform = 'none';
+              
+              gsap.fromTo(card, { opacity: 0, scale: 0 }, {
+                  opacity: 1, scale: 1, duration: 1.2, delay: i * 0.05, ease: 'back.out(1.2)',
+                  scrollTrigger: { trigger: vnSec, start: "top 60%" }
+              });
+          });
+
+          let currentRotX = -10, currentRotY = 0;
+          let targetRotX = currentRotX, targetRotY = currentRotY;
+
+          gsap.ticker.add(() => {
+              targetRotY -= 0.05;
+              currentRotX += (targetRotX - currentRotX) * 0.08;
+              currentRotY += (targetRotY - currentRotY) * 0.08;
+              if(targetRotX > 60) targetRotX = 60;
+              if(targetRotX < -60) targetRotX = -60;
+              vnSphere.style.transform = `translateZ(calc(var(--sphere-z) * 1px)) rotateX(${currentRotX}deg) rotateY(${currentRotY}deg)`;
+          });
+
+          let isDragging = false, startX, startY, startRotX, startRotY;
+          const startDrag = (e) => {
+              if (e.target.closest('.hc-play') || e.target.closest('.hc-slider') || e.target.closest('a')) return;
+              isDragging = true;
+              startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+              startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+              startRotX = targetRotX;
+              startRotY = targetRotY;
+              vnSec.style.cursor = 'grabbing';
+          };
+          const moveDrag = (e) => {
+              if (!isDragging) return;
+              const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+              const y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+              targetRotY = startRotY + (x - startX) * 0.4; 
+              targetRotX = startRotX - (y - startY) * 0.4;
+          };
+          const endDrag = () => {
+              isDragging = false;
+              vnSec.style.cursor = 'grab';
+          };
+
+          vnSec.addEventListener('mousedown', startDrag);
+          window.addEventListener('mousemove', moveDrag);
+          window.addEventListener('mouseup', endDrag);
+          vnSec.addEventListener('touchstart', startDrag, {passive: true});
+          window.addEventListener('touchmove', moveDrag, {passive: true});
+          window.addEventListener('touchend', endDrag);
+        }
+      } // Fin de esfera original
+
+
+
+
+
+
+      // Section Headers & Blocks reveal
+      const sections = gsap.utils.toArray('section:not(.hero):not(.interactive-demo-section)');
+      sections.forEach(sec => {
+        const headers = sec.querySelectorAll('h2, .science-blockquote, .letter-salutation');
+        if (headers.length > 0) {
+          gsap.from(headers, {
+            scrollTrigger: { trigger: sec, start: 'top 85%' },
+            y: 40,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: 'power3.out'
+          });
+        }
+      });
+
+          // Inyectar barras estáticas de volumen y Slider Range (Bolita)
+          document.querySelectorAll('.hc-wave').forEach(wave => {
+            let content = '<input type="range" class="hc-slider" min="0" max="100" value="0" step="0.1">';
+            for (let i = 0; i < 50; i++) { // Inyectamos exceso de barras fijas 
+              const h = Math.floor(Math.random() * 14) + 4; // 4 a 18px altura fija
+              content += `<span class="hc-bar" style="height: ${h}px;"></span>`;
+            }
+            wave.innerHTML = content;
+          });
+
+          function formatTime(seconds) {
+            if (isNaN(seconds) || seconds <= 0) return "0:00";
+            const rounded = Math.ceil(seconds);
+            const m = Math.floor(rounded / 60);
+            const s = rounded % 60;
+            return m + ":" + (s < 10 ? "0" + s : s);
+          }
+
+          // Setup initial Audio Sync and Event Listeners (Scrubbing + Karaoke)
+          document.querySelectorAll('.hc-player').forEach(player => {
+            const wave = player.querySelector('.hc-wave');
+            const slider = player.querySelector('.hc-slider');
+            const audio = player.querySelector('.hc-audio');
+            const btn = player.querySelector('.hc-play');
+            const durEl = player.querySelector('.hc-dur');
+            const card = player.closest('.hc-card');
+
+            if (!audio || !slider) return;
+
+            const updateDur = (time) => {
+              if (durEl) durEl.textContent = formatTime(time);
+            };
+
+            // Set initial duration
+            if (audio.readyState >= 1) updateDur(audio.duration);
+            audio.addEventListener('loadedmetadata', () => {
+              updateDur(audio.duration);
+            });
+
+            // Scrubbing manual desplazando la Bolita
+            slider.addEventListener('input', (e) => {
+              if (audio.readyState > 0 && audio.duration) {
+                const progress = parseFloat(e.target.value) / 100;
+                audio.currentTime = progress * audio.duration;
+
+                // Pre-renderizar las barras manuales en vivo al deslizar 
+                const waveBars = wave.querySelectorAll('.hc-bar');
+                const maxVisibleBars = Math.floor(wave.clientWidth / 8);
+                const activeWaveCount = Math.floor(progress * maxVisibleBars);
+                waveBars.forEach((bar, idx) => {
+                  if (idx <= activeWaveCount) bar.classList.add('played');
+                  else bar.classList.remove('played');
+                });
+
+                // Previsualizar cuenta atrás
+                updateDur(audio.duration - audio.currentTime);
+              }
+            });
+
+            // Evitar que el drag pause o rompa la experiencia: reproducir al soltar si no estaba sonando
+            slider.addEventListener('change', () => {
+              if (audio.paused && audio.currentTime > 0) {
+                btn.click();
+              }
+            });
+
+            // Progress Tracking: Ocurre constantemente durante el playback
+            audio.addEventListener('timeupdate', () => {
+              if (audio.duration) {
+                const progress = audio.currentTime / audio.duration;
+
+                // Mover la bolita automáticamente si el usuario no la tiene agarrada
+                slider.value = progress * 100;
+
+                // Wave Progress Tracker
+                const waveBars = wave.querySelectorAll('.hc-bar');
+                const maxVisibleBars = Math.floor(wave.clientWidth / 8);
+                const activeWaveCount = Math.floor(progress * maxVisibleBars);
+
+                waveBars.forEach((bar, idx) => {
+                  if (idx <= activeWaveCount) bar.classList.add('played');
+                  else bar.classList.remove('played');
+                });
+
+                // Actualizar tiempo restante
+                updateDur(audio.duration - audio.currentTime);
+              }
+            });
+
+            // Final de Audio (Reseteo base cero al estilo Whatsapp)
+            audio.addEventListener('ended', () => {
+              wave.classList.remove('playing');
+              btn.innerHTML = '▶';
+              btn.style.paddingLeft = '3px';
+
+              // Volver todo al inicio
+              audio.currentTime = 0;
+              slider.value = 0;
+
+              wordSpans.forEach(span => span.classList.remove('read'));
+
+              wave.querySelectorAll('.hc-bar').forEach((bar, idx) => {
+                bar.classList.remove('played');
+              });
+
+              // Volver a mostrar duración total
+              updateDur(audio.duration);
+            });
+          });
+
+          // Configuración Portal Interactivo de Cursor (Ghost Hover)
+          const cursorPortal = document.getElementById('hc-cursor-portal');
+          const portalInner = cursorPortal ? cursorPortal.querySelector('.hc-portal-inner') : null;
+          const portalVideo = cursorPortal ? document.getElementById('hc-portal-video') : null;
+
+          if (cursorPortal && portalInner) {
+            document.querySelectorAll('.hc-card').forEach(card => {
+              card.addEventListener('mouseenter', (e) => {
+                if (window.innerWidth <= 768) return;
+
+                const img = card.querySelector('.hc-media-layer img');
+                const vid = card.querySelector('.hc-media-layer video');
+
+                if (img) {
+                  // Imagen: usar background-image como antes
+                  portalInner.style.backgroundImage = `url('${img.src}')`;
+                  portalInner.style.opacity = '1';
+                  portalInner.style.transform = 'scale(1)';
+                  if (portalVideo) portalVideo.style.opacity = '0';
+                } else if (vid && portalVideo) {
+                  // Video: apuntar al mismo src (ya cacheado) y reproducir
+                  portalInner.style.backgroundImage = 'none';
+                  portalInner.style.opacity = '1';
+                  portalInner.style.transform = 'scale(1)';
+                  if (portalVideo.src !== vid.src) {
+                    portalVideo.src = vid.src;
+                  }
+                  portalVideo.style.opacity = '1';
+                  portalVideo.play().catch(() => { });
+                }
+
+                let x = e.clientX + 20;
+                let y = e.clientY - 370;
+                cursorPortal.style.transform = `translate(${x}px, ${y}px)`;
+              });
+
+              card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return;
+
+                let x = e.clientX + 20;
+                let y = e.clientY - 370;
+
+                cursorPortal.style.transform = `translate(${x}px, ${y}px)`;
+              });
+
+              card.addEventListener('mouseleave', () => {
+                portalInner.style.opacity = '0';
+                portalInner.style.transform = 'scale(0.5)';
+                if (portalVideo) {
+                  portalVideo.style.opacity = '0';
+                  portalVideo.pause();
+                }
+              });
+            });
+          }
+
+          // Botones de Play (Lógica pura de toggle UI)
+          const playBtns = document.querySelectorAll('.hc-play');
+          playBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const player = e.currentTarget.closest('.hc-player');
+              const wave = player.querySelector('.hc-wave');
+              const audio = player.querySelector('.hc-audio');
+
+              if (wave.classList.contains('playing')) {
+                // Action: Pause
+                wave.classList.remove('playing');
+                e.currentTarget.innerHTML = '▶';
+                e.currentTarget.style.paddingLeft = '3px';
+                if (audio) audio.pause();
+              } else {
+                // Action: Pause ALL others first
+                document.querySelectorAll('.hc-player').forEach(p => {
+                  const w = p.querySelector('.hc-wave');
+                  if (w.classList.contains('playing')) {
+                    w.classList.remove('playing');
+                    const pBtn = p.querySelector('.hc-play');
+                    pBtn.innerHTML = '▶';
+                    pBtn.style.paddingLeft = '3px';
+                    const a = p.querySelector('.hc-audio');
+                    if (a) a.pause();
+                  }
+                });
+
+                // Action: Play this one
+                wave.classList.add('playing');
+                e.currentTarget.innerHTML = '<span style="font-size: 0.8rem; font-weight: 900; letter-spacing: 1px;">||</span>';
+                e.currentTarget.style.paddingLeft = '0px';
+
+                if (audio) {
+                  audio.play().catch(err => console.log("Audio no insertado o no detectado aún en /assets/audio/", err));
+                }
+              }
+            });
+          });
+
+          // 2. Efecto Frente: Borde Curvo + Aparición de Texto (Idea 2)
+          const demoSection = document.getElementById('interactiveSection');
+          if (demoSection) {
+            const tlTransition = gsap.timeline({
+              scrollTrigger: {
+                trigger: demoSection,
+                start: 'top bottom', // Cuando el borde entra
+                end: 'top top',      // Se endereza completamente JUSTO al tocar el techo del viewport
+                scrub: 0.5           // Inercia suave
+              }
+            });
+
+            // Aplanar la curva
+            tlTransition.to(demoSection, {
+              borderTopLeftRadius: '0vw 0px',
+              borderTopRightRadius: '0vw 0px',
+              ease: "none"
+            }, 0);
+
+            // Parallax Revelador del Texto "EL TABLERO ES TUYO"
+            // Anima desde un estado borroso y hundido hasta su estado CSS normal
+            const demoTitle = demoSection.querySelector('h2');
+            const demoSubtitle = document.getElementById('deckInstruction');
+
+            if (demoTitle) {
+              tlTransition.from(demoTitle, {
+                scale: 0.8,
+                opacity: 0,
+                filter: "blur(15px)",
+                y: 60,
+                ease: "power2.out"
+              }, 0);
+            }
+            if (demoSubtitle) {
+              tlTransition.from(demoSubtitle, {
+                opacity: 0,
+                y: 20,
+                filter: "blur(5px)",
+                ease: "power2.out"
+              }, 0.2); // El subtítulo sale con ligero retraso
+            }
+          }
+
+      // Tricks Cards
+      gsap.from('.trick-card', {
+        scrollTrigger: {
+          trigger: '.tricks-grid',
+          start: 'top 80%'
+        },
+        y: 80,
+        opacity: 0,
+        rotationZ: -3,
+        duration: 1,
+        stagger: 0.15,
+        ease: 'back.out(1.2)'
+      });
+
+      // Offer Box Pop
+      gsap.from('.offer-product', {
+        scrollTrigger: {
+          trigger: '.offer-grid',
+          start: 'top 75%'
+        },
+        y: 50,
+        scale: 0.95,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power4.out'
+      });
+    });
+
+    // Logic for Interactive Cards
+    let highestZIndex = 100;
+
+    // AUTO UNBOXING LOGIC
+    const deck = document.getElementById('mainDeck');
+    const hiddenCards = Array.from(document.querySelectorAll('.card-wrap.card-in-deck'));
+    const instruction = document.getElementById('deckInstruction');
+    let currentDraw = 0;
+
+    function spawnNextCard() {
+      if (currentDraw < hiddenCards.length) {
+        const nextCard = hiddenCards[currentDraw];
+
+        // --- LÓGICA DE RELEVO CONTINUO ---
+        // Calculamos en qué punto de profundidad (Z) y salida de fricción (Y) debía estar la carta
+        let zDepth = 4 + (currentDraw * 2);
+        let startY = 15; // default para la primera carta (hundida en la caja)
+        if (currentDraw === 1) startY = -35;
+        if (currentDraw === 2) startY = -28;
+        if (currentDraw === 3) startY = -20;
+
+        // Empujamos la carta virtual a la posición exacta que ocupaba la carta falsa de apoyo
+        nextCard.style.transform = `translate(-50%, calc(-50% + ${startY}px)) translateZ(${zDepth}px) rotate(-90deg) scale(0.85)`;
+        nextCard.dataset.zDepth = zDepth;
+
+        // Ocultamos la carta de apoyo falsa para que la carta real tome el relevo limpiamente
+        if (currentDraw > 0) {
+          const fakePlane = document.querySelector(`.interior-cards .interior-card:nth-child(${currentDraw})`);
+          if (fakePlane) {
+            fakePlane.style.transition = 'opacity 0.2s';
+            fakePlane.style.opacity = '0';
+          }
+        }
+
+        // Forzamos al navegador a procesar la posición de inicio antes de arrancar la transición
+        void nextCard.offsetWidth;
+
+        nextCard.classList.remove('card-in-deck');
+        nextCard.classList.add('card-peeking');
+        nextCard.style.zIndex = '';
+
+        // Disparamos el destino de la animación, respetando la profundidad dinámica
+        let peekY = window.innerWidth >= 768 ? -110 : -90;
+        nextCard.style.transform = `translate(-50%, calc(-50% + ${peekY}px)) translateZ(${zDepth}px) rotate(-90deg) scale(0.9)`;
+
+        instruction.innerHTML = '¡Arrastra la carta y ponla en el tablero libremente! ↓';
+        currentDraw++;
+        updateHint();
+      }
+    }
+
+    function updateHint(progress = null) {
+      const hint = document.getElementById('dragHint');
+      if (!hint) return;
+      const peekingCard = document.querySelector('.card-peeking:not(.card-on-table)');
+
+      let p = progress !== null ? progress : (window.boxOpenTl ? window.boxOpenTl.scrollTrigger.progress : 0);
+
+      const textSpan = hint.querySelector('span');
+      const arrowSvg = hint.querySelector('svg');
+      if (textSpan) {
+        let newText = '';
+        if (currentDraw <= 1) {
+          newText = 'Coge la carta';
+          if (arrowSvg) arrowSvg.style.display = 'block';
+        } else if (currentDraw === 2) {
+          newText = 'Coge otra carta';
+          if (arrowSvg) arrowSvg.style.display = 'block';
+        } else if (currentDraw === 3) {
+          newText = 'Otra más y...';
+          if (arrowSvg) arrowSvg.style.display = 'block';
+        } else if (currentDraw >= 4) {
+          newText = 'Empieza pinchando el botón';
+          if (arrowSvg) arrowSvg.style.display = 'none';
+        }
+
+        if (textSpan.innerHTML !== newText) {
+          hint.style.opacity = '0';
+          setTimeout(() => {
+            textSpan.innerHTML = newText;
+            hint.style.opacity = '';
+          }, 350);
+        }
+      }
+
+      // Vinculamos la visibilidad a la carta asomando O al 90% del scroll (antes del tope) para la primera
+      if (peekingCard || (p >= 0.90 && currentDraw === 0)) {
+        hint.classList.add('is-visible');
+      } else {
+        hint.classList.remove('is-visible');
+      }
+    }
+
+    if (deck) {
+      // 4. ANIMACIÓN ESCALADA AL SCROLL (Sustituye a IntersectionObserver antiguo)
+      const deckSection = document.querySelector('.interactive-demo-section');
+
+      if (deckSection) {
+        deckSection.addEventListener('mousemove', (e) => {
+          const hint = document.getElementById('dragHint');
+          if (hint) {
+            const rect = deckSection.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Contenedor anclado al 38% vertical y con un gap simétrico de 30px para que texto y flecha abracen al ratón por igual.
+            hint.style.transform = `translate(${x}px, ${y}px) translate(-50%, -38%) rotate(-2deg)`;
+
+            // Flecha brújula: apunta a la carta actual o a la caja
+            const arrowSvg = hint.querySelector('svg');
+            if (arrowSvg && arrowSvg.style.display !== 'none') {
+              const target = document.querySelector('.card-peeking:not(.card-on-table)') || document.getElementById('mainDeck');
+              if (target) {
+                const targetRect = target.getBoundingClientRect();
+
+                // ¿Está el ratón posado sobre la carta/caja? (Le damos 20px de margen de gracia)
+                const isHovering = (
+                  e.clientX >= targetRect.left - 20 && e.clientX <= targetRect.right + 20 &&
+                  e.clientY >= targetRect.top - 20 && e.clientY <= targetRect.bottom + 20
+                );
+
+                let angle = 0;
+                if (isHovering) {
+                  // Si ya estamos tocando la carta, apuntar directamente ARRIBA (-90 grados) para pedirle que tire
+                  angle = -90;
+                } else {
+                  // Si estamos fuera, apuntar a la cúspide VISIBLE de la carta/caja, no al centro físico oculto
+                  const targetX = targetRect.left - rect.left + targetRect.width / 2;
+                  const targetY = targetRect.top - rect.top + 30;
+
+                  const dx = targetX - x;
+                  const dy = targetY - y;
+                  angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                }
+
+                // La flecha SVGs dibujada a mano apunta por defecto a +130deg. Restamos para calibrar el eje 0.
+                arrowSvg.style.transform = `rotate(${angle - 130}deg)`;
+                arrowSvg.style.transformOrigin = 'center';
+              }
+            }
+          }
+        });
+      }
+
+      if (typeof gsap !== 'undefined') {
+        // Quitamos las transiciones CSS de las solapas para que GSAP tenga el control completo y sin lag
+        const flaps = document.querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .interior-cards .interior-card');
+        flaps.forEach(el => el.style.transition = 'none');
+
+        // Estado inicial de la caja forzado
+        gsap.set('.box-flap', { rotationX: 90 });
+        gsap.set('.tuck-lip', { rotationX: -92 });
+        gsap.set('.dust-flap', { rotationX: -90 });
+        gsap.set('.interior-cards .interior-card', { y: 0, z: (i) => 6 + i * 2 });
+
+        window.boxOpenTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: deckSection,
+            start: () => 'top top',
+            end: () => '+=1500',
+            pin: true,
+            scrub: 1,
+            refreshPriority: -1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (self.progress > 0.05 && self.progress < 0.9) {
+                instruction.innerHTML = 'Sigue bajando para abrir la caja... ↓';
+              }
+
+              const peekingCard = document.querySelector('.card-peeking:not(.card-on-table)');
+
+              // Si abrimos la caja la carta ya ha sido extraída manualmente con el scroll! Solo validamos su jugabilidad.
+              if (self.progress >= 0.90 && self.direction === 1 && !peekingCard && currentDraw < hiddenCards.length) {
+                spawnNextCard();
+              }
+              // Si cerramos la caja (scroll arriba) escondemos cualquier carta que sobresalga
+              else if (self.progress < 0.87 && self.direction === -1 && peekingCard) {
+                peekingCard.classList.remove('card-peeking');
+                peekingCard.classList.add('card-in-deck');
+                peekingCard.style.transform = ''; // Limpiamos transform inline para dar paso al scrub GSAP en reverso
+
+                currentDraw--;
+
+                if (currentDraw > 0) {
+                  const fakePlane = document.querySelector(`.interior-cards .interior-card:nth-child(${currentDraw})`);
+                  if (fakePlane) fakePlane.style.opacity = '1';
+                }
+
+                instruction.innerHTML = 'Sigue bajando para abrir la caja... ↓';
+              }
+              updateHint(self.progress);
+            }
+          }
+        });
+
+        window.boxOpenTl.to('.box-flap', { rotationX: 180, duration: 1, ease: 'none' }, 0.3)
+          .to('.tuck-lip', { rotationX: -5, duration: 0.5, ease: 'none' }, 0.5)
+          .to('.dust-flap', { rotationX: -180, duration: 0.6, ease: 'none' }, 0.7)
+          .to('.interior-cards .interior-card:nth-child(1)', { z: 6, y: -35, duration: 0.5, ease: 'power1.inOut' }, 1.1)
+          .to('.interior-cards .interior-card:nth-child(2)', { z: 8, y: -28, duration: 0.5, ease: 'power1.inOut' }, 1.1)
+          .to('.interior-cards .interior-card:nth-child(3)', { z: 10, y: -20, duration: 0.5, ease: 'power1.inOut' }, 1.1)
+          .to('.interior-cards .interior-card:nth-child(4)', { z: 12, y: -12, duration: 0.5, ease: 'power1.inOut' }, 1.1)
+          .to('.interior-cards .interior-card:nth-child(5)', { z: 14, y: -6, duration: 0.5, ease: 'power1.inOut' }, 1.1)
+          .to('.interior-cards .interior-card:nth-child(6)', { z: 16, y: -2, duration: 0.5, ease: 'power1.inOut' }, 1.1)
+          .to('.card-n1', { '--scrub-y': (window.innerWidth >= 768 ? '-110px' : '-90px'), duration: 0.5, ease: 'power1.inOut' }, 1.1);
+      }
+
+      // IMPLEMENTAMOS DRAG PARA LA CAJA (igual que las cartas)
+      let isBoxDragging = false;
+      let startBoxX, startBoxY, initialBoxLeft, initialBoxTop;
+
+      deck.addEventListener('pointerdown', (e) => {
+        // Si pinchamos una carta que asoma, ignoramos arrastrar la caja
+        if (e.target.closest('.card-wrap')) return;
+
+        isBoxDragging = true;
+
+        // Convertimos el bottom/margin-left a left/top absolutos la primera vez
+        if (!deck.dataset.dragged) {
+          deck.dataset.dragged = 'true';
+          const currentLeft = deck.offsetLeft;
+          const currentTop = deck.offsetTop;
+
+          deck.style.bottom = 'auto';
+          deck.style.marginLeft = '0';
+          deck.style.marginTop = '0';
+          deck.style.left = currentLeft + 'px';
+          deck.style.top = currentTop + 'px';
+        }
+
+        startBoxX = e.clientX;
+        startBoxY = e.clientY;
+        initialBoxLeft = parseFloat(deck.style.left) || deck.offsetLeft;
+        initialBoxTop = parseFloat(deck.style.top) || deck.offsetTop;
+
+        const canvas = document.querySelector('.canvas');
+        deck.dataset.cwW = canvas.offsetWidth;
+        deck.dataset.cwH = canvas.offsetHeight;
+        deck.dataset.bW = deck.offsetWidth;
+        deck.dataset.bH = deck.offsetHeight;
+
+        deck.setPointerCapture(e.pointerId);
+      });
+
+      deck.addEventListener('pointermove', (e) => {
+        if (!isBoxDragging) return;
+
+        const dx = e.clientX - startBoxX;
+        const dy = e.clientY - startBoxY;
+
+        let newLeft = initialBoxLeft + dx;
+        let newTop = initialBoxTop + dy;
+
+        const bW = Number(deck.dataset.bW) || 207;
+        const bH = Number(deck.dataset.bH) || 301;
+        const cwW = Number(deck.dataset.cwW) || window.innerWidth;
+        const cwH = Number(deck.dataset.cwH) || window.innerHeight;
+
+        const minLeft = -(bW / 2);
+        const maxLeft = cwW - (bW / 2);
+        const minTop = -(bH / 2);
+        const maxTop = cwH - (bH / 2);
+
+        if (newLeft < minLeft) newLeft = minLeft;
+        if (newLeft > maxLeft) newLeft = maxLeft;
+        if (newTop < minTop) newTop = minTop;
+        if (newTop > maxTop) newTop = maxTop;
+
+        deck.style.left = `${newLeft}px`;
+        deck.style.top = `${newTop}px`;
+      });
+
+      const endBoxDrag = (e) => {
+        isBoxDragging = false;
+        try { deck.releasePointerCapture(e.pointerId); } catch (err) { }
+      };
+      deck.addEventListener('pointerup', endBoxDrag);
+      window.addEventListener('pointerup', endBoxDrag);
+      window.addEventListener('pointercancel', endBoxDrag);
+    }
+
+    // ARRASTRE
+    document.querySelectorAll('.card-wrap').forEach(card => {
+      let isDragging = false;
+      let startX, startY, initialLeft, initialTop;
+      const baseRot = card.getAttribute('data-rot') || 0;
+
+      card.addEventListener('pointerdown', (e) => {
+        if (card.classList.contains('card-in-deck')) return; // Bloquear si está oculta en la caja
+
+        // Permitir que los enlaces funcionen de forma nativa sin arrastrar la carta
+        if (e.target.closest('a')) return;
+
+        // Si la cogemos cuando está asomando ("peeking")
+        if (card.classList.contains('card-peeking')) {
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          card.style.transition = 'none';
+          let basePeekY = window.innerWidth >= 768 ? -110 : -90;
+          card.dataset.startPeekY = basePeekY; // Guardamos dinámicamente según pantalla
+          card.setPointerCapture(e.pointerId);
+          return;
+        }
+
+        isDragging = true;
+        highestZIndex++;
+        card.style.zIndex = highestZIndex;
+
+        // Añadimos una transición fluida (ease-out suave) para que la carta "salga" hacia el centro del puntero
+        card.style.transition = 'transform 0.6s cubic-bezier(0.15, 1, 0.3, 1), box-shadow 0.6s ease';
+
+        card.style.boxShadow = "0 8px 16px rgba(0,0,0,0.12), 0 24px 48px rgba(0,0,0,0.16)";
+        card.style.transform = `rotate(${baseRot}deg) scale(1.05)`;
+        startX = e.clientX;
+        startY = e.clientY;
+        initialLeft = card.offsetLeft;
+        initialTop = card.offsetTop;
+
+        const canvas = document.querySelector('.canvas');
+        card.dataset.cwW = canvas.offsetWidth;
+        card.dataset.cwH = canvas.offsetHeight;
+        card.dataset.cW = card.offsetWidth;
+        card.dataset.cH = card.offsetHeight;
+
+        card.setPointerCapture(e.pointerId);
+      });
+
+      card.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+
+        if (card.classList.contains('card-peeking')) {
+          const dy = e.clientY - startY;
+          let newPeekY = Number(card.dataset.startPeekY) + dy * 1.5; // Multiplier feeling faster
+          if (newPeekY > -50) newPeekY = -50;
+
+          let zDepth = card.dataset.zDepth || 4;
+          card.style.transform = `translate(-50%, calc(-50% + ${newPeekY}px)) translateZ(${zDepth}px) rotate(-90deg) scale(0.9)`;
+
+          if (newPeekY < -240) { // Threshold extraída
+            const rect = card.getBoundingClientRect();
+            const parentRect = document.querySelector('.canvas').getBoundingClientRect();
+
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const cardWidth = card.offsetWidth;
+            const cardHeight = card.offsetHeight;
+
+            document.querySelector('.canvas').appendChild(card);
+
+            card.style.left = (centerX - parentRect.left - cardWidth / 2) + 'px';
+            card.style.top = (centerY - parentRect.top - cardHeight / 2) + 'px';
+            card.style.bottom = 'auto';
+            card.style.margin = '0';
+
+            card.style.transition = 'none';
+            card.style.transform = `rotate(-90deg) scale(0.9)`;
+            void card.offsetWidth;
+
+            card.classList.remove('card-peeking');
+            card.classList.add('card-on-table');
+            if (typeof updateHint === 'function') updateHint();
+
+            highestZIndex++;
+            card.style.zIndex = highestZIndex;
+
+            card.style.transition = 'transform 0.6s cubic-bezier(0.15, 1, 0.3, 1), box-shadow 0.6s ease';
+            card.style.boxShadow = "0 8px 16px rgba(0,0,0,0.12), 0 24px 48px rgba(0,0,0,0.16)";
+            card.style.transform = `rotate(${baseRot}deg) scale(1.05)`;
+
+            startX = e.clientX;
+            startY = e.clientY;
+            initialLeft = card.offsetLeft;
+            initialTop = card.offsetTop;
+
+            setTimeout(() => { spawnNextCard(); }, 100);
+          }
+          return;
+        }
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        let newLeft = initialLeft + dx;
+        let newTop = initialTop + dy;
+
+        const cW = Number(card.dataset.cW) || 280;
+        const cH = Number(card.dataset.cH) || 160;
+        const cwW = Number(card.dataset.cwW) || window.innerWidth;
+        const cwH = Number(card.dataset.cwH) || window.innerHeight;
+
+        const minLeft = -(cW / 2);
+        const maxLeft = cwW - (cW / 2);
+        const minTop = -(cH / 2);
+        const maxTop = cwH - (cH / 2);
+
+        if (newLeft < minLeft) newLeft = minLeft;
+        if (newLeft > maxLeft) newLeft = maxLeft;
+        if (newTop < minTop) newTop = minTop;
+        if (newTop > maxTop) newTop = maxTop;
+
+        card.style.left = `${newLeft}px`;
+        card.style.top = `${newTop}px`;
+        card.style.transform = `rotate(${baseRot}deg) scale(1.05)`;
+      });
+
+      const endCardDrag = (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        try { card.releasePointerCapture(e.pointerId); } catch (err) { }
+
+        if (card.classList.contains('card-peeking')) {
+          let zDepth = card.dataset.zDepth || 4;
+          let basePeekY = card.dataset.startPeekY || (window.innerWidth >= 768 ? -110 : -90);
+          card.style.transition = 'transform 0.4s cubic-bezier(0.15, 1, 0.3, 1)';
+          card.style.transform = `translate(-50%, calc(-50% + ${basePeekY}px)) translateZ(${zDepth}px) rotate(-90deg) scale(0.9)`;
+          return;
+        }
+
+        card.style.boxShadow = "";
+        card.style.transform = `rotate(${baseRot}deg) scale(1)`;
+
+        if (card.classList.contains('card-on-table') && card === hiddenCards[3]) {
+          const giantCta = document.querySelector('.giant-glass-cta');
+          if (giantCta && !giantCta.classList.contains('is-visible')) {
+            setTimeout(() => {
+              giantCta.classList.add('is-visible');
+            }, 150);
+          }
+        }
+      };
+
+      card.addEventListener('pointerup', endCardDrag);
+      window.addEventListener('pointerup', endCardDrag);
+      window.addEventListener('pointercancel', endCardDrag);
+
+      card.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
+    });
+
+    // GLOW TRACKING EN TARJETAS DE TRUCOS
+    const trickCards = document.querySelectorAll('.trick-card');
+    trickCards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+
+    // MARQUEE INTERACTIVA (Velocidad adaptativa por ratón)
+    const marqueeInner = document.querySelector('.marquee-inner');
+    if (marqueeInner) {
+      const marqueeScroller = gsap.to(marqueeInner, {
+        xPercent: -50,
+        repeat: -1,
+        duration: 25,
+        ease: 'none'
+      });
+
+      const marqueeSec = document.querySelector('.marquee-section');
+      if (marqueeSec) {
+        let isMarqueeHeld = false;
+        let startX = 0;
+        let startProgress = 0;
+
+        marqueeSec.addEventListener('pointerdown', (e) => {
+          isMarqueeHeld = true;
+          startX = e.clientX;
+
+          // Matamos inercias previas y clavamos el progreso exacto
+          gsap.killTweensOf(marqueeScroller);
+          marqueeScroller.pause();
+          startProgress = marqueeScroller.progress();
+
+          try { marqueeSec.setPointerCapture(e.pointerId); } catch (err) { }
+        });
+
+        window.addEventListener('pointerup', (e) => {
+          if (!isMarqueeHeld) return;
+          isMarqueeHeld = false;
+          try { marqueeSec.releasePointerCapture(e.pointerId); } catch (err) { }
+
+          marqueeScroller.play(); // Despausar
+
+          // Re-chequea si ratón sigue dentro para arrancar con o sin scrubbing
+          const rect = marqueeSec.getBoundingClientRect();
+          if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            gsap.fromTo(marqueeScroller, { timeScale: 0 }, { timeScale: mouseX * 4, duration: 0.5, overwrite: true });
+          } else {
+            gsap.fromTo(marqueeScroller, { timeScale: 0 }, { timeScale: 1, duration: 0.8, overwrite: true });
+          }
+        });
+
+        marqueeSec.addEventListener('pointerleave', () => {
+          if (isMarqueeHeld) return; // Conserva la pausa si sales arrastrando fuera
+          gsap.to(marqueeScroller, {
+            timeScale: 1,
+            duration: 0.8,
+            overwrite: true
+          });
+        });
+
+        marqueeSec.addEventListener('pointermove', (e) => {
+          if (isMarqueeHeld) {
+            // Dragging mode (1:1 tracking)
+            const dx = e.clientX - startX;
+            const halfWidth = marqueeInner.offsetWidth / 2;
+            let delta = -(dx / halfWidth);
+            let p = startProgress + delta;
+
+            // Loop matemático perfecto
+            p = p % 1;
+            if (p < 0) p += 1;
+
+            marqueeScroller.progress(p);
+          } else {
+            // Hover scrubbing mode
+            const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            gsap.to(marqueeScroller, {
+              timeScale: mouseX * 4,
+              duration: 0.5,
+              overwrite: true
+            });
+          }
+        });
+      }
+    }
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ==========================================
+    // CHAMPAGNE BUBBLES HOVER EFFECT
+    // ==========================================
+    function initChampagneHover() {
+      const ctas = document.querySelectorAll('.btn-floating');
+      if (ctas.length === 0) return;
+
+      const backdrop = document.createElement('div');
+      backdrop.id = 'champagne-backdrop';
+      document.body.appendChild(backdrop);
+
+      let cleanupTimeout;
+
+      ctas.forEach(cta => {
+        cta.addEventListener('mouseenter', () => {
+          clearTimeout(cleanupTimeout);
+          backdrop.style.opacity = '1';
+
+          // Elevate wrapper
+          const heroCtaArea = cta.closest('.hero-cta-area') || cta.parentElement;
+          if (heroCtaArea) {
+            heroCtaArea.style.position = 'relative';
+            heroCtaArea.style.zIndex = '100'; // Penetrate root backdrop
+          }
+
+          // Elevate heading based on context (Hero section or 4 steps card)
+          let localH1 = null;
+          if (cta.closest('.hero-body')) {
+            localH1 = document.querySelector('.hero-body h1');
+          } else if (cta.closest('.intro-card')) {
+            localH1 = cta.closest('.intro-card').querySelector('h2');
+          }
+
+          if (localH1) {
+            localH1.style.position = 'relative';
+            localH1.style.zIndex = '100';
+            gsap.to(localH1, { scale: 1.05, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+          }
+
+          const relativeParent = cta.closest('.hero-body') || cta.closest('.scatter-card');
+          if (relativeParent) {
+            if (relativeParent.classList.contains('scatter-card')) {
+              relativeParent.style.zIndex = '100'; // Bring whole card above backdrop
+            } else {
+              relativeParent.style.zIndex = 'auto'; // Break stacking context trap
+            }
+          }
+
+          cta.style.zIndex = '100';
+          cta.style.position = 'relative';
+
+          // ------------------
+          // CARD SCATTER LOGIC
+          // ------------------
+          if (!backdrop.querySelector('.olt-hover-card')) {
+            const levels = ['NIVEL 1 | Rompehielos', 'NIVEL 2 | Profundizando', 'NIVEL 3 | Profundo'];
+            for (let i = 0; i < 6; i++) {
+              const card = document.createElement('div');
+              card.classList.add('olt-hover-card');
+              const randomLevel = levels[Math.floor(Math.random() * levels.length)];
+              card.innerHTML = `
+                <div class="olt-card-inner">
+                  <img src="assets/img/logo one last time verde.png" alt="One Last Time" style="height: 34px; width: auto; object-fit: contain; margin-bottom: 5px; margin-top: -10px;">
+                  <div class="olt-card-level">${randomLevel}</div>
+                  <div class="olt-card-desc">ESCANEA PARA DESCUBRIR RESPUESTAS<br>DE OTRXS Y COMPARTIR LA TUYA</div>
+                </div>
+              `;
+              backdrop.appendChild(card);
+            }
+          }
+
+          const cards = backdrop.querySelectorAll('.olt-hover-card');
+          gsap.set(cards, { y: 0, x: 0, rotation: 0, opacity: 0, scale: 0.1 });
+
+          const zones = [
+            { rx: -0.35, ry: -0.35 }, { rx: 0.35, ry: -0.35 },
+            { rx: -0.45, ry: 0.05 }, { rx: 0.45, ry: 0.05 },
+            { rx: -0.25, ry: 0.4 }, { rx: 0.25, ry: 0.4 }
+          ].sort(() => Math.random() - 0.5);
+
+          cards.forEach((card, index) => {
+            const zone = zones[index % zones.length];
+            const randomX = (zone.rx * window.innerWidth) + ((Math.random() - 0.5) * 250);
+            const randomY = (zone.ry * window.innerHeight) + ((Math.random() - 0.5) * 250);
+            const randomRot = (Math.random() - 0.5) * 120;
+
+            gsap.to(card, {
+              x: randomX, y: randomY, rotation: randomRot, scale: 1, opacity: 1,
+              duration: 0.8 + Math.random() * 0.4, ease: 'expo.out', delay: index * 0.05
+            });
+          });
+        });
+
+        cta.addEventListener('mouseleave', () => {
+          backdrop.style.opacity = '0';
+
+          let localH1 = null;
+          if (cta.closest('.hero-body')) {
+            localH1 = document.querySelector('.hero-body h1');
+            if (localH1) gsap.to(localH1, { scale: 0.95, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+          } else if (cta.closest('.intro-card')) {
+            localH1 = cta.closest('.intro-card').querySelector('h2');
+            if (localH1) gsap.to(localH1, { scale: 1, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+          }
+
+          const cards = backdrop.querySelectorAll('.olt-hover-card');
+          gsap.to(cards, {
+            y: 0, x: 0, rotation: 0, scale: 0.1, opacity: 0, duration: 0.5, ease: 'power3.in', overwrite: 'auto'
+          });
+
+          clearTimeout(cleanupTimeout);
+          cleanupTimeout = setTimeout(() => {
+            backdrop.innerHTML = '';
+            const heroCtaArea = cta.closest('.hero-cta-area') || cta.parentElement;
+            if (heroCtaArea) {
+              heroCtaArea.style.position = '';
+              heroCtaArea.style.zIndex = '';
+            }
+            if (localH1) {
+              localH1.style.position = '';
+              localH1.style.zIndex = '';
+            }
+            cta.style.zIndex = '';
+            const relativeParent = cta.closest('.hero-body') || cta.closest('.scatter-card');
+            if (relativeParent) {
+              if (relativeParent.classList.contains('scatter-card')) {
+                relativeParent.style.zIndex = '10'; // Reset to GSAP default
+              } else {
+                relativeParent.style.zIndex = '';
+              }
+            }
+          }, 500);
+        });
+      });
+    }
+
+    // Auto-Arming Intercept
+    initChampagneHover();
+
+    // Force GSAP ScrollTrigger to recalculate exact offsets after all images/videos expand the DOM
+    const fixScrollTriggerMath = () => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); };
+    window.addEventListener('load', () => {
+      setTimeout(fixScrollTriggerMath, 300);
+      setTimeout(fixScrollTriggerMath, 1500); // Failsafe for remote Pexels videos triggering late DOM paints
+      setTimeout(fixScrollTriggerMath, 3500);
+    });
+
+    // Recalculate on mobile scroll bar hide/show (resize)
+    let resizeSTTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeSTTimer);
+      resizeSTTimer = setTimeout(fixScrollTriggerMath, 200);
+    });
+
+  </script>
+
+  <!-- PORTAL FANTASMA -->
+  <div id="hc-cursor-portal">
+    <div class="hc-portal-inner"></div>
+    <video id="hc-portal-video" muted loop playsinline
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;opacity:0;transition:opacity 0.3s ease;pointer-events:none;"></video>
+  </div>
+</body>
+
+</html>
