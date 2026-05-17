@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -1603,7 +1603,7 @@ window.onerror = function(msg, url, line, col, err) {
           </div>
 
           <!-- Circulo No6 -->
-          <div style="position: absolute; bottom: 4%; left: 5%; z-index: 4; width: 85px; height: 85px; border: 1.2px solid rgba(255, 255, 255, 0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <div id="mag-circle" style="position: absolute; bottom: 4%; left: 5%; z-index: 4; width: 85px; height: 85px; border: 1.2px solid rgba(255, 255, 255, 0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
             <div style="font-family: 'Times New Roman', Times, serif; display: flex; align-items: baseline; color: rgba(255, 255, 255, 0.95); margin-left: 2px;">
               <span style="font-size: 1.6rem;">N<sup style="text-decoration: underline; text-underline-offset: 3px; font-size: 0.65em; margin-left: 1px;">o</sup></span>
               <span style="font-size: 1.8rem; line-height: 0.8; margin-left: 2px;">76</span>
@@ -5097,14 +5097,19 @@ window.onerror = function(msg, url, line, col, err) {
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. TÍTULO INFERIOR — slide down + fade (último)
+            // 7. CÍRCULO Nº76 — shrink + fade (como Oryzo)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.45, 0, 1), 0), 1);
+              const eu = 1 - Math.pow(1 - p, 3);
+              applyExit('mag-circle', `scale(${1 - eu})`, 1 - p); }
+
+            // 8. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
           } else {
             // Antes de prog 14.62: overlay oculto, elementos reseteados
             breakoutOverlay.style.display = 'none';
-            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom'].forEach(id => {
+            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle'].forEach(id => {
               document.querySelectorAll(`[id="${id}"]`).forEach(el => {
                 el.style.transform = '';
                 el.style.opacity   = '';
@@ -5216,14 +5221,19 @@ window.onerror = function(msg, url, line, col, err) {
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. TÍTULO INFERIOR — slide down + fade (último)
+            // 7. CÍRCULO Nº76 — shrink + fade (como Oryzo)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.45, 0, 1), 0), 1);
+              const eu = 1 - Math.pow(1 - p, 3);
+              applyExit('mag-circle', `scale(${1 - eu})`, 1 - p); }
+
+            // 8. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
           } else {
             // Antes de prog 14.62: overlay oculto, elementos reseteados
             breakoutOverlay.style.display = 'none';
-            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom'].forEach(id => {
+            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle'].forEach(id => {
               document.querySelectorAll(`[id="${id}"]`).forEach(el => {
                 el.style.transform = '';
                 el.style.opacity   = '';
