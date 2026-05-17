@@ -7812,9 +7812,9 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Arranca el loop cuando ambos modelos están listos ──
     function checkReady() {
-      if (!_fullLoaded || !_halfLoaded) return;
+      if (!_fullLoaded) return;
       _brainReady = true;
-      console.log('[BRAIN] Dual-model listo — swap activo');
+      console.log('[BRAIN] Listo — swap 2D activo');
       _renderBrainLoop();
     }
 
@@ -7832,22 +7832,8 @@ window.onerror = function(msg, url, line, col, err) {
       checkReady();
     }, null, function(e) { console.error('[BRAIN] Error full:', e); });
 
-    // Cargar MEDIO cerebro (oculto al inicio)
-    loader.load('assets/models/human_brain_half.glb', function(gltf) {
-      var wrapper = wrapAndCenter(gltf.scene);
-      applyThermalMat(wrapper);
-      // Aplicar plano de recorte inferior a todos los materiales del medio cerebro
-      wrapper.traverse(function(c) {
-        if (!c.isMesh) return;
-        var mats = Array.isArray(c.material) ? c.material : [c.material];
-        mats.forEach(function(m) { m.clippingPlanes = [_halfClipPlane]; m.clipShadows = false; });
-      });
-      setOpacity(wrapper, 0.0);     // empieza invisible
-      _brainHalf = wrapper;
-      _brainScene.add(_brainHalf);
-      _halfLoaded = true;
-      checkReady();
-    }, null, function(e) { console.error('[BRAIN] Error half:', e); });
+    // El medio cerebro ahora es la imagen 2D — no se carga el GLB
+    _halfLoaded = true; // ya no es necesario
 
     window.addEventListener('resize', function() {
       if (!_brainRenderer) return;
@@ -7859,7 +7845,7 @@ window.onerror = function(msg, url, line, col, err) {
 
   function _renderBrainLoop() {
     requestAnimationFrame(_renderBrainLoop);
-    if (!_brainReady || !_brainFull || !_brainHalf) return;
+    if (!_brainReady || !_brainFull) return;
     _brainT = _brainClock.getElapsedTime();
 
     var _bProg   = window._brainScrollProg || 0;
@@ -7905,15 +7891,8 @@ window.onerror = function(msg, url, line, col, err) {
     // → en el punto de swap (mismo rotEase) muestran la misma vista anatómica
     _brainFull.rotation.y = _rotEase * (-Math.PI / 2);
     _brainFull.position.set(posX, posY, -DIST);
-    _brainHalf.rotation.y = Math.PI / 2 + _rotEase * (-Math.PI / 2);
-    _brainHalf.position.set(halfPosX, halfPosY, -DIST);
-
-    // FIX 2: gate de visibilidad — cuando opacity=0 oculta completamente el mesh
-    // (sin esto Three.js lo renderiza como sombra negra aunque sea transparente)
+    // Cerebro COMPLETO: fade-out con swapT (la imagen 2D lo reemplaza)
     _brainFull.visible = (fullOpacity > 0.01);
-    _brainHalf.visible = (halfOpacity > 0.01);
-
-    // Aplicar opacidades del crossfade (solo si visible)
     if (_brainFull.visible) {
       _brainFull.traverse(function(c) {
         if (!c.isMesh) return;
@@ -7921,19 +7900,6 @@ window.onerror = function(msg, url, line, col, err) {
         mats.forEach(function(m) { m.opacity = fullOpacity; });
       });
     }
-    if (_brainHalf.visible) {
-      _brainHalf.traverse(function(c) {
-        if (!c.isMesh) return;
-        var mats = Array.isArray(c.material) ? c.material : [c.material];
-        mats.forEach(function(m) { m.opacity = halfOpacity; });
-      });
-    }
-
-    // Actualizar plano de recorte del medio cerebro (mundo space)
-    // Corta todo lo que esté por debajo de halfPosY - offset
-    // Ajusta el segundo número para subir/bajar el corte
-    var cutY = halfPosY - 0.17 * vH / 2;
-    _halfClipPlane.constant = -cutY; // THREE.Plane: normal·point + constant ≥ 0 → visible si Y ≥ cutY
 
     _brainRenderer.render(_brainScene, _brainCamera);
   }
