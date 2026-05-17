@@ -7676,21 +7676,17 @@ window.onerror = function(msg, url, line, col, err) {
           ].join('\n');
           shader.fragmentShader = fHead + '\n' + shader.fragmentShader;
 
-          // Inyección: brighten+warm-shift solo en zona cingulada, preserva sombras
+          // DIAGNÓSTICO: gradiente naranja→amarillo según posición Y normalizada
+          // El cíngulo está ARRIBA del cuerpo calloso, así que aparecerá en la parte amarilla.
+          // Dime en qué "nivel" de amarillo aparece el cíngulo para calibrar.
           shader.fragmentShader = shader.fragmentShader.replace(
             'gl_FragColor = vec4( outgoingLight, diffuseColor.a );',
             [
               'gl_FragColor = vec4( outgoingLight, diffuseColor.a );',
-              'float _h = cingHeat(vLP);',
-              // Detectar color lila de textura si existe
-              '#ifdef USE_MAP',
-              '  vec4 _rt = texture2D(map, vUv);',
-              '  float _bd = max(0.0, _rt.b - _rt.g * 1.1);',
-              '  _h = max(_h, smoothstep(0.04,0.18,_bd)*smoothstep(0.06,0.22,_rt.r));',
-              '#endif',
-              // Hot: más brillo + tono cálido, sombras preservadas (multiplicamos, no reemplazamos)
+              'float _ny = (vLP.y - uBBCtr.y) / uBBHsz.y;', // -1 (abajo) a +1 (arriba)
+              'float _h = max(0.0, _ny);', // solo la mitad superior brilla
               'vec3 _hotC = gl_FragColor.rgb * 2.1 + vec3(0.20,0.08,-0.04);',
-              'gl_FragColor.rgb = mix(gl_FragColor.rgb, _hotC, _h * 0.80);'
+              'gl_FragColor.rgb = mix(gl_FragColor.rgb, _hotC, _h * 0.85);'
             ].join('\n')
           );
         };
