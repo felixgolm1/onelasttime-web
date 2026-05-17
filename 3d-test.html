@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -1611,7 +1611,7 @@ window.onerror = function(msg, url, line, col, err) {
           </div>
 
           <!-- Barcode -->
-          <div style="position: absolute; bottom: 4%; right: 5%; z-index: 4; text-align: right;">
+          <div id="mag-barcode" style="position: absolute; bottom: 4%; right: 5%; z-index: 4; text-align: right;">
             <div style="display: flex; align-items: stretch; gap: 2px; height: 35px; justify-content: flex-end; opacity: 0.85;">
               <div style="width:3px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:2px;background:#fff"></div><div style="width:4px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:3px;background:#fff"></div><div style="width:2px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:4px;background:#fff"></div><div style="width:2px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:3px;background:#fff"></div><div style="width:2px;background:#fff"></div><div style="width:4px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:2px;background:#fff"></div><div style="width:1px;background:#fff"></div><div style="width:3px;background:#fff"></div><div style="width:2px;background:#fff"></div><div style="width:4px;background:#fff"></div>
             </div>
@@ -5106,17 +5106,25 @@ window.onerror = function(msg, url, line, col, err) {
                 el.style.opacity = '' + (1 - p);
               }); }
 
-            // 8. TÍTULO INFERIOR — slide down + fade (último)
+            // 8. BARCODE — wipe de arriba a abajo (clip-path top)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.55, 0, 1), 0), 1);
+              const eu = 1 - Math.pow(1 - p, 2);
+              document.querySelectorAll('[id="mag-barcode"]').forEach(function(el) {
+                el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
+              }); }
+
+            // 9. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
           } else {
             // Antes de prog 14.62: overlay oculto, elementos reseteados
             breakoutOverlay.style.display = 'none';
-            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle'].forEach(id => {
+            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle','mag-barcode'].forEach(id => {
               document.querySelectorAll(`[id="${id}"]`).forEach(el => {
                 el.style.transform = '';
                 el.style.opacity   = '';
+                el.style.clipPath  = '';
               });
             });
               document.querySelectorAll('.ciencia-letter').forEach(el => el.style.transform = '');
@@ -5234,17 +5242,25 @@ window.onerror = function(msg, url, line, col, err) {
                 el.style.opacity = '' + (1 - p);
               }); }
 
-            // 8. TÍTULO INFERIOR — slide down + fade (último)
+            // 8. BARCODE — wipe de arriba a abajo (clip-path top)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.55, 0, 1), 0), 1);
+              const eu = 1 - Math.pow(1 - p, 2);
+              document.querySelectorAll('[id="mag-barcode"]').forEach(function(el) {
+                el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
+              }); }
+
+            // 9. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
           } else {
             // Antes de prog 14.62: overlay oculto, elementos reseteados
             breakoutOverlay.style.display = 'none';
-            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle'].forEach(id => {
+            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle','mag-barcode'].forEach(id => {
               document.querySelectorAll(`[id="${id}"]`).forEach(el => {
                 el.style.transform = '';
                 el.style.opacity   = '';
+                el.style.clipPath  = '';
               });
             });
               document.querySelectorAll('.ciencia-letter').forEach(el => el.style.transform = '');
