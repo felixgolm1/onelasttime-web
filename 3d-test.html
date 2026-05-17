@@ -5075,9 +5075,9 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
 
-            // 5. COPY IZQUIERDO — sale por izquierda linea a linea (sync 0.05-0.55)
+            // 5. COPY IZQUIERDO — empieza en prog 14.67
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.0, 0.5, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
               });
               document.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5086,9 +5086,9 @@ window.onerror = function(msg, url, line, col, err) {
                 line.style.transform = 'translateX(' + (-200 * eu) + 'px)';
               }); }
 
-            // 6. COPY DERECHO — sale por derecha linea a linea (sync 0.05-0.55)
+            // 6. COPY DERECHO — empieza en prog 14.67
             { document.querySelectorAll('[id="mag-copy-right-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.0, 0.5, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
               });
               document.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5213,7 +5213,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 5. COPY IZQUIERDO — sale por izquierda linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.0, 0.5, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
               });
               document.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5224,7 +5224,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 6. COPY DERECHO — sale por derecha linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-right-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.0, 0.5, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
               });
               document.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
