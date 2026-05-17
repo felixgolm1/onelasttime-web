@@ -1,6 +1,14 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+<script>
+window.onerror = function(msg, url, line, col, err) {
+  let d = document.createElement('div');
+  d.style.cssText = 'position:fixed;top:0;left:0;z-index:9999999;background:red;color:white;padding:20px;font-size:24px;width:100%;';
+  d.innerHTML = '<b>JS ERROR:</b> ' + msg + ' <br>Line: ' + line;
+  document.body.appendChild(d);
+};
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One Last Time — Mesa 3D</title>
@@ -31,7 +39,7 @@
     body, html { width:100%; height:100%; background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); overflow:hidden; }
     /* CSS Scrollbar removido, se usa DOM custom abajo */
     #custom-scroll-track {
-      position: fixed; top: 0; right: 0; width: 16px; height: 100vh; z-index: 10050; pointer-events: none;
+      position: fixed; top: 0; right: 0; width: 16px; height: 100vh; z-index: 10000001; pointer-events: none;
     }
     #custom-scroll-thumb {
       position: absolute; top: 0; right: 0; width: 100%; height: 29vh; background: #f5eedf; pointer-events: auto;
@@ -208,16 +216,22 @@
     }
 
     /* ─ Revista Scene ─ */
-    #magazine-scene {
+    #magazine-scene, #camera-flash-container {
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.85); /* Ajustado para maximizar el espacio libre */
       width: 480px;
       height: 640px;
+    }
+    #magazine-scene {
       z-index: 10003;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    #camera-flash-container {
+      z-index: 10015; /* Por encima de .box-3d-wrapper (10010) */
+      pointer-events: none;
     }
     #magazine-border-svg {
       position: absolute;
@@ -232,9 +246,10 @@
     }
     .magazine-content {
       position: absolute;
-      top: 7px; left: 7px;
-      width: calc(100% - 14px); height: calc(100% - 14px);
-      background: radial-gradient(circle at 50% 40%, #e6d3ba 0%, #7b583f 40%, #291810 100%);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: transparent;
+
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -351,6 +366,7 @@
     .mag-col strong { color: #f5cf87; font-size: 0.5rem; display: block; margin-bottom: 2px; text-transform: uppercase; }
     @media (max-width: 768px) {
       #magazine-scene { width: 90vw; height: 130vw; }
+      #camera-flash-container { width: 90vw; height: 130vw; }
       .magazine-title { font-size: 4.5rem; }
     }
     #intro-logo-img.visible { opacity: 1; }
@@ -1093,7 +1109,7 @@
       position: fixed;
       top: 1.5rem;
       left: 2rem;
-      z-index: 10010;
+      z-index: 10000010;
       pointer-events: auto;
       opacity: 0;
     }
@@ -1106,7 +1122,7 @@
       position: fixed;
       top: 1.5rem;
       right: 2.5rem;
-      z-index: 10010;
+      z-index: 10000010;
       display: flex;
       align-items: center;
       gap: 2.2rem;
@@ -1122,7 +1138,7 @@
       bottom: 1.25rem;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 10001;   /* detrás de las cartas scatter (10002/10005) */
+      z-index: 10000001;
       display: flex;
       align-items: center;
       gap: 0.8rem;
@@ -1186,6 +1202,7 @@
       align-items: flex-start;
       vertical-align: top;
       line-height: 1;
+      outline: none !important;
       transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #nav-menu > a.active::after {
@@ -1488,11 +1505,17 @@
 
   </style>
 </head>
-<body>
+
+
+
+  <!-- CAMERA FLASH OVERLAY (Superpuesto a la caja verde, mismo tamaño que revista) -->
+  <div id="camera-flash-container">
+    <div id="camera-flash" style="position: absolute; inset: 0; background: #ffffff; opacity: 0; pointer-events: none; mix-blend-mode: screen;"></div>
+  </div>
 
   <!-- THE MAGAZINE SCENE (Initially hidden) -->
   <div id="magazine-scene" style="display: none; opacity: 0;">
-    <svg id="magazine-border-svg" xmlns="http://www.w3.org/2000/svg">
+    <svg id="magazine-border-svg" xmlns="http://www.w3.org/2000/svg" style="z-index: 3; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
       <!-- Líneas de trazado SVG -->
       <line id="mag-line-t" x1="50%" y1="0%" x2="50%" y2="0%" />
       <line id="mag-line-b" x1="50%" y1="100%" x2="50%" y2="100%" />
@@ -1518,52 +1541,75 @@
       </div>
       <!-- Slide 4 (Magazine) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
-        <div class="magazine-content">
-          <!-- Background Brain Image -->
-      <img src="assets/img/magazine_brain.png" class="mag-brain-img" alt="Cerebro">
-      
-      <!-- Top Bar -->
-      <div class="mag-top-bar">
-        <div class="mag-top-left">INVESTIGACIÓN<br>Y CIENCIA</div>
-        <div class="mag-top-right">Revista de psicología y neurociencias<br>Enero / Febrero 2018 | N.º 75 | 6,90 €</div>
-      </div>
-      
-      <!-- Main Title -->
-      <h1 class="mag-main-title">Mente<span>&amp;</span>Cerebro</h1>
-      
-      <!-- Pink Badge -->
-      <div class="mag-badge">
-        <strong>YIHADISMO</strong>
-        Claves<br>psicológicas del<br>reclutamiento
-      </div>
+        <div class="magazine-content" style="background: transparent; border: none; justify-content: flex-start; padding: 10px; position: relative;">
 
-      <!-- Bottom Article Section -->
-      <div class="mag-article-section">
-        <div class="mag-serie">NUEVA SERIE</div>
-        <div style="display: flex; flex-direction: column;">
-          <h2 class="mag-article-title" style="margin-bottom: -5px;">Estimulación</h2>
-          <div style="display: flex; align-items: flex-end; gap: 10px;">
-            <h2 class="mag-article-title" style="margin-bottom: 0;">cerebral</h2>
-            <p class="mag-article-subtitle" style="margin-bottom: 5px;">Electricidad,<br>campos magnéticos<br>y ultrasonidos</p>
+
+
+
+
+          <!-- CIENCIA: z-index 2 (queda DETRÁS de la modelo) -->
+          <div id="mag-ciencia" style="width: 100%; text-align: center; position: relative; z-index: 2; margin-top: 10px;">
+            <h1 style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 6.76rem; color: #fff; letter-spacing: -0.04em; margin: 0; line-height: 0.9; text-shadow: 2px 2px 6px rgba(0,0,0,0.8); transform: scaleY(1.1);">CIENCIA</h1>
           </div>
-        </div>
-      </div>
 
-      <!-- Footer Columns -->
-      <div class="mag-footer-columns">
-        <div class="mag-col">
-          <strong>Memoria</strong>
-          La importancia<br>de la neurogénesis
+          <!-- MODELO: z-index 3 (tapa el título CIENCIA) -->
+          <img src="assets/img/modelo-sin-fondo.png" style="position: absolute; height: 138%; width: auto; top: 0; left: 50%; transform: translateX(-50%); z-index: 3; pointer-events: none;">
+
+          <!-- SABER MÁS: z-index 4 (encima de todo, incluso de la modelo) -->
+          <div id="mag-saber-mas" style="width: 100%; text-align: center; position: absolute; top: 10px; left: 0; z-index: 4;">
+            <div style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.3rem; color: #fff; letter-spacing: 0.1em; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></div>
+          </div>
+
+          <!-- Nat Geo Logo: z-index 4 -->
+          <div id="mag-natgeo" style="width: 100%; display: flex; align-items: center; gap: 8px; position: relative; z-index: 4; padding-left: 5px; margin-top: 15px;">
+            
+            <div style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.5rem; color: #fff; line-height: 1.1; text-transform: uppercase;"></div>
+          </div>
+
+          <!-- Columnas Laterales: z-index 4 -->
+          <div style="display: flex; justify-content: space-between; width: 100%; position: relative; z-index: 4; margin-top: auto; margin-bottom: 20px; padding: 0 10px;">
+            <!-- Izquierda -->
+            <div id="mag-col-left" style="width: 45%; text-align: left; text-shadow: 1px 1px 3px rgba(0,0,0,0.9);"></div>
+            <!-- Derecha -->
+            <div id="mag-col-right" style="width: 45%; text-align: right; text-shadow: 1px 1px 3px rgba(0,0,0,0.9);"></div>
+          </div>
+          </div>
+
+          <!-- ISSUE NO -->
+          <div style="position: absolute; top: 10px; right: 10px; z-index: 4; text-align: right;">
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.55rem; color: #fff; letter-spacing: 0.1em; text-transform: uppercase;">ISSUE NO. 00124</div>
+          </div>
+
+          <!-- Badge 25 -->
+          <div style="position: absolute; top: 32%; right: 5%; z-index: 4; border: 1.5px solid #fff; padding: 8px 10px; text-align: center;">
+            <div style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 2.6rem; color: #fff; line-height: 1; letter-spacing: -0.02em;">25</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.42rem; color: #fff; text-transform: uppercase; line-height: 1.5; letter-spacing: 0.06em; margin-top: 2px;">AI SLOP IDEAS<br>FOR THIS<br>WINTER</div>
+          </div>
+
+          <!-- We Are So Cooked -->
+          <div style="position: absolute; bottom: 28%; left: 5%; z-index: 4; text-align: left;">
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1.0rem; color: #fff; line-height: 1.1;">We Are So</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.4rem; color: #fff; line-height: 1.1;">Cooked!</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.4rem; color: #fff; line-height: 1.4; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em;">ORYZO IS TAKING EVERYONE'S JOBS...<br>AND REPLACING THEM WITH AI!</div>
+          </div>
+
+          <!-- No 6 circle -->
+          <div style="position: absolute; bottom: 4%; left: 5%; z-index: 4; width: 56px; height: 56px; border: 1.5px solid #fff; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.42rem; color: #fff; letter-spacing: 0.08em; line-height: 1;">N&#186;</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.6rem; color: #fff; line-height: 1; letter-spacing: -0.02em;">6</div>
+          </div>
+
+          <!-- ORYZO-1 + barcode -->
+          <div style="position: absolute; bottom: 4%; right: 5%; z-index: 4; text-align: right; width: 120px;">
+            <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.62rem; color: #fff; letter-spacing: 0.14em; text-transform: uppercase;">ORYZO-1</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.32rem; color: #fff; line-height: 1.5; margin-top: 3px; letter-spacing: 0.02em;">AN OPEN-WEIGHT MODEL DESIGNED TO BE<br>LIGHTWEIGHT AND EASY TO CARRY</div>
+            <div style="display: flex; align-items: flex-end; gap: 0.8px; height: 18px; justify-content: flex-end; margin-top: 4px;">
+              <div style="width:1px;height:100%;background:#fff"></div><div style="width:2px;height:100%;background:#fff"></div><div style="width:1px;height:80%;background:#fff"></div><div style="width:1px;height:100%;background:#fff"></div><div style="width:3px;height:100%;background:#fff"></div><div style="width:1px;height:90%;background:#fff"></div><div style="width:1px;height:100%;background:#fff"></div><div style="width:2px;height:70%;background:#fff"></div><div style="width:1px;height:100%;background:#fff"></div><div style="width:3px;height:90%;background:#fff"></div><div style="width:2px;height:80%;background:#fff"></div><div style="width:1px;height:100%;background:#fff"></div><div style="width:2px;height:100%;background:#fff"></div><div style="width:1px;height:70%;background:#fff"></div><div style="width:3px;height:100%;background:#fff"></div><div style="width:1px;height:90%;background:#fff"></div>
+            </div>
+          </div>
+
         </div>
-        <div class="mag-col">
-          <strong>Aprendizaje</strong>
-          Desarrollo del lenguaje<br>en los bebés
-        </div>
-        <div class="mag-col">
-          <strong>Emociones</strong>
-          Cómo regulamos<br>los sentimientos
-        </div>
-      </div>
+
     </div>
       </div> <!-- close carousel-item 4 -->
     </div> <!-- close carousel-track -->
@@ -2539,6 +2585,7 @@
   <script src="assets/models/id_card_base64.js"></script>
 
   <script>
+
   // ── SETUP ──────────────────────────────────────────────────────────
   const canvas   = document.getElementById('c');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -3253,7 +3300,7 @@
 
     // ─ Fases 5–8: MACRO CAMERA ────────────────────────────────────────────────────
     const PAN  = 0.05;
-    const HOLD = 0.025;
+      const HOLD = 0.025;
     let t = 0.92;
     // sCards[i] corresponds to which card is the FOCUS of each panData step
     // panData[0] → sc1 focused, panData[1] → sc2, panData[2] → sc3, panData[3] → sc4
@@ -3402,6 +3449,12 @@
       duration: (tSwap - (t2 - 0.08)), 
       ease: 'power2.inOut' 
     }, t2 - 0.08);
+    
+    // La carta plana sale volando hacia arriba coincidiendo con la transición al carrusel
+    // Eliminados los tweens absolutos a 9.62 que alargaban el scrollTl artificialmente.
+      // Permitimos que la duración sea su longitud natural para mapear suavemente a prog/2.2.
+
+      
 
     // ─ Animación del segundo texto "personalizado con IA"
     // Arranca ligeramente MÁS TARDE en la línea de tiempo simulando ese "cuando haya salido la mitad de la palabra".
@@ -3454,9 +3507,8 @@
       { rotationY: 335, rotationX: 0, rotationZ: 0, duration: 0.35, ease: 'power2.out' },
       tSwap
     );
-    // La carta permanece visible debajo de la caja durante los primeros milisegundos
-    // para asegurar la transición geométrica, y luego se oculta para evitar que asomen bordes.
-    scrollTl.set(scBoard, { autoAlpha: 0 }, tSwap + 0.04);
+    // La carta plana sale volando hacia arriba coincidiendo con la transición al carrusel
+    // Eliminados los tweens absolutos a 9.62 que alargaban el scrollTl artificialmente
 
     // ── SCATTER NAME INPUT: bloquea scroll mientras se escribe ────────────
     const scNameInput = document.getElementById('sc-name-input');
@@ -3466,9 +3518,77 @@
     }
 
     // ── Drivers ──────────────────────────────────────────────────
-    // Ampliado maxProg para permitir toda la transición del carrusel y la revista
-    const maxProg = 16.0;
+    // Ampliado maxProg para las dos fases de salida: exits (14.62→15.6) + expansión (15.6→16.8)
+    const maxProg = 17.0;
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
+
+    // --- MAGIC WINDOW CAROUSEL SETUP ---
+    const originalTrack = document.querySelector('.carousel-track');
+    if (originalTrack && !document.querySelector('.carousel-viewport')) {
+      originalTrack.className = 'carousel-track-small';
+      originalTrack.style.zIndex = '1';
+      const smallItems = originalTrack.querySelectorAll('.carousel-item');
+      smallItems.forEach(item => {
+        item.style.transform = 'scale(0.325)';
+        // Asignar pointerEvents none permanentemente a las miniaturas para que no roben clics
+        item.style.pointerEvents = 'none';
+      });
+
+      const viewport = document.createElement('div');
+      viewport.className = 'carousel-viewport';
+      viewport.style.position = 'absolute';
+      viewport.style.width = 'calc(100% - 14px)';
+      viewport.style.height = 'calc(100% - 14px)';
+      viewport.style.top = '7px';
+      viewport.style.left = '7px';
+      viewport.style.overflow = 'hidden';
+      viewport.style.zIndex = '2';
+      viewport.style.pointerEvents = 'none'; // El viewport en sí no interfiere
+      viewport.style.borderRadius = '4px'; // Para redondear todo el conjunto de imágenes grandes
+
+      // Crear contenedor gigante para enmascarar la pista pequeña sin recortar el overflow lejano
+      const smallContainer = document.createElement('div');
+      smallContainer.className = 'carousel-small-container';
+      smallContainer.style.position = 'absolute';
+      smallContainer.style.top = '50%';
+      smallContainer.style.left = '50%';
+      smallContainer.style.width = '4000px';
+      smallContainer.style.height = '1000px';
+      smallContainer.style.transform = 'translate(-50%, -50%)';
+      smallContainer.style.zIndex = '1';
+      smallContainer.style.pointerEvents = 'none';
+
+      // Ocultamos la pista pequeña en la zona del recuadro (480) + el gap a cada lado
+      let G = 16; // 30% más pequeño
+      smallContainer.style.webkitMaskImage = `linear-gradient(to right, black calc(50% - ${240 + G}px), transparent calc(50% - ${240 + G}px), transparent calc(50% + ${240 + G}px), black calc(50% + ${240 + G}px))`;
+      smallContainer.style.maskImage = `linear-gradient(to right, black calc(50% - ${240 + G}px), transparent calc(50% - ${240 + G}px), transparent calc(50% + ${240 + G}px), black calc(50% + ${240 + G}px))`;
+
+      originalTrack.parentNode.insertBefore(smallContainer, originalTrack);
+      smallContainer.appendChild(originalTrack);
+
+      // Restaurar tamaño del originalTrack dentro del contenedor gigante
+      originalTrack.style.width = '480px';
+      originalTrack.style.height = '640px';
+      originalTrack.style.top = '50%';
+      originalTrack.style.left = '50%';
+      originalTrack.style.transform = 'translate(-50%, -50%)';
+
+      const largeTrack = originalTrack.cloneNode(true);
+      largeTrack.className = 'carousel-track-large';
+      largeTrack.style.zIndex = '';
+      // Asegurar que track-large no bloquee clics a menos que sea necesario
+      largeTrack.style.pointerEvents = 'none';
+
+      const largeItems = largeTrack.querySelectorAll('.carousel-item');
+      largeItems.forEach(item => {
+        item.style.transform = 'scale(1.0)';
+        item.style.pointerEvents = 'auto'; // Las grandes sí reciben clics si están activas
+      });
+
+      viewport.appendChild(largeTrack);
+      // Agregar el viewport al magazine-scene (que es el padre de smallContainer)
+      smallContainer.parentNode.insertBefore(viewport, smallContainer.nextSibling);
+    }
 
     // ── SPAWN CARD LOGIC (De index.html) ──────────────────────────
     const hiddenCards   = Array.from(mainDeck.querySelectorAll('.card-wrap.card-in-deck'));
@@ -3585,7 +3705,7 @@
     }
 
     // Eliminamos transiciones para que el box siga al ratón/scroll sin lag
-    mainDeck.querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .interior-cards .interior-card').forEach(el => {
+    mainDeck.querySelectorAll('.box-3d-volume, .box-flap, .tuck-lip, .dust-flap, .interior-cards .interior-card').forEach(el => {
       el.style.transition = 'none';
     });
 
@@ -3596,11 +3716,6 @@
       if (prog > 9.12) {
         let closeP = Math.max(0, Math.min(1, (prog - 9.12) / 0.4));
         openP = 1 - closeP;
-      }
-
-      function mapRange(p, inMin, inMax, outMin, outMax) {
-        let t = Math.max(0, Math.min(1, (p - inMin) / (inMax - inMin)));
-        return outMin + t * (outMax - outMin);
       }
 
       // 1. Tapa principal: se abre primero (0.0 a 0.5), y al cerrar es la ÚLTIMA en bajar (0.5 a 0.0)
@@ -4691,73 +4806,386 @@
       const volume = mainDeck.querySelector('.box-3d-volume');
       
       if (prog > 9.62) {
+        window.wasInMagazine = true;
         if (magazineScene) {
           magazineScene.style.display = 'flex';
           magazineScene.style.pointerEvents = 'auto';
         }
         
         let transP = mapRange(prog, 9.62, 10.62, 0, 1);
+        let boardY = mapRange(transP, 0, 0.8, 0, -150);
+        gsap.set(scBoard, { y: boardY + 'vh' });
         
-        // El flip de la caja continúa (de 335 a 515)
-        // A los 450 grados (transP ≈ 0.64) la cara izquierda se ve de frente.
-        let boxRotY = mapRange(transP, 0, 1, 335, 515);
+        
+        // Fade out the physical box shadow before it flattens into the magazine cover
+        let shadowCast = document.getElementById('mainDeck').querySelector('.box-shadow-cast');
+        if (shadowCast) {
+          if (prog > 9.62) {
+            let sP = mapRange(prog, 9.62, 10.02, 0, 1);
+            shadowCast.style.opacity = (1 - sP).toString();
+          } else {
+            shadowCast.style.opacity = '1';
+          }
+        }
+
+          
+        // Esconder caras perpendiculares y solapas SÓLO cuando la caja ha alcanzado los 450 grados (prog > 10.02)
+        // para evitar que sus bordes físicos de 1px sobresalgan durante la expansión 2D, sin usar opacidad para no  romper el preserve-3d.
+        let hiddenFaces = document.getElementById("mainDeck").querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
+        if (prog > 10.02) {
+          hiddenFaces.forEach(f => f.style.display = 'none');
+        } else {
+          hiddenFaces.forEach(f => f.style.display = '');
+        }
+
+          // FASE 1: (0 a 0.4) El flip de la caja se detiene exactamente a los 450 grados.
+        let boxRotY = transP < 0.4 ? mapRange(transP, 0, 0.4, 335, 450) : 450;
         if (volume) volume.style.transform = `rotateY(${boxRotY}deg) rotateX(0deg) rotateZ(0deg)`;
 
+        // FASE 2: (0.4 a 0.85) Una vez plana, se expande como un 2D hasta recubrir el recuadro interior (466x626).
+        // Ancho: 466 / 82 = 5.68 | Alto: 626 / 301 = 2.08
+        let boxScaleX = 1;
+        let boxScaleY = 1;
+        let shiftX = 0;
+
+        if (transP < 0.4) {
+           shiftX = mapRange(transP, 0, 0.4, 0, -44.87);
+        } else if (transP >= 0.4 && transP <= 0.85) {
+           let tScale = mapRange(transP, 0.4, 0.85, 0, 1);
+           // Ease-out cuadrático para X
+           let tX = 1 - Math.pow(1 - tScale, 2);
+           // Lineal para Y
+           let tY = tScale;
+           
+           // Factor de perspectiva: 1200 / (1200 - 103.5) = 1.09438
+           // Anchura visual base = 82 * 1.09438 = 89.74px.
+           // Altura visual base = 301 * 1.09438 = 329.41px.
+           // El magazine-scene tiene un scale(0.85), por lo que el recuadro de 466x626 en realidad mide 396.1x532.1 píxeles en pantalla.
+           // Escala objetivo X = 396.1 / 89.74 = 4.414
+           // Escala objetivo Y = 532.1 / 329.41 = 1.615
+           boxScaleX = 1 + (4.414 - 1) * tX;
+           boxScaleY = 1 + (1.615 - 1) * tY;
+           shiftX = -44.87 * boxScaleX;
+        } else if (transP > 0.85) {
+           boxScaleX = 4.414;
+           boxScaleY = 1.615;
+           shiftX = -44.87 * boxScaleX;
+        }
+        mainDeck.style.transform = `translateX(${shiftX}px) scaleX(${boxScaleX}) scaleY(${boxScaleY})`;
+        
+        // CROSS-FADE SUAVE: Evita el corte brusco fundiendo la caja con la revista de forma progresiva
+        let boxOpacity = transP < 0.85 ? 1 : mapRange(transP, 0.85, 0.95, 1, 0);
+        let boxBlur = transP < 0.85 ? 0 : mapRange(transP, 0.85, 0.95, 0, 20);
+        mainDeck.style.opacity = boxOpacity.toString();
+        mainDeck.style.filter = `blur(${boxBlur}px)`;
+
+        // Anti-deformación del texto: contrarrestamos la deformación pero permitimos que crezca
+        const faceLeftSpan = mainDeck.querySelector('.face-left span');
+        if (faceLeftSpan) {
+            // Al estar rotado 90deg, la X del span corresponde a la Y del padre, y viceversa.
+            // Crece 4 veces más rápido que la altura de la caja para que acabe ocupando mucho más espacio.
+            let uniformScale = 1 + ((boxScaleY - 1) * 4); 
+            faceLeftSpan.style.transform = `rotate(90deg) scaleX(${uniformScale/boxScaleY}) scaleY(${uniformScale/boxScaleX})`;
+        }
+
         if (heroCta) {
-          // Desvanece el CTA suavemente desde el inicio del flip (0.0 a 0.2)
           let ctaOp = mapRange(transP, 0.0, 0.20, 1, 0);
           heroCta.style.opacity = ctaOp;
           heroCta.style.pointerEvents = ctaOp > 0 ? 'auto' : 'none';
         }
 
-        // CROSS-BLUR: Empieza a los 0.65 (después de ver el mensaje) y llega al máximo en 0.80
-        let boxBlur = mapRange(transP, 0.65, 0.80, 0, 40);
-        mainDeck.style.filter = `blur(${boxBlur}px)`;
-
-        // CROSS-FADE SUAVE: Evita el corte brusco fundiendo la caja con la revista de forma progresiva
-        mainDeck.style.opacity = mapRange(transP, 0.75, 0.85, 1, 0);
-
-        if (magazineScene) {
-           // La escena global (que incluye el SVG) debe ser visible desde el principio (transP = 0)
-           magazineScene.style.opacity = 1;
-           
-           const carouselTrack = document.querySelector('.carousel-track');
-           if (carouselTrack) {
-             // El track entero (con las 5 imagenes) hace el fundido cruzado
-             carouselTrack.style.opacity = mapRange(transP, 0.75, 0.85, 0, 1);
-             
-             // El blur del contenido baja gradualmente hasta revelar la imagen nítida al final
-             let revBlur = mapRange(transP, 0.75, 1.0, 40, 0);
-             let scaleVal = mapRange(transP, 0.75, 1.0, 0.9, 1);
-             carouselTrack.style.filter = `blur(${revBlur}px)`;
-             carouselTrack.style.transform = `scale(${scaleVal})`;
+        // EFECTO FLASH DE CÁMARA (blanco puro en pantalla completa)
+        const cameraFlash = document.getElementById('camera-flash');
+        if (cameraFlash) {
+           if (transP < 0.80) {
+              cameraFlash.style.opacity = '0';
+           } else if (transP < 0.85) {
+              cameraFlash.style.opacity = mapRange(transP, 0.80, 0.85, 0, 1);
+           } else if (transP < 0.95) {
+              cameraFlash.style.opacity = mapRange(transP, 0.85, 0.95, 1, 0);
+           } else {
+              cameraFlash.style.opacity = '0';
            }
         }
 
-        // Dibujo del marco exterior: empieza justo con el flip (0.0) y termina con la opacidad 100% de la revista (0.85)
+        if (magazineScene) {
+           magazineScene.style.opacity = 1;
+           const tracksToAnimate = magazineScene.querySelectorAll('.carousel-track-small, .carousel-track-large');
+           tracksToAnimate.forEach(track => {
+             track.style.opacity = transP < 0.85 ? 0 : mapRange(transP, 0.85, 0.95, 0, 1);
+             let revBlur = transP < 0.85 ? 40 : mapRange(transP, 0.85, 1.0, 40, 0);
+             let scaleVal = transP < 0.85 ? 0.9 : mapRange(transP, 0.85, 1.0, 0.95, 1);
+             track.style.filter = `blur(${revBlur}px)`;
+             track.style.transform = `translate(-50%, -50%) scale(${scaleVal})`;
+           });
+        }
+
+        // Dibujo del marco exterior (entrada): termina en transP=0.85
         if (lineT && lineB && lineL && lineR) {
            const magBorderSvg = document.getElementById('magazine-border-svg');
            if (magBorderSvg) magBorderSvg.style.opacity = mapRange(transP, 0.0, 0.30, 0, 1);
-           
-           let dashP = mapRange(transP, 0.0, 0.85, 0, 1);
-           
-           // Línea Superior: de Derecha a Izquierda
+           let dashP = transP < 0.85 ? mapRange(transP, 0.0, 0.85, 0, 1) : 1;
            lineT.setAttribute('y1', '0%'); lineT.setAttribute('y2', '0%');
            lineT.setAttribute('x1', '100%'); lineT.setAttribute('x2', `${100 - (100 * dashP)}%`);
-           
-           // Línea Izquierda: de Arriba a Abajo
            lineL.setAttribute('x1', '0%'); lineL.setAttribute('x2', '0%');
            lineL.setAttribute('y1', '0%'); lineL.setAttribute('y2', `${100 * dashP}%`);
-           
-           // Línea Inferior: de Izquierda a Derecha
            lineB.setAttribute('y1', '100%'); lineB.setAttribute('y2', '100%');
            lineB.setAttribute('x1', '0%'); lineB.setAttribute('x2', `${100 * dashP}%`);
-           
-           // Línea Derecha: de Abajo a Arriba
            lineR.setAttribute('x1', '100%'); lineR.setAttribute('x2', '100%');
            lineR.setAttribute('y1', '100%'); lineR.setAttribute('y2', `${100 - (100 * dashP)}%`);
         }
+
+        // ── MAGAZINE BREAKOUT ─────────────────────────────────────────────
+        // FASE 1 (prog 14.62→15.6): lines undraw + texts/images exit
+        // FASE 2 (prog 15.6→16.8): frame expands to full screen
+        const breakoutOverlay = document.getElementById('mag-breakout-overlay');
+        if (breakoutOverlay) {
+          if (prog >= 14.62) {
+
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const boxW = 480 * 0.85;
+            const boxH = 640 * 0.85;
+            const startLeft = (vw - boxW) / 2;
+            const startTop  = (vh - boxH) / 2;
+
+            // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
+            const exitP = Math.min(Math.max(mapRange(prog, 14.62, 15.6, 0, 1), 0), 1);
+
+            // FASE 2: progress para expansión del marco (0→1 en prog 15.6→16.8)
+            const expansionP = Math.min(Math.max(mapRange(prog, 15.6, 16.8, 0, 1), 0), 1);
+            const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
+
+            // ── FASE 2: clip-path:inset() en el clon — sin overlay, sin fondo ──
+            if (expansionP > 0) {
+
+              if (!document.getElementById('mag-model-clone')) {
+                const carouselVp = magazineScene?.querySelector('.carousel-viewport');
+                const origImg    = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
+                if (carouselVp && origImg && origImg.naturalWidth) {
+                  const vpr    = carouselVp.getBoundingClientRect();
+                  const modelH = vpr.height * 1.38;
+                  const ar     = origImg.naturalWidth / origImg.naturalHeight;
+                  const modelW = modelH * ar;
+                  const modelT = vpr.top;
+                  const modelL = vpr.left + vpr.width / 2 - modelW / 2;
+
+                  // Clip inicial = lo que sobresale del viewport (elbows, torso)
+                  const iT = 0;
+                  const iL = Math.max(0, vpr.left  - modelL);
+                  const iR = Math.max(0, (modelL + modelW) - (vpr.left + vpr.width));
+                  const iB = Math.max(0, (modelT + modelH) - (vpr.top + vpr.height));
+
+                  const clone = document.createElement('img');
+                  clone.id  = 'mag-model-clone';
+                  clone.src = origImg.src;
+                  clone.dataset.iT = iT; clone.dataset.iL = iL;
+                  clone.dataset.iR = iR; clone.dataset.iB = iB;
+                  Object.assign(clone.style, {
+                    position: 'fixed', zIndex: '10003', pointerEvents: 'none',
+                    left: modelL + 'px', top: modelT + 'px',
+                    width: modelW + 'px', height: modelH + 'px', transform: 'none'
+                  });
+                  document.body.appendChild(clone);
+                  origImg.style.visibility = 'hidden';
+                }
+
+              }
+
+              // Actualizar clip cada frame: clip shrinks de iX → 0
+              const clone = document.getElementById('mag-model-clone');
+              if (clone) {
+                const f  = 1 - easeExpand;
+                const ct = parseFloat(clone.dataset.iT || 0) * f;
+                const cl = parseFloat(clone.dataset.iL || 0) * f;
+                const cr = parseFloat(clone.dataset.iR || 0) * f;
+                const cb = parseFloat(clone.dataset.iB || 0) * f;
+                clone.style.clipPath = `inset(${ct}px ${cr}px ${cb}px ${cl}px)`;
+              }
+
+              // Overlay innecesario
+              breakoutOverlay.style.display = 'none';
+
+            } else {
+              const clone = document.getElementById('mag-model-clone');
+              if (clone) {
+                const orig = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
+                if (orig) orig.style.visibility = '';
+                clone.remove();
+              }
+              breakoutOverlay.style.display = 'none';
+            }
+
+
+
+
+
+
+
+            // ── FASE 1: Exit animations (lines + texts + images) ─────────────────
+
+
+            // 1. SVG LINES — se desdibujan en dirección inversa
+            if (lineT && lineB && lineL && lineR) {
+              const magBorderSvg = document.getElementById('magazine-border-svg');
+              if (magBorderSvg) magBorderSvg.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.6, 1.0, 0, 1));
+              lineT.setAttribute('x1', '100%'); lineT.setAttribute('x2', `${100 * exitP}%`);
+              lineT.setAttribute('y1', '0%');   lineT.setAttribute('y2', '0%');
+              lineL.setAttribute('x1', '0%');   lineL.setAttribute('x2', '0%');
+              lineL.setAttribute('y1', '0%');   lineL.setAttribute('y2', `${100 * (1 - exitP)}%`);
+              lineB.setAttribute('x1', '0%');   lineB.setAttribute('x2', `${100 * (1 - exitP)}%`);
+              lineB.setAttribute('y1', '100%'); lineB.setAttribute('y2', '100%');
+              lineR.setAttribute('x1', '100%'); lineR.setAttribute('x2', '100%');
+              lineR.setAttribute('y1', '100%'); lineR.setAttribute('y2', `${100 * exitP}%`);
+            }
+
+            // Helper: actualiza TODAS las instancias de un ID (cloneNode duplica IDs)
+            const applyExit = (id, transform, opacity) => {
+              document.querySelectorAll(`[id="${id}"]`).forEach(el => {
+                el.style.transform = transform;
+                el.style.opacity   = opacity;
+              });
+            };
+
+            // 2. SABER MÁS — slide up + fade (primero)
+            { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
+              applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
+
+            // 3. CIENCIA — slide UP como "RISE" en Oryzo
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
+              const easeUp = 1 - Math.pow(1 - p, 2);
+              applyExit('mag-ciencia', `translateY(${-60 * easeUp}px)`,
+                Math.max(0, 1 - mapRange(p, 0.2, 1.0, 0, 1))); }
+
+            // 4. NAT GEO — slide left + fade
+            { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
+              applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
+
+            // 5. COLUMNA IZQUIERDA — slide left + fade
+            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
+              applyExit('mag-col-left', `translateX(${-55 * p}px)`, 1 - p); }
+
+            // 6. COLUMNA DERECHA — slide right + fade
+            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
+              applyExit('mag-col-right', `translateX(${55 * p}px)`, 1 - p); }
+
+            // 7. TÍTULO INFERIOR — slide down + fade (último)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
+              applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
+
+          } else {
+            // Antes de prog 14.62: overlay oculto, elementos reseteados
+            breakoutOverlay.style.display = 'none';
+            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom'].forEach(id => {
+              document.querySelectorAll(`[id="${id}"]`).forEach(el => {
+                el.style.transform = '';
+                el.style.opacity   = '';
+              });
+            });
+          }
+
+        }
+
+        if (breakoutOverlay) {
+          if (prog >= 14.62) {
+
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const boxW = 480 * 0.85;
+            const boxH = 640 * 0.85;
+            const startLeft = (vw - boxW) / 2;
+            const startTop  = (vh - boxH) / 2;
+
+            // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
+            const exitP = Math.min(Math.max(mapRange(prog, 14.62, 15.6, 0, 1), 0), 1);
+
+            // FASE 2: progress para expansión del marco (0→1 en prog 15.6→16.8)
+            const expansionP = Math.min(Math.max(mapRange(prog, 15.6, 16.8, 0, 1), 0), 1);
+            const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
+
+            // ── FASE 2: Overlay expansión del marco ────────────────────────────────
+            if (expansionP > 0) {
+              breakoutOverlay.style.display = 'block';
+              const curLeft   = startLeft * (1 - easeExpand);
+              const curTop    = startTop  * (1 - easeExpand);
+              const curWidth  = boxW + (vw - boxW) * easeExpand;
+              const curHeight = boxH + (vh - boxH) * easeExpand;
+              breakoutOverlay.style.left   = curLeft + 'px';
+              breakoutOverlay.style.top    = curTop + 'px';
+              breakoutOverlay.style.width  = curWidth + 'px';
+              breakoutOverlay.style.height = curHeight + 'px';
+              breakoutOverlay.style.borderWidth = '0px';
+            } else {
+              // Fase 1: overlay oculto (sólo salen los elementos)
+              breakoutOverlay.style.display = 'none';
+            }
+
+            // ── FASE 1: Exit animations (lines + texts + images) ─────────────────
+
+            // 1. SVG LINES — se desdibujan en dirección inversa
+            if (lineT && lineB && lineL && lineR) {
+              const magBorderSvg = document.getElementById('magazine-border-svg');
+              if (magBorderSvg) magBorderSvg.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.6, 1.0, 0, 1));
+              lineT.setAttribute('x1', '100%'); lineT.setAttribute('x2', `${100 * exitP}%`);
+              lineT.setAttribute('y1', '0%');   lineT.setAttribute('y2', '0%');
+              lineL.setAttribute('x1', '0%');   lineL.setAttribute('x2', '0%');
+              lineL.setAttribute('y1', '0%');   lineL.setAttribute('y2', `${100 * (1 - exitP)}%`);
+              lineB.setAttribute('x1', '0%');   lineB.setAttribute('x2', `${100 * (1 - exitP)}%`);
+              lineB.setAttribute('y1', '100%'); lineB.setAttribute('y2', '100%');
+              lineR.setAttribute('x1', '100%'); lineR.setAttribute('x2', '100%');
+              lineR.setAttribute('y1', '100%'); lineR.setAttribute('y2', `${100 * exitP}%`);
+            }
+
+            // Helper: actualiza TODAS las instancias de un ID (cloneNode duplica IDs)
+            const applyExit = (id, transform, opacity) => {
+              document.querySelectorAll(`[id="${id}"]`).forEach(el => {
+                el.style.transform = transform;
+                el.style.opacity   = opacity;
+              });
+            };
+
+            // 2. SABER MÁS — slide up + fade (primero)
+            { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
+              applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
+
+            // 3. CIENCIA — slide UP como "RISE" en Oryzo
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
+              const easeUp = 1 - Math.pow(1 - p, 2);
+              applyExit('mag-ciencia', `translateY(${-60 * easeUp}px)`,
+                Math.max(0, 1 - mapRange(p, 0.2, 1.0, 0, 1))); }
+
+            // 4. NAT GEO — slide left + fade
+            { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
+              applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
+
+            // 5. COLUMNA IZQUIERDA — slide left + fade
+            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
+              applyExit('mag-col-left', `translateX(${-55 * p}px)`, 1 - p); }
+
+            // 6. COLUMNA DERECHA — slide right + fade
+            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
+              applyExit('mag-col-right', `translateX(${55 * p}px)`, 1 - p); }
+
+            // 7. TÍTULO INFERIOR — slide down + fade (último)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
+              applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
+
+          } else {
+            // Antes de prog 14.62: overlay oculto, elementos reseteados
+            breakoutOverlay.style.display = 'none';
+            ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom'].forEach(id => {
+              document.querySelectorAll(`[id="${id}"]`).forEach(el => {
+                el.style.transform = '';
+                el.style.opacity   = '';
+              });
+            });
+          }
+
+        }
+
+
       } else {
+
         if (magazineScene) {
           magazineScene.style.display = 'none';
           magazineScene.style.opacity = 0;
@@ -4766,46 +5194,98 @@
           heroCta.style.opacity = '';
           heroCta.style.pointerEvents = '';
         }
-        // RESTAURAR ESTADO FINAL DE GSAP EXACTO PARA EVITAR BUGS AL SUBIR EL SCROLL
-        if (volume) volume.style.transform = `rotateY(335deg) rotateX(0deg) rotateZ(0deg)`;
-        mainDeck.style.opacity = 1;
-        mainDeck.style.filter = 'none';
+        // Ocultar overlay si el usuario vuelve atrás
+        const _bOverlay = document.getElementById('mag-breakout-overlay');
+        if (_bOverlay) _bOverlay.style.display = 'none';
+        
+        if (window.wasInMagazine) {
+          window.wasInMagazine = false;
+          if (volume) volume.style.transform = '';
+          mainDeck.style.transform = '';
+          mainDeck.style.opacity = '';
+          mainDeck.style.filter = '';
+          gsap.set(scBoard, { y: '0vh' });
+          scrollTl.progress(0);
+          scrollTl.progress(Math.min(1, prog / 2.2));
+        }
       }
 
-      // --- COVERFLOW CAROUSEL LOGIC ---
-      const carouselItems = document.querySelectorAll('.carousel-item');
-      if (carouselItems.length > 0) {
+
+      // --- MAGIC WINDOW CAROUSEL LOGIC ---
+      const smallItems = document.querySelectorAll('.carousel-track-small .carousel-item');
+      const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
+      if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
           // currIndex va de 0 a 4 entre prog 10.62 y 14.62
           let currIndex = Math.max(0, Math.min(4, prog - 10.62));
           
-          carouselItems.forEach((item, i) => {
+          // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
+          let exitOffsetSmall = 0;
+          let exitOffsetLarge = 0;
+          let exitFade = 1;
+          if (prog > 14.62) {
+            const exitP = Math.min(mapRange(prog, 14.62, 15.3, 0, 1), 1);
+            const easeExit = Math.pow(exitP, 2); // ease-in: acelera al salir
+            exitOffsetSmall = -900 * easeExit;
+            exitOffsetLarge = -900 * easeExit;
+            exitFade = Math.max(0, 1 - mapRange(exitP, 0.4, 1.0, 0, 1));
+          }
+
+          for (let i = 0; i < 5; i++) {
             let d = i - currIndex;
             let absD = Math.abs(d);
             
-            // Escala: 1.0 en el centro, baja a 0.65 para los de los lados (como Oryzo)
-            let scale = 1.0 - Math.min(absD, 1.0) * 0.35;
+            // Translación X: 466px de separación para alinear perfectamente los grandes SIN hueco entre ellos (480 - 14 de margen global)
+            let translateXLarge = d * 466;
             
-            // Opacidad y brillo
-            let opacity = 1.0 - Math.min(absD, 1.0) * 0.4;
-            let brightness = 1.0 - Math.min(absD, 1.0) * 0.4;
+            // Cálculo de posiciones
+            let G = 16; // Gap físico respecto al recuadro y entre miniaturas (-30%)
+            let step = 156 + G; // Distancia para que el hueco entre miniaturas sea exactamente G
+            let startOffset = 240 + 78 + G; // Posición exacta para que al estar en d=1, mantenga el gap G con el borde
             
-            // Translación X: 
-            // Si d=0 -> 0
-            // Si d=1 -> aprox 380px a la derecha
-            let translateX = d * 380;
+            // Movimiento estrictamente lineal (parallax)
+            let translateXSmall = Math.sign(d) * (startOffset + (absD - 1) * step);
             
-            // Z-index: la carta del centro debe estar arriba
+            let opacity = 1.0 - Math.min(absD, 2.0) * 0.2; // Menos agresivo
+            let brightness = 1.0 - Math.min(absD, 2.0) * 0.2;
             let zIndex = Math.round(100 - absD * 10);
+
+            let entryOffset = 0;
+            let extraBrightness = 0;
+            let localTransP = mapRange(prog, 9.62, 10.62, 0, 1);
+            if (i > 0) {
+                if (localTransP < 0.85) {
+                    entryOffset = 800;
+                    extraBrightness = 2.0;
+                } else if (localTransP >= 0.85 && localTransP <= 1.0) {
+                    let slideP = mapRange(localTransP, 0.85, 1.0, 0, 1);
+                    let easeSlide = 1 - Math.pow(1 - slideP, 3);
+                    entryOffset = mapRange(easeSlide, 0, 1, 800, 0);
+                    extraBrightness = mapRange(slideP, 0, 1, 2.0, 0);
+                }
+            }
+            translateXSmall += entryOffset + (i !== 4 ? exitOffsetSmall : 0);
+            translateXLarge += (i !== 4 ? exitOffsetLarge : 0);
+            brightness += extraBrightness;
             
-            item.style.transform = `translateX(${translateX}px) scale(${scale})`;
-            item.style.opacity = opacity;
-            item.style.filter = `brightness(${brightness})`;
-            item.style.zIndex = zIndex;
-            // Solo interactivo si está casi en el centro
-            item.style.pointerEvents = absD < 0.1 ? 'auto' : 'none';
-          });
+            // Pequeñas (fuera del recuadro)
+            if (smallItems[i]) {
+              smallItems[i].style.transform = `translateX(${translateXSmall}px) scale(0.325)`;
+              smallItems[i].style.opacity = opacity * exitFade;
+              smallItems[i].style.filter = `brightness(${brightness})`;
+              smallItems[i].style.zIndex = zIndex;
+            }
+            
+            // Grandes (dentro del recuadro, recortadas por overflow: hidden)
+            if (largeItems[i]) {
+              largeItems[i].style.transform = `translateX(${translateXLarge}px) scale(1.0)`;
+              largeItems[i].style.zIndex = zIndex;
+              if (i === 3 && currIndex > 3) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
+              largeItems[i].style.pointerEvents = absD < 0.1 ? 'auto' : 'none';
+            }
+          }
         }
+
       }
     }
 
@@ -5016,6 +5496,31 @@
         updateFaceSwap();
         updateBoxState(1);
         updateGlobalScenes();
+
+          const debugProg = document.getElementById('debug-scroll-prog');
+          if (debugProg) debugProg.innerText = prog.toFixed(2);
+
+          // ─ Edge glow: matemáticamente atado a prog
+          const eg = document.getElementById('edge-glow');
+          if (eg) {
+            let startP = 1.54;
+            let endP = 2.19;
+            
+            if (prog >= startP && prog <= endP) {
+              if (prog < startP + 0.03) {
+                // Fade in rápido (0.03 unidades)
+                eg.style.opacity = mapRange(prog, startP, startP + 0.03, 0, 1);
+              } else if (prog > endP - 0.03) {
+                // Fade out rápido (0.03 unidades)
+                eg.style.opacity = mapRange(prog, endP - 0.03, endP, 1, 0);
+              } else {
+                // Plateau (100% visible)
+                eg.style.opacity = 1;
+              }
+            } else {
+              eg.style.opacity = 0;
+            }
+          }
       });
     }
 
@@ -5039,6 +5544,7 @@
 // ── SCROLL DRIVERS & SMOOTH LERP (Lenis-style) ─────────────────────
     let targetProg = prog;
     let glowVisible = false;
+    let lastScrollTime = 0;
 
     function smoothScrollLoop() {
       const lerpF = 0.40;
@@ -5049,13 +5555,35 @@
         scrollTl.progress(Math.min(1, prog / 2.2));
         updateFaceSwap();
         updateGlobalScenes();
-        // ─ Edge glow: usa prog (lerped) igual que GSAP para sincronizar con las letras ─
-        if (glowTSwap > 0) {
+
+          const debugProg = document.getElementById('debug-scroll-prog');
+          if (debugProg) debugProg.innerText = prog.toFixed(2);
+
+
+          // ─ Edge glow: matemáticamente atado a prog
           const eg = document.getElementById('edge-glow');
-          const shouldShow = prog >= (glowTSwap - 0.12) && prog <= (glowTSwap + 0.28);
-          if (eg) eg.style.opacity = shouldShow ? '1' : '0';
+          if (eg) {
+            let startP = 1.54;
+            let endP = 2.19;
+            
+            if (prog >= startP && prog <= endP) {
+              if (prog < startP + 0.03) {
+                // Fade in rápido (0.03 unidades)
+                eg.style.opacity = mapRange(prog, startP, startP + 0.03, 0, 1);
+              } else if (prog > endP - 0.03) {
+                // Fade out rápido (0.03 unidades)
+                eg.style.opacity = mapRange(prog, endP - 0.03, endP, 1, 0);
+              } else {
+                // Plateau (100% visible)
+                eg.style.opacity = 1;
+              }
+            } else {
+              eg.style.opacity = 0;
+            }
+          }
         }
-      }
+
+
       
       // Actualizar posición de la barra de scroll custom estilo Oryzo
       const scrollThumb = document.getElementById('custom-scroll-thumb');
@@ -5065,8 +5593,81 @@
         scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
       }
       
-      // Llamar incondicionalmente a updateBoxState en cada fotograma para que
-      // la inercia secundaria de cardExtractP pueda completarse aunque prog ya haya terminado
+      // ── THERMAL CURTAIN ── incondicional, ejecuta cada frame ──────
+      {
+        const _tP = Math.min(1, Math.max(0, (prog - 15.9) / (17.2 - 15.9)));
+        const _tc = document.getElementById('thermal-canvas');
+        if (_tc) {
+          if (_tP <= 0) {
+            _tc.style.display = 'none';
+          } else {
+            const _vw = window.innerWidth, _vh = window.innerHeight;
+            _tc.width  = _vw;
+            _tc.height = _vh;
+            _tc.style.position      = 'fixed';
+            _tc.style.top           = '0';
+            _tc.style.left          = '0';
+            _tc.style.width         = '100%';
+            _tc.style.height        = '100%';
+            _tc.style.zIndex        = '9999999';
+            _tc.style.display       = 'block';
+            _tc.style.pointerEvents = 'none';
+            const _ctx = _tc.getContext('2d');
+            _ctx.clearRect(0, 0, _vw, _vh);
+            _ctx.fillStyle = 'rgba(200, 0, 130, 0.95)';
+            _ctx.fillRect(0, _vh - Math.round(_vh * _tP), _vw, Math.round(_vh * _tP));
+          }
+        }
+      }
+
+      // ── THERMAL OVERLAY ── máscara gradiente suave en el overlay (sin línea dura)
+      {
+        var _tPdiv = Math.min(1, Math.max(0, (prog - 15.9) / (16.8 - 15.9)));
+        // Exponer prog al renderer del cerebro para la rotacion con scroll
+        window._brainScrollProg = prog;
+        var _tOvr  = document.getElementById('thermal-overlay');
+        var _mOvr  = document.getElementById('mag-breakout-overlay');
+        // Siempre limpiar la máscara del mag-breakout
+        if (_mOvr) { _mOvr.style.webkitMaskImage = ''; _mOvr.style.maskImage = ''; }
+        if (_tOvr) {
+          if (_tPdiv <= 0) {
+            _tOvr.style.display = 'none';
+            _tOvr.style.opacity = '0';
+          } else {
+            _tOvr.style.display = 'block';
+            // SUAVIDAD 1: fade de opacidad en el primer 15% para evitar aparición brusca
+            _tOvr.style.opacity = String(Math.min(1, _tPdiv / 0.15));
+            // Overshoot a 115: cuando tPdiv=1 → _vis=115, _lo=100, _hi=100 → máscara totalmente sólida
+            // Esto elimina el salto al llegar arriba: el fade top se encoge gradualmente de 30% a 0%
+            var _vis = Math.round(_tPdiv * 115);
+            var _se  = 4;
+            var _lo  = Math.max(0, Math.min(100, _vis - _se));
+            var _hi  = Math.max(0, Math.min(100, _vis + _se));
+            var _mv  = 'linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)';
+            _tOvr.style.webkitMaskImage = _mv;
+            _tOvr.style.maskImage = _mv;
+            // Sincronizar posición de la silueta con el modelo real
+            var _sil = document.getElementById('thermal-silhouette');
+            var _realModel = document.getElementById('mag-model-clone');
+            if (_sil && _realModel) {
+              var _r = _realModel.getBoundingClientRect();
+              _sil.style.position = 'absolute';
+              _sil.style.left     = _r.left   + 'px';
+              _sil.style.top      = _r.top    + 'px';
+              _sil.style.width    = _r.width  + 'px';
+              _sil.style.height   = _r.height + 'px';
+              _sil.style.transform = 'none';
+            }
+          }
+        }
+      }
+
+      // Sincronizar reveal del cerebro 3D con el barrido termico
+      if (typeof window._updateBrainReveal === 'function') {
+        window._updateBrainReveal(_tPdiv, (_tPdiv <= 0) ? null : ('linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)'));
+      }
+
+      // Llamar incondicionalmente a updateBoxState en cada fotograma
       updateBoxState();
 
       // ── SINC CSS card → GLB 3D overlay ── (siempre, cada frame)
@@ -5259,11 +5860,46 @@
 
     smoothScrollLoop();
 
+    function applyMagneticFriction(current, delta) {
+      const snapPoints = [10.62, 11.62, 12.62, 13.62, 14.62];
+      const minD = 0.18; // Zona magnética más sutil (18% del encuadre)
+      let newProg = current + delta;
+
+      for (let sp of snapPoints) {
+        // 1. Efecto Atrapar (Notch físico): Si el scroll cruza el centro exacto, paramos en el centro
+        if ( (current < sp && newProg >= sp) || (current > sp && newProg <= sp) ) {
+            if (Math.abs(current - sp) > 0.01) {
+                return sp - current; // Absorbe el momentum y te deja clavado en el centro
+            }
+        }
+
+        // 2. Fricción / Gravedad
+        let dist = Math.abs(current - sp);
+        if (dist < minD) {
+          let newDist = Math.abs((current + delta) - sp);
+          let intensity = (minD - dist) / minD;
+          if (newDist > dist) {
+            // Cuesta salir: fricción sutil (hasta 2.2x más duro)
+            delta /= (1 + intensity * 1.2);
+          } else {
+            // Fácil entrar: resbala hacia el centro
+            delta *= (1 + intensity * 0.3);
+          }
+          break;
+        }
+      }
+      return delta;
+    }
+
     window.addEventListener('wheel', e => {
       e.preventDefault();
       const cappedDY = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60);
-      const divisor  = targetProg < 0.08 ? 8000 : 1200;
-      targetProg = Math.max(0, Math.min(maxProg, targetProg + cappedDY / divisor));
+      // Reducimos el divisor (de 1200 a 900) para un scroll general más ágil
+      let divisor = 900;
+        if (targetProg < 2.20) divisor = 6000;
+      let rawDelta = cappedDY / divisor;
+      let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
+      targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
     }, { passive: false });
     
     // --- Lógica de arrastre del scrollbar (Drag) ---
@@ -5310,8 +5946,11 @@
       const dy = touchY - e.touches[0].clientY;
       touchY = e.touches[0].clientY;
       const cappedDY = Math.sign(dy) * Math.min(Math.abs(dy), 30);
-      const divisorT = targetProg < 0.08 ? 4000 : 600;
-      targetProg = Math.max(0, Math.min(maxProg, targetProg + cappedDY / divisorT));
+      let divisorT = 450;
+        if (targetProg < 0.50) divisorT = 3000;
+      let rawDelta = cappedDY / divisorT;
+      let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
+      targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
     }, { passive: false });
   }
 
@@ -6328,7 +6967,8 @@
                 'T:', size.y.toFixed(3), '| scale:', scaleFact.toFixed(4));
 
     // ── Mostrar 3D card de inmediato (ya es visible durante la carga) ──────
-    // 1) Mover el SVG de borde a un div en <body>
+    // 1) Mover el SVG de borde a un div en 
+
   
     //    del card-canvas z:10003) para que se dibuje SOBRE la carta 3D.
     const _introSvgEl = document.querySelector('#card-morph-group > svg');
@@ -6603,7 +7243,12 @@
   });
 
   // ── SOMBRAS DE PERSONAS (canvas animado sobre la mesa) ────────────────
-  const SC = 512;
+  function mapRange(p, inMin, inMax, outMin, outMax) {
+      let t = Math.max(0, Math.min(1, (p - inMin) / (inMax - inMin)));
+      return outMin + t * (outMax - outMin);
+    }
+
+    const SC = 512;
   const shadowCanvas = document.createElement('canvas');
   shadowCanvas.width = shadowCanvas.height = SC;
   const sCtx = shadowCanvas.getContext('2d');
@@ -6769,5 +7414,441 @@
 
 
 
+  <!-- Debug: Mostrar scroll prog -->
+  <div id="debug-scroll-prog" style="position: fixed; bottom: 20px; left: 20px; color: #00ff00; font-family: monospace; font-size: 24px; font-weight: bold; z-index: 999999; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">0.00</div>
+  <!-- MAGAZINE BREAKOUT OVERLAY — body-level para evitar problemas con transforms del carrusel -->
+  <div id="mag-breakout-overlay" style="display:none;position:fixed;z-index:99998;background:transparent;pointer-events:none;border:none;will-change:top,left,width,height;"></div>
+  <!-- THERMAL OVERLAY — efecto cámara termográfica -->
+  <div id="thermal-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999999;pointer-events:none;overflow:hidden;">
+    <!-- Fondo térmico: indigo/violeta profundo con irregularidades tipo pared Oryzo -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;
+      background:
+        radial-gradient(ellipse 50% 35% at 15% 40%, rgba(140,0,120,0.5) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 82% 20%, rgba(100,0,160,0.4) 0%, transparent 58%),
+        radial-gradient(ellipse 60% 45% at 55% 80%, rgba(120,0,100,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 30% at 38% 55%, rgba(80,0,130,0.45) 0%, transparent 52%),
+        radial-gradient(ellipse 28% 22% at 90% 75%, rgba(110,0,95,0.38) 0%, transparent 52%),
+        linear-gradient(170deg, rgba(12,0,30,1) 0%, rgba(35,0,62,1) 40%, rgba(22,0,45,1) 70%, rgba(14,0,32,1) 100%);"></div>
+    <!-- Silueta de la modelo: negra con glow térmico en los bordes (calor corporal = violeta/magenta) -->
+    <div id="thermal-model-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
+      <img id="thermal-silhouette" src="assets/img/modelo-sin-fondo.png"
+           style="position:fixed;top:0;left:0;width:0;height:0;
+                  filter:brightness(0) opacity(0.92);">
+    </div>
+    <!-- CEREBRO 3D TÉRMICO: canvas renderizado con Three.js, revelado con el barrido -->
+    <canvas id="brain-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 0.4s ease;"></canvas>
+    <!-- Viñeta oscura en bordes (como Oryzo) -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;
+      background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
+  </div>
+
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+//  THERMAL CAMERA SYSTEM
+// ═══════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════
+//  BRAIN 3D THERMAL RENDERER  — Opción A: dual-model swap
+//  Carga human_brain.glb (completo) y human_brain_half.glb.
+//  Al inicio muestra el cerebro completo. Durante el scroll, mientras
+//  rota sobre Y, hace un crossfade al medio cerebro para revelar
+//  las estructuras internas de forma imperceptible.
+// ═══════════════════════════════════════════════════════════════════
+(function initBrainRenderer() {
+  var _brainRenderer = null, _brainScene = null, _brainCamera = null;
+  var _brainFull = null, _brainHalf = null, _brainClock = null;
+  var _brainReady = false, _fullLoaded = false, _halfLoaded = false;
+  var _brainT = 0;
+  var _halfClipPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0); // corta por abajo
+
+  function waitForThree(cb) {
+    if (typeof THREE !== 'undefined' && THREE.GLTFLoader) { cb(); return; }
+    setTimeout(function() { waitForThree(cb); }, 100);
+  }
+
+  waitForThree(function() {
+    var canvas = document.getElementById('brain-canvas');
+    if (!canvas) return;
+
+    // Renderer transparente
+    _brainRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    _brainRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    _brainRenderer.setSize(window.innerWidth, window.innerHeight);
+    _brainRenderer.setClearColor(0x000000, 0);
+    _brainRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+    _brainRenderer.toneMappingExposure = 1.6;
+    _brainRenderer.localClippingEnabled = true; // necesario para clipping por material
+
+    // Escena y camara
+    _brainScene = new THREE.Scene();
+    _brainCamera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.01, 100);
+    _brainCamera.position.set(0, 0, 0);
+
+    // ILUMINACION QUE COMPLEMENTA LOS MAPAS BAKED:
+    // El normal map ya tiene el relieve, las luces solo deben activarlo.
+    // Ambient moderado: permite ver el AO map sin apagarlo completamente
+    _brainScene.add(new THREE.AmbientLight(0x180008, 0.55));
+
+    // Key principal: angulo 45 grados — ni demasiado frontal (aplana) ni demasiado lateral (oscurece)
+    var kL = new THREE.DirectionalLight(0xff6600, 5.0);
+    kL.position.set(3, 4, 5); _brainScene.add(kL);
+
+    // Fill suave desde el lado opuesto para que los sulcos no sean negros puros
+    var fL = new THREE.DirectionalLight(0xff3300, 1.5);
+    fL.position.set(-3, 2, 4); _brainScene.add(fL);
+
+    // Top calido: realza las crestas superiores
+    var tL = new THREE.DirectionalLight(0xffaa00, 2.0);
+    tL.position.set(0, 6, 1); _brainScene.add(tL);
+
+    // Rim frio desde atras: silueta contra el fondo oscuro
+    var rL = new THREE.DirectionalLight(0xbb00ee, 1.6);
+    rL.position.set(0, -1, -5); _brainScene.add(rL);
+
+    _brainClock = new THREE.Clock();
+
+    // ── Helper: aplica material térmico a todos los meshes de un root ──
+    function applyThermalMat(root) {
+      root.traverse(function(c) {
+        if (!c.isMesh || !c.material) return;
+        var o = Array.isArray(c.material) ? c.material[0] : c.material;
+        var m = new THREE.MeshStandardMaterial({
+          map:             o.map             || null,
+          normalMap:       o.normalMap       || null,
+          aoMap:           o.aoMap           || null,
+          roughnessMap:    o.roughnessMap    || null,
+          metalnessMap:    o.metalnessMap    || null,
+          displacementMap: o.displacementMap || null,
+          alphaMap:        o.alphaMap        || null,
+          envMap:          null,
+          color:           new THREE.Color(0.75, 0.11, 0.0),
+          emissive:        new THREE.Color(0.10, 0.01, 0.0),
+          emissiveIntensity: 0.45,
+          roughness:    o.roughnessMap ? 1.0 : 0.82,
+          metalness:    0.0,
+          normalScale:  o.normalMap ? new THREE.Vector2(2.5, 2.5) : new THREE.Vector2(1.0, 1.0),
+          aoMapIntensity: 2.2,
+          side:         THREE.FrontSide,
+          flatShading:  false,
+          transparent:  true,   // necesario para crossfade
+          depthWrite:   false,  // evita la sombra negra cuando opacity=0
+          opacity:      1.0
+        });
+        c.material = m;
+        if (o.aoMap && !c.geometry.attributes.uv2 && c.geometry.attributes.uv) {
+          c.geometry.setAttribute('uv2', c.geometry.attributes.uv);
+        }
+      });
+    }
+
+    // ── Helper: envuelve un root en un Group centrado y escalado ──
+    // El Group es lo que se mueve en el render loop.
+    // El root interno queda centrado en el origen del Group.
+    // Así position.set() en el Group no rompe el centrado.
+    function wrapAndCenter(root) {
+      var box    = new THREE.Box3().setFromObject(root);
+      var size   = box.getSize(new THREE.Vector3());
+      var center = box.getCenter(new THREE.Vector3());
+      // Centrar el modelo dentro del grupo
+      root.position.set(-center.x, -center.y, -center.z);
+      var DIST    = 5.0;
+      var vH      = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
+      var targetH = vH * 0.22;
+      var s       = targetH / Math.max(size.x, size.y, size.z);
+      var wrapper = new THREE.Group();
+      wrapper.scale.setScalar(s);
+      wrapper.add(root);
+      return wrapper; // mover el wrapper, no el root
+    }
+
+    // ── Helper: cambia opacity de todos los meshes de un root ──
+    function setOpacity(root, opacity) {
+      root.traverse(function(c) {
+        if (!c.isMesh) return;
+        var mats = Array.isArray(c.material) ? c.material : [c.material];
+        mats.forEach(function(m) { m.opacity = opacity; });
+      });
+    }
+
+    // ── Arranca el loop cuando ambos modelos están listos ──
+    function checkReady() {
+      if (!_fullLoaded || !_halfLoaded) return;
+      _brainReady = true;
+      console.log('[BRAIN] Dual-model listo — swap activo');
+      _renderBrainLoop();
+    }
+
+    var loader = new THREE.GLTFLoader();
+
+    // Cargar cerebro COMPLETO (visible al inicio)
+    loader.load('assets/models/human_brain.glb', function(gltf) {
+      var wrapper = wrapAndCenter(gltf.scene);
+      wrapper.scale.multiplyScalar(1.1); // 10% más grande que el medio cerebro
+      applyThermalMat(wrapper);
+      setOpacity(wrapper, 1.0);     // empieza visible
+      _brainFull = wrapper;
+      _brainScene.add(_brainFull);
+      _fullLoaded = true;
+      checkReady();
+    }, null, function(e) { console.error('[BRAIN] Error full:', e); });
+
+    // Cargar MEDIO cerebro (oculto al inicio)
+    loader.load('assets/models/human_brain_half.glb', function(gltf) {
+      var wrapper = wrapAndCenter(gltf.scene);
+      applyThermalMat(wrapper);
+      // Aplicar plano de recorte inferior a todos los materiales del medio cerebro
+      wrapper.traverse(function(c) {
+        if (!c.isMesh) return;
+        var mats = Array.isArray(c.material) ? c.material : [c.material];
+        mats.forEach(function(m) { m.clippingPlanes = [_halfClipPlane]; m.clipShadows = false; });
+      });
+      setOpacity(wrapper, 0.0);     // empieza invisible
+      _brainHalf = wrapper;
+      _brainScene.add(_brainHalf);
+      _halfLoaded = true;
+      checkReady();
+    }, null, function(e) { console.error('[BRAIN] Error half:', e); });
+
+    window.addEventListener('resize', function() {
+      if (!_brainRenderer) return;
+      _brainRenderer.setSize(window.innerWidth, window.innerHeight);
+      _brainCamera.aspect = window.innerWidth / window.innerHeight;
+      _brainCamera.updateProjectionMatrix();
+    });
+  });
+
+  function _renderBrainLoop() {
+    requestAnimationFrame(_renderBrainLoop);
+    if (!_brainReady || !_brainFull || !_brainHalf) return;
+    _brainT = _brainClock.getElapsedTime();
+
+    var _bProg   = window._brainScrollProg || 0;
+    var _rotT    = Math.max(0, Math.min(1, (_bProg - 16.3) / (17.6 - 16.3)));
+    var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
+
+    // ── Crossfade swap: entre rotEase 0.30 y 0.55 ──────────────────
+    // Calculado ANTES de DIST para que el zoom dependa del swap
+    var SWAP_START = 0.30, SWAP_END = 0.55;
+    var swapT       = Math.max(0, Math.min(1, (_rotEase - SWAP_START) / (SWAP_END - SWAP_START)));
+    var fullOpacity = 1.0 - swapT;
+    var halfOpacity = swapT;
+
+    // Zoom dramático: la cámara se acerca mientras ocurre el crossfade
+    // DIST constante — el zoom se hace por CSS sobre #thermal-overlay
+    var DIST = 5.0;
+    var vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
+    var vW   = vH * (window.innerWidth / window.innerHeight);
+    var rotY = Math.PI / 2 + _rotEase * (-Math.PI / 2); // solo para referencia
+    var posX = -0.008 * vW / 2; // micro-ajuste izquierda ~1-2mm
+    var posY =  0.312 * vH / 2; // subido 6mm total
+
+    // ── Zoom CSS sobre el overlay completo (cerebro + sombra chica) ──
+    var zoomScale = 1.0 + swapT * 0.4225; // 1.0 → 1.42 durante el swap (+30%)
+    var overlay = document.getElementById('thermal-overlay');
+    if (overlay) {
+      overlay.style.transformOrigin = '50% 30%'; // centro en la zona de la cabeza
+      overlay.style.transform = 'scale(' + zoomScale + ')';
+    }
+
+    // Medio cerebro: posicion X directa — justo a la izquierda del centro
+    var halfPosX = -0.03 * vW / 2;
+    var halfPosY =  0.294 * vH / 2; // posicion absoluta (independiente del cerebro completo)
+
+    // Cerebro COMPLETO: empieza en 0 (frontal para human_brain.glb), acaba en -PI/2
+    // Cerebro MEDIO: empieza en PI/2 (frontal para human_brain_half.glb), acaba en 0
+    // El offset PI/2 entre ambos es exactamente la diferencia de orientación entre los dos GLBs
+    // → en el punto de swap (mismo rotEase) muestran la misma vista anatómica
+    _brainFull.rotation.y = _rotEase * (-Math.PI / 2);
+    _brainFull.position.set(posX, posY, -DIST);
+    _brainHalf.rotation.y = Math.PI / 2 + _rotEase * (-Math.PI / 2);
+    _brainHalf.position.set(halfPosX, halfPosY, -DIST);
+
+    // FIX 2: gate de visibilidad — cuando opacity=0 oculta completamente el mesh
+    // (sin esto Three.js lo renderiza como sombra negra aunque sea transparente)
+    _brainFull.visible = (fullOpacity > 0.01);
+    _brainHalf.visible = (halfOpacity > 0.01);
+
+    // Aplicar opacidades del crossfade (solo si visible)
+    if (_brainFull.visible) {
+      _brainFull.traverse(function(c) {
+        if (!c.isMesh) return;
+        var mats = Array.isArray(c.material) ? c.material : [c.material];
+        mats.forEach(function(m) { m.opacity = fullOpacity; });
+      });
+    }
+    if (_brainHalf.visible) {
+      _brainHalf.traverse(function(c) {
+        if (!c.isMesh) return;
+        var mats = Array.isArray(c.material) ? c.material : [c.material];
+        mats.forEach(function(m) { m.opacity = halfOpacity; });
+      });
+    }
+
+    // Actualizar plano de recorte del medio cerebro (mundo space)
+    // Corta todo lo que esté por debajo de halfPosY - offset
+    // Ajusta el segundo número para subir/bajar el corte
+    var cutY = halfPosY - 0.17 * vH / 2;
+    _halfClipPlane.constant = -cutY; // THREE.Plane: normal·point + constant ≥ 0 → visible si Y ≥ cutY
+
+    _brainRenderer.render(_brainScene, _brainCamera);
+  }
+
+  // Funcion global llamada por smoothScrollLoop para sincronizar el reveal
+  window._updateBrainReveal = function(tP, maskValue) {
+    var canvas = document.getElementById('brain-canvas');
+    if (!canvas) return;
+    if (tP <= 0) {
+      canvas.style.opacity = '0';
+      canvas.style.webkitMaskImage = '';
+      canvas.style.maskImage = '';
+    } else {
+      canvas.style.opacity = '1';
+      canvas.style.webkitMaskImage = maskValue;
+      canvas.style.maskImage = maskValue;
+    }
+  };
+
+})();
+function buildThermalPalette() {
+  const stops = [
+    [0,    [10,   0,  40]],
+    [0.12, [60,   0, 120]],
+    [0.25, [130,  0, 160]],
+    [0.38, [200, 20, 120]],
+    [0.50, [220, 40,  60]],
+    [0.62, [240, 90,   0]],
+    [0.75, [255,165,   0]],
+    [0.88, [255,230,  40]],
+    [1.0,  [255,255, 220]],
+  ];
+  const palette = new Uint8ClampedArray(256 * 3);
+  for (let i = 0; i < 256; i++) {
+    const t = i / 255;
+    let s = stops[0], e = stops[stops.length - 1];
+    for (let j = 0; j < stops.length - 1; j++) {
+      if (t >= stops[j][0] && t <= stops[j+1][0]) { s = stops[j]; e = stops[j+1]; break; }
+    }
+    const f = e[0] === s[0] ? 0 : (t - s[0]) / (e[0] - s[0]);
+    palette[i*3]   = Math.round(s[1][0] + (e[1][0] - s[1][0]) * f);
+    palette[i*3+1] = Math.round(s[1][1] + (e[1][1] - s[1][1]) * f);
+    palette[i*3+2] = Math.round(s[1][2] + (e[1][2] - s[1][2]) * f);
+  }
+  return palette;
+}
+const THERMAL_PALETTE = buildThermalPalette();
+
+let _thermalModelCanvas = null;
+function getThermalModelCanvas(srcImg, w, h) {
+  if (_thermalModelCanvas) return _thermalModelCanvas;
+  const oc = document.createElement('canvas');
+  oc.width = w; oc.height = h;
+  const ctx = oc.getContext('2d');
+  ctx.drawImage(srcImg, 0, 0, w, h);
+  const id = ctx.getImageData(0, 0, w, h);
+  const d  = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    if (d[i+3] < 10) continue;
+    const r = d[i], g = d[i+1], b = d[i+2];
+    const skinBoost = (r > g + 25 && r > b + 15) ? 22 : 0;
+    const lum = Math.min(255, Math.round(0.299*r + 0.587*g + 0.114*b) + skinBoost);
+    const pi  = lum * 3;
+    d[i]   = THERMAL_PALETTE[pi];
+    d[i+1] = THERMAL_PALETTE[pi+1];
+    d[i+2] = THERMAL_PALETTE[pi+2];
+  }
+  ctx.putImageData(id, 0, 0);
+  _thermalModelCanvas = oc;
+  return oc;
+}
+
+// Ruido pequeño 256×256 escalado
+let _bgNoiseCanvas = null;
+function getBgNoiseCanvas() {
+  if (_bgNoiseCanvas) return _bgNoiseCanvas;
+  const S = 256;
+  const oc = document.createElement('canvas');
+  oc.width = S; oc.height = S;
+  const ctx = oc.getContext('2d');
+  const id  = ctx.createImageData(S, S);
+  const d   = id.data;
+  for (let y = 0; y < S; y++) {
+    for (let x = 0; x < S; x++) {
+      // valor noise rápido con Math.sin hash
+      const n1 = (Math.sin(x * 0.07 + y * 0.11) * 0.5 + 0.5);
+      const n2 = (Math.sin(x * 0.19 + y * 0.03 + 5.0) * 0.5 + 0.5);
+      const n3 = (Math.sin(x * 0.04 - y * 0.17 + 2.7) * 0.5 + 0.5);
+      const v  = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
+      const t  = Math.max(0, Math.min(0.52, v * 0.52));
+      const pi = Math.round(t * 255) * 3;
+      const idx = (y * S + x) * 4;
+      d[idx]   = THERMAL_PALETTE[pi];
+      d[idx+1] = THERMAL_PALETTE[pi+1];
+      d[idx+2] = THERMAL_PALETTE[pi+2];
+      d[idx+3] = 255;
+    }
+  }
+  ctx.putImageData(id, 0, 0);
+  _bgNoiseCanvas = oc;
+  return oc;
+}
+// Pre-generar en idle para que no bloquee al primer uso
+if (typeof requestIdleCallback !== 'undefined') {
+  requestIdleCallback(() => getBgNoiseCanvas());
+} else {
+  setTimeout(() => getBgNoiseCanvas(), 200);
+}
+
+function updateThermalCurtain(progress) {
+  const canvas = document.getElementById('thermal-canvas');
+  if (!canvas) { console.warn('[THERMAL] canvas not found'); return; }
+  if (progress <= 0) { canvas.style.display = 'none'; return; }
+
+  console.log('[THERMAL] progress=', progress.toFixed(3));
+
+  const vw = window.innerWidth, vh = window.innerHeight;
+  canvas.width  = vw;
+  canvas.height = vh;
+  canvas.style.display  = 'block';
+  canvas.style.zIndex   = '999990'; // override: más alto que todo
+
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, vw, vh);
+
+  const curtainH = Math.round(vh * progress);
+  const curtainY = vh - curtainH;
+
+  // Diagnóstico: relleno rojo-lila sólido para verificar visibilidad
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, curtainY, vw, curtainH);
+  ctx.clip();
+  ctx.fillStyle = 'rgba(180, 0, 120, 0.92)';
+  ctx.fillRect(0, 0, vw, vh);
+  ctx.restore();
+}
+
+// ── Driver independiente: lee prog de sessionStorage cada 50ms ──────
+setInterval(function() {
+  var p  = parseFloat(sessionStorage.getItem('dev_prog') || '0');
+  var tP = Math.min(1, Math.max(0, (p - 15.9) / (17.2 - 15.9)));
+  var tc = document.getElementById('thermal-canvas');
+  if (!tc) return;
+  if (tP <= 0) { tc.style.display = 'none'; return; }
+  var vw = window.innerWidth, vh = window.innerHeight;
+  tc.width = vw; tc.height = vh;
+  tc.style.position = 'fixed'; tc.style.top = '0'; tc.style.left = '0';
+  tc.style.width = '100%'; tc.style.height = '100%';
+  tc.style.zIndex = '9999999'; tc.style.display = 'block'; tc.style.pointerEvents = 'none';
+  var ctx = tc.getContext('2d');
+  ctx.clearRect(0, 0, vw, vh);
+  ctx.fillStyle = 'rgba(200,0,130,0.95)';
+  ctx.fillRect(0, vh - Math.round(vh * tP), vw, Math.round(vh * tP));
+}, 50);
+
+
+</script>
+
 </body>
 </html>
+
