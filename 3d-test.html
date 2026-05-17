@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5133,6 +5133,7 @@ window.onerror = function(msg, url, line, col, err) {
             // ── FASE 2: Overlay expansión del marco ────────────────────────────────
             if (expansionP > 0) {
               breakoutOverlay.style.display = 'block';
+              breakoutOverlay.style.overflow = 'hidden';
               const curLeft   = startLeft * (1 - easeExpand);
               const curTop    = startTop  * (1 - easeExpand);
               const curWidth  = boxW + (vw - boxW) * easeExpand;
