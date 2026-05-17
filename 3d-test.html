@@ -7849,7 +7849,7 @@ window.onerror = function(msg, url, line, col, err) {
     _brainT = _brainClock.getElapsedTime();
 
     var _bProg   = window._brainScrollProg || 0;
-    var _rotT    = Math.max(0, Math.min(1, (_bProg - 16.3) / (17.6 - 16.3)));
+    var _rotT    = Math.max(0, Math.min(1, (_bProg - 16.3) / (17.0 - 16.3)));
     var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
 
     // ── Crossfade swap: empieza cuando el cerebro está casi de lado ──
@@ -7882,8 +7882,8 @@ window.onerror = function(msg, url, line, col, err) {
     var halfPosX = -0.03 * vW / 2;
     var halfPosY =  0.294 * vH / 2;
 
-    // Cerebro COMPLETO: rota un poquito más que 90° (-PI*0.60 = ~108°)
-    _brainFull.rotation.y = _rotEase * (-Math.PI * 0.60);
+    // Cerebro COMPLETO: rota hasta perfil lateral completo (~99°)
+    _brainFull.rotation.y = _rotEase * (-Math.PI * 0.55);
     _brainFull.position.set(posX, posY, -DIST);
 
     // Cerebro COMPLETO: fade-out con swapT (la imagen 2D lo reemplaza)
