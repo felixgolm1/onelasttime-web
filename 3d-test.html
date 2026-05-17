@@ -7632,8 +7632,10 @@ window.onerror = function(msg, url, line, col, err) {
   }
 
   window._updateNeuralText = function(prog) {
-    if (!$c) { buildPixels(); if (!$c || !pixels) return; }
-    if (!pixels || pixels.length === 0) return;
+    if (!$c) { $c = document.getElementById('neural-text-canvas'); }
+    if (!$c) return;
+    // Si todavia no hay pixeles (font no cargada), intentar rebuild
+    if (!pixels || pixels.length === 0) { tryBuild(); return; }
     var animT = Math.max(0, Math.min(1, (prog - 15.47) / (16.2 - 15.47)));
     var newActive = Math.floor(animT * pixels.length);
     if (newActive === activeCount) return;
@@ -7652,10 +7654,22 @@ window.onerror = function(msg, url, line, col, err) {
     activeCount = newActive;
   };
 
+  // Precarga de fuente + build inicial para evitar array vacio por race condition
+  function tryBuild() {
+    var fs = Math.max(36, Math.min(window.innerWidth * 0.08, 160));
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('700 ' + fs + 'px Inter').then(buildPixels).catch(buildPixels);
+    } else {
+      buildPixels();
+    }
+  }
+  if (document.readyState === 'complete') { tryBuild(); }
+  else { window.addEventListener('load', tryBuild); }
+
   window.addEventListener('resize', function() {
     pixels = null; activeCount = 0;
     if ($c) { $c.width = 0; $c.height = 0; }
-    buildPixels();
+    tryBuild();
   });
 })();
 </script>
