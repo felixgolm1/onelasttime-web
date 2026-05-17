@@ -7649,32 +7649,30 @@ window.onerror = function(msg, url, line, col, err) {
             '#include <begin_vertex>',
             '#include <begin_vertex>\nvLocalPos = position;'
           );
-          // Función de calor por posición: arco sobre el cuerpo calloso
           var hotZoneGLSL = [
             'varying vec3 vLocalPos;',
             'float cingulateHeat(vec3 p) {',
-            '  // Cingulate: arco superior sobre corpus callosum',
-            '  // y = vertical (arriba+), z = ant-post, x = medial-lateral',
             '  float zRange = smoothstep(-0.38, -0.25, p.z) * smoothstep(0.28, 0.16, p.z);',
-            '  float arcY = 0.16 + 0.07 * cos((p.z + 0.05) * 3.0);', // centro del arco
+            '  float arcY = 0.16 + 0.07 * cos((p.z + 0.05) * 3.0);',
             '  float distY = abs(p.y - arcY);',
             '  float yZone = smoothstep(0.13, 0.02, distY);',
-            '  float xZone = smoothstep(0.30, 0.08, abs(p.x));', // zona medial
+            '  float xZone = smoothstep(0.30, 0.08, abs(p.x));',
             '  return zRange * yZone * xZone;',
             '}'
           ].join('\n');
           shader.fragmentShader = hotZoneGLSL + '\n' + shader.fragmentShader;
+          // #include <output_fragment> siempre presente en MeshStandardMaterial
           shader.fragmentShader = shader.fragmentShader.replace(
-            '#include <dithering_fragment>',
+            '#include <output_fragment>',
             [
+              '#include <output_fragment>',
               'float _heat = cingulateHeat(vLocalPos);',
-              'vec3 _hotCol = vec3(1.0, 0.88, 0.10);', // amarillo caliente
-              'gl_FragColor.rgb = mix(gl_FragColor.rgb, _hotCol, _heat * 0.92);',
-              '#include <dithering_fragment>'
+              'vec3 _hotCol = vec3(1.0, 0.88, 0.10);',
+              'gl_FragColor.rgb = mix(gl_FragColor.rgb, _hotCol, _heat * 0.92);'
             ].join('\n')
           );
         };
-        m.customProgramCacheKey = function() { return 'cingulate_hot'; };
+        m.customProgramCacheKey = function() { return 'cingulate_v2'; };
 
         c.material = m;
         if (o.aoMap && !c.geometry.attributes.uv2 && c.geometry.attributes.uv) {
