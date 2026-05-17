@@ -7618,6 +7618,39 @@ window.onerror = function(msg, url, line, col, err) {
       root.traverse(function(c) {
         if (!c.isMesh || !c.material) return;
         var o = Array.isArray(c.material) ? c.material[0] : c.material;
+
+        // ── Canvas emissiveMap: detectar zonas lilas/púrpuras → amarillo caliente ──
+        var emissiveMap = null;
+        var emissiveCol = new THREE.Color(0.10, 0.01, 0.0);
+        var emissiveInt = 0.45;
+        if (o.map && o.map.image) {
+          try {
+            var img = o.map.image;
+            var cw = img.naturalWidth || img.width || 512;
+            var ch = img.naturalHeight || img.height || 512;
+            var ec = document.createElement('canvas');
+            ec.width = cw; ec.height = ch;
+            var ectx = ec.getContext('2d');
+            ectx.drawImage(img, 0, 0, cw, ch);
+            var id = ectx.getImageData(0, 0, cw, ch);
+            var od = new Uint8ClampedArray(id.data.length);
+            for (var pi = 0; pi < id.data.length; pi += 4) {
+              var r = id.data[pi]/255, g = id.data[pi+1]/255, b = id.data[pi+2]/255;
+              var blueDom = Math.max(0, b - g * 1.1);
+              var heat = Math.min(1, blueDom/0.10) * Math.min(1, r/0.08);
+              od[pi]   = Math.round(heat * 255);  // R: amarillo
+              od[pi+1] = Math.round(heat * 220);  // G: amarillo
+              od[pi+2] = 0;                        // B: 0
+              od[pi+3] = 255;
+            }
+            ectx.putImageData(new ImageData(od, cw, ch), 0, 0);
+            emissiveMap = new THREE.CanvasTexture(ec);
+            emissiveMap.flipY = o.map.flipY !== undefined ? o.map.flipY : true;
+            emissiveCol = new THREE.Color(1.0, 1.0, 1.0);
+            emissiveInt = 1.2;
+          } catch(e) { console.warn('[THERMAL emissiveMap]', e); }
+        }
+
         var m = new THREE.MeshStandardMaterial({
           map:             o.map             || null,
           normalMap:       o.normalMap       || null,
@@ -7628,8 +7661,9 @@ window.onerror = function(msg, url, line, col, err) {
           alphaMap:        o.alphaMap        || null,
           envMap:          null,
           color:           new THREE.Color(0.75, 0.11, 0.0),
-          emissive:        new THREE.Color(0.10, 0.01, 0.0),
-          emissiveIntensity: 0.45,
+          emissive:        emissiveCol,
+          emissiveMap:     emissiveMap,
+          emissiveIntensity: emissiveInt,
           roughness:    o.roughnessMap ? 1.0 : 0.82,
           metalness:    0.0,
           normalScale:  o.normalMap ? new THREE.Vector2(2.5, 2.5) : new THREE.Vector2(1.0, 1.0),
@@ -7640,40 +7674,12 @@ window.onerror = function(msg, url, line, col, err) {
           depthWrite:   false,
           opacity:      1.0
         });
-
-        // ── Zona caliente: corteza cingulada anterior + posterior ──
-        m.onBeforeCompile = function(shader) {
-          // Detectar zona lila/púrpura de la textura original y hacer caliente
-          // Inyectar ANTES de output_fragment modificando outgoingLight (no gl_FragColor)
-          shader.fragmentShader = shader.fragmentShader.replace(
-            '#include <output_fragment>',
-            [
-              // Samplear textura original para detectar el color lila/púrpura
-              'vec4 _rawTex = vec4(0.0);',
-              '#ifdef USE_MAP',
-              '  _rawTex = texture2D( map, vMapUv );',
-              '#endif',
-              // Zona lila: azul domina sobre verde, con algo de rojo
-              'float _blueDom = max(0.0, _rawTex.b - _rawTex.g * 1.1);',
-              'float _isPurple = smoothstep(0.04, 0.20, _blueDom) * smoothstep(0.10, 0.35, _rawTex.r);',
-              // Zona muy fría (oscura): negra/muy oscura → frío azul
-              'float _isCold = smoothstep(0.15, 0.05, _rawTex.r + _rawTex.g + _rawTex.b);',
-              // Hot color para la zona lila (cíngulo): amarillo brillante
-              'vec3 _hotCol = vec3(1.0, 0.90, 0.05);',
-              'outgoingLight = mix(outgoingLight, _hotCol, _isPurple * 0.90);',
-              '#include <output_fragment>'
-            ].join('\n')
-          );
-        };
-        m.customProgramCacheKey = function() { return 'cingulate_tex_v1'; };
-
         c.material = m;
         if (o.aoMap && !c.geometry.attributes.uv2 && c.geometry.attributes.uv) {
           c.geometry.setAttribute('uv2', c.geometry.attributes.uv);
         }
       });
     }
-
 
     // ── Helper: envuelve un root en un Group centrado y escalado ──
     // El Group es lo que se mueve en el render loop.
