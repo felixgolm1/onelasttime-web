@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5753,15 +5753,20 @@ window.onerror = function(msg, url, line, col, err) {
             if (_vigEl) _vigEl.style.opacity = String(_bgOp);
             // SUAVIDAD 1: fade de opacidad en el primer 15% para evitar aparición brusca
             // (ya gestionado por _bgOp; el overlay en si es siempre opacity:1 cuando visible)
-            // Overshoot a 115: cuando tPdiv=1 → _vis=115, _lo=100, _hi=100 → máscara totalmente sólida
-            // Esto elimina el salto al llegar arriba: el fade top se encoge gradualmente de 30% a 0%
-            var _vis = Math.round(_tPdiv * 115);
-            var _se  = 4;
-            var _lo  = Math.max(0, Math.min(100, _vis - _se));
-            var _hi  = Math.max(0, Math.min(100, _vis + _se));
-            var _mv  = 'linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)';
-            _tOvr.style.webkitMaskImage = _mv;
-            _tOvr.style.maskImage = _mv;
+            // Máscara de cortina: solo cuando hay cortina activa (_tPdiv>0)
+            // Si no hay cortina, limpiar la máscara → h2 título completamente visible
+            if (_tPdiv <= 0) {
+              _tOvr.style.webkitMaskImage = '';
+              _tOvr.style.maskImage = '';
+            } else {
+              var _vis = Math.round(_tPdiv * 115);
+              var _se  = 4;
+              var _lo  = Math.max(0, Math.min(100, _vis - _se));
+              var _hi  = Math.max(0, Math.min(100, _vis + _se));
+              var _mv  = 'linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)';
+              _tOvr.style.webkitMaskImage = _mv;
+              _tOvr.style.maskImage = _mv;
+            }
             // Sincronizar posición de la silueta con el modelo real
             var _sil = document.getElementById('thermal-silhouette');
             var _realModel = document.getElementById('mag-model-clone');
