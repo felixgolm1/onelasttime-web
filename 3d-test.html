@@ -7534,6 +7534,28 @@ window.onerror = function(msg, url, line, col, err) {
         radial-gradient(ellipse 35% 30% at 38% 55%, rgba(80,0,130,0.45) 0%, transparent 52%),
         radial-gradient(ellipse 28% 22% at 90% 75%, rgba(110,0,95,0.38) 0%, transparent 52%),
         linear-gradient(170deg, rgba(12,0,30,1) 0%, rgba(35,0,62,1) 40%, rgba(22,0,45,1) 70%, rgba(14,0,32,1) 100%);"></div>
+    <!-- TÍTULO "La ciencia de la conversación"
+         – Dentro del overlay: la cortina lo revela junto al cerebro
+         – ANTES de la silueta en el DOM → la silueta pinta encima (texto queda detrás) -->
+    <div id="sciencia-title" style="
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;">
+      <h2 style="
+        font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+        font-size:clamp(2.8rem,6.5vw,7rem);
+        font-weight:800;
+        color:#ffffff;
+        text-align:center;
+        letter-spacing:-0.03em;
+        line-height:1.05;
+        text-transform:lowercase;
+        margin:0;
+        padding:0 6%;
+        opacity:0.93;
+      ">la ciencia de<br>la conversación</h2>
+    </div>
+
     <!-- Silueta de la modelo: negra con glow térmico en los bordes (calor corporal = violeta/magenta) -->
     <div id="thermal-model-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
       <img id="thermal-silhouette" src="assets/img/modelo-sin-fondo.png"
