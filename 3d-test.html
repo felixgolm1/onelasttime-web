@@ -7614,7 +7614,7 @@ window.onerror = function(msg, url, line, col, err) {
     _brainClock = new THREE.Clock();
 
     // ── Helper: aplica material térmico a todos los meshes de un root ──
-    function applyThermalMat(root) {
+    function applyThermalMat(root, isHalf) {
       root.traverse(function(c) {
         if (!c.isMesh || !c.material) return;
         var o = Array.isArray(c.material) ? c.material[0] : c.material;
@@ -7636,16 +7636,53 @@ window.onerror = function(msg, url, line, col, err) {
           aoMapIntensity: 2.2,
           side:         THREE.FrontSide,
           flatShading:  false,
-          transparent:  true,   // necesario para crossfade
-          depthWrite:   false,  // evita la sombra negra cuando opacity=0
+          transparent:  true,
+          depthWrite:   false,
           opacity:      1.0
         });
+
+        // ── Zona caliente: corteza cingulada anterior + posterior ──
+        m.onBeforeCompile = function(shader) {
+          // Pasar posición local al fragment shader
+          shader.vertexShader = 'varying vec3 vLocalPos;\n' + shader.vertexShader;
+          shader.vertexShader = shader.vertexShader.replace(
+            '#include <begin_vertex>',
+            '#include <begin_vertex>\nvLocalPos = position;'
+          );
+          // Función de calor por posición: arco sobre el cuerpo calloso
+          var hotZoneGLSL = [
+            'varying vec3 vLocalPos;',
+            'float cingulateHeat(vec3 p) {',
+            '  // Cingulate: arco superior sobre corpus callosum',
+            '  // y = vertical (arriba+), z = ant-post, x = medial-lateral',
+            '  float zRange = smoothstep(-0.38, -0.25, p.z) * smoothstep(0.28, 0.16, p.z);',
+            '  float arcY = 0.16 + 0.07 * cos((p.z + 0.05) * 3.0);', // centro del arco
+            '  float distY = abs(p.y - arcY);',
+            '  float yZone = smoothstep(0.13, 0.02, distY);',
+            '  float xZone = smoothstep(0.30, 0.08, abs(p.x));', // zona medial
+            '  return zRange * yZone * xZone;',
+            '}'
+          ].join('\n');
+          shader.fragmentShader = hotZoneGLSL + '\n' + shader.fragmentShader;
+          shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <dithering_fragment>',
+            [
+              'float _heat = cingulateHeat(vLocalPos);',
+              'vec3 _hotCol = vec3(1.0, 0.88, 0.10);', // amarillo caliente
+              'gl_FragColor.rgb = mix(gl_FragColor.rgb, _hotCol, _heat * 0.92);',
+              '#include <dithering_fragment>'
+            ].join('\n')
+          );
+        };
+        m.customProgramCacheKey = function() { return 'cingulate_hot'; };
+
         c.material = m;
         if (o.aoMap && !c.geometry.attributes.uv2 && c.geometry.attributes.uv) {
           c.geometry.setAttribute('uv2', c.geometry.attributes.uv);
         }
       });
     }
+
 
     // ── Helper: envuelve un root en un Group centrado y escalado ──
     // El Group es lo que se mueve en el render loop.
