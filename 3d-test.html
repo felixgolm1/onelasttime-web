@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -7542,6 +7542,24 @@ window.onerror = function(msg, url, line, col, err) {
     </div>
 
     <!-- Silueta de la modelo: negra con glow térmico en los bordes (calor corporal = violeta/magenta) -->
+    <!-- TITULO OXITOCINA: dentro del overlay, ANTES de la silueta -> la silueta pinta encima -->
+    <h2 id="oxitocina-title" style="
+      position:absolute;
+      top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+      font-size:clamp(3rem,8.7vw,11.25rem);
+      font-weight:700;
+      color:#ffffff;
+      text-align:center;
+      letter-spacing:-0.05em;
+      line-height:1.1;
+      text-transform:uppercase;
+      margin:0;
+      pointer-events:none;
+      width:100%;
+    ">NO ES MAGIA, ES OXITOCINA</h2>
+
     <div id="thermal-model-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
       <img id="thermal-silhouette" src="assets/img/modelo-sin-fondo.png"
            style="position:fixed;top:0;left:0;width:0;height:0;
@@ -8101,27 +8119,6 @@ setInterval(function() {
 
 </script>
 
-
-<!-- ── TÍTULO OXITOCINA: fixed, aparece en prog 15.50, persiste con la cortina ── -->
-<h2 id="oxitocina-title" style="
-  position:fixed;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  font-family:'Inter','Helvetica Neue',Arial,sans-serif;
-  font-size:clamp(2rem,5.8vw,7.5rem);
-  font-weight:700;
-  color:#ffffff;
-  text-align:center;
-  letter-spacing:-0.05em;
-  line-height:1;
-  text-transform:uppercase;
-  margin:0;
-  pointer-events:none;
-  z-index:10000000;
-  opacity:0;
-  display:none;
-">NO ES MAGIA, ES OXITOCINA</h2>
-
 <script>
 // scroll-driven Neural Wiring
 (function() {
@@ -8213,10 +8210,10 @@ setInterval(function() {
     if(prog<15.45){
       if(lastActive>0){spans.forEach(resetChar);sparks=[];
         if(sctx)sctx.clearRect(0,0,sc.width,sc.height);
-        h2.style.display='none';lastActive=0;}
+        lastActive=0;}
       return;
     }
-    h2.style.display='block'; initSC();
+    initSC();
     var animT=Math.max(0,Math.min(1,(prog-PROG_START)/(PROG_END-PROG_START)));
     var newActive=Math.min(N,Math.floor(animT*N+0.5));
     if(newActive>lastActive){
