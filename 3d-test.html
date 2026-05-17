@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5071,10 +5071,18 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
               applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
 
-            // 5. COPY IZQUIERDO — sale por izquierda linea a linea
-            { document.querySelectorAll('[id="mag-copy-left"]').forEach(function(container) {
+            // 5. COPY IZQUIERDO — sale por izquierda, clip en borde revista
+            { const magScene = document.getElementById('magazine-scene');
+              const magRect = magScene ? magScene.getBoundingClientRect() : null;
+              document.querySelectorAll('[id="mag-copy-left"]').forEach(function(container) {
                 const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
                 container.style.opacity = containerOpacity;
+                if (magRect) {
+                  const contRect = container.getBoundingClientRect();
+                  const overlapLeft = contRect.left - magRect.left;
+                  const clipLeft = Math.max(0, -overlapLeft) + 'px';
+                  container.style.clipPath = 'inset(0px 0px 0px ' + clipLeft + ')';
+                }
                 container.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                   const stagger = idx * 0.05;
                   const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
@@ -5083,10 +5091,18 @@ window.onerror = function(msg, url, line, col, err) {
                 });
               }); }
 
-            // 6. COPY DERECHO — sale por derecha linea a linea
-            { document.querySelectorAll('[id="mag-copy-right"]').forEach(function(container) {
+            // 6. COPY DERECHO — sale por derecha, clip en borde revista
+            { const magScene = document.getElementById('magazine-scene');
+              const magRect = magScene ? magScene.getBoundingClientRect() : null;
+              document.querySelectorAll('[id="mag-copy-right"]').forEach(function(container) {
                 const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
                 container.style.opacity = containerOpacity;
+                if (magRect) {
+                  const contRect = container.getBoundingClientRect();
+                  const overlapRight = (magRect.right) - (contRect.right);
+                  const clipRight = Math.max(0, -overlapRight) + 'px';
+                  container.style.clipPath = 'inset(0px ' + clipRight + ' 0px 0px)';
+                }
                 container.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                   const stagger = idx * 0.05;
                   const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
@@ -5192,10 +5208,18 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
               applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
 
-            // 5. COPY IZQUIERDO — sale por izquierda linea a linea
-            { document.querySelectorAll('[id="mag-copy-left"]').forEach(function(container) {
+            // 5. COPY IZQUIERDO — sale por izquierda, clip en borde revista
+            { const magScene2 = document.getElementById('magazine-scene');
+              const magRect2 = magScene2 ? magScene2.getBoundingClientRect() : null;
+              document.querySelectorAll('[id="mag-copy-left"]').forEach(function(container) {
                 const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
                 container.style.opacity = containerOpacity;
+                if (magRect2) {
+                  const contRect = container.getBoundingClientRect();
+                  const overlapLeft = contRect.left - magRect2.left;
+                  const clipLeft = Math.max(0, -overlapLeft) + 'px';
+                  container.style.clipPath = 'inset(0px 0px 0px ' + clipLeft + ')';
+                }
                 container.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                   const stagger = idx * 0.05;
                   const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
@@ -5204,10 +5228,18 @@ window.onerror = function(msg, url, line, col, err) {
                 });
               }); }
 
-            // 6. COPY DERECHO — sale por derecha linea a linea
-            { document.querySelectorAll('[id="mag-copy-right"]').forEach(function(container) {
+            // 6. COPY DERECHO — sale por derecha, clip en borde revista
+            { const magScene3 = document.getElementById('magazine-scene');
+              const magRect3 = magScene3 ? magScene3.getBoundingClientRect() : null;
+              document.querySelectorAll('[id="mag-copy-right"]').forEach(function(container) {
                 const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
                 container.style.opacity = containerOpacity;
+                if (magRect3) {
+                  const contRect = container.getBoundingClientRect();
+                  const overlapRight = (magRect3.right) - (contRect.right);
+                  const clipRight = Math.max(0, -overlapRight) + 'px';
+                  container.style.clipPath = 'inset(0px ' + clipRight + ' 0px 0px)';
+                }
                 container.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                   const stagger = idx * 0.05;
                   const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
