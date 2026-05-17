@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5100,7 +5100,11 @@ window.onerror = function(msg, url, line, col, err) {
             // 7. CÍRCULO Nº76 — shrink + fade (como Oryzo)
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.45, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
-              applyExit('mag-circle', `scale(${1 - eu})`, 1 - p); }
+              document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
+                el.style.transformOrigin = 'center center';
+                el.style.transform = 'scale(' + (1 - eu) + ')';
+                el.style.opacity = '' + (1 - p);
+              }); }
 
             // 8. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
@@ -5224,7 +5228,11 @@ window.onerror = function(msg, url, line, col, err) {
             // 7. CÍRCULO Nº76 — shrink + fade (como Oryzo)
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.45, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
-              applyExit('mag-circle', `scale(${1 - eu})`, 1 - p); }
+              document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
+                el.style.transformOrigin = 'center center';
+                el.style.transform = 'scale(' + (1 - eu) + ')';
+                el.style.opacity = '' + (1 - p);
+              }); }
 
             // 8. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
