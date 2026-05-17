@@ -7542,6 +7542,16 @@ window.onerror = function(msg, url, line, col, err) {
     </div>
     <!-- CEREBRO 3D TÉRMICO: canvas renderizado con Three.js, revelado con el barrido -->
     <canvas id="brain-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 0.4s ease;"></canvas>
+    <!-- CEREBRO 2D: imagen base + canvas de mapa de calor encima -->
+    <div id="brain-2d-wrap" style="position:absolute;pointer-events:none;opacity:0;
+      left:50%;top:29.5%;transform:translate(-50%,-50%);
+      width:22vh;height:22vh;">
+      <img id="brain-2d-img" src="assets/img/brain_thermal_half.png"
+        style="width:100%;height:100%;object-fit:contain;display:block;">
+      <!-- Canvas encima: mapa de calor dinámico en código -->
+      <canvas id="brain-2d-heat" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
+    </div>
+
     <!-- Viñeta oscura en bordes (como Oryzo) -->
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;
       background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
@@ -7550,6 +7560,76 @@ window.onerror = function(msg, url, line, col, err) {
 
 <script>
 // ═══════════════════════════════════════════════════════════════════
+//  MAPA DE CALOR 2D — zonas definidas en código, sobre imagen base
+// ═══════════════════════════════════════════════════════════════════
+(function initHeatMap() {
+  var wrap = document.getElementById('brain-2d-wrap');
+  var hc   = document.getElementById('brain-2d-heat');
+  if (!wrap || !hc) return;
+
+  // ── ZONAS DE CALOR — editar heat (0=frío, 1=máximo calor) ──
+  // Coordenadas relativas a la imagen: (0,0)=top-left, (1,1)=bottom-right
+  var ZONES = [
+    // Corteza cingulada anterior (ACC) — ZONA CALIENTE PRINCIPAL
+    { id: 'ACC',  cx: 0.42, cy: 0.28, rx: 0.20, ry: 0.10, heat: 1.00 },
+    // Corteza cingulada posterior (PCC)
+    { id: 'PCC',  cx: 0.62, cy: 0.32, rx: 0.14, ry: 0.08, heat: 0.90 },
+    // Cuerpo calloso — zona media
+    { id: 'CC',   cx: 0.52, cy: 0.50, rx: 0.22, ry: 0.06, heat: 0.45 },
+    // Tálamo
+    { id: 'THAL', cx: 0.52, cy: 0.62, rx: 0.14, ry: 0.09, heat: 0.55 },
+    // Corteza prefrontal medial
+    { id: 'mPFC', cx: 0.28, cy: 0.22, rx: 0.12, ry: 0.10, heat: 0.70 }
+  ];
+
+  // Thermal color: 0=dark-red, 0.5=orange, 1.0=yellow-white
+  function thermalRGBA(heat, alpha) {
+    heat = Math.max(0, Math.min(1, heat));
+    var r, g, b;
+    if (heat < 0.5) { r = 80+heat*2*175; g = 5+heat*2*55;  b = 0; }
+    else            { r = 255;            g = 60+(heat-0.5)*2*195; b = (heat-0.5)*2*80; }
+    return 'rgba('+Math.round(r)+','+Math.round(g)+','+Math.round(b)+','+(alpha||1)+')';
+  }
+
+  window._drawHeatMap = function(swapT) {
+    if (!wrap) return;
+    wrap.style.opacity = swapT.toFixed(3);
+    if (swapT <= 0 || !hc) return;
+
+    // Sync canvas resolution to its displayed size
+    var W = hc.offsetWidth, H = hc.offsetHeight;
+    if (hc.width !== W || hc.height !== H) { hc.width = W; hc.height = H; }
+
+    var ctx = hc.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+
+    // Dibujar cada zona como gradiente elíptico
+    ZONES.forEach(function(z) {
+      var x  = z.cx * W, y  = z.cy * H;
+      var rx = z.rx * W, ry = z.ry * H;
+      // Transformar para ellipse: scale Y
+      ctx.save();
+      ctx.scale(1, ry / rx);
+      var yScaled = y * (rx / ry);
+      var grad = ctx.createRadialGradient(x, yScaled, 0, x, yScaled, rx);
+      grad.addColorStop(0.00, thermalRGBA(z.heat, 0.82));
+      grad.addColorStop(0.45, thermalRGBA(z.heat - 0.10, 0.55));
+      grad.addColorStop(0.75, thermalRGBA(z.heat - 0.20, 0.20));
+      grad.addColorStop(1.00, thermalRGBA(z.heat - 0.30, 0.00));
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H * (rx / ry));
+      ctx.restore();
+    });
+  };
+
+  // Exponer ZONES para edición en tiempo real
+  window.HEAT_ZONES = ZONES;
+})();
+</script>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+
 //  THERMAL CAMERA SYSTEM
 // ═══════════════════════════════════════════════════════════════════
 
@@ -7801,12 +7881,17 @@ window.onerror = function(msg, url, line, col, err) {
     var posY =  0.312 * vH / 2; // subido 6mm total
 
     // ── Zoom CSS sobre el overlay completo (cerebro + sombra chica) ──
-    var zoomScale = 1.0 + swapT * 0.4225; // 1.0 → 1.42 durante el swap (+30%)
+    var zoomScale = 1.0 + swapT * 0.4225;
     var overlay = document.getElementById('thermal-overlay');
     if (overlay) {
-      overlay.style.transformOrigin = '50% 30%'; // centro en la zona de la cabeza
+      overlay.style.transformOrigin = '50% 30%';
       overlay.style.transform = 'scale(' + zoomScale + ')';
     }
+
+    // ── Mapa de calor 2D: fade-in con swapT ──
+    if (window._drawHeatMap) window._drawHeatMap(swapT);
+
+
 
     // Medio cerebro: posicion X directa — justo a la izquierda del centro
     var halfPosX = -0.03 * vW / 2;
