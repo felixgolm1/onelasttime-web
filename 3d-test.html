@@ -7619,6 +7619,13 @@ window.onerror = function(msg, url, line, col, err) {
         if (!c.isMesh || !c.material) return;
         var o = Array.isArray(c.material) ? c.material[0] : c.material;
 
+        // Bounding box para normalizar posición en el shader
+        if (!c.geometry.boundingBox) c.geometry.computeBoundingBox();
+        var _bb = c.geometry.boundingBox;
+        var _ctr = new THREE.Vector3(); _bb.getCenter(_ctr);
+        var _hsz = new THREE.Vector3(); _bb.getSize(_hsz).multiplyScalar(0.5);
+        if (!_hsz.x) _hsz.x = 1; if (!_hsz.y) _hsz.y = 1; if (!_hsz.z) _hsz.z = 1;
+
         var m = new THREE.MeshStandardMaterial({
           map:             o.map             || null,
           normalMap:       o.normalMap       || null,
@@ -7643,23 +7650,47 @@ window.onerror = function(msg, url, line, col, err) {
         });
 
         // ── Shader: zona caliente cingulada — Three.js r128 ──
-        // En r128 el punto de inyección es la línea directa de gl_FragColor
         m.onBeforeCompile = function(shader) {
+          shader.uniforms.uBBCtr = { value: _ctr };
+          shader.uniforms.uBBHsz = { value: _hsz };
+
           // Vertex: pasar posición local al fragment
           shader.vertexShader = 'varying vec3 vLP;\n' + shader.vertexShader;
           shader.vertexShader = shader.vertexShader.replace(
             '#include <begin_vertex>',
             '#include <begin_vertex>\nvLP = position;'
           );
-          // Fragment: función de zona caliente + inyección ANTES del tonemapping
-          shader.fragmentShader = 'varying vec3 vLP;\n' + shader.fragmentShader;
-          // En r128: reemplazar la línea de output directa
+
+          // Fragment: declaraciones + función cingulate en espacio normalizado
+          var fHead = [
+            'varying vec3 vLP;',
+            'uniform vec3 uBBCtr;',
+            'uniform vec3 uBBHsz;',
+            'float cingHeat(vec3 lp) {',
+            '  vec3 np = (lp - uBBCtr) / uBBHsz;', // -1 a 1
+            '  float yZ = smoothstep(-0.05,0.08,np.y)*smoothstep(0.82,0.60,np.y);',
+            '  float xZ = smoothstep(0.42,0.10,abs(np.x));', // medial
+            '  float zZ = smoothstep(-0.88,-0.70,np.z)*smoothstep(0.48,0.28,np.z);',
+            '  return yZ * xZ * zZ;',
+            '}'
+          ].join('\n');
+          shader.fragmentShader = fHead + '\n' + shader.fragmentShader;
+
+          // Inyección: brighten+warm-shift solo en zona cingulada, preserva sombras
           shader.fragmentShader = shader.fragmentShader.replace(
             'gl_FragColor = vec4( outgoingLight, diffuseColor.a );',
             [
               'gl_FragColor = vec4( outgoingLight, diffuseColor.a );',
-              // TEST: todo amarillo para verificar que el shader funciona
-              'gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(1.0,0.88,0.10), 1.0);'
+              'float _h = cingHeat(vLP);',
+              // Detectar color lila de textura si existe
+              '#ifdef USE_MAP',
+              '  vec4 _rt = texture2D(map, vUv);',
+              '  float _bd = max(0.0, _rt.b - _rt.g * 1.1);',
+              '  _h = max(_h, smoothstep(0.04,0.18,_bd)*smoothstep(0.06,0.22,_rt.r));',
+              '#endif',
+              // Hot: más brillo + tono cálido, sombras preservadas (multiplicamos, no reemplazamos)
+              'vec3 _hotC = gl_FragColor.rgb * 2.1 + vec3(0.20,0.08,-0.04);',
+              'gl_FragColor.rgb = mix(gl_FragColor.rgb, _hotC, _h * 0.80);'
             ].join('\n')
           );
         };
@@ -7670,6 +7701,7 @@ window.onerror = function(msg, url, line, col, err) {
         }
       });
     }
+
 
     // ── Helper: envuelve un root en un Group centrado y escalado ──
     // El Group es lo que se mueve en el render loop.
