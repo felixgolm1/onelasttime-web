@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -8166,11 +8166,11 @@ setInterval(function() {
       var mx=(s.x1+s.x2)/2,my=Math.min(s.y1,s.y2)-30*(1-t);
       sctx.beginPath();sctx.moveTo(s.x1,s.y1);
       sctx.quadraticCurveTo(mx,my,s.x2,s.y2);
-      sctx.strokeStyle='rgba(220,170,255,'+a+')';
+      sctx.strokeStyle='rgba(180,255,0,'+a+')';
       sctx.lineWidth=1.8*(1-t*0.7);sctx.stroke();
       var ga=sctx.createRadialGradient(s.x2,s.y2,0,s.x2,s.y2,14*(1-t));
-      ga.addColorStop(0,'rgba(255,220,255,'+(a*1.3)+')');
-      ga.addColorStop(1,'rgba(180,100,255,0)');
+      ga.addColorStop(0,'rgba(220,255,80,'+(a*1.3)+')');
+      ga.addColorStop(1,'rgba(100,180,0,0)');
       sctx.fillStyle=ga;sctx.beginPath();
       sctx.arc(s.x2,s.y2,14*(1-t),0,Math.PI*2);sctx.fill();
     });
@@ -8185,20 +8185,20 @@ setInterval(function() {
     (function flick(){
       if(f<3){
         sp.textContent=rnd(GLYPHS);
-        sp.style.color='rgba('+(140+Math.random()*80|0)+',60,'+(200+Math.random()*55|0)+',0.95)';
-        sp.style.textShadow='0 0 14px rgba(190,80,255,0.9)';
+        sp.style.color='rgba('+(180+Math.random()*40|0)+','+(230+Math.random()*25|0)+',0,0.95)';
+        sp.style.textShadow='0 0 14px rgba(180,255,0,0.9)';
         f++;requestAnimationFrame(flick);
       } else {
         sp.textContent=target;
         sp.style.color='#ffffff';
-        sp.style.textShadow='0 0 22px rgba(210,170,255,1),0 0 50px rgba(180,120,255,0.55)';
+        sp.style.textShadow='0 0 22px rgba(204,255,0,1),0 0 50px rgba(140,220,0,0.55)';
         if(prevSp&&sp.dataset.ch!==' '){
           fireSpark(prevSp.getBoundingClientRect(),sp.getBoundingClientRect());
         }
         setTimeout(function(){
           sp.style.transition='text-shadow 1.2s ease,color 0.7s ease';
           sp.style.color='#f0ecff';
-          sp.style.textShadow='0 0 5px rgba(200,160,255,0.22)';
+          sp.style.textShadow='0 0 5px rgba(180,255,0,0.22)';
         },320);
       }
     })();
