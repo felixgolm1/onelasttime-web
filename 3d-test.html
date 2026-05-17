@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5728,8 +5728,8 @@ window.onerror = function(msg, url, line, col, err) {
       // ── THERMAL OVERLAY ── máscara gradiente suave en el overlay (sin línea dura)
       {
         var _tPdiv = Math.min(1, Math.max(0, (prog - 15.9) / (16.8 - 15.9)));
-        // Exponer prog al renderer del cerebro para la rotacion con scroll
         window._brainScrollProg = prog;
+        if (window._updateNeuralText) window._updateNeuralText(prog);
         var _tOvr  = document.getElementById('thermal-overlay');
         var _mOvr  = document.getElementById('mag-breakout-overlay');
         // Siempre limpiar la máscara del mag-breakout
@@ -7534,26 +7534,11 @@ window.onerror = function(msg, url, line, col, err) {
         radial-gradient(ellipse 35% 30% at 38% 55%, rgba(80,0,130,0.45) 0%, transparent 52%),
         radial-gradient(ellipse 28% 22% at 90% 75%, rgba(110,0,95,0.38) 0%, transparent 52%),
         linear-gradient(170deg, rgba(12,0,30,1) 0%, rgba(35,0,62,1) 40%, rgba(22,0,45,1) 70%, rgba(14,0,32,1) 100%);"></div>
-    <!-- TÍTULO "La ciencia de la conversación"
-         – Dentro del overlay: la cortina lo revela junto al cerebro
+    <!-- TÍTULO "NO ES MAGIA, ES OXITOCINA"
+         – Canvas de ignición neuronal: píxeles que se encienden como neuronas
          – ANTES de la silueta en el DOM → la silueta pinta encima (texto queda detrás) -->
-    <div id="sciencia-title" style="
-      position:absolute;top:0;left:0;width:100%;height:100%;
-      display:flex;align-items:center;justify-content:center;
-      pointer-events:none;">
-      <h2 style="
-        font-family:'Inter','Helvetica Neue',Arial,sans-serif;
-        font-size:clamp(2.5rem,8vw,10rem);
-        font-weight:700;
-        color:#ffffff;
-        text-align:center;
-        letter-spacing:-0.05em;
-        line-height:1;
-        text-transform:uppercase;
-        white-space:nowrap;
-        margin:0;
-        opacity:0.93;
-      ">No es magia, es oxitocina</h2>
+    <div id="sciencia-title" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;">
+      <canvas id="neural-text-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
     </div>
 
     <!-- Silueta de la modelo: negra con glow térmico en los bordes (calor corporal = violeta/magenta) -->
@@ -7584,6 +7569,97 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 <script>
+<script>
+// ═══════════════════════════════════════════════════════════════════
+//  NEURAL IGNITION — texto que se enciende como red neuronal
+//  Scroll-driven: bProg 15.47 → 16.2 — pixeles se encienden en orden aleatorio
+//  globalCompositeOperation:'lighter' → zonas densas brillan mas (efecto organico)
+// ═══════════════════════════════════════════════════════════════════
+(function initNeuralIgnition() {
+  var $c = null;
+  var pixels = null;
+  var activeCount = 0;
+  var W = 0, H = 0;
+
+  function buildPixels() {
+    $c = document.getElementById('neural-text-canvas');
+    if (!$c) return;
+    W = window.innerWidth;
+    H = window.innerHeight;
+    $c.width = W; $c.height = H;
+
+    var fontSize = Math.max(36, Math.min(W * 0.08, 160));
+    var text = 'NO ES MAGIA, ES OXITOCINA';
+    var oc = document.createElement('canvas');
+    oc.width = W; oc.height = Math.ceil(fontSize * 2.2);
+    var octx = oc.getContext('2d');
+    octx.clearRect(0, 0, oc.width, oc.height);
+    octx.font = '700 ' + fontSize + 'px Inter, Helvetica Neue, Arial, sans-serif';
+    if ('letterSpacing' in octx) octx.letterSpacing = (-fontSize * 0.05) + 'px';
+    octx.fillStyle = '#fff';
+    octx.textAlign = 'center';
+    octx.textBaseline = 'middle';
+    octx.fillText(text, oc.width / 2, oc.height / 2);
+
+    var imgData = octx.getImageData(0, 0, oc.width, oc.height);
+    var STRIDE = 5;
+    var yOff = Math.round((H - oc.height) / 2);
+    var pts = [];
+    for (var y = 0; y < oc.height; y += STRIDE) {
+      for (var x = 0; x < oc.width; x += STRIDE) {
+        if (imgData.data[(y * oc.width + x) * 4 + 3] > 80) {
+          pts.push({ x: x, y: y + yOff });
+        }
+      }
+    }
+    for (var i = pts.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = pts[i]; pts[i] = pts[j]; pts[j] = tmp;
+    }
+    pixels = pts;
+    activeCount = 0;
+  }
+
+  function drawDot(ctx, p) {
+    var gr = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 5);
+    gr.addColorStop(0,    'rgba(255,255,255,0.90)');
+    gr.addColorStop(0.35, 'rgba(210,185,255,0.55)');
+    gr.addColorStop(0.70, 'rgba(160,120,255,0.20)');
+    gr.addColorStop(1.00, 'rgba(130,90,255,0.00)');
+    ctx.fillStyle = gr;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  window._updateNeuralText = function(prog) {
+    if (!$c) { buildPixels(); if (!$c || !pixels) return; }
+    if (!pixels || pixels.length === 0) return;
+    var animT = Math.max(0, Math.min(1, (prog - 15.47) / (16.2 - 15.47)));
+    var newActive = Math.floor(animT * pixels.length);
+    if (newActive === activeCount) return;
+    var ctx = $c.getContext('2d');
+    if (newActive < activeCount) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      for (var i = 0; i < newActive; i++) drawDot(ctx, pixels[i]);
+      ctx.globalCompositeOperation = 'source-over';
+      activeCount = newActive;
+      return;
+    }
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = activeCount; i < newActive && i < pixels.length; i++) drawDot(ctx, pixels[i]);
+    ctx.globalCompositeOperation = 'source-over';
+    activeCount = newActive;
+  };
+
+  window.addEventListener('resize', function() {
+    pixels = null; activeCount = 0;
+    if ($c) { $c.width = 0; $c.height = 0; }
+    buildPixels();
+  });
+})();
+</script>
 // ═══════════════════════════════════════════════════════════════════
 //  MAPA DE CALOR 2D ANIMADO — zonas respiran, cerebro parece vivo
 // ═══════════════════════════════════════════════════════════════════
