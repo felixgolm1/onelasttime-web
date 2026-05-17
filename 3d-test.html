@@ -7619,38 +7619,6 @@ window.onerror = function(msg, url, line, col, err) {
         if (!c.isMesh || !c.material) return;
         var o = Array.isArray(c.material) ? c.material[0] : c.material;
 
-        // ── Canvas emissiveMap: detectar zonas lilas/púrpuras → amarillo caliente ──
-        var emissiveMap = null;
-        var emissiveCol = new THREE.Color(0.10, 0.01, 0.0);
-        var emissiveInt = 0.45;
-        if (o.map && o.map.image) {
-          try {
-            var img = o.map.image;
-            var cw = img.naturalWidth || img.width || 512;
-            var ch = img.naturalHeight || img.height || 512;
-            var ec = document.createElement('canvas');
-            ec.width = cw; ec.height = ch;
-            var ectx = ec.getContext('2d');
-            ectx.drawImage(img, 0, 0, cw, ch);
-            var id = ectx.getImageData(0, 0, cw, ch);
-            var od = new Uint8ClampedArray(id.data.length);
-            for (var pi = 0; pi < id.data.length; pi += 4) {
-              var r = id.data[pi]/255, g = id.data[pi+1]/255, b = id.data[pi+2]/255;
-              var blueDom = Math.max(0, b - g * 1.1);
-              var heat = Math.min(1, blueDom/0.10) * Math.min(1, r/0.08);
-              od[pi]   = Math.round(heat * 255);  // R: amarillo
-              od[pi+1] = Math.round(heat * 220);  // G: amarillo
-              od[pi+2] = 0;                        // B: 0
-              od[pi+3] = 255;
-            }
-            ectx.putImageData(new ImageData(od, cw, ch), 0, 0);
-            emissiveMap = new THREE.CanvasTexture(ec);
-            emissiveMap.flipY = o.map.flipY !== undefined ? o.map.flipY : true;
-            emissiveCol = new THREE.Color(1.0, 1.0, 1.0);
-            emissiveInt = 1.2;
-          } catch(e) { console.warn('[THERMAL emissiveMap]', e); }
-        }
-
         var m = new THREE.MeshStandardMaterial({
           map:             o.map             || null,
           normalMap:       o.normalMap       || null,
@@ -7661,9 +7629,8 @@ window.onerror = function(msg, url, line, col, err) {
           alphaMap:        o.alphaMap        || null,
           envMap:          null,
           color:           new THREE.Color(0.75, 0.11, 0.0),
-          emissive:        emissiveCol,
-          emissiveMap:     emissiveMap,
-          emissiveIntensity: emissiveInt,
+          emissive:        new THREE.Color(0.10, 0.01, 0.0),
+          emissiveIntensity: 0.45,
           roughness:    o.roughnessMap ? 1.0 : 0.82,
           metalness:    0.0,
           normalScale:  o.normalMap ? new THREE.Vector2(2.5, 2.5) : new THREE.Vector2(1.0, 1.0),
@@ -7674,6 +7641,29 @@ window.onerror = function(msg, url, line, col, err) {
           depthWrite:   false,
           opacity:      1.0
         });
+
+        // ── Shader: zona caliente cingulada — Three.js r128 ──
+        // En r128 el punto de inyección es la línea directa de gl_FragColor
+        m.onBeforeCompile = function(shader) {
+          // Vertex: pasar posición local al fragment
+          shader.vertexShader = 'varying vec3 vLP;\n' + shader.vertexShader;
+          shader.vertexShader = shader.vertexShader.replace(
+            '#include <begin_vertex>',
+            '#include <begin_vertex>\nvLP = position;'
+          );
+          // Fragment: función de zona caliente + inyección ANTES del tonemapping
+          shader.fragmentShader = 'varying vec3 vLP;\n' + shader.fragmentShader;
+          // En r128: reemplazar la línea de output directa
+          shader.fragmentShader = shader.fragmentShader.replace(
+            'gl_FragColor = vec4( outgoingLight, diffuseColor.a );',
+            [
+              'gl_FragColor = vec4( outgoingLight, diffuseColor.a );',
+              // TEST: todo amarillo para verificar que el shader funciona
+              'gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(1.0,0.88,0.10), 1.0);'
+            ].join('\n')
+          );
+        };
+
         c.material = m;
         if (o.aoMap && !c.geometry.attributes.uv2 && c.geometry.attributes.uv) {
           c.geometry.setAttribute('uv2', c.geometry.attributes.uv);
