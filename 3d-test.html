@@ -3530,7 +3530,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Ampliado maxProg para las dos fases de salida: exits (14.62→15.6) + expansión (15.6→16.8)
-    const maxProg = 17.0;
+    const maxProg = 17.8;
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
@@ -7848,15 +7848,14 @@ window.onerror = function(msg, url, line, col, err) {
     if (!_brainReady || !_brainFull) return;
     _brainT = _brainClock.getElapsedTime();
 
+    // ── FASE 1: Rotación — bProg 16.3 → 17.0 ──────────────────────
+    // rotEase va de 0 (frontal) a 1 (perfil lateral completo)
     var _bProg   = window._brainScrollProg || 0;
     var _rotT    = Math.max(0, Math.min(1, (_bProg - 16.3) / (17.0 - 16.3)));
     var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
 
-    // ── Crossfade swap: empieza cuando el cerebro está casi de lado ──
-    // rotEase 0 = frontal, 1 = perfil lateral completo
-    // SWAP_START=0.70: fade empieza al 70% de rotación — el cerebro termina de girar mientras se desvanece
-    var SWAP_START = 0.70, SWAP_END = 1.0;
-    var swapT       = Math.max(0, Math.min(1, (_rotEase - SWAP_START) / (SWAP_END - SWAP_START)));
+    // ── FASE 2: Swap — bProg 17.0 → 17.8 (DESPUÉS de la rotación completa) ──
+    var swapT       = Math.max(0, Math.min(1, (_bProg - 17.0) / (17.8 - 17.0)));
     var fullOpacity = 1.0 - swapT;
     var halfOpacity = swapT;
 
