@@ -5048,11 +5048,18 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP como "RISE" en Oryzo
-            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
-              const easeUp = 1 - Math.pow(1 - p, 2);
-              applyExit('mag-ciencia', `translateY(${-60 * easeUp}px)`,
-                Math.max(0, 1 - mapRange(p, 0.2, 1.0, 0, 1))); }
+            // 3. CIENCIA — slide UP escalonado letra a letra
+            { const baseP = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
+              const globalOpacity = Math.max(0, 1 - mapRange(baseP, 0.2, 1.0, 0, 1));
+              applyExit('mag-ciencia', '', globalOpacity);
+              document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
+                container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
+                  const stagger = idx * 0.08;
+                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.5 + stagger, 0, 1), 0), 1);
+                  const eu = 1 - Math.pow(1 - lp, 2);
+                  letter.style.transform = 'translateY(' + (-150 * eu) + 'px)';
+                });
+              }); }
 
             // 4. NAT GEO — slide left + fade
             { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
@@ -5146,11 +5153,18 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP como "RISE" en Oryzo
-            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
-              const easeUp = 1 - Math.pow(1 - p, 2);
-              applyExit('mag-ciencia', `translateY(${-60 * easeUp}px)`,
-                Math.max(0, 1 - mapRange(p, 0.2, 1.0, 0, 1))); }
+            // 3. CIENCIA — slide UP escalonado letra a letra
+            { const baseP = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
+              const globalOpacity = Math.max(0, 1 - mapRange(baseP, 0.2, 1.0, 0, 1));
+              applyExit('mag-ciencia', '', globalOpacity);
+              document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
+                container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
+                  const stagger = idx * 0.08;
+                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.5 + stagger, 0, 1), 0), 1);
+                  const eu = 1 - Math.pow(1 - lp, 2);
+                  letter.style.transform = 'translateY(' + (-150 * eu) + 'px)';
+                });
+              }); }
 
             // 4. NAT GEO — slide left + fade
             { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
