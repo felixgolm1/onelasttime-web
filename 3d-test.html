@@ -1576,18 +1576,25 @@ window.onerror = function(msg, url, line, col, err) {
             <div id="mag-col-right" style="width: 45%; text-align: right; text-shadow: 1px 1px 3px rgba(0,0,0,0.9);"></div>
           </div>
           <!-- Titulo Medio Izquierdo -->
-          <div style="position: absolute; bottom: 26%; left: 5%; z-index: 4; text-align: left; max-width: 38%;">
+          <div id="mag-copy-left" style="position: absolute; bottom: 26%; left: 5%; z-index: 4; text-align: left; max-width: 38%; overflow: hidden;">
             <div style="font-family: 'Inter', sans-serif; text-transform: uppercase; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); color: #fff;">
-              <div style="font-weight: 900; font-size: 2.1rem; line-height: 0.95; letter-spacing: -0.04em;">QUITÉMONOS<br>LA ROPA</div>
-              <div style="font-weight: 600; font-size: 0.75rem; line-height: 1.4; margin-top: 12px; color: #fff; letter-spacing: 0.04em; text-shadow: none;">LA CIENCIA DETRÁS DEL<br>ESTÍMULO QUE ESTÁ<br>REDISEÑANDO LAS RELACIONES</div>
+              <div class="copy-left-line" style="display: block; font-weight: 900; font-size: 2.1rem; line-height: 0.95; letter-spacing: -0.04em;">QUITÉMONOS</div>
+              <div class="copy-left-line" style="display: block; font-weight: 900; font-size: 2.1rem; line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 12px;">LA ROPA</div>
+              <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">LA CIENCIA DETRÁS DEL</div>
+              <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">ESTÍMULO QUE ESTÁ</div>
+              <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">REDISEÑANDO LAS RELACIONES</div>
             </div>
           </div>
 
           <!-- Texto Superior Derecho -->
-          <div style="position: absolute; top: 32%; right: 5%; z-index: 4; text-align: right; max-width: 28%;">
+          <div id="mag-copy-right" style="position: absolute; top: 32%; right: 5%; z-index: 4; text-align: right; max-width: 28%; overflow: hidden;">
             <div style="font-family: 'Inter', sans-serif; text-transform: uppercase; text-shadow: 2px 2px 8px rgba(0,0,0,0.9); color: #fff;">
-              <div style="font-weight: 900; font-size: 1.8rem; line-height: 0.95; letter-spacing: -0.03em;">CÓDIGO<br><span style="color: #fff;">OLT-35</span></div>
-              <div style="font-weight: 700; font-size: 0.75rem; line-height: 1.3; margin-top: 8px; color: #e6e6e6; letter-spacing: 0.05em;">CONEXIÓN<br>BIOQUÍMICA<br>EN UNA<br>SOLA CENA</div>
+              <div class="copy-right-line" style="display: block; font-weight: 900; font-size: 1.8rem; line-height: 0.95; letter-spacing: -0.03em;">CÓDIGO</div>
+              <div class="copy-right-line" style="display: block; font-weight: 900; font-size: 1.8rem; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 8px;"><span style="color: #fff;">OLT-35</span></div>
+              <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CONEXIÓN</div>
+              <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">BIOQUÍMICA</div>
+              <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">EN UNA</div>
+              <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">SOLA CENA</div>
             </div>
           </div>
 
@@ -5064,13 +5071,29 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
               applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
 
-            // 5. COLUMNA IZQUIERDA — slide left + fade
-            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
-              applyExit('mag-col-left', `translateX(${-55 * p}px)`, 1 - p); }
+            // 5. COPY IZQUIERDO — sale por izquierda linea a linea
+            { document.querySelectorAll('[id="mag-copy-left"]').forEach(function(container) {
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
+                container.style.opacity = containerOpacity;
+                container.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
+                  const stagger = idx * 0.05;
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
+                  const eu = 1 - Math.pow(1 - lp, 2);
+                  line.style.transform = 'translateX(' + (-200 * eu) + 'px)';
+                });
+              }); }
 
-            // 6. COLUMNA DERECHA — slide right + fade
-            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
-              applyExit('mag-col-right', `translateX(${55 * p}px)`, 1 - p); }
+            // 6. COPY DERECHO — sale por derecha linea a linea
+            { document.querySelectorAll('[id="mag-copy-right"]').forEach(function(container) {
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
+                container.style.opacity = containerOpacity;
+                container.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
+                  const stagger = idx * 0.05;
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
+                  const eu = 1 - Math.pow(1 - lp, 2);
+                  line.style.transform = 'translateX(' + (200 * eu) + 'px)';
+                });
+              }); }
 
             // 7. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
@@ -5168,13 +5191,29 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
               applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
 
-            // 5. COLUMNA IZQUIERDA — slide left + fade
-            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
-              applyExit('mag-col-left', `translateX(${-55 * p}px)`, 1 - p); }
+            // 5. COPY IZQUIERDO — sale por izquierda linea a linea
+            { document.querySelectorAll('[id="mag-copy-left"]').forEach(function(container) {
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
+                container.style.opacity = containerOpacity;
+                container.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
+                  const stagger = idx * 0.05;
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
+                  const eu = 1 - Math.pow(1 - lp, 2);
+                  line.style.transform = 'translateX(' + (-200 * eu) + 'px)';
+                });
+              }); }
 
-            // 6. COLUMNA DERECHA — slide right + fade
-            { const p = Math.min(Math.max(mapRange(exitP, 0.15, 0.65, 0, 1), 0), 1);
-              applyExit('mag-col-right', `translateX(${55 * p}px)`, 1 - p); }
+            // 6. COPY DERECHO — sale por derecha linea a linea
+            { document.querySelectorAll('[id="mag-copy-right"]').forEach(function(container) {
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
+                container.style.opacity = containerOpacity;
+                container.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
+                  const stagger = idx * 0.05;
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
+                  const eu = 1 - Math.pow(1 - lp, 2);
+                  line.style.transform = 'translateX(' + (200 * eu) + 'px)';
+                });
+              }); }
 
             // 7. TÍTULO INFERIOR — slide down + fade (último)
             { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
