@@ -7852,10 +7852,10 @@ window.onerror = function(msg, url, line, col, err) {
     var _rotT    = Math.max(0, Math.min(1, (_bProg - 16.3) / (17.6 - 16.3)));
     var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
 
-    // ── Crossfade swap: empieza cuando el cerebro está completamente de lado ──
+    // ── Crossfade swap: empieza cuando el cerebro está casi de lado ──
     // rotEase 0 = frontal, 1 = perfil lateral completo
-    // El swap ocurre en los últimos 20% de la rotación → cerebro llega al lado y LUEGO hace fade
-    var SWAP_START = 0.80, SWAP_END = 1.0;
+    // SWAP_START=0.70: fade empieza al 70% de rotación — el cerebro termina de girar mientras se desvanece
+    var SWAP_START = 0.70, SWAP_END = 1.0;
     var swapT       = Math.max(0, Math.min(1, (_rotEase - SWAP_START) / (SWAP_END - SWAP_START)));
     var fullOpacity = 1.0 - swapT;
     var halfOpacity = swapT;
@@ -7865,11 +7865,10 @@ window.onerror = function(msg, url, line, col, err) {
     var DIST = 5.0;
     var vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
     var vW   = vH * (window.innerWidth / window.innerHeight);
-    var rotY = Math.PI / 2 + _rotEase * (-Math.PI / 2); // solo para referencia
-    var posX = -0.008 * vW / 2; // micro-ajuste izquierda ~1-2mm
-    var posY =  0.312 * vH / 2; // subido 6mm total
+    var posX = -0.008 * vW / 2;
+    var posY =  0.312 * vH / 2;
 
-    // ── Zoom CSS sobre el overlay completo (cerebro + sombra chica) ──
+    // ── Zoom CSS sobre el overlay completo ──
     var zoomScale = 1.0 + swapT * 0.4225;
     var overlay = document.getElementById('thermal-overlay');
     if (overlay) {
@@ -7880,18 +7879,13 @@ window.onerror = function(msg, url, line, col, err) {
     // ── Mapa de calor 2D: fade-in con swapT ──
     if (window._drawHeatMap) window._drawHeatMap(swapT);
 
-
-
-    // Medio cerebro: posicion X directa — justo a la izquierda del centro
     var halfPosX = -0.03 * vW / 2;
-    var halfPosY =  0.294 * vH / 2; // posicion absoluta (independiente del cerebro completo)
+    var halfPosY =  0.294 * vH / 2;
 
-    // Cerebro COMPLETO: empieza en 0 (frontal para human_brain.glb), acaba en -PI/2
-    // Cerebro MEDIO: empieza en PI/2 (frontal para human_brain_half.glb), acaba en 0
-    // El offset PI/2 entre ambos es exactamente la diferencia de orientación entre los dos GLBs
-    // → en el punto de swap (mismo rotEase) muestran la misma vista anatómica
-    _brainFull.rotation.y = _rotEase * (-Math.PI / 2);
+    // Cerebro COMPLETO: rota un poquito más que 90° (-PI*0.60 = ~108°)
+    _brainFull.rotation.y = _rotEase * (-Math.PI * 0.60);
     _brainFull.position.set(posX, posY, -DIST);
+
     // Cerebro COMPLETO: fade-out con swapT (la imagen 2D lo reemplaza)
     _brainFull.visible = (fullOpacity > 0.01);
     if (_brainFull.visible) {
@@ -7901,6 +7895,7 @@ window.onerror = function(msg, url, line, col, err) {
         mats.forEach(function(m) { m.opacity = fullOpacity; });
       });
     }
+
 
     _brainRenderer.render(_brainScene, _brainCamera);
   }
