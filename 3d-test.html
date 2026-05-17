@@ -5055,27 +5055,27 @@ window.onerror = function(msg, url, line, col, err) {
               });
             };
 
-            // 2. SABER MÁS — slide up + fade (primero)
-            { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
+            // 2. SABER MÁS — sync 0.05-0.55
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP ola suave hasta desaparecer
+            // 3. CIENCIA — slide UP ola suave hasta desaparecer (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
-                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.4, 0.7, 0, 1));
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.05, 0.55, 0, 1));
                 container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
-                  const stagger = idx * 0.03;
-                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.6 + stagger, 0, 1), 0), 1);
+                  const stagger = idx * 0.02;
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.05 + stagger, 0.45 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
                   letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
                 });
               }); }
 
-            // 4. NAT GEO — slide left + fade
-            { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
+            // 4. NAT GEO — sync 0.05-0.55
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
 
-            // 5. COPY IZQUIERDO — sale por izquierda linea a linea
+            // 5. COPY IZQUIERDO — sale por izquierda linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
                 container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.05, 0.55, 0, 1));
               });
@@ -5097,7 +5097,7 @@ window.onerror = function(msg, url, line, col, err) {
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. CÍRCULO Nº76 — shrink + fade (como Oryzo)
+            // 7. CÍRCULO Nº76 — shrink + fade (sync 0.05-0.55)
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
               document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
@@ -5113,8 +5113,8 @@ window.onerror = function(msg, url, line, col, err) {
                 el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
               }); }
 
-            // 9. TÍTULO INFERIOR — slide down + fade (último)
-            { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
+            // 9. TÍTULO INFERIOR — sync 0.05-0.55
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
           } else {
@@ -5191,50 +5191,50 @@ window.onerror = function(msg, url, line, col, err) {
               });
             };
 
-            // 2. SABER MÁS — slide up + fade (primero)
-            { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
+            // 2. SABER MÁS — sync 0.05-0.55
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP ola suave hasta desaparecer
+            // 3. CIENCIA — slide UP ola suave hasta desaparecer (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
-                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.4, 0.7, 0, 1));
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.05, 0.55, 0, 1));
                 container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
-                  const stagger = idx * 0.03;
-                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.6 + stagger, 0, 1), 0), 1);
+                  const stagger = idx * 0.02;
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.05 + stagger, 0.45 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
                   letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
                 });
               }); }
 
-            // 4. NAT GEO — slide left + fade
-            { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.5, 0, 1), 0), 1);
+            // 4. NAT GEO — sync 0.05-0.55
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-natgeo', `translateX(${-45 * p}px)`, 1 - p); }
 
-            // 5. COPY IZQUIERDO — sale por izquierda linea a linea
+            // 5. COPY IZQUIERDO — sale por izquierda linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.05, 0.55, 0, 1));
               });
               document.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
-                const stagger = idx * 0.05;
-                const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
+                const stagger = idx * 0.02;
+                const lp = Math.min(Math.max(mapRange(exitP, 0.05 + stagger, 0.45 + stagger, 0, 1), 0), 1);
                 const eu = 1 - Math.pow(1 - lp, 2);
                 line.style.transform = 'translateX(' + (-200 * eu) + 'px)';
               }); }
 
-            // 6. COPY DERECHO — sale por derecha linea a linea
+            // 6. COPY DERECHO — sale por derecha linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-right-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.3, 0.65, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(exitP, 0.05, 0.55, 0, 1));
               });
               document.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
-                const stagger = idx * 0.05;
-                const lp = Math.min(Math.max(mapRange(exitP, 0.1 + stagger, 0.6 + stagger, 0, 1), 0), 1);
+                const stagger = idx * 0.02;
+                const lp = Math.min(Math.max(mapRange(exitP, 0.05 + stagger, 0.45 + stagger, 0, 1), 0), 1);
                 const eu = 1 - Math.pow(1 - lp, 2);
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. CÍRCULO Nº76 — shrink + fade (como Oryzo)
-            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.45, 0, 1), 0), 1);
+            // 7. CÍRCULO Nº76 — shrink + fade (sync 0.05-0.55)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
               document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
                 el.style.transformOrigin = 'center center';
@@ -5242,15 +5242,15 @@ window.onerror = function(msg, url, line, col, err) {
                 el.style.opacity = '' + (1 - p);
               }); }
 
-            // 8. BARCODE — wipe de arriba a abajo (clip-path top)
-            { const p = Math.min(Math.max(mapRange(exitP, 0.1, 0.55, 0, 1), 0), 1);
+            // 8. BARCODE — wipe de arriba a abajo (sync 0.05-0.55)
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 2);
               document.querySelectorAll('[id="mag-barcode"]').forEach(function(el) {
                 el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
               }); }
 
-            // 9. TÍTULO INFERIOR — slide down + fade (último)
-            { const p = Math.min(Math.max(mapRange(exitP, 0.2, 0.7, 0, 1), 0), 1);
+            // 9. TÍTULO INFERIOR — sync 0.05-0.55
+            { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
           } else {
