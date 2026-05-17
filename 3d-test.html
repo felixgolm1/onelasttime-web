@@ -8124,25 +8124,155 @@ setInterval(function() {
 ">NO ES MAGIA, ES OXITOCINA</h2>
 
 <script>
-// ── Control de opacidad del título oxitocina desde el scroll loop ──
+// ══════════════════════════════════════════════════════════════════
+//  NEURAL WIRING ANIMATION — caracteres que se conectan como sinapsis
+// ══════════════════════════════════════════════════════════════════
 (function() {
-  var _oxEl = null;
-  var _oxPrevProg = -1;
-  // Hookeamos el título en el mismo tick que el thermal overlay
-  var _origUpdate = window._updateNeuralText || null;
+  var h2 = document.getElementById('oxitocina-title');
+  if (!h2) return;
+
+  var TEXT     = 'NO ES MAGIA, ES OXITOCINA';
+  var GLYPHS   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#∆∑Ωμ░▒';
+  var DELAY    = 48;   // ms entre caracteres
+  var FLICKER  = 3;    // frames de flickeo por carácter
+
+  // ── Construir spans por carácter ──────────────────────────────
+  var spans = [];
+  h2.textContent = '';
+  h2.style.opacity = '1'; // siempre visible cuando display:block
+  for (var i = 0; i < TEXT.length; i++) {
+    var sp = document.createElement('span');
+    sp.dataset.ch = TEXT[i];
+    sp.textContent = TEXT[i] === ' ' ? '\u00A0' : TEXT[i];
+    sp.style.cssText = 'display:inline-block;opacity:0;';
+    h2.appendChild(sp);
+    spans.push(sp);
+  }
+
+  // ── Canvas de chispas neurales (fixed, encima de todo) ────────
+  var sc = document.createElement('canvas');
+  sc.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10000001;';
+  document.body.appendChild(sc);
+  var sctx = null;
+  var sparks = [], sparkRAF = null;
+
+  function initSC() {
+    sc.width  = window.innerWidth;
+    sc.height = window.innerHeight;
+    sctx = sc.getContext('2d');
+  }
+
+  function fireSpark(r1, r2) {
+    if (!r1 || !r2) return;
+    sparks.push({
+      x1: r1.left + r1.width / 2, y1: r1.top + r1.height / 2,
+      x2: r2.left + r2.width / 2, y2: r2.top + r2.height / 2,
+      born: performance.now(), life: 380
+    });
+    if (!sparkRAF) renderSparks();
+  }
+
+  function renderSparks() {
+    sctx.clearRect(0, 0, sc.width, sc.height);
+    var now = performance.now(), alive = [];
+    sparks.forEach(function(s) {
+      var t = (now - s.born) / s.life;
+      if (t >= 1) return;
+      alive.push(s);
+      var a   = (1 - t) * (1 - t) * 0.85;
+      var mx  = (s.x1 + s.x2) / 2;
+      var my  = Math.min(s.y1, s.y2) - 28 * (1 - t);
+      var lw  = 1.8 * (1 - t * 0.8);
+      // Arco curvado
+      sctx.beginPath();
+      sctx.moveTo(s.x1, s.y1);
+      sctx.quadraticCurveTo(mx, my, s.x2, s.y2);
+      sctx.strokeStyle = 'rgba(220,170,255,' + a + ')';
+      sctx.lineWidth   = lw;
+      sctx.stroke();
+      // Destello en destino
+      var ga = sctx.createRadialGradient(s.x2, s.y2, 0, s.x2, s.y2, 12 * (1 - t));
+      ga.addColorStop(0,   'rgba(255,220,255,' + (a * 1.2) + ')');
+      ga.addColorStop(1,   'rgba(180,100,255,0)');
+      sctx.fillStyle = ga;
+      sctx.beginPath();
+      sctx.arc(s.x2, s.y2, 12 * (1 - t), 0, Math.PI * 2);
+      sctx.fill();
+    });
+    sparks = alive;
+    sparkRAF = sparks.length ? requestAnimationFrame(renderSparks) : null;
+  }
+
+  // ── Lógica de animación ───────────────────────────────────────
+  var _active  = false;
+  var _reset   = true;
+  var _tids    = [];
+  var _prevRect = null;
+
+  function rnd(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function animChar(sp, idx) {
+    var target = sp.dataset.ch === ' ' ? '\u00A0' : sp.dataset.ch;
+    var tid = setTimeout(function() {
+      sp.style.opacity = '1';
+      var f = 0;
+      (function flick() {
+        if (f < FLICKER) {
+          sp.textContent = rnd(GLYPHS);
+          sp.style.color = 'rgba(' + (140+Math.random()*80|0) + ',60,' + (200+Math.random()*55|0) + ',0.95)';
+          sp.style.textShadow = '0 0 12px rgba(190,90,255,0.9)';
+          f++;
+          requestAnimationFrame(flick);
+        } else {
+          // Carácter definitivo
+          sp.textContent = target;
+          sp.style.color = '#ffffff';
+          sp.style.textShadow = '0 0 22px rgba(210,170,255,0.95), 0 0 45px rgba(180,120,255,0.5)';
+          // Chispa hacia este carácter desde el anterior
+          var rect = sp.getBoundingClientRect();
+          if (_prevRect && sp.dataset.ch !== ' ') fireSpark(_prevRect, rect);
+          _prevRect = rect;
+          // Apagar glow suavemente
+          setTimeout(function() {
+            sp.style.transition = 'text-shadow 1s ease, color 0.6s ease';
+            sp.style.color = '#f5f0ff';
+            sp.style.textShadow = '0 0 6px rgba(200,160,255,0.25)';
+          }, 350);
+        }
+      })();
+    }, idx * DELAY);
+    _tids.push(tid);
+  }
+
+  function startWiring() {
+    if (_active) return;
+    _active = true; _reset = false; _prevRect = null;
+    initSC();
+    h2.style.display = 'block';
+    spans.forEach(animChar);
+  }
+
+  function resetWiring() {
+    _tids.forEach(clearTimeout); _tids = [];
+    sparks = [];
+    if (sctx) sctx.clearRect(0, 0, sc.width, sc.height);
+    spans.forEach(function(sp) {
+      sp.textContent = sp.dataset.ch === ' ' ? '\u00A0' : sp.dataset.ch;
+      sp.style.cssText = 'display:inline-block;opacity:0;color:#fff;text-shadow:none;transition:none;';
+    });
+    h2.style.display = 'none';
+    _active = false; _reset = true;
+  }
+
+  // ── Hook en el scroll loop ────────────────────────────────────
+  var _origNT = window._updateNeuralText || null;
   window._updateNeuralText = function(prog) {
-    if (_origUpdate) _origUpdate(prog);
-    if (!_oxEl) _oxEl = document.getElementById('oxitocina-title');
-    if (!_oxEl) return;
-    if (prog < 15.45) {
-      _oxEl.style.display = 'none';
-      _oxEl.style.opacity = '0';
-      return;
+    if (_origNT) _origNT(prog);
+    if (prog >= 15.50) {
+      if (_reset) startWiring();
+    } else if (prog < 15.45) {
+      if (!_reset) resetWiring();
     }
-    _oxEl.style.display = 'block';
-    // Fade in: 15.50 → 15.90
-    var t = Math.max(0, Math.min(1, (prog - 15.50) / (15.90 - 15.50)));
-    _oxEl.style.opacity = t.toFixed(3);
   };
 })();
 </script>
