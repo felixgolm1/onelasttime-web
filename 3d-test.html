@@ -5065,7 +5065,7 @@ window.onerror = function(msg, url, line, col, err) {
                 container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
                   const stagger = idx * 0.02;
-                  const lp = Math.min(Math.max(mapRange(exitP, 0.05, 0.45 + stagger, 0, 1), 0), 1);
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.05 + stagger * 0.5, 0.45 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
                   letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
                 });
@@ -5201,7 +5201,7 @@ window.onerror = function(msg, url, line, col, err) {
                 container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
                   const stagger = idx * 0.02;
-                  const lp = Math.min(Math.max(mapRange(exitP, 0.05, 0.45 + stagger, 0, 1), 0), 1);
+                  const lp = Math.min(Math.max(mapRange(exitP, 0.05 + stagger * 0.5, 0.45 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
                   letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
                 });
