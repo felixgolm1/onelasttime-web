@@ -5048,16 +5048,15 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP suave en ola
-            { const baseP = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
-              const globalOpacity = Math.max(0, 1 - mapRange(baseP, 0.2, 1.0, 0, 1));
-              applyExit('mag-ciencia', '', globalOpacity);
-              document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
+            // 3. CIENCIA — slide UP ola suave hasta desaparecer
+            { document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.4, 0.7, 0, 1));
+                container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
                   const stagger = idx * 0.03;
-                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.55 + stagger, 0, 1), 0), 1);
+                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.6 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
-                  letter.style.transform = 'translateY(' + (-70 * eu) + 'px)';
+                  letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
                 });
               }); }
 
@@ -5153,16 +5152,15 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0, 0.35, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP suave en ola
-            { const baseP = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
-              const globalOpacity = Math.max(0, 1 - mapRange(baseP, 0.2, 1.0, 0, 1));
-              applyExit('mag-ciencia', '', globalOpacity);
-              document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
+            // 3. CIENCIA — slide UP ola suave hasta desaparecer
+            { document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.4, 0.7, 0, 1));
+                container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
                   const stagger = idx * 0.03;
-                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.55 + stagger, 0, 1), 0), 1);
+                  const lp = Math.min(Math.max(mapRange(exitP, stagger, 0.6 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
-                  letter.style.transform = 'translateY(' + (-70 * eu) + 'px)';
+                  letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
                 });
               }); }
 
