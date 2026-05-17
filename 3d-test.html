@@ -7643,29 +7643,29 @@ window.onerror = function(msg, url, line, col, err) {
 
         // ── Zona caliente: corteza cingulada anterior + posterior ──
         m.onBeforeCompile = function(shader) {
-          shader.vertexShader = 'varying vec3 vLocalPos;\n' + shader.vertexShader;
-          shader.vertexShader = shader.vertexShader.replace(
-            '#include <begin_vertex>',
-            '#include <begin_vertex>\nvLocalPos = position;'
-          );
-          var hotZoneGLSL = [
-            'varying vec3 vLocalPos;',
-            'float cingulateHeat(vec3 p) {',
-            '  return 1.0;', // TEST: todo amarillo para verificar shader
-            '}'
-          ].join('\n');
-          shader.fragmentShader = hotZoneGLSL + '\n' + shader.fragmentShader;
+          // Detectar zona lila/púrpura de la textura original y hacer caliente
+          // Inyectar ANTES de output_fragment modificando outgoingLight (no gl_FragColor)
           shader.fragmentShader = shader.fragmentShader.replace(
             '#include <output_fragment>',
             [
-              '#include <output_fragment>',
-              'float _heat = cingulateHeat(vLocalPos);',
-              'vec3 _hotCol = vec3(1.0, 0.88, 0.10);',
-              'gl_FragColor.rgb = mix(gl_FragColor.rgb, _hotCol, _heat * 0.92);'
+              // Samplear textura original para detectar el color lila/púrpura
+              'vec4 _rawTex = vec4(0.0);',
+              '#ifdef USE_MAP',
+              '  _rawTex = texture2D( map, vMapUv );',
+              '#endif',
+              // Zona lila: azul domina sobre verde, con algo de rojo
+              'float _blueDom = max(0.0, _rawTex.b - _rawTex.g * 1.1);',
+              'float _isPurple = smoothstep(0.04, 0.20, _blueDom) * smoothstep(0.10, 0.35, _rawTex.r);',
+              // Zona muy fría (oscura): negra/muy oscura → frío azul
+              'float _isCold = smoothstep(0.15, 0.05, _rawTex.r + _rawTex.g + _rawTex.b);',
+              // Hot color para la zona lila (cíngulo): amarillo brillante
+              'vec3 _hotCol = vec3(1.0, 0.90, 0.05);',
+              'outgoingLight = mix(outgoingLight, _hotCol, _isPurple * 0.90);',
+              '#include <output_fragment>'
             ].join('\n')
           );
         };
-        m.customProgramCacheKey = function() { return 'cingulate_test_' + Math.random(); };
+        m.customProgramCacheKey = function() { return 'cingulate_tex_v1'; };
 
         c.material = m;
         if (o.aoMap && !c.geometry.attributes.uv2 && c.geometry.attributes.uv) {
