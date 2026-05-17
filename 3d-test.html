@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5735,13 +5735,24 @@ window.onerror = function(msg, url, line, col, err) {
         // Siempre limpiar la máscara del mag-breakout
         if (_mOvr) { _mOvr.style.webkitMaskImage = ''; _mOvr.style.maskImage = ''; }
         if (_tOvr) {
-          if (_tPdiv <= 0) {
+          // Overlay visible desde 15.47 (neural wiring title) aunque la cortina empiece en 15.9
+          var _showOverlay = prog >= 15.47;
+          if (!_showOverlay) {
             _tOvr.style.display = 'none';
-            _tOvr.style.opacity = '0';
+            _tOvr.style.opacity = '1';
           } else {
             _tOvr.style.display = 'block';
+            _tOvr.style.opacity  = '1';
+            // Fondo y silueta: invisibles hasta la cortina (15.9), luego fade in con ella
+            var _bgEl  = document.getElementById('thermal-bg');
+            var _silWr = document.getElementById('thermal-model-wrap');
+            var _vigEl = document.getElementById('thermal-vignette');
+            var _bgOp  = _tPdiv <= 0 ? 0 : Math.min(1, _tPdiv / 0.15);
+            if (_bgEl)  _bgEl.style.opacity  = String(_bgOp);
+            if (_silWr) _silWr.style.opacity = String(_bgOp);
+            if (_vigEl) _vigEl.style.opacity = String(_bgOp);
             // SUAVIDAD 1: fade de opacidad en el primer 15% para evitar aparición brusca
-            _tOvr.style.opacity = String(Math.min(1, _tPdiv / 0.15));
+            // (ya gestionado por _bgOp; el overlay en si es siempre opacity:1 cuando visible)
             // Overshoot a 115: cuando tPdiv=1 → _vis=115, _lo=100, _hi=100 → máscara totalmente sólida
             // Esto elimina el salto al llegar arriba: el fade top se encoge gradualmente de 30% a 0%
             var _vis = Math.round(_tPdiv * 115);
@@ -7526,7 +7537,7 @@ window.onerror = function(msg, url, line, col, err) {
   <!-- THERMAL OVERLAY — efecto cámara termográfica -->
   <div id="thermal-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999999;pointer-events:none;overflow:hidden;">
     <!-- Fondo térmico: indigo/violeta profundo con irregularidades tipo pared Oryzo -->
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;
+    <div id="thermal-bg" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;
       background:
         radial-gradient(ellipse 50% 35% at 15% 40%, rgba(140,0,120,0.5) 0%, transparent 60%),
         radial-gradient(ellipse 40% 50% at 82% 20%, rgba(100,0,160,0.4) 0%, transparent 58%),
@@ -7581,7 +7592,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
     <!-- Viñeta oscura en bordes (como Oryzo) -->
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;
+    <div id="thermal-vignette" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;
       background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
   </div>
 
