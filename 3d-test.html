@@ -7852,9 +7852,10 @@ window.onerror = function(msg, url, line, col, err) {
     var _rotT    = Math.max(0, Math.min(1, (_bProg - 16.3) / (17.6 - 16.3)));
     var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
 
-    // ── Crossfade swap: entre rotEase 0.30 y 0.55 ──────────────────
-    // Calculado ANTES de DIST para que el zoom dependa del swap
-    var SWAP_START = 0.30, SWAP_END = 0.55;
+    // ── Crossfade swap: empieza cuando el cerebro está completamente de lado ──
+    // rotEase 0 = frontal, 1 = perfil lateral completo
+    // El swap ocurre en los últimos 20% de la rotación → cerebro llega al lado y LUEGO hace fade
+    var SWAP_START = 0.80, SWAP_END = 1.0;
     var swapT       = Math.max(0, Math.min(1, (_rotEase - SWAP_START) / (SWAP_END - SWAP_START)));
     var fullOpacity = 1.0 - swapT;
     var halfOpacity = swapT;
