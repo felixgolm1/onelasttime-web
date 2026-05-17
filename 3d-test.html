@@ -4980,13 +4980,16 @@ window.onerror = function(msg, url, line, col, err) {
               if (!document.getElementById('mag-model-clone')) {
                 const carouselVp = magazineScene?.querySelector('.carousel-viewport');
                 const origImg    = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
-                if (carouselVp && origImg && origImg.naturalWidth) {
+                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[4];
+                if (carouselVp && origImg && origImg.naturalWidth && magEl) {
                   const vpr    = carouselVp.getBoundingClientRect();
-                  const modelH = vpr.height * 1.38;
+                  const magR   = magEl.getBoundingClientRect(); // rect real del item (incluyendo borde)
+                  // Usar el item real como referencia de tamaño (vpr excluye 7px de borde → 2% error)
+                  const modelH = magR.height * 1.38;
                   const ar     = origImg.naturalWidth / origImg.naturalHeight;
                   const modelW = modelH * ar;
-                  const modelT = vpr.top;
-                  const modelL = vpr.left + vpr.width / 2 - modelW / 2;
+                  const modelT = magR.top;
+                  const modelL = magR.left + magR.width / 2 - modelW / 2;
 
                   // Clip inicial = lo que sobresale del viewport (elbows, torso)
                   const iT = 0;
