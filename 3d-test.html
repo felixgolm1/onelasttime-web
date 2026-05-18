@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5735,37 +5735,31 @@ window.onerror = function(msg, url, line, col, err) {
         // Siempre limpiar la máscara del mag-breakout
         if (_mOvr) { _mOvr.style.webkitMaskImage = ''; _mOvr.style.maskImage = ''; }
         if (_tOvr) {
-          // Overlay visible desde 15.47 (neural wiring title) aunque la cortina empiece en 15.9
           var _showOverlay = prog >= 15.35;
           if (!_showOverlay) {
             _tOvr.style.display = 'none';
-            _tOvr.style.opacity = '1';
           } else {
             _tOvr.style.display = 'block';
             _tOvr.style.opacity  = '1';
-            // Fondo y silueta: invisibles hasta la cortina (15.9), luego fade in con ella
+            _tOvr.style.webkitMaskImage = '';
+            _tOvr.style.maskImage = '';
             var _bgEl  = document.getElementById('thermal-bg');
             var _silWr = document.getElementById('thermal-model-wrap');
             var _vigEl = document.getElementById('thermal-vignette');
-            var _bgOp  = _tPdiv <= 0 ? 0 : Math.min(1, _tPdiv / 0.15);
-            if (_bgEl)  _bgEl.style.opacity  = String(_bgOp);
-            if (_silWr) _silWr.style.opacity = String(_bgOp);
-            if (_vigEl) _vigEl.style.opacity = String(_bgOp);
-            // SUAVIDAD 1: fade de opacidad en el primer 15% para evitar aparición brusca
-            // (ya gestionado por _bgOp; el overlay en si es siempre opacity:1 cuando visible)
-            // Máscara de cortina: solo cuando hay cortina activa (_tPdiv>0)
-            // Si no hay cortina, limpiar la máscara → h2 título completamente visible
             if (_tPdiv <= 0) {
-              _tOvr.style.webkitMaskImage = '';
-              _tOvr.style.maskImage = '';
+              if (_bgEl)  { _bgEl.style.opacity = '0';  _bgEl.style.webkitMaskImage = '';  _bgEl.style.maskImage = ''; }
+              if (_silWr) { _silWr.style.opacity = '0'; _silWr.style.webkitMaskImage = ''; _silWr.style.maskImage = ''; }
+              if (_vigEl) { _vigEl.style.opacity = '0'; _vigEl.style.webkitMaskImage = ''; _vigEl.style.maskImage = ''; }
             } else {
               var _vis = Math.round(_tPdiv * 115);
               var _se  = 4;
               var _lo  = Math.max(0, Math.min(100, _vis - _se));
               var _hi  = Math.max(0, Math.min(100, _vis + _se));
               var _mv  = 'linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)';
-              _tOvr.style.webkitMaskImage = _mv;
-              _tOvr.style.maskImage = _mv;
+              var _bgOp = Math.min(1, _tPdiv / 0.15);
+              if (_bgEl)  { _bgEl.style.opacity = String(_bgOp);  _bgEl.style.webkitMaskImage = _mv;  _bgEl.style.maskImage = _mv; }
+              if (_silWr) { _silWr.style.opacity = String(_bgOp); _silWr.style.webkitMaskImage = _mv; _silWr.style.maskImage = _mv; }
+              if (_vigEl) { _vigEl.style.opacity = String(_bgOp); _vigEl.style.webkitMaskImage = _mv; _vigEl.style.maskImage = _mv; }
             }
             // Sincronizar posición de la silueta con el modelo real
             var _sil = document.getElementById('thermal-silhouette');
