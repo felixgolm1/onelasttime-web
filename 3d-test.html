@@ -8184,7 +8184,9 @@ setInterval(function() {
     sparks=alive;
     sparkRAF=sparks.length?requestAnimationFrame(renderSparks):null;
   }
-  var lastActive = 0;
+  // N1 = chars line 1 'NO ES MAGIA'=11, N2 = chars line 2 'ES OXITOCINA'=12
+  var N1=11, N2=12, L2END=spans.length-1; // L2END=22
+  var lastActive1=0, lastActive2=0;
   function rnd(g){return g[Math.floor(Math.random()*g.length)];}
   function settleChar(sp, prevSp) {
     var target = sp.dataset.ch===' '?'\u00A0':sp.dataset.ch;
@@ -8218,22 +8220,39 @@ setInterval(function() {
   window._updateNeuralText = function(prog){
     if(_origNT)_origNT(prog);
     if(prog<15.30){
-      if(lastActive>0){spans.forEach(resetChar);sparks=[];
+      if(lastActive1>0||lastActive2>0){
+        spans.forEach(resetChar); sparks=[];
         if(sctx)sctx.clearRect(0,0,sc.width,sc.height);
-        lastActive=0;}
+        lastActive1=0; lastActive2=0;
+      }
       return;
     }
     initSC();
     var animT=Math.max(0,Math.min(1,(prog-PROG_START)/(PROG_END-PROG_START)));
-    var newActive=Math.min(N,Math.floor(animT*N+0.5));
-    if(newActive>lastActive){
-      for(var i=lastActive;i<newActive;i++)
+    // --- Linea 1: izquierda a derecha (indices 0..N1-1) ---
+    var na1=Math.min(N1,Math.floor(animT*N1+0.5));
+    if(na1>lastActive1){
+      for(var i=lastActive1;i<na1;i++)
         settleChar(spans[i],i>0?spans[i-1]:null);
-      lastActive=newActive;
-    } else if(newActive<lastActive){
-      for(var i=newActive;i<lastActive;i++) resetChar(spans[i]);
+      lastActive1=na1;
+    } else if(na1<lastActive1){
+      for(var i=na1;i<lastActive1;i++) resetChar(spans[i]);
       if(sctx)sctx.clearRect(0,0,sc.width,sc.height); sparks=[];
-      lastActive=newActive;
+      lastActive1=na1;
+    }
+    // --- Linea 2: derecha a izquierda (L2END..N1, en reverso) ---
+    var na2=Math.min(N2,Math.floor(animT*N2+0.5));
+    if(na2>lastActive2){
+      for(var i=lastActive2;i<na2;i++){
+        var idx=L2END-i;
+        var prevIdx=(i>0)?(L2END-(i-1)):null;
+        settleChar(spans[idx],prevIdx!==null?spans[prevIdx]:null);
+      }
+      lastActive2=na2;
+    } else if(na2<lastActive2){
+      for(var i=na2;i<lastActive2;i++) resetChar(spans[L2END-i]);
+      if(sctx)sctx.clearRect(0,0,sc.width,sc.height); sparks=[];
+      lastActive2=na2;
     }
   };
 })();
