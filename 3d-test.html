@@ -5133,6 +5133,13 @@ window.onerror = function(msg, url, line, col, err) {
           } else {
             // Antes de prog 14.62: overlay oculto, elementos reseteados
             breakoutOverlay.style.display = 'none';
+            // Limpieza del clone de la chica si quedo huerfano al hacer scroll-back rapido
+            const _staleClone = document.getElementById('mag-model-clone');
+            if (_staleClone) {
+              const _staleOrig = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
+              if (_staleOrig) _staleOrig.style.visibility = '';
+              _staleClone.remove();
+            }
             ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle','mag-barcode'].forEach(id => {
               document.querySelectorAll(`[id="${id}"]`).forEach(el => {
                 el.style.transform = '';
@@ -5276,6 +5283,13 @@ window.onerror = function(msg, url, line, col, err) {
           } else {
             // Antes de prog 14.62: overlay oculto, elementos reseteados
             breakoutOverlay.style.display = 'none';
+            // Limpieza del clone de la chica si quedo huerfano al hacer scroll-back rapido
+            const _staleClone = document.getElementById('mag-model-clone');
+            if (_staleClone) {
+              const _staleOrig = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
+              if (_staleOrig) _staleOrig.style.visibility = '';
+              _staleClone.remove();
+            }
             ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom','mag-circle','mag-barcode'].forEach(id => {
               document.querySelectorAll(`[id="${id}"]`).forEach(el => {
                 el.style.transform = '';
