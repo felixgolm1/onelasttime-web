@@ -8406,7 +8406,20 @@ setInterval(function() {
     curStep = s;
     for (var i = 0; i < NUM_STEPS; i++) {
       var on = (i === s);
-      if (brains[i]) brains[i].style.opacity = on ? '1' : '0';
+      if (brains[i]) {
+        if (on) {
+          brains[i].style.display = 'block';   // mostrar antes de fade in
+          // forzar reflow para que la transition arranque correctamente
+          brains[i].getBoundingClientRect();
+          brains[i].style.opacity = '1';
+        } else {
+          brains[i].style.opacity = '0';
+          // tras la transition (0.75s), ocultarlo del compositing
+          (function(el) {
+            setTimeout(function() { if (el.style.opacity === '0') el.style.display = 'none'; }, 850);
+          })(brains[i]);
+        }
+      }
       if (slides[i]) slides[i].style.opacity = on ? '1' : '0';
       if (dots[i]) {
         dots[i].style.background = on ? '#ff8c42' : 'rgba(255,255,255,.2)';
