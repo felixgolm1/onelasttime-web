@@ -3530,7 +3530,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Ampliado maxProg para las dos fases de salida: exits (14.62→15.6) + expansión (15.6→16.8)
-    const maxProg = 17.8;
+    const maxProg = 20.2;  // ampliado para 4 pasos neuro (17.2 → 20.2)
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
@@ -8378,10 +8378,14 @@ setInterval(function() {
 // Lee window._brainScrollProg (ya actualizado por el scroll engine
 // en cada frame) — sin modificar nada del loop de scroll.
 (function() {
-  // La sección aparece SOLO después de que la pink curtain termina (prog >= 17.2)
-  // (_tP llega a 1 en prog=17.2, cubriendo toda la pantalla)
-  var SHOW_AT    = 17.2;
-  var STEP_MS    = 3200;   // ms entre cada paso
+  // Scroll-driven — sincronizado con prog del scroll engine
+  // Rango: 17.2 (tras pink curtain completa) → 20.2 (maxProg nuevo)
+  // Fade in: 17.2 → 17.5
+  // 4 pasos: 17.5 → 20.2 (0.675 unidades cada uno)
+  var SHOW_START = 17.2;
+  var SHOW_FADE  = 17.5;
+  var STEP_START = 17.5;
+  var STEP_END   = 20.2;
   var NUM_STEPS  = 4;
 
   var brain  = document.getElementById('neuro-brain');
@@ -8395,11 +8399,10 @@ setInterval(function() {
 
   if (!brain || !brains[0]) return;
 
-  var curStep    = 0;
-  var timerActive = false;
-  var wasVisible  = false;
+  var curStep = -1;
 
   function setStep(s) {
+    if (s === curStep) return;
     curStep = s;
     for (var i = 0; i < NUM_STEPS; i++) {
       var on = (i === s);
@@ -8412,46 +8415,31 @@ setInterval(function() {
     }
   }
 
-  function startTimer() {
-    if (timerActive) return;
-    timerActive = true;
-    setStep(0);
-    var interval = setInterval(function() {
-      var next = curStep + 1;
-      if (next >= NUM_STEPS) {
-        // Quedarse en el último paso al acabar
-        clearInterval(interval);
-        return;
-      }
-      setStep(next);
-    }, STEP_MS);
-  }
-
   function tick() {
     var p = window._brainScrollProg || 0;
-    var visible = p >= SHOW_AT;
 
-    if (visible !== wasVisible) {
-      var op = visible ? '1' : '0';
-      if (brain) brain.style.opacity = op;
-      if (card)  card.style.opacity  = op;
-      wasVisible = visible;
+    // Fade in/out
+    var fadeT = p >= SHOW_START
+      ? String(Math.min(1, (p - SHOW_START) / (SHOW_FADE - SHOW_START)))
+      : '0';
+    if (brain) brain.style.opacity = fadeT;
+    if (card)  card.style.opacity  = fadeT;
 
-      if (visible && !timerActive) {
-        // 400ms de margen para que el fade-in termine antes de empezar el timer
-        setTimeout(startTimer, 400);
-      }
-      if (!visible) {
-        // Si se hace scroll back, resetear el estado
-        timerActive = false;
-        setStep(0);
-      }
+    // Qué paso mostrar según scroll
+    var step;
+    if (p < STEP_START) {
+      step = 0;
+    } else if (p >= STEP_END) {
+      step = NUM_STEPS - 1;
+    } else {
+      var t = (p - STEP_START) / (STEP_END - STEP_START);
+      step = Math.min(NUM_STEPS - 1, Math.floor(t * NUM_STEPS));
     }
+    setStep(step);
 
     requestAnimationFrame(tick);
   }
 
-  // Inicializar estados
   setStep(0);
   requestAnimationFrame(tick);
 })();
