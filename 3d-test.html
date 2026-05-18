@@ -7609,91 +7609,85 @@ window.onerror = function(msg, url, line, col, err) {
     <div id="thermal-vignette" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;
       background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
 
-    <!-- ══ SECCIÓN NEUROCIENCIA ══════════════════════════════════════
-         Stack de 4 cerebros + cuadro cristalizado.
-         Vive DENTRO del thermal-overlay — el scroll engine ya controla
-         cuándo este overlay es visible. Sin tocar el loop de scroll.
-    ══════════════════════════════════════════════════════════════ -->
-    <div id="neuro-wrap" style="
-      position:absolute; inset:0;
-      display:flex; flex-direction:column;
-      align-items:center; justify-content:center;
+    <!-- ══ SECCIÓN NEUROCIENCIA ══════════════════════════════════════ -->
+
+    <!-- Cerebro: posicionado absolutamente, mix-blend-mode:screen propio -->
+    <div id="neuro-brain" style="
+      position:absolute;
+      left:50%; top:34%;
+      transform:translate(-50%,-50%);
+      width:25vh; height:25vh;
+      mix-blend-mode:screen;
       opacity:0; transition:opacity 0.7s ease;
       pointer-events:none;">
+      <img class="nbr" id="nbr-0" src="assets/brain_zona1_prefrontal.png"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
+      <img class="nbr" id="nbr-1" src="assets/brain_zona2_limbico.png"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
+      <img class="nbr" id="nbr-2" src="assets/brain_zona3_recompensa.png"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
+      <img class="nbr" id="nbr-3" src="assets/brain_zona4_oxitocina.png"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
+    </div>
 
-      <!-- Stack de 4 cerebros superpuestos -->
-      <div style="position:relative; width:25vh; height:25vh; flex-shrink:0; mix-blend-mode:screen;">
-        <img class="nbr" id="nbr-0" src="assets/brain_zona1_prefrontal.png"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);pointer-events:none;mix-blend-mode:screen;">
-        <img class="nbr" id="nbr-1" src="assets/brain_zona2_limbico.png"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);pointer-events:none;mix-blend-mode:screen;">
-        <img class="nbr" id="nbr-2" src="assets/brain_zona3_recompensa.png"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);pointer-events:none;mix-blend-mode:screen;">
-        <img class="nbr" id="nbr-3" src="assets/brain_zona4_oxitocina.png"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);pointer-events:none;mix-blend-mode:screen;">
+    <!-- Tarjeta cristalizada: separada del cerebro, SIN mix-blend-mode -->
+    <div id="neuro-card" style="
+      position:absolute;
+      left:50%; bottom:6vh;
+      transform:translateX(-50%);
+      width:min(500px,88vw);
+      padding:1.3rem 1.8rem 1.5rem;
+      background:rgba(15,10,30,0.72);
+      backdrop-filter:blur(28px);
+      -webkit-backdrop-filter:blur(28px);
+      border:1px solid rgba(255,255,255,0.16);
+      border-radius:6px;
+      overflow:hidden;
+      opacity:0; transition:opacity 0.7s ease;
+      pointer-events:none;">
+      <!-- Reflejo superior -->
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);"></div>
+
+      <!-- Slides de texto -->
+      <div style="position:relative; min-height:108px;">
+        <div class="nsl" id="nsl-0" style="position:absolute;inset:0;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 01 · Corteza Prefrontal</p>
+          <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Tu cerebro detecta algo único</h3>
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">Una carta hecha exactamente para ti activa la zona de atención plena. El cerebro registra que esto no es ruido — es señal. Y para.</p>
+          <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">DOPAMINA ↑</p>
+        </div>
+        <div class="nsl" id="nsl-1" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 02 · Amígdala + Hipocampo</p>
+          <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">El momento se convierte en recuerdo</h3>
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">El sistema límbico codifica la emoción y la ancla en la memoria a largo plazo. Ese instante contigo quedará grabado.</p>
+          <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">NOREPINEFRINA ↑</p>
+        </div>
+        <div class="nsl" id="nsl-2" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 03 · Circuito de Recompensa</p>
+          <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Quiere más. Sin poder evitarlo.</h3>
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">El núcleo accumbens libera dopamina. La misma que activa el placer, la motivación y el deseo de repetir la experiencia.</p>
+          <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">DOPAMINA + SEROTONINA ↑</p>
+        </div>
+        <div class="nsl" id="nsl-3" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 04 · Activación Total</p>
+          <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Y entonces ocurre la conexión real</h3>
+          <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">Todo el cerebro activo a la vez. La oxitocina une a dos personas en ese instante. No es magia. Es neurociencia.</p>
+          <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">OXITOCINA ↑↑↑</p>
+        </div>
       </div>
 
-      <!-- Cuadro cristalizado -->
-      <div style="
-        position:relative;
-        width:min(500px,88vw);
-        margin-top:2vh;
-        padding:1.3rem 1.8rem 1.5rem;
-        background:rgba(255,255,255,0.06);
-        backdrop-filter:blur(28px);
-        -webkit-backdrop-filter:blur(28px);
-        border:1px solid rgba(255,255,255,0.16);
-        border-radius:6px;
-        overflow:hidden;
-        flex-shrink:0;">
-        <!-- Reflejo superior -->
-        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);"></div>
-
-        <!-- Slides de texto — 4 divs apilados, cross-fade por opacity -->
-        <div style="position:relative; min-height:108px;">
-
-          <div class="nsl active" id="nsl-0" style="position:absolute;inset:0;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 01 · Corteza Prefrontal</p>
-            <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Tu cerebro detecta algo único</h3>
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">Una carta hecha exactamente para ti activa la zona de atención plena. El cerebro registra que esto no es ruido — es señal. Y para.</p>
-            <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">DOPAMINA ↑</p>
-          </div>
-
-          <div class="nsl" id="nsl-1" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 02 · Amígdala + Hipocampo</p>
-            <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">El momento se convierte en recuerdo</h3>
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">El sistema límbico codifica la emoción y la ancla en la memoria a largo plazo. Ese instante contigo quedará grabado.</p>
-            <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">NOREPINEFRINA ↑</p>
-          </div>
-
-          <div class="nsl" id="nsl-2" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 03 · Circuito de Recompensa</p>
-            <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Quiere más. Sin poder evitarlo.</h3>
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">El núcleo accumbens libera dopamina. La misma que activa el placer, la motivación y el deseo de repetir la experiencia.</p>
-            <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">DOPAMINA + SEROTONINA ↑</p>
-          </div>
-
-          <div class="nsl" id="nsl-3" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;">
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#ff8c42;">Zona 04 · Activación Total</p>
-            <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Y entonces ocurre la conexión real</h3>
-            <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:rgba(255,255,255,.7);line-height:1.6;">Todo el cerebro activo a la vez. La oxitocina une a dos personas en ese instante. No es magia. Es neurociencia.</p>
-            <p style="margin:0;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,2.6vw,1.6rem);letter-spacing:.08em;color:rgba(255,140,66,.9);line-height:1;">OXITOCINA ↑↑↑</p>
-          </div>
-
-        </div>
-
-        <!-- Dots indicadores -->
-        <div style="display:flex;gap:8px;margin-top:1.1rem;justify-content:center;">
-          <div class="ndot" id="ndot-0" style="width:6px;height:6px;border-radius:50%;background:#ff8c42;transform:scale(1.4);transition:background .4s,transform .4s;"></div>
-          <div class="ndot" id="ndot-1" style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s,transform .4s;"></div>
-          <div class="ndot" id="ndot-2" style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s,transform .4s;"></div>
-          <div class="ndot" id="ndot-3" style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s,transform .4s;"></div>
-        </div>
+      <!-- Dots indicadores -->
+      <div style="display:flex;gap:8px;margin-top:1.1rem;justify-content:center;">
+        <div class="ndot" id="ndot-0" style="width:6px;height:6px;border-radius:50%;background:#ff8c42;transform:scale(1.4);transition:background .4s,transform .4s;"></div>
+        <div class="ndot" id="ndot-1" style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s,transform .4s;"></div>
+        <div class="ndot" id="ndot-2" style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s,transform .4s;"></div>
+        <div class="ndot" id="ndot-3" style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .4s,transform .4s;"></div>
       </div>
     </div>
     <!-- ══ FIN SECCIÓN NEUROCIENCIA ══════════════════════════════ -->
 
   </div>
+
 
 
 
@@ -8384,16 +8378,14 @@ setInterval(function() {
 // Lee window._brainScrollProg (ya actualizado por el scroll engine
 // en cada frame) — sin modificar nada del loop de scroll.
 (function() {
-  // Rango de prog donde aparece el neuro-wrap
-  // El thermal-overlay empieza en 15.35 y el barrido termina ~16.8
-  // La sección neuro ocupa el tramo FINAL: 16.2 → 17.8
   var SHOW_START  = 16.2;
-  var SHOW_FADE   = 16.5;  // completamente visible
+  var SHOW_FADE   = 16.5;
   var STEP_START  = 16.5;
   var STEP_END    = 17.8;
   var NUM_STEPS   = 4;
 
-  var wrap  = document.getElementById('neuro-wrap');
+  var brain  = document.getElementById('neuro-brain');
+  var card   = document.getElementById('neuro-card');
   var brains = [document.getElementById('nbr-0'), document.getElementById('nbr-1'),
                 document.getElementById('nbr-2'), document.getElementById('nbr-3')];
   var slides = [document.getElementById('nsl-0'), document.getElementById('nsl-1'),
@@ -8401,7 +8393,7 @@ setInterval(function() {
   var dots   = [document.getElementById('ndot-0'), document.getElementById('ndot-1'),
                 document.getElementById('ndot-2'), document.getElementById('ndot-3')];
 
-  if (!wrap || !brains[0]) return;
+  if (!brain || !brains[0]) return;
 
   var curStep = -1;
 
@@ -8410,11 +8402,11 @@ setInterval(function() {
     curStep = s;
     for (var i = 0; i < NUM_STEPS; i++) {
       var on = (i === s);
-      if (brains[i])  brains[i].style.opacity  = on ? '1' : '0';
-      if (slides[i])  slides[i].style.opacity  = on ? '1' : '0';
+      if (brains[i]) brains[i].style.opacity = on ? '1' : '0';
+      if (slides[i]) slides[i].style.opacity = on ? '1' : '0';
       if (dots[i]) {
-        dots[i].style.background  = on ? '#ff8c42' : 'rgba(255,255,255,.2)';
-        dots[i].style.transform   = on ? 'scale(1.4)' : 'scale(1)';
+        dots[i].style.background = on ? '#ff8c42' : 'rgba(255,255,255,.2)';
+        dots[i].style.transform  = on ? 'scale(1.4)' : 'scale(1)';
       }
     }
   }
@@ -8422,13 +8414,12 @@ setInterval(function() {
   function tick() {
     var p = window._brainScrollProg || 0;
 
-    // Visibilidad del wrap
-    if (p >= SHOW_START) {
-      var fadeT = Math.min(1, (p - SHOW_START) / (SHOW_FADE - SHOW_START));
-      wrap.style.opacity = String(fadeT);
-    } else {
-      wrap.style.opacity = '0';
-    }
+    // Fade in cerebro y tarjeta juntos
+    var fadeT = p >= SHOW_START
+      ? String(Math.min(1, (p - SHOW_START) / (SHOW_FADE - SHOW_START)))
+      : '0';
+    if (brain) brain.style.opacity = fadeT;
+    if (card)  card.style.opacity  = fadeT;
 
     // Qué paso mostrar
     if (p >= STEP_START && p <= STEP_END) {
