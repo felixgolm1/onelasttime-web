@@ -4970,8 +4970,8 @@ window.onerror = function(msg, url, line, col, err) {
             // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
             const exitP = Math.min(Math.max(mapRange(prog, 14.62, 15.6, 0, 1), 0), 1);
 
-            // FASE 2: progress para expansión del marco (0→1 en prog 15.6→16.8)
-            const expansionP = Math.min(Math.max(mapRange(prog, 15.6, 16.8, 0, 1), 0), 1);
+            // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
+            const expansionP = Math.min(Math.max(mapRange(prog, 14.72, 15.92, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
             // ── FASE 2: clip-path:inset() en el clon — sin overlay, sin fondo ──
@@ -5165,8 +5165,8 @@ window.onerror = function(msg, url, line, col, err) {
             // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
             const exitP = Math.min(Math.max(mapRange(prog, 14.62, 15.6, 0, 1), 0), 1);
 
-            // FASE 2: progress para expansión del marco (0→1 en prog 15.6→16.8)
-            const expansionP = Math.min(Math.max(mapRange(prog, 15.6, 16.8, 0, 1), 0), 1);
+            // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
+            const expansionP = Math.min(Math.max(mapRange(prog, 14.72, 15.92, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
             // ── FASE 2: Overlay expansión del marco ────────────────────────────────
