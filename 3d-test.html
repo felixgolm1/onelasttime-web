@@ -7597,8 +7597,8 @@ window.onerror = function(msg, url, line, col, err) {
       left:50%;top:34.4%;transform:translate(-50%,-50%);
       width:25vh;height:25vh;
       mix-blend-mode:screen;">
-      <img id="brain-2d-img" src="assets/img/brain_thermal_half.png"
-        style="width:100%;height:100%;object-fit:contain;display:block;">
+      <img id="brain-2d-img" src="assets/brain_zona1_prefrontal.png"
+        style="width:100%;height:100%;object-fit:contain;display:block;transition:opacity 0.15s ease;">
       <!-- Canvas encima: mapa de calor dinámico en código -->
       <canvas id="brain-2d-heat" style="position:absolute;top:0;left:0;width:100%;height:100%;mix-blend-mode:screen;"></canvas>
     </div>
@@ -7609,20 +7609,7 @@ window.onerror = function(msg, url, line, col, err) {
     <div id="thermal-vignette" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;
       background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
 
-    <!-- ══ SECCIÓN NEUROCIENCIA ══════════════════════════════════════ -->
-
-    <!-- Cerebro: UNA sola imagen — cambia src en cada paso, sin doble silueta -->
-    <div id="neuro-brain" style="
-      position:absolute;
-      left:50%; top:34%;
-      transform:translate(-50%,-50%);
-      width:25vh; height:25vh;
-      mix-blend-mode:screen;
-      opacity:0; transition:opacity 0.7s ease;
-      pointer-events:none;">
-      <img id="nbr-active" src="assets/brain_zona1_prefrontal.png"
-           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;transition:opacity 0.15s ease;">
-    </div>
+    <!-- ══ SECCIÓN NEUROCIENCIA — usa brain-2d-wrap ya existente, sin div extra ══ -->
 
     <!-- Tarjeta cristalizada: separada del cerebro, SIN mix-blend-mode -->
     <div id="neuro-card" style="
@@ -8385,15 +8372,17 @@ setInterval(function() {
     'assets/brain_zona4_oxitocina.png'
   ];
 
-  var brain   = document.getElementById('neuro-brain');
+  // Reutilizamos brain-2d-wrap (el cerebro de la mujer) como el cerebro neuro.
+  // Así solo hay 4 imágenes en total, sin elementos extra.
+  var brain   = document.getElementById('brain-2d-wrap');  // el wrap ya existente
   var card    = document.getElementById('neuro-card');
-  var imgEl   = document.getElementById('nbr-active');   // única imagen
+  var imgEl   = document.getElementById('brain-2d-img');   // la única imagen
   var slides  = [document.getElementById('nsl-0'), document.getElementById('nsl-1'),
                  document.getElementById('nsl-2'), document.getElementById('nsl-3')];
   var dots    = [document.getElementById('ndot-0'), document.getElementById('ndot-1'),
                  document.getElementById('ndot-2'), document.getElementById('ndot-3')];
 
-  if (!brain || !imgEl) return;
+  if (!imgEl) return;
 
   var curStep   = 0;
   var swapping  = false;
@@ -8432,15 +8421,10 @@ setInterval(function() {
     }
   }
 
-  var brain2d = document.getElementById('brain-2d-wrap');  // cerebro original — ocultar cuando entra neuro
-
   function tick() {
     var p = window._brainScrollProg || 0;
 
-    // Ocultar el cerebro original de la mujer cuando entra la sección neuro
-    if (brain2d) brain2d.style.opacity = (p >= SHOW_START) ? '0' : '';
-
-    // Fade in/out del contenedor neuro
+    // Fade in/out de la tarjeta (el brain-2d-wrap lo maneja el scroll engine)
     var fadeT = p >= SHOW_START
       ? String(Math.min(1, (p - SHOW_START) / (SHOW_FADE - SHOW_START)))
       : '0';
