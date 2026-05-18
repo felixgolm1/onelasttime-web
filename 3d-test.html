@@ -8432,10 +8432,15 @@ setInterval(function() {
     }
   }
 
+  var brain2d = document.getElementById('brain-2d-wrap');  // cerebro original — ocultar cuando entra neuro
+
   function tick() {
     var p = window._brainScrollProg || 0;
 
-    // Fade in/out del contenedor
+    // Ocultar el cerebro original de la mujer cuando entra la sección neuro
+    if (brain2d) brain2d.style.opacity = (p >= SHOW_START) ? '0' : '';
+
+    // Fade in/out del contenedor neuro
     var fadeT = p >= SHOW_START
       ? String(Math.min(1, (p - SHOW_START) / (SHOW_FADE - SHOW_START)))
       : '0';
