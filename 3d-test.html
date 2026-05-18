@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -8217,6 +8217,22 @@ setInterval(function() {
     sp.style.cssText='display:inline-block;opacity:0;transition:none;';
     sp.textContent=sp.dataset.ch===' '?'\u00A0':sp.dataset.ch;
   }
+  function unsettleChar(sp){
+    var f=0; sp.style.transition='none';
+    (function flick(){
+      if(f<3){
+        sp.textContent=rnd(GLYPHS);
+        sp.style.opacity='1';
+        sp.style.color='rgba('+(180+Math.random()*40|0)+','+(230+Math.random()*25|0)+',0,0.95)';
+        sp.style.textShadow='0 0 14px rgba(180,255,0,0.9)';
+        f++;requestAnimationFrame(flick);
+      } else {
+        sp.style.opacity='0';
+        sp.textContent=sp.dataset.ch===' '?'\u00A0':sp.dataset.ch;
+        sp.style.color='';sp.style.textShadow='';
+      }
+    })();
+  }
   var _origNT = window._updateNeuralText||null;
   window._updateNeuralText = function(prog){
     if(_origNT)_origNT(prog);
@@ -8237,7 +8253,7 @@ setInterval(function() {
         settleChar(spans[i],i>0?spans[i-1]:null);
       lastActive1=na1;
     } else if(na1<lastActive1){
-      for(var i=na1;i<lastActive1;i++) resetChar(spans[i]);
+      for(var i=na1;i<lastActive1;i++) unsettleChar(spans[i]);
       if(sctx)sctx.clearRect(0,0,sc.width,sc.height); sparks=[];
       lastActive1=na1;
     }
@@ -8251,7 +8267,7 @@ setInterval(function() {
       }
       lastActive2=na2;
     } else if(na2<lastActive2){
-      for(var i=na2;i<lastActive2;i++) resetChar(spans[L2END-i]);
+      for(var i=na2;i<lastActive2;i++) unsettleChar(spans[L2END-i]);
       if(sctx)sctx.clearRect(0,0,sc.width,sc.height); sparks=[];
       lastActive2=na2;
     }
