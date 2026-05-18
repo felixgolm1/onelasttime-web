@@ -7980,10 +7980,12 @@ window.onerror = function(msg, url, line, col, err) {
     var canvas = document.getElementById('brain-canvas');
     if (!canvas) return;
     if (tP <= 0) {
+      canvas.style.transition = 'none'; // hide instantaneo, sin flash
       canvas.style.opacity = '0';
       canvas.style.webkitMaskImage = '';
       canvas.style.maskImage = '';
     } else {
+      canvas.style.transition = '';
       canvas.style.opacity = '1';
       canvas.style.webkitMaskImage = maskValue;
       canvas.style.maskImage = maskValue;
