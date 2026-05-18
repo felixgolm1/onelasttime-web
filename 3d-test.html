@@ -7611,7 +7611,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     <!-- ══ SECCIÓN NEUROCIENCIA ══════════════════════════════════════ -->
 
-    <!-- Cerebro: posicionado absolutamente, mix-blend-mode:screen propio -->
+    <!-- Cerebro: UNA sola imagen — cambia src en cada paso, sin doble silueta -->
     <div id="neuro-brain" style="
       position:absolute;
       left:50%; top:34%;
@@ -7620,14 +7620,8 @@ window.onerror = function(msg, url, line, col, err) {
       mix-blend-mode:screen;
       opacity:0; transition:opacity 0.7s ease;
       pointer-events:none;">
-      <img class="nbr" id="nbr-0" src="assets/brain_zona1_prefrontal.png"
-           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
-      <img class="nbr" id="nbr-1" src="assets/brain_zona2_limbico.png"
-           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
-      <img class="nbr" id="nbr-2" src="assets/brain_zona3_recompensa.png"
-           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
-      <img class="nbr" id="nbr-3" src="assets/brain_zona4_oxitocina.png"
-           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);">
+      <img id="nbr-active" src="assets/brain_zona1_prefrontal.png"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;transition:opacity 0.15s ease;">
     </div>
 
     <!-- Tarjeta cristalizada: separada del cerebro, SIN mix-blend-mode -->
@@ -8378,48 +8372,58 @@ setInterval(function() {
 // Lee window._brainScrollProg (ya actualizado por el scroll engine
 // en cada frame) — sin modificar nada del loop de scroll.
 (function() {
-  // Scroll-driven — sincronizado con prog del scroll engine
-  // Rango: 17.2 (tras pink curtain completa) → 20.2 (maxProg nuevo)
-  // Fade in: 17.2 → 17.5
-  // 4 pasos: 17.5 → 20.2 (0.675 unidades cada uno)
   var SHOW_START = 17.2;
   var SHOW_FADE  = 17.5;
   var STEP_START = 17.5;
   var STEP_END   = 20.2;
   var NUM_STEPS  = 4;
 
-  var brain  = document.getElementById('neuro-brain');
-  var card   = document.getElementById('neuro-card');
-  var brains = [document.getElementById('nbr-0'), document.getElementById('nbr-1'),
-                document.getElementById('nbr-2'), document.getElementById('nbr-3')];
-  var slides = [document.getElementById('nsl-0'), document.getElementById('nsl-1'),
-                document.getElementById('nsl-2'), document.getElementById('nsl-3')];
-  var dots   = [document.getElementById('ndot-0'), document.getElementById('ndot-1'),
-                document.getElementById('ndot-2'), document.getElementById('ndot-3')];
+  var SRCS = [
+    'assets/brain_zona1_prefrontal.png',
+    'assets/brain_zona2_limbico.png',
+    'assets/brain_zona3_recompensa.png',
+    'assets/brain_zona4_oxitocina.png'
+  ];
 
-  if (!brain || !brains[0]) return;
+  var brain   = document.getElementById('neuro-brain');
+  var card    = document.getElementById('neuro-card');
+  var imgEl   = document.getElementById('nbr-active');   // única imagen
+  var slides  = [document.getElementById('nsl-0'), document.getElementById('nsl-1'),
+                 document.getElementById('nsl-2'), document.getElementById('nsl-3')];
+  var dots    = [document.getElementById('ndot-0'), document.getElementById('ndot-1'),
+                 document.getElementById('ndot-2'), document.getElementById('ndot-3')];
 
-  var curStep = -1;
+  if (!brain || !imgEl) return;
+
+  var curStep   = 0;
+  var swapping  = false;
 
   function setStep(s) {
     if (s === curStep) return;
+    var newStep = s;
     curStep = s;
+
+    if (swapping) return;  // no interrumpir un swap en curso
+    swapping = true;
+
+    // 1. Fade out imagen actual (0.15s)
+    imgEl.style.opacity = '0';
+
+    setTimeout(function() {
+      // 2. Cambiar src (solo una imagen, sin doble silueta)
+      imgEl.src = SRCS[newStep];
+
+      // 3. Pequeño reflow para que el browser cargue el src antes de fade in
+      imgEl.getBoundingClientRect();
+
+      // 4. Fade in
+      imgEl.style.opacity = '1';
+      swapping = false;
+    }, 180);  // ligeramente mayor que la transición CSS de 0.15s
+
+    // Slides y dots
     for (var i = 0; i < NUM_STEPS; i++) {
-      var on = (i === s);
-      if (brains[i]) {
-        if (on) {
-          brains[i].style.display = 'block';   // mostrar antes de fade in
-          // forzar reflow para que la transition arranque correctamente
-          brains[i].getBoundingClientRect();
-          brains[i].style.opacity = '1';
-        } else {
-          brains[i].style.opacity = '0';
-          // tras la transition (0.75s), ocultarlo del compositing
-          (function(el) {
-            setTimeout(function() { if (el.style.opacity === '0') el.style.display = 'none'; }, 850);
-          })(brains[i]);
-        }
-      }
+      var on = (i === newStep);
       if (slides[i]) slides[i].style.opacity = on ? '1' : '0';
       if (dots[i]) {
         dots[i].style.background = on ? '#ff8c42' : 'rgba(255,255,255,.2)';
@@ -8431,14 +8435,14 @@ setInterval(function() {
   function tick() {
     var p = window._brainScrollProg || 0;
 
-    // Fade in/out
+    // Fade in/out del contenedor
     var fadeT = p >= SHOW_START
       ? String(Math.min(1, (p - SHOW_START) / (SHOW_FADE - SHOW_START)))
       : '0';
     if (brain) brain.style.opacity = fadeT;
     if (card)  card.style.opacity  = fadeT;
 
-    // Qué paso mostrar según scroll
+    // Qué paso según scroll
     var step;
     if (p < STEP_START) {
       step = 0;
@@ -8453,9 +8457,9 @@ setInterval(function() {
     requestAnimationFrame(tick);
   }
 
-  setStep(0);
   requestAnimationFrame(tick);
 })();
+
 
 </script>
 </html>
