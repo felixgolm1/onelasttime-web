@@ -8445,9 +8445,9 @@ setInterval(function() {
   var MOVE_END   = 17.30;   // cuando la sección neuro toma el relevo
 
   // Inicio: centrado (top:67%, left:50%, scale:1)
-  // Final: esquina superior-izquierda (top:13%, left:20%, scale:0.28)
-  var S_TOP = 67,  E_TOP = 29;
-  var S_LEFT = 50, E_LEFT = 28;
+  // Final: derecha junto al cerebro (top:22%, left:72%, scale:0.28)
+  var S_TOP = 67,  E_TOP = 22;
+  var S_LEFT = 50, E_LEFT = 72;
   var S_SCL = 1.0, E_SCL = 0.28;
 
   // Encadenar con la función ya existente
@@ -8463,20 +8463,12 @@ setInterval(function() {
     var left = S_LEFT + (E_LEFT - S_LEFT) * te;
     var scl  = S_SCL  + (E_SCL  - S_SCL)  * te;
 
-    h2.style.top        = top  + '%';
-    h2.style.left       = left + '%';
-    h2.style.transition = 'none';
-
-    if (te >= 0.98) {
-      // Destino final: anclado a izquierda, texto left-aligned
-      h2.style.transform  = 'translate(0,-50%) scale(' + scl + ')';
-      h2.style.textAlign  = 'left';
-    } else {
-      // Durante el movimiento: siempre centrado en el punto left/top — motion limpio
-      h2.style.transform  = 'translate(-50%,-50%) scale(' + scl + ')';
-      h2.style.textAlign  = 'center';
-    }
+    h2.style.top             = top  + '%';
+    h2.style.left            = left + '%';
+    h2.style.transition      = 'none';
+    h2.style.transform       = 'translate(-50%,-50%) scale(' + scl + ')';
     h2.style.transformOrigin = 'center center';
+    h2.style.textAlign       = 'center';
   };
 })();
 </script>
