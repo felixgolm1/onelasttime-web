@@ -7594,7 +7594,7 @@ window.onerror = function(msg, url, line, col, err) {
     <canvas id="brain-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 0.4s ease;"></canvas>
     <!-- CEREBRO 2D: imagen base + canvas de mapa de calor encima -->
     <div id="brain-2d-wrap" style="position:absolute;pointer-events:none;opacity:0;
-      left:50%;top:34.4%;transform:translate(-50%,-50%);
+      left:calc(50% - 4px);top:34.4%;transform:translate(-50%,-50%);
       width:25vh;height:25vh;
       mix-blend-mode:screen;">
       <!-- Dos capas para crossfade suave sin flash negro -->
