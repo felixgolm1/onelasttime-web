@@ -8462,15 +8462,21 @@ setInterval(function() {
     var top  = S_TOP  + (E_TOP  - S_TOP)  * te;
     var left = S_LEFT + (E_LEFT - S_LEFT) * te;
     var scl  = S_SCL  + (E_SCL  - S_SCL)  * te;
-    // Interpolar translateX de -50% (centrado) a 0% (anclado izquierda)
-    var tx   = -50 + 50 * te;
 
-    h2.style.top             = top  + '%';
-    h2.style.left            = left + '%';
-    h2.style.transform       = 'translate(' + tx + '%,-50%) scale(' + scl + ')';
+    h2.style.top        = top  + '%';
+    h2.style.left       = left + '%';
+    h2.style.transition = 'none';
+
+    if (te >= 0.98) {
+      // Destino final: anclado a izquierda, texto left-aligned
+      h2.style.transform  = 'translate(0,-50%) scale(' + scl + ')';
+      h2.style.textAlign  = 'left';
+    } else {
+      // Durante el movimiento: siempre centrado en el punto left/top — motion limpio
+      h2.style.transform  = 'translate(-50%,-50%) scale(' + scl + ')';
+      h2.style.textAlign  = 'center';
+    }
     h2.style.transformOrigin = 'center center';
-    h2.style.transition      = 'none';
-    h2.style.textAlign       = te > 0.5 ? 'left' : 'center';
   };
 })();
 </script>
