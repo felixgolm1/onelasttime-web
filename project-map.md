@@ -30,6 +30,7 @@ Este documento actúa como el **Cerebro Central (Single Source of Truth - SSOT)*
         git add 3d-test.html && git commit -m "hecho: [descripción del cambio]" && git push origin main
         ```
 4.  **Autonomía Total:** El asistente ejecuta los comandos y cambios de archivos directamente sin interrumpir pidiendo confirmación o permisos.
+5.  **Carga Obligatoria de Memoria (Inicialización):** Al iniciar cualquier nueva conversación o sesión, el asistente debe leer obligatoriamente este archivo (`project-map.md`) en su totalidad para asimilar todas las reglas, timings, estado actual e historial del proyecto antes de realizar cualquier cambio o responder.
 
 ---
 
