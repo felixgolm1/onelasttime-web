@@ -8360,7 +8360,7 @@ setInterval(function() {
   var NUM_STEPS  = 4;
   var STEP_SIZE  = (STEP_END - STEP_START) / NUM_STEPS; // 0.675 por paso
   var TRANS      = 0.10; // unidades de scroll para la zona de transición en cada límite
-  var FEATHER    = 18;   // % de suavidad del borde del gradiente (el "fade" de Oryzo)
+  var FEATHER    = 55;   // % de suavidad del gradiente — grande = más gradual (Oryzo style)
 
   var SRCS = [
     'assets/brain_zona1_vta.png',
@@ -8394,17 +8394,19 @@ setInterval(function() {
     return { el: sl, h3: h3, para: para };
   });
 
-  // ── Aplicar máscara de gradiente horizontal a un elemento ──────────────
+  // ── Aplicar máscara de gradiente diagonal a un elemento (efecto Oryzo) ──
   // showFrac: 0 = invisible, 1 = visible
-  // dir: 'ltr' = revela de izquierda a derecha (título)
-  //      'rtl' = revela de derecha a izquierda (párrafo)
+  // dir: 'ltr' = diagonal top-left → bottom-right (título)
+  //      'rtl' = diagonal bottom-right → top-left (párrafo, dirección opuesta)
+  // El gradiente es muy ancho (FEATHER grande) → desvanecimiento suave de esquina a esquina
   function applyMask(el, showFrac, dir) {
     if (!el) return;
     var pct = showFrac * 100;
     var lo  = Math.max(0, pct - FEATHER * 0.5);
     var hi  = Math.min(100, pct + FEATHER * 0.5);
-    var deg = (dir === 'ltr') ? '90deg' : '270deg';
-    // Gradiente: zona visible (black = muestra), zona oculta (transparent = oculta)
+    // 135deg = diagonal top-left→bottom-right | 315deg = dirección opuesta
+    var deg = (dir === 'ltr') ? '135deg' : '315deg';
+    // black = visible, transparent = oculto
     var mask = 'linear-gradient(' + deg + ', black 0%, black ' + lo.toFixed(1) + '%, transparent ' + hi.toFixed(1) + '%, transparent 100%)';
     el.style.webkitMaskImage = mask;
     el.style.maskImage = mask;
