@@ -8412,16 +8412,26 @@ setInterval(function() {
     el.style.maskImage = mask;
   }
 
-  // ── ENTRADA: clip-path reveal desde abajo (como .oh-inner en 4 pasos) ──
+  // ── ENTRADA: clip-path reveal diagonal en cascada (efecto tobogán Oryzo) ──
+  // El borde izquierdo sube antes que el derecho → texto aparece inclinado.
+  // TILT: cuánto lag tiene el borde derecho respecto al izquierdo.
+  var TILT = 0.30;
+
   function applyEntryReveal(el, entryFrac) {
     if (!el) return;
-    var clip = (1 - entryFrac) * 110;
-    var ty   = (1 - entryFrac) * 14;
-    el.style.clipPath        = 'inset(0 0 ' + clip.toFixed(1) + '% 0)';
-    el.style.transform       = 'translateY(' + ty.toFixed(1) + 'px)';
+    // leftFrac = borde izquierdo (va adelantado)
+    // rightFrac = borde derecho (va retrasado TILT)
+    var leftFrac  = clamp01((entryFrac + TILT) / (1 + TILT));
+    var rightFrac = clamp01(entryFrac          / (1 + TILT));
+    var lPct = (leftFrac  * 100).toFixed(1);
+    var rPct = (rightFrac * 100).toFixed(1);
+    // polygon: top-left, top-right, bottom-right (retrasa), bottom-left (adelanta)
+    el.style.clipPath        = 'polygon(0 0, 100% 0, 100% ' + rPct + '%, 0 ' + lPct + '%)';
+    el.style.transform       = 'translateY(' + ((1 - entryFrac) * 6).toFixed(1) + 'px)';
     el.style.webkitMaskImage = '';
     el.style.maskImage       = '';
   }
+
 
   // ── STAGGER de entrada: cada elemento empieza más tarde que el anterior ──
   // n=0 label (más rápido), n=1 h3, n=2 para (más lento)
