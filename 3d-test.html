@@ -8452,28 +8452,30 @@ setInterval(function() {
     if (card)  card.style.opacity  = String(fadeT);
 
     // ── Calcular showFrac para cada slide ────────────────────────────────
-    // Cada step ocupa STEP_SIZE unidades de scroll.
-    // En el límite entre step s y s+1 (en prog = STEP_START + (s+1)*STEP_SIZE)
-    // hay una zona de transición de ±TRANS donde ambos slides se solapan.
-    // showFrac[s] = entryFrac * (1 - exitFrac)
+    // En el límite entre step S y S+1 (boundary = STEP_START + (S+1)*STEP_SIZE):
+    //   - Step S sale:   scroll de [boundary - TRANS]  a  [boundary]        (1→0)
+    //   - Step S+1 entra: scroll de [boundary]          a  [boundary + TRANS] (0→1)
+    // SECUENCIAL: primero sale del todo, luego entra. Sin solapamiento.
     var showFracs = [0, 0, 0, 0];
 
     for (var s = 0; s < NUM_STEPS; s++) {
-      var stepEnd   = STEP_START + (s + 1) * STEP_SIZE; // límite de salida de s
-      var stepStart = STEP_START + s * STEP_SIZE;        // límite de entrada de s
+      var boundary = STEP_START + (s + 1) * STEP_SIZE; // límite entre step s y s+1
 
-      // ENTRADA: step 0 siempre entra al 100% (ya visible desde el inicio)
-      var entryFrac = (s === 0)
-        ? 1.0
-        : ease(clamp01((p - (stepStart - TRANS)) / (2 * TRANS)));
-
-      // SALIDA: el último step nunca sale
+      // SALIDA de step s: [boundary - TRANS] → [boundary]   (exitFrac 0→1)
       var exitFrac = (s === NUM_STEPS - 1)
         ? 0.0
-        : ease(clamp01((p - (stepEnd - TRANS)) / (2 * TRANS)));
+        : ease(clamp01((p - (boundary - TRANS)) / TRANS));
+
+      // ENTRADA de step s: [prev_boundary] → [prev_boundary + TRANS]   (entryFrac 0→1)
+      // prev_boundary = STEP_START + s * STEP_SIZE
+      var prevBoundary = STEP_START + s * STEP_SIZE;
+      var entryFrac = (s === 0)
+        ? 1.0
+        : ease(clamp01((p - prevBoundary) / TRANS));
 
       showFracs[s] = entryFrac * (1 - exitFrac);
     }
+
 
     // Slide dominante = el de mayor showFrac (para imagen y dots)
     var domStep = 0, domVal = -1;
