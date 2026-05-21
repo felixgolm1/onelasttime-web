@@ -8348,15 +8348,19 @@ setInterval(function() {
 
 </body>
 <script>
-// ── CONTROLADOR SECCIÓN NEUROCIENCIA — efecto Oryzo palabra a palabra ──
-// Lee window._brainScrollProg (ya actualizado por el scroll engine
-// en cada frame) — sin modificar nada del loop de scroll.
+// ── CONTROLADOR SECCIÓN NEUROCIENCIA — wipe Oryzo scroll-driven ──
+// Barrido de máscara de gradiente 100% vinculado al scroll.
+// Título: barre izquierda→derecha. Párrafo: barre derecha→izquierda.
+// Todo computado en cada frame desde window._brainScrollProg. Cero timers.
 (function() {
   var SHOW_START = 17.43;
   var SHOW_FADE  = 17.58;
   var STEP_START = 17.5;
   var STEP_END   = 20.2;
   var NUM_STEPS  = 4;
+  var STEP_SIZE  = (STEP_END - STEP_START) / NUM_STEPS; // 0.675 por paso
+  var TRANS      = 0.10; // unidades de scroll para la zona de transición en cada límite
+  var FEATHER    = 18;   // % de suavidad del borde del gradiente (el "fade" de Oryzo)
 
   var SRCS = [
     'assets/brain_zona1_vta.png',
@@ -8376,162 +8380,123 @@ setInterval(function() {
 
   if (!imgA || !imgB) return;
 
-  // ── Parámetros del efecto Oryzo ───────────────────────────────────────
-  var STAGGER_MS  = 48;   // ms entre palabras
-  var WORD_DUR_MS = 420;  // duración de transición por palabra
-  var EASE        = 'cubic-bezier(0.22, 1, 0.36, 1)'; // ease out expo suave
-
-  // ── Split de texto en spans por palabra ──────────────────────────────
-  function splitWords(el, cssClass) {
-    var text = el.textContent;
-    var words = text.split(' ');
-    el.textContent = '';
-    el.style.display    = 'flex';
-    el.style.flexWrap   = 'wrap';
-    el.style.justifyContent = 'center';
-    el.style.gap        = '0.25em';
-    words.forEach(function(w) {
-      var s = document.createElement('span');
-      s.className = cssClass;
-      s.textContent = w;
-      s.style.display    = 'inline-block';
-      s.style.opacity    = '0';
-      s.style.transition = 'opacity ' + WORD_DUR_MS + 'ms ' + EASE;
-      el.appendChild(s);
-    });
-    return el.querySelectorAll('.' + cssClass);
-  }
-
-  // ── Preparar slides: split de h3 y p en cada nsl ──────────────────────
-  var slideData = []; // [{title: NodeList, para: NodeList}, ...]
-  slides.forEach(function(sl, idx) {
-    if (!sl) { slideData.push(null); return; }
-
-    // El primer <p> es el label (CORTEZA PREFRONTAL etc.) — lo dejamos intacto
-    // El <h3> es el título → stagger izq→der en entrada, der→izq en salida
-    // El último <p> es el párrafo → stagger der→izq en entrada, izq→der en salida
-    var h3  = sl.querySelector('h3');
-    var ps  = sl.querySelectorAll('p');
-    var para = ps.length > 1 ? ps[ps.length - 1] : null;
-
-    var titleWords = h3  ? splitWords(h3,  'nsl-title-word-' + idx) : null;
-    var paraWords  = para? splitWords(para,'nsl-para-word-'  + idx) : null;
-
-    slideData.push({ title: titleWords, para: paraWords, el: sl });
+  // Quitar la transición CSS de los slides — el scroll lo maneja todo
+  slides.forEach(function(sl) {
+    if (sl) sl.style.transition = 'none';
   });
 
-  // ── Función para animar palabras con stagger ──────────────────────────
-  // dir: 1 = izq→der (normal), -1 = der→izq (reversed)
-  // show: true = fade in, false = fade out
-  function animWords(wordList, dir, show) {
-    if (!wordList || wordList.length === 0) return;
-    var n = wordList.length;
-    for (var i = 0; i < n; i++) {
-      var idx = (dir === 1) ? i : (n - 1 - i);
-      (function(el, delay) {
-        setTimeout(function() {
-          el.style.opacity = show ? '1' : '0';
-        }, delay);
-      })(wordList[idx], i * STAGGER_MS);
-    }
+  // Extraer h3 y último p de cada slide (sin tocar el DOM ni partir palabras)
+  var slideEls = slides.map(function(sl) {
+    if (!sl) return null;
+    var h3   = sl.querySelector('h3');
+    var ps   = sl.querySelectorAll('p');
+    var para = ps.length > 1 ? ps[ps.length - 1] : null;
+    return { el: sl, h3: h3, para: para };
+  });
+
+  // ── Aplicar máscara de gradiente horizontal a un elemento ──────────────
+  // showFrac: 0 = invisible, 1 = visible
+  // dir: 'ltr' = revela de izquierda a derecha (título)
+  //      'rtl' = revela de derecha a izquierda (párrafo)
+  function applyMask(el, showFrac, dir) {
+    if (!el) return;
+    var pct = showFrac * 100;
+    var lo  = Math.max(0, pct - FEATHER * 0.5);
+    var hi  = Math.min(100, pct + FEATHER * 0.5);
+    var deg = (dir === 'ltr') ? '90deg' : '270deg';
+    // Gradiente: zona visible (black = muestra), zona oculta (transparent = oculta)
+    var mask = 'linear-gradient(' + deg + ', black 0%, black ' + lo.toFixed(1) + '%, transparent ' + hi.toFixed(1) + '%, transparent 100%)';
+    el.style.webkitMaskImage = mask;
+    el.style.maskImage = mask;
   }
 
-  // ── Mostrar/ocultar un slide con efecto Oryzo ────────────────────────
-  function showSlide(idx) {
-    var d = slideData[idx];
+  // ── Aplicar el estado completo de un slide según su showFrac (0→1) ─────
+  function applySlide(sIdx, showFrac) {
+    var d = slideEls[sIdx];
     if (!d) return;
-    d.el.style.opacity = '1';
-    d.el.style.pointerEvents = 'none';
-    // Título: izquierda → derecha (dir=1)
-    animWords(d.title, 1, true);
-    // Párrafo: derecha → izquierda (dir=-1)
-    animWords(d.para, -1, true);
+    // El contenedor sólo se oculta cuando la opacidad es prácticamente 0
+    d.el.style.opacity = showFrac > 0.005 ? '1' : '0';
+    // Título: wipe izquierda→derecha
+    applyMask(d.h3,   showFrac, 'ltr');
+    // Párrafo: wipe derecha→izquierda
+    applyMask(d.para, showFrac, 'rtl');
   }
 
-  function hideSlide(idx) {
-    var d = slideData[idx];
-    if (!d) return;
-    // Título: derecha → izquierda al salir (dir=-1)
-    animWords(d.title, -1, false);
-    // Párrafo: izquierda → derecha al salir (dir=1)
-    animWords(d.para, 1, false);
-    // Ocultar el contenedor tras la última transición
-    var n = Math.max(
-      d.title ? d.title.length : 0,
-      d.para  ? d.para.length  : 0
-    );
-    var delay = (n - 1) * STAGGER_MS + WORD_DUR_MS;
-    var el = d.el;
-    setTimeout(function() { el.style.opacity = '0'; }, delay);
-  }
+  // ── Imagen del cerebro: crossfade discreto al cambiar step dominante ───
+  var curImgStep = -1;
+  var frontIsA   = true;
 
-  // ── Init: asegurar que el slide 0 empieza visible ─────────────────────
-  // (La transición de scroll se encarga del fade-in del card completo)
-  // Mostramos palabras del slide 0 inmediatamente
-  if (slideData[0]) {
-    var d0 = slideData[0];
-    d0.el.style.opacity = '1';
-    if (d0.title) d0.title.forEach(function(w) { w.style.opacity = '1'; });
-    if (d0.para)  d0.para.forEach( function(w) { w.style.opacity = '1'; });
-  }
-
-  var curStep  = 0;
-  var frontIsA = true;
-
-  function setStep(s) {
-    if (s === curStep) return;
-    var prev = curStep;
-    curStep = s;
-
-    // Crossfade imágenes del cerebro
+  function setImg(s) {
+    if (s === curImgStep) return;
+    curImgStep = s;
     var front = frontIsA ? imgA : imgB;
     var back  = frontIsA ? imgB : imgA;
     back.src            = SRCS[s];
     back.style.opacity  = '1';
     front.style.opacity = '0';
     frontIsA = !frontIsA;
-
-    // Dots
-    for (var i = 0; i < NUM_STEPS; i++) {
-      var on = (i === s);
-      if (dots[i]) {
-        dots[i].style.background = on ? '#ff8c42' : 'rgba(255,255,255,.2)';
-        dots[i].style.transform  = on ? 'scale(1.4)' : 'scale(1)';
-      }
-    }
-
-    // Animación Oryzo: salida del slide anterior, entrada del nuevo
-    hideSlide(prev);
-    // Pequeño delay para que la salida empiece antes que la entrada
-    setTimeout(function() { showSlide(s); }, STAGGER_MS * 2);
   }
+
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  // Ease in-out cuadrático — suaviza el barrido sin distorsionar el mapeo de scroll
+  function ease(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2; }
 
   function tick() {
     var p = window._brainScrollProg || 0;
 
+    // Fade in/out del card y el cerebro 2D
     var fadeT = p >= SHOW_START
-      ? String(Math.min(1, (p - SHOW_START) / (SHOW_FADE - SHOW_START)))
-      : '0';
-    if (brain) brain.style.opacity = fadeT;
-    if (card)  card.style.opacity  = fadeT;
+      ? clamp01((p - SHOW_START) / (SHOW_FADE - SHOW_START))
+      : 0;
+    if (brain) brain.style.opacity = String(fadeT);
+    if (card)  card.style.opacity  = String(fadeT);
 
-    var step;
-    if (p < STEP_START) {
-      step = 0;
-    } else if (p >= STEP_END) {
-      step = NUM_STEPS - 1;
-    } else {
-      var t = (p - STEP_START) / (STEP_END - STEP_START);
-      step = Math.min(NUM_STEPS - 1, Math.floor(t * NUM_STEPS));
+    // ── Calcular showFrac para cada slide ────────────────────────────────
+    // Cada step ocupa STEP_SIZE unidades de scroll.
+    // En el límite entre step s y s+1 (en prog = STEP_START + (s+1)*STEP_SIZE)
+    // hay una zona de transición de ±TRANS donde ambos slides se solapan.
+    // showFrac[s] = entryFrac * (1 - exitFrac)
+    var showFracs = [0, 0, 0, 0];
+
+    for (var s = 0; s < NUM_STEPS; s++) {
+      var stepEnd   = STEP_START + (s + 1) * STEP_SIZE; // límite de salida de s
+      var stepStart = STEP_START + s * STEP_SIZE;        // límite de entrada de s
+
+      // ENTRADA: step 0 siempre entra al 100% (ya visible desde el inicio)
+      var entryFrac = (s === 0)
+        ? 1.0
+        : ease(clamp01((p - (stepStart - TRANS)) / (2 * TRANS)));
+
+      // SALIDA: el último step nunca sale
+      var exitFrac = (s === NUM_STEPS - 1)
+        ? 0.0
+        : ease(clamp01((p - (stepEnd - TRANS)) / (2 * TRANS)));
+
+      showFracs[s] = entryFrac * (1 - exitFrac);
     }
-    setStep(step);
+
+    // Slide dominante = el de mayor showFrac (para imagen y dots)
+    var domStep = 0, domVal = -1;
+    for (var i = 0; i < NUM_STEPS; i++) {
+      if (showFracs[i] > domVal) { domVal = showFracs[i]; domStep = i; }
+    }
+    setImg(domStep);
+
+    // Aplicar masks y dots a todos los slides
+    for (var j = 0; j < NUM_STEPS; j++) {
+      applySlide(j, showFracs[j]);
+      if (dots[j]) {
+        var isActive = (j === domStep);
+        dots[j].style.background = isActive ? '#ff8c42' : 'rgba(255,255,255,.2)';
+        dots[j].style.transform  = isActive ? 'scale(1.4)' : 'scale(1)';
+      }
+    }
 
     requestAnimationFrame(tick);
   }
 
   requestAnimationFrame(tick);
 })();
-
 
 </script>
 
