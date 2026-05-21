@@ -8385,13 +8385,14 @@ setInterval(function() {
     if (sl) sl.style.transition = 'none';
   });
 
-  // Extraer h3 y último p de cada slide (sin tocar el DOM ni partir palabras)
+  // Extraer label, h3 y último p de cada slide
   var slideEls = slides.map(function(sl) {
     if (!sl) return null;
-    var h3   = sl.querySelector('h3');
-    var ps   = sl.querySelectorAll('p');
-    var para = ps.length > 1 ? ps[ps.length - 1] : null;
-    return { el: sl, h3: h3, para: para };
+    var h3    = sl.querySelector('h3');
+    var ps    = sl.querySelectorAll('p');
+    var label = ps.length > 0 ? ps[0] : null;                   // "CORTEZA PREFRONTAL" etc.
+    var para  = ps.length > 1 ? ps[ps.length - 1] : null;       // párrafo descriptivo
+    return { el: sl, label: label, h3: h3, para: para };
   });
 
   // ── Aplicar máscara Oryzo — gradiente puro sin zonas sólidas ─────────
@@ -8418,10 +8419,11 @@ setInterval(function() {
     if (!d) return;
     // El contenedor sólo se oculta cuando la opacidad es prácticamente 0
     d.el.style.opacity = showFrac > 0.005 ? '1' : '0';
-    // Título: wipe izquierda→derecha
-    applyMask(d.h3,   showFrac, 'ltr');
-    // Párrafo: wipe derecha→izquierda
-    applyMask(d.para, showFrac, 'rtl');
+    // Label (nombre zona cerebro) + Título: mismo wipe ltr
+    applyMask(d.label, showFrac, 'ltr');
+    applyMask(d.h3,    showFrac, 'ltr');
+    // Párrafo: wipe rtl (dirección opuesta)
+    applyMask(d.para,  showFrac, 'rtl');
   }
 
   // ── Imagen del cerebro: crossfade discreto al cambiar step dominante ───
