@@ -8394,23 +8394,23 @@ setInterval(function() {
     return { el: sl, h3: h3, para: para };
   });
 
-  // ── Aplicar máscara de gradiente diagonal a un elemento (efecto Oryzo) ──
-  // showFrac: 0 = invisible, 1 = visible
-  // dir: 'ltr' = diagonal top-left → bottom-right (título)
-  //      'rtl' = diagonal bottom-right → top-left (párrafo, dirección opuesta)
-  // El gradiente es muy ancho (FEATHER grande) → desvanecimiento suave de esquina a esquina
+  // ── Aplicar máscara Oryzo — gradiente puro sin zonas sólidas ─────────
+  // Fórmula: la franja de degradado siempre ocupa el 100% del elemento.
+  // Sólo se desplaza su posición. Nunca hay una zona sólida → ningún borde visible.
+  //   showFrac = 1 → gradiente completamente fuera (todo visible)
+  //   showFrac = 0.5 → gradiente centrado (fade suave de esquina a esquina)
+  //   showFrac = 0 → gradiente completamente fuera (todo oculto)
+  // dir: 'ltr' = 135deg (top-left→bottom-right) | 'rtl' = 315deg (opuesto)
   function applyMask(el, showFrac, dir) {
     if (!el) return;
-    var pct = showFrac * 100;
-    var lo  = Math.max(0, pct - FEATHER * 0.5);
-    var hi  = Math.min(100, pct + FEATHER * 0.5);
-    // 135deg = diagonal top-left→bottom-right | 315deg = dirección opuesta
+    var X   = showFrac * 200 - 100; // -100 (todo oculto) → +100 (todo visible)
     var deg = (dir === 'ltr') ? '135deg' : '315deg';
-    // black = visible, transparent = oculto
-    var mask = 'linear-gradient(' + deg + ', black 0%, black ' + lo.toFixed(1) + '%, transparent ' + hi.toFixed(1) + '%, transparent 100%)';
+    // black = muestra, transparent = oculta. La franja siempre es de 100%.
+    var mask = 'linear-gradient(' + deg + ', black ' + X.toFixed(1) + '%, transparent ' + (X + 100).toFixed(1) + '%)';
     el.style.webkitMaskImage = mask;
     el.style.maskImage = mask;
   }
+
 
   // ── Aplicar el estado completo de un slide según su showFrac (0→1) ─────
   function applySlide(sIdx, showFrac) {
