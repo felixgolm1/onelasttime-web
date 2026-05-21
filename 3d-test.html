@@ -8423,6 +8423,17 @@ setInterval(function() {
     el.style.maskImage       = '';
   }
 
+  // ── STAGGER de entrada: cada elemento empieza más tarde que el anterior ──
+  // n=0 label (más rápido), n=1 h3, n=2 para (más lento)
+  // STAGGER: cuánto del rango de entryFrac se retrasa cada elemento
+  var STAGGER_IN = 0.22;
+  var LEAD_IN    = 1 - 2 * STAGGER_IN; // fracción que usa cada elemento para ir 0→1
+
+  function staggerFrac(ef, n) {
+    // Elemento n empieza cuando ef = n*STAGGER_IN y termina cuando ef = n*STAGGER_IN + LEAD_IN
+    return clamp01((ef - n * STAGGER_IN) / LEAD_IN);
+  }
+
   // ── SALIDA: limpia clip y aplica gradient mask wipe ──
   function applyExitMask(el, exitFrac, dir) {
     if (!el) return;
@@ -8443,12 +8454,13 @@ setInterval(function() {
       applyExitMask(d.h3,    exitFrac, 'ltr');
       applyExitMask(d.para,  exitFrac, 'rtl');
     } else {
-      // ENTRADA: clip-path reveal (como 4 pasos)
-      applyEntryReveal(d.label, entryFrac);
-      applyEntryReveal(d.h3,    entryFrac);
-      applyEntryReveal(d.para,  entryFrac);
+      // ENTRADA: clip-path reveal escalonado (label→h3→para)
+      applyEntryReveal(d.label, staggerFrac(entryFrac, 0)); // más rápido
+      applyEntryReveal(d.h3,    staggerFrac(entryFrac, 1)); // medio
+      applyEntryReveal(d.para,  staggerFrac(entryFrac, 2)); // más lento
     }
   }
+
 
   // ── Imagen del cerebro: crossfade discreto al cambiar step dominante ───
   var curImgStep = -1;
