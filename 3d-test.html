@@ -1921,6 +1921,10 @@ window.onerror = function(msg, url, line, col, err) {
 
     </div>
   </div><!-- end mainDeck -->
+  <script>
+    // Guardar un clon puro de la baraja antes de que ningún motor de JS la contamine
+    window._pristineMainDeckClone = document.getElementById('mainDeck').cloneNode(true);
+  </script>
 
 
   <!-- Puntero "Coge la carta" Marker (fuera del steps-overlay para que no quede atrapado en su stacking context) -->
@@ -7682,12 +7686,11 @@ window.onerror = function(msg, url, line, col, err) {
       <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center;">
       </div>
       <script>
-        // Clonar la baraja pristine antes de que GSAP la modifique
+        // Insertar el clon prístino guardado al inicio del body
         document.addEventListener('DOMContentLoaded', function() {
-          var orig = document.getElementById('mainDeck');
           var cont = document.getElementById('oryzo-deck-container');
-          if(orig && cont) {
-             var clone = orig.cloneNode(true);
+          if(window._pristineMainDeckClone && cont) {
+             var clone = window._pristineMainDeckClone;
              clone.id = 'oryzo-deck-clone';
              clone.style.display = 'block';
              clone.style.opacity = '1';
