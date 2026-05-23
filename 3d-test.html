@@ -3530,7 +3530,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Ampliado maxProg para las dos fases de salida: exits (14.62→15.6) + expansión (15.6→16.8)
-    const maxProg = 25.6;  // ampliado +50% sobre el x2 anterior (17.5→25.6)
+    const maxProg = 33.7;  // x2 sobre 25.6 (17.5→33.7)
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
@@ -8356,10 +8356,10 @@ setInterval(function() {
   var SHOW_START = 17.43;
   var SHOW_FADE  = 17.58;
   var STEP_START = 17.5;
-  var STEP_END   = 25.6;  // +50% adicional: cada step 2.025 unidades de scroll
+  var STEP_END   = 33.7;  // x2: cada step 4.05 unidades de scroll
   var NUM_STEPS  = 4;
-  var STEP_SIZE  = (STEP_END - STEP_START) / NUM_STEPS; // 2.025 por paso
-  var TRANS      = 0.30; // zona de transición +50% (era 0.20)
+  var STEP_SIZE  = (STEP_END - STEP_START) / NUM_STEPS; // 4.05 por paso
+  var TRANS      = 0.60; // zona de transición x2 (era 0.30)
   var FEATHER    = 55;   // % de suavidad del gradiente — grande = más gradual (Oryzo style)
 
   var SRCS = [
