@@ -7590,10 +7590,10 @@ window.onerror = function(msg, url, line, col, err) {
                   filter:brightness(0) opacity(0.92);">
     </div>
     <!-- CEREBRO 3D TÉRMICO: canvas renderizado con Three.js, revelado con el barrido -->
-    <canvas id="brain-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 0.4s ease;"></canvas>
+    <canvas id="brain-canvas" style="position:absolute;top:0;left:0;width:100vw;height:100vh;pointer-events:none;opacity:0;transition:opacity 0.4s ease;"></canvas>
     <!-- CEREBRO 2D: imagen base + canvas de mapa de calor encima -->
     <div id="brain-2d-wrap" style="position:absolute;pointer-events:none;opacity:0;
-      left:calc(50% - 4px);top:34.4%;transform:translate(-50%,-50%);
+      left:calc(50% - 4px);top:34.4vh;transform:translate(-50%,-50%);
       width:25vh;height:25vh;
       mix-blend-mode:screen;">
       <!-- Dos capas para crossfade suave sin flash negro -->
@@ -7617,7 +7617,7 @@ window.onerror = function(msg, url, line, col, err) {
     <!-- Tarjeta cristalizada: separada del cerebro, SIN mix-blend-mode -->
     <div id="neuro-card" style="
       position:absolute;
-      left:50%; top:42%; 
+      left:50%; top:48vh;
       transform:translateX(-50%);
       width:min(500px,88vw);
       padding:1.3rem 1.8rem 1.5rem;
