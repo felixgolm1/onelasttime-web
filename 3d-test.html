@@ -8567,7 +8567,7 @@ setInterval(function() {
         var pStart = STEP_START + cIdx * STEP_SIZE;
         var pEnd   = pStart + STEP_SIZE - TRANS_EXIT;
         var entryF = clamp01((p - pStart) / TRANS_ENTRY);
-        var exitF  = clamp01((p - pEnd) / TRANS_EXIT);
+        var exitF  = (cIdx === 3) ? 0 : clamp01((p - pEnd) / TRANS_EXIT);
         
         var lEntry = staggerFrac(entryF, 0);
         var labelFrac = 0;
