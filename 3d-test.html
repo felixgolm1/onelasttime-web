@@ -8715,7 +8715,7 @@ setInterval(function() {
       if (textGrad) {
         var chars = textGrad.querySelectorAll('.oryzo-char');
         if (chars.length > 0) {
-           var txtP = clamp01((p - 26.95) / 0.2); // ajuste fino: un poco mas pronto (entre 26.95 y 27.15)
+           var txtP = clamp01((p - 26.95) / 0.3); // un 50% mas lento (entre 26.95 y 27.25)
            // Difuminado de 8 letras para que sea muy suave
            var blurLen = 8;
            var targetIdx = txtP * (chars.length + blurLen) - blurLen;
