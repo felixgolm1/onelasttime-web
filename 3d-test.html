@@ -7663,13 +7663,13 @@ window.onerror = function(msg, url, line, col, err) {
 
     <!-- ══ NUEVA SECCIÓN: ORYZO DECK ══════════════════════════════ -->
     <div id="oryzo-section" style="
-      position:fixed; top:30vh; left:0; width:100vw; height:70vh;
+      position:fixed; top:0; left:0; width:100vw; height:100vh;
       background-color: #000;
       background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
       z-index: 10000000;
       transform: translateY(100%);
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       padding: 0 6vw;
       box-sizing: border-box;
@@ -7691,7 +7691,7 @@ window.onerror = function(msg, url, line, col, err) {
         opacity: 0;
       ">conecta</h1>
       <!-- Texto Izquierdo -->
-      <div id="oryzo-text-left" style="flex:1; margin-top: 44vh;">
+      <div id="oryzo-text-left" style="flex:1; align-self: flex-start; margin-top: 15vh;">
         <h2 id="oryzo-text-gradient" style="display:inline-block; font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3vw, 3.5rem); font-weight:800; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em; color: #fff;">
         </h2>
         <script>
@@ -7716,7 +7716,7 @@ window.onerror = function(msg, url, line, col, err) {
       </div>
       
       <!-- Contenedor Baraja -->
-      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center; margin-top: 63vh;">
+      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center;">
       </div>
       <script>
         // Insertar el clon prístino guardado al inicio del body
@@ -7737,7 +7737,7 @@ window.onerror = function(msg, url, line, col, err) {
       </script>
       
       <!-- Texto Derecho -->
-      <div id="oryzo-text-right" style="flex:1; text-align:left; margin-top: 74vh;">
+      <div id="oryzo-text-right" style="flex:1; text-align:left;">
         <p id="oryzo-text-right-gradient" style="font-family:'Inter',sans-serif; font-size:clamp(1.2rem, 2vw, 1.6rem); color:#fff; line-height:1.5; font-weight:400; max-width:400px; margin-left: 1vw;">
         </p>
         <script>
@@ -8719,20 +8719,20 @@ setInterval(function() {
     var oryzoDeck = document.getElementById('oryzo-deck-container');
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
-      // 1. Translación simultánea (termina más rápido, en 27.6, para reducir el scroll extra)
-      var tSlide = clamp01((p - 26.6) / 1.0);
+      // 1. Translación simultánea: sube hasta el top 0% de la pantalla para encajar perfectamente
+      var tSlide = clamp01((p - 26.6) / 2.0); // Scroll mas largo para cubrir el 100vh
       var slideY = (1 - ease(tSlide)) * 100; // de 100% a 0%
       oryzoSec.style.transform = 'translateY(' + slideY + '%)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
 
       // Pasamos el translate a _renderBrainLoop para evitar conflictos de requestAnimationFrame
-      window._thermalTranslateY = (slideY - 100) / 1.4225;
+      window._thermalTranslateY = 0; // Fijo, la silueta no sube ni se alarga con la caja
 
       // 2. Baraja girando
       var deckClone = document.getElementById('oryzo-deck-clone');
       if (deckClone) {
-         // En 27.6 llega al centro de la pantalla. Rotamos hacia el otro lado para que enseñe el lomo derecho igual que al principio, y se queda quieta.
-         var rotP = clamp01((p - 26.6) / 1.0); 
+         // Gira mientras sube
+         var rotP = clamp01((p - 27.0) / 1.5); 
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
            volume.style.transform = 'rotateX(-15deg) rotateY(' + (rotP * -35) + 'deg) rotateZ(0deg)';
@@ -8745,11 +8745,14 @@ setInterval(function() {
       var conectaTxt = document.getElementById('conecta-transition-text');
       
       if (conectaTxt) {
-         conectaTxt.style.opacity = clamp01((p - 26.6) / 0.3);
+         // Se enciende al empezar a asomar, y se apaga cuando la pantalla verde lo pasa
+         var opIn = clamp01((p - 26.6) / 0.3);
+         var opOut = clamp01((p - 27.8) / 0.4);
+         conectaTxt.style.opacity = opIn - opOut;
       }
       
-      var txtP = clamp01((p - 27.00) / 0.3); // texto izq: recalibrado para nivel inferior extremo (27.00)
-      var txtPR = clamp01((p - 27.25) / 0.3); // texto der: recalibrado para nivel inferior extremo (27.25)
+      var txtP = clamp01((p - 26.90) / 0.3); // texto izq
+      var txtPR = clamp01((p - 27.30) / 0.3); // texto der
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       
       if (textGrad) {
