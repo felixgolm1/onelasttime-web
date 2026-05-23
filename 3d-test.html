@@ -7677,11 +7677,27 @@ window.onerror = function(msg, url, line, col, err) {
     ">
       <!-- Texto Izquierdo -->
       <div id="oryzo-text-left" style="flex:1;">
-        <h2 id="oryzo-text-gradient" style="display:inline-block; font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3vw, 3.5rem); font-weight:800; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em; background: linear-gradient(110deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%); background-size: 300% 100%; background-position: 100% 0; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent;">
-          PAREJAS ALREDEDOR<br>
-          DEL MUNDO AMAN<br>
-          ONE LAST TIME
+        <h2 id="oryzo-text-gradient" style="display:inline-block; font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3vw, 3.5rem); font-weight:800; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em; color: #fff;">
         </h2>
+        <script>
+          (function(){
+            var el = document.getElementById('oryzo-text-gradient');
+            if(!el) return;
+            var text = "PAREJAS ALREDEDOR<br>DEL MUNDO AMAN<br>ONE LAST TIME";
+            var newHtml = '';
+            for(var i=0; i<text.length; i++){
+               if(text.substring(i, i+4) === '<br>'){
+                  newHtml += '<br>';
+                  i += 3;
+               } else if(text[i] === ' ') {
+                  newHtml += ' ';
+               } else {
+                  newHtml += '<span class="oryzo-char" style="opacity:0;">' + text[i] + '</span>';
+               }
+            }
+            el.innerHTML = newHtml;
+          })();
+        </script>
       </div>
       
       <!-- Contenedor Baraja -->
@@ -8694,12 +8710,21 @@ setInterval(function() {
          }
       }
       
-      // 3. Reveal de texto tipo Oryzo (difuminado diagonal)
+      // 3. Reveal de texto tipo Oryzo (letra a letra con difuminado suave)
       var textGrad = document.getElementById('oryzo-text-gradient');
       if (textGrad) {
-        // Hacemos que el barrido dure un poco más para que se vea claro mientras bajas
-        var txtP = clamp01((p - 27.2) / 1.0); // barre entre 27.2 y 28.2
-        textGrad.style.backgroundPosition = (100 - txtP * 100) + '% 0';
+        var chars = textGrad.querySelectorAll('.oryzo-char');
+        if (chars.length > 0) {
+           var txtP = clamp01((p - 27.2) / 1.2); // barre entre 27.2 y 28.4
+           // Difuminado de 8 letras para que sea muy suave
+           var blurLen = 8;
+           var targetIdx = txtP * (chars.length + blurLen) - blurLen;
+           
+           for (var i = 0; i < chars.length; i++) {
+              var op = 1 - (i - targetIdx) / blurLen;
+              chars[i].style.opacity = Math.max(0, Math.min(1, op));
+           }
+        }
       }
     }
 
