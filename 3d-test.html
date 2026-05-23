@@ -7723,9 +7723,23 @@ window.onerror = function(msg, url, line, col, err) {
       
       <!-- Texto Derecho -->
       <div id="oryzo-text-right" style="flex:1; text-align:left;">
-        <p style="font-family:'Inter',sans-serif; font-size:clamp(1.2rem, 2vw, 1.6rem); color:#fff; line-height:1.5; font-weight:400; max-width:400px; margin-left: 1vw;">
-          No nos creas a nosotros,<br>escúchales a ellos.
+        <p id="oryzo-text-right-gradient" style="font-family:'Inter',sans-serif; font-size:clamp(1.2rem, 2vw, 1.6rem); color:#fff; line-height:1.5; font-weight:400; max-width:400px; margin-left: 1vw;">
         </p>
+        <script>
+          var textR = "No nos creas a nosotros,<br>escúchales a ellos.";
+          var newHtmlR = "";
+          for (var i = 0; i < textR.length; i++) {
+            if (textR.substring(i, i+4) === "<br>") {
+              newHtmlR += "<br>";
+              i += 3;
+            } else if (textR[i] === ' ') {
+              newHtmlR += ' ';
+            } else {
+              newHtmlR += '<span class="oryzo-char-right" style="opacity:0;">' + textR[i] + '</span>';
+            }
+          }
+          document.getElementById('oryzo-text-right-gradient').innerHTML = newHtmlR;
+        </script>
       </div>
     </div>
     <!-- ══ FIN SECCIÓN ORYZO ══════════════════════════════ -->
@@ -8712,17 +8726,29 @@ setInterval(function() {
       
       // 3. Reveal de texto tipo Oryzo (letra a letra con difuminado suave)
       var textGrad = document.getElementById('oryzo-text-gradient');
+      var textGradR = document.getElementById('oryzo-text-right-gradient');
+      
+      var txtP = clamp01((p - 26.95) / 0.3); // un 50% mas lento (entre 26.95 y 27.25)
+      var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
+      
       if (textGrad) {
         var chars = textGrad.querySelectorAll('.oryzo-char');
         if (chars.length > 0) {
-           var txtP = clamp01((p - 26.95) / 0.3); // un 50% mas lento (entre 26.95 y 27.25)
-           // Difuminado de 8 letras para que sea muy suave
-           var blurLen = 8;
            var targetIdx = txtP * (chars.length + blurLen) - blurLen;
-           
            for (var i = 0; i < chars.length; i++) {
               var op = 1 - (i - targetIdx) / blurLen;
               chars[i].style.opacity = Math.max(0, Math.min(1, op));
+           }
+        }
+      }
+      
+      if (textGradR) {
+        var charsR = textGradR.querySelectorAll('.oryzo-char-right');
+        if (charsR.length > 0) {
+           var targetIdxR = txtP * (charsR.length + blurLen) - blurLen;
+           for (var j = 0; j < charsR.length; j++) {
+              var opR = 1 - (j - targetIdxR) / blurLen;
+              charsR[j].style.opacity = Math.max(0, Math.min(1, opR));
            }
         }
       }
