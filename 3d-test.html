@@ -7659,7 +7659,8 @@ window.onerror = function(msg, url, line, col, err) {
     <!-- ══ NUEVA SECCIÓN: ORYZO DECK ══════════════════════════════ -->
     <div id="oryzo-section" style="
       position:fixed; top:0; left:0; width:100vw; height:100vh;
-      background: radial-gradient(ellipse at 50% 100%, rgba(204,255,0,0.08) 0%, #050505 80%);
+      background-color: #000;
+      background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
       z-index: 100;
       transform: translateY(100%);
       display: flex;
@@ -7695,8 +7696,6 @@ window.onerror = function(msg, url, line, col, err) {
              clone.style.top = 'auto';
              clone.style.left = 'auto';
              clone.style.margin = '0';
-             // Restaurar scale del contenedor wrapper
-             clone.style.transform = 'scale(1.5)';
              cont.appendChild(clone);
           }
         });
