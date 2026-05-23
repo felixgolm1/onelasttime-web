@@ -7663,7 +7663,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     <!-- ══ NUEVA SECCIÓN: ORYZO DECK ══════════════════════════════ -->
     <div id="oryzo-section" style="
-      position:fixed; top:0; left:0; width:100vw; height:100vh;
+      position:fixed; top:30vh; left:0; width:100vw; height:70vh;
       background-color: #000;
       background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
       z-index: 10000000;
@@ -7675,6 +7675,21 @@ window.onerror = function(msg, url, line, col, err) {
       box-sizing: border-box;
       pointer-events: none;
     ">
+      <!-- Transition Word -->
+      <h1 id="conecta-transition-text" style="
+        position: absolute; 
+        top: 0; left: 50%; 
+        transform: translate(-50%, -50%); 
+        font-family: 'Inter', sans-serif;
+        font-size: 16vw; 
+        font-weight: 800; 
+        letter-spacing: -0.04em; 
+        color: #f2f0e6; 
+        margin: 0; 
+        white-space: nowrap; 
+        pointer-events: none;
+        opacity: 0;
+      ">conecta</h1>
       <!-- Texto Izquierdo -->
       <div id="oryzo-text-left" style="flex:1; align-self: flex-start; margin-top: 15vh;">
         <h2 id="oryzo-text-gradient" style="display:inline-block; font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3vw, 3.5rem); font-weight:800; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em; color: #fff;">
@@ -8727,9 +8742,14 @@ setInterval(function() {
       // 3. Reveal de texto tipo Oryzo (letra a letra con difuminado suave)
       var textGrad = document.getElementById('oryzo-text-gradient');
       var textGradR = document.getElementById('oryzo-text-right-gradient');
+      var conectaTxt = document.getElementById('conecta-transition-text');
       
-      var txtP = clamp01((p - 26.95) / 0.3); // texto izq: empieza al asomar (26.95)
-      var txtPR = clamp01((p - 27.05) / 0.3); // texto der: un poco antes (27.05)
+      if (conectaTxt) {
+         conectaTxt.style.opacity = clamp01((p - 26.6) / 0.3);
+      }
+      
+      var txtP = clamp01((p - 26.85) / 0.3); // texto izq: recalibrado para layout de 70vh (26.85)
+      var txtPR = clamp01((p - 27.07) / 0.3); // texto der: recalibrado para misma altura visual (27.07)
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       
       if (textGrad) {
