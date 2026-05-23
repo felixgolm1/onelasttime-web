@@ -7634,23 +7634,24 @@ window.onerror = function(msg, url, line, col, err) {
 
       <!-- Slides de texto -->
       <div style="position:relative; min-height:108px;">
+        <p id="global-brain-label" style="position:absolute; top:0; left:0; right:0; margin:0; font-family:'Inter',sans-serif; font-size:.6rem; font-weight:600; letter-spacing:.17em; text-transform:uppercase; color:#fff; text-align:center; z-index:10; opacity:0; pointer-events:none;"></p>
         <div class="nsl" id="nsl-0" style="position:absolute;inset:0;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;text-align:center;">
-          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Área Tegmental Ventral</p>
+          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Área Tegmental Ventral</p>
           <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">La chispa</h3>
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Las primeras cartas activan tu sistema de atención y recompensa con estímulos nuevos e inesperados. Empiezas a generar dopamina de alta calidad.</p>
         </div>
         <div class="nsl" id="nsl-1" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;text-align:center;">
-          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Corteza Cingulada</p>
+          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Corteza Cingulada</p>
           <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Egos fuera</h3>
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Procesas empatía profunda dando lugar a un espacio de seguridad que te permite abrirte y compartir. Sin esto, no hay conexión.</p>
         </div>
         <div class="nsl" id="nsl-2" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;text-align:center;">
-          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Hipotálamo</p>
+          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Hipotálamo</p>
           <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">Clímax</h3>
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Las cartas profundas desatan oxitocina, la hormona del apego y la confianza. «Magia» será la única palabra que usarás para describir este estado donde todo es posible.</p>
         </div>
         <div class="nsl" id="nsl-3" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;text-align:center;">
-          <p style="margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">El Núcleo Caudado</p>
+          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">El Núcleo Caudado</p>
           <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">La huella</h3>
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Graba lo vivido en la memoria a largo plazo para recordarlo durante mucho tiempo y poder seguir construyendo en base a lo compartido.</p>
         </div>
@@ -8414,20 +8415,10 @@ setInterval(function() {
     el.style.maskImage = mask;
   }
 
-  // ── ENTRADA LABEL: Efecto decodificación random (scramble) ─────────────────
+  // ── LABEL GLOBAL: Efecto decodificación random (scramble) ─────────────────
   var SCRAMBLE_GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
-  function applyScrambleReveal(el, frac) {
+  function applyGlobalScramble(el, frac, finalStr) {
     if (!el) return;
-    if (!el.dataset.orig) el.dataset.orig = el.textContent;
-    var finalStr = el.dataset.orig;
-    
-    if (frac <= 0) { 
-      el.style.opacity = '0'; 
-      el.style.transform = 'translateY(10px)';
-      return; 
-    }
-    
-    el.style.opacity = '1';
     
     if (frac >= 0.999) { 
       el.textContent = finalStr; 
@@ -8506,12 +8497,10 @@ setInterval(function() {
     d.el.style.opacity = totalFrac > 0.005 ? '1' : '0';
     if (exitFrac > 0.005) {
       // SALIDA: gradient mask wipe (Oryzo)
-      applyExitMask(d.label, exitFrac, 'ltr');
       applyExitMask(d.h3,    exitFrac, 'ltr');
       applyExitMask(d.para,  exitFrac, 'rtl');
     } else {
-      // ENTRADA: scramble para el label, clip-path para h3 y para
-      applyScrambleReveal(d.label, staggerFrac(entryFrac, 0)); // más rápido, decodifica
+      // ENTRADA: clip-path para h3 y para
       applyEntryReveal(d.h3,       staggerFrac(entryFrac, 1)); // medio
       applyEntryReveal(d.para,     staggerFrac(entryFrac, 2)); // más lento
     }
