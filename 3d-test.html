@@ -5714,7 +5714,7 @@ window.onerror = function(msg, url, line, col, err) {
       
       // ── THERMAL CURTAIN ── incondicional, ejecuta cada frame ──────
       {
-        const _tP = Math.min(1, Math.max(0, (prog - 15.9) / (17.2 - 15.9)));
+        const _tP = Math.min(1, Math.max(0, (prog - 16.27) / (17.2 - 16.27)));
         const _tc = document.getElementById('thermal-canvas');
         if (_tc) {
           if (_tP <= 0) {
@@ -5741,7 +5741,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       // ── THERMAL OVERLAY ── máscara gradiente suave en el overlay (sin línea dura)
       {
-        var _tPdiv = Math.min(1, Math.max(0, (prog - 15.9) / (16.8 - 15.9)));
+        var _tPdiv = Math.min(1, Math.max(0, (prog - 16.27) / (16.8 - 16.27)));
         window._brainScrollProg = prog;
         if (window._updateNeuralText) window._updateNeuralText(prog);
         var _tOvr  = document.getElementById('thermal-overlay');
@@ -8183,7 +8183,7 @@ function updateThermalCurtain(progress) {
 // ── Driver independiente: lee prog de sessionStorage cada 50ms ──────
 setInterval(function() {
   var p  = parseFloat(sessionStorage.getItem('dev_prog') || '0');
-  var tP = Math.min(1, Math.max(0, (p - 15.9) / (17.2 - 15.9)));
+  var tP = Math.min(1, Math.max(0, (p - 16.27) / (17.2 - 16.27)));
   var tc = document.getElementById('thermal-canvas');
   if (!tc) return;
   if (tP <= 0) { tc.style.display = 'none'; return; }
