@@ -8417,7 +8417,7 @@ setInterval(function() {
 
   // ── LABEL GLOBAL: Efecto decodificación random (scramble) ─────────────────
   var SCRAMBLE_GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
-  function applyGlobalScramble(el, frac, finalStr) {
+  function applyGlobalScramble(el, frac, finalStr, isExit) {
     if (!el) return;
     
     el.style.transform = ''; // Mantener fijo siempre
@@ -8434,10 +8434,11 @@ setInterval(function() {
     var resolvedStr = '';
     var randomStr = '';
     for(var i=0; i<N; i++) {
+      var isResolved = isExit ? (i >= N - numResolved) : (i < numResolved);
       if (finalStr[i] === ' ') {
-        if (i < numResolved) resolvedStr += ' ';
+        if (isResolved) resolvedStr += ' ';
         else randomStr += ' ';
-      } else if (i < numResolved) {
+      } else if (isResolved) {
         resolvedStr += finalStr[i];
       } else {
         // Pseudo-random index tied exactly to scroll fraction
@@ -8448,8 +8449,13 @@ setInterval(function() {
       }
     }
     
-    el.innerHTML = '<span style="color:#fff; text-shadow:none;">' + resolvedStr + '</span>' + 
-                   '<span style="color:#ccff00; text-shadow:0 0 10px rgba(204,255,0,0.6);">' + randomStr + '</span>';
+    if (isExit) {
+      el.innerHTML = '<span style="color:#ccff00; text-shadow:0 0 10px rgba(204,255,0,0.6);">' + randomStr + '</span>' + 
+                     '<span style="color:#fff; text-shadow:none;">' + resolvedStr + '</span>';
+    } else {
+      el.innerHTML = '<span style="color:#fff; text-shadow:none;">' + resolvedStr + '</span>' + 
+                     '<span style="color:#ccff00; text-shadow:0 0 10px rgba(204,255,0,0.6);">' + randomStr + '</span>';
+    }
                    
     el.style.color = '';
     el.style.textShadow = '';
@@ -8565,16 +8571,18 @@ setInterval(function() {
         
         var lEntry = staggerFrac(entryF, 0);
         var labelFrac = 0;
+        var isExitPhase = false;
         if (lEntry < 1) {
           labelFrac = lEntry;
         } else if (exitF > 0) {
+          isExitPhase = true;
           // Retrasar el scramble de salida hasta que el fade-out esté al 50%
           labelFrac = exitF <= 0.5 ? 1 : 1 - ((exitF - 0.5) * 2);
         } else {
           labelFrac = 1;
         }
         
-        applyGlobalScramble(gLabel, labelFrac, BRAIN_LABELS[cIdx]);
+        applyGlobalScramble(gLabel, labelFrac, BRAIN_LABELS[cIdx], isExitPhase);
       }
     }
 
