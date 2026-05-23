@@ -7733,6 +7733,12 @@ window.onerror = function(msg, url, line, col, err) {
              clone.style.top = 'auto';
              clone.style.left = 'auto';
              clone.style.margin = '0';
+             // Forzar orientacion correcta antes de que el loop empiece
+             var vol = clone.querySelector('.box-3d-volume');
+             if (vol) {
+               vol.style.transition = 'none';
+               vol.style.transform = 'rotateX(-15deg) rotateY(-25deg) rotateZ(0deg)';
+             }
              cont.appendChild(clone);
           }
         });
