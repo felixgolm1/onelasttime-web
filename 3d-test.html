@@ -3524,8 +3524,8 @@ window.onerror = function(msg, url, line, col, err) {
     }
 
     // ── Drivers ──────────────────────────────────────────────────
-    // Ampliado maxProg para la nueva sección "Oryzo" de la baraja al final
-    const maxProg = 32.0;  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    // Reducido maxProg para que el scroll termine justo al completar la nueva sección
+    const maxProg = 28.6;  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
@@ -7608,7 +7608,6 @@ window.onerror = function(msg, url, line, col, err) {
       background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
 
     <!-- ══ SECCIÓN NEUROCIENCIA — usa brain-2d-wrap ya existente, sin div extra ══ -->
-    <div id="neuro-section-container" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:5;">
 
 
     <!-- Tarjeta cristalizada: separada del cerebro, SIN mix-blend-mode -->
@@ -7653,7 +7652,7 @@ window.onerror = function(msg, url, line, col, err) {
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Graba lo vivido en la memoria a largo plazo para recordarlo durante mucho tiempo y poder seguir construyendo en base a lo compartido.</p>
         </div>
       </div>
-    </div> <!-- FIN neuro-section-container -->
+
     <!-- ══ FIN SECCIÓN NEUROCIENCIA ══════════════════════════════ -->
 
     <!-- ══ NUEVA SECCIÓN: ORYZO DECK ══════════════════════════════ -->
@@ -8669,16 +8668,17 @@ setInterval(function() {
     var oryzoDeck = document.getElementById('oryzo-deck-container');
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
-      // 1. Translación del telón Y del contenedor neuro (prog 26.6 a 28.6)
-      var tSlide = clamp01((p - 26.6) / 2.0);
+      // 1. Translación simultánea (termina más rápido, en 27.6, para reducir el scroll extra)
+      var tSlide = clamp01((p - 26.6) / 1.0);
       var slideY = (1 - ease(tSlide)) * 100; // de 100% a 0%
       oryzoSec.style.transform = 'translateY(' + slideY + '%)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
 
-      var neuroCont = document.getElementById('neuro-section-container');
-      if (neuroCont) {
-         // Cuando slideY baja de 100 a 0, esto va de 0 a -100
-         neuroCont.style.transform = 'translateY(' + (slideY - 100) + '%)';
+      var thermalOverlay = document.getElementById('thermal-overlay');
+      if (thermalOverlay) {
+         // En esta fase, thermalOverlay ya tiene un scale de 1.4225
+         // Compensamos el scale para que el translate visual sea exactamente de 100vh
+         thermalOverlay.style.transform = 'scale(1.4225) translateY(' + ((slideY - 100) / 1.4225) + '%)';
       }
 
       // 2. Baraja girando
