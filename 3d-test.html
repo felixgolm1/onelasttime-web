@@ -8581,7 +8581,7 @@ setInterval(function() {
       var boundary     = STEP_START + (s + 1) * STEP_SIZE;
       var prevBoundary = STEP_START + s * STEP_SIZE;
       exitFracs[s]  = (s === NUM_STEPS - 1) ? 0.0 : ease(clamp01((p - (boundary - TRANS_EXIT))  / TRANS_EXIT));
-      entryFracs[s] = (s === 0)             ? 1.0 : ease(clamp01((p - prevBoundary) / TRANS_ENTRY));
+      entryFracs[s] = ease(clamp01((p - prevBoundary) / TRANS_ENTRY));
     }
 
     var domStep = 0, domVal = -1;
