@@ -8065,7 +8065,8 @@ window.onerror = function(msg, url, line, col, err) {
     var overlay = document.getElementById('thermal-overlay');
     if (overlay) {
       overlay.style.transformOrigin = '50% 30%';
-      overlay.style.transform = 'scale(' + zoomScale + ')';
+      var ty = window._thermalTranslateY || 0;
+      overlay.style.transform = 'scale(' + zoomScale + ')' + (ty !== 0 ? ' translateY(' + ty + '%)' : '');
     }
 
     // ── Mapa de calor 2D: fade-in con swapT ──
@@ -8674,12 +8675,8 @@ setInterval(function() {
       oryzoSec.style.transform = 'translateY(' + slideY + '%)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
 
-      var thermalOverlay = document.getElementById('thermal-overlay');
-      if (thermalOverlay) {
-         // En esta fase, thermalOverlay ya tiene un scale de 1.4225
-         // Compensamos el scale para que el translate visual sea exactamente de 100vh
-         thermalOverlay.style.transform = 'scale(1.4225) translateY(' + ((slideY - 100) / 1.4225) + '%)';
-      }
+      // Pasamos el translate a _renderBrainLoop para evitar conflictos de requestAnimationFrame
+      window._thermalTranslateY = (slideY - 100) / 1.4225;
 
       // 2. Baraja girando
       var deckClone = document.getElementById('oryzo-deck-clone');
