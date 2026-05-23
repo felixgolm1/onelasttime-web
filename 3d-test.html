@@ -8736,8 +8736,8 @@ setInterval(function() {
       // 2. Baraja girando
       var deckClone = document.getElementById('oryzo-deck-clone');
       if (deckClone) {
-         // Gira mientras sube
-         var rotP = clamp01((p - 27.0) / 1.5); 
+         // Gira mientras sube (empieza a asomar en slideY=51vh, lo animamos de 65vh a 0vh)
+         var rotP = clamp01((65 - slideY) / 65); 
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
            volume.style.transform = 'rotateX(-15deg) rotateY(' + (rotP * -35) + 'deg) rotateZ(0deg)';
@@ -8750,11 +8750,13 @@ setInterval(function() {
       var conectaTxt = document.getElementById('conecta-transition-text');
       
       if (conectaTxt) {
-         conectaTxt.style.opacity = clamp01((p - 26.6) / 0.3); // Fade in suave al asomar por abajo
+         conectaTxt.style.opacity = clamp01((130 - slideY) / 30); // Fade in suave al asomar por abajo
       }
       
-      var txtP = clamp01((p - 26.90) / 0.3); // texto izq
-      var txtPR = clamp01((p - 27.30) / 0.3); // texto der
+      // left text (margin 30vh) entra en slideY=70vh
+      var txtP = clamp01((70 - slideY) / 40); 
+      // right text (margin 60vh) entra en slideY=40vh
+      var txtPR = clamp01((40 - slideY) / 40); 
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       
       if (textGrad) {
