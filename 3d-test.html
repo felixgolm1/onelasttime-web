@@ -8414,7 +8414,50 @@ setInterval(function() {
     el.style.maskImage = mask;
   }
 
-  // ── ENTRADA: clip-path reveal de abajo hacia arriba ──────────────────
+  // ── ENTRADA LABEL: Efecto decodificación random (scramble) ─────────────────
+  var SCRAMBLE_GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
+  function applyScrambleReveal(el, frac) {
+    if (!el) return;
+    if (!el.dataset.orig) el.dataset.orig = el.textContent;
+    var finalStr = el.dataset.orig;
+    
+    if (frac <= 0) { 
+      el.style.opacity = '0'; 
+      el.style.transform = 'translateY(10px)';
+      return; 
+    }
+    
+    el.style.opacity = '1';
+    
+    if (frac >= 0.999) { 
+      el.textContent = finalStr; 
+      el.style.transform = 'translateY(0px)';
+      el.style.color = '#fff';
+      el.style.textShadow = '';
+      return; 
+    }
+    
+    var N = finalStr.length;
+    var numResolved = Math.floor(frac * N);
+    var str = '';
+    for(var i=0; i<N; i++) {
+      if (finalStr[i] === ' ') {
+        str += ' ';
+      } else if (i < numResolved) {
+        str += finalStr[i];
+      } else {
+        str += SCRAMBLE_GLYPHS[Math.floor(Math.random() * SCRAMBLE_GLYPHS.length)];
+      }
+    }
+    el.textContent = str;
+    
+    var ty = (1 - frac) * 10;
+    el.style.transform = 'translateY(' + ty.toFixed(1) + 'px)';
+    el.style.color = '#ccff00'; // Lima fluor 
+    el.style.textShadow = '0 0 10px rgba(204,255,0,0.6)';
+  }
+
+  // ── ENTRADA H3/P: clip-path reveal de abajo hacia arriba ──────────────────
   // El stagger (STAGGER_IN) entre label→h3→para crea el efecto cascada.
   // Cada bloque usa un clip recto (inset) — sin inclinar nada.
   function applyEntryReveal(el, entryFrac) {
@@ -8467,10 +8510,10 @@ setInterval(function() {
       applyExitMask(d.h3,    exitFrac, 'ltr');
       applyExitMask(d.para,  exitFrac, 'rtl');
     } else {
-      // ENTRADA: clip-path reveal escalonado (label→h3→para)
-      applyEntryReveal(d.label, staggerFrac(entryFrac, 0)); // más rápido
-      applyEntryReveal(d.h3,    staggerFrac(entryFrac, 1)); // medio
-      applyEntryReveal(d.para,  staggerFrac(entryFrac, 2)); // más lento
+      // ENTRADA: scramble para el label, clip-path para h3 y para
+      applyScrambleReveal(d.label, staggerFrac(entryFrac, 0)); // más rápido, decodifica
+      applyEntryReveal(d.h3,       staggerFrac(entryFrac, 1)); // medio
+      applyEntryReveal(d.para,     staggerFrac(entryFrac, 2)); // más lento
     }
   }
 
