@@ -8740,7 +8740,7 @@ setInterval(function() {
          var rotP = clamp01((65 - slideY) / 65); 
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
-           volume.style.transform = 'rotateX(-15deg) rotateY(' + (rotP * -35) + 'deg) rotateZ(0deg)';
+           volume.style.transform = 'rotateX(-15deg) rotateY(' + (-25 + rotP * -10) + 'deg) rotateZ(0deg)';
          }
       }
       
