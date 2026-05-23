@@ -8536,6 +8536,36 @@ setInterval(function() {
     if (brain) brain.style.opacity = String(fadeT);
     if (card)  card.style.opacity  = String(fadeT);
 
+    // Global Label Logic
+    var gLabel = document.getElementById('global-brain-label');
+    if (gLabel) {
+      // Fade in smoothly right before step 0, fade out after step 3
+      var activeProg = clamp01((p - 17.3)/0.2) * clamp01((26.0 - p)/0.4);
+      gLabel.style.opacity = activeProg.toString();
+      
+      if (activeProg > 0) {
+        var BRAIN_LABELS = [
+          "ÁREA TEGMENTAL VENTRAL",
+          "CORTEZA CINGULADA",
+          "HIPOTÁLAMO",
+          "EL NÚCLEO CAUDADO"
+        ];
+        var cIdx = Math.max(0, Math.min(3, Math.floor((p - STEP_START) / STEP_SIZE)));
+        var pStart = STEP_START + cIdx * STEP_SIZE;
+        var pEnd   = pStart + STEP_SIZE - TRANS_EXIT;
+        var entryF = clamp01((p - pStart) / TRANS_ENTRY);
+        var exitF  = clamp01((p - pEnd) / TRANS_EXIT);
+        
+        var lEntry = staggerFrac(entryF, 0);
+        var labelFrac = 0;
+        if (lEntry < 1) labelFrac = lEntry;
+        else if (exitF > 0) labelFrac = 1 - exitF;
+        else labelFrac = 1;
+        
+        applyGlobalScramble(gLabel, labelFrac, BRAIN_LABELS[cIdx]);
+      }
+    }
+
     // entryFrac y exitFrac por separado — entrada clip reveal, salida mask wipe
     var entryFracs = [1, 0, 0, 0];
     var exitFracs  = [0, 0, 0, 0];
