@@ -7658,7 +7658,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     <!-- ══ NUEVA SECCIÓN: ORYZO DECK ══════════════════════════════ -->
     <div id="oryzo-section" style="
-      position:absolute; top:0; left:0; width:100%; height:100%;
+      position:fixed; top:0; left:0; width:100vw; height:100vh;
       background: radial-gradient(ellipse at 50% 100%, rgba(204,255,0,0.08) 0%, #050505 80%);
       z-index: 100;
       transform: translateY(100%);
@@ -7678,9 +7678,29 @@ window.onerror = function(msg, url, line, col, err) {
         </h2>
       </div>
       
-      <!-- Contenedor Baraja (Espaciador para la caja 3D absoluta) -->
-      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center;">
+      <!-- Contenedor Baraja -->
+      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center; opacity:0; transform:scale(0.9); transition:none;">
       </div>
+      <script>
+        // Clonar la baraja pristine antes de que GSAP la modifique
+        document.addEventListener('DOMContentLoaded', function() {
+          var orig = document.getElementById('mainDeck');
+          var cont = document.getElementById('oryzo-deck-container');
+          if(orig && cont) {
+             var clone = orig.cloneNode(true);
+             clone.id = 'oryzo-deck-clone';
+             clone.style.display = 'block';
+             clone.style.opacity = '1';
+             clone.style.position = 'relative';
+             clone.style.top = 'auto';
+             clone.style.left = 'auto';
+             clone.style.margin = '0';
+             // Restaurar scale del contenedor wrapper
+             clone.style.transform = 'scale(1.5)';
+             cont.appendChild(clone);
+          }
+        });
+      </script>
       
       <!-- Texto Derecho -->
       <div id="oryzo-text-right" style="flex:1; opacity:0; transform:translateY(20px); transition:none; text-align:right;">
@@ -8660,27 +8680,17 @@ setInterval(function() {
       var tContent = clamp01((p - 28.0) / 1.5);
       var easeContent = ease(tContent);
 
-      // Reciclamos la baraja 3D central
-      var mainDeckEl = document.getElementById('mainDeck');
-      if (mainDeckEl && p >= 26.6) {
-        mainDeckEl.style.display = 'block';
-        mainDeckEl.style.pointerEvents = 'none';
-        mainDeckEl.style.zIndex = '10010';
-        mainDeckEl.style.opacity = String(easeContent);
-        mainDeckEl.style.filter = 'none';
-        
-        // Animación suave de entrada
-        var dy = (1 - easeContent) * 30; 
-        mainDeckEl.style.transform = 'translateY(' + dy + 'px) scale(' + (1.2 + 0.1 * easeContent) + ')';
-        
-        var volume = mainDeckEl.querySelector('.box-3d-volume');
-        if (volume) {
-          volume.style.transform = 'rotateX(-15deg) rotateY(' + ((p - 26.6) * 40) + 'deg) rotateZ(0deg)';
-        }
-        
-        // Restaurar caras ocultas por el aplanamiento de GSAP anterior
-        var hiddenFaces = mainDeckEl.querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
-        hiddenFaces.forEach(f => f.style.display = '');
+      // Animación de la baraja clonada
+      var deckClone = document.getElementById('oryzo-deck-clone');
+      if (deckClone) {
+         // Asegurar que el contenedor del deck sube y se hace visible
+         oryzoDeck.style.opacity = String(easeContent);
+         oryzoDeck.style.transform = 'scale(' + (0.9 + 0.1 * easeContent) + ')';
+         
+         var volume = deckClone.querySelector('.box-3d-volume');
+         if (volume) {
+           volume.style.transform = 'rotateX(-15deg) rotateY(' + ((p - 26.6) * 40) + 'deg) rotateZ(0deg)';
+         }
       }
 
       // Textos entran con un poco más de retraso (stagger simulado)
