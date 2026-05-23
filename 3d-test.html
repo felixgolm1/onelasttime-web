@@ -7691,7 +7691,7 @@ window.onerror = function(msg, url, line, col, err) {
         opacity: 0;
       ">conecta</h1>
       <!-- Texto Izquierdo -->
-      <div id="oryzo-text-left" style="flex:1; align-self: flex-start; margin-top: 24vh;">
+      <div id="oryzo-text-left" style="flex:1; align-self: flex-start; margin-top: 35vh;">
         <h2 id="oryzo-text-gradient" style="display:inline-block; font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3vw, 3.5rem); font-weight:800; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em; color: #fff;">
         </h2>
         <script>
@@ -7716,7 +7716,7 @@ window.onerror = function(msg, url, line, col, err) {
       </div>
       
       <!-- Contenedor Baraja -->
-      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center; margin-top: 8vh;">
+      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center; margin-top: 19vh;">
       </div>
       <script>
         // Insertar el clon prístino guardado al inicio del body
@@ -7737,7 +7737,7 @@ window.onerror = function(msg, url, line, col, err) {
       </script>
       
       <!-- Texto Derecho -->
-      <div id="oryzo-text-right" style="flex:1; text-align:left; margin-top: 8vh;">
+      <div id="oryzo-text-right" style="flex:1; text-align:left; margin-top: 19vh;">
         <p id="oryzo-text-right-gradient" style="font-family:'Inter',sans-serif; font-size:clamp(1.2rem, 2vw, 1.6rem); color:#fff; line-height:1.5; font-weight:400; max-width:400px; margin-left: 1vw;">
         </p>
         <script>
@@ -8748,8 +8748,8 @@ setInterval(function() {
          conectaTxt.style.opacity = clamp01((p - 26.6) / 0.3);
       }
       
-      var txtP = clamp01((p - 26.85) / 0.3); // texto izq: recalibrado para layout de 70vh (26.85)
-      var txtPR = clamp01((p - 27.07) / 0.3); // texto der: recalibrado para misma altura visual (27.07)
+      var txtP = clamp01((p - 26.90) / 0.3); // texto izq: recalibrado para layout de 70vh bajado (26.90)
+      var txtPR = clamp01((p - 27.20) / 0.3); // texto der: recalibrado para misma altura visual (27.20)
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       
       if (textGrad) {
