@@ -3474,8 +3474,6 @@ window.onerror = function(msg, url, line, col, err) {
     
     // Al setearlo específicamente aquí, evitamos que un scroll salvaje hacia arriba deje rastros ("alizado")
     scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -5, x: '-92vw' }, tAiStart);
-        // Ampliado maxProg para la nueva sección "Oryzo" de la baraja al final
-    const maxProg = 32.0;
 
     // ─ Edge glow: opacity calculada directamente en updateGlobalScenes ──────
     //   (sin tweens GSAP — la persiana la mueve el scroll puro)
@@ -3526,8 +3524,8 @@ window.onerror = function(msg, url, line, col, err) {
     }
 
     // ── Drivers ──────────────────────────────────────────────────
-    // Ampliado maxProg para las dos fases de salida: exits (14.62→15.6) + expansión (15.6→16.8)
-    const maxProg = 26.6;  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    // Ampliado maxProg para la nueva sección "Oryzo" de la baraja al final
+    const maxProg = 32.0;  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
@@ -7673,25 +7671,21 @@ window.onerror = function(msg, url, line, col, err) {
     ">
       <!-- Texto Izquierdo -->
       <div id="oryzo-text-left" style="flex:1; opacity:0; transform:translateY(20px); transition:none;">
-        <h2 style="font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3.5vw, 4rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em;">
-          PEOPLE ALL AROUND<br>
-          <span style="color:rgba(255,255,255,0.4);">THE WORLD LOVE</span><br>
+        <h2 style="font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3vw, 3.5rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em;">
+          PAREJAS ALREDEDOR<br>
+          <span style="color:rgba(255,255,255,0.4);">DEL MUNDO AMAN</span><br>
           <span style="color:rgba(255,255,255,0.15);">ONE LAST TIME</span>
         </h2>
       </div>
       
-      <!-- Contenedor Baraja -->
-      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center; opacity:0; transform:scale(0.9); transition:none;">
-        <!-- Placeholder circular para la baraja (como el corcho de Oryzo) -->
-        <div style="width:35vh; height:35vh; border-radius:50%; background:linear-gradient(135deg, #111, #1a1a1a); box-shadow:inset 0 0 20px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; border: 1px solid rgba(204,255,0,0.15);">
-          <span style="color:#ccff00; font-family:'Inter',sans-serif; font-size:0.8rem; letter-spacing:0.1em; opacity:0.6;">[IMAGEN BARAJA]</span>
-        </div>
+      <!-- Contenedor Baraja (Espaciador para la caja 3D absoluta) -->
+      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center;">
       </div>
       
       <!-- Texto Derecho -->
       <div id="oryzo-text-right" style="flex:1; opacity:0; transform:translateY(20px); transition:none; text-align:right;">
         <p style="font-family:'Inter',sans-serif; font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:#fff; line-height:1.5; font-weight:400; max-width:300px; margin-left:auto;">
-          Do not take our word for it,<br>see what people say after<br>living with <span style="color:rgba(255,255,255,0.5);">One Last Time.</span>
+          No nos creas a nosotros,<br>escúchales a ellos.
         </p>
       </div>
     </div>
@@ -8666,9 +8660,28 @@ setInterval(function() {
       var tContent = clamp01((p - 28.0) / 1.5);
       var easeContent = ease(tContent);
 
-      // Deck entra un poco antes
-      oryzoDeck.style.opacity = String(easeContent);
-      oryzoDeck.style.transform = 'scale(' + (0.9 + 0.1 * easeContent) + ')';
+      // Reciclamos la baraja 3D central
+      var mainDeckEl = document.getElementById('mainDeck');
+      if (mainDeckEl && p >= 26.6) {
+        mainDeckEl.style.display = 'block';
+        mainDeckEl.style.pointerEvents = 'none';
+        mainDeckEl.style.zIndex = '10010';
+        mainDeckEl.style.opacity = String(easeContent);
+        mainDeckEl.style.filter = 'none';
+        
+        // Animación suave de entrada
+        var dy = (1 - easeContent) * 30; 
+        mainDeckEl.style.transform = 'translateY(' + dy + 'px) scale(' + (1.2 + 0.1 * easeContent) + ')';
+        
+        var volume = mainDeckEl.querySelector('.box-3d-volume');
+        if (volume) {
+          volume.style.transform = 'rotateX(-15deg) rotateY(' + ((p - 26.6) * 40) + 'deg) rotateZ(0deg)';
+        }
+        
+        // Restaurar caras ocultas por el aplanamiento de GSAP anterior
+        var hiddenFaces = mainDeckEl.querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
+        hiddenFaces.forEach(f => f.style.display = '');
+      }
 
       // Textos entran con un poco más de retraso (stagger simulado)
       var tTxtL = clamp01((p - 28.3) / 1.2);
