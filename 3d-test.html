@@ -8565,9 +8565,14 @@ setInterval(function() {
         
         var lEntry = staggerFrac(entryF, 0);
         var labelFrac = 0;
-        if (lEntry < 1) labelFrac = lEntry;
-        else if (exitF > 0) labelFrac = 1 - exitF;
-        else labelFrac = 1;
+        if (lEntry < 1) {
+          labelFrac = lEntry;
+        } else if (exitF > 0) {
+          // Retrasar el scramble de salida hasta que el fade-out esté al 50%
+          labelFrac = exitF <= 0.5 ? 1 : 1 - ((exitF - 0.5) * 2);
+        } else {
+          labelFrac = 1;
+        }
         
         applyGlobalScramble(gLabel, labelFrac, BRAIN_LABELS[cIdx]);
       }
