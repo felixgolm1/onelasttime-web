@@ -8437,7 +8437,11 @@ setInterval(function() {
       } else if (i < numResolved) {
         str += finalStr[i];
       } else {
-        str += SCRAMBLE_GLYPHS[Math.floor(Math.random() * SCRAMBLE_GLYPHS.length)];
+        // Pseudo-random index tied exactly to scroll fraction
+        var speed = 300 + i * 23;
+        var offset = i * 73;
+        var charIdx = Math.floor(frac * speed + offset) % SCRAMBLE_GLYPHS.length;
+        str += SCRAMBLE_GLYPHS[charIdx];
       }
     }
     el.textContent = str;
