@@ -3474,11 +3474,8 @@ window.onerror = function(msg, url, line, col, err) {
     
     // Al setearlo específicamente aquí, evitamos que un scroll salvaje hacia arriba deje rastros ("alizado")
     scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -5, x: '-92vw' }, tAiStart);
-    scrollTl.to('#made-by-ai', {
-      x: '0vw', 
-      duration: (tSwap - tAiStart), 
-      ease: 'power2.out' 
-    }, tAiStart);
+        // Ampliado maxProg para la nueva sección "Oryzo" de la baraja al final
+    const maxProg = 32.0;
 
     // ─ Edge glow: opacity calculada directamente en updateGlobalScenes ──────
     //   (sin tweens GSAP — la persiana la mueve el scroll puro)
@@ -7661,6 +7658,45 @@ window.onerror = function(msg, url, line, col, err) {
     </div>
     <!-- ══ FIN SECCIÓN NEUROCIENCIA ══════════════════════════════ -->
 
+    <!-- ══ NUEVA SECCIÓN: ORYZO DECK ══════════════════════════════ -->
+    <div id="oryzo-section" style="
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      background: radial-gradient(ellipse at 50% 100%, rgba(204,255,0,0.08) 0%, #050505 80%);
+      z-index: 100;
+      transform: translateY(100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      box-sizing: border-box;
+      pointer-events: none;
+    ">
+      <!-- Texto Izquierdo -->
+      <div id="oryzo-text-left" style="flex:1; opacity:0; transform:translateY(20px); transition:none;">
+        <h2 style="font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3.5vw, 4rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em;">
+          PEOPLE ALL AROUND<br>
+          <span style="color:rgba(255,255,255,0.4);">THE WORLD LOVE</span><br>
+          <span style="color:rgba(255,255,255,0.15);">ONE LAST TIME</span>
+        </h2>
+      </div>
+      
+      <!-- Contenedor Baraja -->
+      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center; opacity:0; transform:scale(0.9); transition:none;">
+        <!-- Placeholder circular para la baraja (como el corcho de Oryzo) -->
+        <div style="width:35vh; height:35vh; border-radius:50%; background:linear-gradient(135deg, #111, #1a1a1a); box-shadow:inset 0 0 20px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; border: 1px solid rgba(204,255,0,0.15);">
+          <span style="color:#ccff00; font-family:'Inter',sans-serif; font-size:0.8rem; letter-spacing:0.1em; opacity:0.6;">[IMAGEN BARAJA]</span>
+        </div>
+      </div>
+      
+      <!-- Texto Derecho -->
+      <div id="oryzo-text-right" style="flex:1; opacity:0; transform:translateY(20px); transition:none; text-align:right;">
+        <p style="font-family:'Inter',sans-serif; font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:#fff; line-height:1.5; font-weight:400; max-width:300px; margin-left:auto;">
+          Do not take our word for it,<br>see what people say after<br>living with <span style="color:rgba(255,255,255,0.5);">One Last Time.</span>
+        </p>
+      </div>
+    </div>
+    <!-- ══ FIN SECCIÓN ORYZO ══════════════════════════════ -->
+
   </div>
 
 
@@ -8611,6 +8647,38 @@ setInterval(function() {
         dots[j].style.background = isActive ? '#ff8c42' : 'rgba(255,255,255,.2)';
         dots[j].style.transform  = isActive ? 'scale(1.4)' : 'scale(1)';
       }
+    }
+
+    // ── LÓGICA DE LA SECCIÓN ORYZO ──
+    var oryzoSec = document.getElementById('oryzo-section');
+    var oryzoTxtL = document.getElementById('oryzo-text-left');
+    var oryzoTxtR = document.getElementById('oryzo-text-right');
+    var oryzoDeck = document.getElementById('oryzo-deck-container');
+
+    if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
+      // 1. Translación del telón (prog 26.6 a 28.6)
+      var tSlide = clamp01((p - 26.6) / 2.0);
+      var slideY = (1 - ease(tSlide)) * 100; // de 100% a 0%
+      oryzoSec.style.transform = 'translateY(' + slideY + '%)';
+      oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
+
+      // 2. Animación de textos e imagen (prog 28.0 a 29.5)
+      var tContent = clamp01((p - 28.0) / 1.5);
+      var easeContent = ease(tContent);
+
+      // Deck entra un poco antes
+      oryzoDeck.style.opacity = String(easeContent);
+      oryzoDeck.style.transform = 'scale(' + (0.9 + 0.1 * easeContent) + ')';
+
+      // Textos entran con un poco más de retraso (stagger simulado)
+      var tTxtL = clamp01((p - 28.3) / 1.2);
+      var tTxtR = clamp01((p - 28.6) / 1.2);
+      
+      oryzoTxtL.style.opacity = String(ease(tTxtL));
+      oryzoTxtL.style.transform = 'translateY(' + ((1 - ease(tTxtL)) * 30) + 'px)';
+
+      oryzoTxtR.style.opacity = String(ease(tTxtR));
+      oryzoTxtR.style.transform = 'translateY(' + ((1 - ease(tTxtR)) * 30) + 'px)';
     }
 
     requestAnimationFrame(tick);
