@@ -7608,6 +7608,8 @@ window.onerror = function(msg, url, line, col, err) {
       background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
 
     <!-- ══ SECCIÓN NEUROCIENCIA — usa brain-2d-wrap ya existente, sin div extra ══ -->
+    <div id="neuro-section-container" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:5;">
+
 
     <!-- Tarjeta cristalizada: separada del cerebro, SIN mix-blend-mode -->
     <div id="neuro-card" style="
@@ -7651,9 +7653,7 @@ window.onerror = function(msg, url, line, col, err) {
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Graba lo vivido en la memoria a largo plazo para recordarlo durante mucho tiempo y poder seguir construyendo en base a lo compartido.</p>
         </div>
       </div>
-
-
-    </div>
+    </div> <!-- FIN neuro-section-container -->
     <!-- ══ FIN SECCIÓN NEUROCIENCIA ══════════════════════════════ -->
 
     <!-- ══ NUEVA SECCIÓN: ORYZO DECK ══════════════════════════════ -->
@@ -7671,7 +7671,7 @@ window.onerror = function(msg, url, line, col, err) {
       pointer-events: none;
     ">
       <!-- Texto Izquierdo -->
-      <div id="oryzo-text-left" style="flex:1; opacity:0; transform:translateY(20px); transition:none;">
+      <div id="oryzo-text-left" style="flex:1;">
         <h2 style="font-family:'Inter',sans-serif; font-size:clamp(1.5rem, 3vw, 3.5rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:1rem; letter-spacing:-0.03em;">
           PAREJAS ALREDEDOR<br>
           <span style="color:rgba(255,255,255,0.4);">DEL MUNDO AMAN</span><br>
@@ -7680,7 +7680,7 @@ window.onerror = function(msg, url, line, col, err) {
       </div>
       
       <!-- Contenedor Baraja -->
-      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center; opacity:0; transform:scale(0.9); transition:none;">
+      <div id="oryzo-deck-container" style="flex:1; display:flex; justify-content:center;">
       </div>
       <script>
         // Clonar la baraja pristine antes de que GSAP la modifique
@@ -7702,7 +7702,7 @@ window.onerror = function(msg, url, line, col, err) {
       </script>
       
       <!-- Texto Derecho -->
-      <div id="oryzo-text-right" style="flex:1; opacity:0; transform:translateY(20px); transition:none; text-align:right;">
+      <div id="oryzo-text-right" style="flex:1; text-align:right;">
         <p style="font-family:'Inter',sans-serif; font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:#fff; line-height:1.5; font-weight:400; max-width:300px; margin-left:auto;">
           No nos creas a nosotros,<br>escúchales a ellos.
         </p>
@@ -8669,38 +8669,26 @@ setInterval(function() {
     var oryzoDeck = document.getElementById('oryzo-deck-container');
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
-      // 1. Translación del telón (prog 26.6 a 28.6)
+      // 1. Translación del telón Y del contenedor neuro (prog 26.6 a 28.6)
       var tSlide = clamp01((p - 26.6) / 2.0);
       var slideY = (1 - ease(tSlide)) * 100; // de 100% a 0%
       oryzoSec.style.transform = 'translateY(' + slideY + '%)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
 
-      // 2. Animación de textos e imagen (prog 28.0 a 29.5)
-      var tContent = clamp01((p - 28.0) / 1.5);
-      var easeContent = ease(tContent);
+      var neuroCont = document.getElementById('neuro-section-container');
+      if (neuroCont) {
+         // Cuando slideY baja de 100 a 0, esto va de 0 a -100
+         neuroCont.style.transform = 'translateY(' + (slideY - 100) + '%)';
+      }
 
-      // Animación de la baraja clonada
+      // 2. Baraja girando
       var deckClone = document.getElementById('oryzo-deck-clone');
       if (deckClone) {
-         // Asegurar que el contenedor del deck sube y se hace visible
-         oryzoDeck.style.opacity = String(easeContent);
-         oryzoDeck.style.transform = 'scale(' + (0.9 + 0.1 * easeContent) + ')';
-         
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
            volume.style.transform = 'rotateX(-15deg) rotateY(' + ((p - 26.6) * 40) + 'deg) rotateZ(0deg)';
          }
       }
-
-      // Textos entran con un poco más de retraso (stagger simulado)
-      var tTxtL = clamp01((p - 28.3) / 1.2);
-      var tTxtR = clamp01((p - 28.6) / 1.2);
-      
-      oryzoTxtL.style.opacity = String(ease(tTxtL));
-      oryzoTxtL.style.transform = 'translateY(' + ((1 - ease(tTxtL)) * 30) + 'px)';
-
-      oryzoTxtR.style.opacity = String(ease(tTxtR));
-      oryzoTxtR.style.transform = 'translateY(' + ((1 - ease(tTxtR)) * 30) + 'px)';
     }
 
     requestAnimationFrame(tick);
