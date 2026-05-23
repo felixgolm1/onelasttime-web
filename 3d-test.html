@@ -7651,7 +7651,7 @@ window.onerror = function(msg, url, line, col, err) {
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Las cartas profundas desatan oxitocina, la hormona del apego y la confianza. «Magia» será la única palabra que usarás para describir este estado donde todo es posible.</p>
         </div>
         <div class="nsl" id="nsl-3" style="position:absolute;inset:0;opacity:0;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;text-align:center;">
-          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">El Núcleo Caudado</p>
+          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Núcleo Caudado</p>
           <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">La huella</h3>
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Graba lo vivido en la memoria a largo plazo para recordarlo durante mucho tiempo y poder seguir construyendo en base a lo compartido.</p>
         </div>
@@ -8552,8 +8552,8 @@ setInterval(function() {
     // Global Label Logic
     var gLabel = document.getElementById('global-brain-label');
     if (gLabel) {
-      // Fade in smoothly right before step 0, fade out after step 3
-      var activeProg = clamp01((p - 17.3)/0.2) * clamp01((26.0 - p)/0.4);
+      // Fade in smoothly right before step 0
+      var activeProg = clamp01((p - 17.3)/0.2);
       gLabel.style.opacity = activeProg.toString();
       
       if (activeProg > 0) {
@@ -8561,7 +8561,7 @@ setInterval(function() {
           "ÁREA TEGMENTAL VENTRAL",
           "CORTEZA CINGULADA",
           "HIPOTÁLAMO",
-          "EL NÚCLEO CAUDADO"
+          "NÚCLEO CAUDADO"
         ];
         var cIdx = Math.max(0, Math.min(3, Math.floor((p - STEP_START) / STEP_SIZE)));
         var pStart = STEP_START + cIdx * STEP_SIZE;
