@@ -7583,7 +7583,7 @@ window.onerror = function(msg, url, line, col, err) {
       margin:0;
       pointer-events:none;
       width:100%;
-    ">NO ES MAGIA, ES OXITOCINA</h2>
+    ">NO ES MAGIA, ES QUÍMICA</h2>
 
     <div id="thermal-model-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
       <img id="thermal-silhouette" src="assets/img/modelo-sin-fondo.png"
@@ -8205,7 +8205,7 @@ setInterval(function() {
 (function() {
   var h2 = document.getElementById('oxitocina-title');
   if (!h2) return;
-  var TEXT = 'NO ES MAGIA\nES OXITOCINA';
+  var TEXT = 'NO ES MAGIA\nES QUÍMICA';
   var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
   var PROG_START = 15.35, PROG_END = 16.20;
   var spans = [];
@@ -8255,8 +8255,8 @@ setInterval(function() {
     sparks=alive;
     sparkRAF=sparks.length?requestAnimationFrame(renderSparks):null;
   }
-  // N1 = chars line 1 'NO ES MAGIA'=11, N2 = chars line 2 'ES OXITOCINA'=12
-  var N1=11, N2=12, L2END=spans.length-1; // L2END=22
+  // N1 = chars line 1 'NO ES MAGIA'=11, N2 = chars line 2 'ES QUIMICA'=10
+  var N1=11, N2=10, L2END=spans.length-1;
   var lastActive1=0, lastActive2=0;
   function rnd(g){return g[Math.floor(Math.random()*g.length)];}
   function settleChar(sp, prevSp) {
