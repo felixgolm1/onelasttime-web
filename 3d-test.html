@@ -8728,7 +8728,8 @@ setInterval(function() {
       var textGrad = document.getElementById('oryzo-text-gradient');
       var textGradR = document.getElementById('oryzo-text-right-gradient');
       
-      var txtP = clamp01((p - 26.95) / 0.3); // un 50% mas lento (entre 26.95 y 27.25)
+      var txtP = clamp01((p - 26.95) / 0.3); // texto izq: empieza al asomar (26.95)
+      var txtPR = clamp01((p - 27.33) / 0.3); // texto der: al estar mas abajo, asoma mas tarde (27.33)
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       
       if (textGrad) {
@@ -8745,7 +8746,7 @@ setInterval(function() {
       if (textGradR) {
         var charsR = textGradR.querySelectorAll('.oryzo-char-right');
         if (charsR.length > 0) {
-           var targetIdxR = txtP * (charsR.length + blurLen) - blurLen;
+           var targetIdxR = txtPR * (charsR.length + blurLen) - blurLen;
            for (var j = 0; j < charsR.length; j++) {
               var opR = 1 - (j - targetIdxR) / blurLen;
               charsR[j].style.opacity = Math.max(0, Math.min(1, opR));
