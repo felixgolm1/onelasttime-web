@@ -8739,15 +8739,13 @@ setInterval(function() {
       // Sincronizamos el fondo morado para que suba EXACTAMENTE igual que la sección verde
       window._scrollUpVh = 130 - slideY; // Va de 0 a 130
 
-      // 2. Baraja - orientacion fija identica a la seccion anterior (rotateY -25deg)
+      // 2. Baraja - orientacion identica a la primera seccion
       var deckClone = document.getElementById('oryzo-deck-clone');
       if (deckClone) {
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
-           // Matar la transicion en cada frame para garantizar que no la sobreescriba el CSS
-           volume.style.cssText = volume.style.cssText; // fuerza reflow
            volume.style.setProperty('transition', 'none', 'important');
-           volume.style.setProperty('transform', 'rotateX(-15deg) rotateY(-25deg) rotateZ(0deg)', 'important');
+           volume.style.setProperty('transform', 'rotateX(-15deg) rotateY(-40deg) rotateZ(0deg)', 'important');
          }
       }
       
