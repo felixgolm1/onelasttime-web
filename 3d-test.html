@@ -8686,9 +8686,11 @@ setInterval(function() {
       // 2. Baraja girando
       var deckClone = document.getElementById('oryzo-deck-clone');
       if (deckClone) {
+         // En 27.6 llega al centro de la pantalla. Rotamos hacia el otro lado para que enseñe el lomo derecho igual que al principio, y se queda quieta.
+         var rotP = clamp01((p - 26.6) / 1.0); 
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
-           volume.style.transform = 'rotateX(-15deg) rotateY(' + ((p - 26.6) * 40) + 'deg) rotateZ(0deg)';
+           volume.style.transform = 'rotateX(-15deg) rotateY(' + (rotP * -35) + 'deg) rotateZ(0deg)';
          }
       }
     }
