@@ -7547,7 +7547,7 @@ window.onerror = function(msg, url, line, col, err) {
   <!-- MAGAZINE BREAKOUT OVERLAY — body-level para evitar problemas con transforms del carrusel -->
   <div id="mag-breakout-overlay" style="display:none;position:fixed;z-index:99998;background:transparent;pointer-events:none;border:none;will-change:top,left,width,height;"></div>
   <!-- THERMAL OVERLAY — efecto cámara termográfica -->
-  <div id="thermal-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:115vh;z-index:9999999;pointer-events:none;overflow:hidden;">
+  <div id="thermal-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:130vh;z-index:9999999;pointer-events:none;overflow:hidden;">
     <!-- Fondo térmico: indigo/violeta profundo con irregularidades tipo pared Oryzo -->
     <div id="thermal-bg" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;
       background:
@@ -8287,10 +8287,10 @@ setInterval(function() {
   if (!tc) return;
   if (tP <= 0) { tc.style.display = 'none'; return; }
   var vw = window.innerWidth, vh = window.innerHeight;
-  var extendedVh = vh * 1.15; // 15vh extra para bajar el corte
+  var extendedVh = vh * 1.30; // 30vh extra para bajar el corte
   tc.width = vw; tc.height = extendedVh;
   tc.style.position = 'fixed'; tc.style.top = '0'; tc.style.left = '0';
-  tc.style.width = '100%'; tc.style.height = '115vh';
+  tc.style.width = '100%'; tc.style.height = '130vh';
   tc.style.zIndex = '9999999'; tc.style.display = 'block'; tc.style.pointerEvents = 'none';
   tc.style.transform = 'translateY(-' + (window._scrollUpVh || 0) + 'vh)';
   var ctx = tc.getContext('2d');
@@ -8724,12 +8724,12 @@ setInterval(function() {
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
       // 1. Translación fluida pegada al fondo morado extendido
       var tSlide = clamp01((p - 26.6) / 2.0); // Scroll largo
-      var slideY = (1 - ease(tSlide)) * 115; // de 115vh a 0vh (inicia 15vh mas abajo)
+      var slideY = (1 - ease(tSlide)) * 130; // de 130vh a 0vh (inicia 30vh mas abajo)
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
 
       // Sincronizamos el fondo morado para que suba EXACTAMENTE igual que la sección verde
-      window._scrollUpVh = 115 - slideY; // Va de 0 a 115
+      window._scrollUpVh = 130 - slideY; // Va de 0 a 130
 
       // 2. Baraja girando
       var deckClone = document.getElementById('oryzo-deck-clone');
