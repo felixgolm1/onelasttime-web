@@ -8420,9 +8420,10 @@ setInterval(function() {
   function applyGlobalScramble(el, frac, finalStr) {
     if (!el) return;
     
+    el.style.transform = ''; // Mantener fijo siempre
+    
     if (frac >= 0.999) { 
       el.textContent = finalStr; 
-      el.style.transform = 'translateY(0px)';
       el.style.color = '#fff';
       el.style.textShadow = '';
       return; 
@@ -8430,26 +8431,28 @@ setInterval(function() {
     
     var N = finalStr.length;
     var numResolved = Math.floor(frac * N);
-    var str = '';
+    var resolvedStr = '';
+    var randomStr = '';
     for(var i=0; i<N; i++) {
       if (finalStr[i] === ' ') {
-        str += ' ';
+        if (i < numResolved) resolvedStr += ' ';
+        else randomStr += ' ';
       } else if (i < numResolved) {
-        str += finalStr[i];
+        resolvedStr += finalStr[i];
       } else {
         // Pseudo-random index tied exactly to scroll fraction
         var speed = 300 + i * 23;
         var offset = i * 73;
         var charIdx = Math.floor(frac * speed + offset) % SCRAMBLE_GLYPHS.length;
-        str += SCRAMBLE_GLYPHS[charIdx];
+        randomStr += SCRAMBLE_GLYPHS[charIdx];
       }
     }
-    el.textContent = str;
     
-    var ty = (1 - frac) * 10;
-    el.style.transform = 'translateY(' + ty.toFixed(1) + 'px)';
-    el.style.color = '#ccff00'; // Lima fluor 
-    el.style.textShadow = '0 0 10px rgba(204,255,0,0.6)';
+    el.innerHTML = '<span style="color:#fff; text-shadow:none;">' + resolvedStr + '</span>' + 
+                   '<span style="color:#ccff00; text-shadow:0 0 10px rgba(204,255,0,0.6);">' + randomStr + '</span>';
+                   
+    el.style.color = '';
+    el.style.textShadow = '';
   }
 
   // ── ENTRADA H3/P: clip-path reveal de abajo hacia arriba ──────────────────
