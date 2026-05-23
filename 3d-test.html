@@ -8715,7 +8715,7 @@ setInterval(function() {
       if (textGrad) {
         var chars = textGrad.querySelectorAll('.oryzo-char');
         if (chars.length > 0) {
-           var txtP = clamp01((p - 26.9) / 0.2); // empieza antes, justo al cruzar la linea blanca (entre 26.9 y 27.1)
+           var txtP = clamp01((p - 27.0) / 0.2); // punto intermedio perfecto (entre 27.0 y 27.2)
            // Difuminado de 8 letras para que sea muy suave
            var blurLen = 8;
            var targetIdx = txtP * (chars.length + blurLen) - blurLen;
