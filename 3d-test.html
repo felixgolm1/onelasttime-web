@@ -8715,7 +8715,7 @@ setInterval(function() {
       if (textGrad) {
         var chars = textGrad.querySelectorAll('.oryzo-char');
         if (chars.length > 0) {
-           var txtP = clamp01((p - 27.1) / 0.4); // barre todavia mas rapido (entre 27.1 y 27.5)
+           var txtP = clamp01((p - 27.1) / 0.2); // barre a velocidad extrema (entre 27.1 y 27.3)
            // Difuminado de 8 letras para que sea muy suave
            var blurLen = 8;
            var targetIdx = txtP * (chars.length + blurLen) - blurLen;
