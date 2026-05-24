@@ -8911,20 +8911,22 @@ setInterval(function() {
              return outMin + t * (outMax - outMin);
          }
          
-         let eSlide = ease(tSlide); // Usamos ease para que sea suave
+         // tOpen: animacion de apertura SEPARADA de la subida — arranca cuando la caja ya es visible
+         var tOpen = clamp01((p - 28.2) / 2.0); // 28.2 a 30.2
+         let eOpen = ease(tOpen);
 
          // La tapa principal (90 a 180)
          var topFlap = deckClone.querySelector('.box-flap');
          if (topFlap) {
             topFlap.style.transition = 'none';
             topFlap.style.transformOrigin = 'top center';
-            let flapRot = mapFlap(eSlide, 0.0, 0.5, 90, 180);
+            let flapRot = mapFlap(eOpen, 0.0, 0.5, 90, 180);
             topFlap.style.transform = 'translateZ(0px) rotateX(' + flapRot + 'deg)';
          }
          // Solapas de polvo (-90 a -180)
          var dustLeft = deckClone.querySelector('.dust-flap.left');
          var dustRight = deckClone.querySelector('.dust-flap.right');
-         let dustRot = mapFlap(eSlide, 0.4, 0.8, -90, -180);
+         let dustRot = mapFlap(eOpen, 0.4, 0.8, -90, -180);
          if (dustLeft) {
             dustLeft.style.transition = 'none';
             dustLeft.style.transform = 'rotateX(' + dustRot + 'deg)';
@@ -8937,21 +8939,22 @@ setInterval(function() {
          var tuckLip = deckClone.querySelector('.tuck-lip');
          if (tuckLip) {
             tuckLip.style.transition = 'none';
-            let lipRot = mapFlap(eSlide, 0.05, 0.5, -92, -5);
+            let lipRot = mapFlap(eOpen, 0.05, 0.5, -92, -5);
             tuckLip.style.transform = 'rotateX(' + lipRot + 'deg)';
          }
 
          // --- INYECCION DE CARTAS VOLANDO ---
-         let c1_peek_end = mapRange(p, 27.0, 27.5, 0, 1);
-         let c2_peek_end = mapRange(p, 27.3, 27.8, 0, 1);
-         let c3_peek_end = mapRange(p, 27.6, 28.1, 0, 1);
-         let c4_peek_end = mapRange(p, 27.9, 28.4, 0, 1);
+         // Cartas: empiezan a salir en 28.8 (cuando la caja ya esta centrada y abierta)
+         let c1_peek_end = mapRange(p, 28.5, 29.0, 0, 1);
+         let c2_peek_end = mapRange(p, 28.8, 29.3, 0, 1);
+         let c3_peek_end = mapRange(p, 29.1, 29.6, 0, 1);
+         let c4_peek_end = mapRange(p, 29.4, 29.9, 0, 1);
          
          let endCards = [
-             { el: deckClone.querySelector('.card-n1'), peek: c1_peek_end, progRange: [27.5, 28.5] },
-             { el: deckClone.querySelector('.card-n2'), peek: c2_peek_end, progRange: [27.8, 28.8] },
-             { el: deckClone.querySelector('.card-n3'), peek: c3_peek_end, progRange: [28.1, 29.1] },
-             { el: deckClone.querySelector('.card-n4'), peek: c4_peek_end, progRange: [28.4, 29.4] }
+             { el: deckClone.querySelector('.card-n1'), peek: c1_peek_end, progRange: [29.0, 30.0] },
+             { el: deckClone.querySelector('.card-n2'), peek: c2_peek_end, progRange: [29.3, 30.3] },
+             { el: deckClone.querySelector('.card-n3'), peek: c3_peek_end, progRange: [29.6, 30.6] },
+             { el: deckClone.querySelector('.card-n4'), peek: c4_peek_end, progRange: [29.9, 30.9] }
          ];
 
          let cardTable = document.getElementById('oryzo-section');
