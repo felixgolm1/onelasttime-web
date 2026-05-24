@@ -3473,7 +3473,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ─ Animación del segundo texto "personalizado con IA"
     // Arranca ligeramente MÁS TARDE en la línea de tiempo simulando ese "cuando haya salido la mitad de la palabra".
-    let tAiDelay = (tSwap - (t2 - 0.08)) * 0.45; // ~Esperamos a que la primera frase esté casi al ecuador de su viaje
+    let tAiDelay = 0; // Arranca al mismo tiempo que "hecho por personas" (antes era 0.45 pero al aumentar maxProg se retrasaba)
     let tAiStart = (t2 - 0.08) + tAiDelay;
     
     // Al setearlo específicamente aquí, evitamos que un scroll salvaje hacia arriba deje rastros ("alizado")
