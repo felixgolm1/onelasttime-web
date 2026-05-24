@@ -9097,9 +9097,9 @@ setInterval(function() {
       var textGrad = document.getElementById('oryzo-text-gradient');
       var textGradR = document.getElementById('oryzo-text-right-gradient');
       
-      // Retrasado un pelín para que aparezcan después de que la carta haya salido
-      var txtP = clamp01((p - 28.8) / 1.0); 
-      var txtPR = clamp01((p - 29.0) / 1.0); 
+      // Retrasado un pelín respecto al original, basado en textY para un fundido fluido
+      var txtP = clamp01((60 - textY) / 40); 
+      var txtPR = clamp01((35 - textY) / 40); 
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       
       if (textGrad) {
