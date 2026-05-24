@@ -8900,7 +8900,7 @@ setInterval(function() {
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
            volume.style.setProperty('transition', 'none', 'important');
-           var rotY = -25 - (tExit * 15); 
+           var rotY = -25; // Fija, sin rotar durante la apertura
            volume.style.setProperty('transform', 'rotateX(0deg) rotateY(' + rotY + 'deg) rotateZ(0deg)', 'important');
          }
          
@@ -8944,17 +8944,17 @@ setInterval(function() {
          }
 
          // --- INYECCION DE CARTAS VOLANDO ---
-         // Cartas: empiezan a salir en 28.8 (cuando la caja ya esta centrada y abierta)
-         let c1_peek_end = mapRange(p, 28.5, 29.0, 0, 1);
-         let c2_peek_end = mapRange(p, 28.8, 29.3, 0, 1);
-         let c3_peek_end = mapRange(p, 29.1, 29.6, 0, 1);
-         let c4_peek_end = mapRange(p, 29.4, 29.9, 0, 1);
+         // Cartas: empiezan a salir cuando la caja ya esta totalmente abierta (~prog 30.0)
+         let c1_peek_end = mapRange(p, 29.8, 30.3, 0, 1);
+         let c2_peek_end = mapRange(p, 30.1, 30.6, 0, 1);
+         let c3_peek_end = mapRange(p, 30.4, 30.9, 0, 1);
+         let c4_peek_end = mapRange(p, 30.7, 31.2, 0, 1);
          
          let endCards = [
-             { el: deckClone.querySelector('.card-n1'), peek: c1_peek_end, progRange: [29.0, 30.0] },
-             { el: deckClone.querySelector('.card-n2'), peek: c2_peek_end, progRange: [29.3, 30.3] },
-             { el: deckClone.querySelector('.card-n3'), peek: c3_peek_end, progRange: [29.6, 30.6] },
-             { el: deckClone.querySelector('.card-n4'), peek: c4_peek_end, progRange: [29.9, 30.9] }
+             { el: deckClone.querySelector('.card-n1'), peek: c1_peek_end, progRange: [30.3, 31.3] },
+             { el: deckClone.querySelector('.card-n2'), peek: c2_peek_end, progRange: [30.6, 31.6] },
+             { el: deckClone.querySelector('.card-n3'), peek: c3_peek_end, progRange: [30.9, 31.9] },
+             { el: deckClone.querySelector('.card-n4'), peek: c4_peek_end, progRange: [31.2, 32.2] }
          ];
 
          let cardTable = document.getElementById('oryzo-section');
