@@ -3751,10 +3751,11 @@ window.onerror = function(msg, url, line, col, err) {
       });
 
       // 4. Secuencia Cinemática de Cartas (Peek -> Zoom -> Review -> Land)
-      const c1 = mainDeck.querySelector('.card-n1') || document.querySelector('.card-on-table.card-n1');
-      const c2 = mainDeck.querySelector('.card-n2') || document.querySelector('.card-on-table.card-n2');
-      const c3 = mainDeck.querySelector('.card-n3') || document.querySelector('.card-on-table.card-n3');
-      const c4 = mainDeck.querySelector('.card-n4') || document.querySelector('.card-on-table.card-n4');
+      const _ct = document.getElementById('card-table');
+      const c1 = mainDeck.querySelector('.card-n1') || (_ct ? _ct.querySelector('.card-on-table.card-n1') : null);
+      const c2 = mainDeck.querySelector('.card-n2') || (_ct ? _ct.querySelector('.card-on-table.card-n2') : null);
+      const c3 = mainDeck.querySelector('.card-n3') || (_ct ? _ct.querySelector('.card-on-table.card-n3') : null);
+      const c4 = mainDeck.querySelector('.card-n4') || (_ct ? _ct.querySelector('.card-on-table.card-n4') : null);
 
       // Fases CARTA 1 (prog: 2.5 a 4.6)
       let c1_peek = mapRange(prog, 2.5, 3.0, 0, 1);
@@ -9033,7 +9034,20 @@ setInterval(function() {
                if(localP>3.0){ec1.style.transition='none';ec1.style.left=cx1+'px';ec1.style.top=cy1+'px';ec1.style.transform='translate(-50%,-50%) rotateY('+ry1+'deg) rotateX('+rx1+'deg) rotateZ('+rz1+'deg) scale('+cs1+')';ec1.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha1*0.75)+'),0 40px 80px rgba(0,0,0,'+sha1+')';const ef1=ec1.querySelector('.card-front'),eb1=ec1.querySelector('.card-back');if(ef1&&eb1){if(rx1>90){ef1.style.display='none';eb1.style.display='flex';}else{ef1.style.display='flex';eb1.style.display='none';}}ec1.style.zIndex='9999';}
              }
            }
-           // CARTA 2
+            // DEBUG BOX
+            let dbg = document.getElementById('debug-box');
+            if(!dbg) {
+              dbg = document.createElement('div');
+              dbg.id = 'debug-box';
+              dbg.style.cssText = 'position:fixed; top:50px; left:10px; background:rgba(0,0,0,0.8); color:#0f0; z-index:99999999; font-size:14px; padding:10px; border:2px solid #0f0; font-family:monospace; pointer-events:none;';
+              document.body.appendChild(dbg);
+            }
+            if(ec1) {
+              const rect = ec1.getBoundingClientRect();
+              dbg.innerHTML = 'ec1 localP: ' + localP.toFixed(2) + '<br>state: ' + ec1.dataset.endState + '<br>parent: ' + (ec1.parentNode ? (ec1.parentNode.id || ec1.parentNode.className) : 'null') + '<br>opacity: ' + ec1.style.opacity + '<br>left: ' + ec1.style.left + '<br>top: ' + ec1.style.top + '<br>rect: ' + rect.left.toFixed(1) + ', ' + rect.top.toFixed(1) + '<br>display: ' + window.getComputedStyle(ec1).display + '<br>visibility: ' + window.getComputedStyle(ec1).visibility;
+            }
+
+            // CARTA 2
            const efc2=deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
            if(ec2){
              if(ec2_peek===0){if(efc2)efc2.style.opacity='1';if(ec2.dataset.endState!=='deck-rest'){ec2.dataset.endState='deck-rest';ec2.style.opacity='0';const ei2=deckClone.querySelector('.interior-cards');if(ei2&&ec2.parentNode!==ei2)ei2.insertBefore(ec2,ei2.firstChild);ec2.style.position='';ec2.style.left='';ec2.style.top='';ec2.style.margin='';ec2.classList.remove('card-on-table','card-peeking');ec2.classList.add('card-in-deck');ec2.style.transition='none';ec2.style.transform='translate(-50%, calc(-50% - 35px)) translateZ('+(ec2.dataset.zDepth||6)+'px) rotate(-90deg) scale(0.85)';ec2.style.clipPath='inset(0 0 0 10px round 16px)';}}
