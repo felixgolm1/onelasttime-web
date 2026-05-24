@@ -9034,19 +9034,6 @@ setInterval(function() {
                if(localP>3.0){ec1.style.transition='none';ec1.style.left=cx1+'px';ec1.style.top=cy1+'px';ec1.style.transform='translate(-50%,-50%) rotateY('+ry1+'deg) rotateX('+rx1+'deg) rotateZ('+rz1+'deg) scale('+cs1+')';ec1.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha1*0.75)+'),0 40px 80px rgba(0,0,0,'+sha1+')';const ef1=ec1.querySelector('.card-front'),eb1=ec1.querySelector('.card-back');if(ef1&&eb1){if(rx1>90){ef1.style.display='none';eb1.style.display='flex';}else{ef1.style.display='flex';eb1.style.display='none';}}ec1.style.zIndex='9999';}
              }
            }
-            // DEBUG BOX
-            let dbg = document.getElementById('debug-box');
-            if(!dbg) {
-              dbg = document.createElement('div');
-              dbg.id = 'debug-box';
-              dbg.style.cssText = 'position:fixed; top:50px; left:10px; background:rgba(0,0,0,0.8); color:#0f0; z-index:99999999; font-size:14px; padding:10px; border:2px solid #0f0; font-family:monospace; pointer-events:none;';
-              document.body.appendChild(dbg);
-            }
-            if(ec1) {
-              const rect = ec1.getBoundingClientRect();
-              dbg.innerHTML = 'ec1 localP: ' + localP.toFixed(2) + '<br>state: ' + ec1.dataset.endState + '<br>parent: ' + (ec1.parentNode ? (ec1.parentNode.id || ec1.parentNode.className) : 'null') + '<br>opacity: ' + ec1.style.opacity + '<br>left: ' + ec1.style.left + '<br>top: ' + ec1.style.top + '<br>rect: ' + rect.left.toFixed(1) + ', ' + rect.top.toFixed(1) + '<br>display: ' + window.getComputedStyle(ec1).display + '<br>visibility: ' + window.getComputedStyle(ec1).visibility;
-            }
-
             // CARTA 2
            const efc2=deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
            if(ec2){
