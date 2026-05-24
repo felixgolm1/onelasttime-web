@@ -2829,6 +2829,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Caracteres del título: invisible + blur + desplazados (GSAP sobreescribe el CSS)
     gsap.set(ftChars, { opacity: 0, filter: 'blur(10px)', x: -18 });
     // ─ Split por caracteres para el efecto Oryzo letra a letra ────────────
+
     function splitFltChars(selector) {
       const chars = [];
       document.querySelectorAll(selector).forEach(span => {
@@ -3472,12 +3473,9 @@ window.onerror = function(msg, url, line, col, err) {
       
 
     // ─ Animación del segundo texto "personalizado con IA"
-    // El texto debe aparecer en prog ~1.49. La relación es prog = GSAP_time * 2.2 / duration.
-    // Como t2-0.08 mapea a prog ~1.88 y queremos ~1.49, escalamos: tAiStart = (t2-0.08) * (1.49/1.88)
-    let tAiStart = (t2 - 0.08) * (1.49 / 1.88);
-    
-    // Al setearlo específicamente aquí, evitamos que un scroll salvaje hacia arriba deje rastros ("alizado")
+    let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" → prog ~1.47
     scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -5, x: '-92vw' }, tAiStart);
+    scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
     // ─ Edge glow: opacity calculada directamente en updateGlobalScenes ──────
     //   (sin tweens GSAP — la persiana la mueve el scroll puro)
