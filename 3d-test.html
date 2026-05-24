@@ -3529,7 +3529,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
-    const maxProg = 28.6;  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    const maxProg = 36.0;  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
@@ -7765,6 +7765,154 @@ window.onerror = function(msg, url, line, col, err) {
         </script>
       </div>
     </div>
+    <div id="end-reviews-container" class="oryzo-reviews-container" style="position:absolute; top: 100vh; left:0; width:100vw; height:100vh; pointer-events:none;">
+    <div class="oryzo-review-panel" id="end-review-panel-1">
+      <div class="osr-body" style="align-items: flex-start; flex-direction: column; width: 100%; gap: 6rem;">
+        
+        <!-- LEFT COLUMN (Sobre la carta) -->
+        <div class="review-left-col" style="width: 36%; max-width: 600px; align-self: flex-start;">
+          <div class="osr-top-line">
+            <div>SOBRE ESTA CARTA</div>
+          </div>
+          <div class="review-left-quote" style="font-family: 'Inter', sans-serif; font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.6; color: rgba(255,255,255,0.85); font-weight: 400; text-align: left;">
+            <p style="margin-bottom: 1.5rem;">Preparamos esta carta <span style="color: #ccff00;">para Elsa y sus compañerxs</span> de baile.</p>
+            <p style="margin-bottom: 1.5rem;">Ya que querían elevar el nivel de sus conversaciones y compartir cosas de las que nunca antes habían hablado.</p>
+            <p style="margin-bottom: 1.5rem;">Así que la creamos como <span style="color: #ccff00;">transición</span> entre romper el hielo y empezar a profundizar.</p>
+            <p style="margin-bottom: 0;">Y <span style="color: #ccff00;">gustó tanto que</span> ahora la usamos para otras ocasiones, incluso para convertir primeras citas en segundas.</p>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN (La Reseña) -->
+        <div class="review-right-col" style="width: 36%; align-self: flex-end; display: flex; flex-direction: column; align-items: flex-end; text-align: right; color: #ffffff; font-family: 'Inter', sans-serif;">
+          <div class="osr-top-line" style="justify-content: flex-end;">
+            <div>LA RESEÑA</div>
+          </div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-end; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="review-quote" id="end-rev1-quote" style="text-align: right;">"Es increíble cómo una simple carta puede generar <span class="review-highlight">conversaciones tan profundas</span> y auténticas. Lo recomiendo 100%."</div>
+          <div class="review-author" style="text-align: right;">
+            ELSA NARANJO<br>
+            <span style="display:inline-flex; align-items:center; gap: 6px; margin-top: 4px; text-transform: none; letter-spacing: 0; line-height: 1;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              @elsaaang6
+            </span>
+          </div>
+          <div class="review-img-col" style="margin-top: 3rem; width: 100%; display: flex; justify-content: flex-end;">
+            <img src="assets/img/elsa.png" alt="Review 1">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="oryzo-review-panel" id="end-review-panel-2">
+      <div class="osr-body" style="align-items: flex-start; flex-direction: column; width: 100%; gap: 6rem;">
+        
+        <!-- LEFT COLUMN (Sobre la carta) -->
+        <div class="review-left-col" style="width: 36%; max-width: 600px; align-self: flex-start;">
+          <div class="osr-top-line">
+            <div>SOBRE ESTA CARTA</div>
+          </div>
+          <div class="review-left-quote" style="font-family: 'Inter', sans-serif; font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.6; color: rgba(255,255,255,0.85); font-weight: 400; text-align: left;">
+            <p style="margin-bottom: 1.5rem;">Esta es la carta de intro de la experiencia que preparamos en secreto con Ricard para sorprender a Laura por su <span style="color: #ccff00;">aniversario de 5 años juntos</span>.</p>
+            <p style="margin-bottom: 1.5rem;">Querían <span style="color: #ccff00;">construir una relación aún más sólida</span> recordando tanto lo bueno como lo no tan bueno para poder trabajar sobre ello.</p>
+            <p style="margin-bottom: 1.5rem;">Y como construir relaciones en pareja, amigos o familia es <span style="color: #ccff00;">lo que mejor sabemos hacer</span>, nos pusimos manos a la obra, y esto fue lo que pasó...</p>
+            <p style="margin-bottom: 0;">PD. A parte de las barajas que después <span style="color: #ccff00;">nos pidieron varixs de sus amigxs</span></p>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN (La Reseña) -->
+        <div class="review-right-col" style="width: 36%; align-self: flex-end; display: flex; flex-direction: column; align-items: flex-end; text-align: right; color: #ffffff; font-family: 'Inter', sans-serif;">
+          <div class="osr-top-line" style="justify-content: flex-end;">
+            <div>LA RESEÑA</div>
+          </div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-end; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="review-quote" id="end-rev2-quote" style="text-align: right;">"¡<span class="review-highlight">Flipé</span> al ver cartas hechas para nuestro aniversario! Nos hicieron tener <span class="review-highlight">conversaciones que nunca antes habíamos tenido</span>. Y sin duda ahora estamos más preparados para durar muchos años más. Ya <span class="review-highlight">he obligado a mis amigas a probarlo</span>."</div>
+          <div class="review-author" style="text-align: right;">
+            LAURA GIL<br>
+            <span style="display:inline-flex; align-items:center; gap: 6px; margin-top: 4px; text-transform: none; letter-spacing: 0; line-height: 1;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              @_laugilp
+            </span>
+          </div>
+          <div class="review-img-col" style="margin-top: 3rem; width: 100%; display: flex; justify-content: flex-end;">
+            <img src="assets/img/lauric.jpeg" alt="Review 2">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oryzo-review-panel" id="end-review-panel-3">
+      <div class="osr-body" style="align-items: flex-start; flex-direction: column; width: 100%; gap: 6rem;">
+        
+        <!-- LEFT COLUMN (Sobre la carta) -->
+        <div class="review-left-col" style="width: 36%; max-width: 600px; align-self: flex-start;">
+          <div class="osr-top-line">
+            <div>SOBRE ESTA CARTA</div>
+          </div>
+          <div class="review-left-quote" style="font-family: 'Inter', sans-serif; font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.6; color: rgba(255,255,255,0.85); font-weight: 400; text-align: left;">
+            <p style="margin-bottom: 1.5rem;">Esta es una de las cartas que preparamos <span style="color: #ccff00;">para Fran y su hermano por el Día de la Madre</span>.</p>
+            <p style="margin-bottom: 1.5rem;">Buscaban la forma de expresarle lo profundamente agradecidos que estaban con ella, yendo mucho <span style="color: #ccff00;">más allá de los típicos regalos materiales</span>.</p>
+            <p style="margin-bottom: 0;">Así que diseñamos <span style="color: #ccff00;">una de las barajas más emocionales</span> que hemos creado. Y este fue el resultado...</p>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN (La Reseña) -->
+        <div class="review-right-col" style="width: 36%; align-self: flex-end; display: flex; flex-direction: column; align-items: flex-end; text-align: right; color: #ffffff; font-family: 'Inter', sans-serif;">
+          <div class="osr-top-line" style="justify-content: flex-end;">
+            <div>LA RESEÑA</div>
+          </div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-end; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="review-quote" id="end-rev3-quote" style="text-align: right;">"Conseguir expresar tanto agradecimiento no es fácil, y sin duda es el mejor regalo que se puede hacer a alguien. Fue <span class="review-highlight">uno de los momentos más bonitos que hemos compartido en familia</span>. Infinitas gracias."</div>
+          <div class="review-author" style="text-align: right;">
+            FRANCISCO ARBESÚ<br>
+            <span style="display:inline-flex; align-items:center; gap: 6px; margin-top: 4px; text-transform: none; letter-spacing: 0; line-height: 1;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              @franarbesu
+            </span>
+          </div>
+          <div class="review-img-col" style="margin-top: 3rem; width: 100%; display: flex; justify-content: flex-end;">
+            <img src="assets/img/fran.jpeg" alt="Review Fran">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oryzo-review-panel" id="end-review-panel-4">
+      <div class="osr-body" style="align-items: flex-start; flex-direction: column; width: 100%; gap: 6rem;">
+        
+        <!-- LEFT COLUMN (Sobre la carta) -->
+        <div class="review-left-col" style="width: 36%; max-width: 600px; align-self: flex-start;">
+          <div class="osr-top-line">
+            <div>SOBRE ESTA CARTA</div>
+          </div>
+          <div class="review-left-quote" style="font-family: 'Inter', sans-serif; font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.6; color: rgba(255,255,255,0.85); font-weight: 400; text-align: left;">
+            <p style="margin-bottom: 1.5rem;">Iria nos usó para hacer una <span style="color: #ccff00;">dinámica con el equipo</span> de una de las empresas donde colabora como consultora de Recursos Humanos.</p>
+            <p style="margin-bottom: 1.5rem;">Buscaba <span style="color: #ccff00;">huir de los típicos 'team buildings'</span> y lograr que el equipo conectara desde aquello que todos comparten: las emociones.</p>
+            <p style="margin-bottom: 0;">Así que creamos algo que transformó sus relaciones, hasta el punto en que <span style="color: #ccff00;">esta misma carta se ha convertido en parte esencial de las dinámicas que prepara para otros equipos</span>.</p>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN (La Reseña) -->
+        <div class="review-right-col" style="width: 36%; align-self: flex-end; display: flex; flex-direction: column; align-items: flex-end; text-align: right; color: #ffffff; font-family: 'Inter', sans-serif;">
+          <div class="osr-top-line" style="justify-content: flex-end;">
+            <div>LA RESEÑA</div>
+          </div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-end; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="review-quote" id="end-rev4-quote" style="text-align: right;">"<span class="review-highlight">El equipo lloró, rió y se unió como nunca</span>. Cuando consigues que en una empresa <span class="review-highlight">se hable desde la vulnerabilidad y no desde el ego</span>, la cultura del equipo cambia para siempre. Una <span class="review-highlight">experiencia absolutamente transformadora</span>."</div>
+          <div class="review-author" style="text-align: right;">
+            IRIA MUDARRA<br>
+            <span style="display:inline-flex; align-items:center; gap: 6px; margin-top: 4px; text-transform: none; letter-spacing: 0; line-height: 1;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              @iriamudarra
+            </span>
+          </div>
+          <div class="review-img-col" style="margin-top: 3rem; width: 100%; display: flex; justify-content: flex-end;">
+            <img src="assets/img/iria.jpeg" alt="Review Iria">
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    </div>
     <!-- ══ FIN SECCIÓN ORYZO ══════════════════════════════ -->
 
   </div>
@@ -8731,21 +8879,30 @@ setInterval(function() {
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
       // 1. Translación fluida pegada al fondo morado extendido
-      var tSlide = clamp01((p - 26.6) / 2.0); // Scroll largo
-      var slideY = (1 - ease(tSlide)) * 130; // de 130vh a 0vh (inicia 30vh mas abajo)
+      var tSlide = clamp01((p - 26.6) / 2.0); // 26.6 to 28.6
+      var tExit = clamp01((p - 28.6) / 1.0);  // 28.6 to 29.6 -> Camara baja, seccion sube
+      var slideY = (1 - ease(tSlide)) * 130 - (ease(tExit) * 100); 
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
 
       // Sincronizamos el fondo morado para que suba EXACTAMENTE igual que la sección verde
-      window._scrollUpVh = 130 - slideY; // Va de 0 a 130
+      window._scrollUpVh = 130 - slideY;
 
-      // 2. Baraja - orientacion identica a la primera seccion
+      // 2. Baraja - orientacion identica a la primera seccion y animacion de apertura
       var deckClone = document.getElementById('oryzo-deck-clone');
       if (deckClone) {
          var volume = deckClone.querySelector('.box-3d-volume');
          if (volume) {
            volume.style.setProperty('transition', 'none', 'important');
-           volume.style.setProperty('transform', 'rotateX(0deg) rotateY(-25deg) rotateZ(0deg)', 'important');
+           // Cae hacia abajo ligeramente con el tExit
+           volume.style.setProperty('transform', 'rotateX(0deg) rotateY(-25deg) rotateZ(0deg) translateY(' + (tExit * 30) + 'vh)', 'important');
+         }
+         var topFlap = deckClone.querySelector('.box-3d-top');
+         if (topFlap) {
+            topFlap.style.transition = 'none';
+            topFlap.style.transformOrigin = 'top center';
+            // Empieza a abrirse cuando aparece
+            topFlap.style.transform = 'rotateX(' + (110 * ease(tSlide)) + 'deg)';
          }
       }
       
@@ -8780,6 +8937,38 @@ setInterval(function() {
               charsR[j].style.opacity = Math.max(0, Math.min(1, opR));
            }
         }
+      }
+
+      // 4. Testimonios Finales
+      var endRev1 = document.getElementById('end-review-panel-1');
+      var endRev2 = document.getElementById('end-review-panel-2');
+      var endRev3 = document.getElementById('end-review-panel-3');
+      var endRev4 = document.getElementById('end-review-panel-4');
+      var endContainer = document.getElementById('end-reviews-container');
+
+      if (endContainer) {
+          endContainer.style.opacity = (p > 28.6) ? 1 : 0;
+          
+          if (endRev1) {
+              var f1 = ease(clamp01((p - 29.6) / 0.3)) * (1 - ease(clamp01((p - 30.8) / 0.2)));
+              endRev1.style.opacity = f1;
+              endRev1.style.transform = 'translateY(' + ((1 - f1) * 20) + 'px)';
+          }
+          if (endRev2) {
+              var f2 = ease(clamp01((p - 31.0) / 0.3)) * (1 - ease(clamp01((p - 32.4) / 0.2)));
+              endRev2.style.opacity = f2;
+              endRev2.style.transform = 'translateY(' + ((1 - f2) * 20) + 'px)';
+          }
+          if (endRev3) {
+              var f3 = ease(clamp01((p - 32.6) / 0.3)) * (1 - ease(clamp01((p - 34.0) / 0.2)));
+              endRev3.style.opacity = f3;
+              endRev3.style.transform = 'translateY(' + ((1 - f3) * 20) + 'px)';
+          }
+          if (endRev4) {
+              var f4 = ease(clamp01((p - 34.2) / 0.3)) * (1 - ease(clamp01((p - 35.8) / 0.2)));
+              endRev4.style.opacity = f4;
+              endRev4.style.transform = 'translateY(' + ((1 - f4) * 20) + 'px)';
+          }
       }
     }
 
