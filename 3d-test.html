@@ -962,6 +962,10 @@ window.onerror = function(msg, url, line, col, err) {
     body.is-drawn #mainDeck .interior-card:nth-child(4) { transform: translateZ(12px) translateY(-12px) !important; }
     body.is-drawn #mainDeck .interior-card:nth-child(5) { transform: translateZ(14px) translateY(-6px) !important; }
     body.is-drawn #mainDeck .interior-card:nth-child(6) { transform: translateZ(16px) translateY(-2px) !important; }
+    body.is-drawn #mainDeck .card-n1.card-in-deck { transform: translate(-50%, calc(-50% - 35px)) translateZ(58px) rotate(-90deg) scale(0.85) !important; }
+    body.is-drawn #mainDeck .card-n2.card-in-deck { transform: translate(-50%, calc(-50% - 28px)) translateZ(52px) rotate(-90deg) scale(0.85) !important; }
+    body.is-drawn #mainDeck .card-n3.card-in-deck { transform: translate(-50%, calc(-50% - 20px)) translateZ(46px) rotate(-90deg) scale(0.85) !important; }
+    body.is-drawn #mainDeck .card-n4.card-in-deck { transform: translate(-50%, calc(-50% - 12px)) translateZ(40px) rotate(-90deg) scale(0.85) !important; }
 
     .box-flap {
       position: absolute;
@@ -1827,7 +1831,7 @@ window.onerror = function(msg, url, line, col, err) {
         </div>
 
         <!-- Cartas reales extraíbles — heredan perspectiva 3D del volumen -->
-        <div class="card-wrap card-n1 card-in-deck" data-rot="0" style="transform-style: preserve-3d;">
+        <div class="card-wrap card-n1 card-in-deck" data-rot="0" data-z-depth="58" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%;">
             <div class="card-question">ANNA, ¿QUÉ HARIAS SI SUPIERAS QUE NO VAS A FRACASAR?</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
@@ -1838,7 +1842,7 @@ window.onerror = function(msg, url, line, col, err) {
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo" style="filter: brightness(0) invert(1); opacity: 1;"></div>
           </div>
         </div>
-        <div class="card-wrap card-n2 card-in-deck" data-rot="0" style="transform-style: preserve-3d;">
+        <div class="card-wrap card-n2 card-in-deck" data-rot="0" data-z-depth="52" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%; background: #0a0a0a; background-image: none; box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 8px 24px rgba(0,0,0,0.35), 0 20px 60px rgba(0,0,0,0.4), inset 0 0 0 1.5px #0a0a0a; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.5rem 2rem;">
             <div class="card-question" style="color: #ffffff; font-size: clamp(0.5rem, 1vw, 0.65rem); text-transform: none; text-align: center; margin-bottom: 1.5rem; line-height: 1.4;">
               <p style="margin: 0 0 6px 0;">Si vivimos cada día como si fuera el último, algún día estaremos en lo cierto.</p>
@@ -1861,7 +1865,7 @@ window.onerror = function(msg, url, line, col, err) {
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo" style="filter: brightness(0) invert(1); opacity: 1;"></div>
           </div>
         </div>
-        <div class="card-wrap card-n3 card-in-deck" data-rot="0" style="transform-style: preserve-3d;">
+        <div class="card-wrap card-n3 card-in-deck" data-rot="0" data-z-depth="46" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%;">
             <div class="card-question">¿QUÉ ES LO QUE APRECIÁIS MÁS DE VUESTRA MADRE QUE CUANDO ERAIS MÁS JÓVENES NO APRECIABAIS?</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
@@ -1872,7 +1876,7 @@ window.onerror = function(msg, url, line, col, err) {
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo" style="filter: brightness(0) invert(1); opacity: 1;"></div>
           </div>
         </div>
-        <div class="card-wrap card-n4 card-in-deck" data-rot="0" style="transform-style: preserve-3d;">
+        <div class="card-wrap card-n4 card-in-deck" data-rot="0" data-z-depth="40" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%;">
             <div class="card-question" style="font-size: clamp(0.6rem, 1vw, 0.8rem); line-height: 1.6;">PARA CADA UNA DE LAS PERSONAS PRESENTES DI...<br><br>1 COSA QUE APRECIAS<br>1 COSA QUE CREES QUE PUEDE MEJORAR<br>1 COSA QUE HARÁS PARA ÉL O ELLA</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
@@ -8917,6 +8921,20 @@ setInterval(function() {
          // tOpen: animacion de apertura SEPARADA de la subida — arranca cuando la caja ya es visible
          var tOpen = clamp01((p - 28.2) / 0.3); // 28.2 a 30.2
          let eOpen = ease(tOpen);
+         if(deckClone) {
+           let df1 = deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
+           if(df1) df1.style.transform = \	ranslateZ(6px) translateY(${-35 * eOpen}px)\;
+           let df2 = deckClone.querySelector('.interior-cards .interior-card:nth-child(2)');
+           if(df2) df2.style.transform = \	ranslateZ(8px) translateY(${-28 * eOpen}px)\;
+           let df3 = deckClone.querySelector('.interior-cards .interior-card:nth-child(3)');
+           if(df3) df3.style.transform = \	ranslateZ(10px) translateY(${-20 * eOpen}px)\;
+           let df4 = deckClone.querySelector('.interior-cards .interior-card:nth-child(4)');
+           if(df4) df4.style.transform = \	ranslateZ(12px) translateY(${-12 * eOpen}px)\;
+           let df5 = deckClone.querySelector('.interior-cards .interior-card:nth-child(5)');
+           if(df5) df5.style.transform = \	ranslateZ(14px) translateY(${-6 * eOpen}px)\;
+           let df6 = deckClone.querySelector('.interior-cards .interior-card:nth-child(6)');
+           if(df6) df6.style.transform = \	ranslateZ(16px) translateY(${-2 * eOpen}px)\;
+         }
 
          // La tapa principal (90 a 180)
          var topFlap = deckClone.querySelector('.box-flap');
@@ -8993,7 +9011,7 @@ setInterval(function() {
                  ec1.style.position=''; ec1.style.left=''; ec1.style.top=''; ec1.style.margin='';
                  ec1.classList.remove('card-on-table','card-peeking'); ec1.classList.add('card-in-deck');
                  ec1.style.transition='none';
-                 ec1.style.transform='translate(-50%, calc(-50% + 15px)) translateZ(58px) rotate(-90deg) scale(0.85)';
+                 const popY1 = 15 - 50 * eOpen; ec1.style.transform='translate(-50%, calc(-50% + '+popY1+'px)) translateZ(58px) rotate(-90deg) scale(0.85)';
                  ec1.style.clipPath='inset(0 0 0 10px round 16px)';
                }
              } else if (ec1_peek > 0 && localP <= 3.0) {
@@ -9002,7 +9020,7 @@ setInterval(function() {
                if(ei1b&&ec1.parentNode!==ei1b){ei1b.insertBefore(ec1,ei1b.firstChild);ec1.style.position='';ec1.style.left='';ec1.style.top='';ec1.style.margin='';}
                ec1.classList.add('card-peeking'); ec1.classList.remove('card-on-table','card-in-deck');
                ec1.style.transition='none';
-               const ey1=15-345*ec1_peek;
+               const ey1=-35-295*ec1_peek;
                ec1.style.transform='translate(-50%, calc(-50% + '+ey1+'px)) translateZ(58px) rotate(-90deg) scale(0.9)';
                ec1.style.clipPath=ey1>5?'inset(0 0 0 10px round 16px)':'';
              } else {
@@ -9037,7 +9055,7 @@ setInterval(function() {
             // CARTA 2
            const efc2=deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
            if(ec2){
-             if(ec2_peek===0){if(efc2)efc2.style.opacity='0';if(ec2.dataset.endState!=='deck-rest'){ec2.dataset.endState='deck-rest';ec2.style.opacity='1';const ei2=deckClone.querySelector('.interior-cards');if(ei2&&ec2.parentNode!==ei2)ei2.insertBefore(ec2,ei2.firstChild);ec2.style.position='';ec2.style.left='';ec2.style.top='';ec2.style.margin='';ec2.classList.remove('card-on-table','card-peeking');ec2.classList.add('card-in-deck');ec2.style.transition='none';ec2.style.transform='translate(-50%, calc(-50% + 15px)) translateZ(52px) rotate(-90deg) scale(0.85)';ec2.style.clipPath='inset(0 0 0 10px round 16px)';}}
+             if(ec2_peek===0){if(efc2)efc2.style.opacity='0';if(ec2.dataset.endState!=='deck-rest'){ec2.dataset.endState='deck-rest';ec2.style.opacity='1';const ei2=deckClone.querySelector('.interior-cards');if(ei2&&ec2.parentNode!==ei2)ei2.insertBefore(ec2,ei2.firstChild);ec2.style.position='';ec2.style.left='';ec2.style.top='';ec2.style.margin='';ec2.classList.remove('card-on-table','card-peeking');ec2.classList.add('card-in-deck');ec2.style.transition='none';const popY2 = 15 - 43 * eOpen; ec2.style.transform='translate(-50%, calc(-50% + '+popY2+'px)) translateZ(52px) rotate(-90deg) scale(0.85)';ec2.style.clipPath='inset(0 0 0 10px round 16px)';}}
              else if(ec2_peek>0&&localP<=4.72){if(efc2)efc2.style.opacity='0';ec2.style.opacity='1';ec2.dataset.endState='extracting';const ei2b=deckClone.querySelector('.interior-cards');if(ei2b&&ec2.parentNode!==ei2b){ei2b.insertBefore(ec2,ei2b.firstChild);ec2.style.position='';ec2.style.left='';ec2.style.top='';ec2.style.margin='';}ec2.classList.add('card-peeking');ec2.classList.remove('card-on-table','card-in-deck');ec2.style.transition='none';const ey2=-35-295*ec2_peek;ec2.style.transform='translate(-50%, calc(-50% + '+ey2+'px)) translateZ(52px) rotate(-90deg) scale(0.9)';ec2.style.clipPath=ey2>5?'inset(0 0 0 10px round 16px)':'';}
              else{if(efc2)efc2.style.opacity='0';ec2.style.opacity='1';ec2.dataset.endState='table';if(ec2.parentNode!==oryzoSec){const _dcr2=deckClone.getBoundingClientRect();ec2.dataset.boxLeftEnd=(_dcr2.left+_dcr2.width/2).toString();ec2.dataset.boxTopEnd=(_dcr2.top+_dcr2.height/2-330).toString();oryzoSec.appendChild(ec2);ec2.classList.remove('card-in-deck','card-peeking');ec2.classList.add('card-on-table');ec2.style.position='fixed';ec2.style.clipPath='';ec2.style.transition='none';}
                const sX2=parseFloat(ec2.dataset.boxLeftEnd)||(window.innerWidth/2+132.5),sY2=parseFloat(ec2.dataset.boxTopEnd)||(window.innerHeight/2-114.75);
@@ -9052,7 +9070,7 @@ setInterval(function() {
            // CARTA 3
            const efc3=deckClone.querySelector('.interior-cards .interior-card:nth-child(2)');
            if(ec3){
-             if(ec3_peek===0){if(efc3)efc3.style.opacity='0';if(ec3.dataset.endState!=='deck-rest'){ec3.dataset.endState='deck-rest';ec3.style.opacity='1';const ei3=deckClone.querySelector('.interior-cards');if(ei3&&ec3.parentNode!==ei3)ei3.insertBefore(ec3,ei3.firstChild);ec3.style.position='';ec3.style.left='';ec3.style.top='';ec3.style.margin='';ec3.classList.remove('card-on-table','card-peeking');ec3.classList.add('card-in-deck');ec3.style.transition='none';ec3.style.transform='translate(-50%, calc(-50% + 15px)) translateZ(46px) rotate(-90deg) scale(0.85)';ec3.style.clipPath='inset(0 0 0 10px round 16px)';}}
+             if(ec3_peek===0){if(efc3)efc3.style.opacity='0';if(ec3.dataset.endState!=='deck-rest'){ec3.dataset.endState='deck-rest';ec3.style.opacity='1';const ei3=deckClone.querySelector('.interior-cards');if(ei3&&ec3.parentNode!==ei3)ei3.insertBefore(ec3,ei3.firstChild);ec3.style.position='';ec3.style.left='';ec3.style.top='';ec3.style.margin='';ec3.classList.remove('card-on-table','card-peeking');ec3.classList.add('card-in-deck');ec3.style.transition='none';const popY3 = 15 - 35 * eOpen; ec3.style.transform='translate(-50%, calc(-50% + '+popY3+'px)) translateZ(46px) rotate(-90deg) scale(0.85)';ec3.style.clipPath='inset(0 0 0 10px round 16px)';}}
              else if(ec3_peek>0&&localP<=6.52){if(efc3)efc3.style.opacity='0';ec3.style.opacity='1';ec3.dataset.endState='extracting';const ei3b=deckClone.querySelector('.interior-cards');if(ei3b&&ec3.parentNode!==ei3b){ei3b.insertBefore(ec3,ei3b.firstChild);ec3.style.position='';ec3.style.left='';ec3.style.top='';ec3.style.margin='';}ec3.classList.add('card-peeking');ec3.classList.remove('card-on-table','card-in-deck');ec3.style.transition='none';const ey3=-35-295*ec3_peek;ec3.style.transform='translate(-50%, calc(-50% + '+ey3+'px)) translateZ(46px) rotate(-90deg) scale(0.9)';ec3.style.clipPath=ey3>5?'inset(0 0 0 10px round 16px)':'';}
              else{if(efc3)efc3.style.opacity='0';ec3.style.opacity='1';ec3.dataset.endState='table';if(ec3.parentNode!==oryzoSec){const _dcr3=deckClone.getBoundingClientRect();ec3.dataset.boxLeftEnd=(_dcr3.left+_dcr3.width/2).toString();ec3.dataset.boxTopEnd=(_dcr3.top+_dcr3.height/2-330).toString();oryzoSec.appendChild(ec3);ec3.classList.remove('card-in-deck','card-peeking');ec3.classList.add('card-on-table');ec3.style.position='fixed';ec3.style.clipPath='';ec3.style.transition='none';}
                const sX3=parseFloat(ec3.dataset.boxLeftEnd)||(window.innerWidth/2+132.5),sY3=parseFloat(ec3.dataset.boxTopEnd)||(window.innerHeight/2-114.75);
@@ -9067,7 +9085,7 @@ setInterval(function() {
            // CARTA 4
            const efc4=deckClone.querySelector('.interior-cards .interior-card:nth-child(3)');
            if(ec4){
-             if(ec4_peek===0){if(efc4)efc4.style.opacity='0';if(ec4.dataset.endState!=='deck-rest'){ec4.dataset.endState='deck-rest';ec4.style.opacity='1';const ei4=deckClone.querySelector('.interior-cards');if(ei4&&ec4.parentNode!==ei4)ei4.insertBefore(ec4,ei4.firstChild);ec4.style.position='';ec4.style.left='';ec4.style.top='';ec4.style.margin='';ec4.classList.remove('card-on-table','card-peeking');ec4.classList.add('card-in-deck');ec4.style.transition='none';ec4.style.transform='translate(-50%, calc(-50% + 15px)) translateZ(40px) rotate(-90deg) scale(0.85)';ec4.style.clipPath='inset(0 0 0 10px round 16px)';}}
+             if(ec4_peek===0){if(efc4)efc4.style.opacity='0';if(ec4.dataset.endState!=='deck-rest'){ec4.dataset.endState='deck-rest';ec4.style.opacity='1';const ei4=deckClone.querySelector('.interior-cards');if(ei4&&ec4.parentNode!==ei4)ei4.insertBefore(ec4,ei4.firstChild);ec4.style.position='';ec4.style.left='';ec4.style.top='';ec4.style.margin='';ec4.classList.remove('card-on-table','card-peeking');ec4.classList.add('card-in-deck');ec4.style.transition='none';const popY4 = 15 - 27 * eOpen; ec4.style.transform='translate(-50%, calc(-50% + '+popY4+'px)) translateZ(40px) rotate(-90deg) scale(0.85)';ec4.style.clipPath='inset(0 0 0 10px round 16px)';}}
              else if(ec4_peek>0&&localP<=8.32){if(efc4)efc4.style.opacity='0';ec4.style.opacity='1';ec4.dataset.endState='extracting';const ei4b=deckClone.querySelector('.interior-cards');if(ei4b&&ec4.parentNode!==ei4b){ei4b.insertBefore(ec4,ei4b.firstChild);ec4.style.position='';ec4.style.left='';ec4.style.top='';ec4.style.margin='';}ec4.classList.add('card-peeking');ec4.classList.remove('card-on-table','card-in-deck');ec4.style.transition='none';const ey4=-35-295*ec4_peek;ec4.style.transform='translate(-50%, calc(-50% + '+ey4+'px)) translateZ(40px) rotate(-90deg) scale(0.9)';ec4.style.clipPath=ey4>5?'inset(0 0 0 10px round 16px)':'';}
              else{if(efc4)efc4.style.opacity='0';ec4.style.opacity='1';ec4.dataset.endState='table';if(ec4.parentNode!==oryzoSec){const _dcr4=deckClone.getBoundingClientRect();ec4.dataset.boxLeftEnd=(_dcr4.left+_dcr4.width/2).toString();ec4.dataset.boxTopEnd=(_dcr4.top+_dcr4.height/2-330).toString();oryzoSec.appendChild(ec4);ec4.classList.remove('card-in-deck','card-peeking');ec4.classList.add('card-on-table');ec4.style.position='fixed';ec4.style.clipPath='';ec4.style.transition='none';}
                const sX4=parseFloat(ec4.dataset.boxLeftEnd)||(window.innerWidth/2+132.5),sY4=parseFloat(ec4.dataset.boxTopEnd)||(window.innerHeight/2-114.75);
