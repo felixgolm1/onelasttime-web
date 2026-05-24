@@ -8944,7 +8944,7 @@ setInterval(function() {
              { el: deckClone.querySelector('.card-n4'), peek: c4_peek_end, progRange: [28.4, 29.4] }
          ];
 
-         let cardTable = document.getElementById('card-table');
+         let cardTable = document.getElementById('oryzo-section');
          let isDesktop = window.innerWidth > 768;
 
          endCards.forEach((cData, idx) => {
@@ -9021,10 +9021,8 @@ setInterval(function() {
                  const currentRot = -90 + (targetRot + 90) * pRev;
                  const currentScale = 0.9 + (targetScale - 0.9) * pRev;
 
-                 // Translate Y adjustment for camera down (tExit)
-                 const exitY = tExit * 100 * window.innerHeight / 100;
-
-                 c.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY - exitY}px) rotate(${currentRot}deg) scale(${currentScale})`;
+                 // No need for tExit adjustment because we append to oryzo-section which already moves up!
+                 c.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY}px) rotate(${currentRot}deg) scale(${currentScale})`;
                  
                  // Desvanecer cuando aparecen los testimonios HTML
                  let fadeOut = 1 - mapRange(p, 29.2, 29.6, 0, 1);
