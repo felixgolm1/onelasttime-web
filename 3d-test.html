@@ -8892,7 +8892,7 @@ setInterval(function() {
       // Fase de salida (la cámara baja continuamente)
       var tCamera = clamp01((p - 26.6) / 3.0);
       var textY = 130 - (ease(tCamera) * 230);
-      var contentY = textY - slideY;
+      var contentY = Math.min(0, textY - slideY);
       var conectaTxt = document.getElementById('conecta-transition-text');
       
       if (oryzoTxtL) oryzoTxtL.style.transform = 'translateY(' + contentY + 'vh)';
