@@ -8889,9 +8889,10 @@ setInterval(function() {
       // Sincronizamos el fondo morado 
       window._scrollUpVh = 130 - slideY;
 
-      // Fase de salida (la cámara "baja", los textos suben, la caja se queda en medio)
-      var tExit = ease(clamp01((p - 28.6) / 1.0));  // 28.6 to 29.6
-      var contentY = -(tExit * 100); // 0 a -100vh
+      // Fase de salida (la cámara baja continuamente)
+      var tCamera = clamp01((p - 26.6) / 3.0);
+      var textY = 130 - (ease(tCamera) * 230);
+      var contentY = textY - slideY;
       var conectaTxt = document.getElementById('conecta-transition-text');
       
       if (oryzoTxtL) oryzoTxtL.style.transform = 'translateY(' + contentY + 'vh)';
@@ -9096,10 +9097,9 @@ setInterval(function() {
       var textGrad = document.getElementById('oryzo-text-gradient');
       var textGradR = document.getElementById('oryzo-text-right-gradient');
       
-      // left text (margin 30vh) entra en slideY=65vh
-      var txtP = clamp01((65 - slideY) / 40); 
-      // right text (margin 60vh) entra en slideY=40vh
-      var txtPR = clamp01((40 - slideY) / 40); 
+      // Retrasado un pelín para que aparezcan después de que la carta haya salido
+      var txtP = clamp01((p - 28.8) / 1.0); 
+      var txtPR = clamp01((p - 29.0) / 1.0); 
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       
       if (textGrad) {
