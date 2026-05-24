@@ -8945,10 +8945,25 @@ setInterval(function() {
 
          // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 26.0 ---
          let localP = p - 26.0;
-         let ec1 = deckClone.querySelector('.card-n1');
-         let ec2 = deckClone.querySelector('.card-n2');
-         let ec3 = deckClone.querySelector('.card-n3');
-         let ec4 = deckClone.querySelector('.card-n4');
+         // Cache card refs: una vez movidas a endCardTable, querySelector devuelve null — necesitamos la referencia persistente
+         if (!window._ecCache || window._ecCache._deck !== deckClone) {
+           window._ecCache = {
+             _deck: deckClone,
+             ec1: deckClone.querySelector('.card-n1'),
+             ec2: deckClone.querySelector('.card-n2'),
+             ec3: deckClone.querySelector('.card-n3'),
+             ec4: deckClone.querySelector('.card-n4')
+           };
+         }
+         // Actualizar solo las que aún no se han encontrado (por si el DOM tarda)
+         if (!window._ecCache.ec1) window._ecCache.ec1 = deckClone.querySelector('.card-n1');
+         if (!window._ecCache.ec2) window._ecCache.ec2 = deckClone.querySelector('.card-n2');
+         if (!window._ecCache.ec3) window._ecCache.ec3 = deckClone.querySelector('.card-n3');
+         if (!window._ecCache.ec4) window._ecCache.ec4 = deckClone.querySelector('.card-n4');
+         let ec1 = window._ecCache.ec1;
+         let ec2 = window._ecCache.ec2;
+         let ec3 = window._ecCache.ec3;
+         let ec4 = window._ecCache.ec4;
          let endCardTable = document.getElementById('oryzo-section');
          let ec1_peek = mapRange(localP, 2.5, 3.0, 0, 1);
          let ec2_peek = mapRange(localP, 4.22, 4.72, 0, 1);
