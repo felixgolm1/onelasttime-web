@@ -8890,6 +8890,7 @@ setInterval(function() {
       // Fase de salida (la cámara "baja", los textos suben, la caja se queda en medio)
       var tExit = ease(clamp01((p - 28.6) / 1.0));  // 28.6 to 29.6
       var contentY = -(tExit * 100); // 0 a -100vh
+      var conectaTxt = document.getElementById('conecta-transition-text');
       
       if (oryzoTxtL) oryzoTxtL.style.transform = 'translateY(' + contentY + 'vh)';
       if (oryzoTxtR) oryzoTxtR.style.transform = 'translateY(' + contentY + 'vh)';
@@ -8931,7 +8932,6 @@ setInterval(function() {
       // 3. Reveal de texto tipo Oryzo (letra a letra con difuminado suave)
       var textGrad = document.getElementById('oryzo-text-gradient');
       var textGradR = document.getElementById('oryzo-text-right-gradient');
-      var conectaTxt = document.getElementById('conecta-transition-text');
       
       // left text (margin 30vh) entra en slideY=65vh
       var txtP = clamp01((65 - slideY) / 40); 
