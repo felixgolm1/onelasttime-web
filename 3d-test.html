@@ -7666,7 +7666,6 @@ window.onerror = function(msg, url, line, col, err) {
       background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
       z-index: 10000000;
       transform: translateY(100%);
-      transform-style: preserve-3d;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -8967,7 +8966,15 @@ setInterval(function() {
          let ec2 = window._ecCache.ec2;
          let ec3 = window._ecCache.ec3;
          let ec4 = window._ecCache.ec4;
-         let endCardTable = document.getElementById('oryzo-section');
+     // Contenedor dedicado para las cartas - identico a #card-table
+     if (!window._endCardTable) {
+       var ect = document.createElement('div');
+       ect.id = 'end-card-table';
+       ect.style.cssText = 'position:fixed;inset:0;z-index:10000001;pointer-events:none;';
+       document.body.appendChild(ect);
+       window._endCardTable = ect;
+     }
+     var endCardTable = window._endCardTable;
          let ec1_peek = mapRange(localP, 2.5, 3.0, 0, 1);
          let ec2_peek = mapRange(localP, 4.22, 4.72, 0, 1);
          let ec3_peek = mapRange(localP, 6.02, 6.52, 0, 1);
