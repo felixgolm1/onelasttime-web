@@ -8986,6 +8986,7 @@ setInterval(function() {
              if (ec1_peek === 0) {
                if (ec1.dataset.endState !== 'deck-rest') {
                  ec1.dataset.endState = 'deck-rest';
+                  ec1.style.opacity='0';
                  const ei1 = deckClone.querySelector('.interior-cards');
                  if (ei1 && ec1.parentNode !== ei1) ei1.insertBefore(ec1, ei1.firstChild);
                  ec1.style.position=''; ec1.style.left=''; ec1.style.top=''; ec1.style.margin='';
@@ -8995,7 +8996,7 @@ setInterval(function() {
                  ec1.style.clipPath='inset(0 0 0 10px round 16px)';
                }
              } else if (ec1_peek > 0 && localP <= 3.0) {
-               ec1.dataset.endState='extracting';
+               ec1.style.opacity='1';ec1.dataset.endState='extracting';
                const ei1b=deckClone.querySelector('.interior-cards');
                if(ei1b&&ec1.parentNode!==ei1b){ei1b.insertBefore(ec1,ei1b.firstChild);ec1.style.position='';ec1.style.left='';ec1.style.top='';ec1.style.margin='';}
                ec1.classList.add('card-peeking'); ec1.classList.remove('card-on-table','card-in-deck');
