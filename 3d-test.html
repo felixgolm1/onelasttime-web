@@ -4773,7 +4773,8 @@ window.onerror = function(msg, url, line, col, err) {
       // opacity = openP: empieza a desvanecerse cuando openP < 1 (caja empieza a cerrar)
       // y termina invisible en openP = 0 (caja completamente cerrada)
       const tableOpacity = Math.max(0, Math.min(1, openP));
-      const tableCards = document.querySelectorAll('.card-wrap.card-on-table');
+      const _cardTableElem = document.getElementById('card-table');
+      const tableCards = _cardTableElem ? _cardTableElem.querySelectorAll('.card-wrap.card-on-table') : [];
       if (tableCards.length > 0) {
         tableCards.forEach(card => {
           if (card.classList.contains('card-n4')) {
