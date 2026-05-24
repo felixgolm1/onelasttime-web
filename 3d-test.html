@@ -7690,7 +7690,7 @@ window.onerror = function(msg, url, line, col, err) {
         margin: 0; 
         white-space: nowrap; 
         pointer-events: none;
-        opacity: 0;
+        opacity: 1;
       ">conecta</h1>
       <!-- Texto Izquierdo -->
       <div id="oryzo-text-left" style="flex:1; align-self: flex-start; margin-top: 30vh;">
@@ -8753,10 +8753,6 @@ setInterval(function() {
       var textGrad = document.getElementById('oryzo-text-gradient');
       var textGradR = document.getElementById('oryzo-text-right-gradient');
       var conectaTxt = document.getElementById('conecta-transition-text');
-      
-      if (conectaTxt) {
-         conectaTxt.style.opacity = clamp01((130 - slideY) / 30); // Fade in suave al asomar por abajo
-      }
       
       // left text (margin 30vh) entra en slideY=65vh
       var txtP = clamp01((65 - slideY) / 40); 
