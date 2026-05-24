@@ -7666,6 +7666,7 @@ window.onerror = function(msg, url, line, col, err) {
       background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
       z-index: 10000000;
       transform: translateY(100%);
+      transform-style: preserve-3d;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -8457,7 +8458,7 @@ setInterval(function() {
 </script>
 
 
-<div id="end-reviews-container" class="oryzo-reviews-container" style="position:fixed; inset:0; pointer-events:none; z-index:10007;">
+<div id="end-reviews-container" class="oryzo-reviews-container" style="position:fixed; inset:0; pointer-events:none; z-index:10000002;">
     <div class="oryzo-review-panel" id="end-review-panel-1">
       <div class="osr-body" style="align-items: flex-start; flex-direction: column; width: 100%; gap: 6rem;">
         
@@ -9022,7 +9023,7 @@ setInterval(function() {
                let cx1,cy1,cs1,sha1;
                if(mo1===0){cx1=sX1+(zX1-sX1)*mi1;cy1=sY1+(zY1-sY1)*mi1+(60*hp1);cs1=0.9+(zS1-0.9)*mi1;sha1=0.16+(0.4-0.16)*mi1;}
                else{cx1=zX1-(window.innerWidth*1.5)*mo1;cy1=zY1+60+(window.innerHeight*1.5)*mo1;cs1=zS1;sha1=0.4-(0.4-0.16)*mo1;rx1+=120*mo1;ry1+=90*mo1;rz1-=60*mo1;}
-               if(localP>3.0){ec1.style.transition='none';ec1.style.left=cx1+'px';ec1.style.top=cy1+'px';ec1.style.transform='translate(-50%,-50%) rotateY('+ry1+'deg) rotateX('+rx1+'deg) rotateZ('+rz1+'deg) scale('+cs1+')';ec1.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha1*0.75)+'),0 40px 80px rgba(0,0,0,'+sha1+')';const ef1=ec1.querySelector('.card-front'),eb1=ec1.querySelector('.card-back');if(ef1&&eb1){if(rx1>90){ef1.style.display='none';eb1.style.display='flex';}else{ef1.style.display='flex';eb1.style.display='none';}}ec1.style.zIndex=(localP>3.0&&localP<4.6)?'500':'2000';}
+               if(localP>3.0){ec1.style.transition='none';ec1.style.left=cx1+'px';ec1.style.top=cy1+'px';ec1.style.transform='translate(-50%,-50%) rotateY('+ry1+'deg) rotateX('+rx1+'deg) rotateZ('+rz1+'deg) scale('+cs1+')';ec1.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha1*0.75)+'),0 40px 80px rgba(0,0,0,'+sha1+')';const ef1=ec1.querySelector('.card-front'),eb1=ec1.querySelector('.card-back');if(ef1&&eb1){if(rx1>90){ef1.style.display='none';eb1.style.display='flex';}else{ef1.style.display='flex';eb1.style.display='none';}}ec1.style.zIndex='9999';}
              }
            }
            // CARTA 2
@@ -9037,7 +9038,7 @@ setInterval(function() {
                let rp2=0,hp2=0;if(localP>5.52&&localP<=6.02)hp2=mapRange(localP,5.52,6.02,0,1);else if(localP>6.02)hp2=1.0;if(localP<=5.02)rp2=mapRange(localP,4.72,5.02,0,0.85);else if(localP<=5.22)rp2=mapRange(localP,5.02,5.22,0.85,0.95);else if(localP<=5.52)rp2=mapRange(localP,5.22,5.52,0.95,1.0);else if(localP<=6.62)rp2=mapRange(localP,5.52,6.62,1.0,0.95);else rp2=0.95;
                let rz2=-90+(90*rp2),ry2=335+(25*rp2),fp2=mapRange(localP,5.22,5.82,0,1),rx2=fp2*180;
                let cx2,cy2,cs2,sha2;if(mo2===0){cx2=sX2+(zX2-sX2)*mi2;cy2=sY2+(zY2-sY2)*mi2+(60*hp2);cs2=0.9+(zS2-0.9)*mi2;sha2=0.16+(0.4-0.16)*mi2;}else{cx2=zX2+(window.innerWidth*1.5)*mo2;cy2=zY2+60+(window.innerHeight*1.5)*mo2;cs2=zS2;sha2=0.4-(0.4-0.16)*mo2;rx2+=120*mo2;ry2-=90*mo2;rz2+=60*mo2;}
-               if(localP>4.72){ec2.style.transition='none';ec2.style.left=cx2+'px';ec2.style.top=cy2+'px';ec2.style.transform='translate(-50%,-50%) rotateY('+ry2+'deg) rotateX('+rx2+'deg) rotateZ('+rz2+'deg) scale('+cs2+')';ec2.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha2*0.75)+'),0 40px 80px rgba(0,0,0,'+sha2+')';const ef2=ec2.querySelector('.card-front'),eb2=ec2.querySelector('.card-back');if(ef2&&eb2){if(rx2>90){ef2.style.display='none';eb2.style.display='flex';}else{ef2.style.display='flex';eb2.style.display='none';}}ec2.style.zIndex=(localP>4.72&&localP<6.32)?'500':'2001';}
+               if(localP>4.72){ec2.style.transition='none';ec2.style.left=cx2+'px';ec2.style.top=cy2+'px';ec2.style.transform='translate(-50%,-50%) rotateY('+ry2+'deg) rotateX('+rx2+'deg) rotateZ('+rz2+'deg) scale('+cs2+')';ec2.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha2*0.75)+'),0 40px 80px rgba(0,0,0,'+sha2+')';const ef2=ec2.querySelector('.card-front'),eb2=ec2.querySelector('.card-back');if(ef2&&eb2){if(rx2>90){ef2.style.display='none';eb2.style.display='flex';}else{ef2.style.display='flex';eb2.style.display='none';}}ec2.style.zIndex='9999';}
              }
            }
            // CARTA 3
