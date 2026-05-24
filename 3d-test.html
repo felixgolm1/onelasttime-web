@@ -8881,7 +8881,7 @@ setInterval(function() {
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
       // 1. Translación fluida de la sección (hasta el centro de la pantalla)
-      var tSlide = clamp01((p - 26.6) / 2.0); // 26.6 to 28.6
+      var tSlide = clamp01((p - 26.6) / 1.6); // Termina en 28.2, justo cuando empieza a abrirse
       var slideY = (1 - ease(tSlide)) * 130; // Nunca baja de 0 para no romper el fondo
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
