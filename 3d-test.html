@@ -8802,17 +8802,29 @@ setInterval(function() {
   function ease(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2; }
 
   function updateReviewPanelInternals(panel, pRev) {
-      if (!panel._charsLeft) panel._charsLeft = Array.from(panel.querySelectorAll('.review-left-quote .char'));
-      if (!panel._charsRight) panel._charsRight = Array.from(panel.querySelectorAll('.review-quote .char'));
-      if (!panel._stars) panel._stars = Array.from(panel.querySelectorAll('.star'));
+      if (!panel._charsLeft) {
+          panel._charsLeft = Array.from(panel.querySelectorAll('.review-left-quote .char'));
+          panel._charsLeft.forEach(c => c.style.transition = 'none');
+      }
+      if (!panel._charsRight) {
+          panel._charsRight = Array.from(panel.querySelectorAll('.review-quote .char'));
+          panel._charsRight.forEach(c => c.style.transition = 'none');
+      }
+      if (!panel._stars) {
+          panel._stars = Array.from(panel.querySelectorAll('.star'));
+          panel._stars.forEach(s => s.style.transition = 'none');
+      }
       if (!panel._img) { 
           panel._img = panel.querySelector('.review-img-col img');
-          if (panel._img) panel._img.style.willChange = 'transform, filter';
+          if (panel._img) {
+              panel._img.style.willChange = 'transform, filter, opacity';
+              panel._img.style.transition = 'none';
+          }
       }
       if (!panel._ratingNum) panel._ratingNum = panel.querySelector('.rating-number');
 
       if (panel._stars && panel._stars.length > 0) {
-         let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
+         let starP = mapRange(pRev, 0.35, 0.48, 0, 1); 
          starP = Math.max(0, Math.min(1, starP));
          const totalStars = panel._stars.length;
          let currentScore = 0;
@@ -8824,7 +8836,7 @@ setInterval(function() {
          if (panel._ratingNum) panel._ratingNum.innerText = '[' + currentScore + '/5]';
       }
 
-      let readPLeft = mapRange(pRev, 0.18, 0.34, 0, 1);
+      let readPLeft = mapRange(pRev, 0.20, 0.38, 0, 1);
       readPLeft = Math.max(0, Math.min(1, readPLeft));
       if (panel._charsLeft && panel._charsLeft.length > 0) {
          const totalL = panel._charsLeft.length;
@@ -8838,7 +8850,7 @@ setInterval(function() {
          });
       }
 
-      let readPRight = mapRange(pRev, 0.43, 0.54, 0, 1);
+      let readPRight = mapRange(pRev, 0.25, 0.42, 0, 1);
       readPRight = Math.max(0, Math.min(1, readPRight));
       if (panel._charsRight && panel._charsRight.length > 0) {
          const totalR = panel._charsRight.length;
@@ -8853,7 +8865,7 @@ setInterval(function() {
       }
 
       if (panel._img) {
-         let imgP = mapRange(pRev, 0.60, 0.675, 0, 1); 
+         let imgP = mapRange(pRev, 0.40, 0.55, 0, 1); 
          imgP = Math.max(0, Math.min(1, imgP));
          let scale = 1.0 + (0.3 * imgP);
          let brightness = 0.3 + (0.7 * imgP);
