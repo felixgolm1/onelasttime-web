@@ -4695,7 +4695,7 @@ window.onerror = function(msg, url, line, col, err) {
         // Esconder caras perpendiculares y solapas SÓLO cuando la caja ha alcanzado los 450 grados (prog > 10.02)
         // para evitar que sus bordes físicos de 1px sobresalgan durante la expansión 2D, sin usar opacidad para no  romper el preserve-3d.
         let hiddenFaces = document.getElementById("mainDeck").querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
-        if (prog > 2.6) {
+        if (prog > 10.02) {
           hiddenFaces.forEach(f => f.style.display = 'none');
         } else {
           hiddenFaces.forEach(f => f.style.display = '');
@@ -5178,7 +5178,10 @@ window.onerror = function(msg, url, line, col, err) {
           gsap.set(scBoard, { y: '0vh' });
           scrollTl.progress(0);
           scrollTl.progress(Math.min(1, prog / 2.2));
-        }
+        
+            let hiddenFaces = document.getElementById('mainDeck').querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
+            hiddenFaces.forEach(f => f.style.display = '');
+          }
       }
 
 
