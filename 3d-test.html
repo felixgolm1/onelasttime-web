@@ -8611,6 +8611,9 @@ setInterval(function() {
     </div>
 </body>
 <script>
+document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
+</script>
+<script>
 // ── CONTROLADOR SECCIÓN NEUROCIENCIA — wipe Oryzo scroll-driven ──
 // Barrido de máscara de gradiente 100% vinculado al scroll.
 // Título: barre izquierda→derecha. Párrafo: barre derecha→izquierda.
