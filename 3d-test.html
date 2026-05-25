@@ -8801,6 +8801,67 @@ setInterval(function() {
   // Ease in-out cuadrático — suaviza el barrido sin distorsionar el mapeo de scroll
   function ease(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2; }
 
+  function updateReviewPanelInternals(panel, pRev) {
+      if (!panel._charsLeft) panel._charsLeft = Array.from(panel.querySelectorAll('.review-left-quote .char'));
+      if (!panel._charsRight) panel._charsRight = Array.from(panel.querySelectorAll('.review-quote .char'));
+      if (!panel._stars) panel._stars = Array.from(panel.querySelectorAll('.star'));
+      if (!panel._img) { 
+          panel._img = panel.querySelector('.review-img-col img');
+          if (panel._img) panel._img.style.willChange = 'transform, filter';
+      }
+      if (!panel._ratingNum) panel._ratingNum = panel.querySelector('.rating-number');
+
+      if (panel._stars && panel._stars.length > 0) {
+         let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
+         starP = Math.max(0, Math.min(1, starP));
+         const totalStars = panel._stars.length;
+         let currentScore = 0;
+         panel._stars.forEach((s, i) => {
+             let threshold = (i + 0.5) / totalStars; 
+             if (starP > threshold) { s.style.opacity = '1'; currentScore++; } 
+             else { s.style.opacity = '0.2'; }
+         });
+         if (panel._ratingNum) panel._ratingNum.innerText = '[' + currentScore + '/5]';
+      }
+
+      let readPLeft = mapRange(pRev, 0.18, 0.34, 0, 1);
+      readPLeft = Math.max(0, Math.min(1, readPLeft));
+      if (panel._charsLeft && panel._charsLeft.length > 0) {
+         const totalL = panel._charsLeft.length;
+         const gradL = Math.max(10, Math.floor(totalL * 0.15)); 
+         panel._charsLeft.forEach((c, i) => {
+             let charStart = i / totalL;
+             let charEnd = Math.min(1, (i + gradL) / totalL); 
+             let cP = mapRange(readPLeft, charStart, charEnd, 0, 1);
+             cP = Math.max(0, Math.min(1, cP));
+             c.style.opacity = (0.15 + (0.85 * cP)).toString();
+         });
+      }
+
+      let readPRight = mapRange(pRev, 0.43, 0.54, 0, 1);
+      readPRight = Math.max(0, Math.min(1, readPRight));
+      if (panel._charsRight && panel._charsRight.length > 0) {
+         const totalR = panel._charsRight.length;
+         const gradR = Math.max(10, Math.floor(totalR * 0.15)); 
+         panel._charsRight.forEach((c, i) => {
+             let charStart = i / totalR;
+             let charEnd = Math.min(1, (i + gradR) / totalR); 
+             let cP = mapRange(readPRight, charStart, charEnd, 0, 1);
+             cP = Math.max(0, Math.min(1, cP));
+             c.style.opacity = (0.15 + (0.85 * cP)).toString();
+         });
+      }
+
+      if (panel._img) {
+         let imgP = mapRange(pRev, 0.60, 0.675, 0, 1); 
+         imgP = Math.max(0, Math.min(1, imgP));
+         let scale = 1.0 + (0.3 * imgP);
+         let brightness = 0.3 + (0.7 * imgP);
+         panel._img.style.transform = "scale(" + scale + ") translateZ(0)"; 
+         panel._img.style.opacity = brightness.toString(); 
+      }
+  }
+
   function tick() {
     var p = window._brainScrollProg || 0;
 
