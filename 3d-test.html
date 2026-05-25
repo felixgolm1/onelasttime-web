@@ -5578,11 +5578,14 @@ window.onerror = function(msg, url, line, col, err) {
       
       // Actualizar posición de la barra de scroll custom estilo Oryzo
       const scrollThumb = document.getElementById('custom-scroll-thumb');
-      if (scrollThumb && !window.isDraggingThumb) {
-        const scrollPercent = Math.max(0, Math.min(1, prog / maxProg));
-        // Asumimos un track de 100vh y thumb de 29vh, nos queda 71vh de recorrido libre
-        scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
-      }
+        if (scrollThumb && !window.isDraggingThumb) {
+          let fakeProg = prog;
+          if (prog >= 9.62) fakeProg = prog - 7.42;
+          let fakeMax = maxProg - 7.42;
+          const scrollPercent = Math.max(0, Math.min(1, fakeProg / fakeMax));
+          // Asumimos un track de 100vh y thumb de 29vh, nos queda 71vh de recorrido libre
+          scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
+        }
       
       // ── THERMAL CURTAIN ── incondicional, ejecuta cada frame ──────
       {
