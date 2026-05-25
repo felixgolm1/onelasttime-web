@@ -3611,16 +3611,16 @@ window.onerror = function(msg, url, line, col, err) {
       const c4 = mainDeck.querySelector('.card-n4') || (_ct ? _ct.querySelector('.card-on-table.card-n4') : null);
 
       // Fases CARTA 1 (prog: 2.5 a 4.6)
-      let c1_peek = mapRange(prog, 2.5, 3.0, 0, 1);
+      let c1_peek = 0; // mapRange(prog, 2.5, 3.0, 0, 1);
 
       // Fases CARTA 2
-      let c2_peek = mapRange(prog, 4.22, 4.72, 0, 1);
+      let c2_peek = 0; // mapRange(prog, 4.22, 4.72, 0, 1);
 
       // Fases CARTA 3
-      let c3_peek = mapRange(prog, 6.02, 6.52, 0, 1);
+      let c3_peek = 0; // mapRange(prog, 6.02, 6.52, 0, 1);
 
       // Fases CARTA 4
-      let c4_peek = mapRange(prog, 7.82, 8.32, 0, 1);
+      let c4_peek = 0; // mapRange(prog, 7.82, 8.32, 0, 1);
 
       // Controlar la visibilidad de los tooltips ligados al scroll
       const t1 = document.getElementById('card1-tooltip');
