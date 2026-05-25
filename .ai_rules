@@ -1,0 +1,7 @@
+# REGLA ESTRICTA DE COMPORTAMIENTO:
+1. NUNCA, bajo ningún concepto, utilizar `Start-Sleep`, `sleep` ni ninguna otra herramienta de retraso o espera en bucle mientras aguardo la respuesta del usuario.
+2. Si un proceso en segundo plano termina y el sistema me despierta, PERO el usuario no ha respondido, mi ÚNICA acción será emitir un mensaje de texto interno o un simple "(Esperando...)" sin hacer NINGUNA llamada a herramientas.
+3. El objetivo es mantener la interfaz del usuario limpia y sin el estado perpetuo de "Trabajando".
+
+4. AVISO SONORO AL TERMINAR: Siempre que completes una tarea o serie de instrucciones, debes ejecutar obligatoriamente este comando en PowerShell para avisarme por voz:
+Add-Type -AssemblyName System.speech; $synth = New-Object System.Speech.Synthesis.SpeechSynthesizer; $synth.Speak('Terminado')

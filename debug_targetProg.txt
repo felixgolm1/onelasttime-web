@@ -1,0 +1,29 @@
+targetProg:  LERP (Lenis-style) ─────────────────────
+    let targetProg = prog;
+    let glowVisible = false;
+    let lastScrollTime = 0;
+
+    function smoothScrollLoop() {
+      const lerpF = 0.40;
+      if (Mat
+
+targetProg: pplyMagneticFriction(targetProg, rawDelta);
+      targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
+    }, { passive: false });
+    
+    // --- Lógica de arrastre del scrollbar 
+
+targetProg:       let scrollPercent = newY / maxMove;
+        targetProg = scrollPercent * maxProg;
+      });
+
+      customScrollThumb.addEventListener('pointerup', (e) => {
+        window.isDraggingThumb = false
+
+targetProg: pplyMagneticFriction(targetProg, rawDelta);
+      targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
+    }, { passive: false });
+  }
+
+  // ── INTRO CARD ANIMATION ───────────────
+
