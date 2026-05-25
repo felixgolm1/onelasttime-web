@@ -5940,7 +5940,9 @@ window.onerror = function(msg, url, line, col, err) {
         
         // Actualizar targetProg para que el loop lo alcance suavemente
         let scrollPercent = newY / maxMove;
-        targetProg = scrollPercent * maxProg;
+          let fakeMax = maxProg - 7.42;
+          let fakeProg = scrollPercent * fakeMax;
+          targetProg = fakeProg > 2.2 ? fakeProg + 7.42 : fakeProg;
       });
 
       customScrollThumb.addEventListener('pointerup', (e) => {
