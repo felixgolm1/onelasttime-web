@@ -8826,8 +8826,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
       }
       if (!panel._ratingNum) panel._ratingNum = panel.querySelector('.rating-number');
 
-      // 1. Texto Izquierdo (Historia) - Aparece a los ~2cm del borde inferior
-      let readPLeft = mapRange(pRev, 0.25, 0.40, 0, 1);
+      // 1. Texto Izquierdo (Historia) - Aparece cruzando el límite inferior
+      let readPLeft = mapRange(pRev, 0.05, 0.25, 0, 1);
       readPLeft = Math.max(0, Math.min(1, readPLeft));
       if (panel._charsLeft && panel._charsLeft.length > 0) {
          const totalL = panel._charsLeft.length;
@@ -8843,7 +8843,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 
       // 2. Estrellas
       if (panel._stars && panel._stars.length > 0) {
-         let starP = mapRange(pRev, 0.35, 0.45, 0, 1); 
+         let starP = mapRange(pRev, 0.20, 0.30, 0, 1); 
          starP = Math.max(0, Math.min(1, starP));
          const totalStars = panel._stars.length;
          let currentScore = 0;
@@ -8855,8 +8855,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
          if (panel._ratingNum) panel._ratingNum.innerText = '[' + currentScore + '/5]';
       }
 
-      // 3. Texto Derecho (Reseña) - Aparece a los ~2cm del borde inferior
-      let readPRight = mapRange(pRev, 0.45, 0.60, 0, 1);
+      // 3. Texto Derecho (Reseña) - Aparece cruzando el límite inferior
+      let readPRight = mapRange(pRev, 0.28, 0.45, 0, 1);
       readPRight = Math.max(0, Math.min(1, readPRight));
       if (panel._charsRight && panel._charsRight.length > 0) {
          const totalR = panel._charsRight.length;
