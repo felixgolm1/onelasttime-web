@@ -9178,10 +9178,10 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
            var eRev2=document.getElementById('end-review-panel-2');
            var eRev3=document.getElementById('end-review-panel-3');
            var eRev4=document.getElementById('end-review-panel-4');
-           if(eRev1){if(localP>3.0&&localP<4.6){var eRp1=mapRange(localP,3.0,4.6,0,1);eRev1.style.transform='translateY('+mapRange(localP,3.0,4.6,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev1.style.opacity=eRp1>0.85?mapRange(eRp1,0.85,1.0,1,0):1;}else eRev1.style.opacity='0';}
-           if(eRev2){if(localP>4.72&&localP<6.32){var eRp2=mapRange(localP,4.72,6.32,0,1);eRev2.style.transform='translateY('+mapRange(localP,4.72,6.32,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev2.style.opacity=eRp2>0.85?mapRange(eRp2,0.85,1.0,1,0):1;}else eRev2.style.opacity='0';}
-           if(eRev3){if(localP>6.52&&localP<8.12){var eRp3=mapRange(localP,6.52,8.12,0,1);eRev3.style.transform='translateY('+mapRange(localP,6.52,8.12,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev3.style.opacity=eRp3>0.85?mapRange(eRp3,0.85,1.0,1,0):1;}else eRev3.style.opacity='0';}
-           if(eRev4){if(localP>8.32&&localP<9.92){var eRp4=mapRange(localP,8.32,9.92,0,1);eRev4.style.transform='translateY('+mapRange(localP,8.32,9.92,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev4.style.opacity=eRp4>0.85?mapRange(eRp4,0.85,1.0,1,0):1;}else eRev4.style.opacity='0';}
+           if(eRev1){if(localP>3.0&&localP<4.6){var eRp1=mapRange(localP,3.0,4.6,0,1);eRev1.style.transform='translateY('+mapRange(localP,3.0,4.6,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev1.style.opacity=eRp1>0.85?mapRange(eRp1,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev1, eRp1);}else eRev1.style.opacity='0';}
+           if(eRev2){if(localP>4.72&&localP<6.32){var eRp2=mapRange(localP,4.72,6.32,0,1);eRev2.style.transform='translateY('+mapRange(localP,4.72,6.32,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev2.style.opacity=eRp2>0.85?mapRange(eRp2,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev2, eRp2);}else eRev2.style.opacity='0';}
+           if(eRev3){if(localP>6.52&&localP<8.12){var eRp3=mapRange(localP,6.52,8.12,0,1);eRev3.style.transform='translateY('+mapRange(localP,6.52,8.12,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev3.style.opacity=eRp3>0.85?mapRange(eRp3,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev3, eRp3);}else eRev3.style.opacity='0';}
+           if(eRev4){if(localP>8.32&&localP<9.92){var eRp4=mapRange(localP,8.32,9.92,0,1);eRev4.style.transform='translateY('+mapRange(localP,8.32,9.92,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev4.style.opacity=eRp4>0.85?mapRange(eRp4,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev4, eRp4);}else eRev4.style.opacity='0';}
          }
       }
       
