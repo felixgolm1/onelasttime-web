@@ -8834,7 +8834,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
       // 1. Translación fluida de la sección (hasta el centro de la pantalla)
-      var tSlide = clamp01((p - 26.6) / 1.6); // Termina en 28.2, justo cuando empieza a abrirse
+      var tSlide = clamp01((p - 26.2) / 1.6); // Termina en 28.2, justo cuando empieza a abrirse
       var slideY = (1 - ease(tSlide)) * 130; // Nunca baja de 0 para no romper el fondo
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
@@ -8843,7 +8843,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
       window._scrollUpVh = 130 - slideY;
 
       // Fase de salida (la cámara baja continuamente)
-      var tCamera = clamp01((p - 26.6) / 3.0);
+      var tCamera = clamp01((p - 26.2) / 3.0);
       var textY = 130 - (ease(tCamera) * 230);
       var contentY = Math.min(0, textY - slideY);
       var conectaTxt = document.getElementById('conecta-transition-text');
@@ -8870,7 +8870,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
          }
          
          // tOpen: animacion de apertura SEPARADA de la subida — arranca cuando la caja ya es visible
-         var tOpen = clamp01((p - 28.2) / 0.3); // 28.2 a 30.2
+         var tOpen = clamp01((p - 27.8) / 0.3); // 28.2 a 30.2
          let eOpen = ease(tOpen);
          if(deckClone) {
            let df1 = deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
@@ -8916,7 +8916,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
          }
 
          // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 26.0 ---
-         let localP = p - 26.0;
+         let localP = p - 25.6;
          // Cache card refs: una vez movidas a endCardTable, querySelector devuelve null — necesitamos la referencia persistente
          if (!window._ecCache || window._ecCache._deck !== deckClone) {
            window._ecCache = {
