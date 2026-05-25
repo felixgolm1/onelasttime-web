@@ -5538,6 +5538,13 @@ window.onerror = function(msg, url, line, col, err) {
                 prog = 2.2;
             }
         }
+        
+        // ANTI-LODO (Warp Lerp): Evita que la fricción interpole a través del salto
+        if (prog <= 2.2 && targetProg >= 9.62) {
+            prog = 9.62;
+        } else if (prog >= 9.62 && targetProg <= 2.2) {
+            prog = 2.2;
+        }
 
       if (Math.abs(targetProg - prog) > 0.000005) {
         prog += (targetProg - prog) * lerpF;
