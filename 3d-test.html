@@ -8826,20 +8826,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
       }
       if (!panel._ratingNum) panel._ratingNum = panel.querySelector('.rating-number');
 
-      if (panel._stars && panel._stars.length > 0) {
-         let starP = mapRange(pRev, 0.35, 0.48, 0, 1); 
-         starP = Math.max(0, Math.min(1, starP));
-         const totalStars = panel._stars.length;
-         let currentScore = 0;
-         panel._stars.forEach((s, i) => {
-             let threshold = (i + 0.5) / totalStars; 
-             if (starP > threshold) { s.style.opacity = '1'; currentScore++; } 
-             else { s.style.opacity = '0.2'; }
-         });
-         if (panel._ratingNum) panel._ratingNum.innerText = '[' + currentScore + '/5]';
-      }
-
-      let readPLeft = mapRange(pRev, 0.20, 0.38, 0, 1);
+      // 1. Texto Izquierdo (Historia)
+      let readPLeft = mapRange(pRev, 0.15, 0.32, 0, 1);
       readPLeft = Math.max(0, Math.min(1, readPLeft));
       if (panel._charsLeft && panel._charsLeft.length > 0) {
          const totalL = panel._charsLeft.length;
@@ -8853,7 +8841,22 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
          });
       }
 
-      let readPRight = mapRange(pRev, 0.25, 0.42, 0, 1);
+      // 2. Estrellas
+      if (panel._stars && panel._stars.length > 0) {
+         let starP = mapRange(pRev, 0.32, 0.44, 0, 1); 
+         starP = Math.max(0, Math.min(1, starP));
+         const totalStars = panel._stars.length;
+         let currentScore = 0;
+         panel._stars.forEach((s, i) => {
+             let threshold = (i + 0.5) / totalStars; 
+             if (starP > threshold) { s.style.opacity = '1'; currentScore++; } 
+             else { s.style.opacity = '0.2'; }
+         });
+         if (panel._ratingNum) panel._ratingNum.innerText = '[' + currentScore + '/5]';
+      }
+
+      // 3. Texto Derecho (Reseña)
+      let readPRight = mapRange(pRev, 0.44, 0.60, 0, 1);
       readPRight = Math.max(0, Math.min(1, readPRight));
       if (panel._charsRight && panel._charsRight.length > 0) {
          const totalR = panel._charsRight.length;
@@ -8867,8 +8870,9 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
          });
       }
 
+      // 4. Imagen
       if (panel._img) {
-         let imgP = mapRange(pRev, 0.40, 0.55, 0, 1); 
+         let imgP = mapRange(pRev, 0.60, 0.72, 0, 1); 
          imgP = Math.max(0, Math.min(1, imgP));
          let scale = 1.0 + (0.3 * imgP);
          let brightness = 0.3 + (0.7 * imgP);
