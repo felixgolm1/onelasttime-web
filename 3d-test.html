@@ -3695,6 +3695,32 @@ window.onerror = function(msg, url, line, col, err) {
       }
 
       // Recordar que openP se basa en (prog - 2.2)/0.4
+      let openP = Math.max(0, Math.min(1, (p - 2.2) / 0.4));
+      if (peekingCard) {
+        if (!hint.classList.contains('is-visible')) {
+          // Limpiar overrides inline para que la transición CSS (0.5s ease)
+          // haga el fade-in cuando la carta empieza a asomar
+          hint.style.transition = '';
+          hint.style.opacity    = '';
+        }
+        hint.classList.add('is-visible');
+      } else {
+        if (hint.classList.contains('is-visible')) {
+          // Restaurar transición CSS para el fade-out al retirar la carta
+          hint.style.transition = '';
+          hint.style.opacity    = '';
+        }
+        hint.classList.remove('is-visible');
+      }
+    }
+
+    // Eliminamos transiciones para que el box siga al ratón/scroll sin lag
+    mainDeck.querySelectorAll('.box-3d-volume, .box-flap, .tuck-lip, .dust-flap, .interior-cards .interior-card').forEach(el => {
+      el.style.transition = 'none';
+    });
+
+    function updateBoxState() {
+      // Ampliamos el rango de scroll para la caja: de 2.2 a 2.6 (0.4 unidades)
       // Rotación extra de volumen para enganchar con carrusel suavemente
       let volRotPre = 0;
       if (prog > 2.2 && prog <= 2.6) {
