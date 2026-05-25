@@ -3529,7 +3529,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
-    const maxProg = 28.98;  // Extendido para acomodar el bloque final completo (localP hasta 10.22)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    const maxProg = 37.0;  // Extendido para acomodar el bloque final completo (localP hasta 10.22)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
@@ -3739,14 +3739,14 @@ window.onerror = function(msg, url, line, col, err) {
       const volume = mainDeck.querySelector('.box-3d-volume');
       if (prog <= 2.6 && volume) volume.style.transform = `rotateY(${volRotPre}deg) rotateX(0deg) rotateZ(0deg)`;
       
-      if (prog > 2.6) {
+      if (prog > 9.62) {
         window.wasInMagazine = true;
         if (magazineScene) {
           magazineScene.style.display = 'flex';
           magazineScene.style.pointerEvents = 'auto';
         }
         
-        let transP = mapRange(prog, 2.6, 3.6, 0, 1);
+        let transP = mapRange(prog, 9.62, 10.62, 0, 1);
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
         gsap.set(scBoard, { y: boardY + 'vh' });
         
@@ -3754,7 +3754,7 @@ window.onerror = function(msg, url, line, col, err) {
         // Fade out the physical box shadow before it flattens into the magazine cover
         let shadowCast = document.getElementById('mainDeck').querySelector('.box-shadow-cast');
         if (shadowCast) {
-          if (prog > 2.6) {
+          if (prog > 9.62) {
             let sP = mapRange(prog, 9.62, 10.02, 0, 1);
             shadowCast.style.opacity = (1 - sP).toString();
           } else {
@@ -3766,7 +3766,7 @@ window.onerror = function(msg, url, line, col, err) {
         // Esconder caras perpendiculares y solapas SÓLO cuando la caja ha alcanzado los 450 grados (prog > 10.02)
         // para evitar que sus bordes físicos de 1px sobresalgan durante la expansión 2D, sin usar opacidad para no  romper el preserve-3d.
         let hiddenFaces = document.getElementById("mainDeck").querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
-        if (prog > 3.0) {
+        if (prog > 2.6) {
           hiddenFaces.forEach(f => f.style.display = 'none');
         } else {
           hiddenFaces.forEach(f => f.style.display = '');
@@ -3874,7 +3874,7 @@ window.onerror = function(msg, url, line, col, err) {
         // FASE 2 (prog 15.6→16.8): frame expands to full screen
         const breakoutOverlay = document.getElementById('mag-breakout-overlay');
         if (breakoutOverlay) {
-          if (prog >= 7.6) {
+          if (prog >= 14.62) {
 
             const vw = window.innerWidth;
             const vh = window.innerHeight;
@@ -4076,7 +4076,7 @@ window.onerror = function(msg, url, line, col, err) {
         }
 
         if (breakoutOverlay) {
-          if (prog >= 7.6) {
+          if (prog >= 14.62) {
 
             const vw = window.innerWidth;
             const vh = window.innerHeight;
@@ -4257,9 +4257,9 @@ window.onerror = function(msg, url, line, col, err) {
       const smallItems = document.querySelectorAll('.carousel-track-small .carousel-item');
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
-        if (prog > 2.6) {
+        if (prog > 9.62) {
           // currIndex va de 0 a 4 entre prog 10.62 y 14.62
-          let currIndex = Math.max(0, Math.min(4, prog - 3.6));
+          let currIndex = Math.max(0, Math.min(4, prog - 10.62));
           
           // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
           let exitOffsetSmall = 0;
@@ -4294,7 +4294,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             let entryOffset = 0;
             let extraBrightness = 0;
-            let localTransP = mapRange(prog, 2.6, 3.6, 0, 1);
+            let localTransP = mapRange(prog, 9.62, 10.62, 0, 1);
             if (i > 0) {
                 if (localTransP < 0.85) {
                     entryOffset = 800;
@@ -4877,7 +4877,7 @@ window.onerror = function(msg, url, line, col, err) {
 
                   // Modificador de escala para que desaparezca durante el carrusel y reaparezca
                   let scaleMod = 1.0;
-                  if (prog > 2.6 && prog <= 10.62) {
+                  if (prog > 9.62 && prog <= 10.62) {
                       scaleMod = 1.0 - (prog - 9.62);
                   } else if (prog > 10.62 && prog <= 13.62) {
                       scaleMod = 0.001; // oculto
@@ -7541,10 +7541,10 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 // Título: barre izquierda→derecha. Párrafo: barre derecha→izquierda.
 // Todo computado en cada frame desde window._brainScrollProg. Cero timers.
 (function() {
-  var SHOW_START = 9.41;
+  var SHOW_START = 17.43;
   var SHOW_FADE  = 17.58;
   var STEP_START = 17.5;
-  var STEP_END    = 18.58;  // 4 × (0.475 estatico + 0.60 entry + 1.20 exit) = 4×2.275
+  var STEP_END    = 26.6;  // 4 × (0.475 estatico + 0.60 entry + 1.20 exit) = 4×2.275
   var NUM_STEPS   = 4;
   var STEP_SIZE   = (STEP_END - STEP_START) / NUM_STEPS; // 2.275 por paso
   var TRANS_ENTRY = 0.60; // duracion animacion de ENTRADA (sin cambios)
@@ -7885,7 +7885,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
       // 1. Translación fluida de la sección (hasta el centro de la pantalla)
-      var tSlide = clamp01((p - 19.58) / 1.6); // Termina en 28.2, justo cuando empieza a abrirse
+      var tSlide = clamp01((p - 26.6) / 1.6); // Termina en 28.2, justo cuando empieza a abrirse
       var slideY = (1 - ease(tSlide)) * 130; // Nunca baja de 0 para no romper el fondo
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
@@ -7894,7 +7894,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
       window._scrollUpVh = 130 - slideY;
 
       // Fase de salida (la cámara baja continuamente)
-      var tCamera = clamp01((p - 19.58) / 3.0);
+      var tCamera = clamp01((p - 26.6) / 3.0);
       var textY = 130 - (ease(tCamera) * 230);
       var contentY = Math.min(0, textY - slideY);
       var conectaTxt = document.getElementById('conecta-transition-text');
