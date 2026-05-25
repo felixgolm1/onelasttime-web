@@ -3294,11 +3294,11 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Primera mitad de las 2 vueltas (hacia canto = 270deg) de la tarjeta SC
     // Aplicamos también un scale de alejamiento simulando perspectiva: la SC renderizada con scale 1.2 es 280x456. Reducirla a 0.66 iguala matemáticamente los ~301px de altura de la caja 3D entrante.
-    scrollTl.to(scBoard, { rotationY: 270, scale: 0.66, duration: 0.27, ease: 'power1.in' }, t3);
+    scrollTl.to(scBoard, { rotationY: 270, scale: 0.66, duration: 0.27, ease: 'none' }, t3);
     
     // De forma simultánea, rotamos tooodo el mazo plano -90 grados (como un volante) para ponerlo en formato vertical.
     // Así, cuando aparezca la caja 3D (que es nativamente de formato vertical), las geometrías encajarán a la perfección en el cambiazo ciego
-    scrollTl.to([scIntro, scIntroBack, sc1, sc2, sc3, sc4], { rotation: -90, duration: 0.27, ease: 'power1.in' }, t3);
+    scrollTl.to([scIntro, scIntroBack, sc1, sc2, sc3, sc4], { rotation: -90, duration: 0.27, ease: 'none' }, t3);
     
     // Ocultamos las cartas de fondo exactamente cuando el mazo está 100% de canto (90 grados)
     // t3 + (0.27 * (90/270)) = t3 + 0.09
@@ -3365,7 +3365,7 @@ window.onerror = function(msg, url, line, col, err) {
     // ángulo que el scBoard → la geometría encaja sin salto visual.
     scrollTl.fromTo(mainDeck.querySelector('.box-3d-volume'),
       { rotationY: 270, rotationX: 0, rotationZ: 0 },
-      { rotationY: 335, rotationX: 0, rotationZ: 0, duration: 0.35, ease: 'power2.out' },
+      { rotationY: 335, rotationX: 0, rotationZ: 0, duration: 0.35, ease: 'none' },
       tSwap
     );
     // La carta plana sale volando hacia arriba coincidiendo con la transición al carrusel
