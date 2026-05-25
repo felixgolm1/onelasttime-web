@@ -3721,13 +3721,1098 @@ window.onerror = function(msg, url, line, col, err) {
 
     function updateBoxState() {
       // Ampliamos el rango de scroll para la caja: de 2.2 a 2.6 (0.4 unidades)
-      // Rotación extra de volumen para enganchar con carrusel suavemente
+      let openP = 0; // ANULADO para que la caja no se abra.
       let volRotPre = 0;
       if (prog > 2.2 && prog <= 2.6) {
           volRotPre = mapRange(prog, 2.2, 2.6, 0, 335);
       } else if (prog > 2.6) {
           volRotPre = 335;
       }
+      // La caja se cierra a la misma velocidad (0.4) a partir de 9.12
+      if (prog > 9.12) {
+        let closeP = Math.max(0, Math.min(1, (prog - 9.12) / 0.4));
+        openP = 1 - closeP;
+      }
+
+      // 1. Tapa principal: se abre primero (0.0 a 0.5), y al cerrar es la ÚLTIMA en bajar (0.5 a 0.0)
+      let flapRot = mapRange(openP, 0.0, 0.5, 90, 180);
+      mainDeck.querySelector('.box-flap').style.transform = `translateZ(0px) rotateX(${flapRot}deg)`;
+      
+      // Lengüeta: sigue a la tapa principal
+      let lipRot = mapRange(openP, 0.05, 0.5, -92, -5);
+      mainDeck.querySelector('.tuck-lip').style.transform = `rotateX(${lipRot}deg)`;
+
+      // 2. Orejetas laterales: abren solo cuando la tapa principal ya está apartada (0.4 a 0.8)
+      // Así NUNCA se cruzan. Y al cerrar bajan antes que la tapa principal.
+      let dustRot = mapRange(openP, 0.4, 0.8, -90, -180);
+      mainDeck.querySelectorAll('.dust-flap').forEach(el => {
+        el.style.transform = `rotateX(${dustRot}deg)`;
+      });
+
+      // 3. Salida escalonada de las cartas interiores (0.3 a 1.0)
+      const targets = [-35, -28, -20, -12, -6, -2];
+      mainDeck.querySelectorAll('.interior-cards .interior-card').forEach((el, i) => {
+        let z = 6 + i * 2;
+        let finalY = targets[i] || 0;
+        let cY = mapRange(openP, 0.3, 1.0, 0, finalY);
+        el.style.transform = `translateZ(${z}px) translateY(${cY}px)`;
+      });
+
+      // 4. Secuencia Cinemática de Cartas (Peek -> Zoom -> Review -> Land)
+      const _ct = document.getElementById('card-table');
+      const c1 = mainDeck.querySelector('.card-n1') || (_ct ? _ct.querySelector('.card-on-table.card-n1') : null);
+      const c2 = mainDeck.querySelector('.card-n2') || (_ct ? _ct.querySelector('.card-on-table.card-n2') : null);
+      const c3 = mainDeck.querySelector('.card-n3') || (_ct ? _ct.querySelector('.card-on-table.card-n3') : null);
+      const c4 = mainDeck.querySelector('.card-n4') || (_ct ? _ct.querySelector('.card-on-table.card-n4') : null);
+
+      // Fases CARTA 1 (prog: 2.5 a 4.6)
+      let c1_peek = mapRange(prog, 2.5, 3.0, 0, 1);
+
+      // Fases CARTA 2
+      let c2_peek = mapRange(prog, 4.22, 4.72, 0, 1);
+
+      // Fases CARTA 3
+      let c3_peek = mapRange(prog, 6.02, 6.52, 0, 1);
+
+      // Fases CARTA 4
+      let c4_peek = mapRange(prog, 7.82, 8.32, 0, 1);
+
+      // Controlar la visibilidad de los tooltips ligados al scroll
+      const t1 = document.getElementById('card1-tooltip');
+      const t2 = document.getElementById('card2-tooltip');
+
+      if (t1) {
+         if (prog > 3.0 && prog < 4.6) {
+            if (prog <= 3.4) {
+               // Fade in mientras se acerca
+               let pIn = mapRange(prog, 3.0, 3.4, 0, 1);
+               t1.style.opacity = pIn.toFixed(3);
+               t1.style.pointerEvents = pIn > 0.05 ? 'auto' : 'none';
+            } else if (prog <= 4.2) {
+               // Visible durante el Hang Time y el primer 10% de alejamiento
+               t1.style.opacity = '1';
+               t1.style.pointerEvents = 'auto';
+            } else {
+               // Fade out cuando ya se ha alejado un 10%
+               let pOut = mapRange(prog, 4.2, 4.6, 0, 1);
+               let t1FadeOut = 1 - pOut;
+               t1.style.opacity = t1FadeOut.toFixed(3);
+               t1.style.pointerEvents = 'none';
+            }
+         } else {
+            t1.style.opacity = '0';
+            t1.style.pointerEvents = 'none';
+         }
+      }
+
+      if (t2) {
+         if (prog > 5.0 && prog < 6.6) {
+            if (prog <= 5.4) {
+               let pIn = mapRange(prog, 5.0, 5.4, 0, 1);
+               t2.style.opacity = pIn.toFixed(3);
+               t2.style.pointerEvents = pIn > 0.05 ? 'auto' : 'none';
+            } else if (prog <= 6.2) {
+               t2.style.opacity = '1';
+               t2.style.pointerEvents = 'auto';
+            } else {
+               let pOut = mapRange(prog, 6.2, 6.6, 0, 1);
+               let t2FadeOut = 1 - pOut;
+               t2.style.opacity = t2FadeOut.toFixed(3);
+               t2.style.pointerEvents = 'none';
+            }
+         } else {
+            t2.style.opacity = '0';
+            t2.style.pointerEvents = 'none';
+         }
+      }
+
+      // Controlar la visibilidad del CTA inferior (ahora siempre visible)
+      const bottomCta = document.getElementById('cta-bottom-container');
+      if (bottomCta) {
+         bottomCta.style.opacity = '1';
+         bottomCta.style.pointerEvents = 'auto';
+      }
+
+      // Animación de los paneles de reseña (Solo Fade In/Out)
+      // Animación de los paneles de reseña (AHORA ORYZO SLIDE UP)
+      const rev1 = document.getElementById('review-panel-1');
+      if (rev1) {
+        if (prog > 3.0 && prog < 4.6) {
+          let pRev = mapRange(prog, 3.0, 4.6, 0, 1);
+          
+          // 1. Desplazamiento desde abajo hacia arriba
+          let yVal = mapRange(prog, 3.0, 4.6, window.innerHeight * 1.5, -window.innerHeight * 1.5);
+          rev1.style.transform = `translateY(${yVal}px)`;
+          
+          // 2. Fade out antes de llegar al menú (sin fade in temprano)
+          if (pRev > 0.85) {
+             rev1.style.opacity = mapRange(pRev, 0.85, 1.0, 1, 0);
+          } else {
+             rev1.style.opacity = 1;
+          }
+
+          // Caching elements to avoid slow querySelectors in 60fps loop
+          if (!rev1._charsLeft) rev1._charsLeft = Array.from(rev1.querySelectorAll('.review-left-quote .char'));
+          if (!rev1._charsRight) rev1._charsRight = Array.from(rev1.querySelectorAll('.review-quote .char'));
+          if (!rev1._stars) rev1._stars = Array.from(rev1.querySelectorAll('.star'));
+          if (!rev1._img) { 
+              rev1._img = rev1.querySelector('.review-img-col img');
+              if (rev1._img) rev1._img.style.willChange = 'transform, filter';
+          }
+
+          // 2.5 Estrellas se iluminan de 1 en 1 antes de que empiece el texto (DERECHA)
+          if (!rev1._ratingNum) rev1._ratingNum = rev1.querySelector('.rating-number');
+          if (rev1._stars && rev1._stars.length > 0) {
+             let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
+             starP = Math.max(0, Math.min(1, starP));
+             
+             const totalStars = rev1._stars.length;
+             let currentScore = 0;
+             rev1._stars.forEach((s, i) => {
+                 let threshold = (i + 0.5) / totalStars; 
+                 if (starP > threshold) {
+                     s.style.opacity = '1';
+                     currentScore++;
+                 } else {
+                     s.style.opacity = '0.2';
+                 }
+             });
+             if (rev1._ratingNum) rev1._ratingNum.innerText = `[${currentScore}/5]`;
+          }
+
+          // 3. Texto iluminado (IZQUIERDA)
+          let readPLeft = mapRange(pRev, 0.18, 0.34, 0, 1);
+          readPLeft = Math.max(0, Math.min(1, readPLeft));
+          
+          if (rev1._charsLeft && rev1._charsLeft.length > 0) {
+             const totalL = rev1._charsLeft.length;
+             const gradL = Math.max(10, Math.floor(totalL * 0.15)); 
+             rev1._charsLeft.forEach((c, i) => {
+                 let charStart = i / totalL;
+                 let charEnd = Math.min(1, (i + gradL) / totalL); 
+                 let cP = mapRange(readPLeft, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+          
+          // 3.5 Texto iluminado (DERECHA)
+          let readPRight = mapRange(pRev, 0.43, 0.54, 0, 1);
+          readPRight = Math.max(0, Math.min(1, readPRight));
+          
+          if (rev1._charsRight && rev1._charsRight.length > 0) {
+             const totalR = rev1._charsRight.length;
+             const gradR = Math.max(10, Math.floor(totalR * 0.15)); 
+             rev1._charsRight.forEach((c, i) => {
+                 let charStart = i / totalR;
+                 let charEnd = Math.min(1, (i + gradR) / totalR); 
+                 let cP = mapRange(readPRight, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+
+          // 4. Imagen se agranda 30% y se ilumina (DERECHA)
+          if (rev1._img) {
+             let imgP = mapRange(pRev, 0.60, 0.675, 0, 1); 
+             imgP = Math.max(0, Math.min(1, imgP));
+             let scale = 1.0 + (0.3 * imgP);
+             let brightness = 0.3 + (0.7 * imgP);
+             rev1._img.style.transform = `scale(${scale}) translateZ(0)`; 
+             rev1._img.style.opacity = brightness.toString(); 
+          }
+        } else {
+          rev1.style.opacity = '0';
+        }
+      }
+
+      const rev2 = document.getElementById('review-panel-2');
+      if (rev2) {
+        if (prog > 4.72 && prog < 6.32) {
+          let pRev = mapRange(prog, 4.72, 6.32, 0, 1);
+          
+          let yVal = mapRange(prog, 4.72, 6.32, window.innerHeight * 1.5, -window.innerHeight * 1.5);
+          rev2.style.transform = `translateY(${yVal}px)`;
+          
+          if (pRev > 0.85) {
+             rev2.style.opacity = mapRange(pRev, 0.85, 1.0, 1, 0);
+          } else {
+             rev2.style.opacity = 1;
+          }
+
+          if (!rev2._charsLeft) rev2._charsLeft = Array.from(rev2.querySelectorAll('.review-left-quote .char'));
+          if (!rev2._charsRight) rev2._charsRight = Array.from(rev2.querySelectorAll('.review-quote .char'));
+          if (!rev2._stars) rev2._stars = Array.from(rev2.querySelectorAll('.star'));
+          if (!rev2._img) { 
+              rev2._img = rev2.querySelector('.review-img-col img');
+              if (rev2._img) rev2._img.style.willChange = 'transform, filter';
+          }
+
+          if (!rev2._ratingNum) rev2._ratingNum = rev2.querySelector('.rating-number');
+          if (rev2._stars && rev2._stars.length > 0) {
+             let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
+             starP = Math.max(0, Math.min(1, starP));
+             
+             const totalStars = rev2._stars.length;
+             let currentScore = 0;
+             rev2._stars.forEach((s, i) => {
+                 let threshold = (i + 0.5) / totalStars; 
+                 if (starP > threshold) {
+                     s.style.opacity = '1';
+                     currentScore++;
+                 } else {
+                     s.style.opacity = '0.2';
+                 }
+             });
+             if (rev2._ratingNum) rev2._ratingNum.innerText = `[${currentScore}/5]`;
+          }
+
+          let readPLeft = mapRange(pRev, 0.18, 0.34, 0, 1);
+          readPLeft = Math.max(0, Math.min(1, readPLeft));
+          
+          if (rev2._charsLeft && rev2._charsLeft.length > 0) {
+             const totalL = rev2._charsLeft.length;
+             const gradL = Math.max(10, Math.floor(totalL * 0.15)); 
+             rev2._charsLeft.forEach((c, i) => {
+                 let charStart = i / totalL;
+                 let charEnd = Math.min(1, (i + gradL) / totalL); 
+                 let cP = mapRange(readPLeft, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+          
+          let readPRight = mapRange(pRev, 0.43, 0.54, 0, 1);
+          readPRight = Math.max(0, Math.min(1, readPRight));
+          
+          if (rev2._charsRight && rev2._charsRight.length > 0) {
+             const totalR = rev2._charsRight.length;
+             const gradR = Math.max(10, Math.floor(totalR * 0.15)); 
+             rev2._charsRight.forEach((c, i) => {
+                 let charStart = i / totalR;
+                 let charEnd = Math.min(1, (i + gradR) / totalR); 
+                 let cP = mapRange(readPRight, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+
+          if (rev2._img) {
+             let imgP = mapRange(pRev, 0.60, 0.675, 0, 1); 
+             imgP = Math.max(0, Math.min(1, imgP));
+             let scale = 1.0 + (0.3 * imgP);
+             let brightness = 0.3 + (0.7 * imgP);
+             rev2._img.style.transform = `scale(${scale}) translateZ(0)`; 
+             rev2._img.style.opacity = brightness.toString(); 
+          }
+        } else {
+          rev2.style.opacity = '0';
+        }
+      }
+
+      const rev3 = document.getElementById('review-panel-3');
+      if (rev3) {
+        if (prog > 6.52 && prog < 8.12) {
+          let pRev = mapRange(prog, 6.52, 8.12, 0, 1);
+          
+          let yVal = mapRange(prog, 6.52, 8.12, window.innerHeight * 1.5, -window.innerHeight * 1.5);
+          rev3.style.transform = `translateY(${yVal}px)`;
+          
+          if (pRev > 0.85) {
+             rev3.style.opacity = mapRange(pRev, 0.85, 1.0, 1, 0);
+          } else {
+             rev3.style.opacity = 1;
+          }
+
+          if (!rev3._charsLeft) rev3._charsLeft = Array.from(rev3.querySelectorAll('.review-left-quote .char'));
+          if (!rev3._charsRight) rev3._charsRight = Array.from(rev3.querySelectorAll('.review-quote .char'));
+          if (!rev3._stars) rev3._stars = Array.from(rev3.querySelectorAll('.star'));
+          if (!rev3._img) { 
+              rev3._img = rev3.querySelector('.review-img-col img');
+              if (rev3._img) rev3._img.style.willChange = 'transform, filter';
+          }
+
+          if (!rev3._ratingNum) rev3._ratingNum = rev3.querySelector('.rating-number');
+          if (rev3._stars && rev3._stars.length > 0) {
+             let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
+             starP = Math.max(0, Math.min(1, starP));
+             
+             const totalStars = rev3._stars.length;
+             let currentScore = 0;
+             rev3._stars.forEach((s, i) => {
+                 let threshold = (i + 0.5) / totalStars; 
+                 if (starP > threshold) {
+                     s.style.opacity = '1';
+                     currentScore++;
+                 } else {
+                     s.style.opacity = '0.2';
+                 }
+             });
+             if (rev3._ratingNum) rev3._ratingNum.innerText = `[${currentScore}/5]`;
+          }
+
+          let readPLeft = mapRange(pRev, 0.18, 0.34, 0, 1);
+          readPLeft = Math.max(0, Math.min(1, readPLeft));
+          
+          if (rev3._charsLeft && rev3._charsLeft.length > 0) {
+             const totalL = rev3._charsLeft.length;
+             const gradL = Math.max(10, Math.floor(totalL * 0.15)); 
+             rev3._charsLeft.forEach((c, i) => {
+                 let charStart = i / totalL;
+                 let charEnd = Math.min(1, (i + gradL) / totalL); 
+                 let cP = mapRange(readPLeft, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+          
+          let readPRight = mapRange(pRev, 0.43, 0.54, 0, 1);
+          readPRight = Math.max(0, Math.min(1, readPRight));
+          
+          if (rev3._charsRight && rev3._charsRight.length > 0) {
+             const totalR = rev3._charsRight.length;
+             const gradR = Math.max(10, Math.floor(totalR * 0.15)); 
+             rev3._charsRight.forEach((c, i) => {
+                 let charStart = i / totalR;
+                 let charEnd = Math.min(1, (i + gradR) / totalR); 
+                 let cP = mapRange(readPRight, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+
+          if (rev3._img) {
+             let imgP = mapRange(pRev, 0.60, 0.675, 0, 1); 
+             imgP = Math.max(0, Math.min(1, imgP));
+             let scale = 1.0 + (0.3 * imgP);
+             let brightness = 0.3 + (0.7 * imgP);
+             rev3._img.style.transform = `scale(${scale}) translateZ(0)`; 
+             rev3._img.style.opacity = brightness.toString(); 
+          }
+        } else {
+          rev3.style.opacity = '0';
+        }
+      }
+
+      
+      const rev4 = document.getElementById('review-panel-4');
+      if (rev4) {
+        if (prog > 8.32 && prog < 9.92) {
+          let pRev = mapRange(prog, 8.32, 9.92, 0, 1);
+          
+          let yVal = mapRange(prog, 8.32, 9.92, window.innerHeight * 1.5, -window.innerHeight * 1.5);
+          rev4.style.transform = `translateY(${yVal}px)`;
+          
+          if (pRev > 0.85) {
+             rev4.style.opacity = mapRange(pRev, 0.85, 1.0, 1, 0);
+          } else {
+             rev4.style.opacity = 1;
+          }
+
+          if (!rev4._charsLeft) rev4._charsLeft = Array.from(rev4.querySelectorAll('.review-left-quote .char'));
+          if (!rev4._charsRight) rev4._charsRight = Array.from(rev4.querySelectorAll('.review-quote .char'));
+          if (!rev4._stars) rev4._stars = Array.from(rev4.querySelectorAll('.star'));
+          if (!rev4._img) { 
+              rev4._img = rev4.querySelector('.review-img-col img');
+              if (rev4._img) rev4._img.style.willChange = 'transform, filter';
+          }
+
+          if (!rev4._ratingNum) rev4._ratingNum = rev4.querySelector('.rating-number');
+          if (rev4._stars && rev4._stars.length > 0) {
+             let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
+             starP = Math.max(0, Math.min(1, starP));
+             
+             const totalStars = rev4._stars.length;
+             let currentScore = 0;
+             rev4._stars.forEach((s, i) => {
+                 let threshold = (i + 0.5) / totalStars; 
+                 if (starP > threshold) {
+                     s.style.opacity = '1';
+                     currentScore++;
+                 } else {
+                     s.style.opacity = '0.2';
+                 }
+             });
+             if (rev4._ratingNum) rev4._ratingNum.innerText = `[${currentScore}/5]`;
+          }
+
+          let readPLeft = mapRange(pRev, 0.18, 0.34, 0, 1);
+          readPLeft = Math.max(0, Math.min(1, readPLeft));
+          
+          if (rev4._charsLeft && rev4._charsLeft.length > 0) {
+             const totalL = rev4._charsLeft.length;
+             const gradL = Math.max(10, Math.floor(totalL * 0.15)); 
+             rev4._charsLeft.forEach((c, i) => {
+                 let charStart = i / totalL;
+                 let charEnd = Math.min(1, (i + gradL) / totalL); 
+                 let cP = mapRange(readPLeft, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+          
+          let readPRight = mapRange(pRev, 0.43, 0.54, 0, 1);
+          readPRight = Math.max(0, Math.min(1, readPRight));
+          
+          if (rev4._charsRight && rev4._charsRight.length > 0) {
+             const totalR = rev4._charsRight.length;
+             const gradR = Math.max(10, Math.floor(totalR * 0.15)); 
+             rev4._charsRight.forEach((c, i) => {
+                 let charStart = i / totalR;
+                 let charEnd = Math.min(1, (i + gradR) / totalR); 
+                 let cP = mapRange(readPRight, charStart, charEnd, 0, 1);
+                 cP = Math.max(0, Math.min(1, cP));
+                 c.style.opacity = (0.15 + (0.85 * cP)).toString();
+             });
+          }
+
+          if (rev4._img) {
+             let imgP = mapRange(pRev, 0.60, 0.675, 0, 1); 
+             imgP = Math.max(0, Math.min(1, imgP));
+             let scale = 1.0 + (0.3 * imgP);
+             let brightness = 0.3 + (0.7 * imgP);
+             rev4._img.style.transform = `scale(${scale}) translateZ(0)`; 
+             rev4._img.style.opacity = brightness.toString(); 
+          }
+        } else {
+          rev4.style.opacity = '0';
+        }
+      }
+
+      
+      
+      // Lógica Extracción CARTA 1
+      if (c1) {
+        if (c1_peek === 0) {
+          if (c1.dataset.state !== 'deck-rest') {
+            c1.dataset.state = 'deck-rest';
+            const interior = mainDeck.querySelector('.interior-cards');
+            if (c1.parentNode !== interior) interior.insertBefore(c1, interior.firstChild);
+            c1.style.position = ''; c1.style.left = ''; c1.style.top = ''; c1.style.margin = '';
+            c1.classList.remove('card-on-table', 'card-peeking');
+            c1.classList.add('card-in-deck');
+            c1.style.transition = 'none';
+            c1.style.transform = `translate(-50%, calc(-50% + 15px)) translateZ(${c1.dataset.zDepth||6}px) rotate(-90deg) scale(0.85)`;
+            c1.style.clipPath = 'inset(0 0 0 10px round 16px)';
+          }
+        } else if (c1_peek > 0 && prog <= 3.0) {
+          c1.dataset.state = 'extracting';
+          const interior = mainDeck.querySelector('.interior-cards');
+          if (c1.parentNode !== interior) {
+             interior.insertBefore(c1, interior.firstChild);
+             c1.style.position = ''; c1.style.left = ''; c1.style.top = ''; c1.style.margin = '';
+          }
+          c1.classList.add('card-peeking');
+          c1.classList.remove('card-on-table', 'card-in-deck');
+          c1.style.transition = 'none';
+          const y = 15 - 345 * c1_peek; 
+          c1.style.transform = `translate(-50%, calc(-50% + ${y}px)) translateZ(${c1.dataset.zDepth||6}px) rotate(-90deg) scale(0.9)`;
+          c1.style.clipPath = y > 5 ? 'inset(0 0 0 10px round 16px)' : '';
+        } else {
+          c1.dataset.state = 'table';
+          const cardTable = document.getElementById('card-table');
+          if (c1.parentNode !== cardTable) {
+             let slotRef = mainDeck.querySelector('#slot-reference');
+             if (!slotRef) {
+               slotRef = document.createElement('div');
+               slotRef.id = 'slot-reference';
+               slotRef.style.cssText = `position:absolute; left:50%; top:50%; width:1px; height:1px; pointer-events:none; opacity:0; transform: translate(-50%, calc(-50% - 330px)) translateZ(${c1.dataset.zDepth||6}px) rotate(-90deg) scale(0.9);`;
+               mainDeck.querySelector('.interior-cards').appendChild(slotRef);
+             }
+             const rect = slotRef.getBoundingClientRect();
+             const tableRect = cardTable.getBoundingClientRect();
+             if (rect.width > 0 && rect.height > 0) {
+                 c1.dataset.boxLeft = (rect.left - tableRect.left).toString();
+                 c1.dataset.boxTop  = (rect.top - tableRect.top).toString();
+             }
+             cardTable.appendChild(c1);
+             c1.classList.remove('card-in-deck', 'card-peeking');
+             c1.classList.add('card-on-table');
+             c1.style.position = 'absolute';
+             c1.style.clipPath = '';
+             c1.style.transition = 'none';
+          }
+          const startX = parseFloat(c1.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
+          const startY = parseFloat(c1.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          
+          const isDesktop = window.innerWidth > 768;
+          const zoomScale = isDesktop ? 1.1 : 0.97; // Aumentado un 10% según solicitud
+          const zoomX = window.innerWidth / 2;
+          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          
+          const endX = zoomX; // Se mantiene en el centro en lugar de ir a la izquierda
+          const endY = zoomY + 60; // Baja suavemente
+          
+          let uX = parseFloat(c1.dataset.userOffsetX) || 0;
+          let uY = parseFloat(c1.dataset.userOffsetY) || 0;
+          
+          let currentX, currentY, currentRotY, currentRotZ, currentScale, shadowAlpha;
+
+          let move_in = 0, move_out = 0;
+          if (prog <= 3.4) {
+             move_in = mapRange(prog, 3.0, 3.4, 0, 0.8);
+          } else if (prog <= 3.8) {
+             move_in = mapRange(prog, 3.4, 3.8, 0.8, 1.0);
+          } else if (prog <= 4.3) {
+             move_in = 1.0;
+             move_out = 0;
+          } else {
+             move_in = 1.0;
+             move_out = mapRange(prog, 4.3, 4.9, 0, 1);
+          }
+
+          let rot_p = 0;
+          let hang_p = 0;
+          if (prog > 3.8 && prog <= 4.3) {
+             hang_p = mapRange(prog, 3.8, 4.3, 0, 1);
+          } else if (prog > 4.3) {
+             hang_p = 1.0;
+          }
+          if (prog <= 3.3) {
+             rot_p = mapRange(prog, 3.0, 3.3, 0, 0.85);
+          } else if (prog <= 3.5) {
+             rot_p = mapRange(prog, 3.3, 3.5, 0.85, 0.95);
+          } else if (prog <= 3.8) {
+             rot_p = mapRange(prog, 3.5, 3.8, 0.95, 1.0);
+          } else if (prog <= 4.9) {
+             rot_p = mapRange(prog, 3.8, 4.9, 1.0, 0.95);
+          } else {
+             rot_p = 0.95;
+          }
+
+          currentRotZ = -90 + (90 * rot_p); 
+          currentRotY = 335 + (25 * rot_p); 
+          
+          let flip_p = mapRange(prog, 3.5, 4.1, 0, 1);
+          let currentRotX = flip_p * 180;
+          
+          c1.style.filter = ''; // Eliminamos el desenfoque
+          
+          if (move_out === 0) {
+             // Fase de Acercamiento y Suspensión (hang)
+             currentX = startX + (zoomX - startX) * move_in;
+             currentY = startY + (zoomY - startY) * move_in + (60 * hang_p);
+             currentScale = 0.9 + (zoomScale - 0.9) * move_in;
+             shadowAlpha = 0.16 + (0.4 - 0.16) * move_in;
+          } else {
+             // Fase de Alejamiento (Cae hacia abajo y a la izquierda)
+             currentX = zoomX - (window.innerWidth * 1.5) * move_out; 
+             currentY = zoomY + 60 + (window.innerHeight * 1.5) * move_out; 
+             currentScale = zoomScale; 
+             shadowAlpha = 0.4 - (0.4 - 0.16) * move_out;
+             
+             currentRotX += 120 * move_out;
+             currentRotY += 90 * move_out;
+             currentRotZ -= 60 * move_out;
+          }
+
+          if (c1.dataset.isDragging !== 'true' && prog > 3.0) {
+            c1.style.transition = 'none';
+            c1.style.left = currentX + 'px';
+            c1.style.top = currentY + 'px';
+            c1.style.transform = `translate(-50%, -50%) rotateY(${currentRotY}deg) rotateX(${currentRotX}deg) rotateZ(${currentRotZ}deg) scale(${currentScale})`;
+            c1.style.boxShadow = `0 8px 16px rgba(0,0,0,${shadowAlpha*0.75}), 0 40px 80px rgba(0,0,0,${shadowAlpha})`;
+            
+            const frontFace = c1.querySelector('.card-front');
+            const backFace = c1.querySelector('.card-back');
+            if (frontFace && backFace) {
+                if (currentRotX > 90) {
+                    frontFace.style.display = 'none';
+                    backFace.style.display = 'flex';
+                } else {
+                    frontFace.style.display = 'flex';
+                    backFace.style.display = 'none';
+                }
+            }
+            
+            if (prog > 3.0 && prog < 4.6) c1.style.zIndex = '500';
+            else c1.style.zIndex = c1.dataset.isDragging === 'true' ? '10000' : '2000';
+          }
+        }
+      }
+
+      // Lógica de extracción de c2
+      const fakeCard2 = mainDeck.querySelector('.interior-cards .interior-card:nth-child(1)');
+      if (c2) {
+        if (c2_peek === 0) {
+          if (fakeCard2) fakeCard2.style.opacity = '1';
+          if (c2.dataset.state !== 'deck-rest') {
+            c2.dataset.state = 'deck-rest';
+            c2.style.opacity = '0';
+            const interior = mainDeck.querySelector('.interior-cards');
+            if (c2.parentNode !== interior) interior.insertBefore(c2, interior.firstChild);
+            c2.style.position = ''; c2.style.left = ''; c2.style.top = ''; c2.style.margin = '';
+            c2.classList.remove('card-on-table', 'card-peeking');
+            c2.classList.add('card-in-deck');
+            c2.style.transition = 'none';
+            c2.style.transform = `translate(-50%, calc(-50% - 35px)) translateZ(${c2.dataset.zDepth||6}px) rotate(-90deg) scale(0.85)`;
+            c2.style.clipPath = 'inset(0 0 0 10px round 16px)';
+          }
+        } else if (c2_peek > 0 && prog <= 4.72) {
+          if (fakeCard2) fakeCard2.style.opacity = '0';
+          c2.style.opacity = '1';
+          c2.dataset.state = 'extracting';
+          const interior = mainDeck.querySelector('.interior-cards');
+          if (c2.parentNode !== interior) {
+             interior.insertBefore(c2, interior.firstChild);
+             c2.style.position = ''; c2.style.left = ''; c2.style.top = ''; c2.style.margin = '';
+          }
+          c2.classList.add('card-peeking');
+          c2.classList.remove('card-on-table', 'card-in-deck');
+          c2.style.transition = 'none';
+          const y = -35 - 295 * c2_peek; 
+          c2.style.transform = `translate(-50%, calc(-50% + ${y}px)) translateZ(${c2.dataset.zDepth||6}px) rotate(-90deg) scale(0.9)`;
+          c2.style.clipPath = y > 5 ? 'inset(0 0 0 10px round 16px)' : '';
+        } else {
+          if (fakeCard2) fakeCard2.style.opacity = '0';
+          c2.style.opacity = '1';
+          c2.dataset.state = 'table';
+          const cardTable = document.getElementById('card-table');
+          if (c2.parentNode !== cardTable) {
+             let slotRef = mainDeck.querySelector('#slot-reference');
+             if (!slotRef) {
+               slotRef = document.createElement('div');
+               slotRef.id = 'slot-reference';
+               slotRef.style.cssText = `position:absolute; left:50%; top:50%; width:1px; height:1px; pointer-events:none; opacity:0; transform: translate(-50%, calc(-50% - 330px)) translateZ(${c2.dataset.zDepth||6}px) rotate(-90deg) scale(0.9);`;
+               mainDeck.querySelector('.interior-cards').appendChild(slotRef);
+             }
+             const rect = slotRef.getBoundingClientRect();
+             const tableRect = cardTable.getBoundingClientRect();
+             if (rect.width > 0 && rect.height > 0) {
+                 c2.dataset.boxLeft = (rect.left - tableRect.left).toString();
+                 c2.dataset.boxTop  = (rect.top - tableRect.top).toString();
+             }
+             cardTable.appendChild(c2);
+             c2.classList.remove('card-in-deck', 'card-peeking');
+             c2.classList.add('card-on-table');
+             c2.style.position = 'absolute';
+             c2.style.clipPath = '';
+             c2.style.transition = 'none';
+          }
+          const startX = parseFloat(c2.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
+          const startY = parseFloat(c2.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          
+          const isDesktop = window.innerWidth > 768;
+          const zoomScale = isDesktop ? 1.1 : 0.97;
+          const zoomX = window.innerWidth / 2;
+          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          
+          let currentX, currentY, currentRotY, currentRotZ, currentScale, shadowAlpha;
+
+          let move_in = 0, move_out = 0;
+          if (prog <= 5.12) {
+             move_in = mapRange(prog, 4.72, 5.12, 0, 0.8);
+          } else if (prog <= 5.52) {
+             move_in = mapRange(prog, 5.12, 5.52, 0.8, 1.0);
+          } else if (prog <= 6.02) {
+             move_in = 1.0;
+             move_out = 0;
+          } else {
+             move_in = 1.0;
+             move_out = mapRange(prog, 6.02, 6.62, 0, 1);
+          }
+
+          let rot_p = 0;
+          let hang_p = 0;
+          if (prog > 5.52 && prog <= 6.02) {
+             hang_p = mapRange(prog, 5.52, 6.02, 0, 1);
+          } else if (prog > 6.02) {
+             hang_p = 1.0;
+          }
+          if (prog <= 5.02) {
+             rot_p = mapRange(prog, 4.72, 5.02, 0, 0.85);
+          } else if (prog <= 5.22) {
+             rot_p = mapRange(prog, 5.02, 5.22, 0.85, 0.95);
+          } else if (prog <= 5.52) {
+             rot_p = mapRange(prog, 5.22, 5.52, 0.95, 1.0);
+          } else if (prog <= 6.62) {
+             rot_p = mapRange(prog, 5.52, 6.62, 1.0, 0.95);
+          } else {
+             rot_p = 0.95;
+          }
+
+          currentRotZ = -90 + (90 * rot_p); 
+          currentRotY = 335 + (25 * rot_p); 
+          
+          let flip_p = mapRange(prog, 5.22, 5.82, 0, 1);
+          let currentRotX = flip_p * 180;
+          
+          c2.style.filter = '';
+          
+          if (move_out === 0) {
+             currentX = startX + (zoomX - startX) * move_in;
+             currentY = startY + (zoomY - startY) * move_in + (60 * hang_p);
+             currentScale = 0.9 + (zoomScale - 0.9) * move_in;
+             shadowAlpha = 0.16 + (0.4 - 0.16) * move_in;
+          } else {
+             currentX = zoomX + (window.innerWidth * 1.5) * move_out;
+             currentY = zoomY + 60 + (window.innerHeight * 1.5) * move_out;
+             currentScale = zoomScale;
+             shadowAlpha = 0.4 - (0.4 - 0.16) * move_out;
+             
+             currentRotX += 120 * move_out;
+             currentRotY -= 90 * move_out;
+             currentRotZ += 60 * move_out;
+          }
+
+          if (c2.dataset.isDragging !== 'true' && prog > 4.72) {
+            c2.style.transition = 'none';
+            c2.style.left = currentX + 'px';
+            c2.style.top = currentY + 'px';
+            c2.style.transform = `translate(-50%, -50%) rotateY(${currentRotY}deg) rotateX(${currentRotX}deg) rotateZ(${currentRotZ}deg) scale(${currentScale})`;
+            c2.style.boxShadow = `0 8px 16px rgba(0,0,0,${shadowAlpha*0.75}), 0 40px 80px rgba(0,0,0,${shadowAlpha})`;
+            
+            const frontFace = c2.querySelector('.card-front');
+            const backFace = c2.querySelector('.card-back');
+            if (frontFace && backFace) {
+                if (currentRotX > 90) {
+                    frontFace.style.display = 'none';
+                    backFace.style.display = 'flex';
+                } else {
+                    frontFace.style.display = 'flex';
+                    backFace.style.display = 'none';
+                }
+            }
+            
+            if (prog > 4.72 && prog < 6.32) c2.style.zIndex = '500';
+            else c2.style.zIndex = c2.dataset.isDragging === 'true' ? '10000' : '2001';
+          }
+        }
+      }
+
+      // Lógica de extracción de c3
+      const fakeCard3 = mainDeck.querySelector('.interior-cards .interior-card:nth-child(2)');
+      if (c3) {
+        if (c3_peek === 0) {
+          if (fakeCard3) fakeCard3.style.opacity = '1';
+          if (c3.dataset.state !== 'deck-rest') {
+            c3.dataset.state = 'deck-rest';
+            c3.style.opacity = '0';
+            const interior = mainDeck.querySelector('.interior-cards');
+            if (c3.parentNode !== interior) interior.insertBefore(c3, interior.firstChild);
+            c3.style.position = ''; c3.style.left = ''; c3.style.top = ''; c3.style.margin = '';
+            c3.classList.remove('card-on-table', 'card-peeking');
+            c3.classList.add('card-in-deck');
+            c3.style.transition = 'none';
+            c3.style.transform = `translate(-50%, calc(-50% - 35px)) translateZ(${c3.dataset.zDepth||6}px) rotate(-90deg) scale(0.85)`;
+            c3.style.clipPath = 'inset(0 0 0 10px round 16px)';
+          }
+        } else if (c3_peek > 0 && prog <= 6.52) {
+          if (fakeCard3) fakeCard3.style.opacity = '0';
+          c3.style.opacity = '1';
+          c3.dataset.state = 'extracting';
+          const interior = mainDeck.querySelector('.interior-cards');
+          if (c3.parentNode !== interior) {
+             interior.insertBefore(c3, interior.firstChild);
+             c3.style.position = ''; c3.style.left = ''; c3.style.top = ''; c3.style.margin = '';
+          }
+          c3.classList.add('card-peeking');
+          c3.classList.remove('card-on-table', 'card-in-deck');
+          c3.style.transition = 'none';
+          const y = -35 - 295 * c3_peek; 
+          c3.style.transform = `translate(-50%, calc(-50% + ${y}px)) translateZ(${c3.dataset.zDepth||6}px) rotate(-90deg) scale(0.9)`;
+          c3.style.clipPath = y > 5 ? 'inset(0 0 0 10px round 16px)' : '';
+        } else {
+          if (fakeCard3) fakeCard3.style.opacity = '0';
+          c3.style.opacity = '1';
+          c3.dataset.state = 'table';
+          const cardTable = document.getElementById('card-table');
+          if (c3.parentNode !== cardTable) {
+             let slotRef = mainDeck.querySelector('#slot-reference');
+             if (!slotRef) {
+               slotRef = document.createElement('div');
+               slotRef.id = 'slot-reference';
+               slotRef.style.cssText = `position:absolute; left:50%; top:50%; width:1px; height:1px; pointer-events:none; opacity:0; transform: translate(-50%, calc(-50% - 330px)) translateZ(${c3.dataset.zDepth||6}px) rotate(-90deg) scale(0.9);`;
+               mainDeck.querySelector('.interior-cards').appendChild(slotRef);
+             }
+             const rect = slotRef.getBoundingClientRect();
+             const tableRect = cardTable.getBoundingClientRect();
+             if (rect.width > 0 && rect.height > 0) {
+                 c3.dataset.boxLeft = (rect.left - tableRect.left).toString();
+                 c3.dataset.boxTop  = (rect.top - tableRect.top).toString();
+             }
+             cardTable.appendChild(c3);
+             c3.classList.remove('card-in-deck', 'card-peeking');
+             c3.classList.add('card-on-table');
+             c3.style.position = 'absolute';
+             c3.style.clipPath = '';
+             c3.style.transition = 'none';
+          }
+          const startX = parseFloat(c3.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
+          const startY = parseFloat(c3.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          
+          const isDesktop = window.innerWidth > 768;
+          const zoomScale = isDesktop ? 1.1 : 0.97;
+          const zoomX = window.innerWidth / 2;
+          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          
+          let currentX, currentY, currentRotY, currentRotZ, currentScale, shadowAlpha;
+
+          let move_in = 0, move_out = 0;
+          if (prog <= 6.92) {
+             move_in = mapRange(prog, 6.52, 6.92, 0, 0.8);
+          } else if (prog <= 7.32) {
+             move_in = mapRange(prog, 6.92, 7.32, 0.8, 1.0);
+          } else if (prog <= 7.82) {
+             move_in = 1.0;
+             move_out = 0;
+          } else {
+             move_in = 1.0;
+             move_out = mapRange(prog, 7.82, 8.42, 0, 1);
+          }
+
+          let rot_p = 0;
+          let hang_p = 0;
+          if (prog > 7.32 && prog <= 7.82) {
+             hang_p = mapRange(prog, 7.32, 7.82, 0, 1);
+          } else if (prog > 7.82) {
+             hang_p = 1.0;
+          }
+          if (prog <= 6.82) {
+             rot_p = mapRange(prog, 6.52, 6.82, 0, 0.85);
+          } else if (prog <= 7.02) {
+             rot_p = mapRange(prog, 6.82, 7.02, 0.85, 0.95);
+          } else if (prog <= 7.32) {
+             rot_p = mapRange(prog, 7.02, 7.32, 0.95, 1.0);
+          } else if (prog <= 8.42) {
+             rot_p = mapRange(prog, 7.32, 8.42, 1.0, 0.95);
+          } else {
+             rot_p = 0.95;
+          }
+
+          currentRotZ = -90 + (90 * rot_p); 
+          currentRotY = 335 + (25 * rot_p); 
+          
+          let flip_p = mapRange(prog, 7.02, 7.62, 0, 1);
+          let currentRotX = flip_p * 180;
+          
+          c3.style.filter = '';
+          
+          if (move_out === 0) {
+             currentX = startX + (zoomX - startX) * move_in;
+             currentY = startY + (zoomY - startY) * move_in + (60 * hang_p);
+             currentScale = 0.9 + (zoomScale - 0.9) * move_in;
+             shadowAlpha = 0.16 + (0.4 - 0.16) * move_in;
+          } else {
+             currentX = zoomX;
+             currentY = zoomY + 60 + (window.innerHeight * 1.5) * move_out;
+             currentScale = zoomScale;
+             shadowAlpha = 0.4 - (0.4 - 0.16) * move_out;
+             
+             currentRotX += 120 * move_out;
+             currentRotY -= 90 * move_out;
+             currentRotZ += 60 * move_out;
+          }
+
+          if (c3.dataset.isDragging !== 'true' && prog > 6.52) {
+            c3.style.transition = 'none';
+            c3.style.left = currentX + 'px';
+            c3.style.top = currentY + 'px';
+            c3.style.transform = `translate(-50%, -50%) rotateY(${currentRotY}deg) rotateX(${currentRotX}deg) rotateZ(${currentRotZ}deg) scale(${currentScale})`;
+            c3.style.boxShadow = `0 8px 16px rgba(0,0,0,${shadowAlpha*0.75}), 0 40px 80px rgba(0,0,0,${shadowAlpha})`;
+            
+            const frontFace = c3.querySelector('.card-front');
+            const backFace = c3.querySelector('.card-back');
+            if (frontFace && backFace) {
+                if (currentRotX > 90) {
+                    frontFace.style.display = 'none';
+                    backFace.style.display = 'flex';
+                } else {
+                    frontFace.style.display = 'flex';
+                    backFace.style.display = 'none';
+                }
+            }
+            
+            if (prog > 6.52 && prog < 6.32) c3.style.zIndex = '500';
+            else c3.style.zIndex = c3.dataset.isDragging === 'true' ? '10000' : '2001';
+          }
+        }
+      }
+
+      // Lógica de extracción de c4
+      const fakeCard4 = mainDeck.querySelector('.interior-cards .interior-card:nth-child(3)');
+      if (c4) {
+        if (c4_peek === 0) {
+          if (fakeCard4) fakeCard4.style.opacity = '1';
+          if (c4.dataset.state !== 'deck-rest') {
+            c4.dataset.state = 'deck-rest';
+            c4.style.opacity = '0';
+            const interior = mainDeck.querySelector('.interior-cards');
+            if (c4.parentNode !== interior) interior.insertBefore(c4, interior.firstChild);
+            c4.style.position = ''; c4.style.left = ''; c4.style.top = ''; c4.style.margin = '';
+            c4.classList.remove('card-on-table', 'card-peeking');
+            c4.classList.add('card-in-deck');
+            c4.style.transition = 'none';
+            c4.style.transform = `translate(-50%, calc(-50% - 35px)) translateZ(${c4.dataset.zDepth||6}px) rotate(-90deg) scale(0.85)`;
+            c4.style.clipPath = 'inset(0 0 0 10px round 16px)';
+          }
+        } else if (c4_peek > 0 && prog <= 8.32) {
+          if (fakeCard4) fakeCard4.style.opacity = '0';
+          c4.style.opacity = '1';
+          c4.dataset.state = 'extracting';
+          const interior = mainDeck.querySelector('.interior-cards');
+          if (c4.parentNode !== interior) {
+             interior.insertBefore(c4, interior.firstChild);
+             c4.style.position = ''; c4.style.left = ''; c4.style.top = ''; c4.style.margin = '';
+          }
+          c4.classList.add('card-peeking');
+          c4.classList.remove('card-on-table', 'card-in-deck');
+          c4.style.transition = 'none';
+          const y = -35 - 295 * c4_peek; 
+          c4.style.transform = `translate(-50%, calc(-50% + ${y}px)) translateZ(${c4.dataset.zDepth||6}px) rotate(-90deg) scale(0.9)`;
+          c4.style.clipPath = y > 5 ? 'inset(0 0 0 10px round 16px)' : '';
+        } else {
+          if (fakeCard4) fakeCard4.style.opacity = '0';
+          c4.style.opacity = '1';
+          c4.dataset.state = 'table';
+          const cardTable = document.getElementById('card-table');
+          if (c4.parentNode !== cardTable) {
+             let slotRef = mainDeck.querySelector('#slot-reference');
+             if (!slotRef) {
+               slotRef = document.createElement('div');
+               slotRef.id = 'slot-reference';
+               slotRef.style.cssText = `position:absolute; left:50%; top:50%; width:1px; height:1px; pointer-events:none; opacity:0; transform: translate(-50%, calc(-50% - 330px)) translateZ(${c4.dataset.zDepth||6}px) rotate(-90deg) scale(0.9);`;
+               mainDeck.querySelector('.interior-cards').appendChild(slotRef);
+             }
+             const rect = slotRef.getBoundingClientRect();
+             const tableRect = cardTable.getBoundingClientRect();
+             if (rect.width > 0 && rect.height > 0) {
+                 c4.dataset.boxLeft = (rect.left - tableRect.left).toString();
+                 c4.dataset.boxTop  = (rect.top - tableRect.top).toString();
+             }
+             cardTable.appendChild(c4);
+             c4.classList.remove('card-in-deck', 'card-peeking');
+             c4.classList.add('card-on-table');
+             c4.style.position = 'absolute';
+             c4.style.clipPath = '';
+             c4.style.transition = 'none';
+          }
+          const startX = parseFloat(c4.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
+          const startY = parseFloat(c4.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          
+          const isDesktop = window.innerWidth > 768;
+          const zoomScale = isDesktop ? 1.1 : 0.97;
+          const zoomX = window.innerWidth / 2;
+          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          
+          let currentX, currentY, currentRotY, currentRotZ, currentScale, shadowAlpha;
+
+          let move_in = 0, move_out = 0;
+          if (prog <= 8.72) {
+             move_in = mapRange(prog, 8.32, 8.72, 0, 0.8);
+          } else if (prog <= 9.12) {
+             move_in = mapRange(prog, 8.72, 9.12, 0.8, 1.0);
+          } else if (prog <= 9.62) {
+             move_in = 1.0;
+             move_out = 0;
+          } else {
+             move_in = 1.0;
+             move_out = mapRange(prog, 9.62, 10.22, 0, 1);
+          }
+
+          let rot_p = 0;
+          let hang_p = 0;
+          if (prog > 9.12 && prog <= 9.62) {
+             hang_p = mapRange(prog, 9.12, 9.62, 0, 1);
+          } else if (prog > 9.62) {
+             hang_p = 1.0;
+          }
+          if (prog <= 8.62) {
+             rot_p = mapRange(prog, 8.32, 8.62, 0, 0.85);
+          } else if (prog <= 8.82) {
+             rot_p = mapRange(prog, 8.62, 8.82, 0.85, 0.95);
+          } else if (prog <= 9.12) {
+             rot_p = mapRange(prog, 8.82, 9.12, 0.95, 1.0);
+          } else if (prog <= 10.22) {
+             rot_p = mapRange(prog, 9.12, 10.22, 1.0, 0.95);
+          } else {
+             rot_p = 0.95;
+          }
+
+          currentRotZ = -90 + (90 * rot_p); 
+          currentRotY = 335 + (25 * rot_p); 
+          
+          let flip_p = mapRange(prog, 8.82, 9.42, 0, 1);
+          let currentRotX = flip_p * 180;
+          
+          c4.style.filter = '';
+          
+          if (move_out === 0) {
+             currentX = startX + (zoomX - startX) * move_in;
+             currentY = startY + (zoomY - startY) * move_in + (60 * hang_p);
+             currentScale = 0.9 + (zoomScale - 0.9) * move_in;
+             shadowAlpha = 0.16 + (0.4 - 0.16) * move_in;
+          } else {
+             currentX = zoomX;
+             currentY = zoomY + 60 - (window.innerHeight * 1.5) * move_out; // Hacia arriba
+             currentScale = zoomScale;
+             shadowAlpha = 0.4 - (0.4 - 0.16) * move_out;
+             
+             currentRotX += 120 * move_out;
+             currentRotY -= 90 * move_out;
+             currentRotZ += 60 * move_out;
+          }
+
+          if (c4.dataset.isDragging !== 'true' && prog > 8.32) {
+            c4.style.transition = 'none';
+            c4.style.left = currentX + 'px';
+            c4.style.top = currentY + 'px';
+            c4.style.transform = `translate(-50%, -50%) rotateY(${currentRotY}deg) rotateX(${currentRotX}deg) rotateZ(${currentRotZ}deg) scale(${currentScale})`;
+            c4.style.boxShadow = `0 8px 16px rgba(0,0,0,${shadowAlpha*0.75}), 0 40px 80px rgba(0,0,0,${shadowAlpha})`;
+            
+            const frontFace = c4.querySelector('.card-front');
+            const backFace = c4.querySelector('.card-back');
+            if (frontFace && backFace) {
+                if (currentRotX > 90) {
+                    frontFace.style.display = 'none';
+                    backFace.style.display = 'flex';
+                } else {
+                    frontFace.style.display = 'flex';
+                    backFace.style.display = 'none';
+                }
+            }
+            
+            if (prog > 8.32 && prog < 6.32) c4.style.zIndex = '500';
+            else c4.style.zIndex = c4.dataset.isDragging === 'true' ? '10000' : '2001';
+          }
+        }
+      }
+      // ─ Fade de cartas en la mesa + drag-hint ─────────────────────
+      // opacity = openP: empieza a desvanecerse cuando openP < 1 (caja empieza a cerrar)
+      // y termina invisible en openP = 0 (caja completamente cerrada)
+      const tableOpacity = Math.max(0, Math.min(1, openP));
+      const _cardTableElem = document.getElementById('card-table');
+      const tableCards = _cardTableElem ? _cardTableElem.querySelectorAll('.card-wrap.card-on-table') : [];
+      if (tableCards.length > 0) {
+        tableCards.forEach(card => {
+          if (card.classList.contains('card-n4')) {
+            card.style.opacity = '1'; // Aseguramos que la 4ª carta NUNCA haga fade out con la caja
+            return;
+          }
+          card.style.opacity        = tableOpacity >= 1 ? '' : tableOpacity.toFixed(3);
+          card.style.pointerEvents  = tableOpacity > 0.05 ? '' : 'none';
+        });
+      }
+      // Drag-hint: sigue la misma curva de retracción que la carta.
+      // La carta desaparece en openP=0.55 → el hint también.
+      // hintT = 1 cuando la carta asoma (openP=1), = 0 cuando ya está dentro (openP≤0.55)
+      const hint = document.getElementById('dragHint');
+      if (hint) {
+        if (hint.classList.contains('is-visible') && openP < 1.0) {
+          // Scroll-sync sincronizado con la retracción real de la carta
+          const hintT = Math.max(0, Math.min(1, (openP - 0.55) / 0.45));
+          hint.style.transition = 'none';
+          hint.style.opacity    = hintT.toFixed(3);
+        } else if (!hint.classList.contains('is-visible')) {
+          // Hint invisible: dejar que el CSS lo gestione (opacity: 0)
+          hint.style.transition = '';
+          hint.style.opacity    = '';
+        }
+        // Cuando is-visible && openP === 1: no tocar inline styles
+        // → el CSS puede hacer el fade-in limpio cuando aparece una nueva carta
+      }
+      updateHint(prog);
+
       // --- TRANSICIÓN A LA REVISTA ---
       const magazineScene = document.getElementById('magazine-scene');
       const magazineContent = magazineScene ? magazineScene.querySelector('.magazine-content') : null;
