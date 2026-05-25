@@ -3610,6 +3610,11 @@ window.onerror = function(msg, url, line, col, err) {
       const c3 = mainDeck.querySelector('.card-n3') || (_ct ? _ct.querySelector('.card-on-table.card-n3') : null);
       const c4 = mainDeck.querySelector('.card-n4') || (_ct ? _ct.querySelector('.card-on-table.card-n4') : null);
 
+      if (c1) c1.style.display = 'none';
+      if (c2) c2.style.display = 'none';
+      if (c3) c3.style.display = 'none';
+      if (c4) c4.style.display = 'none';
+
       // Fases CARTA 1 (prog: 2.5 a 4.6)
       let c1_peek = 0; // mapRange(prog, 2.5, 3.0, 0, 1);
 
