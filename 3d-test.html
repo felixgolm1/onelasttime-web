@@ -1585,7 +1585,7 @@ window.onerror = function(msg, url, line, col, err) {
             max-width: 80%;
           ">Este vídeo puede contener<br>contenido para adultos.</div>
           <!-- Button -->
-          <button onclick="var overlay=this.parentElement;overlay.style.opacity='0';overlay.style.pointerEvents='none';" style="
+          <button class="sensitive-reveal-btn" onclick="var overlay=this.parentElement;overlay.style.opacity='0';overlay.style.pointerEvents='none';" style="
             margin-top: 8px;
             background: #ccff00;
             color: #000000;
@@ -5328,7 +5328,7 @@ window.onerror = function(msg, url, line, col, err) {
               largeItems[i].style.transform = `translateX(${translateXLarge}px) scale(1.0)`;
               largeItems[i].style.zIndex = zIndex;
               if (i === 4 && currIndex > 4) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
-              largeItems[i].style.pointerEvents = absD < 0.1 ? 'auto' : 'none';
+              largeItems[i].style.pointerEvents = absD < 0.5 ? 'auto' : 'none';
             }
           }
         }
@@ -8560,6 +8560,19 @@ setInterval(function() {
     </div>
   
     </div>
+<script>
+// Listener global para el botón de contenido sensible (capture phase para evitar bloqueos)
+window.addEventListener('click', function(e) {
+  var btn = e.target.closest ? e.target.closest('.sensitive-reveal-btn') : null;
+  if (!btn) return;
+  e.stopPropagation();
+  var overlay = btn.parentElement;
+  if (overlay) {
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+  }
+}, true);
+</script>
 </body>
 <script>
 document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
