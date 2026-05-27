@@ -9224,33 +9224,39 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   var btn     = document.getElementById('sens-ov-btn');
   if (!ov || !btn) return;
 
-  // dismissed = true solo mientras el usuario esta en el slide y ha pinchado el boton
-  // Se resetea a false al salir del slide, asi el overlay reaparece al volver
-  var dismissed = false;
+  var dismissed = false;  // usuario ha pinchado el boton en esta pasada
+  var isVisible = false;  // overlay actualmente visible (evita resetear la transicion cada frame)
 
   btn.addEventListener('click', function(e){
     e.stopPropagation();
     e.preventDefault();
     dismissed = true;
+    isVisible = false;
     ovInner.style.opacity = '0';
     setTimeout(function(){ ov.style.display = 'none'; }, 580);
   });
 
-  // Llamada desde el loop del carousel
   window._sensitiveOvShow = function(show){
     if (show) {
-      if (dismissed) return; // ya lo descarto el usuario en este paso por el slide
-      // Fade-in suave: display flex primero, luego opacity en doble rAF
+      if (dismissed) return;   // usuario lo descarto, no volver a mostrar hasta salir del slide
+      if (isVisible) return;   // ya visible: no resetear la transicion en cada frame
+      // Primera vez que se muestra: fade-in suave
+      isVisible = true;
       ov.style.display = 'flex';
       ovInner.style.opacity = '0';
       requestAnimationFrame(function(){
-        requestAnimationFrame(function(){ ovInner.style.opacity = '1'; });
+        requestAnimationFrame(function(){
+          ovInner.style.opacity = '1';
+        });
       });
     } else {
-      // Al salir del slide: resetear dismissed para que reaparezca al volver
-      dismissed = false;
-      ov.style.display = 'none';
-      ovInner.style.opacity = '0';
+      // Al salir del slide: resetear todo para que reaparezca al volver
+      if (isVisible || dismissed) {
+        dismissed = false;
+        isVisible = false;
+        ov.style.display = 'none';
+        ovInner.style.opacity = '0';
+      }
     }
   };
 })();
