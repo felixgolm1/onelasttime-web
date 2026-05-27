@@ -1541,7 +1541,11 @@ window.onerror = function(msg, url, line, col, err) {
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/amiccartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
-      <!-- Slide 4 (Magazine) -->
+      <!-- Slide 4 (duplicate) -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/amiccartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+      </div>
+      <!-- Slide 5 (Magazine) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <div class="magazine-content" style="background: transparent; border: none; justify-content: flex-start; padding: 10px; position: relative; overflow: hidden; width: 100%; height: 100%;">
 
@@ -4813,7 +4817,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[4];
+            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[5];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -4837,7 +4841,7 @@ window.onerror = function(msg, url, line, col, err) {
               if (!document.getElementById('mag-model-clone')) {
                 const carouselVp = magazineScene?.querySelector('.carousel-viewport');
                 const origImg    = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
-                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[4];
+                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[5];
                 if (carouselVp && origImg && origImg.naturalWidth && magEl) {
                   const vpr    = carouselVp.getBoundingClientRect();
                   const magR   = magEl.getBoundingClientRect(); // rect real del item (incluyendo borde)
@@ -5015,7 +5019,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[4];
+            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[5];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -5195,8 +5199,8 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
-          // currIndex va de 0 a 4 entre prog 10.62 y 14.62
-          let currIndex = Math.max(0, Math.min(4, prog - 10.62));
+          // currIndex va de 0 a 5 entre prog 10.62 y 14.62 (factor 1.25 para 6 slides en mismo rango)
+          let currIndex = Math.max(0, Math.min(5, (prog - 10.62) * 1.25));
           
           // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
           let exitOffsetSmall = 0;
@@ -5210,7 +5214,7 @@ window.onerror = function(msg, url, line, col, err) {
             exitFade = Math.max(0, 1 - mapRange(exitP, 0.4, 1.0, 0, 1));
           }
 
-          for (let i = 0; i < 5; i++) {
+          for (let i = 0; i < 6; i++) {
             let d = i - currIndex;
             let absD = Math.abs(d);
             
@@ -5243,8 +5247,8 @@ window.onerror = function(msg, url, line, col, err) {
                     extraBrightness = mapRange(slideP, 0, 1, 2.0, 0);
                 }
             }
-            translateXSmall += entryOffset + (i !== 4 ? exitOffsetSmall : 0);
-            translateXLarge += (i !== 4 ? exitOffsetLarge : 0);
+            translateXSmall += entryOffset + (i !== 5 ? exitOffsetSmall : 0);
+            translateXLarge += (i !== 5 ? exitOffsetLarge : 0);
             brightness += extraBrightness;
             
             // Pequeñas (fuera del recuadro)
@@ -5259,7 +5263,7 @@ window.onerror = function(msg, url, line, col, err) {
             if (largeItems[i]) {
               largeItems[i].style.transform = `translateX(${translateXLarge}px) scale(1.0)`;
               largeItems[i].style.zIndex = zIndex;
-              if (i === 3 && currIndex > 3) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
+              if (i === 4 && currIndex > 4) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
               largeItems[i].style.pointerEvents = absD < 0.1 ? 'auto' : 'none';
             }
           }
