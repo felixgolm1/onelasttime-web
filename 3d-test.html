@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -9219,21 +9219,31 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 <script>
 (function(){
-  var ov     = document.getElementById('sens-ov');
-  var ovInner= document.getElementById('sens-ov-inner');
-  var btn    = document.getElementById('sens-ov-btn');
+  var ov      = document.getElementById('sens-ov');
+  var ovInner = document.getElementById('sens-ov-inner');
+  var btn     = document.getElementById('sens-ov-btn');
   if (!ov || !btn) return;
-  // Al pulsar el boton: fade-out y descartar para siempre
+
+  // Variable local: se resetea a false en cada refresh de pagina
+  var dismissed = false;
+
   btn.addEventListener('click', function(e){
     e.stopPropagation();
+    e.preventDefault();
+    dismissed = true;
     ovInner.style.opacity = '0';
-    setTimeout(function(){ ov.style.display = 'none'; ov.dataset.dismissed = '1'; }, 580);
+    setTimeout(function(){ ov.style.display = 'none'; }, 580);
   });
-  // Exponemos funcion global para que la llame el loop del carousel
+
+  // Llamada desde el loop del carousel
   window._sensitiveOvShow = function(show){
-    if (ov.dataset.dismissed) return;
-    ov.style.display = show ? 'flex' : 'none';
-    if (show) ovInner.style.opacity = '1';
+    if (dismissed) return;
+    if (show) {
+      ov.style.display = 'flex';
+      requestAnimationFrame(function(){ ovInner.style.opacity = '1'; });
+    } else {
+      ov.style.display = 'none';
+    }
   };
 })();
 </script>
