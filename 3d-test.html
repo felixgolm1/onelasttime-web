@@ -9224,7 +9224,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   var btn     = document.getElementById('sens-ov-btn');
   if (!ov || !btn) return;
 
-  // Variable local: se resetea a false en cada refresh de pagina
+  // dismissed = true solo mientras el usuario esta en el slide y ha pinchado el boton
+  // Se resetea a false al salir del slide, asi el overlay reaparece al volver
   var dismissed = false;
 
   btn.addEventListener('click', function(e){
@@ -9237,12 +9238,19 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 
   // Llamada desde el loop del carousel
   window._sensitiveOvShow = function(show){
-    if (dismissed) return;
     if (show) {
+      if (dismissed) return; // ya lo descarto el usuario en este paso por el slide
+      // Fade-in suave: display flex primero, luego opacity en doble rAF
       ov.style.display = 'flex';
-      requestAnimationFrame(function(){ ovInner.style.opacity = '1'; });
+      ovInner.style.opacity = '0';
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){ ovInner.style.opacity = '1'; });
+      });
     } else {
+      // Al salir del slide: resetear dismissed para que reaparezca al volver
+      dismissed = false;
       ov.style.display = 'none';
+      ovInner.style.opacity = '0';
     }
   };
 })();
