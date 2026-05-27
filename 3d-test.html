@@ -1540,6 +1540,74 @@ window.onerror = function(msg, url, line, col, err) {
       <!-- Slide 3 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <video src="assets/img/pareja 1 beso.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"></video>
+        <!-- Sensitive content overlay -->
+        <div id="sensitive-overlay" style="
+          position: absolute; inset: 0;
+          border-radius: 4px;
+          backdrop-filter: blur(22px) saturate(0.6) brightness(0.75);
+          -webkit-backdrop-filter: blur(22px) saturate(0.6) brightness(0.75);
+          background: rgba(0,0,0,0.28);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          z-index: 10;
+          transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1);
+          pointer-events: auto;
+        ">
+          <!-- Eye-slash icon (SVG, same style as Instagram) -->
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.92;margin-bottom:4px;">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <!-- Title -->
+          <div style="
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+            text-align: center;
+            line-height: 1.2;
+          ">Contenido sensible</div>
+          <!-- Subtitle -->
+          <div style="
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.82);
+            letter-spacing: 0.01em;
+            text-align: center;
+            line-height: 1.4;
+            max-width: 80%;
+          ">Este vídeo puede contener<br>contenido para adultos.</div>
+          <!-- Button -->
+          <button onclick="(function(btn){
+            var overlay = document.getElementById('sensitive-overlay');
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+          })(this)" style="
+            margin-top: 8px;
+            background: #ccff00;
+            color: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.03em;
+            border: none;
+            border-radius: 999px;
+            padding: 9px 22px;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 12px rgba(204,255,0,0.35);
+          "
+          onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 4px 20px rgba(204,255,0,0.55)'"
+          onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 12px rgba(204,255,0,0.35)'"
+          >Ver imágenes</button>
+        </div>
       </div>
       <!-- Slide 4 (duplicate) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
