@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5225,9 +5225,10 @@ window.onerror = function(msg, url, line, col, err) {
           // currIndex va de 0 a 5 entre prog 10.62 y 14.62 (factor 1.25 para 6 slides en mismo rango)
           let currIndex = Math.max(0, Math.min(5, (prog - 10.62) * 1.25));
           
-          // Overlay solo cuando el slide del beso está centrado en el recuadro grande
-          if (typeof window._sensitiveOvShow === 'function') {
-            window._sensitiveOvShow(Math.abs(currIndex - 3) < 0.5);
+          // Resetear overlay si el usuario se aleja del slide
+          if (Math.abs(currIndex - 3) > 1.0 && window._sensDismissed) {
+            window._sensDismissed = false;
+            document.querySelectorAll('#dummy-sens-ov').forEach(el => el.style.opacity = '1');
           }
 
           // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
