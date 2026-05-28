@@ -5202,10 +5202,11 @@ window.onerror = function(msg, url, line, col, err) {
           // currIndex va de 0 a 5 entre prog 10.62 y 14.62 (factor 1.25 para 6 slides en mismo rango)
           let currIndex = Math.max(0, Math.min(5, (prog - 10.62) * 1.25));
           
-          // Mostrar/ocultar overlay: visible durante todo el carousel hasta que el usuario lo descarte
-          // Se oculta solo cuando currIndex >= 4.5 (transicion a la revista, slide 5)
+          // Mostrar overlay cuando el slide del beso (slide 3) está a menos de 1.8 posiciones del centro
+          // — cubre el beso como thumbnail notable + cuando está centrado
+          // — no cubre slides 0/1 cuando el beso está demasiado lejos
           if (typeof window._sensitiveOvShow === 'function') {
-            window._sensitiveOvShow(currIndex < 4.5);
+            window._sensitiveOvShow(Math.abs(currIndex - 3) < 1.8);
           }
 
           // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
