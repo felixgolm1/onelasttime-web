@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -1540,6 +1540,29 @@ window.onerror = function(msg, url, line, col, err) {
       <!-- Slide 3 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <video src="assets/img/pareja 1 beso.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"></video>
+        <div id="dummy-sens-ov" style="
+          position:absolute; inset:0;
+          border-radius:4px;
+          overflow:hidden;
+          display:flex; flex-direction:column;
+          align-items:center; justify-content:center;
+          gap:10px;
+          backdrop-filter:blur(22px) saturate(0.6) brightness(0.75);
+          -webkit-backdrop-filter:blur(22px) saturate(0.6) brightness(0.75);
+          background:rgba(0,0,0,0.28);
+          transition:opacity 0.55s cubic-bezier(0.4,0,0.2,1);
+          pointer-events:none;
+        ">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" style="opacity:0.92;margin-bottom:4px;">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-weight:400;font-size:0.95rem;color:#fff;text-align:center;">Contenido sensible</div>
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-weight:400;font-size:0.72rem;color:rgba(255,255,255,0.82);text-align:center;line-height:1.4;max-width:80%;">Este v&iacute;deo puede contener<br>contenido para adultos.</div>
+          <div style="margin-top:8px;background:#ccff00;color:#000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.03em;border-radius:999px;padding:9px 22px;box-shadow:0 2px 12px rgba(204,255,0,0.35);">Ver im&aacute;genes</div>
+        </div>
       </div>
       <!-- Slide 4 (duplicate) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -9219,14 +9242,16 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 <script>
 (function(){
-  var ov      = document.getElementById('sens-ov');
-  var ovInner = document.getElementById('sens-ov-inner');
-  var btn     = document.getElementById('sens-ov-btn');
+  var ov       = document.getElementById('sens-ov');
+  var ovInner  = document.getElementById('sens-ov-inner');
+  var btn      = document.getElementById('sens-ov-btn');
+  // Hay 2 dummy-sens-ov (uno en track-small y otro clonado en track-large)
+  var getDummies = function() { return document.querySelectorAll('#dummy-sens-ov'); };
   if (!ov || !btn) return;
 
   var dismissed   = false; // usuario ha pinchado el boton en esta pasada
   var isVisible   = false; // overlay actualmente visible
-  var hideTimeout = null;  // debounce para no ocultar en oscilaciones del lerp
+  var hideTimeout = null;  // debounce
 
   btn.addEventListener('click', function(e){
     e.stopPropagation();
@@ -9235,16 +9260,15 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     isVisible = false;
     if (hideTimeout) { clearTimeout(hideTimeout); hideTimeout = null; }
     ovInner.style.opacity = '0';
+    getDummies().forEach(function(d) { d.style.opacity = '0'; });
     setTimeout(function(){ ov.style.display = 'none'; }, 580);
   });
 
   window._sensitiveOvShow = function(show){
     if (show) {
-      // Cancelar cualquier hide pendiente
       if (hideTimeout) { clearTimeout(hideTimeout); hideTimeout = null; }
       if (dismissed) return;
-      if (isVisible) return; // ya visible, no interrumpir la transicion
-      // Primera vez que se muestra: fade-in suave
+      if (isVisible) return;
       isVisible = true;
       ov.style.display = 'flex';
       ovInner.style.opacity = '0';
@@ -9254,16 +9278,15 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
         });
       });
     } else {
-      // Debounce: esperar 400ms antes de ocultar
-      // Si show=true vuelve antes, se cancela el hide
       if (!isVisible && !dismissed) return;
-      if (hideTimeout) return; // ya hay un hide pendiente
+      if (hideTimeout) return;
       hideTimeout = setTimeout(function(){
         hideTimeout = null;
         dismissed = false;
         isVisible = false;
         ov.style.display = 'none';
         ovInner.style.opacity = '0';
+        getDummies().forEach(function(d) { d.style.opacity = '1'; });
       }, 400);
     }
   };
