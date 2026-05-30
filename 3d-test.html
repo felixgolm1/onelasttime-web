@@ -3460,7 +3460,7 @@ window.onerror = function(msg, url, line, col, err) {
       viewport.style.left = '7px';
       viewport.style.overflow = 'hidden';
       viewport.style.zIndex = '2';
-      viewport.style.pointerEvents = 'none'; // El viewport en sí no interfiere
+      viewport.style.pointerEvents = ''; // Eliminar restricción para no romper herencia en 3D
       viewport.style.borderRadius = '4px'; // Para redondear todo el conjunto de imágenes grandes
 
       // Crear contenedor gigante para enmascarar la pista pequeña sin recortar el overflow lejano
