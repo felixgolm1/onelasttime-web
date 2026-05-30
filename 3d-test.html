@@ -5310,26 +5310,27 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- CITAS OVERLAY: el carousel ya asigna el zIndex más alto al slide centrado ---
-          // Usamos eso para detectar si #aging-slide está centrado sin cálculos de índice.
+          // --- CITAS OVERLAY: el carousel asigna el zIndex más alto al slide centrado ---
           const citasImgLayer    = document.getElementById('citas-img-layer');
           const citasSliderPanel = document.getElementById('citas-slider-panel');
           const agingSlide       = document.getElementById('aging-slide');
           if (citasImgLayer && agingSlide && largeItems.length > 0) {
-            // Máximo zIndex entre todos los slides del carrusel
             let maxZ = 0;
             for (let k = 0; k < largeItems.length; k++) {
               const z = parseInt(largeItems[k].style.zIndex || '0');
               if (z > maxZ) maxZ = z;
             }
             const agingZ = parseInt(agingSlide.style.zIndex || '0');
-            // El aging slide está centrado si tiene el zIndex más alto
             const isActive = agingZ > 0 && agingZ >= maxZ;
             if (isActive) {
               const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
               if (vp) {
                 const r = vp.getBoundingClientRect();
-                citasImgLayer.style.clipPath = 'inset(' + r.top + 'px ' + (window.innerWidth - r.right) + 'px ' + (window.innerHeight - r.bottom) + 'px ' + r.left + 'px round 4px)';
+                // Posicionar y redimensionar exactamente sobre el viewport (sin clip-path, sin fondo)
+                citasImgLayer.style.top    = r.top    + 'px';
+                citasImgLayer.style.left   = r.left   + 'px';
+                citasImgLayer.style.width  = r.width  + 'px';
+                citasImgLayer.style.height = r.height + 'px';
                 if (citasSliderPanel) {
                   citasSliderPanel.style.bottom = (window.innerHeight - r.bottom + 16) + 'px';
                 }
@@ -9253,10 +9254,14 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 <!-- Capa de imágenes clipeada al viewport del carrusel -->
 <div id="citas-img-layer" style="
   position: fixed;
-  inset: 0;
+  top: 0; left: 0;
+  width: 200px; height: 200px;
+  overflow: hidden;
+  border-radius: 4px;
   pointer-events: none;
   z-index: 10050;
   opacity: 0;
+  transition: opacity 0.4s ease;
 ">
   <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear;">
   <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
@@ -9274,6 +9279,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   width: min(420px, 80vw);
   pointer-events: auto;
   opacity: 0;
+  transition: opacity 0.35s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
