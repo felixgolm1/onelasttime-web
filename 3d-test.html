@@ -5311,26 +5311,30 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           // --- CITAS OVERLAY: mostrar cuando el slide interactivo (índice 4) está centrado ---
-          const citasOv = document.getElementById('citas-overlay');
-          const citasFrame = document.getElementById('citas-img-frame');
-          if (citasOv) {
+          const citasImgLayer = document.getElementById('citas-img-layer');
+          const citasSliderPanel = document.getElementById('citas-slider-panel');
+          if (citasImgLayer) {
             const distToSlide4 = Math.abs(currIndex - 4);
-            const isActive = distToSlide4 < 0.3;
+            const isActive = distToSlide4 < 0.15;
             if (isActive) {
-              // Usar el carousel-viewport (elemento 2D estable) para el bounding rect
               const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
-              if (citasFrame && vp) {
+              if (vp) {
                 const r = vp.getBoundingClientRect();
-                citasFrame.style.left   = r.left   + 'px';
-                citasFrame.style.top    = r.top    + 'px';
-                citasFrame.style.width  = r.width  + 'px';
-                citasFrame.style.height = r.height + 'px';
+                const cTop    = r.top;
+                const cRight  = window.innerWidth  - r.right;
+                const cBottom = window.innerHeight - r.bottom;
+                const cLeft   = r.left;
+                citasImgLayer.style.clipPath = `inset(${cTop}px ${cRight}px ${cBottom}px ${cLeft}px round 4px)`;
+                // Posicionar el slider justo debajo del viewport
+                if (citasSliderPanel) {
+                  citasSliderPanel.style.bottom = (window.innerHeight - r.bottom + 20) + 'px';
+                }
               }
-              citasOv.style.opacity = '1';
-              citasOv.style.pointerEvents = 'none';
+              citasImgLayer.style.opacity = '1';
+              if (citasSliderPanel) citasSliderPanel.style.opacity = '1';
             } else {
-              citasOv.style.opacity = '0';
-              citasOv.style.pointerEvents = 'none';
+              citasImgLayer.style.opacity = '0';
+              if (citasSliderPanel) citasSliderPanel.style.opacity = '0';
             }
           }
         }
@@ -9237,67 +9241,58 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </script>
 
 <!-- =====================================================
-     CITAS OVERLAY - fixed, fuera del DOM del carrusel 3D
-     Se muestra cuando currIndex ~ 4 (slide interactivo)
+     CITAS OVERLAY - dos capas independientes fixed
+     1) Imágenes: full-screen con clip-path al viewport del carrusel
+     2) Slider panel: fixed independiente sin clip
      ===================================================== -->
-<div id="citas-overlay" style="
+
+<!-- Capa de imágenes clipeada al viewport del carrusel -->
+<div id="citas-img-layer" style="
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 10050;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 80px;
   opacity: 0;
 ">
-  <!-- Frame que replica exactamente el bounding rect del slide activo del carrusel -->
-  <div id="citas-img-frame" style="
-    position: fixed;
-    top: 0; left: 0;
-    width: 100px; height: 100px;
-    overflow: hidden;
-    border-radius: 4px;
-    pointer-events: none;
-    z-index: 1;
-    background: #0a0a0a;
-  ">
-    <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear; pointer-events:none;">
-    <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
-    <img id="age-img-2" src="assets/img/cita 5.766.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
-    <img id="age-img-3" src="assets/img/cita 10.992.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
-  </div>
+  <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear;">
+  <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
+  <img id="age-img-2" src="assets/img/cita 5.766.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
+  <img id="age-img-3" src="assets/img/cita 10.992.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
+</div>
 
-  <!-- Panel del slider: único elemento que acepta clics -->
-  <div style="
-    position: relative;
-    z-index: 2;
-    width: min(420px, 80vw);
-    pointer-events: auto;
-    background: rgba(0,0,0,0.70);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 16px;
-    padding: 18px 20px 14px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  ">
-    <div style="color:#fff; font-family:'Inter',sans-serif; font-size:1rem; font-weight:600; letter-spacing:0.02em;">
-      Cita <span id="age-label-num">1</span>
-    </div>
-    <input
-      type="range" id="age-slider"
-      min="0" max="300" value="0"
-      style="width:100%; cursor:pointer; accent-color:#a3cc00;"
-      oninput="window.updateAgeSlider(this.value)"
-    >
-    <div style="display:flex; justify-content:space-between; width:100%; color:rgba(255,255,255,0.6); font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:500;">
-      <span>1</span><span>1.345</span><span>5.766</span><span>10.992</span>
-    </div>
+<!-- Panel del slider: completamente independiente, acepta clics -->
+<div id="citas-slider-panel" style="
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 80px;
+  z-index: 10051;
+  width: min(420px, 80vw);
+  pointer-events: auto;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 18px 20px 14px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+">
+  <div style="color:#fff; font-family:'Inter',sans-serif; font-size:1rem; font-weight:600; letter-spacing:0.02em;">
+    Cita <span id="age-label-num">1</span>
+  </div>
+  <input
+    type="range" id="age-slider"
+    min="0" max="300" value="0"
+    style="width:100%; cursor:pointer; accent-color:#a3cc00;"
+    oninput="window.updateAgeSlider(this.value)"
+  >
+  <div style="display:flex; justify-content:space-between; width:100%; color:rgba(255,255,255,0.6); font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:500;">
+    <span>1</span><span>1.345</span><span>5.766</span><span>10.992</span>
   </div>
 </div>
 
