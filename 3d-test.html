@@ -4844,7 +4844,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[5];
+            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[6];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -4868,7 +4868,7 @@ window.onerror = function(msg, url, line, col, err) {
               if (!document.getElementById('mag-model-clone')) {
                 const carouselVp = magazineScene?.querySelector('.carousel-viewport');
                 const origImg    = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
-                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[5];
+                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[6];
                 if (carouselVp && origImg && origImg.naturalWidth && magEl) {
                   const vpr    = carouselVp.getBoundingClientRect();
                   const magR   = magEl.getBoundingClientRect(); // rect real del item (incluyendo borde)
@@ -5046,7 +5046,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[5];
+            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[6];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
