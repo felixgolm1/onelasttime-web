@@ -5315,21 +5315,22 @@ window.onerror = function(msg, url, line, col, err) {
           const citasSliderPanel = document.getElementById('citas-slider-panel');
           const agingSlide       = document.getElementById('aging-slide');
           if (citasImgLayer && agingSlide && largeItems.length > 0) {
-            // Encontrar el índice real del aging-slide en largeItems
             let agingIndex = -1;
             for (let k = 0; k < largeItems.length; k++) {
               if (largeItems[k] === agingSlide || largeItems[k].id === 'aging-slide') {
-                agingIndex = k;
-                break;
+                agingIndex = k; break;
               }
             }
             if (agingIndex >= 0) {
               const distToAging = Math.abs(currIndex - agingIndex);
-              // Opacidad: 1 cuando centrado (dist=0), 0 cuando a 0.5 de distancia
-              // El fade empieza cuando el slide está a 0.5 de llegar al centro
-              const overlayOpacity = Math.max(0, 1 - distToAging * 2);
+              // Ventana estrecha: dist 0.25→0 da opacidad 0→1
+              // Así el overlay solo se ve cuando el slide está casi perfectamente centrado
+              const overlayOpacity = Math.max(0, Math.min(1, 1 - distToAging * 4));
               citasImgLayer.style.opacity = overlayOpacity;
               if (citasSliderPanel) citasSliderPanel.style.opacity = overlayOpacity;
+              // Compensar: imagen base del slide baja mientras la overlay sube → no hay doble imagen
+              const agingImg = agingSlide.querySelector('img');
+              if (agingImg) agingImg.style.opacity = Math.max(0, 1 - overlayOpacity);
               if (overlayOpacity > 0) {
                 const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
                 if (vp) {
