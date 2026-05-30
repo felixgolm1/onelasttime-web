@@ -9250,39 +9250,61 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </script>
 
 
-<!-- Panel del slider: fixed, solo aparece cuando el aging-slide está centrado -->
-<!-- Panel del slider: completamente independiente, acepta clics -->
+<!-- Panel de progreso: fixed, solo aparece cuando el aging-slide está centrado -->
 <div id="citas-slider-panel" style="
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 80px;
+  bottom: 72px;
   z-index: 10051;
-  width: min(460px, 88vw);
+  width: min(400px, 86vw);
   pointer-events: auto;
   opacity: 0;
   transition: opacity 0.35s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  background: rgba(0,0,0,0.78);
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 18px;
-  padding: 18px 20px 16px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.55);
+  gap: 18px;
+  background: rgba(8,8,8,0.82);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 20px;
+  padding: 20px 24px 18px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.6);
 ">
-  <div style="color:rgba(255,255,255,0.45); font-family:'Inter',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; align-self:flex-start;">
-    ¿En qué cita os conocisteis?
+
+  <!-- Header: label + flechas -->
+  <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+    <span style="color:rgba(255,255,255,0.4); font-family:'Inter',sans-serif; font-size:0.58rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase;">¿En qué cita os conocisteis?</span>
+    <div style="display:flex; gap:6px;">
+      <button id="age-prev" onclick="window.ageNav(-1)" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.7);font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s ease;font-family:sans-serif;">&#8592;</button>
+      <button id="age-next" onclick="window.ageNav(1)" style="width:28px;height:28px;border-radius:50%;background:rgba(163,204,0,0.18);border:1px solid rgba(163,204,0,0.4);color:rgba(163,204,0,1);font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s ease;font-family:sans-serif;">&#8594;</button>
+    </div>
   </div>
-  <div style="display:flex; gap:8px; width:100%;">
-    <button id="age-btn-0" onclick="window.setAgeStep(0)" style="flex:1;padding:11px 4px;background:rgba(163,204,0,1);border:none;border-radius:12px;color:#0a0a0a;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.18s ease;">Cita 1</button>
-    <button id="age-btn-1" onclick="window.setAgeStep(1)" style="flex:1;padding:11px 4px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:12px;color:rgba(255,255,255,0.65);font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.18s ease;">1.345</button>
-    <button id="age-btn-2" onclick="window.setAgeStep(2)" style="flex:1;padding:11px 4px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:12px;color:rgba(255,255,255,0.65);font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.18s ease;">5.766</button>
-    <button id="age-btn-3" onclick="window.setAgeStep(3)" style="flex:1;padding:11px 4px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:12px;color:rgba(255,255,255,0.65);font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.18s ease;">10.992</button>
+
+  <!-- Track con 4 puntos -->
+  <div style="position:relative; width:100%; height:40px; display:flex; align-items:center;">
+    <!-- Track fondo -->
+    <div style="position:absolute; left:0; right:0; height:2px; background:rgba(255,255,255,0.12); border-radius:2px;"></div>
+    <!-- Track fill animado -->
+    <div id="age-fill" style="position:absolute; left:0; height:2px; width:0%; background:rgba(163,204,0,1); border-radius:2px; transition:width 0.4s cubic-bezier(0.4,0,0.2,1);"></div>
+
+    <!-- Los 4 puntos (left: 0%, 33.33%, 66.66%, 100%) -->
+    <div id="age-dot-0" onclick="window.setAgeStep(0)" style="position:absolute; left:0%; transform:translateX(-50%); width:12px; height:12px; border-radius:50%; background:rgba(163,204,0,1); border:2px solid rgba(163,204,0,1); cursor:pointer; transition:all 0.3s ease; box-shadow:0 0 0 4px rgba(163,204,0,0.2);"></div>
+    <div id="age-dot-1" onclick="window.setAgeStep(1)" style="position:absolute; left:33.33%; transform:translateX(-50%); width:10px; height:10px; border-radius:50%; background:rgba(30,30,30,1); border:2px solid rgba(255,255,255,0.25); cursor:pointer; transition:all 0.3s ease;"></div>
+    <div id="age-dot-2" onclick="window.setAgeStep(2)" style="position:absolute; left:66.66%; transform:translateX(-50%); width:10px; height:10px; border-radius:50%; background:rgba(30,30,30,1); border:2px solid rgba(255,255,255,0.25); cursor:pointer; transition:all 0.3s ease;"></div>
+    <div id="age-dot-3" onclick="window.setAgeStep(3)" style="position:absolute; left:100%; transform:translateX(-50%); width:10px; height:10px; border-radius:50%; background:rgba(30,30,30,1); border:2px solid rgba(255,255,255,0.25); cursor:pointer; transition:all 0.3s ease;"></div>
   </div>
+
+  <!-- Labels debajo del track -->
+  <div style="position:relative; width:100%; display:flex; justify-content:space-between; margin-top:-14px;">
+    <span id="age-lbl-0" style="font-family:'Inter',sans-serif; font-size:0.65rem; font-weight:700; color:rgba(163,204,0,1); cursor:pointer; transition:color 0.3s;" onclick="window.setAgeStep(0)">Cita 1</span>
+    <span id="age-lbl-1" style="font-family:'Inter',sans-serif; font-size:0.65rem; font-weight:500; color:rgba(255,255,255,0.35); cursor:pointer; transition:color 0.3s; transform:translateX(-50%); position:absolute; left:33.33%;" onclick="window.setAgeStep(1)">1.345</span>
+    <span id="age-lbl-2" style="font-family:'Inter',sans-serif; font-size:0.65rem; font-weight:500; color:rgba(255,255,255,0.35); cursor:pointer; transition:color 0.3s; transform:translateX(-50%); position:absolute; left:66.66%;" onclick="window.setAgeStep(2)">5.766</span>
+    <span id="age-lbl-3" style="font-family:'Inter',sans-serif; font-size:0.65rem; font-weight:500; color:rgba(255,255,255,0.35); cursor:pointer; transition:color 0.3s;" onclick="window.setAgeStep(3)">10.992</span>
+  </div>
+
 </div>
 
 <!-- SENSITIVE OVERLAY - fuera de toda jerarquía, z-index máximo
@@ -9297,36 +9319,57 @@ window.dismissSens = function(e) {
   window._sensDismissed = true;
 };
 
-// Colores activos/inactivos para los botones de paso
-var _ageActiveStyle  = 'background:rgba(163,204,0,1);border:none;color:#0a0a0a;font-weight:700;';
-var _agePassiveStyle = 'background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.65);font-weight:600;';
+
+var _ageCurrentStep = 0;
+var _ageFillPcts = ['0%', '33.33%', '66.66%', '100%'];
 
 window.setAgeStep = function(step) {
-  // Actualizar estilos de los botones
+  _ageCurrentStep = step;
+
+  // Track fill
+  var fill = document.getElementById('age-fill');
+  if (fill) fill.style.width = _ageFillPcts[step];
+
+  // Dots
   for (var i = 0; i < 4; i++) {
-    var btn = document.getElementById('age-btn-' + i);
-    if (!btn) continue;
-    btn.setAttribute('style', btn.getAttribute('style').replace(/background:[^;]+;|border:[^;]+;|color:[^;]+;|font-weight:[^;]+;/g, ''));
-    if (i === step) {
-      btn.style.background = 'rgba(163,204,0,1)';
-      btn.style.border = 'none';
-      btn.style.color = '#0a0a0a';
-      btn.style.fontWeight = '700';
+    var dot = document.getElementById('age-dot-' + i);
+    var lbl = document.getElementById('age-lbl-' + i);
+    if (!dot) continue;
+    if (i <= step) {
+      // Puntos ya pasados o activo: verde
+      dot.style.background = 'rgba(163,204,0,1)';
+      dot.style.borderColor = 'rgba(163,204,0,1)';
+      dot.style.width = i === step ? '14px' : '10px';
+      dot.style.height = i === step ? '14px' : '10px';
+      dot.style.boxShadow = i === step ? '0 0 0 5px rgba(163,204,0,0.22)' : 'none';
     } else {
-      btn.style.background = 'rgba(255,255,255,0.10)';
-      btn.style.border = '1px solid rgba(255,255,255,0.18)';
-      btn.style.color = 'rgba(255,255,255,0.65)';
-      btn.style.fontWeight = '600';
+      // Puntos futuros: gris
+      dot.style.background = 'rgba(30,30,30,1)';
+      dot.style.borderColor = 'rgba(255,255,255,0.25)';
+      dot.style.width = '10px';
+      dot.style.height = '10px';
+      dot.style.boxShadow = 'none';
     }
+    if (lbl) lbl.style.color = i === step ? 'rgba(163,204,0,1)' : (i < step ? 'rgba(163,204,0,0.5)' : 'rgba(255,255,255,0.3)');
   }
-  // Hacer visible solo la imagen del paso seleccionado (dentro del slide en la pista grande)
+
+  // Flechas: prev desactivada en step 0, next desactivada en step 3
+  var prev = document.getElementById('age-prev');
+  var next = document.getElementById('age-next');
+  if (prev) { prev.style.opacity = step === 0 ? '0.3' : '1'; prev.style.cursor = step === 0 ? 'default' : 'pointer'; }
+  if (next) { next.style.opacity = step === 3 ? '0.3' : '1'; next.style.cursor = step === 3 ? 'default' : 'pointer'; }
+
+  // Imágenes dentro del aging-slide de la pista grande
   var largeAging = document.querySelector('.carousel-track-large [id="aging-slide"]');
   if (largeAging) {
     var imgs = largeAging.querySelectorAll('img');
-    imgs.forEach(function(img, i) {
-      img.style.opacity = (i === step) ? '1' : '0';
-    });
+    imgs.forEach(function(img, i) { img.style.opacity = (i === step) ? '1' : '0'; });
   }
+};
+
+window.ageNav = function(dir) {
+  var next = Math.max(0, Math.min(3, _ageCurrentStep + dir));
+  window.setAgeStep(next);
 };
 </script>
 
