@@ -1564,6 +1564,10 @@ window.onerror = function(msg, url, line, col, err) {
           <button onclick="window.dismissSens(event)" style="pointer-events:auto;margin-top:8px;background:#ccff00;color:#000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.03em;border-radius:999px;padding:9px 22px;box-shadow:0 2px 12px rgba(204,255,0,0.35);cursor:pointer;border:none;">Ver im&aacute;genes</button>
         </div>
       </div>
+      <!-- Slide Nuevo Cena Sola -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/cena sola.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+      </div>
       <!-- Slide 4 (duplicate) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/amiccartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
@@ -5223,7 +5227,7 @@ window.onerror = function(msg, url, line, col, err) {
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
           // currIndex va de 0 a 5 entre prog 10.62 y 14.62 (factor 1.25 para 6 slides en mismo rango)
-          let currIndex = Math.max(0, Math.min(5, (prog - 10.62) * 1.25));
+          let currIndex = Math.max(0, Math.min(6, (prog - 10.62) * 1.5));
           
           // Resetear overlay si el usuario se aleja del slide
           if (Math.abs(currIndex - 3) > 1.0 && window._sensDismissed) {
@@ -5243,7 +5247,7 @@ window.onerror = function(msg, url, line, col, err) {
             exitFade = Math.max(0, 1 - mapRange(exitP, 0.4, 1.0, 0, 1));
           }
 
-          for (let i = 0; i < 6; i++) {
+          for (let i = 0; i < 7; i++) {
             let d = i - currIndex;
             let absD = Math.abs(d);
             
@@ -5276,8 +5280,8 @@ window.onerror = function(msg, url, line, col, err) {
                     extraBrightness = mapRange(slideP, 0, 1, 2.0, 0);
                 }
             }
-            translateXSmall += entryOffset + (i !== 5 ? exitOffsetSmall : 0);
-            translateXLarge += (i !== 5 ? exitOffsetLarge : 0);
+            translateXSmall += entryOffset + (i !== 6 ? exitOffsetSmall : 0);
+            translateXLarge += (i !== 6 ? exitOffsetLarge : 0);
             brightness += extraBrightness;
             
             // Pequeñas (fuera del recuadro)
@@ -5292,7 +5296,7 @@ window.onerror = function(msg, url, line, col, err) {
             if (largeItems[i]) {
               largeItems[i].style.transform = `translateX(${translateXLarge}px) scale(1.0)`;
               largeItems[i].style.zIndex = zIndex;
-              if (i === 4 && currIndex > 4) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
+              if (i === 5 && currIndex > 5) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
               largeItems[i].style.pointerEvents = absD < 0.5 ? 'auto' : 'none';
             }
           }
