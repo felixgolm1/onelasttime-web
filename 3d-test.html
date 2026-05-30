@@ -5312,11 +5312,20 @@ window.onerror = function(msg, url, line, col, err) {
 
           // --- CITAS OVERLAY: mostrar cuando el slide interactivo (índice 4) está centrado ---
           const citasOv = document.getElementById('citas-overlay');
+          const citasFrame = document.getElementById('citas-img-frame');
           if (citasOv) {
             const distToSlide4 = Math.abs(currIndex - 4);
             if (distToSlide4 < 0.5) {
+              // Actualizar el frame para que coincida con el bounding rect del slide 4
+              if (citasFrame && largeItems[4]) {
+                const r = largeItems[4].getBoundingClientRect();
+                citasFrame.style.left   = r.left   + 'px';
+                citasFrame.style.top    = r.top    + 'px';
+                citasFrame.style.width  = r.width  + 'px';
+                citasFrame.style.height = r.height + 'px';
+              }
               citasOv.style.opacity = '1';
-              citasOv.style.pointerEvents = 'none'; // el contenedor base no intercepta
+              citasOv.style.pointerEvents = 'none';
             } else {
               citasOv.style.opacity = '0';
               citasOv.style.pointerEvents = 'none';
@@ -9241,11 +9250,21 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   opacity: 0;
   transition: opacity 0.4s ease;
 ">
-  <!-- Imágenes apiladas, sin interacción -->
-  <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear; pointer-events:none;">
-  <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
-  <img id="age-img-2" src="assets/img/cita 5.766.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
-  <img id="age-img-3" src="assets/img/cita 10.992.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
+  <!-- Frame que replica exactamente el bounding rect del slide activo del carrusel -->
+  <div id="citas-img-frame" style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100px; height: 100px;
+    overflow: hidden;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 1;
+  ">
+    <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear; pointer-events:none;">
+    <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
+    <img id="age-img-2" src="assets/img/cita 5.766.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
+    <img id="age-img-3" src="assets/img/cita 10.992.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
+  </div>
 
   <!-- Panel del slider: único elemento que acepta clics -->
   <div style="
