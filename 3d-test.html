@@ -5310,29 +5310,26 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- CITAS OVERLAY: sigue exactamente la posición del aging-slide ---
+          // --- CITAS OVERLAY: sigue exactamente la posición del aging-slide en la pista GRANDE ---
           const citasImgLayer    = document.getElementById('citas-img-layer');
           const citasSliderPanel = document.getElementById('citas-slider-panel');
-          const agingSlide       = document.getElementById('aging-slide');
-          if (citasImgLayer && agingSlide && largeItems.length > 0) {
+          // IMPORTANTE: getElementById devuelve el 1º match (small track). Buscamos en largeItems.
+          if (citasImgLayer && largeItems.length > 0) {
             let agingIndex = -1;
             for (let k = 0; k < largeItems.length; k++) {
-              if (largeItems[k] === agingSlide || largeItems[k].id === 'aging-slide') {
-                agingIndex = k; break;
-              }
+              if (largeItems[k].id === 'aging-slide') { agingIndex = k; break; }
             }
             if (agingIndex >= 0) {
               const distToAging = Math.abs(currIndex - agingIndex);
-              // Overlay solo visible dist<0.25 (la imagen del slide 2D, getBoundingClientRect funciona)
               const overlayOpacity = Math.max(0, Math.min(1, 1 - distToAging * 4));
-              // Compensar imagen base: sube overlay → baja base (sin doble imagen)
-              const agingImg = agingSlide.querySelector('img');
-              if (agingImg) agingImg.style.opacity = Math.max(0, 1 - overlayOpacity);
+              // Imagen base del slide grande: baja cuando sube el overlay
+              const largeAgingImg = largeItems[agingIndex].querySelector('img');
+              if (largeAgingImg) largeAgingImg.style.opacity = Math.max(0, 1 - overlayOpacity);
               citasImgLayer.style.opacity = overlayOpacity;
               if (citasSliderPanel) citasSliderPanel.style.opacity = overlayOpacity;
               if (overlayOpacity > 0) {
-                // Usar bounding rect del SLIDE (2D transform) no del viewport completo
-                const sr = agingSlide.getBoundingClientRect();
+                // getBoundingClientRect del slide GRANDE (transform 2D, funciona correctamente)
+                const sr = largeItems[agingIndex].getBoundingClientRect();
                 citasImgLayer.style.top    = sr.top    + 'px';
                 citasImgLayer.style.left   = sr.left   + 'px';
                 citasImgLayer.style.width  = sr.width  + 'px';
