@@ -5279,7 +5279,7 @@ window.onerror = function(msg, url, line, col, err) {
             exitFade = Math.max(0, 1 - mapRange(exitP, 0.4, 1.0, 0, 1));
           }
 
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < 9; i++) {
             let d = i - currIndex;
             let absD = Math.abs(d);
             
@@ -5312,8 +5312,8 @@ window.onerror = function(msg, url, line, col, err) {
                     extraBrightness = mapRange(slideP, 0, 1, 2.0, 0);
                 }
             }
-            translateXSmall += entryOffset + (i !== 7 ? exitOffsetSmall : 0);
-            translateXLarge += (i !== 7 ? exitOffsetLarge : 0);
+            translateXSmall += entryOffset + (i !== 8 ? exitOffsetSmall : 0);
+            translateXLarge += (i !== 8 ? exitOffsetLarge : 0);
             brightness += extraBrightness;
             
             // Pequeñas (fuera del recuadro)
@@ -5328,7 +5328,7 @@ window.onerror = function(msg, url, line, col, err) {
             if (largeItems[i]) {
               largeItems[i].style.transform = `translateX(${translateXLarge}px) scale(1.0)`;
               largeItems[i].style.zIndex = zIndex;
-              if (i === 6 && currIndex > 6) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
+              if (i === 7 && currIndex > 7) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
               largeItems[i].style.pointerEvents = absD < 0.5 ? 'auto' : 'none';
             }
           }
