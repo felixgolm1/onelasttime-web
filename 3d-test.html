@@ -5310,21 +5310,22 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- CITAS OVERLAY: detectar por posición real del slide, no por índice ---
-          const citasImgLayer   = document.getElementById('citas-img-layer');
+          // --- CITAS OVERLAY: el carousel ya asigna el zIndex más alto al slide centrado ---
+          // Usamos eso para detectar si #aging-slide está centrado sin cálculos de índice.
+          const citasImgLayer    = document.getElementById('citas-img-layer');
           const citasSliderPanel = document.getElementById('citas-slider-panel');
-          const agingSlide      = document.getElementById('aging-slide');
-          if (citasImgLayer && agingSlide) {
-            const sr = agingSlide.getBoundingClientRect();
-            const slideCX = sr.left + sr.width  / 2;
-            const slideCY = sr.top  + sr.height / 2;
-            const vpCX = window.innerWidth  / 2;
-            const vpCY = window.innerHeight / 2;
-            // Activo si el centro del slide está a menos de 80px del centro de la ventana
-            const distFromCenter = Math.sqrt(Math.pow(slideCX - vpCX, 2) + Math.pow(slideCY - vpCY, 2));
-            const isActive = distFromCenter < 80 && sr.width > 100;
+          const agingSlide       = document.getElementById('aging-slide');
+          if (citasImgLayer && agingSlide && largeItems.length > 0) {
+            // Máximo zIndex entre todos los slides del carrusel
+            let maxZ = 0;
+            for (let k = 0; k < largeItems.length; k++) {
+              const z = parseInt(largeItems[k].style.zIndex || '0');
+              if (z > maxZ) maxZ = z;
+            }
+            const agingZ = parseInt(agingSlide.style.zIndex || '0');
+            // El aging slide está centrado si tiene el zIndex más alto
+            const isActive = agingZ > 0 && agingZ >= maxZ;
             if (isActive) {
-              // Clip al viewport del carrusel (2D estable)
               const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
               if (vp) {
                 const r = vp.getBoundingClientRect();
