@@ -1573,7 +1573,16 @@ window.onerror = function(msg, url, line, col, err) {
       <div id="aging-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/cita 1.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
-      <!-- Slide 6 (duplicate) -->
+      <!-- Slide 6 (Interactive Final Feliz) -->
+      <div id="final-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <!-- Imagen base: escoger final (visible por defecto) -->
+        <img src="assets/img/escoger final.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:1;transition:opacity 0.4s ease;">
+        <!-- Con final feliz (oculta hasta elección) -->
+        <img src="assets/img/con final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
+        <!-- Sin final feliz (oculta hasta elección) -->
+        <img src="assets/img/sin final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
+      </div>
+      <!-- Slide 7 (duplicate) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/amiccartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
@@ -4864,7 +4873,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[7];
+            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -5066,7 +5075,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[7];
+            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -5246,8 +5255,8 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
-          // currIndex va de 0 a 5 entre prog 10.62 y 14.62 (factor 1.25 para 6 slides en mismo rango)
-          let currIndex = Math.max(0, Math.min(7, (prog - 10.62) * 1.75));
+          // currIndex: 0..8 entre prog 10.62 y 14.62 (9 slides, factor 2.0 = mismo rango)
+          let currIndex = Math.max(0, Math.min(8, (prog - 10.62) * 2.0));
           
           // Resetear overlay si el usuario se aleja del slide
           if (Math.abs(currIndex - 3) > 1.0 && window._sensDismissed) {
@@ -5343,6 +5352,36 @@ window.onerror = function(msg, url, line, col, err) {
                 // Clamped: el slider no debe salir de pantalla
                 const panelBottom = Math.max(8, window.innerHeight - Math.min(sr.bottom, window.innerHeight) + 16);
                 citasSliderPanel.style.bottom = panelBottom + 'px';
+              }
+            }
+          }
+
+          // --- FINAL PANEL: aparece cuando el final-slide está centrado ---
+          const finalPanel = document.getElementById('final-panel');
+          if (finalPanel && largeItems.length > 0) {
+            let finalIndex = -1;
+            for (let k = 0; k < largeItems.length; k++) {
+              if (largeItems[k].id === 'final-slide') { finalIndex = k; break; }
+            }
+            if (finalIndex >= 0) {
+              const distToFinal = Math.abs(currIndex - finalIndex);
+              // Mostrar panel solo si no se ha elegido aún y el slide está cerca del centro
+              const fpOpacity = (window._finalChoice == null)
+                ? Math.max(0, Math.min(1, 1 - distToFinal * 2.5))
+                : 0;
+              finalPanel.style.opacity = fpOpacity;
+              if (fpOpacity > 0) {
+                // Posicionar en la parte BAJA del frame (estilo Oryzo)
+                const vp = document.querySelector('.carousel-viewport');
+                if (vp) {
+                  const vpR = vp.getBoundingClientRect();
+                  const sr  = largeItems[finalIndex].getBoundingClientRect();
+                  finalPanel.style.left   = Math.max(0, sr.left) + 'px';
+                  finalPanel.style.width  = sr.width + 'px';
+                  // Panel justo encima del borde inferior visible del frame
+                  const frameBottom = Math.min(vpR.bottom, window.innerHeight);
+                  finalPanel.style.bottom = (window.innerHeight - frameBottom + 12) + 'px';
+                }
               }
             }
           }
@@ -9249,6 +9288,56 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 })();
 </script>
 
+<!-- FINAL PANEL: estilo Oryzo - aparece en la base del frame cuando final-slide está centrado -->
+<div id="final-panel" style="
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 72px;
+  z-index: 10052;
+  width: min(476px, 86vw);
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(6,6,6,0.90);
+  border-radius: 0 0 4px 4px;
+  padding: 18px 22px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.5);
+">
+  <span style="color:#fff; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:600; line-height:1.35; flex-shrink:0;">¿Quieres<br>final feliz?</span>
+  <div style="display:flex; gap:10px; flex-shrink:0;">
+    <button onclick="window.chooseFinal(true)" style="
+      padding:11px 26px;
+      background:rgba(163,204,0,1);
+      border:none; border-radius:999px;
+      color:#0a0a0a;
+      font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
+      cursor:pointer; white-space:nowrap;
+      box-shadow:0 2px 16px rgba(163,204,0,0.35);
+      transition:transform 0.12s ease, box-shadow 0.12s ease;
+    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      Sí ✓
+    </button>
+    <button onclick="window.chooseFinal(false)" style="
+      padding:11px 26px;
+      background:rgba(255,255,255,0.10);
+      border:1.5px solid rgba(255,255,255,0.30); border-radius:999px;
+      color:#fff;
+      font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;
+      cursor:pointer; white-space:nowrap;
+      transition:background 0.15s ease;
+    " onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.10)'">
+      No
+    </button>
+  </div>
+</div>
+
 
 <!-- Panel de progreso: fixed, solo aparece cuando el aging-slide está centrado -->
 <div id="citas-slider-panel" style="
@@ -9370,6 +9459,24 @@ window.setAgeStep = function(step) {
 window.ageNav = function(dir) {
   var next = Math.max(0, Math.min(3, _ageCurrentStep + dir));
   window.setAgeStep(next);
+};
+
+// --- FINAL FELIZ ---
+window._finalChoice = null; // null = sin elegir, true = feliz, false = infeliz
+
+window.chooseFinal = function(happy) {
+  window._finalChoice = happy;
+  // Ocultar el panel permanentemente
+  var panel = document.getElementById('final-panel');
+  if (panel) { panel.style.opacity = '0'; panel.style.pointerEvents = 'none'; }
+  // Crossfade a la imagen elegida en el slide de la pista GRANDE
+  var largeAging = document.querySelector('.carousel-track-large [id="final-slide"]');
+  if (largeAging) {
+    var imgs = largeAging.querySelectorAll('img');
+    if (imgs[0]) imgs[0].style.opacity = '0';                 // escoger final → oculta
+    if (imgs[1]) imgs[1].style.opacity = happy ? '1' : '0';  // con final feliz
+    if (imgs[2]) imgs[2].style.opacity = happy ? '0' : '1';  // sin final feliz
+  }
 };
 </script>
 
