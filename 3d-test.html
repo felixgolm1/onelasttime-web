@@ -3470,7 +3470,7 @@ window.onerror = function(msg, url, line, col, err) {
       largeTrack.className = 'carousel-track-large';
       largeTrack.style.zIndex = '';
       // Asegurar que track-large no bloquee clics a menos que sea necesario
-      largeTrack.style.pointerEvents = 'none';
+      largeTrack.style.pointerEvents = '';
 
       const largeItems = largeTrack.querySelectorAll('.carousel-item');
       largeItems.forEach(item => {
