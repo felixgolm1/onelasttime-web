@@ -5310,7 +5310,7 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- CITAS OVERLAY: opacidad proporcional a cuánto está centrado el aging-slide ---
+          // --- CITAS OVERLAY: sigue exactamente la posición del aging-slide ---
           const citasImgLayer    = document.getElementById('citas-img-layer');
           const citasSliderPanel = document.getElementById('citas-slider-panel');
           const agingSlide       = document.getElementById('aging-slide');
@@ -5323,25 +5323,22 @@ window.onerror = function(msg, url, line, col, err) {
             }
             if (agingIndex >= 0) {
               const distToAging = Math.abs(currIndex - agingIndex);
-              // Ventana estrecha: dist 0.25→0 da opacidad 0→1
-              // Así el overlay solo se ve cuando el slide está casi perfectamente centrado
+              // Overlay solo visible dist<0.25 (la imagen del slide 2D, getBoundingClientRect funciona)
               const overlayOpacity = Math.max(0, Math.min(1, 1 - distToAging * 4));
-              citasImgLayer.style.opacity = overlayOpacity;
-              if (citasSliderPanel) citasSliderPanel.style.opacity = overlayOpacity;
-              // Compensar: imagen base del slide baja mientras la overlay sube → no hay doble imagen
+              // Compensar imagen base: sube overlay → baja base (sin doble imagen)
               const agingImg = agingSlide.querySelector('img');
               if (agingImg) agingImg.style.opacity = Math.max(0, 1 - overlayOpacity);
+              citasImgLayer.style.opacity = overlayOpacity;
+              if (citasSliderPanel) citasSliderPanel.style.opacity = overlayOpacity;
               if (overlayOpacity > 0) {
-                const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
-                if (vp) {
-                  const r = vp.getBoundingClientRect();
-                  citasImgLayer.style.top    = r.top    + 'px';
-                  citasImgLayer.style.left   = r.left   + 'px';
-                  citasImgLayer.style.width  = r.width  + 'px';
-                  citasImgLayer.style.height = r.height + 'px';
-                  if (citasSliderPanel) {
-                    citasSliderPanel.style.bottom = (window.innerHeight - r.bottom + 16) + 'px';
-                  }
+                // Usar bounding rect del SLIDE (2D transform) no del viewport completo
+                const sr = agingSlide.getBoundingClientRect();
+                citasImgLayer.style.top    = sr.top    + 'px';
+                citasImgLayer.style.left   = sr.left   + 'px';
+                citasImgLayer.style.width  = sr.width  + 'px';
+                citasImgLayer.style.height = sr.height + 'px';
+                if (citasSliderPanel) {
+                  citasSliderPanel.style.bottom = (window.innerHeight - sr.bottom + 16) + 'px';
                 }
               }
             }
