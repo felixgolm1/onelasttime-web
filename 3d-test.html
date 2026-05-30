@@ -9258,33 +9258,30 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   transform: translateX(-50%);
   bottom: 80px;
   z-index: 10051;
-  width: min(420px, 80vw);
+  width: min(460px, 88vw);
   pointer-events: auto;
   opacity: 0;
   transition: opacity 0.35s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  background: rgba(0,0,0,0.75);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px;
-  padding: 18px 20px 14px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  gap: 14px;
+  background: rgba(0,0,0,0.78);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  padding: 18px 20px 16px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.55);
 ">
-  <div style="color:#fff; font-family:'Inter',sans-serif; font-size:1rem; font-weight:600; letter-spacing:0.02em;">
-    Cita <span id="age-label-num">1</span>
+  <div style="color:rgba(255,255,255,0.45); font-family:'Inter',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; align-self:flex-start;">
+    ¿En qué cita os conocisteis?
   </div>
-  <input
-    type="range" id="age-slider"
-    min="0" max="300" value="0"
-    style="width:100%; cursor:pointer; accent-color:#a3cc00;"
-    oninput="window.updateAgeSlider(this.value)"
-  >
-  <div style="display:flex; justify-content:space-between; width:100%; color:rgba(255,255,255,0.6); font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:500;">
-    <span>1</span><span>1.345</span><span>5.766</span><span>10.992</span>
+  <div style="display:flex; gap:8px; width:100%;">
+    <button id="age-btn-0" onclick="window.setAgeStep(0)" style="flex:1;padding:11px 4px;background:rgba(163,204,0,1);border:none;border-radius:12px;color:#0a0a0a;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.18s ease;">Cita 1</button>
+    <button id="age-btn-1" onclick="window.setAgeStep(1)" style="flex:1;padding:11px 4px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:12px;color:rgba(255,255,255,0.65);font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.18s ease;">1.345</button>
+    <button id="age-btn-2" onclick="window.setAgeStep(2)" style="flex:1;padding:11px 4px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:12px;color:rgba(255,255,255,0.65);font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.18s ease;">5.766</button>
+    <button id="age-btn-3" onclick="window.setAgeStep(3)" style="flex:1;padding:11px 4px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:12px;color:rgba(255,255,255,0.65);font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.18s ease;">10.992</button>
   </div>
 </div>
 
@@ -9292,10 +9289,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
      Controlado desde la lógica JS del carousel (currIndex) -->
 <script>
 window.dismissSens = function(e) {
-  if (e) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
+  if (e) { e.stopPropagation(); e.preventDefault(); }
   document.querySelectorAll('#dummy-sens-ov').forEach(function(el) { 
     el.style.opacity = '0'; 
     el.style.pointerEvents = 'none'; 
@@ -9303,41 +9297,36 @@ window.dismissSens = function(e) {
   window._sensDismissed = true;
 };
 
-window.updateAgeSlider = function(val) {
-  const v = parseFloat(val) / 100; // Va de 0 a 3
-  const img0 = document.getElementById('age-img-0');
-  const img1 = document.getElementById('age-img-1');
-  const img2 = document.getElementById('age-img-2');
-  const img3 = document.getElementById('age-img-3');
-  const label = document.getElementById('age-label-num');
-  
-  let citaNum = 1;
-  if (v <= 1) {
-    citaNum = Math.round(1 + (1344 * v));
-  } else if (v <= 2) {
-    citaNum = Math.round(1345 + (4421 * (v - 1)));
-  } else {
-    citaNum = Math.round(5766 + (5226 * (v - 2)));
-  }
-  
-  if (label) {
-    // Formatear manualmente con punto como separador de miles
-    let numStr = citaNum.toString();
-    if (numStr.length > 3) {
-      numStr = numStr.slice(0, -3) + '.' + numStr.slice(-3);
+// Colores activos/inactivos para los botones de paso
+var _ageActiveStyle  = 'background:rgba(163,204,0,1);border:none;color:#0a0a0a;font-weight:700;';
+var _agePassiveStyle = 'background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.65);font-weight:600;';
+
+window.setAgeStep = function(step) {
+  // Actualizar estilos de los botones
+  for (var i = 0; i < 4; i++) {
+    var btn = document.getElementById('age-btn-' + i);
+    if (!btn) continue;
+    btn.setAttribute('style', btn.getAttribute('style').replace(/background:[^;]+;|border:[^;]+;|color:[^;]+;|font-weight:[^;]+;/g, ''));
+    if (i === step) {
+      btn.style.background = 'rgba(163,204,0,1)';
+      btn.style.border = 'none';
+      btn.style.color = '#0a0a0a';
+      btn.style.fontWeight = '700';
+    } else {
+      btn.style.background = 'rgba(255,255,255,0.10)';
+      btn.style.border = '1px solid rgba(255,255,255,0.18)';
+      btn.style.color = 'rgba(255,255,255,0.65)';
+      btn.style.fontWeight = '600';
     }
-    label.innerText = numStr;
   }
-  
-  let op0 = Math.max(0, 1 - Math.abs(v - 0));
-  let op1 = Math.max(0, 1 - Math.abs(v - 1));
-  let op2 = Math.max(0, 1 - Math.abs(v - 2));
-  let op3 = Math.max(0, 1 - Math.abs(v - 3));
-  
-  if (img0) img0.style.opacity = op0;
-  if (img1) img1.style.opacity = op1;
-  if (img2) img2.style.opacity = op2;
-  if (img3) img3.style.opacity = op3;
+  // Hacer visible solo la imagen del paso seleccionado (dentro del slide en la pista grande)
+  var largeAging = document.querySelector('.carousel-track-large [id="aging-slide"]');
+  if (largeAging) {
+    var imgs = largeAging.querySelectorAll('img');
+    imgs.forEach(function(img, i) {
+      img.style.opacity = (i === step) ? '1' : '0';
+    });
+  }
 };
 </script>
 
