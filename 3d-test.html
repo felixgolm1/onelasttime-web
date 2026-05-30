@@ -5310,36 +5310,39 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- CITAS OVERLAY: el carousel asigna el zIndex más alto al slide centrado ---
+          // --- CITAS OVERLAY: opacidad proporcional a cuánto está centrado el aging-slide ---
           const citasImgLayer    = document.getElementById('citas-img-layer');
           const citasSliderPanel = document.getElementById('citas-slider-panel');
           const agingSlide       = document.getElementById('aging-slide');
           if (citasImgLayer && agingSlide && largeItems.length > 0) {
-            let maxZ = 0;
+            // Encontrar el índice real del aging-slide en largeItems
+            let agingIndex = -1;
             for (let k = 0; k < largeItems.length; k++) {
-              const z = parseInt(largeItems[k].style.zIndex || '0');
-              if (z > maxZ) maxZ = z;
+              if (largeItems[k] === agingSlide || largeItems[k].id === 'aging-slide') {
+                agingIndex = k;
+                break;
+              }
             }
-            const agingZ = parseInt(agingSlide.style.zIndex || '0');
-            const isActive = agingZ > 0 && agingZ >= maxZ;
-            if (isActive) {
-              const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
-              if (vp) {
-                const r = vp.getBoundingClientRect();
-                // Posicionar y redimensionar exactamente sobre el viewport (sin clip-path, sin fondo)
-                citasImgLayer.style.top    = r.top    + 'px';
-                citasImgLayer.style.left   = r.left   + 'px';
-                citasImgLayer.style.width  = r.width  + 'px';
-                citasImgLayer.style.height = r.height + 'px';
-                if (citasSliderPanel) {
-                  citasSliderPanel.style.bottom = (window.innerHeight - r.bottom + 16) + 'px';
+            if (agingIndex >= 0) {
+              const distToAging = Math.abs(currIndex - agingIndex);
+              // Opacidad: 1 cuando centrado (dist=0), 0 cuando a 0.5 de distancia
+              // El fade empieza cuando el slide está a 0.5 de llegar al centro
+              const overlayOpacity = Math.max(0, 1 - distToAging * 2);
+              citasImgLayer.style.opacity = overlayOpacity;
+              if (citasSliderPanel) citasSliderPanel.style.opacity = overlayOpacity;
+              if (overlayOpacity > 0) {
+                const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
+                if (vp) {
+                  const r = vp.getBoundingClientRect();
+                  citasImgLayer.style.top    = r.top    + 'px';
+                  citasImgLayer.style.left   = r.left   + 'px';
+                  citasImgLayer.style.width  = r.width  + 'px';
+                  citasImgLayer.style.height = r.height + 'px';
+                  if (citasSliderPanel) {
+                    citasSliderPanel.style.bottom = (window.innerHeight - r.bottom + 16) + 'px';
+                  }
                 }
               }
-              citasImgLayer.style.opacity = '1';
-              if (citasSliderPanel) citasSliderPanel.style.opacity = '1';
-            } else {
-              citasImgLayer.style.opacity = '0';
-              if (citasSliderPanel) citasSliderPanel.style.opacity = '0';
             }
           }
         }
@@ -9261,7 +9264,6 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   pointer-events: none;
   z-index: 10050;
   opacity: 0;
-  transition: opacity 0.4s ease;
 ">
   <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear;">
   <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
