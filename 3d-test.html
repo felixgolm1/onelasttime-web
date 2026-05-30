@@ -3486,6 +3486,20 @@ window.onerror = function(msg, url, line, col, err) {
       viewport.appendChild(largeTrack);
       // Agregar el viewport al magazine-scene (que es el padre de smallContainer)
       smallContainer.parentNode.insertBefore(viewport, smallContainer.nextSibling);
+
+      // Inyectar las 4 imágenes de envejecimiento DENTRO del aging-slide de la pista GRANDE
+      // (no overlay, la imagen vive dentro del propio slide del carrusel)
+      const _largeAgingSlide = largeTrack.querySelector('[id="aging-slide"]');
+      if (_largeAgingSlide) {
+        _largeAgingSlide.innerHTML = [
+          'cita 1.jfif',
+          'cita 1.345.jfif',
+          'cita 5.766.jfif',
+          'cita 10.992.jfif'
+        ].map((f, i) =>
+          `<img id="age-img-${i}" src="assets/img/${f}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:${i===0?1:0};transition:opacity 0.2s linear;">`
+        ).join('');
+      }
     }
 
     // ── SPAWN CARD LOGIC (De index.html) ──────────────────────────
@@ -5310,33 +5324,25 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- CITAS OVERLAY: sigue exactamente la posición del aging-slide en la pista GRANDE ---
-          const citasImgLayer    = document.getElementById('citas-img-layer');
+          // --- SLIDER PANEL: aparece solo cuando el aging-slide está centrado ---
+          // Sin overlay. Las imágenes viven dentro del propio slide del carrusel.
           const citasSliderPanel = document.getElementById('citas-slider-panel');
-          // IMPORTANTE: getElementById devuelve el 1º match (small track). Buscamos en largeItems.
-          if (citasImgLayer && largeItems.length > 0) {
+          if (citasSliderPanel && largeItems.length > 0) {
             let agingIndex = -1;
             for (let k = 0; k < largeItems.length; k++) {
               if (largeItems[k].id === 'aging-slide') { agingIndex = k; break; }
             }
             if (agingIndex >= 0) {
               const distToAging = Math.abs(currIndex - agingIndex);
-              const overlayOpacity = Math.max(0, Math.min(1, 1 - distToAging * 4));
-              // Imagen base del slide grande: baja cuando sube el overlay
-              const largeAgingImg = largeItems[agingIndex].querySelector('img');
-              if (largeAgingImg) largeAgingImg.style.opacity = Math.max(0, 1 - overlayOpacity);
-              citasImgLayer.style.opacity = overlayOpacity;
-              if (citasSliderPanel) citasSliderPanel.style.opacity = overlayOpacity;
-              if (overlayOpacity > 0) {
-                // getBoundingClientRect del slide GRANDE (transform 2D, funciona correctamente)
+              // Panel visible solo cuando el slide está muy cerca del centro (dist < 0.4)
+              const panelOpacity = Math.max(0, Math.min(1, 1 - distToAging * 2.5));
+              citasSliderPanel.style.opacity = panelOpacity;
+              if (panelOpacity > 0) {
+                // Posicionar el panel justo debajo del frame del carrusel
                 const sr = largeItems[agingIndex].getBoundingClientRect();
-                citasImgLayer.style.top    = sr.top    + 'px';
-                citasImgLayer.style.left   = sr.left   + 'px';
-                citasImgLayer.style.width  = sr.width  + 'px';
-                citasImgLayer.style.height = sr.height + 'px';
-                if (citasSliderPanel) {
-                  citasSliderPanel.style.bottom = (window.innerHeight - sr.bottom + 16) + 'px';
-                }
+                // Clamped: el slider no debe salir de pantalla
+                const panelBottom = Math.max(8, window.innerHeight - Math.min(sr.bottom, window.innerHeight) + 16);
+                citasSliderPanel.style.bottom = panelBottom + 'px';
               }
             }
           }
@@ -9243,29 +9249,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 })();
 </script>
 
-<!-- =====================================================
-     CITAS OVERLAY - dos capas independientes fixed
-     1) Imágenes: full-screen con clip-path al viewport del carrusel
-     2) Slider panel: fixed independiente sin clip
-     ===================================================== -->
 
-<!-- Capa de imágenes clipeada al viewport del carrusel -->
-<div id="citas-img-layer" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 200px; height: 200px;
-  overflow: hidden;
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 10050;
-  opacity: 0;
-">
-  <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear;">
-  <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
-  <img id="age-img-2" src="assets/img/cita 5.766.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
-  <img id="age-img-3" src="assets/img/cita 10.992.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear;">
-</div>
-
+<!-- Panel del slider: fixed, solo aparece cuando el aging-slide está centrado -->
 <!-- Panel del slider: completamente independiente, acepta clics -->
 <div id="citas-slider-panel" style="
   position: fixed;
