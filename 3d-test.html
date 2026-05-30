@@ -1570,7 +1570,7 @@ window.onerror = function(msg, url, line, col, err) {
         <img src="assets/img/cena sola.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
       <!-- Slide 5 (Interactive Aging) - Imagen base visible en transición, overlay cubre cuando centrado -->
-      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+      <div id="aging-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/cita 1.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
       <!-- Slide 6 (duplicate) -->
@@ -5310,24 +5310,27 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- CITAS OVERLAY: mostrar cuando el slide interactivo (índice 4) está centrado ---
-          const citasImgLayer = document.getElementById('citas-img-layer');
+          // --- CITAS OVERLAY: detectar por posición real del slide, no por índice ---
+          const citasImgLayer   = document.getElementById('citas-img-layer');
           const citasSliderPanel = document.getElementById('citas-slider-panel');
-          if (citasImgLayer) {
-            const distToSlide4 = Math.abs(currIndex - 4);
-            const isActive = distToSlide4 < 0.15;
+          const agingSlide      = document.getElementById('aging-slide');
+          if (citasImgLayer && agingSlide) {
+            const sr = agingSlide.getBoundingClientRect();
+            const slideCX = sr.left + sr.width  / 2;
+            const slideCY = sr.top  + sr.height / 2;
+            const vpCX = window.innerWidth  / 2;
+            const vpCY = window.innerHeight / 2;
+            // Activo si el centro del slide está a menos de 80px del centro de la ventana
+            const distFromCenter = Math.sqrt(Math.pow(slideCX - vpCX, 2) + Math.pow(slideCY - vpCY, 2));
+            const isActive = distFromCenter < 80 && sr.width > 100;
             if (isActive) {
+              // Clip al viewport del carrusel (2D estable)
               const vp = magazineScene ? magazineScene.querySelector('.carousel-viewport') : null;
               if (vp) {
                 const r = vp.getBoundingClientRect();
-                const cTop    = r.top;
-                const cRight  = window.innerWidth  - r.right;
-                const cBottom = window.innerHeight - r.bottom;
-                const cLeft   = r.left;
-                citasImgLayer.style.clipPath = `inset(${cTop}px ${cRight}px ${cBottom}px ${cLeft}px round 4px)`;
-                // Posicionar el slider justo debajo del viewport
+                citasImgLayer.style.clipPath = 'inset(' + r.top + 'px ' + (window.innerWidth - r.right) + 'px ' + (window.innerHeight - r.bottom) + 'px ' + r.left + 'px round 4px)';
                 if (citasSliderPanel) {
-                  citasSliderPanel.style.bottom = (window.innerHeight - r.bottom + 20) + 'px';
+                  citasSliderPanel.style.bottom = (window.innerHeight - r.bottom + 16) + 'px';
                 }
               }
               citasImgLayer.style.opacity = '1';
