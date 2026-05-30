@@ -1569,28 +1569,9 @@ window.onerror = function(msg, url, line, col, err) {
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/cena sola.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
-      <!-- Slide 5 (Interactive Aging) -->
+      <!-- Slide 5 (Interactive Aging) - Solo imagen base, el slider es un overlay fixed -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
-        <div style="position: relative; width: 100%; height: 100%;">
-          <img id="age-img-0" src="assets/img/cita 1.jfif" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; z-index: 1;">
-          <img id="age-img-1" src="assets/img/cita 1.345.jfif" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; z-index: 2; opacity: 0; transition: opacity 0.1s linear;">
-          <img id="age-img-2" src="assets/img/cita 5.766.jfif" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; z-index: 3; opacity: 0; transition: opacity 0.1s linear;">
-          <img id="age-img-3" src="assets/img/cita 10.992.jfif" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; z-index: 4; opacity: 0; transition: opacity 0.1s linear;">
-          
-          <!-- Slider Overlay -->
-          <div style="position: absolute; bottom: 20px; left: 0; width: 100%; padding: 0 20px; z-index: 10; box-sizing: border-box; pointer-events: auto;">
-            <div style="background: rgba(0,0,0,0.65); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px); display: flex; flex-direction: column; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.1);">
-              <div style="color: white; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600;">Cita <span id="age-label-num">1</span></div>
-              <input type="range" id="age-slider" min="0" max="300" value="0" style="width: 100%; cursor: pointer; position: relative; z-index: 9999;" oninput="window.updateAgeSlider(this.value)" onpointerdown="event.stopPropagation();" onmousedown="event.stopPropagation();" ontouchstart="event.stopPropagation();">
-              <div style="display: flex; justify-content: space-between; width: 100%; color: rgba(255,255,255,0.7); font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 500;">
-                <span>1</span>
-                <span>1.345</span>
-                <span>5.766</span>
-                <span>10.992</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <img src="assets/img/cita 1.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
       <!-- Slide 6 (duplicate) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -5326,6 +5307,19 @@ window.onerror = function(msg, url, line, col, err) {
               largeItems[i].style.zIndex = zIndex;
               if (i === 6 && currIndex > 6) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
               largeItems[i].style.pointerEvents = absD < 0.5 ? 'auto' : 'none';
+            }
+          }
+
+          // --- CITAS OVERLAY: mostrar cuando el slide interactivo (índice 4) está centrado ---
+          const citasOv = document.getElementById('citas-overlay');
+          if (citasOv) {
+            const distToSlide4 = Math.abs(currIndex - 4);
+            if (distToSlide4 < 0.5) {
+              citasOv.style.opacity = '1';
+              citasOv.style.pointerEvents = 'none'; // el contenedor base no intercepta
+            } else {
+              citasOv.style.opacity = '0';
+              citasOv.style.pointerEvents = 'none';
             }
           }
         }
@@ -9231,10 +9225,63 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 })();
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════
-     SENSITIVE OVERLAY — fuera de toda jerarquía, z-index máximo
-     Controlado desde la lógica JS del carousel (currIndex)
-════════════════════════════════════════════════════════════ -->
+<!-- =====================================================
+     CITAS OVERLAY - fixed, fuera del DOM del carrusel 3D
+     Se muestra cuando currIndex ~ 4 (slide interactivo)
+     ===================================================== -->
+<div id="citas-overlay" style="
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10050;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 80px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+">
+  <!-- Imágenes apiladas, sin interacción -->
+  <img id="age-img-0" src="assets/img/cita 1.jfif"       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;  transition:opacity 0.15s linear; pointer-events:none;">
+  <img id="age-img-1" src="assets/img/cita 1.345.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
+  <img id="age-img-2" src="assets/img/cita 5.766.jfif"  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
+  <img id="age-img-3" src="assets/img/cita 10.992.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;  transition:opacity 0.15s linear; pointer-events:none;">
+
+  <!-- Panel del slider: único elemento que acepta clics -->
+  <div style="
+    position: relative;
+    z-index: 2;
+    width: min(420px, 80vw);
+    pointer-events: auto;
+    background: rgba(0,0,0,0.70);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 18px 20px 14px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  ">
+    <div style="color:#fff; font-family:'Inter',sans-serif; font-size:1rem; font-weight:600; letter-spacing:0.02em;">
+      Cita <span id="age-label-num">1</span>
+    </div>
+    <input
+      type="range" id="age-slider"
+      min="0" max="300" value="0"
+      style="width:100%; cursor:pointer; accent-color:#a3cc00;"
+      oninput="window.updateAgeSlider(this.value)"
+    >
+    <div style="display:flex; justify-content:space-between; width:100%; color:rgba(255,255,255,0.6); font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:500;">
+      <span>1</span><span>1.345</span><span>5.766</span><span>10.992</span>
+    </div>
+  </div>
+</div>
+
+<!-- SENSITIVE OVERLAY - fuera de toda jerarquía, z-index máximo
+     Controlado desde la lógica JS del carousel (currIndex) -->
 <script>
 window.dismissSens = function(e) {
   if (e) {
@@ -9287,3 +9334,5 @@ window.updateAgeSlider = function(val) {
 </script>
 
 </html>
+
+
