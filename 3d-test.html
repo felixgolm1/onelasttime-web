@@ -1551,7 +1551,8 @@ window.onerror = function(msg, url, line, col, err) {
           -webkit-backdrop-filter:blur(22px) saturate(0.6) brightness(0.75);
           background:rgba(0,0,0,0.28);
           transition:opacity 0.55s cubic-bezier(0.4,0,0.2,1);
-          pointer-events:none;
+          pointer-events:auto;
+          z-index: 10;
         ">
           <svg width="38" height="38" viewBox="0 0 24 24" fill="none" style="opacity:0.92;margin-bottom:4px;">
             <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -5232,7 +5233,10 @@ window.onerror = function(msg, url, line, col, err) {
           // Resetear overlay si el usuario se aleja del slide
           if (Math.abs(currIndex - 3) > 1.0 && window._sensDismissed) {
             window._sensDismissed = false;
-            document.querySelectorAll('#dummy-sens-ov').forEach(el => el.style.opacity = '1');
+            document.querySelectorAll('#dummy-sens-ov').forEach(el => {
+              el.style.opacity = '1';
+              el.style.pointerEvents = 'auto';
+            });
           }
 
           // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
@@ -9213,7 +9217,10 @@ window.dismissSens = function(e) {
     e.stopPropagation();
     e.preventDefault();
   }
-  document.querySelectorAll('#dummy-sens-ov').forEach(function(el) { el.style.opacity = '0'; });
+  document.querySelectorAll('#dummy-sens-ov').forEach(function(el) { 
+    el.style.opacity = '0'; 
+    el.style.pointerEvents = 'none'; 
+  });
   window._sensDismissed = true;
 };
 </script>
