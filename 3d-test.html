@@ -5295,12 +5295,32 @@ window.onerror = function(msg, url, line, col, err) {
 
 
       // --- MAGIC WINDOW CAROUSEL LOGIC ---
+      // Función que mapea prog → currIndex con zonas planas en cada slide
+      // Cuando prog está ±HOLD alrededor de cada centro, currIndex = entero exacto (pausa visual)
+      function getCarouselIndex(p) {
+        const HOLD = 0.08; // ±0.08 prog de zona plana por slide (ej: 12.62 → 12.70 sin movimiento)
+        const centers = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62];
+        // Zona plana: devolver entero exacto
+        for (let i = 0; i < centers.length; i++) {
+          if (Math.abs(p - centers[i]) <= HOLD) return i;
+        }
+        // Zona de transición: interpolar entre el borde de una zona plana y la siguiente
+        for (let i = 0; i < centers.length - 1; i++) {
+          const fromEdge = centers[i] + HOLD;
+          const toEdge   = centers[i + 1] - HOLD;
+          if (p >= fromEdge && p <= toEdge) {
+            const t = (p - fromEdge) / (toEdge - fromEdge); // 0→1
+            return i + t; // currIndex interpolado entre i e i+1
+          }
+        }
+        return Math.max(0, Math.min(8, (p - 10.62) * 2.0)); // fallback
+      }
+
       const smallItems = document.querySelectorAll('.carousel-track-small .carousel-item');
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
-          // currIndex: 0..8 entre prog 10.62 y 14.62 (9 slides, factor 2.0 = mismo rango)
-          let currIndex = Math.max(0, Math.min(8, (prog - 10.62) * 2.0));
+          let currIndex = getCarouselIndex(prog);
           
           // Resetear overlay si el usuario se aleja del slide
           if (Math.abs(currIndex - 3) > 1.0 && window._sensDismissed) {
