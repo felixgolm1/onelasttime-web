@@ -5508,8 +5508,8 @@ window.onerror = function(msg, url, line, col, err) {
                 agingPanelClip.style.width  = vpR.width  + 'px';
                 agingPanelClip.style.height = vpR.height + 'px';
               }
-              // Panel sigue el mismo translateX que el aging-slide
-              const agingD = currIndex - agingIndex;
+              // Panel sigue el mismo translateX que el aging-slide: d = (agingIndex - currIndex)
+              const agingD = agingIndex - currIndex;
               const slideX = agingD * 466;
               citasSliderPanel.style.transform = `translateX(${slideX}px)`;
             }
