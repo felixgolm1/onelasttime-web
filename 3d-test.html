@@ -3631,12 +3631,11 @@ window.onerror = function(msg, url, line, col, err) {
           if (!_barTrack) return;
           const rect = _barTrack.getBoundingClientRect();
           const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-          // Seekear TODOS los videos (small track + large track clone)
+          // Seek instant: solo currentTime, sin play() (el browser muestra el frame al instante)
           document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
-            if (v.duration) {
+            if (v.readyState >= 1 && v.duration) {
+              v.pause();
               v.currentTime = pct * v.duration;
-              const p = v.play();
-              if (p) p.then(function() { v.pause(); }).catch(function(){});
             }
           });
         }
