@@ -6146,6 +6146,12 @@ window.onerror = function(msg, url, line, col, err) {
       // Trigger en transP=0.80 (prog=10.42): el flash aparece → restá del reveal es automático
       if (prevTarget <= 10.42 && targetProg > 10.42 && !window._carouselEntryStart) {
         window._carouselEntryStart = Date.now();
+        // Primera vez que el usuario entra en el carrusel: vídeo slide 0 empieza desde 0
+        if (!window._slide0VideoReset) {
+          window._slide0VideoReset = true;
+          const slide0Video = document.querySelector('.carousel-item video');
+          if (slide0Video) { slide0Video.currentTime = 0; slide0Video.play(); }
+        }
       }
       // Si el usuario retrocede antes del flash: cancela el timer
       if (targetProg <= 10.42) {
