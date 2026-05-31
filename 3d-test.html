@@ -5483,13 +5483,16 @@ window.onerror = function(msg, url, line, col, err) {
               const panelOpacity = Math.max(0, Math.min(1, 1 - distToAging * 2.5));
               citasSliderPanel.style.opacity = panelOpacity;
               if (panelOpacity > 0) {
-                const sr = largeItems[agingIndex].getBoundingClientRect();
-                // Alineado como los otros overlays: 40px desde el borde inferior del frame, 32px de margen lateral
-                const frameBottom = Math.min(sr.bottom, window.innerHeight);
-                citasSliderPanel.style.bottom = (window.innerHeight - frameBottom + 40) + 'px';
-                citasSliderPanel.style.left = (sr.left + 32) + 'px';
-                citasSliderPanel.style.width = (sr.width - 64) + 'px';
-                citasSliderPanel.style.transform = 'none';
+                const vp = document.querySelector('.carousel-viewport');
+                if (vp) {
+                  const vpR = vp.getBoundingClientRect();
+                  // Mismo margen que los otros overlays: 32px lateral, 40px desde el borde inferior
+                  citasSliderPanel.style.left = (vpR.left + 32) + 'px';
+                  citasSliderPanel.style.width = (vpR.width - 64) + 'px';
+                  citasSliderPanel.style.transform = 'none';
+                  const frameBottom = Math.min(vpR.bottom, window.innerHeight);
+                  citasSliderPanel.style.bottom = (window.innerHeight - frameBottom + 40) + 'px';
+                }
               }
             }
           }
