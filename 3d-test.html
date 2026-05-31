@@ -6040,31 +6040,48 @@ window.onerror = function(msg, url, line, col, err) {
 
     smoothScrollLoop();
 
+    // --- Snap Lock: pausa real en cada imagen del carrusel ---
+    let _snapLockPoint = null;   // snap point actualmente bloqueado
+    let _snapLockTicks = 0;      // ticks restantes para escapar
+    const SNAP_LOCK_TICKS = 5;  // ticks de scroll necesarios para pasar al siguiente slide
+
     function applyMagneticFriction(current, delta) {
       // Los 9 slides con factor 2.0 → cada 0.5 unidades de prog desde 10.62
       const snapPoints = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62];
-      const minD = 0.15; // Zona magnética (±0.15 de 0.5 total → 30% de cada slot)
-      let newProg = current + delta;
 
-      for (let sp of snapPoints) {
-        // 1. Efecto Atrapar (Notch físico): Si el scroll cruza el centro exacto, paramos en el centro
-        if ( (current < sp && newProg >= sp) || (current > sp && newProg <= sp) ) {
-            if (Math.abs(current - sp) > 0.01) {
-                return sp - current; // Absorbe el momentum y te deja clavado en el centro
-            }
+      // ── Caso 1: Bloqueado en un snap point ──────────────────────────────
+      if (_snapLockPoint !== null && Math.abs(current - _snapLockPoint) < 0.02) {
+        if (_snapLockTicks > 0) {
+          _snapLockTicks--;
+          return 0; // bloqueo total: el scroll no avanza
+        } else {
+          _snapLockPoint = null; // suficientes ticks → soltar
         }
+      }
 
-        // 2. Fricción / Gravedad
+      // ── Caso 2: Cruza un snap point → snap + bloquear ────────────────────
+      let newProg = current + delta;
+      for (let sp of snapPoints) {
+        if ((current < sp && newProg >= sp) || (current > sp && newProg <= sp)) {
+          if (Math.abs(current - sp) > 0.008) {
+            _snapLockPoint = sp;
+            _snapLockTicks = SNAP_LOCK_TICKS;
+            return sp - current; // aterriza en el centro exacto
+          }
+        }
+      }
+
+      // ── Caso 3: Zona de gravedad (atracción suave hacia el centro) ────────
+      const minD = 0.14;
+      for (let sp of snapPoints) {
         let dist = Math.abs(current - sp);
         if (dist < minD) {
-          let newDist = Math.abs((current + delta) - sp);
+          let newDist = Math.abs(newProg - sp);
           let intensity = (minD - dist) / minD;
           if (newDist > dist) {
-            // Cuesta salir: fricción fuerte (hasta 3.5x más duro) → pausa visible
-            delta /= (1 + intensity * 2.5);
+            delta /= (1 + intensity * 2.0); // resistencia al salir
           } else {
-            // Fácil entrar: resbala hacia el centro
-            delta *= (1 + intensity * 0.3);
+            delta *= (1 + intensity * 0.4); // aceleración al entrar
           }
           break;
         }
