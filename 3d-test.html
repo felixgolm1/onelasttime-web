@@ -3628,16 +3628,17 @@ window.onerror = function(msg, url, line, col, err) {
         let _envejDragging = false;
         const _barTrack = document.getElementById('envej-bar-track');
         function _envejSeek(clientX) {
-          const v = document.getElementById('envej-video');
-          if (!v || !_barTrack) return;
+          if (!_barTrack) return;
           const rect = _barTrack.getBoundingClientRect();
           const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-          if (v.duration) {
-            v.currentTime = pct * v.duration;
-            // Forzar render del frame: play brief + pause
-            const p = v.play();
-            if (p) p.then(function() { v.pause(); }).catch(function(){});
-          }
+          // Seekear TODOS los videos (small track + large track clone)
+          document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
+            if (v.duration) {
+              v.currentTime = pct * v.duration;
+              const p = v.play();
+              if (p) p.then(function() { v.pause(); }).catch(function(){});
+            }
+          });
         }
         if (_barTrack) {
           _barTrack.addEventListener('mousedown', function(e) { _envejDragging = true; _envejSeek(e.clientX); e.preventDefault(); });
