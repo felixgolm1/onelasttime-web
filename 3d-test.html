@@ -3581,6 +3581,27 @@ window.onerror = function(msg, url, line, col, err) {
           `<img id="age-img-${i}" src="assets/img/${f}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:${i===0?1:0};transition:opacity 0.2s linear;">`
         ).join('');
       }
+
+      // Crear wrapper-clip para el panel interactivo del aging-slide:
+      // position:fixed + overflow:hidden + tamaño del viewport → el panel queda clipado al frame
+      // pointer-events:none en el wrapper pero auto en el panel → botones siguen siendo clicables
+      const _agingPanelWrap = document.createElement('div');
+      _agingPanelWrap.id = 'aging-panel-clip';
+      _agingPanelWrap.style.cssText = 'position:fixed;overflow:hidden;pointer-events:none;z-index:10051;';
+      const _existingPanel = document.getElementById('citas-slider-panel');
+      if (_existingPanel) {
+        _existingPanel.parentNode.insertBefore(_agingPanelWrap, _existingPanel);
+        _agingPanelWrap.appendChild(_existingPanel);
+        // Panel: position absolute dentro del wrapper, sin transición CSS (el movimiento es por JS)
+        _existingPanel.style.position  = 'absolute';
+        _existingPanel.style.bottom    = '40px';
+        _existingPanel.style.left      = '32px';
+        _existingPanel.style.right     = '32px';
+        _existingPanel.style.width     = 'auto';
+        _existingPanel.style.transform = 'none';
+        _existingPanel.style.transition = 'none';
+        _existingPanel.style.opacity   = '1';
+      }
     }
 
     // ── SPAWN CARD LOGIC (De index.html) ──────────────────────────
@@ -5469,30 +5490,28 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- SLIDER PANEL: aparece solo cuando el aging-slide está centrado ---
+          // --- SLIDER PANEL: sigue el translateX del aging-slide (entra/sale con el slide) ---
           const citasSliderPanel = document.getElementById('citas-slider-panel');
-          if (citasSliderPanel && largeItems.length > 0) {
+          const agingPanelClip   = document.getElementById('aging-panel-clip');
+          if (citasSliderPanel && agingPanelClip && largeItems.length > 0) {
             let agingIndex = -1;
             for (let k = 0; k < largeItems.length; k++) {
               if (largeItems[k].id === 'aging-slide') { agingIndex = k; break; }
             }
             if (agingIndex >= 0) {
-              const distToAging = Math.abs(currIndex - agingIndex);
-              const panelOpacity = Math.max(0, Math.min(1, 1 - distToAging * 2.5));
-              citasSliderPanel.style.opacity = panelOpacity;
-              if (panelOpacity > 0) {
-                const vp = document.querySelector('.carousel-viewport');
-                if (vp) {
-                  const vpR = vp.getBoundingClientRect();
-                  // Anclar con left + right para que nunca sobresalga del frame
-                  citasSliderPanel.style.left   = (vpR.left + 32) + 'px';
-                  citasSliderPanel.style.right  = (window.innerWidth - vpR.right + 32) + 'px';
-                  citasSliderPanel.style.width  = 'auto';
-                  citasSliderPanel.style.transform = 'none';
-                  const frameBottom = Math.min(vpR.bottom, window.innerHeight);
-                  citasSliderPanel.style.bottom = (window.innerHeight - frameBottom + 40) + 'px';
-                }
+              const vp = document.querySelector('.carousel-viewport');
+              if (vp) {
+                const vpR = vp.getBoundingClientRect();
+                // Wrapper ocupa exactamente el frame del carrusel
+                agingPanelClip.style.left   = vpR.left   + 'px';
+                agingPanelClip.style.top    = vpR.top    + 'px';
+                agingPanelClip.style.width  = vpR.width  + 'px';
+                agingPanelClip.style.height = vpR.height + 'px';
               }
+              // Panel sigue el mismo translateX que el aging-slide
+              const agingD = currIndex - agingIndex;
+              const slideX = agingD * 466;
+              citasSliderPanel.style.transform = `translateX(${slideX}px)`;
             }
           }
 
@@ -9520,16 +9539,15 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 
 
-<!-- Panel interactivo aging: position:fixed, anclado dentro del frame via JS con left+right -->
+<!-- Panel interactivo aging: vive dentro de #aging-panel-clip (wrapper fixed+overflow:hidden) -->
 <div id="citas-slider-panel" style="
-  position: fixed;
-  bottom: 72px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: absolute;
+  bottom: 40px;
+  left: 32px;
+  right: 32px;
   z-index: 10051;
   pointer-events: auto;
-  opacity: 0;
-  transition: opacity 0.35s ease;
+  opacity: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
