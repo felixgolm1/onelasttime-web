@@ -5377,12 +5377,12 @@ window.onerror = function(msg, url, line, col, err) {
               // Entrada time-based: los items laterales entran desde la derecha en 700ms (suave)
               if (window._carouselEntryStart !== null && window._carouselEntryStart !== undefined) {
                 const elapsed = Date.now() - window._carouselEntryStart;
-                const SIDE_DUR = 700; // ms
+                const SIDE_DUR = 1100; // ms — más suave
                 if (elapsed < SIDE_DUR) {
                   const slideP = elapsed / SIDE_DUR;
-                  const easeSlide = 1 - Math.pow(1 - slideP, 3); // ease-out cúbico
-                  entryOffset   = (1 - easeSlide) * 600;         // 600→0 px
-                  extraBrightness = (1 - slideP) * 1.5;
+                  const easeSlide = 1 - Math.pow(1 - slideP, 5); // ease-out quíntico (muy suave)
+                  entryOffset   = (1 - easeSlide) * 900;         // 900→0 px
+                  extraBrightness = (1 - slideP) * 1.2;
                 }
                 // Una vez terminado el timer: entryOffset = 0 (posición final)
               } else {
