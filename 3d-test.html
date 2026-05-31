@@ -1525,9 +1525,12 @@ window.onerror = function(msg, url, line, col, err) {
       <line id="mag-line-r" x1="100%" y1="50%" x2="100%" y2="50%" />
     </svg>
     <div class="carousel-track" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
-      <!-- Slide 0 -->
-      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
-        <img src="assets/img/amigacartes.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+      <!-- Slide 0: Secuencia crossfade divertido → sorprendente → profundo → emocional -->
+      <div class="carousel-item" id="slide0-seq" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/divertido.jfif"    class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:1;transition:opacity 0.8s ease;">
+        <img src="assets/img/sorprendente.jfif" class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
+        <img src="assets/img/profundo.jfif"     class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
+        <img src="assets/img/emocional.jfif"    class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
       </div>
       <!-- Slide 1 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -9519,6 +9522,31 @@ window.chooseFinal = function(happy) {
     if (imgs[2]) imgs[2].style.opacity = happy ? '0' : '1';  // sin final feliz
   }
 };
+
+// --- SLIDE 0: SECUENCIA CROSSFADE (divertido → sorprendente → profundo → emocional) ---
+(function() {
+  var _seq0Index = 0;
+  var _seq0Total = 4;
+
+  function seq0Tick() {
+    _seq0Index = (_seq0Index + 1) % _seq0Total;
+    // Actualiza en todos los elementos .seq0-img del DOM (original + clon large track)
+    var allGroups = document.querySelectorAll('#slide0-seq');
+    allGroups.forEach(function(slide) {
+      var imgs = slide.querySelectorAll('.seq0-img');
+      imgs.forEach(function(img, i) {
+        img.style.opacity = (i === _seq0Index) ? '1' : '0';
+      });
+    });
+  }
+
+  // Arranca el intervalo en cuanto el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setInterval(seq0Tick, 2000); });
+  } else {
+    setInterval(seq0Tick, 2000);
+  }
+})();
 </script>
 
 </html>
