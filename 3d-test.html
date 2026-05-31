@@ -3580,6 +3580,17 @@ window.onerror = function(msg, url, line, col, err) {
         ].map((f, i) =>
           `<img id="age-img-${i}" src="assets/img/${f}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:${i===0?1:0};transition:opacity 0.2s linear;">`
         ).join('');
+        // Mover el panel interactivo dentro del aging-slide (large track)
+        // para que quede clipado por el overflow:hidden del viewport, igual que los otros overlays
+        const _sliderPanel = document.getElementById('citas-slider-panel');
+        if (_sliderPanel) {
+          _sliderPanel.style.position = 'absolute';
+          _sliderPanel.style.bottom   = '40px';
+          _sliderPanel.style.left     = '32px';
+          _sliderPanel.style.width    = 'calc(100% - 64px)';
+          _sliderPanel.style.transform = 'none';
+          _largeAgingSlide.appendChild(_sliderPanel);
+        }
       }
     }
 
@@ -5470,7 +5481,6 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           // --- SLIDER PANEL: aparece solo cuando el aging-slide está centrado ---
-          // Sin overlay. Las imágenes viven dentro del propio slide del carrusel.
           const citasSliderPanel = document.getElementById('citas-slider-panel');
           if (citasSliderPanel && largeItems.length > 0) {
             let agingIndex = -1;
@@ -5482,18 +5492,6 @@ window.onerror = function(msg, url, line, col, err) {
               // Panel visible solo cuando el slide está muy cerca del centro (dist < 0.4)
               const panelOpacity = Math.max(0, Math.min(1, 1 - distToAging * 2.5));
               citasSliderPanel.style.opacity = panelOpacity;
-              if (panelOpacity > 0) {
-                const vp = document.querySelector('.carousel-viewport');
-                if (vp) {
-                  const vpR = vp.getBoundingClientRect();
-                  // Mismo margen que los otros overlays: 32px lateral, 40px desde el borde inferior
-                  citasSliderPanel.style.left = (vpR.left + 32) + 'px';
-                  citasSliderPanel.style.width = (vpR.width - 64) + 'px';
-                  citasSliderPanel.style.transform = 'none';
-                  const frameBottom = Math.min(vpR.bottom, window.innerHeight);
-                  citasSliderPanel.style.bottom = (window.innerHeight - frameBottom + 40) + 'px';
-                }
-              }
             }
           }
 
@@ -9521,14 +9519,13 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 
 
-<!-- Panel de progreso: fixed, aparece dentro del frame cuando el aging-slide está centrado -->
+<!-- Panel interactivo aging: se mueve dentro del aging-slide via JS (position:absolute, clipado por el viewport) -->
 <div id="citas-slider-panel" style="
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 72px;
+  position: absolute;
+  bottom: 40px;
+  left: 32px;
+  width: calc(100% - 64px);
   z-index: 10051;
-  width: min(416px, calc(100vw - 64px));
   pointer-events: auto;
   opacity: 0;
   transition: opacity 0.35s ease;
