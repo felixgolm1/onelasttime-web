@@ -3632,7 +3632,12 @@ window.onerror = function(msg, url, line, col, err) {
           if (!v || !_barTrack) return;
           const rect = _barTrack.getBoundingClientRect();
           const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-          if (v.duration) { v.currentTime = pct * v.duration; v.pause(); }
+          if (v.duration) {
+            v.currentTime = pct * v.duration;
+            // Forzar render del frame: play brief + pause
+            const p = v.play();
+            if (p) p.then(function() { v.pause(); }).catch(function(){});
+          }
         }
         if (_barTrack) {
           _barTrack.addEventListener('mousedown', function(e) { _envejDragging = true; _envejSeek(e.clientX); e.preventDefault(); });
@@ -5572,9 +5577,8 @@ window.onerror = function(msg, url, line, col, err) {
             const distToVideo = Math.abs(currIndex - videoSlideIndex);
             envejPanel.style.opacity = Math.max(0, Math.min(1, 1 - distToVideo * 2.5));
             envejPanel.style.transform = 'translateX(0)';
-            // Vídeo siempre pausado: es un scrubber, el usuario controla la posición
+            // Scrubber: actualizar barra + tiempos en cada frame
             if (envejVideo) {
-              if (!envejVideo.paused) envejVideo.pause();
               const vDur = envejVideo.duration || 0;
               const vCur = envejVideo.currentTime || 0;
               const pct = vDur > 0 ? (vCur / vDur * 100) : 0;
