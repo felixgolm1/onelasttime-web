@@ -5298,7 +5298,7 @@ window.onerror = function(msg, url, line, col, err) {
       // Función que mapea prog → currIndex con zonas planas en cada slide
       // Cuando prog está ±HOLD alrededor de cada centro, currIndex = entero exacto (pausa visual)
       function getCarouselIndex(p) {
-        const HOLD = 0.08; // ±0.08 prog de zona plana por slide (ej: 12.62 → 12.70 sin movimiento)
+        const HOLD = 0.056; // ±0.056 prog de zona plana por slide (~30% menos que 0.08)
         const centers = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62];
         // Zona plana: devolver entero exacto
         for (let i = 0; i < centers.length; i++) {
