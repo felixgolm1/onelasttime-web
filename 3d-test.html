@@ -4763,12 +4763,14 @@ window.onerror = function(msg, url, line, col, err) {
           magazineScene.style.pointerEvents = 'auto';
         }
         
-        // Animación de entrada TIME-BASED: si hay timer activo, usa tiempo real; si no, fallback scroll
+        // Animación TIME-BASED desde el flash (transP=0.80 a 1.0 en 400ms)
+        // El scroll es manual hasta transP=0.80 (prog 9.62→10.42). Desde el flash, tiempo real.
         let transP;
         if (window._carouselEntryStart !== null && window._carouselEntryStart !== undefined) {
-          transP = Math.min(1, (Date.now() - window._carouselEntryStart) / 750);
+          const elapsed = Date.now() - window._carouselEntryStart;
+          transP = 0.80 + Math.min(0.20, (elapsed / 400) * 0.20); // 0.80 → 1.0 en 400ms
         } else {
-          transP = Math.min(1, mapRange(prog, 9.62, 10.62, 0, 1)); // fallback (recarga en medio)
+          transP = Math.min(1, mapRange(prog, 9.62, 10.62, 0, 1)); // scroll-driven hasta el flash
         }
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
         gsap.set(scBoard, { y: boardY + 'vh' });
@@ -6127,16 +6129,16 @@ window.onerror = function(msg, url, line, col, err) {
       targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
 
       // ── Entrada carrusel TIME-BASED ──────────────────────────────────────
-      // Al cruzar 9.62 hacia adelante: inicia timer y bloquea targetProg en 10.62 durante 750ms
-      if (prevTarget <= 9.62 && targetProg > 9.62 && !window._carouselEntryStart) {
+      // Trigger en transP=0.80 (prog=10.42): el flash aparece → restá del reveal es automático
+      if (prevTarget <= 10.42 && targetProg > 10.42 && !window._carouselEntryStart) {
         window._carouselEntryStart = Date.now();
       }
-      // Si el usuario retrocede: cancela el timer
-      if (targetProg <= 9.62) {
+      // Si el usuario retrocede antes del flash: cancela el timer
+      if (targetProg <= 10.42) {
         window._carouselEntryStart = null;
       }
-      // Durante la animación: bloquear targetProg en 10.62 (slide 0 centrado)
-      if (window._carouselEntryStart && (Date.now() - window._carouselEntryStart) < 750) {
+      // Durante los 400ms: bloquear en 10.62 (slide 0 centrado)
+      if (window._carouselEntryStart && (Date.now() - window._carouselEntryStart) < 400) {
         targetProg = Math.min(targetProg, 10.62);
       }
     }, { passive: false });
