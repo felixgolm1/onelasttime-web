@@ -5373,18 +5373,32 @@ window.onerror = function(msg, url, line, col, err) {
 
             let entryOffset = 0;
             let extraBrightness = 0;
-            let localTransP = mapRange(prog, 9.62, 10.62, 0, 1);
             if (i > 0) {
-                if (localTransP < 0.85) {
-                    entryOffset = 800;
-                    extraBrightness = 2.0;
-                } else if (localTransP >= 0.85 && localTransP <= 1.0) {
-                    let slideP = mapRange(localTransP, 0.85, 1.0, 0, 1);
-                    let easeSlide = 1 - Math.pow(1 - slideP, 3);
-                    entryOffset = mapRange(easeSlide, 0, 1, 800, 0);
-                    extraBrightness = mapRange(slideP, 0, 1, 2.0, 0);
+              // Entrada time-based: los items laterales entran desde la derecha en 700ms (suave)
+              if (window._carouselEntryStart !== null && window._carouselEntryStart !== undefined) {
+                const elapsed = Date.now() - window._carouselEntryStart;
+                const SIDE_DUR = 700; // ms
+                if (elapsed < SIDE_DUR) {
+                  const slideP = elapsed / SIDE_DUR;
+                  const easeSlide = 1 - Math.pow(1 - slideP, 3); // ease-out cúbico
+                  entryOffset   = (1 - easeSlide) * 600;         // 600→0 px
+                  extraBrightness = (1 - slideP) * 1.5;
                 }
+                // Una vez terminado el timer: entryOffset = 0 (posición final)
+              } else {
+                // Fallback scroll-based (recarga de página en medio del carrusel)
+                const localTransP = mapRange(prog, 9.62, 10.62, 0, 1);
+                if (localTransP < 0.85) {
+                  entryOffset = 600; extraBrightness = 1.5;
+                } else if (localTransP <= 1.0) {
+                  const slideP   = mapRange(localTransP, 0.85, 1.0, 0, 1);
+                  const easeSlide = 1 - Math.pow(1 - slideP, 3);
+                  entryOffset     = (1 - easeSlide) * 600;
+                  extraBrightness = (1 - slideP) * 1.5;
+                }
+              }
             }
+
             translateXSmall += entryOffset + (i !== 8 ? exitOffsetSmall : 0);
             translateXLarge += (i !== 8 ? exitOffsetLarge : 0);
             brightness += extraBrightness;
