@@ -1591,7 +1591,11 @@ window.onerror = function(msg, url, line, col, err) {
       <div id="aging-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/cita 1.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
-      <!-- Slide 5 -->
+      <!-- Slide 5 (cita 10.992 - pareja mayor) -->
+      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <img src="assets/img/cita 10.992.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+      </div>
+      <!-- Slide 6 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/parrots.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
@@ -4970,19 +4974,19 @@ window.onerror = function(msg, url, line, col, err) {
         const breakoutOverlay = document.getElementById('mag-breakout-overlay');
         if (breakoutOverlay) {
           // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
-          if (prog < 14.62) {
-            const _mEl8s = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+          if (prog < 15.12) {
+            const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
             const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
             if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
             const _cloneS = document.getElementById('mag-model-clone');
             if (_cloneS) _cloneS.remove();
           }
-          if (prog >= 14.62) {
+          if (prog >= 15.12) {
 
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+            const _magLargeEl =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -4994,10 +4998,10 @@ window.onerror = function(msg, url, line, col, err) {
             }
 
             // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
-            const exitP = Math.min(Math.max(mapRange(prog, 14.62, 15.6, 0, 1), 0), 1);
+            const exitP = Math.min(Math.max(mapRange(prog, 15.12, 16.1, 0, 1), 0), 1);
 
             // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
-            const expansionP = Math.min(Math.max(mapRange(prog, 14.72, 15.92, 0, 1), 0), 1);
+            const expansionP = Math.min(Math.max(mapRange(prog, 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
             // ── FASE 2: clip-path:inset() en el clon — sin overlay, sin fondo ──
@@ -5005,7 +5009,7 @@ window.onerror = function(msg, url, line, col, err) {
 
               if (!document.getElementById('mag-model-clone')) {
                 const carouselVp = magazineScene?.querySelector('.carousel-viewport');
-                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+                const magEl      =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
                 const origImg    = magEl?.querySelector('img[src*="modelo-sin-fondo"]')
                                 || magazineScene?.querySelector('.carousel-track-large img[src*="modelo-sin-fondo"]');
                 if (carouselVp && origImg && origImg.naturalWidth && magEl) {
@@ -5058,7 +5062,7 @@ window.onerror = function(msg, url, line, col, err) {
               const clone = document.getElementById('mag-model-clone');
               if (clone) {
                 // Restaurar modelo en AMBOS tracks (small y large)
-                const _mEl8 = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+                const _mEl8 =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
                 const origL = _mEl8?.querySelector('img[src*="modelo-sin-fondo"]');
                 const origS = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
                 if (origL) origL.style.visibility = '';
@@ -5121,7 +5125,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 5. COPY IZQUIERDO — empieza en prog 14.67
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5132,7 +5136,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 6. COPY DERECHO — empieza en prog 14.67
             { document.querySelectorAll('[id="mag-copy-right-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5185,19 +5189,19 @@ window.onerror = function(msg, url, line, col, err) {
 
         if (breakoutOverlay) {
           // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
-          if (prog < 14.62) {
-            const _mEl8s = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+          if (prog < 15.12) {
+            const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
             const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
             if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
             const _cloneS = document.getElementById('mag-model-clone');
             if (_cloneS) _cloneS.remove();
           }
-          if (prog >= 14.62) {
+          if (prog >= 15.12) {
 
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+            const _magLargeEl =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -5209,10 +5213,10 @@ window.onerror = function(msg, url, line, col, err) {
             }
 
             // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
-            const exitP = Math.min(Math.max(mapRange(prog, 14.62, 15.6, 0, 1), 0), 1);
+            const exitP = Math.min(Math.max(mapRange(prog, 15.12, 16.1, 0, 1), 0), 1);
 
             // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
-            const expansionP = Math.min(Math.max(mapRange(prog, 14.72, 15.92, 0, 1), 0), 1);
+            const expansionP = Math.min(Math.max(mapRange(prog, 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
             // ── FASE 2: Overlay expansión del marco ────────────────────────────────
@@ -5279,7 +5283,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 5. COPY IZQUIERDO — sale por izquierda linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5290,7 +5294,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 6. COPY DERECHO — sale por derecha linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-right-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 14.67, 15.2, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5377,8 +5381,8 @@ window.onerror = function(msg, url, line, col, err) {
       // Cuando prog está ±HOLD alrededor de cada centro, currIndex = entero exacto (pausa visual)
       function getCarouselIndex(p) {
         // Hold por slide: el primero tiene el doble de zona plana
-        const centers = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62];
-        const holds   = [0.112, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056];
+        const centers = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62, 15.12];
+        const holds   = [0.112, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056];
         // Zona plana: devolver entero exacto
         for (let i = 0; i < centers.length; i++) {
           if (Math.abs(p - centers[i]) <= holds[i]) return i;
@@ -5392,7 +5396,7 @@ window.onerror = function(msg, url, line, col, err) {
             return i + t; // currIndex interpolado entre i e i+1
           }
         }
-        return Math.max(0, Math.min(8, (p - 10.62) * 2.0)); // fallback
+        return Math.max(0, Math.min(9, (p - 10.62) * 2.0)); // fallback
       }
 
       const smallItems = document.querySelectorAll('.carousel-track-small .carousel-item');
@@ -5414,15 +5418,15 @@ window.onerror = function(msg, url, line, col, err) {
           let exitOffsetSmall = 0;
           let exitOffsetLarge = 0;
           let exitFade = 1;
-          if (prog > 14.62) {
-            const exitP = Math.min(mapRange(prog, 14.62, 15.3, 0, 1), 1);
+          if (prog > 15.12) {
+            const exitP = Math.min(mapRange(prog, 15.12, 15.8, 0, 1), 1);
             const easeExit = Math.pow(exitP, 2); // ease-in: acelera al salir
             exitOffsetSmall = -900 * easeExit;
             exitOffsetLarge = -900 * easeExit;
             exitFade = Math.max(0, 1 - mapRange(exitP, 0.4, 1.0, 0, 1));
           }
 
-          for (let i = 0; i < 9; i++) {
+          for (let i = 0; i < 10; i++) {
             let d = i - currIndex;
             let absD = Math.abs(d);
             
@@ -5469,8 +5473,8 @@ window.onerror = function(msg, url, line, col, err) {
               }
             }
 
-            translateXSmall += entryOffset + (i !== 8 ? exitOffsetSmall : 0);
-            translateXLarge += (i !== 8 ? exitOffsetLarge : 0);
+            translateXSmall += entryOffset + (i !== 9 ? exitOffsetSmall : 0);
+            translateXLarge += (i !== 9 ? exitOffsetLarge : 0);
             brightness += extraBrightness;
             
             // Pequeñas (fuera del recuadro)
@@ -5485,7 +5489,7 @@ window.onerror = function(msg, url, line, col, err) {
             if (largeItems[i]) {
               largeItems[i].style.transform = `translateX(${translateXLarge}px) scale(1.0)`;
               largeItems[i].style.zIndex = zIndex;
-              if (i === 7 && currIndex > 7) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
+              if (i === 8 && currIndex > 8) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
               largeItems[i].style.pointerEvents = absD < 0.5 ? 'auto' : 'none';
             }
           }
@@ -6162,7 +6166,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     function applyMagneticFriction(current, delta) {
       // Los 9 slides con factor 2.0 → cada 0.5 unidades de prog desde 10.62
-      const snapPoints = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62];
+      const snapPoints = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62, 15.12];
 
       // ── Caso 1: Bloqueado en un snap point ──────────────────────────────
       if (_snapLockPoint !== null && Math.abs(current - _snapLockPoint) < 0.02) {
