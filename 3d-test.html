@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -3624,19 +3624,24 @@ window.onerror = function(msg, url, line, col, err) {
         _envejPanelEl.style.transform  = 'none';
         _envejPanelEl.style.transition = 'none';
         _envejPanelEl.style.opacity    = '1';
-        // Drag-to-seek en la barra de progreso
+        // Drag-to-seek: throttled con requestAnimationFrame + fastSeek
         let _envejDragging = false;
+        let _envejRafPending = false;
+        let _envejPendingPct = 0;
         const _barTrack = document.getElementById('envej-bar-track');
         function _envejSeek(clientX) {
           if (!_barTrack) return;
           const rect = _barTrack.getBoundingClientRect();
-          const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-          // Seek instant: solo currentTime, sin play() (el browser muestra el frame al instante)
-          document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
-            if (v.readyState >= 1 && v.duration) {
-              v.pause();
-              v.currentTime = pct * v.duration;
-            }
+          _envejPendingPct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+          if (_envejRafPending) return;
+          _envejRafPending = true;
+          requestAnimationFrame(function() {
+            _envejRafPending = false;
+            document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
+              if (!v.duration) return;
+              var t = _envejPendingPct * v.duration;
+              if (v.fastSeek) { v.fastSeek(t); } else { v.currentTime = t; }
+            });
           });
         }
         if (_barTrack) {
@@ -9784,6 +9789,18 @@ window.ageNav = function(dir) {
   var next = Math.max(0, Math.min(3, _ageCurrentStep + dir));
   window.setAgeStep(next);
 };
+
+// Warmup: forzar buffering de todos los videos embejecimiento (incluido el clone del large track)
+setTimeout(function() {
+  document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
+    v.muted = true;
+    v.preload = 'auto';
+    if (v.readyState < 4) {
+      var p = v.play();
+      if (p) p.then(function() { v.pause(); v.currentTime = 0; }).catch(function(){});
+    }
+  });
+}, 800);
 
 // --- PANEL VÍDEO ENVEJECIMIENTO ---
 window.envejPlayPause = function() {
