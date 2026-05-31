@@ -4763,7 +4763,13 @@ window.onerror = function(msg, url, line, col, err) {
           magazineScene.style.pointerEvents = 'auto';
         }
         
-        let transP = mapRange(prog, 9.62, 10.62, 0, 1);
+        // Animación de entrada TIME-BASED: si hay timer activo, usa tiempo real; si no, fallback scroll
+        let transP;
+        if (window._carouselEntryStart !== null && window._carouselEntryStart !== undefined) {
+          transP = Math.min(1, (Date.now() - window._carouselEntryStart) / 750);
+        } else {
+          transP = Math.min(1, mapRange(prog, 9.62, 10.62, 0, 1)); // fallback (recarga en medio)
+        }
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
         gsap.set(scBoard, { y: boardY + 'vh' });
         
@@ -6113,12 +6119,26 @@ window.onerror = function(msg, url, line, col, err) {
     window.addEventListener('wheel', e => {
       e.preventDefault();
       const cappedDY = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60);
-      // Reducimos el divisor (de 1200 a 900) para un scroll general más ágil
       let divisor = 900;
         if (targetProg < 2.20) divisor = 6000;
       let rawDelta = cappedDY / divisor;
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
+      const prevTarget = targetProg;
       targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
+
+      // ── Entrada carrusel TIME-BASED ──────────────────────────────────────
+      // Al cruzar 9.62 hacia adelante: inicia timer y bloquea targetProg en 10.62 durante 750ms
+      if (prevTarget <= 9.62 && targetProg > 9.62 && !window._carouselEntryStart) {
+        window._carouselEntryStart = Date.now();
+      }
+      // Si el usuario retrocede: cancela el timer
+      if (targetProg <= 9.62) {
+        window._carouselEntryStart = null;
+      }
+      // Durante la animación: bloquear targetProg en 10.62 (slide 0 centrado)
+      if (window._carouselEntryStart && (Date.now() - window._carouselEntryStart) < 750) {
+        targetProg = Math.min(targetProg, 10.62);
+      }
     }, { passive: false });
     
     // --- Lógica de arrastre del scrollbar (Drag) ---
