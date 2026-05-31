@@ -4896,8 +4896,9 @@ window.onerror = function(msg, url, line, col, err) {
 
               if (!document.getElementById('mag-model-clone')) {
                 const carouselVp = magazineScene?.querySelector('.carousel-viewport');
-                const origImg    = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
-                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[7];
+                const magEl      = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+                const origImg    = magEl?.querySelector('img[src*="modelo-sin-fondo"]')
+                                || magazineScene?.querySelector('.carousel-track-large img[src*="modelo-sin-fondo"]');
                 if (carouselVp && origImg && origImg.naturalWidth && magEl) {
                   const vpr    = carouselVp.getBoundingClientRect();
                   const magR   = magEl.getBoundingClientRect(); // rect real del item (incluyendo borde)
