@@ -5720,6 +5720,9 @@ window.onerror = function(msg, url, line, col, err) {
         updateFaceSwap();
         updateGlobalScenes();
 
+        // SAFEGUARD: fuerza stOverlay visible en toda la fase scatter (GSAP puede restablecerse a 0 en scrub)
+        if (stOverlay) stOverlay.style.opacity = (prog >= 0.82 && prog <= 2.2) ? '1' : '';
+
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
 
