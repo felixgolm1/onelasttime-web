@@ -4868,6 +4868,14 @@ window.onerror = function(msg, url, line, col, err) {
         // FASE 2 (prog 15.6→16.8): frame expands to full screen
         const breakoutOverlay = document.getElementById('mag-breakout-overlay');
         if (breakoutOverlay) {
+          // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
+          if (prog < 14.62) {
+            const _mEl8s = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+            const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
+            if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
+            const _cloneS = document.getElementById('mag-model-clone');
+            if (_cloneS) _cloneS.remove();
+          }
           if (prog >= 14.62) {
 
             const vw = window.innerWidth;
@@ -4948,8 +4956,12 @@ window.onerror = function(msg, url, line, col, err) {
             } else {
               const clone = document.getElementById('mag-model-clone');
               if (clone) {
-                const orig = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
-                if (orig) orig.style.visibility = '';
+                // Restaurar modelo en AMBOS tracks (small y large)
+                const _mEl8 = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+                const origL = _mEl8?.querySelector('img[src*="modelo-sin-fondo"]');
+                const origS = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
+                if (origL) origL.style.visibility = '';
+                if (origS) origS.style.visibility = '';
                 clone.remove();
               }
               breakoutOverlay.style.display = 'none';
@@ -5071,6 +5083,14 @@ window.onerror = function(msg, url, line, col, err) {
         }
 
         if (breakoutOverlay) {
+          // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
+          if (prog < 14.62) {
+            const _mEl8s = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+            const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
+            if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
+            const _cloneS = document.getElementById('mag-model-clone');
+            if (_cloneS) _cloneS.remove();
+          }
           if (prog >= 14.62) {
 
             const vw = window.innerWidth;
