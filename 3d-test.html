@@ -1553,13 +1553,26 @@ window.onerror = function(msg, url, line, col, err) {
           Lo que quieras. La cena hace el resto.
         </div>
       </div>
-      <!-- Slide 1: Secuencia crossfade divertido → sorprendente → profundo → emocional -->
+      <!-- Slide 1: Secuencia crossfade divertido → sorprendente → profundo → emocional → neutro -->
       <div class="carousel-item" id="slide0-seq" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/divertido.jfif"    class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:1;transition:opacity 0.8s ease;">
         <img src="assets/img/sorprendente.jfif" class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
         <img src="assets/img/profundo.jfif"     class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
         <img src="assets/img/emocional.jfif"    class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
+        <img src="assets/img/neutro.jfif"       class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
+        <!-- Overlay dinámico: solo en track grande -->
+        <div data-large-only="true" style="
+          position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+          width: calc(100% - 32px); background: rgba(0,0,0,0.88);
+          font-family: 'Inter','Helvetica Neue',sans-serif; font-size: 12.5px;
+          font-weight: 400; line-height: 1.6; letter-spacing: 0.05em;
+          text-transform: uppercase; text-align: center;
+          padding: 14px 16px; border-radius: 6px; pointer-events: none;">
+          <span style="color:#ccff00;font-weight:600;display:block;">Tú defines el tono.</span>
+          <span class="seq0-word" style="color:#ffffff;display:block;transition:opacity 0.35s ease;">¿Divertido?</span>
+        </div>
       </div>
+
       <!-- Slide 2 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/parrots.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
@@ -9633,14 +9646,15 @@ window.chooseFinal = function(happy) {
   }
 };
 
-// --- SLIDE 0: SECUENCIA CROSSFADE (divertido → sorprendente → profundo → emocional) ---
+// --- SLIDE 1: SECUENCIA CROSSFADE (divertido → sorprendente → profundo → emocional → neutro) ---
 (function() {
   var _seq0Index = 0;
-  var _seq0Total = 4;
+  var _seq0Total = 5;
+  var _seq0Words = ['¿Divertido?', '¿Sorprendente?', '¿Profundo?', '¿Emocional?', '¿Otro?'];
 
   function seq0Tick() {
     _seq0Index = (_seq0Index + 1) % _seq0Total;
-    // Actualiza en todos los elementos .seq0-img del DOM (original + clon large track)
+    // Actualiza imágenes en todos los #slide0-seq del DOM (small + large track)
     var allGroups = document.querySelectorAll('#slide0-seq');
     allGroups.forEach(function(slide) {
       var imgs = slide.querySelectorAll('.seq0-img');
@@ -9648,15 +9662,24 @@ window.chooseFinal = function(happy) {
         img.style.opacity = (i === _seq0Index) ? '1' : '0';
       });
     });
+    // Actualiza palabra dinámica con fade (solo en large track por data-large-only)
+    var wordEls = document.querySelectorAll('.seq0-word');
+    wordEls.forEach(function(el) {
+      el.style.opacity = '0';
+      setTimeout(function() {
+        el.textContent = _seq0Words[_seq0Index];
+        el.style.opacity = '1';
+      }, 350);
+    });
   }
 
-  // Arranca el intervalo en cuanto el DOM esté listo
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() { setInterval(seq0Tick, 2000); });
   } else {
     setInterval(seq0Tick, 2000);
   }
 })();
+
 </script>
 
 </html>
