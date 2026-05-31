@@ -5483,11 +5483,13 @@ window.onerror = function(msg, url, line, col, err) {
               const panelOpacity = Math.max(0, Math.min(1, 1 - distToAging * 2.5));
               citasSliderPanel.style.opacity = panelOpacity;
               if (panelOpacity > 0) {
-                // Posicionar el panel justo debajo del frame del carrusel
                 const sr = largeItems[agingIndex].getBoundingClientRect();
-                // Clamped: el slider no debe salir de pantalla
-                const panelBottom = Math.max(8, window.innerHeight - Math.min(sr.bottom, window.innerHeight) + 16);
-                citasSliderPanel.style.bottom = panelBottom + 'px';
+                // Alineado como los otros overlays: 40px desde el borde inferior del frame, 32px de margen lateral
+                const frameBottom = Math.min(sr.bottom, window.innerHeight);
+                citasSliderPanel.style.bottom = (window.innerHeight - frameBottom + 40) + 'px';
+                citasSliderPanel.style.left = (sr.left + 32) + 'px';
+                citasSliderPanel.style.width = (sr.width - 64) + 'px';
+                citasSliderPanel.style.transform = 'none';
               }
             }
           }
@@ -9516,28 +9518,24 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 
 
-<!-- Panel de progreso: fixed, solo aparece cuando el aging-slide está centrado -->
+<!-- Panel de progreso: fixed, aparece dentro del frame cuando el aging-slide está centrado -->
 <div id="citas-slider-panel" style="
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
   bottom: 72px;
   z-index: 10051;
-  width: min(400px, 86vw);
+  width: min(416px, calc(100vw - 64px));
   pointer-events: auto;
   opacity: 0;
   transition: opacity 0.35s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
-  background: rgba(8,8,8,0.82);
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 20px;
-  padding: 20px 24px 18px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 48px rgba(0,0,0,0.6);
+  gap: 14px;
+  background: rgba(0,0,0,0.88);
+  border-radius: 0;
+  padding: 14px 16px;
 ">
 
   <!-- Header: label + flechas -->
