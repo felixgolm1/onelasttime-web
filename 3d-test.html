@@ -6041,8 +6041,9 @@ window.onerror = function(msg, url, line, col, err) {
     smoothScrollLoop();
 
     function applyMagneticFriction(current, delta) {
-      const snapPoints = [10.62, 11.62, 12.62, 13.62, 14.62];
-      const minD = 0.18; // Zona magnética más sutil (18% del encuadre)
+      // Los 9 slides con factor 2.0 → cada 0.5 unidades de prog desde 10.62
+      const snapPoints = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62];
+      const minD = 0.15; // Zona magnética (±0.15 de 0.5 total → 30% de cada slot)
       let newProg = current + delta;
 
       for (let sp of snapPoints) {
@@ -6059,8 +6060,8 @@ window.onerror = function(msg, url, line, col, err) {
           let newDist = Math.abs((current + delta) - sp);
           let intensity = (minD - dist) / minD;
           if (newDist > dist) {
-            // Cuesta salir: fricción sutil (hasta 2.2x más duro)
-            delta /= (1 + intensity * 1.2);
+            // Cuesta salir: fricción fuerte (hasta 3.5x más duro) → pausa visible
+            delta /= (1 + intensity * 2.5);
           } else {
             // Fácil entrar: resbala hacia el centro
             delta *= (1 + intensity * 0.3);
