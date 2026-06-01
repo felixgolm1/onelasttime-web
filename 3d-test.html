@@ -5584,9 +5584,9 @@ window.onerror = function(msg, url, line, col, err) {
             // Panel fixed independiente: posicionado directamente con coords de viewport
             if (vp2) {
               var _vr = vp2.getBoundingClientRect();
-              envejPanel.style.left   = (_vr.left   + 32) + 'px';
-              envejPanel.style.width  = (_vr.width  - 64) + 'px';
-              envejPanel.style.bottom = (window.innerHeight - _vr.bottom + 40) + 'px';
+              envejPanel.style.left   = _vr.left + 'px';
+              envejPanel.style.width  = _vr.width + 'px';
+              envejPanel.style.bottom = (window.innerHeight - _vr.bottom) + 'px';
             }
             envejPanel.style.opacity = envejFade;
             // Video siempre en pausa: solo se mueve arrastrando la barra
@@ -9630,21 +9630,20 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 
 <!-- Panel video envejecimiento: vive dentro de #envej-panel-clip (wrapper fixed+overflow:hidden) -->
 <div id="envej-panel" style="
-  position: absolute;
-  bottom: 40px;
-  left: 32px;
-  right: 32px;
-  z-index: 10051;
+  position: fixed;
+  z-index: 10052;
   pointer-events: auto;
   opacity: 0;
-  background: rgba(6,6,6,0.90);
+  background: rgba(6,6,6,0.92);
   border-radius: 0 0 4px 4px;
   padding: 18px 22px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 12px;
-  box-shadow: 0 -4px 32px rgba(0,0,0,0.5);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.6);
 ">
   <!-- Copy superior -->
   <div style="display:flex; flex-direction:column; gap:4px;">
