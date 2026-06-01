@@ -3626,7 +3626,7 @@ window.onerror = function(msg, url, line, col, err) {
         _envejPanelWrap.appendChild(_envejVid);
         // Panel: solo cambiar position/z-index/opacity - preservar el resto del CSS del HTML
         _envejPanelEl.style.position     = 'fixed';
-        _envejPanelEl.style.zIndex       = '10052';
+        _envejPanelEl.style.zIndex       = '99999';
         _envejPanelEl.style.opacity      = '0';
         _envejPanelEl.style.pointerEvents = 'auto';
         _envejPanelEl.style.bottom       = '';
@@ -3655,17 +3655,11 @@ window.onerror = function(msg, url, line, col, err) {
           var citaEl = document.getElementById('envej-cita-num');
           if (citaEl) { var n = Math.round(1 + pct * 9999); citaEl.textContent = n.toLocaleString('es-ES'); }
         };
-        // Listeners globales en capture phase: inmunes a stopPropagation del carousel
-        document.addEventListener('mousemove', function(e) {
-          if (window._bDrag) window.envejSeekTo(e.clientX);
+        // Listener global pointermove en capture phase: recibe eventos aunque el cursor salga de la barra
+        document.addEventListener('pointermove', function(e) {
+          if (window._bDrag) { window.envejSeekTo(e.clientX); e.stopPropagation(); }
         }, true);
-        document.addEventListener('mouseup', function() {
-          window._bDrag = false;
-        }, true);
-        document.addEventListener('touchmove', function(e) {
-          if (window._bDrag && e.touches[0]) window.envejSeekTo(e.touches[0].clientX);
-        }, { capture: true, passive: true });
-        document.addEventListener('touchend', function() {
+        document.addEventListener('pointerup', function() {
           window._bDrag = false;
         }, true);
       }
@@ -9674,8 +9668,10 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   </div>
   <!-- Barra scrubber -->
   <div id="envej-bar-track"
-  onmousedown="window._bDrag=true; window.envejSeekTo(event.clientX); event.preventDefault();"
-  ontouchstart="window._bDrag=true; window.envejSeekTo(event.touches[0].clientX);"
+  onpointerdown="window._bDrag=true; window.envejSeekTo(event.clientX); event.preventDefault(); event.stopPropagation();"
+  onpointermove="if(window._bDrag) window.envejSeekTo(event.clientX);"
+  onpointerup="window._bDrag=false;"
+  onpointercancel="window._bDrag=false;"
   style="flex:1; height:28px; cursor:grab; display:flex; align-items:center; position:relative; pointer-events:auto; touch-action:none; user-select:none;">
     <div style="position:absolute; top:50%; left:0; right:0; height:2px; transform:translateY(-50%); background:rgba(255,255,255,0.15); border-radius:2px; pointer-events:none;"></div>
     <div id="envej-bar-fill" style="position:absolute; top:50%; left:0; height:2px; transform:translateY(-50%); background:#a3cc00; width:0%; border-radius:2px; pointer-events:none;"></div>
