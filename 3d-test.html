@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -3687,8 +3687,10 @@ window.onerror = function(msg, url, line, col, err) {
           var f = document.getElementById('envej-bar-fill');
           var t = document.getElementById('envej-bar-thumb');
           var c = document.getElementById('envej-cita-num');
+          var w = document.getElementById('envej-wave-fill');
           if (f) f.style.width = (pct*100)+'%';
           if (t) t.style.left  = (pct*100)+'%';
+          if (w) w.style.clipPath = 'inset(0 ' + (100 - (pct*100)) + '% 0 0)';
           if (c) c.textContent = Math.round(1+pct*9999).toLocaleString('es-ES');
         };
       }
@@ -5643,8 +5645,10 @@ window.onerror = function(msg, url, line, col, err) {
               const fillEl  = document.getElementById('envej-bar-fill');
               const thumbEl = document.getElementById('envej-bar-thumb');
               const citaEl2 = document.getElementById('envej-cita-num');
+              const waveEl  = document.getElementById('envej-wave-fill');
               if (fillEl)  fillEl.style.width = pct + '%';
               if (thumbEl) thumbEl.style.left  = pct + '%';
+              if (waveEl)  waveEl.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
               if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; citaEl2.textContent = Math.round(1+p2*9999).toLocaleString('es-ES'); }
             }
           }
@@ -9699,6 +9703,10 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   <!-- Barra scrubber: input[range] nativo -->
   <div style="position:relative; height:28px; display:flex; align-items:center;">
     <div style="position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%); background:rgba(255,255,255,0.15); border-radius:2px; pointer-events:none;"></div>
+    <!-- Onda azul SVG irregular que se llena usando clipPath -->
+    <svg id="envej-wave-fill" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; clip-path: inset(0 100% 0 0);" preserveAspectRatio="none" viewBox="0 0 100 28">
+       <path d="M0 14 Q 5 20, 10 14 T 25 10 T 38 18 T 52 14 T 68 10 T 80 18 Q 85 24, 90 4 Q 95 14, 100 14" fill="none" stroke="#007aff" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
     <div id="envej-bar-fill" style="position:absolute; left:0; top:50%; height:2px; transform:translateY(-50%); background:#a3cc00; width:0%; border-radius:2px; pointer-events:none;"></div>
     <div id="envej-bar-thumb" style="position:absolute; top:50%; transform:translate(-50%,-50%); width:11px; height:11px; border-radius:50%; background:#a3cc00; left:0%; pointer-events:none; box-shadow:0 0 6px rgba(163,204,0,0.5);"></div>
     <input id="envej-range" type="range" min="0" max="9999" value="0" step="1" oninput="window.envejSeekByRange(this.value);" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:grab; margin:0; padding:0;">
