@@ -3624,7 +3624,15 @@ window.onerror = function(msg, url, line, col, err) {
         _envejPanelEl.style.transform  = 'none';
         _envejPanelEl.style.transition = 'none';
         _envejPanelEl.style.opacity    = '1';
-        // Drag-to-seek: throttled con requestAnimationFrame + fastSeek
+        // Funcion global play/pause con flag de usuario
+        window.envejPlayPause = function() {
+          var v = document.getElementById('envej-video');
+          if (!v) return;
+          if (v.paused) { window._envejUserPaused = false; v.play().catch(function(){}); }
+          else          { window._envejUserPaused = true;  v.pause(); }
+        };
+        // Seek draggable: throttled con requestAnimationFrame
+        // (seek mientras reproduce = instantaneo porque el buffer esta activo)
         let _envejDragging = false;
         let _envejRafPending = false;
         let _envejPendingPct = 0;
@@ -3640,7 +3648,7 @@ window.onerror = function(msg, url, line, col, err) {
             document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
               if (!v.duration) return;
               var t = _envejPendingPct * v.duration;
-              if (v.fastSeek) { v.fastSeek(t); } else { v.currentTime = t; }
+              v.currentTime = t; // instantaneo cuando el video reproduce y el buffer esta activo
             });
           });
         }
@@ -5582,20 +5590,30 @@ window.onerror = function(msg, url, line, col, err) {
             const distToVideo = Math.abs(currIndex - videoSlideIndex);
             envejPanel.style.opacity = Math.max(0, Math.min(1, 1 - distToVideo * 2.5));
             envejPanel.style.transform = 'translateX(0)';
-            // Scrubber: actualizar barra + tiempos en cada frame
+            // Autoplay al centrar, pausa al alejarse (salvo que el usuario haya pausado manualmente)
+            if (envejVideo && !window._envejUserPaused) {
+              if (distToVideo < 0.35) {
+                if (envejVideo.paused) envejVideo.play().catch(function(){});
+              } else {
+                if (!envejVideo.paused) envejVideo.pause();
+              }
+            }
+            // Actualizar controles del player en cada frame
             if (envejVideo) {
               const vDur = envejVideo.duration || 0;
               const vCur = envejVideo.currentTime || 0;
-              const pct = vDur > 0 ? (vCur / vDur * 100) : 0;
-              const fillEl = document.getElementById('envej-bar-fill');
+              const pct  = vDur > 0 ? (vCur / vDur * 100) : 0;
+              const fillEl  = document.getElementById('envej-bar-fill');
               const thumbEl = document.getElementById('envej-bar-thumb');
-              if (fillEl) fillEl.style.width = pct + '%';
-              if (thumbEl) thumbEl.style.left = pct + '%';
-              const fmtT = t => `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`;
-              const curEl = document.getElementById('envej-time-cur');
-              const durEl = document.getElementById('envej-time-dur');
+              const curEl   = document.getElementById('envej-time-cur');
+              const durEl   = document.getElementById('envej-time-dur');
+              const playBtn = document.getElementById('envej-play-btn');
+              if (fillEl)  fillEl.style.width = pct + '%';
+              if (thumbEl) thumbEl.style.left  = pct + '%';
+              const fmtT = function(t) { return Math.floor(t/60) + ':' + String(Math.floor(t%60)).padStart(2,'0'); };
               if (curEl) curEl.textContent = fmtT(vCur);
               if (durEl && vDur > 0) durEl.textContent = fmtT(vDur);
+              if (playBtn) playBtn.innerHTML = envejVideo.paused ? '&#9654;' : '&#9646;&#9646;';
             }
           }
 
@@ -9643,7 +9661,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   <!-- Fila 1: pregunta + hint -->
   <div style="display:flex; align-items:center; justify-content:space-between;">
     <span style="color:#fff; font-family:'Inter',sans-serif; font-size:0.73rem; letter-spacing:0.12em; text-transform:uppercase;">¿C&oacute;mo ser&eacute;is de mayores?</span>
-    <span style="color:rgba(255,255,255,0.35); font-family:'Inter',sans-serif; font-size:0.65rem; letter-spacing:0.06em;">&#8592; arrastra &#8594;</span>
+    <button id="envej-play-btn" onclick="window.envejPlayPause()" style="width:28px;height:28px;border-radius:50%;background:rgba(163,204,0,0.18);border:1px solid rgba(163,204,0,0.4);color:rgba(163,204,0,1);font-size:0.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:auto;transition:all 0.15s ease;">&#9654;</button>
   </div>
   <!-- Fila 2: tiempo actual + barra (zona click amplia) + duraci&oacute;n -->
   <div style="display:flex; align-items:center; gap:10px;">
