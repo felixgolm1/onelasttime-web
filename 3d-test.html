@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5597,14 +5597,8 @@ window.onerror = function(msg, url, line, col, err) {
             const envejFade = Math.max(0, Math.min(1, 1 - distToVideo * 2.5));
             envejPanelClip.style.opacity = envejFade;
             envejPanel.style.opacity = '1'; // panel siempre visible dentro del clip
-            // Autoplay al centrar, pausa al alejarse (salvo que el usuario haya pausado manualmente)
-            if (envejVideo && !window._envejUserPaused) {
-              if (distToVideo < 0.35) {
-                if (envejVideo.paused) envejVideo.play().catch(function(){});
-              } else {
-                if (!envejVideo.paused) envejVideo.pause();
-              }
-            }
+            // Video siempre en pausa: solo se mueve arrastrando la barra
+            if (envejVideo && !envejVideo.paused) envejVideo.pause();
             // Actualizar controles del player en cada frame
             if (envejVideo) {
               const vDur = envejVideo.duration || 0;
