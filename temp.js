@@ -1,7 +1,4 @@
-﻿<!DOCTYPE html>
-<html lang="es">
-<head>
-<script>
+﻿
 window.onerror = function(msg, url, line, col, err) {
   let d = document.createElement('div');
   d.style.cssText = 'position:fixed;top:0;left:0;z-index:9999999;background:red;color:white;padding:20px;font-size:24px;width:100%;';
@@ -3724,6 +3721,7 @@ window.onerror = function(msg, url, line, col, err) {
                     ctaEl.style.pointerEvents = 'none';
                 }
              }
+          }
           }
         };
 
@@ -9979,9 +9977,5 @@ window.chooseFinal = function(happy) {
     setInterval(seq0Tick, 2000);
   }
 })();
-
-</script>
-
-</html>
 
 
