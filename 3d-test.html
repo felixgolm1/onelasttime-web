@@ -3679,7 +3679,7 @@ window.onerror = function(msg, url, line, col, err) {
             currentCopyIdx = idx;
             const tEl = document.getElementById('envej-copy-title');
             const sEl = document.getElementById('envej-copy-sub');
-            if (tEl && sEl) {
+            if (tEl && sEl && pct < 0.99) {
               tEl.style.opacity = '0';
               sEl.style.opacity = '0';
               setTimeout(() => {
@@ -3689,6 +3689,42 @@ window.onerror = function(msg, url, line, col, err) {
                 sEl.style.opacity = '1';
               }, 400);
             }
+          }
+          
+          const panelEl = document.getElementById('envej-panel');
+          const ctaEl = document.getElementById('envej-final-cta');
+          if (panelEl) {
+             panelEl.style.transition = 'background 0.5s ease, border-color 0.5s ease';
+             if (pct >= 0.99) {
+                panelEl.style.background = 'transparent';
+                panelEl.style.borderTopColor = 'transparent';
+                Array.from(panelEl.children).forEach(c => {
+                    if (c.id !== 'envej-final-cta') {
+                        c.style.transition = 'opacity 0.4s ease';
+                        c.style.opacity = '0';
+                        c.style.pointerEvents = 'none';
+                    }
+                });
+                if (ctaEl) {
+                    ctaEl.style.opacity = '1';
+                    ctaEl.style.pointerEvents = 'auto';
+                }
+             } else {
+                panelEl.style.background = 'rgba(4,4,4,0.97)';
+                panelEl.style.borderTopColor = 'rgba(255,255,255,0.07)';
+                Array.from(panelEl.children).forEach(c => {
+                    if (c.id !== 'envej-final-cta') {
+                        c.style.transition = 'opacity 0.4s ease';
+                        c.style.opacity = '1';
+                        c.style.pointerEvents = 'auto';
+                    }
+                });
+                if (ctaEl) {
+                    ctaEl.style.opacity = '0';
+                    ctaEl.style.pointerEvents = 'none';
+                }
+             }
+          }
           }
         };
 
@@ -9751,6 +9787,11 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     <span style="color:rgba(255,255,255,0.22); font-family:'Inter',sans-serif; font-size:0.57rem; letter-spacing:0.06em;">Cita 10.000</span>
   </div>
   <button id="envej-play-btn" onclick="window.envejPlayPause()" style="display:none;">&#9654;</button>
+
+  <button id="envej-final-cta" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #a3cc00; color: #111; border: none; border-radius: 40px; padding: 16px 32px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; text-align: center; line-height: 1.4; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; box-shadow: 0 8px 24px rgba(163,204,0,0.4); width: max-content;">
+    <span style="display:block;">No te dejes nada por decir.</span>
+    <span style="display:block;">Díselo en la próxima cena</span>
+  </button>
 </div>
 
 <!-- Panel interactivo aging: vive dentro de #aging-panel-clip (wrapper fixed+overflow:hidden) -->
