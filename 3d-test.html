@@ -5608,9 +5608,7 @@ window.onerror = function(msg, url, line, col, err) {
             const envejFade = Math.max(0, Math.min(1, 1 - distToVideo * 2.5));
             // Clip: fade del video
             envejPanelClip.style.opacity = envejFade;
-            // Miniatura: ocultar cuando centrado (clip cubre), mostrar en tira
-            var _tv = document.getElementById('envej-thumb-vid');
-            if (_tv) _tv.style.opacity = distToVideo > 0.4 ? '1' : '0';
+
             // Panel fixed independiente: posicionado directamente con coords de viewport
             if (vp2) {
               var _vr = vp2.getBoundingClientRect();
