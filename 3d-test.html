@@ -3654,19 +3654,7 @@ window.onerror = function(msg, url, line, col, err) {
           var citaEl = document.getElementById('envej-cita-num');
           if (citaEl) { var n = Math.round(1 + pct * 9999); citaEl.textContent = n.toLocaleString('es-ES'); }
         };
-        if (_barTrack) {
-          _barTrack.addEventListener('pointerdown', function(e) {
-            _barTrack.setPointerCapture(e.pointerId);
-            window.envejSeekTo(e.clientX);
-            e.preventDefault();
-          });
-          _barTrack.addEventListener('pointermove', function(e) {
-            if (e.buttons > 0) window.envejSeekTo(e.clientX);
-          });
-          _barTrack.addEventListener('pointerup', function(e) {
-            _barTrack.releasePointerCapture(e.pointerId);
-          });
-        }
+        // Drag handlers movidos a HTML inline en el bar-track (onpointerdown/move/up)
       }
     }
 
@@ -9668,7 +9656,12 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     <span id="envej-cita-num" style="color:#fff; font-family:'Inter',sans-serif; font-size:2.6rem; font-weight:200; letter-spacing:-0.03em; line-height:1;">1</span>
   </div>
   <!-- Barra scrubber -->
-  <div id="envej-bar-track" style="flex:1; height:20px; cursor:grab; display:flex; align-items:center; position:relative; pointer-events:auto; touch-action:none; user-select:none;">
+  <div id="envej-bar-track"
+  onpointerdown="this.setPointerCapture(event.pointerId); window._bDrag=true; window.envejSeekTo(event.clientX); event.preventDefault();"
+  onpointermove="if(window._bDrag) window.envejSeekTo(event.clientX);"
+  onpointerup="window._bDrag=false; this.releasePointerCapture(event.pointerId);"
+  onpointercancel="window._bDrag=false;"
+  style="flex:1; height:28px; cursor:grab; display:flex; align-items:center; position:relative; pointer-events:auto; touch-action:none; user-select:none;">
     <div style="position:absolute; top:50%; left:0; right:0; height:2px; transform:translateY(-50%); background:rgba(255,255,255,0.15); border-radius:2px; pointer-events:none;"></div>
     <div id="envej-bar-fill" style="position:absolute; top:50%; left:0; height:2px; transform:translateY(-50%); background:#a3cc00; width:0%; border-radius:2px; pointer-events:none;"></div>
     <div id="envej-bar-thumb" style="position:absolute; top:50%; transform:translate(-50%,-50%); width:11px; height:11px; border-radius:50%; background:#a3cc00; left:0%; pointer-events:none; box-shadow:0 0 6px rgba(163,204,0,0.5);"></div>
