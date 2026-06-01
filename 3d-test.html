@@ -3662,13 +3662,30 @@ window.onerror = function(msg, url, line, col, err) {
           _thumbVid.pause();
         }
 
-        // Seek via input[range] nativo (val: 0-9999)
+        // Seek via input[range] nativo (val: 0-9999) - búsqueda lazy del video
         window.envejSeekByRange = function(val) {
           var pct = val / 9999;
+          // Buscar el video en el large track si no está cacheado
+          if (!window._envejVideoRef) {
+            var _lt = document.querySelector('.carousel-track-large');
+            if (_lt) {
+              var _li = _lt.querySelectorAll('.carousel-item');
+              if (_li[4]) window._envejVideoRef = _li[4].querySelector('video.envej-thumb-vid');
+            }
+          }
           var v = window._envejVideoRef;
-          if (v && v.duration) { v.currentTime = pct * v.duration; }
-          var thumb = document.getElementById('envej-thumb-vid');
-          if (thumb && thumb.duration) { thumb.currentTime = pct * thumb.duration; thumb.pause(); }
+          if (v) { v.currentTime = pct * (v.duration || 0); v.pause(); }
+          // Sincronizar también la miniatura small
+          if (!window._envejSmallVid) {
+            var _st = document.querySelector('.carousel-track-small');
+            if (_st) {
+              var _si2 = _st.querySelectorAll('.carousel-item');
+              if (_si2[4]) window._envejSmallVid = _si2[4].querySelector('video.envej-thumb-vid');
+            }
+          }
+          var sv = window._envejSmallVid;
+          if (sv) { sv.currentTime = pct * (sv.duration || 0); sv.pause(); }
+          // Actualizar visuales del panel
           var f = document.getElementById('envej-bar-fill');
           var t = document.getElementById('envej-bar-thumb');
           var c = document.getElementById('envej-cita-num');
