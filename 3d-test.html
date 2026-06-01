@@ -3655,7 +3655,18 @@ window.onerror = function(msg, url, line, col, err) {
           var citaEl = document.getElementById('envej-cita-num');
           if (citaEl) { var n = Math.round(1 + pct * 9999); citaEl.textContent = n.toLocaleString('es-ES'); }
         };
-        // Drag: setPointerCapture en el bar-track captura todos los pointer events
+        // Seek por valor del range (0-9999)
+        window.envejSeekByRange = function(val) {
+          var v = window._envejVideoRef;
+          var pct = val / 9999;
+          if (v && v.duration) v.currentTime = pct * v.duration;
+          var fill  = document.getElementById('envej-bar-fill');
+          var thumb = document.getElementById('envej-bar-thumb');
+          var cita  = document.getElementById('envej-cita-num');
+          if (fill)  fill.style.width = (pct * 100) + '%';
+          if (thumb) thumb.style.left = (pct * 100) + '%';
+          if (cita)  cita.textContent = Math.round(1 + pct * 9999).toLocaleString('es-ES');
+        };
       }
     }
 
@@ -5609,7 +5620,18 @@ window.onerror = function(msg, url, line, col, err) {
               const playBtn = document.getElementById('envej-play-btn');
               if (fillEl)  fillEl.style.width = pct + '%';
               if (thumbEl) thumbEl.style.left  = pct + '%';
-              if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; citaEl2.textContent = Math.round(1+p2*9999).toLocaleString('es-ES'); }
+              if (vDur > 0) {
+                var p2 = vCur / vDur;
+                var pct2 = p2 * 100;
+                var fillEl2  = document.getElementById('envej-bar-fill');
+                var thumbEl2 = document.getElementById('envej-bar-thumb');
+                var rangeEl  = document.getElementById('envej-range');
+                var citaEl2  = document.getElementById('envej-cita-num');
+                if (fillEl2)  fillEl2.style.width = pct2 + '%';
+                if (thumbEl2) thumbEl2.style.left  = pct2 + '%';
+                if (rangeEl)  rangeEl.value = Math.round(p2 * 9999);
+                if (citaEl2)  citaEl2.textContent = Math.round(1 + p2 * 9999).toLocaleString('es-ES');
+              }
             }
           }
 
@@ -9660,15 +9682,15 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     <span style="color:rgba(255,255,255,0.45); font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;">Cita</span>
     <span id="envej-cita-num" style="color:#fff; font-family:'Inter',sans-serif; font-size:2.6rem; font-weight:200; letter-spacing:-0.03em; line-height:1;">1</span>
   </div>
-  <!-- Barra scrubber -->
-  <div id="envej-bar-track"
-  onpointerdown="this.setPointerCapture(event.pointerId); window.envejSeekTo(event.clientX); event.preventDefault();"
-  onpointermove="window.envejSeekTo(event.clientX);"
-  onpointerup="this.releasePointerCapture(event.pointerId);"
-  style="flex:1; height:28px; cursor:grab; display:flex; align-items:center; position:relative; pointer-events:auto; touch-action:none; user-select:none;">
-    <div style="position:absolute; top:50%; left:0; right:0; height:2px; transform:translateY(-50%); background:rgba(255,255,255,0.15); border-radius:2px; pointer-events:none;"></div>
-    <div id="envej-bar-fill" style="position:absolute; top:50%; left:0; height:2px; transform:translateY(-50%); background:#a3cc00; width:0%; border-radius:2px; pointer-events:none;"></div>
+  <!-- Barra scrubber: input[range] nativo - drag gestionado por el browser, sin conflictos -->
+  <div style="position:relative; height:28px; display:flex; align-items:center;">
+    <div style="position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%); background:rgba(255,255,255,0.15); border-radius:2px; pointer-events:none;"></div>
+    <div id="envej-bar-fill" style="position:absolute; left:0; top:50%; height:2px; transform:translateY(-50%); background:#a3cc00; width:0%; border-radius:2px; pointer-events:none;"></div>
     <div id="envej-bar-thumb" style="position:absolute; top:50%; transform:translate(-50%,-50%); width:11px; height:11px; border-radius:50%; background:#a3cc00; left:0%; pointer-events:none; box-shadow:0 0 6px rgba(163,204,0,0.5);"></div>
+    <input id="envej-range" type="range" min="0" max="9999" value="0" step="1"
+      oninput="window.envejSeekByRange(this.value);"
+      style="position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:grab; margin:0; padding:0;">
+  </div>
   </div>
   <!-- Labels extremos -->
   <div style="display:flex; justify-content:space-between; margin-top:-6px;">
