@@ -3661,6 +3661,37 @@ window.onerror = function(msg, url, line, col, err) {
         }
 
         // Seek via input[range] nativo (val: 0-9999) - búsqueda lazy del video
+        
+        const envejCopies = [
+          { t: 'Esa primera mirada', s: 'Cuando el tiempo parecía infinito.' },
+          { t: 'Las risas', s: 'Las rutinas que se convirtieron en vuestro refugio.' },
+          { t: 'Las tormentas superadas', s: 'Las arrugas compartidas.' },
+          { t: 'Y si esta fuera la última...', s: '¿Qué te habrías dejado por decir?' }
+        ];
+        let currentCopyIdx = 0;
+        window.updateEnvejCopy = function(pct) {
+          let idx = 0;
+          if (pct > 0.8) idx = 3;
+          else if (pct > 0.5) idx = 2;
+          else if (pct > 0.2) idx = 1;
+          
+          if (idx !== currentCopyIdx) {
+            currentCopyIdx = idx;
+            const tEl = document.getElementById('envej-copy-title');
+            const sEl = document.getElementById('envej-copy-sub');
+            if (tEl && sEl) {
+              tEl.style.opacity = '0';
+              sEl.style.opacity = '0';
+              setTimeout(() => {
+                tEl.textContent = envejCopies[idx].t;
+                sEl.textContent = envejCopies[idx].s;
+                tEl.style.opacity = '1';
+                sEl.style.opacity = '1';
+              }, 400);
+            }
+          }
+        };
+
         window.envejSeekByRange = function(val) {
           var pct = val / 9999;
           // Buscar el video en el large track si no está cacheado
@@ -3691,6 +3722,7 @@ window.onerror = function(msg, url, line, col, err) {
           if (f) f.style.width = (pct*100)+'%';
           if (t) t.style.left  = (pct*100)+'%';
           if (w) w.style.clipPath = 'inset(0 ' + (100 - (pct*100)) + '% 0 0)';
+          window.updateEnvejCopy(pct);
           if (c) c.textContent = Math.round(1+pct*9999).toLocaleString('es-ES');
         };
       }
@@ -5649,6 +5681,7 @@ window.onerror = function(msg, url, line, col, err) {
               if (fillEl)  fillEl.style.width = pct + '%';
               if (thumbEl) thumbEl.style.left  = pct + '%';
               if (waveEl)  waveEl.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+              if (window.updateEnvejCopy) window.updateEnvejCopy(pct / 100);
               if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; citaEl2.textContent = Math.round(1+p2*9999).toLocaleString('es-ES'); }
             }
           }
