@@ -1593,7 +1593,7 @@ window.onerror = function(msg, url, line, col, err) {
       </div>
             <!-- Slide 5 (video en envej-panel-clip, fuera del carousel) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
-        <video id="envej-thumb-vid" src="assets/img/embejecimiento_fast.mp4" muted playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;border-radius:4px;"></video>
+        <video class="envej-thumb-vid" src="assets/img/embejecimiento_fast.mp4" muted playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;border-radius:4px;"></video>
       </div>
       <!-- Slide 6 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -5592,24 +5592,13 @@ window.onerror = function(msg, url, line, col, err) {
 
           // --- VIDEO PANEL: slide 5 (envejecimiento, index 4) ---
           const envejPanel = document.getElementById('envej-panel');
-          const envejPanelClip = document.getElementById('envej-panel-clip');
-          const envejVideo = window._envejVideoRef || document.getElementById('envej-video');
-          if (envejPanel && envejPanelClip && largeItems.length > 0) {
+          const envejVideo = window._envejVideoRef;
+          if (envejPanel && largeItems.length > 0) {
             const videoSlideIndex = 4;
             const vp2 = document.querySelector('.carousel-viewport');
-            if (vp2) {
-              const vpR2 = vp2.getBoundingClientRect();
-              envejPanelClip.style.left   = vpR2.left   + 'px';
-              envejPanelClip.style.top    = vpR2.top    + 'px';
-              envejPanelClip.style.width  = vpR2.width  + 'px';
-              envejPanelClip.style.height = vpR2.height + 'px';
-            }
             const distToVideo = Math.abs(currIndex - videoSlideIndex);
             const envejFade = Math.max(0, Math.min(1, 1 - distToVideo * 2.5));
-            // Clip: fade del video
-            envejPanelClip.style.opacity = envejFade;
-
-            // Panel fixed independiente: posicionado directamente con coords de viewport
+            // Panel fixed: posicionado dentro del viewport del carousel
             if (vp2) {
               var _vr = vp2.getBoundingClientRect();
               envejPanel.style.left   = _vr.left + 'px';
@@ -5617,9 +5606,14 @@ window.onerror = function(msg, url, line, col, err) {
               envejPanel.style.bottom = (window.innerHeight - _vr.bottom) + 'px';
             }
             envejPanel.style.opacity = envejFade;
-            // Video siempre en pausa: solo se mueve arrastrando la barra
+            // Video siempre en pausa
             if (envejVideo && !envejVideo.paused) envejVideo.pause();
-            // Actualizar controles del player en cada frame
+            // Sincronizar small video con el mismo frame
+            var _sv = window._envejSmallVid;
+            if (_sv && envejVideo && Math.abs(_sv.currentTime - envejVideo.currentTime) > 0.05) {
+              _sv.currentTime = envejVideo.currentTime; _sv.pause();
+            }
+            // Actualizar controles del player
             if (envejVideo) {
               const vDur = envejVideo.duration || 0;
               const vCur = envejVideo.currentTime || 0;
@@ -5627,7 +5621,6 @@ window.onerror = function(msg, url, line, col, err) {
               const fillEl  = document.getElementById('envej-bar-fill');
               const thumbEl = document.getElementById('envej-bar-thumb');
               const citaEl2 = document.getElementById('envej-cita-num');
-              const playBtn = document.getElementById('envej-play-btn');
               if (fillEl)  fillEl.style.width = pct + '%';
               if (thumbEl) thumbEl.style.left  = pct + '%';
               if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; citaEl2.textContent = Math.round(1+p2*9999).toLocaleString('es-ES'); }
