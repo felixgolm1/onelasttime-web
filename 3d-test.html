@@ -1593,7 +1593,7 @@ window.onerror = function(msg, url, line, col, err) {
       </div>
             <!-- Slide 5 (video en envej-panel-clip, fuera del carousel) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
-        <img src="assets/img/pareja_70.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
+        <video id="envej-thumb-vid" src="assets/img/embejecimiento_fast.mp4" muted playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;border-radius:4px;"></video>
       </div>
       <!-- Slide 6 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -3655,11 +3655,20 @@ window.onerror = function(msg, url, line, col, err) {
           var citaEl = document.getElementById('envej-cita-num');
           if (citaEl) { var n = Math.round(1 + pct * 9999); citaEl.textContent = n.toLocaleString('es-ES'); }
         };
+        // Sincronizar miniatura con el video principal al hacer seek
+        var _thumbVid = document.getElementById('envej-thumb-vid');
+        if (_thumbVid) {
+          // Al cargar, pausar la miniatura en el frame 0
+          _thumbVid.pause();
+        }
+
         // Seek via input[range] nativo (val: 0-9999)
         window.envejSeekByRange = function(val) {
           var pct = val / 9999;
           var v = window._envejVideoRef;
-          if (v && v.duration) v.currentTime = pct * v.duration;
+          if (v && v.duration) { v.currentTime = pct * v.duration; }
+          var thumb = document.getElementById('envej-thumb-vid');
+          if (thumb && thumb.duration) { thumb.currentTime = pct * thumb.duration; thumb.pause(); }
           var f = document.getElementById('envej-bar-fill');
           var t = document.getElementById('envej-bar-thumb');
           var c = document.getElementById('envej-cita-num');
@@ -5599,6 +5608,9 @@ window.onerror = function(msg, url, line, col, err) {
             const envejFade = Math.max(0, Math.min(1, 1 - distToVideo * 2.5));
             // Clip: fade del video
             envejPanelClip.style.opacity = envejFade;
+            // Miniatura: ocultar cuando centrado (clip cubre), mostrar en tira
+            var _tv = document.getElementById('envej-thumb-vid');
+            if (_tv) _tv.style.opacity = distToVideo > 0.4 ? '1' : '0';
             // Panel fixed independiente: posicionado directamente con coords de viewport
             if (vp2) {
               var _vr = vp2.getBoundingClientRect();
