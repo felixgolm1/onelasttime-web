@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5622,7 +5622,7 @@ window.onerror = function(msg, url, line, col, err) {
             // Panel interactivo se mueve con el slide usando translateX
             const envejD = videoSlideIndex - currIndex;
             const slideX2 = envejD * 466;
-            envejPanel.style.transform = 	ranslateX(px);
+            envejPanel.style.transform = `translateX(${slideX2}px)`;
 
             // Video siempre en pausa
             if (envejVideo && !envejVideo.paused) envejVideo.pause();
