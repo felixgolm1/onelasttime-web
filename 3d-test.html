@@ -5613,10 +5613,7 @@ window.onerror = function(msg, url, line, col, err) {
               const playBtn = document.getElementById('envej-play-btn');
               if (fillEl)  fillEl.style.width = pct + '%';
               if (thumbEl) thumbEl.style.left  = pct + '%';
-              const fmtT = function(t) { return Math.floor(t/60) + ':' + String(Math.floor(t%60)).padStart(2,'0'); };
-              if (curEl) curEl.textContent = fmtT(vCur);
-              if (durEl && vDur > 0) durEl.textContent = fmtT(vDur);
-              if (playBtn) playBtn.innerHTML = envejVideo.paused ? '&#9654;' : '&#9646;&#9646;';
+              if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; citaEl2.textContent = Math.round(1+p2*9999).toLocaleString('es-ES'); }
             }
           }
 
@@ -9653,22 +9650,25 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   z-index: 10051;
   pointer-events: auto;
   opacity: 0;
-  background: rgba(0,0,0,0.88);
+  background: rgba(6,6,6,0.90);
   border-radius: 0 0 4px 4px;
-  padding: 16px 20px 18px;
+  padding: 18px 22px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 12px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.5);
 ">
   <!-- Copy superior -->
-  <div style="display:flex; flex-direction:column; gap:3px;">
-    <span style="color:rgba(255,255,255,0.9); font-family:'Inter',sans-serif; font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:500;">Para cualquier cita</span>
-    <span style="color:rgba(255,255,255,0.35); font-family:'Inter',sans-serif; font-size:0.6rem; letter-spacing:0.08em; font-style:italic;">Siempre habr&aacute; una &uacute;ltima vez</span>
+  <div style="display:flex; flex-direction:column; gap:4px;">
+    <span style="color:#fff; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:600; line-height:1.3;">Para cualquier cita</span>
+    <span style="color:rgba(255,255,255,0.42); font-family:'Inter',sans-serif; font-size:0.75rem; font-weight:400; font-style:italic; letter-spacing:0.01em;">Siempre habr&aacute; una &uacute;ltima vez</span>
   </div>
   <!-- Contador -->
   <div style="display:flex; align-items:baseline; gap:7px;">
-    <span style="color:rgba(255,255,255,0.4); font-family:'Inter',sans-serif; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;">Cita</span>
+    <span style="color:rgba(255,255,255,0.45); font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;">Cita</span>
     <span id="envej-cita-num" style="color:#fff; font-family:'Inter',sans-serif; font-size:2.6rem; font-weight:200; letter-spacing:-0.03em; line-height:1;">1</span>
   </div>
   <!-- Barra scrubber -->
