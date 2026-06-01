@@ -3607,23 +3607,29 @@ window.onerror = function(msg, url, line, col, err) {
         _existingPanel.style.opacity   = '1';
       }
 
-      // Wrapper-clip para el panel de vídeo eliminado.
-      // El video vive ahora en el carousel item (large track) y se mueve naturalmente.
+      // Wrapper-clip para el panel de vídeo (slide 5 - envejecimiento)
+      const _envejPanelWrap = document.createElement('div');
+      _envejPanelWrap.id = 'envej-panel-clip';
+      _envejPanelWrap.style.cssText = 'position:fixed;overflow:hidden;pointer-events:none;z-index:10051;';
       const _envejPanelEl = document.getElementById('envej-panel');
       if (_envejPanelEl) {
-        // Inicializar video references null, las buscará de forma lazy
+        // Inicializar video references null
         window._envejVideoRef = null;
         window._envejSmallVid = null;
         
-        // Panel: position fixed independiente, se posiciona en el loop
-        _envejPanelEl.style.position      = 'fixed';
+        // Envolver el panel en el clip
+        _envejPanelEl.parentNode.insertBefore(_envejPanelWrap, _envejPanelEl);
+        _envejPanelWrap.appendChild(_envejPanelEl);
+        
+        // Panel interactivo dentro del clip
+        _envejPanelEl.style.position      = 'absolute';
         _envejPanelEl.style.zIndex        = '99999';
-        _envejPanelEl.style.opacity       = '0';
+        _envejPanelEl.style.opacity       = '1';
         _envejPanelEl.style.pointerEvents = 'auto';
-        _envejPanelEl.style.bottom        = '';
-        _envejPanelEl.style.left          = '';
-        _envejPanelEl.style.right         = '';
-        _envejPanelEl.style.width         = '';
+        _envejPanelEl.style.bottom        = '40px';
+        _envejPanelEl.style.left          = '32px';
+        _envejPanelEl.style.right         = '32px';
+        _envejPanelEl.style.width         = 'auto';
         // Play/pause global
         window.envejPlayPause = function() {
           var v = window._envejVideoRef;
@@ -5598,22 +5604,29 @@ window.onerror = function(msg, url, line, col, err) {
 
           // --- VIDEO PANEL: slide 5 (envejecimiento, index 4) ---
           const envejPanel = document.getElementById('envej-panel');
+          const envejPanelClip = document.getElementById('envej-panel-clip');
           const envejVideo = window._envejVideoRef;
-          if (envejPanel && largeItems.length > 0) {
+          if (envejPanel && envejPanelClip && largeItems.length > 0) {
             const videoSlideIndex = 4;
             const vp2 = document.querySelector('.carousel-viewport');
-            const distToVideo = Math.abs(currIndex - videoSlideIndex);
-            const envejFade = Math.max(0, Math.min(1, 1 - distToVideo * 2.5));
-            // Panel fixed: posicionado dentro del viewport del carousel
+            
+            // Clip wrapper ocupa exactamente el frame del carrusel
             if (vp2) {
-              var _vr = vp2.getBoundingClientRect();
-              envejPanel.style.left   = _vr.left + 'px';
-              envejPanel.style.width  = _vr.width + 'px';
-              envejPanel.style.bottom = (window.innerHeight - _vr.bottom) + 'px';
+              const vpR2 = vp2.getBoundingClientRect();
+              envejPanelClip.style.left   = vpR2.left   + 'px';
+              envejPanelClip.style.top    = vpR2.top    + 'px';
+              envejPanelClip.style.width  = vpR2.width  + 'px';
+              envejPanelClip.style.height = vpR2.height + 'px';
             }
-            envejPanel.style.opacity = envejFade;
+            
+            // Panel interactivo se mueve con el slide usando translateX
+            const envejD = videoSlideIndex - currIndex;
+            const slideX2 = envejD * 466;
+            envejPanel.style.transform = 	ranslateX(px);
+
             // Video siempre en pausa
             if (envejVideo && !envejVideo.paused) envejVideo.pause();
+            
             // Sincronizar small video con el mismo frame
             var _sv = window._envejSmallVid;
             if (_sv && envejVideo && Math.abs(_sv.currentTime - envejVideo.currentTime) > 0.05) {
