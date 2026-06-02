@@ -5557,7 +5557,7 @@ window.onerror = function(msg, url, line, col, err) {
           let currIndex = getCarouselIndex(prog);
           
           // Resetear overlay si el usuario se aleja del slide
-          if (Math.abs(currIndex - 3) > 1.0 && window._sensDismissed) {
+          if (Math.abs(currIndex - 6) > 1.0 && window._sensDismissed) {
             window._sensDismissed = false;
             document.querySelectorAll('#dummy-sens-ov').forEach(el => {
               el.style.opacity = '1';
