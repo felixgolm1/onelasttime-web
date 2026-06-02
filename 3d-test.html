@@ -3670,11 +3670,11 @@ window.onerror = function(msg, url, line, col, err) {
         // Seek via input[range] nativo (val: 0-9999) - búsqueda lazy del video
         
         const envejCopies = [
-          { t: 'Esa primera mirada,', s: 'cuando el tiempo parece infinito' },
-          { t: 'Empezis a superar los primeros retos juntos.', s: 'Esto promete' },
-          { t: 'Habis logrado construir', s: 'una relacin realmente fuerte' },
-          { t: 'Muchas tormentas superadas, y arrugas compartidas.', s: 'Nada puede con vosotrxs' },
-          { t: 'Y si esta fuera la ltima...', s: 'qu te habras dejado por decir?' }
+          "Esa primera mirada, cuando el tiempo parece infinito",
+          "Empezáis a superar los primeros retos juntos y la cosa promete",
+          "Habéis logrado construir algo realmente fuerte",
+          "Tormentas superadas y arrugas compartidas. Nada puede con lo vuestro",
+          "Y si esta fuera la última... ¿qué te habrías dejado por decir?"
         ];
         let currentCopyIdx = 0;
         window.updateEnvejCopy = function(pct) {
@@ -3683,95 +3683,21 @@ window.onerror = function(msg, url, line, col, err) {
           else if (pct > 0.66) idx = 3;
           else if (pct > 0.33) idx = 2;
           else if (pct > 0.05) idx = 1;
-                    if (idx !== currentCopyIdx) {
+          
+          if (idx !== currentCopyIdx) {
             currentCopyIdx = idx;
             const tEl = document.getElementById('envej-copy-title');
             const sEl = document.getElementById('envej-copy-sub');
-            if (tEl && sEl && pct < 0.99) {
+            if (sEl) sEl.style.display = 'none';
+            if (tEl && pct < 0.99) {
               tEl.style.opacity = '0';
-              sEl.style.opacity = '0';
               setTimeout(() => {
-                tEl.textContent = envejCopies[idx].t;
-                sEl.textContent = envejCopies[idx].s;
+                tEl.textContent = envejCopies[idx];
                 tEl.style.opacity = '1';
-                sEl.style.opacity = '1';
               }, 400);
             }
           }
-          
-          const panelEl = document.getElementById('envej-panel');
-          const ctaEl = document.getElementById('envej-final-cta');
-          if (panelEl) {
-             panelEl.style.transition = 'background 0.5s ease, border-color 0.5s ease';
-             if (pct >= 0.99) {
-                panelEl.style.background = 'transparent';
-                panelEl.style.borderTopColor = 'transparent';
-                Array.from(panelEl.children).forEach(c => {
-                    if (c.id !== 'envej-final-cta') {
-                        c.style.transition = 'opacity 0.4s ease';
-                        c.style.opacity = '0';
-                        c.style.pointerEvents = 'none';
-                    }
-                });
-                if (ctaEl) {
-                    ctaEl.style.opacity = '1';
-                    ctaEl.style.pointerEvents = 'auto';
-                }
-             } else {
-                panelEl.style.background = 'rgba(4,4,4,0.97)';
-                panelEl.style.borderTopColor = 'rgba(255,255,255,0.07)';
-                Array.from(panelEl.children).forEach(c => {
-                    if (c.id !== 'envej-final-cta') {
-                        c.style.transition = 'opacity 0.4s ease';
-                        c.style.opacity = '1';
-                        c.style.pointerEvents = 'auto';
-                    }
-                });
-                if (ctaEl) {
-                    ctaEl.style.opacity = '0';
-                    ctaEl.style.pointerEvents = 'none';
-                }
-             }
-          }
         };
-
-        window.envejSeekByRange = function(val) {
-          var pct = val / 9999;
-          if (!window._envejVideoRef) {
-            var _lt = document.querySelector('.carousel-track-large');
-            if (_lt) {
-              var _li = _lt.querySelectorAll('.carousel-item');
-              if (_li[4]) window._envejVideoRef = _li[4].querySelector('video.envej-thumb-vid');
-            }
-          }
-          var v = window._envejVideoRef;
-          if (v && v.duration) { 
-              v.currentTime = pct * v.duration; 
-              var p = v.play();
-              if (p && p.catch) { p.then(() => v.pause()).catch(() => {}); } else { v.pause(); }
-          }
-          if (!window._envejSmallVid) {
-            var _st = document.querySelector('.carousel-track-small');
-            if (_st) {
-              var _si2 = _st.querySelectorAll('.carousel-item');
-              if (_si2[4]) window._envejSmallVid = _si2[4].querySelector('video.envej-thumb-vid');
-            }
-          }
-          var sv = window._envejSmallVid;
-          if (sv && sv.duration) { 
-              sv.currentTime = pct * sv.duration; 
-              var sp = sv.play();
-              if (sp && sp.catch) { sp.then(() => sv.pause()).catch(() => {}); } else { sv.pause(); }
-          }
-          var f = document.getElementById('envej-bar-fill');
-          var t = document.getElementById('envej-bar-thumb');
-          var c = document.getElementById('envej-cita-num');
-          var w = document.getElementById('envej-wave-fill');
-          if (f) f.style.width = (pct*100)+'%';
-          if (t) t.style.left  = (pct*100)+'%';
-          if (w) w.style.clipPath = 'inset(0 ' + (100 - (pct*100)) + '% 0 0)';
-          
-          window.updateEnvejCopy(pct);
           if (c) c.textContent = Math.round(1+pct*9999).toLocaleString('es-ES');
         };
 
