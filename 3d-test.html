@@ -9899,11 +9899,11 @@ window.dismissSens = function(e) {
 
 
 
-  var next = Math.max(0, Math.min(3, _ageCurrentStep + dir));
-  window.setAgeStep(next);
-};
 
-// Warmup: forzar buffering de todos los videos embejecimiento (incluido el clone del large track)
+
+
+
+
 setTimeout(function() {
   document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
     v.muted = true;
