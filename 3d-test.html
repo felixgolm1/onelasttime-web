@@ -3633,7 +3633,7 @@ window.onerror = function(msg, url, line, col, err) {
         _envejPanelEl.style.zIndex        = '99999';
         _envejPanelEl.style.opacity       = '1';
         _envejPanelEl.style.pointerEvents = 'auto';
-        _envejPanelEl.style.bottom        = '0px';
+        _envejPanelEl.style.bottom        = '20px';
         _envejPanelEl.style.left          = '32px';
         _envejPanelEl.style.right         = '32px';
         _envejPanelEl.style.width         = 'auto';
@@ -3655,7 +3655,7 @@ window.onerror = function(msg, url, line, col, err) {
           if (v.duration) v.currentTime = pct * v.duration;
           // Actualizar contador cita (1 - 10.000)
           var citaEl = document.getElementById('envej-cita-num');
-          if (citaEl) { var n = Math.round(1 + pct * 9999); citaEl.textContent = n.toLocaleString('es-ES'); }
+          if (citaEl) { var n = Math.round(1 + pct * 9999); citaEl.innerHTML = n >= 10000 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
         };
         // Sincronizar miniatura con el video principal al hacer seek
         var _thumbVid = document.getElementById('envej-thumb-vid');
@@ -3753,7 +3753,7 @@ window.onerror = function(msg, url, line, col, err) {
           if (w) w.style.clipPath = 'inset(0 ' + (100 - (pct*100)) + '% 0 0)';
           
           window.updateEnvejCopy(pct);
-          if (c) c.textContent = Math.round(1+pct*9999).toLocaleString('es-ES');
+          if (c) { var n = Math.round(1 + pct * 9999); c.innerHTML = n >= 10000 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
         };
 
       }
@@ -5713,7 +5713,7 @@ window.onerror = function(msg, url, line, col, err) {
               if (thumbEl) thumbEl.style.left  = pct + '%';
               if (waveEl)  waveEl.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
               if (window.updateEnvejCopy) window.updateEnvejCopy(pct / 100);
-              if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; citaEl2.textContent = Math.round(1+p2*9999).toLocaleString('es-ES'); }
+              if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; var n = Math.round(1+p2*9999); citaEl2.innerHTML = n >= 10000 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
             }
           }
 
