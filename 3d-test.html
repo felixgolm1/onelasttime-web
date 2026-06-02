@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -1598,10 +1598,7 @@ window.onerror = function(msg, url, line, col, err) {
       
 
       
-        <button id="envej-final-cta" data-large-only="true" style="position: absolute; bottom: 70px; left: 50%; transform: translateX(-50%); z-index: 100000; background-color: #a3cc00; color: #111; border: none; border-radius: 100px; padding: 22px 45px; font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 600; text-align: center; line-height: 1.4; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; box-shadow: 0 8px 24px rgba(163,204,0,0.4); width: max-content;">
-          <span style="display:block;">No te dejes nada por decir.</span>
-          <span style="display:block;">Díselo en la próxima cena</span>
-        </button>
+
       </div>
       <!-- Slide 6 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -3684,55 +3681,41 @@ window.onerror = function(msg, url, line, col, err) {
           else if (pct > 0.33) idx = 2;
           else if (pct > 0.05) idx = 1;
           
-          if (idx !== currentCopyIdx) {
-            currentCopyIdx = idx;
-            const tEl = document.getElementById('envej-copy-title');
-            const sEl = document.getElementById('envej-copy-sub');
-            if (sEl) sEl.style.display = 'none';
-            if (tEl && pct < 0.99) {
-              tEl.style.opacity = '0';
-              setTimeout(() => {
-                tEl.textContent = envejCopies[idx];
-                tEl.style.opacity = '1';
-              }, 400);
-            }
-          }
-          
-          const panelEl = document.getElementById('envej-panel');
+          const tEl = document.getElementById('envej-copy-title');
+          const sEl = document.getElementById('envej-copy-sub');
           const ctaEl = document.getElementById('envej-final-cta');
-          if (panelEl) {
-             panelEl.style.transition = 'background 0.5s ease, border-color 0.5s ease';
-             if (pct >= 0.99) {
-                panelEl.style.background = 'transparent';
-                panelEl.style.borderTopColor = 'transparent';
-                Array.from(panelEl.children).forEach(c => {
-                    if (c.id !== 'envej-final-cta') {
-                        c.style.transition = 'opacity 0.4s ease';
-                        c.style.opacity = '0';
-                        c.style.pointerEvents = 'none';
-                    }
-                });
-                if (ctaEl) {
-                    ctaEl.style.opacity = '1';
-                    ctaEl.style.pointerEvents = 'auto';
-                }
-             } else {
-                panelEl.style.background = 'rgba(0,0,0,0.88)';
-                panelEl.style.borderTopColor = 'rgba(255,255,255,0.08)';
-                Array.from(panelEl.children).forEach(c => {
-                    if (c.id !== 'envej-final-cta') {
-                        c.style.opacity = '1';
-                        c.style.pointerEvents = 'auto';
-                    }
-                });
-                if (ctaEl) {
-                    ctaEl.style.opacity = '0';
-                    ctaEl.style.pointerEvents = 'none';
-                }
+
+          if (sEl) sEl.style.display = 'none';
+
+          if (pct >= 0.99) {
+             if (tEl) {
+                 tEl.style.opacity = '0';
+                 tEl.style.pointerEvents = 'none';
+             }
+             if (ctaEl) {
+                 ctaEl.style.opacity = '1';
+                 ctaEl.style.pointerEvents = 'auto';
+             }
+          } else {
+             if (ctaEl) {
+                 ctaEl.style.opacity = '0';
+                 ctaEl.style.pointerEvents = 'none';
+             }
+             if (tEl) {
+                 tEl.style.pointerEvents = 'auto';
+                 if (idx !== currentCopyIdx) {
+                   currentCopyIdx = idx;
+                   tEl.style.opacity = '0';
+                   setTimeout(() => {
+                     tEl.textContent = envejCopies[idx];
+                     tEl.style.opacity = '1';
+                   }, 400);
+                 } else {
+                   if (tEl.style.opacity === '0') tEl.style.opacity = '1';
+                 }
              }
           }
         };
-
         window.envejSeekByRange = function(val) {
           var pct = val / 9999;
           if (!window._envejVideoRef) {
@@ -9772,9 +9755,13 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   gap: 12px;
 ">
   <!-- Copy superior -->
-  <div style="display:flex; flex-direction:column; gap:4px; min-height: 42px; text-align:center; align-items:center; justify-content:center;">
+  <div style="position:relative; display:flex; flex-direction:column; gap:4px; min-height: 42px; text-align:center; align-items:center; justify-content:center;">
     <span id="envej-copy-title" style="color:#fff; font-family:'Inter','Helvetica Neue',sans-serif; font-size:12.5px; font-weight:400; line-height:1.6; letter-spacing:0.05em; text-transform:uppercase; transition:opacity 0.4s ease;">Esa primera mirada</span>
     <span id="envej-copy-sub" style="color:#fff; font-family:'Inter','Helvetica Neue',sans-serif; font-size:12.5px; font-weight:400; line-height:1.6; letter-spacing:0.05em; text-transform:uppercase; transition:opacity 0.4s ease;">Cuando el tiempo parec&iacute;a infinito.</span>
+    <button id="envej-final-cta" style="position: absolute; inset: 0; margin: auto; z-index: 100000; background-color: #a3cc00; color: #111; border: none; border-radius: 100px; padding: 6px 18px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-align: center; line-height: 1.3; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; box-shadow: 0 4px 12px rgba(163,204,0,0.4); width: max-content; height: max-content; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <span style="display:block;">No te dejes nada por decir.</span>
+      <span style="display:block;">Díselo en la próxima cena</span>
+    </button>
   </div>
   <!-- Contador -->
   <div style="display:flex; align-items:baseline; gap:7px;">
