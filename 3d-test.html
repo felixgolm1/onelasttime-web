@@ -5126,7 +5126,7 @@ window.onerror = function(msg, url, line, col, err) {
         if (breakoutOverlay) {
           // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
           if (prog < 15.12) {
-            const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
+            const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
             if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
             const _cloneS = document.getElementById('mag-model-clone');
@@ -5137,7 +5137,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
+            const _magLargeEl =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
@@ -5160,7 +5160,7 @@ window.onerror = function(msg, url, line, col, err) {
 
               if (!document.getElementById('mag-model-clone')) {
                 const carouselVp = magazineScene?.querySelector('.carousel-viewport');
-                const magEl      =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
+                const magEl      =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
                 const origImg    = magEl?.querySelector('img[src*="modelo-sin-fondo"]')
                                 || magazineScene?.querySelector('.carousel-track-large img[src*="modelo-sin-fondo"]');
                 if (carouselVp && origImg && origImg.naturalWidth && magEl) {
@@ -5213,7 +5213,7 @@ window.onerror = function(msg, url, line, col, err) {
               const clone = document.getElementById('mag-model-clone');
               if (clone) {
                 // Restaurar modelo en AMBOS tracks (small y large)
-                const _mEl8 =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
+                const _mEl8 =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
                 const origL = _mEl8?.querySelector('img[src*="modelo-sin-fondo"]');
                 const origS = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
                 if (origL) origL.style.visibility = '';
@@ -5341,7 +5341,7 @@ window.onerror = function(msg, url, line, col, err) {
         if (breakoutOverlay) {
           // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
           if (prog < 15.12) {
-            const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
+            const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
             if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
             const _cloneS = document.getElementById('mag-model-clone');
@@ -5352,7 +5352,7 @@ window.onerror = function(msg, url, line, col, err) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             // Leer posición/tamaño REAL del elemento revista para evitar salto visual
-            const _magLargeEl =             document.querySelectorAll('.carousel-track-large .carousel-item')[9];
+            const _magLargeEl =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             let boxW, boxH, startLeft, startTop;
             if (_magLargeEl) {
               const _r = _magLargeEl.getBoundingClientRect();
