@@ -3697,6 +3697,40 @@ window.onerror = function(msg, url, line, col, err) {
               }, 400);
             }
           }
+          
+          const panelEl = document.getElementById('envej-panel');
+          const ctaEl = document.getElementById('envej-final-cta');
+          if (panelEl) {
+             panelEl.style.transition = 'background 0.5s ease, border-color 0.5s ease';
+             if (pct >= 0.99) {
+                panelEl.style.background = 'transparent';
+                panelEl.style.borderTopColor = 'transparent';
+                Array.from(panelEl.children).forEach(c => {
+                    if (c.id !== 'envej-final-cta') {
+                        c.style.transition = 'opacity 0.4s ease';
+                        c.style.opacity = '0';
+                        c.style.pointerEvents = 'none';
+                    }
+                });
+                if (ctaEl) {
+                    ctaEl.style.opacity = '1';
+                    ctaEl.style.pointerEvents = 'auto';
+                }
+             } else {
+                panelEl.style.background = 'rgba(0,0,0,0.88)';
+                panelEl.style.borderTopColor = 'rgba(255,255,255,0.08)';
+                Array.from(panelEl.children).forEach(c => {
+                    if (c.id !== 'envej-final-cta') {
+                        c.style.opacity = '1';
+                        c.style.pointerEvents = 'auto';
+                    }
+                });
+                if (ctaEl) {
+                    ctaEl.style.opacity = '0';
+                    ctaEl.style.pointerEvents = 'none';
+                }
+             }
+          }
         };
 
         window.envejSeekByRange = function(val) {
