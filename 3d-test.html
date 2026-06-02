@@ -8729,7 +8729,7 @@ setInterval(function() {
   if (!h2) return;
   var TEXT = 'NO ES MAGIA\nES QUÍMICA';
   var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
-  var PROG_START = 15.35, PROG_END = 16.20;
+  var PROG_START = 14.85, PROG_END = 15.70;
   var spans = [];
   h2.textContent = ''; h2.style.opacity = '1';
   for (var i = 0; i < TEXT.length; i++) {
@@ -9040,10 +9040,10 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 // Título: barre izquierda→derecha. Párrafo: barre derecha→izquierda.
 // Todo computado en cada frame desde window._brainScrollProg. Cero timers.
 (function() {
-  var SHOW_START = 17.43;
-  var SHOW_FADE  = 17.58;
-  var STEP_START = 17.5;
-  var STEP_END    = 26.6;  // 4 × (0.475 estatico + 0.60 entry + 1.20 exit) = 4×2.275
+  var SHOW_START = 16.93;
+  var SHOW_FADE  = 17.08;
+  var STEP_START = 17.0;
+  var STEP_END    = 26.1;  // 4 × (0.475 estatico + 0.60 entry + 1.20 exit) = 4×2.275
   var NUM_STEPS   = 4;
   var STEP_SIZE   = (STEP_END - STEP_START) / NUM_STEPS; // 2.275 por paso
   var TRANS_ENTRY = 0.60; // duracion animacion de ENTRADA (sin cambios)
@@ -9660,8 +9660,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   if (!h2) return;
 
   // Rango de scroll en el que ocurre el movimiento
-  var MOVE_START = 17.0;    // mismo inicio que el zoom-in del overlay (swapT)
-  var MOVE_END   = 17.8;    // mismo final que el zoom-in del overlay (swapT)
+  var MOVE_START = 16.5;    // mismo inicio que el zoom-in del overlay (swapT)
+  var MOVE_END   = 17.3;    // mismo final que el zoom-in del overlay (swapT)
 
   // Inicio: centrado (top:67%, left:50%, scale:1)
   // Final: derecha junto al cerebro (top:22%, left:72%, scale:0.28)
@@ -9979,6 +9979,7 @@ window.chooseFinal = function(happy) {
 </script>
 
 </html>
+
 
 
 
