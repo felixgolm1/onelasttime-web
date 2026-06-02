@@ -1608,6 +1608,15 @@ window.onerror = function(msg, url, line, col, err) {
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/pareja barco.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
       </div>
+      <!-- Slide 6 (Interactive Final Feliz) -->
+      <div id="final-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+        <!-- Imagen base: escoger final (visible por defecto) -->
+        <img src="assets/img/escoger final.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:1;transition:opacity 0.4s ease;">
+        <!-- Con final feliz (oculta hasta elección) -->
+        <img src="assets/img/con final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
+        <!-- Sin final feliz (oculta hasta elección) -->
+        <img src="assets/img/sin final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
+      </div>
       <!-- Slide 3 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <video src="assets/img/besos parejas.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"></video>
@@ -1655,15 +1664,6 @@ window.onerror = function(msg, url, line, col, err) {
             Ver v&iacute;deo
           </button>
         </div>
-      </div>
-      <!-- Slide 6 (Interactive Final Feliz) -->
-      <div id="final-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
-        <!-- Imagen base: escoger final (visible por defecto) -->
-        <img src="assets/img/escoger final.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:1;transition:opacity 0.4s ease;">
-        <!-- Con final feliz (oculta hasta elección) -->
-        <img src="assets/img/con final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
-        <!-- Sin final feliz (oculta hasta elección) -->
-        <img src="assets/img/sin final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
       </div>
       <!-- Slide 5 (Magazine) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -5557,7 +5557,7 @@ window.onerror = function(msg, url, line, col, err) {
           let currIndex = getCarouselIndex(prog);
           
           // Resetear overlay si el usuario se aleja del slide
-          if (Math.abs(currIndex - 6) > 1.0 && window._sensDismissed) {
+          if (Math.abs(currIndex - 7) > 1.0 && window._sensDismissed) {
             window._sensDismissed = false;
             document.querySelectorAll('#dummy-sens-ov').forEach(el => {
               el.style.opacity = '1';
