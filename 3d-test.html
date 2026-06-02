@@ -8702,6 +8702,7 @@ function updateThermalCurtain(progress) {
 // ── Driver independiente: lee prog de sessionStorage cada 50ms ──────
 setInterval(function() {
   var p  = parseFloat(sessionStorage.getItem('dev_prog') || '0');
+    var pM = p + 0.5;
   var tP = Math.min(1, Math.max(0, (pM - 16.27) / (17.2 - 16.27)));
   var tc = document.getElementById('thermal-canvas');
   if (!tc) return;
@@ -9980,6 +9981,7 @@ window.chooseFinal = function(happy) {
 </script>
 
 </html>
+
 
 
 
