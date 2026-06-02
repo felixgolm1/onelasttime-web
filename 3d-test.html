@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -3698,6 +3698,44 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
         };
+
+        window.envejSeekByRange = function(val) {
+          var pct = val / 9999;
+          if (!window._envejVideoRef) {
+            var _lt = document.querySelector('.carousel-track-large');
+            if (_lt) {
+              var _li = _lt.querySelectorAll('.carousel-item');
+              if (_li[4]) window._envejVideoRef = _li[4].querySelector('video.envej-thumb-vid');
+            }
+          }
+          var v = window._envejVideoRef;
+          if (v && v.duration) { 
+              v.currentTime = pct * v.duration; 
+              var p = v.play();
+              if (p && p.catch) { p.then(() => v.pause()).catch(() => {}); } else { v.pause(); }
+          }
+          if (!window._envejSmallVid) {
+            var _st = document.querySelector('.carousel-track-small');
+            if (_st) {
+              var _si2 = _st.querySelectorAll('.carousel-item');
+              if (_si2[4]) window._envejSmallVid = _si2[4].querySelector('video.envej-thumb-vid');
+            }
+          }
+          var sv = window._envejSmallVid;
+          if (sv && sv.duration) { 
+              sv.currentTime = pct * sv.duration; 
+              var sp = sv.play();
+              if (sp && sp.catch) { sp.then(() => sv.pause()).catch(() => {}); } else { sv.pause(); }
+          }
+          var f = document.getElementById('envej-bar-fill');
+          var t = document.getElementById('envej-bar-thumb');
+          var c = document.getElementById('envej-cita-num');
+          var w = document.getElementById('envej-wave-fill');
+          if (f) f.style.width = (pct*100)+'%';
+          if (t) t.style.left  = (pct*100)+'%';
+          if (w) w.style.clipPath = 'inset(0 ' + (100 - (pct*100)) + '% 0 0)';
+          
+          window.updateEnvejCopy(pct);
           if (c) c.textContent = Math.round(1+pct*9999).toLocaleString('es-ES');
         };
 
