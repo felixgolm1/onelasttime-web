@@ -5125,14 +5125,15 @@ window.onerror = function(msg, url, line, col, err) {
         const breakoutOverlay = document.getElementById('mag-breakout-overlay');
         if (breakoutOverlay) {
           // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
-          if (prog < 15.12) {
+          let animProg = prog + 0.5;
+          if (animProg < 15.12) {
             const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
             if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
             const _cloneS = document.getElementById('mag-model-clone');
             if (_cloneS) _cloneS.remove();
           }
-          if (prog >= 15.12) {
+          if (animProg >= 15.12) {
 
             const vw = window.innerWidth;
             const vh = window.innerHeight;
@@ -5149,10 +5150,10 @@ window.onerror = function(msg, url, line, col, err) {
             }
 
             // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
-            const exitP = Math.min(Math.max(mapRange(prog, 15.12, 16.1, 0, 1), 0), 1);
+            const exitP = Math.min(Math.max(mapRange(animProg, 15.12, 16.1, 0, 1), 0), 1);
 
             // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
-            const expansionP = Math.min(Math.max(mapRange(prog, 15.22, 16.42, 0, 1), 0), 1);
+            const expansionP = Math.min(Math.max(mapRange(animProg, 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
             // ── FASE 2: clip-path:inset() en el clon — sin overlay, sin fondo ──
@@ -5276,7 +5277,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 5. COPY IZQUIERDO — empieza en prog 14.67
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(animProg, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5287,7 +5288,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 6. COPY DERECHO — empieza en prog 14.67
             { document.querySelectorAll('[id="mag-copy-right-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(animProg, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5340,14 +5341,15 @@ window.onerror = function(msg, url, line, col, err) {
 
         if (breakoutOverlay) {
           // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
-          if (prog < 15.12) {
+          let animProg = prog + 0.5;
+          if (animProg < 15.12) {
             const _mEl8s =             document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             const _lms = _mEl8s?.querySelector('img[src*="modelo-sin-fondo"]');
             if (_lms && _lms.style.visibility === 'hidden') _lms.style.visibility = '';
             const _cloneS = document.getElementById('mag-model-clone');
             if (_cloneS) _cloneS.remove();
           }
-          if (prog >= 15.12) {
+          if (animProg >= 15.12) {
 
             const vw = window.innerWidth;
             const vh = window.innerHeight;
@@ -5364,10 +5366,10 @@ window.onerror = function(msg, url, line, col, err) {
             }
 
             // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
-            const exitP = Math.min(Math.max(mapRange(prog, 15.12, 16.1, 0, 1), 0), 1);
+            const exitP = Math.min(Math.max(mapRange(animProg, 15.12, 16.1, 0, 1), 0), 1);
 
             // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
-            const expansionP = Math.min(Math.max(mapRange(prog, 15.22, 16.42, 0, 1), 0), 1);
+            const expansionP = Math.min(Math.max(mapRange(animProg, 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
             // ── FASE 2: Overlay expansión del marco ────────────────────────────────
@@ -5434,7 +5436,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 5. COPY IZQUIERDO — sale por izquierda linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-left-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(animProg, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-left-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5445,7 +5447,7 @@ window.onerror = function(msg, url, line, col, err) {
 
             // 6. COPY DERECHO — sale por derecha linea a linea (sync 0.05-0.55)
             { document.querySelectorAll('[id="mag-copy-right-clip"]').forEach(function(container) {
-                container.style.opacity = Math.max(0, 1 - mapRange(prog, 15.17, 15.7, 0, 1));
+                container.style.opacity = Math.max(0, 1 - mapRange(animProg, 15.17, 15.7, 0, 1));
               });
               document.querySelectorAll('.copy-right-line').forEach(function(line, idx) {
                 const stagger = idx * 0.02;
@@ -5519,7 +5521,7 @@ window.onerror = function(msg, url, line, col, err) {
           mainDeck.style.filter = '';
           gsap.set(scBoard, { y: '0vh' });
           scrollTl.progress(0);
-          scrollTl.progress(Math.min(1, prog / 2.2));
+          scrollTl.progress(Math.min(1, animProg / 2.2));
         
             let hiddenFaces = document.getElementById('mainDeck').querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
             hiddenFaces.forEach(f => f.style.display = '');
@@ -5569,8 +5571,8 @@ window.onerror = function(msg, url, line, col, err) {
           let exitOffsetSmall = 0;
           let exitOffsetLarge = 0;
           let exitFade = 1;
-          if (prog > 15.12) {
-            const exitP = Math.min(mapRange(prog, 15.12, 15.8, 0, 1), 1);
+          if (animProg > 15.12) {
+            const exitP = Math.min(mapRange(animProg, 15.12, 15.8, 0, 1), 1);
             const easeExit = Math.pow(exitP, 2); // ease-in: acelera al salir
             exitOffsetSmall = -900 * easeExit;
             exitOffsetLarge = -900 * easeExit;
@@ -5954,7 +5956,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Restore state instantly on load if preserved
     if (prog > 0) {
       requestAnimationFrame(() => {
-        scrollTl.progress(Math.min(1, prog / 2.2)); // clamp scene logic
+        scrollTl.progress(Math.min(1, animProg / 2.2)); // clamp scene logic
         updateFaceSwap();
         updateBoxState(1);
         updateGlobalScenes();
@@ -6033,7 +6035,7 @@ window.onerror = function(msg, url, line, col, err) {
         prog += (targetProg - prog) * lerpF;
         if (Math.abs(targetProg - prog) <= 0.000005) prog = targetProg;
         sessionStorage.setItem('dev_prog', prog);
-        scrollTl.progress(Math.min(1, prog / 2.2));
+        scrollTl.progress(Math.min(1, animProg / 2.2));
         updateFaceSwap();
         updateGlobalScenes();
 
@@ -6082,7 +6084,7 @@ window.onerror = function(msg, url, line, col, err) {
       
       // ── THERMAL CURTAIN ── incondicional, ejecuta cada frame ──────
       {
-        const _tP = Math.min(1, Math.max(0, (prog - 16.27) / (17.2 - 16.27)));
+        const _tP = Math.min(1, Math.max(0, (animProg - 16.27) / (17.2 - 16.27)));
         const _tc = document.getElementById('thermal-canvas');
         if (_tc) {
           if (_tP <= 0) {
@@ -6109,7 +6111,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       // ── THERMAL OVERLAY ── máscara gradiente suave en el overlay (sin línea dura)
       {
-        var _tPdiv = Math.min(1, Math.max(0, (prog - 16.27) / (16.8 - 16.27)));
+        var _tPdiv = Math.min(1, Math.max(0, (animProg - 16.27) / (16.8 - 16.27)));
         window._brainScrollProg = prog;
         if (window._updateNeuralText) window._updateNeuralText(prog);
         var _tOvr  = document.getElementById('thermal-overlay');
@@ -6117,7 +6119,7 @@ window.onerror = function(msg, url, line, col, err) {
         // Siempre limpiar la máscara del mag-breakout
         if (_mOvr) { _mOvr.style.webkitMaskImage = ''; _mOvr.style.maskImage = ''; }
         if (_tOvr) {
-          var _showOverlay = prog >= 15.35;
+          var _showOverlay = animProg >= 15.35;
           if (!_showOverlay) {
             _tOvr.style.display = 'none';
           } else {
@@ -8511,12 +8513,12 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── FASE 1: Rotación — bProg 16.3 → 17.0 ──────────────────────
     // rotEase va de 0 (frontal) a 1 (perfil lateral completo)
-    var _bProg   = window._brainScrollProg || 0;
-    var _rotT    = Math.max(0, Math.min(1, (_bProg - 16.3) / (17.0 - 16.3)));
+    var _bProg = window._brainScrollProg || 0; var _bProgM = _bProg + 0.5;
+    var _rotT    = Math.max(0, Math.min(1, (_bProgM - 16.3) / (17.0 - 16.3)));
     var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
 
     // ── FASE 2: Swap — bProg 17.0 → 17.8 (DESPUÉS de la rotación completa) ──
-    var swapT       = Math.max(0, Math.min(1, (_bProg - 17.0) / (17.8 - 17.0)));
+    var swapT       = Math.max(0, Math.min(1, (_bProgM - 17.0) / (17.8 - 17.0)));
     var fullOpacity = 1.0 - swapT;
     var halfOpacity = swapT;
 
@@ -8700,7 +8702,7 @@ function updateThermalCurtain(progress) {
 // ── Driver independiente: lee prog de sessionStorage cada 50ms ──────
 setInterval(function() {
   var p  = parseFloat(sessionStorage.getItem('dev_prog') || '0');
-  var tP = Math.min(1, Math.max(0, (p - 16.27) / (17.2 - 16.27)));
+  var tP = Math.min(1, Math.max(0, (pM - 16.27) / (17.2 - 16.27)));
   var tc = document.getElementById('thermal-canvas');
   if (!tc) return;
   if (tP <= 0) { tc.style.display = 'none'; return; }
@@ -8827,7 +8829,7 @@ setInterval(function() {
   var _origNT = window._updateNeuralText||null;
   window._updateNeuralText = function(prog){
     if(_origNT)_origNT(prog);
-    if(prog<15.30){
+    if(animProg<15.30){
       if(lastActive1>0||lastActive2>0){
         spans.forEach(resetChar); sparks=[];
         if(sctx)sctx.clearRect(0,0,sc.width,sc.height);
@@ -9315,7 +9317,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     var gLabel = document.getElementById('global-brain-label');
     if (gLabel) {
       // Fade in smoothly right before step 0
-      var activeProg = clamp01((p - 17.3)/0.2);
+      var pM = p + 0.5;
+      var activeProg = clamp01((pM - 17.3)/0.2);
       gLabel.style.opacity = activeProg.toString();
       
       if (activeProg > 0) {
@@ -9977,5 +9980,6 @@ window.chooseFinal = function(happy) {
 </script>
 
 </html>
+
 
 
