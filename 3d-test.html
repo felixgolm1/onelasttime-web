@@ -5547,7 +5547,7 @@ window.onerror = function(msg, url, line, col, err) {
             return i + t; // currIndex interpolado entre i e i+1
           }
         }
-        return Math.max(0, Math.min(9, (p - 10.62) * 2.0)); // fallback
+        return Math.max(0, Math.min(8, (p - 10.62) * 2.0)); // fallback
       }
 
       const smallItems = document.querySelectorAll('.carousel-track-small .carousel-item');
@@ -5577,7 +5577,7 @@ window.onerror = function(msg, url, line, col, err) {
             exitFade = Math.max(0, 1 - mapRange(exitP, 0.4, 1.0, 0, 1));
           }
 
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 9; i++) {
             let d = i - currIndex;
             let absD = Math.abs(d);
             
@@ -5624,8 +5624,8 @@ window.onerror = function(msg, url, line, col, err) {
               }
             }
 
-            translateXSmall += entryOffset + (i !== 9 ? exitOffsetSmall : 0);
-            translateXLarge += (i !== 9 ? exitOffsetLarge : 0);
+            translateXSmall += entryOffset + (i !== 8 ? exitOffsetSmall : 0);
+            translateXLarge += (i !== 8 ? exitOffsetLarge : 0);
             brightness += extraBrightness;
             
             // Pequeñas (fuera del recuadro)
@@ -9979,6 +9979,7 @@ window.chooseFinal = function(happy) {
 </script>
 
 </html>
+
 
 
 
