@@ -1636,8 +1636,8 @@ window.onerror = function(msg, url, line, col, err) {
         <img src="assets/img/sin final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
 
       </div>
-      <!-- Slide 3 -->
-      <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
+      <!-- Slide besos parejas (sensible) -->
+      <div id="besos-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <video src="assets/img/besos parejas.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"></video>
         <div id="dummy-sens-ov" style="
           position:absolute; inset:0;
@@ -5553,11 +5553,17 @@ window.onerror = function(msg, url, line, col, err) {
         if (prog > 9.62) {
           let currIndex = getCarouselIndex(prog);
           
-          // Resetear overlay si el usuario se aleja del slide
-          if (Math.abs(currIndex - 2) > 1.0 && window._sensDismissed) {
-            window._sensDismissed = false;
-            var _dov = document.getElementById('dummy-sens-ov');
-            if (_dov) { _dov.style.opacity = '1'; }
+          // Resetear overlay si el usuario se aleja del slide de besos parejas
+          {
+            let _bReset = -1;
+            for (let k = 0; k < largeItems.length; k++) {
+              if (largeItems[k].id === 'besos-slide') { _bReset = k; break; }
+            }
+            if (_bReset >= 0 && Math.abs(currIndex - _bReset) > 1.0 && window._sensDismissed) {
+              window._sensDismissed = false;
+              var _dov = document.getElementById('dummy-sens-ov');
+              if (_dov) { _dov.style.opacity = '1'; }
+            }
           }
 
           // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
@@ -5663,12 +5669,16 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- SENS PANEL: slide "besos parejas" (índice 2) ---
+          // --- SENS PANEL: slide "besos parejas" (busca por ID igual que final-slide) ---
           {
             const _btn = document.getElementById('sens-cta-btn');
             if (_btn) {
-              const _nearSlide2 = Math.abs(currIndex - 2) < 0.45;
-              _btn.style.display = (!window._sensDismissed && _nearSlide2) ? 'block' : 'none';
+              let _bIdx = -1;
+              for (let k = 0; k < largeItems.length; k++) {
+                if (largeItems[k].id === 'besos-slide') { _bIdx = k; break; }
+              }
+              const _nearBesos = _bIdx >= 0 && Math.abs(currIndex - _bIdx) < 0.45;
+              _btn.style.display = (!window._sensDismissed && _nearBesos) ? 'block' : 'none';
             }
           }
 
