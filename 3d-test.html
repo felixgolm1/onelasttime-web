@@ -1634,54 +1634,7 @@ window.onerror = function(msg, url, line, col, err) {
         <img src="assets/img/con final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
         <!-- Sin final feliz (oculta hasta elección) -->
         <img src="assets/img/sin final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
-        <!-- OVERLAY INTERACTIVO -->
-        <div class="final-ov" data-large-only="true" onpointerdown="event.stopPropagation()" style="
-          position: absolute;
-          bottom: 40px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: calc(100% - 64px);
-          background: rgba(0, 0, 0, 0.88);
-          color: #ffffff;
-          font-family: 'Inter', 'Helvetica Neue', sans-serif;
-          font-size: 12.5px;
-          font-weight: 400;
-          line-height: 1.6;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          text-align: left;
-          padding: 14px 16px;
-          border-radius: 0;
-          pointer-events: auto;
-          transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1);
-          z-index: 10;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        ">
-          <div style="font-weight: 600; flex-shrink: 0;">¿QUIERES<br>FINAL FELIZ?</div>
-          <div style="display:flex; gap:10px; flex-shrink: 0;">
-            <button onclick="window.chooseFinal(event, true)" style="
-              padding:11px 26px;
-              background:rgba(163,204,0,1);
-              border:none; border-radius:999px;
-              color:#0a0a0a;
-              font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
-              cursor:pointer; white-space:nowrap;
-              box-shadow:0 2px 16px rgba(163,204,0,0.35);
-              transition:transform 0.12s ease;
-            " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Sí ✓</button>
-            <button onclick="window.chooseFinal(event, false)" style="
-              padding:11px 26px;
-              background:rgba(255,255,255,0.10);
-              border:1.5px solid rgba(255,255,255,0.30); border-radius:999px;
-              color:#fff;
-              font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;
-              cursor:pointer; white-space:nowrap;
-              transition:background 0.15s ease;
-            " onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.10)'">No</button>
-          </div>
-        </div>
+
       </div>
       <!-- Slide 3 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -5734,7 +5687,7 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- FINAL FELIZ PANEL: posicionado con getBoundingClientRect() ---
+          // --- FINAL FELIZ PANEL: desliza con el carrusel (como el video) ---
           {
             const _fp = document.getElementById('final-feliz-panel');
             if (_fp && largeItems.length > 0) {
@@ -5743,21 +5696,32 @@ window.onerror = function(msg, url, line, col, err) {
                 if (largeItems[k].id === 'final-slide') { _fIdx = k; break; }
               }
               if (_fIdx >= 0) {
-                const _fD = Math.abs(_fIdx - currIndex);
                 const _vp = document.querySelector('.carousel-viewport');
-                if (_vp && _fD < 0.5 && window._finalChoice === null) {
+                if (_vp) {
                   const _vpr = _vp.getBoundingClientRect();
-                  _fp.style.display = 'flex';
-                  _fp.style.position = 'fixed';
-                  _fp.style.top    = 'auto';
-                  _fp.style.bottom = (window.innerHeight - _vpr.bottom + 40) + 'px';
-                  _fp.style.left   = (_vpr.left + 32) + 'px';
-                  _fp.style.width  = (_vpr.width - 64) + 'px';
-                  _fp.style.opacity = '1';
-                  _fp.style.pointerEvents = 'auto';
-                } else {
-                  _fp.style.display = 'none';
-                  _fp.style.pointerEvents = 'none';
+                  const _fDsigned = _fIdx - currIndex;
+                  const _panelWidth = _vpr.width - 64;
+                  const _panelLeft  = _vpr.left + 32 + _fDsigned * 466;
+                  const _visible = _panelLeft + _panelWidth > _vpr.left && _panelLeft < _vpr.right;
+                  if (_visible && window._finalChoice === null) {
+                    const _clipL = Math.max(0, _vpr.left - _panelLeft);
+                    const _clipR = Math.max(0, _panelLeft + _panelWidth - _vpr.right);
+                    _fp.style.display = 'flex';
+                    _fp.style.position = 'fixed';
+                    _fp.style.top    = 'auto';
+                    _fp.style.bottom = (window.innerHeight - _vpr.bottom + 40) + 'px';
+                    _fp.style.left   = _panelLeft + 'px';
+                    _fp.style.width  = _panelWidth + 'px';
+                    _fp.style.opacity = '1';
+                    _fp.style.pointerEvents = Math.abs(_fDsigned) < 0.5 ? 'auto' : 'none';
+                    _fp.style.clipPath = (_clipL > 0 || _clipR > 0)
+                      ? `inset(0 ${_clipR}px 0 ${_clipL}px)`
+                      : 'none';
+                  } else {
+                    _fp.style.display = 'none';
+                    _fp.style.pointerEvents = 'none';
+                    _fp.style.clipPath = 'none';
+                  }
                 }
               }
             }
