@@ -5733,34 +5733,35 @@ window.onerror = function(msg, url, line, col, err) {
               citasSliderPanel.style.transform = `translateX(${slideX}px)`;
             }
           }
-            const finalPanel = document.getElementById('final-feliz-panel');
-            const finalPanelClip = document.getElementById('final-feliz-panel-clip');
-            if (finalPanel && finalPanelClip && largeItems.length > 0) {
-              let finalSlideIndex = -1;
+
+          // --- FINAL FELIZ PANEL: posicionado con getBoundingClientRect() ---
+          {
+            const _fp = document.getElementById('final-feliz-panel');
+            if (_fp && largeItems.length > 0) {
+              let _fIdx = -1;
               for (let k = 0; k < largeItems.length; k++) {
-                if (largeItems[k].id === 'final-slide') { finalSlideIndex = k; break; }
+                if (largeItems[k].id === 'final-slide') { _fIdx = k; break; }
               }
-              if (finalSlideIndex >= 0) {
-                const vpF = document.querySelector('.carousel-viewport');
-                if (vpF) {
-                  const vpR2 = vpF.getBoundingClientRect();
-                  finalPanelClip.style.left   = vpR2.left   + 'px';
-                  finalPanelClip.style.top    = vpR2.top    + 'px';
-                  finalPanelClip.style.width  = vpR2.width  + 'px';
-                  finalPanelClip.style.height = vpR2.height + 'px';
-                }
-                const finalD = finalSlideIndex - currIndex;
-                const slideXF = finalD * 466;
-                finalPanel.style.transform = `translateX(${slideXF}px)`;
-                if (window._finalChoice !== null) {
-                  finalPanel.style.opacity = '0';
-                  finalPanel.style.pointerEvents = 'none';
+              if (_fIdx >= 0) {
+                const _fD = Math.abs(_fIdx - currIndex);
+                const _vp = document.querySelector('.carousel-viewport');
+                if (_vp && _fD < 0.5 && window._finalChoice === null) {
+                  const _vpr = _vp.getBoundingClientRect();
+                  _fp.style.display = 'flex';
+                  _fp.style.position = 'fixed';
+                  _fp.style.top    = 'auto';
+                  _fp.style.bottom = (window.innerHeight - _vpr.bottom + 40) + 'px';
+                  _fp.style.left   = (_vpr.left + 32) + 'px';
+                  _fp.style.width  = (_vpr.width - 64) + 'px';
+                  _fp.style.opacity = '1';
+                  _fp.style.pointerEvents = 'auto';
                 } else {
-                  finalPanel.style.opacity = Math.abs(finalD) < 0.5 ? '1' : '0';
-                  finalPanel.style.pointerEvents = Math.abs(finalD) < 0.5 ? 'auto' : 'none';
+                  _fp.style.display = 'none';
+                  _fp.style.pointerEvents = 'none';
                 }
               }
             }
+          }
             // --- VIDEO PANEL: slide 5 (envejecimiento, index 4) ---
           const envejPanel = document.getElementById('envej-panel');
           const envejPanelClip = document.getElementById('envej-panel-clip');
