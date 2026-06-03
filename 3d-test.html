@@ -5791,8 +5791,8 @@ window.onerror = function(msg, url, line, col, err) {
               var _fp2 = document.getElementById('final-feliz-panel');
               if (_fp2) {
                 var _btns = _fp2.querySelectorAll('button');
-                if (_btns[0]) { _btns[0].style.background = 'rgba(163,204,0,1)'; _btns[0].style.outline = 'none'; }
-                if (_btns[1]) { _btns[1].style.background = 'rgba(255,255,255,0.10)'; _btns[1].style.outline = 'none'; }
+                if (_btns[0]) { _btns[0].style.background = '#0a0a0a'; _btns[0].style.color = '#fff'; }
+                if (_btns[1]) { _btns[1].style.background = '#0a0a0a'; _btns[1].style.color = '#fff'; }
               }
             }
           }
@@ -9779,22 +9779,21 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   <div style="display:flex; gap:10px; flex-shrink: 0;">
     <button onclick="window.chooseFinal(event, true)" style="
       padding:11px 26px;
-      background:rgba(163,204,0,1);
-      border:none; border-radius:999px;
-      color:#0a0a0a;
+      background:#0a0a0a;
+      border:1.5px solid rgba(163,204,0,1); border-radius:999px;
+      color:#fff;
       font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
       cursor:pointer; white-space:nowrap;
-      box-shadow:0 2px 16px rgba(163,204,0,0.35);
-      transition:transform 0.12s ease;
-    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Sí ✓</button>
+      transition:transform 0.12s ease, background 0.15s ease;
+    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Sí</button>
     <button onclick="window.chooseFinal(event, false)" style="
       padding:11px 26px;
-      background:rgba(255,255,255,0.10);
-      border:1.5px solid rgba(255,255,255,0.30); border-radius:999px;
+      background:#0a0a0a;
+      border:1.5px solid rgba(163,204,0,1); border-radius:999px;
       color:#fff;
-      font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;
+      font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
       cursor:pointer; white-space:nowrap;
-      transition:transform 0.12s ease;
+      transition:transform 0.12s ease, background 0.15s ease;
     " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">No</button>
   </div>
 </div>
@@ -9997,17 +9996,17 @@ window.chooseFinal = function(e, happy) {
     if (imgs[1]) imgs[1].style.opacity = happy ? '1' : '0';
     if (imgs[2]) imgs[2].style.opacity = happy ? '0' : '1';
   });
-  // Feedback visual en los botones: resaltar el activo
+  // Feedback visual en los botones: activo = fondo verde; inactivo = negro con borde verde
   var panel = document.getElementById('final-feliz-panel');
   if (panel) {
     var btns = panel.querySelectorAll('button');
     if (btns[0]) { // Sí
-      btns[0].style.background = happy ? 'rgba(163,204,0,1)' : 'rgba(163,204,0,0.35)';
-      btns[0].style.outline = happy ? '2px solid #fff' : 'none';
+      btns[0].style.background = happy ? 'rgba(163,204,0,1)' : '#0a0a0a';
+      btns[0].style.color = happy ? '#0a0a0a' : '#fff';
     }
     if (btns[1]) { // No
-      btns[1].style.background = !happy ? 'rgba(255,255,255,0.30)' : 'rgba(255,255,255,0.10)';
-      btns[1].style.outline = !happy ? '2px solid #fff' : 'none';
+      btns[1].style.background = !happy ? 'rgba(163,204,0,1)' : '#0a0a0a';
+      btns[1].style.color = !happy ? '#0a0a0a' : '#fff';
     }
   }
 };
