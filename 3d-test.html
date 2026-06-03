@@ -1649,7 +1649,37 @@ window.onerror = function(msg, url, line, col, err) {
           z-index:10;
           opacity:1;
           transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1);
-        "></div>
+          display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+        ">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" style="opacity:0.92;margin-bottom:4px;">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <div style="font-family:'Inter',sans-serif;font-weight:500;font-size:0.92rem;color:#fff;text-align:center;">Contenido sensible</div>
+          <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:0.70rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:80%;">Este v&iacute;deo puede contener<br>contenido para adultos.</div>
+          <button id="sens-cta-btn" onclick="window.dismissSens(event)" style="
+            margin-top:10px;
+            background:rgba(163,204,0,1);
+            color:#0a0a0a;
+            font-family:'Inter',sans-serif;
+            font-weight:700;
+            font-size:0.78rem;
+            letter-spacing:0.02em;
+            border-radius:999px;
+            padding:10px 26px;
+            box-shadow:0 2px 16px rgba(163,204,0,0.35);
+            cursor:pointer;
+            border:none;
+            pointer-events:auto;
+            position:relative;
+            z-index:10000030;
+            transition:transform 0.12s ease;
+          " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+            Ver v&iacute;deo
+          </button>
+        </div>
       </div>
       <!-- Slide 5 (Magazine) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -9753,44 +9783,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 
 
-<!-- Panel Contenido Sensible: fixed - solo capa interactiva (el blur lo hace dummy-sens-ov dentro del carousel-item) -->
-<div id="sens-panel" style="
-  position: fixed;
-  z-index: 10000020;
-  pointer-events: none;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-">
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="none" style="opacity:0.92;margin-bottom:4px;">
-    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-  <div style="font-family:'Inter',sans-serif;font-weight:500;font-size:0.92rem;color:#fff;text-align:center;">Contenido sensible</div>
-  <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:0.70rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:80%;">Este v&iacute;deo puede contener<br>contenido para adultos.</div>
-  <button onclick="window.dismissSens(event)" style="
-    margin-top:10px;
-    background:rgba(163,204,0,1);
-    color:#0a0a0a;
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:0.78rem;
-    letter-spacing:0.02em;
-    border-radius:999px;
-    padding:10px 26px;
-    box-shadow:0 2px 16px rgba(163,204,0,0.35);
-    cursor:pointer;
-    border:none;
-    pointer-events:auto;
-    transition:transform 0.12s ease;
-  " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    Ver v&iacute;deo
-  </button>
-</div>
+<!-- sens-panel: referencia de posicionamiento (el contenido visual está en dummy-sens-ov) -->
+<div id="sens-panel" style="position:fixed;z-index:10000020;pointer-events:none;display:none;"></div>
 
 <!-- Panel final feliz: vive dentro de #final-feliz-panel-clip -->
 <div id="final-feliz-panel" style="
