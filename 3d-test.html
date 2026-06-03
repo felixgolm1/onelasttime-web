@@ -1659,26 +1659,7 @@ window.onerror = function(msg, url, line, col, err) {
           </svg>
           <div style="font-family:'Inter',sans-serif;font-weight:500;font-size:0.92rem;color:#fff;text-align:center;">Contenido sensible</div>
           <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:0.70rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:80%;">Este v&iacute;deo puede contener<br>contenido para adultos.</div>
-          <button id="sens-cta-btn" onclick="window.dismissSens(event)" style="
-            margin-top:10px;
-            background:rgba(163,204,0,1);
-            color:#0a0a0a;
-            font-family:'Inter',sans-serif;
-            font-weight:700;
-            font-size:0.78rem;
-            letter-spacing:0.02em;
-            border-radius:999px;
-            padding:10px 26px;
-            box-shadow:0 2px 16px rgba(163,204,0,0.35);
-            cursor:pointer;
-            border:none;
-            pointer-events:auto;
-            position:relative;
-            z-index:10000030;
-            transition:transform 0.12s ease;
-          " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-            Ver v&iacute;deo
-          </button>
+
         </div>
       </div>
       <!-- Slide 5 (Magazine) -->
@@ -5684,8 +5665,9 @@ window.onerror = function(msg, url, line, col, err) {
 
           // --- SENS PANEL: slide "besos parejas" (índice 2) ---
           {
-            const _sp = document.getElementById('sens-panel');
-            if (_sp && !window._sensDismissed && largeItems.length > 0) {
+            const _sp  = document.getElementById('sens-panel');
+            const _btn = document.getElementById('sens-cta-btn');
+            if (!window._sensDismissed && largeItems.length > 0) {
               const _sIdx = 2; // índice del slide besos parejas
               const _vp = document.querySelector('.carousel-viewport');
               if (_vp) {
@@ -5694,29 +5676,43 @@ window.onerror = function(msg, url, line, col, err) {
                 const _spLeft  = _vpr.left + _sDsigned * 466;
                 const _spWidth = _vpr.width;
                 const _visible = _spLeft + _spWidth > _vpr.left && _spLeft < _vpr.right;
+                const _centered = Math.abs(_sDsigned) < 0.45;
                 if (_visible) {
-                  const _clipL = Math.max(0, _vpr.left - _spLeft);
-                  const _clipR = Math.max(0, _spLeft + _spWidth - _vpr.right);
-                  _sp.style.display  = 'flex';
-                  _sp.style.position = 'fixed';
-                  _sp.style.top      = _vpr.top  + 'px';
-                  _sp.style.left     = _spLeft   + 'px';
-                  _sp.style.width    = _spWidth  + 'px';
-                  _sp.style.height   = _vpr.height + 'px';
-                  _sp.style.opacity  = '1';
-                  _sp.style.pointerEvents = Math.abs(_sDsigned) < 0.5 ? 'auto' : 'none';
-                  _sp.style.clipPath = (_clipL > 0 || _clipR > 0)
-                    ? `inset(0 ${_clipR}px 0 ${_clipL}px)`
-                    : 'none';
+                  // Posicionar stub sens-panel (para referencia)
+                  if (_sp) {
+                    const _clipL = Math.max(0, _vpr.left - _spLeft);
+                    const _clipR = Math.max(0, _spLeft + _spWidth - _vpr.right);
+                    _sp.style.display  = 'block';
+                    _sp.style.top      = _vpr.top  + 'px';
+                    _sp.style.left     = _spLeft   + 'px';
+                    _sp.style.width    = _spWidth  + 'px';
+                    _sp.style.height   = _vpr.height + 'px';
+                    _sp.style.clipPath = (_clipL > 0 || _clipR > 0)
+                      ? `inset(0 ${_clipR}px 0 ${_clipL}px)` : 'none';
+                  }
+                  // Botón fixed: solo cuando el slide está centrado
+                  if (_btn) {
+                    if (_centered) {
+                      const _cx = _vpr.left + _vpr.width / 2;
+                      const _cy = _vpr.top  + _vpr.height * 0.72; // bajo el copy
+                      _btn.style.display = 'block';
+                      _btn.style.left    = _cx + 'px';
+                      _btn.style.top     = _cy + 'px';
+                    } else {
+                      _btn.style.display = 'none';
+                    }
+                  }
                 } else {
-                  _sp.style.display = 'none';
-                  _sp.style.clipPath = 'none';
+                  if (_sp)  _sp.style.display  = 'none';
+                  if (_btn) _btn.style.display = 'none';
                 }
               }
-            } else if (_sp && window._sensDismissed) {
-              _sp.style.display = 'none';
+            } else {
+              if (_sp)  _sp.style.display  = 'none';
+              if (_btn) _btn.style.display = 'none';
             }
           }
+
 
           // --- FINAL FELIZ PANEL: desliza con el carrusel (como el video) ---
           {
@@ -9783,8 +9779,37 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 
 
-<!-- sens-panel: referencia de posicionamiento (el contenido visual está en dummy-sens-ov) -->
+<!-- sens-panel stub: referencia de posicionamiento -->
 <div id="sens-panel" style="position:fixed;z-index:10000020;pointer-events:none;display:none;"></div>
+
+<!-- BOTÓN SENSIBLE: position:fixed en el body, FUERA del carousel.
+     Z-index máximo absoluto. Posicionado por JS según las coordenadas del slide. -->
+<button id="sens-cta-btn"
+  onclick="window.dismissSens(event)"
+  style="
+    display:none;
+    position:fixed;
+    z-index:99999999;
+    pointer-events:auto;
+    background:rgba(163,204,0,1);
+    color:#0a0a0a;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.02em;
+    border-radius:999px;
+    padding:10px 26px;
+    box-shadow:0 2px 16px rgba(163,204,0,0.35);
+    cursor:pointer;
+    border:none;
+    transform:translate(-50%,-50%);
+    transition:box-shadow 0.12s ease;
+  "
+  onmouseover="this.style.boxShadow='0 4px 24px rgba(163,204,0,0.6)'"
+  onmouseout="this.style.boxShadow='0 2px 16px rgba(163,204,0,0.35)'"
+>
+  Ver v&iacute;deo
+</button>
 
 <!-- Panel final feliz: vive dentro de #final-feliz-panel-clip -->
 <div id="final-feliz-panel" style="
@@ -9935,8 +9960,10 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 <script>
 window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
-  var sp = document.getElementById('sens-panel');
-  if (sp) { sp.style.display = 'none'; }
+  var sp  = document.getElementById('sens-panel');
+  if (sp)  { sp.style.display = 'none'; }
+  var btn = document.getElementById('sens-cta-btn');
+  if (btn) { btn.style.display = 'none'; }
   var dov = document.getElementById('dummy-sens-ov');
   if (dov) { dov.style.opacity = '0'; }
   window._sensDismissed = true;
