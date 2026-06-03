@@ -5562,7 +5562,13 @@ window.onerror = function(msg, url, line, col, err) {
             if (_bReset >= 0 && Math.abs(currIndex - _bReset) > 1.0 && window._sensDismissed) {
               window._sensDismissed = false;
               var _dov = document.getElementById('dummy-sens-ov');
-              if (_dov) { _dov.style.opacity = '1'; }
+              if (_dov) {
+                _dov.style.display             = '';  // restaura el display del CSS inline original
+                _dov.style.backdropFilter      = '';  // restaura desde la regla CSS
+                _dov.style.webkitBackdropFilter= '';
+                _dov.style.background          = '';
+                _dov.style.opacity             = '1';
+              }
             }
           }
 
@@ -9937,7 +9943,18 @@ window.dismissSens = function(e) {
   var btn = document.getElementById('sens-cta-btn');
   if (btn) { btn.style.display = 'none'; }
   var dov = document.getElementById('dummy-sens-ov');
-  if (dov) { dov.style.opacity = '0'; }
+  if (dov) {
+    // Eliminar backdrop-filter inmediatamente para forzar que Chrome
+    // destruya la capa de compositing GPU del blur
+    dov.style.backdropFilter         = 'none';
+    dov.style.webkitBackdropFilter   = 'none';
+    dov.style.background             = 'none';
+    dov.style.opacity                = '0';
+    // Tras la transición, sacarlo del render tree completamente
+    setTimeout(function() {
+      dov.style.display = 'none';
+    }, 480);
+  }
   window._sensDismissed = true;
 };
 
