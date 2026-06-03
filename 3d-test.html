@@ -1639,7 +1639,17 @@ window.onerror = function(msg, url, line, col, err) {
       <!-- Slide 3 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <video src="assets/img/besos parejas.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"></video>
-        <div id="dummy-sens-ov" style="display:none;"></div>
+        <div id="dummy-sens-ov" style="
+          position:absolute; inset:0;
+          border-radius:4px;
+          backdrop-filter:blur(22px) saturate(0.6) brightness(0.75);
+          -webkit-backdrop-filter:blur(22px) saturate(0.6) brightness(0.75);
+          background:rgba(0,0,0,0.28);
+          pointer-events:none;
+          z-index:10;
+          opacity:1;
+          transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1);
+        "></div>
       </div>
       <!-- Slide 5 (Magazine) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -5535,6 +5545,8 @@ window.onerror = function(msg, url, line, col, err) {
           // Resetear overlay si el usuario se aleja del slide
           if (Math.abs(currIndex - 2) > 1.0 && window._sensDismissed) {
             window._sensDismissed = false;
+            var _dov = document.getElementById('dummy-sens-ov');
+            if (_dov) { _dov.style.opacity = '1'; }
           }
 
           // EXIT: slide hacia la izquierda durante el breakout (espejo de la entrada desde la derecha)
@@ -9741,58 +9753,43 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 </div>
 
 
-<!-- Panel Contenido Sensible: fixed fuera del carrusel, posicionado por JS -->
-<!-- NOTA: clip-path y backdrop-filter NO pueden coexistir en el mismo elemento (bug Chrome).
-     Solución: wrapper externo recibe clip-path, inner div aplica backdrop-filter. -->
+<!-- Panel Contenido Sensible: fixed - solo capa interactiva (el blur lo hace dummy-sens-ov dentro del carousel-item) -->
 <div id="sens-panel" style="
   position: fixed;
   z-index: 10051;
-  pointer-events: auto;
+  pointer-events: none;
   display: none;
-  overflow: hidden;
-  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
 ">
-  <!-- Inner: backdrop-filter separado del clip-path -->
-  <div id="sens-blur-inner" style="
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    backdrop-filter: blur(22px) saturate(0.6) brightness(0.75);
-    -webkit-backdrop-filter: blur(22px) saturate(0.6) brightness(0.75);
-    background: rgba(0,0,0,0.28);
-    cursor: pointer;
-  ">
-    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" style="opacity:0.92;margin-bottom:4px;">
-      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
-    <div style="font-family:'Inter',sans-serif;font-weight:500;font-size:0.92rem;color:#fff;text-align:center;">Contenido sensible</div>
-    <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:0.70rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:80%;">Este v&iacute;deo puede contener<br>contenido para adultos.</div>
-    <button onclick="window.dismissSens(event)" style="
-      margin-top:10px;
-      background:rgba(163,204,0,1);
-      color:#0a0a0a;
-      font-family:'Inter',sans-serif;
-      font-weight:700;
-      font-size:0.78rem;
-      letter-spacing:0.02em;
-      border-radius:999px;
-      padding:10px 26px;
-      box-shadow:0 2px 16px rgba(163,204,0,0.35);
-      cursor:pointer;
-      border:none;
-      pointer-events:auto;
-      transition:transform 0.12s ease;
-    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      Ver v&iacute;deo
-    </button>
-  </div>
+  <svg width="38" height="38" viewBox="0 0 24 24" fill="none" style="opacity:0.92;margin-bottom:4px;">
+    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+  <div style="font-family:'Inter',sans-serif;font-weight:500;font-size:0.92rem;color:#fff;text-align:center;">Contenido sensible</div>
+  <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:0.70rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:80%;">Este v&iacute;deo puede contener<br>contenido para adultos.</div>
+  <button onclick="window.dismissSens(event)" style="
+    margin-top:10px;
+    background:rgba(163,204,0,1);
+    color:#0a0a0a;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.02em;
+    border-radius:999px;
+    padding:10px 26px;
+    box-shadow:0 2px 16px rgba(163,204,0,0.35);
+    cursor:pointer;
+    border:none;
+    pointer-events:auto;
+    transition:transform 0.12s ease;
+  " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+    Ver v&iacute;deo
+  </button>
 </div>
 
 <!-- Panel final feliz: vive dentro de #final-feliz-panel-clip -->
@@ -9946,6 +9943,8 @@ window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
   var sp = document.getElementById('sens-panel');
   if (sp) { sp.style.display = 'none'; }
+  var dov = document.getElementById('dummy-sens-ov');
+  if (dov) { dov.style.opacity = '0'; }
   window._sensDismissed = true;
 };
 
