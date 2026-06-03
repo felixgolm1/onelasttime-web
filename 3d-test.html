@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -765,15 +765,13 @@ window.onerror = function(msg, url, line, col, err) {
       perspective-origin: 50% 50%;
       z-index: 10010;
       touch-action: none;
-      cursor: grab;
       user-select: none;
       -webkit-user-select: none;
       overflow: visible;         /* cartas pueden asomar fuera sin ser clipped */
     }
 
     .box-3d-wrapper:active {
-      cursor: grabbing;
-    }
+      }
 
     @media(min-width: 768px) {
       .box-3d-wrapper {
@@ -1300,12 +1298,11 @@ window.onerror = function(msg, url, line, col, err) {
       touch-action: none;
       user-select: none; -webkit-user-select: none;
       pointer-events: auto !important;
-      cursor: grab !important;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       border-radius: 16px;
     }
     @media(min-width: 768px) { .card-wrap { width: 350px; height: 198px; } }
-    .card-wrap:active { cursor: grabbing; transition: none; }
+    .card-wrap:active { transition: none; }
 
     .card-face {
       width: 100%; height: 100%;
@@ -1323,7 +1320,6 @@ window.onerror = function(msg, url, line, col, err) {
         0 20px 60px rgba(0,0,0,0.4),
         inset 0 0 0 1.5px rgba(255,255,255,0.8);
       pointer-events: auto !important;
-      cursor: grab !important;
       position: relative; overflow: hidden;
     }
     .card-question {
@@ -1349,7 +1345,6 @@ window.onerror = function(msg, url, line, col, err) {
       position: absolute !important;  /* dentro de #card-table (position:fixed) */
       opacity: 1;                     /* sin !important → el JS puede sobrescribir para el fade */
       pointer-events: auto !important;
-      cursor: grab !important;
       transform-style: flat !important;
       perspective: none !important;
     }
@@ -1607,6 +1602,29 @@ window.onerror = function(msg, url, line, col, err) {
       <!-- Slide 7 (duplicate) -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/pareja barco.jfif" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+        <!-- Overlay copy: solo visible en el recuadro grande (data-large-only) -->
+        <div data-large-only="true" style="
+          position: absolute;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: calc(100% - 64px);
+          background: rgba(0, 0, 0, 0.88);
+          color: #ffffff;
+          font-family: 'Inter', 'Helvetica Neue', sans-serif;
+          font-size: 12.5px;
+          font-weight: 400;
+          line-height: 1.6;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          text-align: center;
+          padding: 14px 16px;
+          border-radius: 0;
+          pointer-events: none;
+        ">
+          <span style="color: #ccff00; font-weight: 600;">Pssst.</span>
+          Puedes usarlas aunque no estés en un restaurante o no sea una cena
+        </div>
       </div>
       <!-- Slide 6 (Interactive Final Feliz) -->
       <div id="final-slide" class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -1616,6 +1634,54 @@ window.onerror = function(msg, url, line, col, err) {
         <img src="assets/img/con final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
         <!-- Sin final feliz (oculta hasta elección) -->
         <img src="assets/img/sin final feliz.jfif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.4s ease;">
+        <!-- OVERLAY INTERACTIVO -->
+        <div class="final-ov" data-large-only="true" onpointerdown="event.stopPropagation()" style="
+          position: absolute;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: calc(100% - 64px);
+          background: rgba(0, 0, 0, 0.88);
+          color: #ffffff;
+          font-family: 'Inter', 'Helvetica Neue', sans-serif;
+          font-size: 12.5px;
+          font-weight: 400;
+          line-height: 1.6;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          text-align: left;
+          padding: 14px 16px;
+          border-radius: 0;
+          pointer-events: auto;
+          transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1);
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        ">
+          <div style="font-weight: 600; flex-shrink: 0;">¿QUIERES<br>FINAL FELIZ?</div>
+          <div style="display:flex; gap:10px; flex-shrink: 0;">
+            <button onclick="window.chooseFinal(event, true)" style="
+              padding:11px 26px;
+              background:rgba(163,204,0,1);
+              border:none; border-radius:999px;
+              color:#0a0a0a;
+              font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
+              cursor:pointer; white-space:nowrap;
+              box-shadow:0 2px 16px rgba(163,204,0,0.35);
+              transition:transform 0.12s ease;
+            " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Sí ✓</button>
+            <button onclick="window.chooseFinal(event, false)" style="
+              padding:11px 26px;
+              background:rgba(255,255,255,0.10);
+              border:1.5px solid rgba(255,255,255,0.30); border-radius:999px;
+              color:#fff;
+              font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;
+              cursor:pointer; white-space:nowrap;
+              transition:background 0.15s ease;
+            " onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.10)'">No</button>
+          </div>
+        </div>
       </div>
       <!-- Slide 3 -->
       <div class="carousel-item" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
@@ -5590,9 +5656,7 @@ window.onerror = function(msg, url, line, col, err) {
             let startOffset = 240 + 78 + G; // Posición exacta para que al estar en d=1, mantenga el gap G con el borde
             
             // Movimiento estrictamente lineal (parallax)
-            let translateXSmall = Math.sign(d) * (startOffset + (absD - 1) * step);
-            
-            let opacity = 1.0 - Math.min(absD, 2.0) * 0.2; // Menos agresivo
+            let translateXSmall = Math.sign(d) * (startOffset + (absD - 1) * step);let opacity = 1.0 - Math.min(absD, 2.0) * 0.2; // Menos agresivo
             let brightness = 1.0 - Math.min(absD, 2.0) * 0.2;
             let zIndex = Math.round(100 - absD * 10);
 
@@ -5669,8 +5733,35 @@ window.onerror = function(msg, url, line, col, err) {
               citasSliderPanel.style.transform = `translateX(${slideX}px)`;
             }
           }
-
-          // --- VIDEO PANEL: slide 5 (envejecimiento, index 4) ---
+            const finalPanel = document.getElementById('final-feliz-panel');
+            const finalPanelClip = document.getElementById('final-feliz-panel-clip');
+            if (finalPanel && finalPanelClip && largeItems.length > 0) {
+              let finalSlideIndex = -1;
+              for (let k = 0; k < largeItems.length; k++) {
+                if (largeItems[k].id === 'final-slide') { finalSlideIndex = k; break; }
+              }
+              if (finalSlideIndex >= 0) {
+                const vpF = document.querySelector('.carousel-viewport');
+                if (vpF) {
+                  const vpR2 = vpF.getBoundingClientRect();
+                  finalPanelClip.style.left   = vpR2.left   + 'px';
+                  finalPanelClip.style.top    = vpR2.top    + 'px';
+                  finalPanelClip.style.width  = vpR2.width  + 'px';
+                  finalPanelClip.style.height = vpR2.height + 'px';
+                }
+                const finalD = finalSlideIndex - currIndex;
+                const slideXF = finalD * 466;
+                finalPanel.style.transform = `translateX(${slideXF}px)`;
+                if (window._finalChoice !== null) {
+                  finalPanel.style.opacity = '0';
+                  finalPanel.style.pointerEvents = 'none';
+                } else {
+                  finalPanel.style.opacity = Math.abs(finalD) < 0.5 ? '1' : '0';
+                  finalPanel.style.pointerEvents = Math.abs(finalD) < 0.5 ? 'auto' : 'none';
+                }
+              }
+            }
+            // --- VIDEO PANEL: slide 5 (envejecimiento, index 4) ---
           const envejPanel = document.getElementById('envej-panel');
           const envejPanelClip = document.getElementById('envej-panel-clip');
           const envejVideo = window._envejVideoRef;
@@ -5717,33 +5808,23 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- FINAL PANEL: aparece cuando el final-slide está centrado ---
-          const finalPanel = document.getElementById('final-panel');
-          if (finalPanel && largeItems.length > 0) {
+          // --- FINAL FELIZ RESET ---
+          if (largeItems.length > 0) {
             let finalIndex = -1;
             for (let k = 0; k < largeItems.length; k++) {
               if (largeItems[k].id === 'final-slide') { finalIndex = k; break; }
             }
-            if (finalIndex >= 0) {
-              const distToFinal = Math.abs(currIndex - finalIndex);
-              // Mostrar panel solo si no se ha elegido aún y el slide está cerca del centro
-              const fpOpacity = (window._finalChoice == null)
-                ? Math.max(0, Math.min(1, 1 - distToFinal * 2.5))
-                : 0;
-              finalPanel.style.opacity = fpOpacity;
-              if (fpOpacity > 0) {
-                // Posicionar en la parte BAJA del frame (estilo Oryzo)
-                const vp = document.querySelector('.carousel-viewport');
-                if (vp) {
-                  const vpR = vp.getBoundingClientRect();
-                  const sr  = largeItems[finalIndex].getBoundingClientRect();
-                  finalPanel.style.left   = Math.max(0, sr.left) + 'px';
-                  finalPanel.style.width  = sr.width + 'px';
-                  // Panel justo encima del borde inferior visible del frame
-                  const frameBottom = Math.min(vpR.bottom, window.innerHeight);
-                  finalPanel.style.bottom = (window.innerHeight - frameBottom + 12) + 'px';
-                }
-              }
+            if (finalIndex >= 0 && Math.abs(currIndex - finalIndex) > 1.0 && window._finalChoice != null) {
+              window._finalChoice = null;
+              document.querySelectorAll('#final-feliz-panel').forEach(p => {
+                p.style.opacity = '1'; p.style.pointerEvents = 'auto';
+              });
+              document.querySelectorAll('#final-slide').forEach(slide => {
+                var imgs = slide.querySelectorAll('img');
+                if (imgs[0]) imgs[0].style.opacity = '1';
+                if (imgs[1]) imgs[1].style.opacity = '0';
+                if (imgs[2]) imgs[2].style.opacity = '0';
+              });
             }
           }
         }
@@ -6007,6 +6088,12 @@ window.onerror = function(msg, url, line, col, err) {
     let targetProg = prog;
     let glowVisible = false;
     let lastScrollTime = 0;
+
+    function mapRange(p, inMin, inMax, outMin, outMax) {
+      if (p <= inMin) return outMin;
+      if (p >= inMax) return outMax;
+      return outMin + (outMax - outMin) * ((p - inMin) / (inMax - inMin));
+    }
 
     function smoothScrollLoop() {
         const lerpF = 0.40;
@@ -9692,29 +9779,36 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 })();
 </script>
 
-<!-- FINAL PANEL: estilo Oryzo - aparece en la base del frame cuando final-slide está centrado -->
-<div id="final-panel" style="
+
+</div>
+
+
+<!-- Panel final feliz: vive dentro de #final-feliz-panel-clip -->
+<div id="final-feliz-panel" style="
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 72px;
   z-index: 10052;
-  width: min(476px, 86vw);
   pointer-events: auto;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  background: rgba(0, 0, 0, 0.88);
+  color: #ffffff;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 14px 16px;
+  bottom: 40px;
+  left: 32px;
+  right: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  background: rgba(6,6,6,0.90);
-  border-radius: 0 0 4px 4px;
-  padding: 18px 22px;
-  box-shadow: 0 -4px 32px rgba(0,0,0,0.5);
 ">
-  <span style="color:#fff; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:600; line-height:1.35; flex-shrink:0;">¿Quieres<br>final feliz?</span>
-  <div style="display:flex; gap:10px; flex-shrink:0;">
-    <button onclick="window.chooseFinal(true)" style="
+  <div style="font-weight: 600; flex-shrink: 0;">¿QUIERES<br>FINAL FELIZ?</div>
+  <div style="display:flex; gap:10px; flex-shrink: 0;">
+    <button onclick="window.chooseFinal(event, true)" style="
       padding:11px 26px;
       background:rgba(163,204,0,1);
       border:none; border-radius:999px;
@@ -9722,25 +9816,19 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
       font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
       cursor:pointer; white-space:nowrap;
       box-shadow:0 2px 16px rgba(163,204,0,0.35);
-      transition:transform 0.12s ease, box-shadow 0.12s ease;
-    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      Sí ✓
-    </button>
-    <button onclick="window.chooseFinal(false)" style="
+      transition:transform 0.12s ease;
+    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Sí ✓</button>
+    <button onclick="window.chooseFinal(event, false)" style="
       padding:11px 26px;
       background:rgba(255,255,255,0.10);
       border:1.5px solid rgba(255,255,255,0.30); border-radius:999px;
       color:#fff;
       font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;
       cursor:pointer; white-space:nowrap;
-      transition:background 0.15s ease;
-    " onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.10)'">
-      No
-    </button>
+      transition:transform 0.12s ease;
+    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">No</button>
   </div>
 </div>
-
-
 <!-- Panel video envejecimiento: vive dentro de #envej-panel-clip (wrapper fixed+overflow:hidden) -->
 <div id="envej-panel" style="
   position: fixed;
@@ -9927,19 +10015,21 @@ window.envejPlayPause = function() {
 // --- FINAL FELIZ ---
 window._finalChoice = null; // null = sin elegir, true = feliz, false = infeliz
 
-window.chooseFinal = function(happy) {
-  window._finalChoice = happy;
-  // Ocultar el panel permanentemente
-  var panel = document.getElementById('final-panel');
-  if (panel) { panel.style.opacity = '0'; panel.style.pointerEvents = 'none'; }
-  // Crossfade a la imagen elegida en el slide de la pista GRANDE
-  var largeAging = document.querySelector('.carousel-track-large [id="final-slide"]');
-  if (largeAging) {
-    var imgs = largeAging.querySelectorAll('img');
-    if (imgs[0]) imgs[0].style.opacity = '0';                 // escoger final → oculta
-    if (imgs[1]) imgs[1].style.opacity = happy ? '1' : '0';  // con final feliz
-    if (imgs[2]) imgs[2].style.opacity = happy ? '0' : '1';  // sin final feliz
+window.chooseFinal = function(e, happy) {
+  if (e) {
+    e.stopPropagation();
+    e.preventDefault();
   }
+  window._finalChoice = happy;
+  document.querySelectorAll('#final-feliz-panel').forEach(p => {
+    p.style.opacity = '0'; p.style.pointerEvents = 'none';
+  });
+  document.querySelectorAll('#final-slide').forEach(slide => {
+    var imgs = slide.querySelectorAll('img');
+    if (imgs[0]) imgs[0].style.opacity = '0';
+    if (imgs[1]) imgs[1].style.opacity = happy ? '1' : '0';
+    if (imgs[2]) imgs[2].style.opacity = happy ? '0' : '1';
+  });
 };
 
 // --- SLIDE 1: SECUENCIA CROSSFADE (divertido → sorprendente → profundo → emocional → neutro) ---
@@ -9979,6 +10069,13 @@ window.chooseFinal = function(happy) {
 </script>
 
 </html>
+
+
+
+
+
+
+
 
 
 
