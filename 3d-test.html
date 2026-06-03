@@ -5703,7 +5703,7 @@ window.onerror = function(msg, url, line, col, err) {
                   const _panelWidth = _vpr.width - 64;
                   const _panelLeft  = _vpr.left + 32 + _fDsigned * 466;
                   const _visible = _panelLeft + _panelWidth > _vpr.left && _panelLeft < _vpr.right;
-                  if (_visible && window._finalChoice === null) {
+                  if (_visible) {
                     const _clipL = Math.max(0, _vpr.left - _panelLeft);
                     const _clipR = Math.max(0, _panelLeft + _panelWidth - _vpr.right);
                     _fp.style.display = 'flex';
@@ -5781,15 +5781,19 @@ window.onerror = function(msg, url, line, col, err) {
             }
             if (finalIndex >= 0 && Math.abs(currIndex - finalIndex) > 1.0 && window._finalChoice != null) {
               window._finalChoice = null;
-              document.querySelectorAll('#final-feliz-panel').forEach(p => {
-                p.style.opacity = '1'; p.style.pointerEvents = 'auto';
-              });
               document.querySelectorAll('#final-slide').forEach(slide => {
                 var imgs = slide.querySelectorAll('img');
                 if (imgs[0]) imgs[0].style.opacity = '1';
                 if (imgs[1]) imgs[1].style.opacity = '0';
                 if (imgs[2]) imgs[2].style.opacity = '0';
               });
+              // Reset feedback visual de botones
+              var _fp2 = document.getElementById('final-feliz-panel');
+              if (_fp2) {
+                var _btns = _fp2.querySelectorAll('button');
+                if (_btns[0]) { _btns[0].style.background = 'rgba(163,204,0,1)'; _btns[0].style.outline = 'none'; }
+                if (_btns[1]) { _btns[1].style.background = 'rgba(255,255,255,0.10)'; _btns[1].style.outline = 'none'; }
+              }
             }
           }
         }
@@ -9986,15 +9990,26 @@ window.chooseFinal = function(e, happy) {
     e.preventDefault();
   }
   window._finalChoice = happy;
-  document.querySelectorAll('#final-feliz-panel').forEach(p => {
-    p.style.opacity = '0'; p.style.pointerEvents = 'none';
-  });
+  // Cambiar imagen en todos los final-slide
   document.querySelectorAll('#final-slide').forEach(slide => {
     var imgs = slide.querySelectorAll('img');
     if (imgs[0]) imgs[0].style.opacity = '0';
     if (imgs[1]) imgs[1].style.opacity = happy ? '1' : '0';
     if (imgs[2]) imgs[2].style.opacity = happy ? '0' : '1';
   });
+  // Feedback visual en los botones: resaltar el activo
+  var panel = document.getElementById('final-feliz-panel');
+  if (panel) {
+    var btns = panel.querySelectorAll('button');
+    if (btns[0]) { // Sí
+      btns[0].style.background = happy ? 'rgba(163,204,0,1)' : 'rgba(163,204,0,0.35)';
+      btns[0].style.outline = happy ? '2px solid #fff' : 'none';
+    }
+    if (btns[1]) { // No
+      btns[1].style.background = !happy ? 'rgba(255,255,255,0.30)' : 'rgba(255,255,255,0.10)';
+      btns[1].style.outline = !happy ? '2px solid #fff' : 'none';
+    }
+  }
 };
 
 // --- SLIDE 1: SECUENCIA CROSSFADE (divertido → sorprendente → profundo → emocional → neutro) ---
