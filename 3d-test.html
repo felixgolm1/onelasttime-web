@@ -5560,15 +5560,8 @@ window.onerror = function(msg, url, line, col, err) {
               if (largeItems[k].id === 'besos-slide') { _bReset = k; break; }
             }
             if (_bReset >= 0 && Math.abs(currIndex - _bReset) > 1.0 && window._sensDismissed) {
-              window._sensDismissed = false;
-              var _dov = document.getElementById('dummy-sens-ov');
-              if (_dov) {
-                _dov.style.display             = '';  // restaura el display del CSS inline original
-                _dov.style.backdropFilter      = '';  // restaura desde la regla CSS
-                _dov.style.webkitBackdropFilter= '';
-                _dov.style.background          = '';
-                _dov.style.opacity             = '1';
-              }
+              // Usar la función centralizada que borra la regla CSS !important
+              if (window._resetSensOverlay) window._resetSensOverlay();
             }
           }
 
@@ -9936,26 +9929,49 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 <!-- SENSITIVE OVERLAY - fuera de toda jerarquía, z-index máximo
      Controlado desde la lógica JS del carousel (currIndex) -->
 <script>
+// ── SENS OVERLAY CONTROL ──────────────────────────────────────────────────
+// Inyectamos un <style> en el <head> con !important.
+// Las reglas de hoja de estilo con !important ganan sobre CUALQUIER inline style,
+// incluyendo el backdrop-filter que Chrome composita en GPU.
+(function() {
+  var _ss = document.createElement('style');
+  _ss.id  = '__sens_dismiss_css';
+  // Empieza vacío (overlay visible por defecto)
+  _ss.textContent = '';
+  document.head.appendChild(_ss);
+})();
+
 window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
-  var sp  = document.getElementById('sens-panel');
-  if (sp)  { sp.style.display = 'none'; }
+
+  // Ocultar botón
   var btn = document.getElementById('sens-cta-btn');
-  if (btn) { btn.style.display = 'none'; }
-  var dov = document.getElementById('dummy-sens-ov');
-  if (dov) {
-    // Eliminar backdrop-filter inmediatamente para forzar que Chrome
-    // destruya la capa de compositing GPU del blur
-    dov.style.backdropFilter         = 'none';
-    dov.style.webkitBackdropFilter   = 'none';
-    dov.style.background             = 'none';
-    dov.style.opacity                = '0';
-    // Tras la transición, sacarlo del render tree completamente
-    setTimeout(function() {
-      dov.style.display = 'none';
-    }, 480);
+  if (btn) btn.style.display = 'none';
+
+  // Inyectar regla CSS !important que destruye el overlay
+  var ss = document.getElementById('__sens_dismiss_css');
+  if (ss) {
+    ss.textContent = [
+      '#dummy-sens-ov {',
+      '  display: none !important;',
+      '  backdrop-filter: none !important;',
+      '  -webkit-backdrop-filter: none !important;',
+      '  opacity: 0 !important;',
+      '  pointer-events: none !important;',
+      '}'
+    ].join('\n');
   }
+
   window._sensDismissed = true;
+};
+
+// Función de reset: borra la regla CSS → overlay vuelve a sus estilos inline originales
+window._resetSensOverlay = function() {
+  var ss = document.getElementById('__sens_dismiss_css');
+  if (ss) ss.textContent = '';
+  window._sensDismissed = false;
+  var btn = document.getElementById('sens-cta-btn');
+  if (btn) btn.style.display = '';  // reset al estado del loop
 };
 
 
