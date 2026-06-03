@@ -5665,51 +5665,10 @@ window.onerror = function(msg, url, line, col, err) {
 
           // --- SENS PANEL: slide "besos parejas" (índice 2) ---
           {
-            const _sp  = document.getElementById('sens-panel');
             const _btn = document.getElementById('sens-cta-btn');
-            if (!window._sensDismissed && largeItems.length > 0) {
-              const _sIdx = 2; // índice del slide besos parejas
-              const _vp = document.querySelector('.carousel-viewport');
-              if (_vp) {
-                const _vpr = _vp.getBoundingClientRect();
-                const _sDsigned = _sIdx - currIndex;
-                const _spLeft  = _vpr.left + _sDsigned * 466;
-                const _spWidth = _vpr.width;
-                const _visible = _spLeft + _spWidth > _vpr.left && _spLeft < _vpr.right;
-                const _centered = Math.abs(_sDsigned) < 0.45;
-                if (_visible) {
-                  // Posicionar stub sens-panel (para referencia)
-                  if (_sp) {
-                    const _clipL = Math.max(0, _vpr.left - _spLeft);
-                    const _clipR = Math.max(0, _spLeft + _spWidth - _vpr.right);
-                    _sp.style.display  = 'block';
-                    _sp.style.top      = _vpr.top  + 'px';
-                    _sp.style.left     = _spLeft   + 'px';
-                    _sp.style.width    = _spWidth  + 'px';
-                    _sp.style.height   = _vpr.height + 'px';
-                    _sp.style.clipPath = (_clipL > 0 || _clipR > 0)
-                      ? `inset(0 ${_clipR}px 0 ${_clipL}px)` : 'none';
-                  }
-                  // Botón fixed: solo cuando el slide está centrado
-                  if (_btn) {
-                    if (_centered) {
-                      const _cx = _vpr.left + _vpr.width / 2;
-                      const _cy = _vpr.top  + _vpr.height * 0.72; // bajo el copy
-                      _btn.style.display = 'block';
-                      _btn.style.left    = _cx + 'px';
-                      _btn.style.top     = _cy + 'px';
-                    } else {
-                      _btn.style.display = 'none';
-                    }
-                  }
-                } else {
-                  if (_sp)  _sp.style.display  = 'none';
-                  if (_btn) _btn.style.display = 'none';
-                }
-              }
-            } else {
-              if (_sp)  _sp.style.display  = 'none';
-              if (_btn) _btn.style.display = 'none';
+            if (_btn) {
+              const _nearSlide2 = Math.abs(currIndex - 2) < 0.45;
+              _btn.style.display = (!window._sensDismissed && _nearSlide2) ? 'block' : 'none';
             }
           }
 
@@ -9783,12 +9742,15 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 <div id="sens-panel" style="position:fixed;z-index:10000020;pointer-events:none;display:none;"></div>
 
 <!-- BOTÓN SENSIBLE: position:fixed en el body, FUERA del carousel.
-     Z-index máximo absoluto. Posicionado por JS según las coordenadas del slide. -->
+     CSS centrado horizontalmente, sin coordenadas dinámicas. -->
 <button id="sens-cta-btn"
   onclick="window.dismissSens(event)"
   style="
     display:none;
     position:fixed;
+    left:50%;
+    top:72vh;
+    transform:translateX(-50%);
     z-index:99999999;
     pointer-events:auto;
     background:rgba(163,204,0,1);
@@ -9802,11 +9764,11 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     box-shadow:0 2px 16px rgba(163,204,0,0.35);
     cursor:pointer;
     border:none;
-    transform:translate(-50%,-50%);
-    transition:box-shadow 0.12s ease;
+    white-space:nowrap;
+    transition:box-shadow 0.12s ease, transform 0.12s ease;
   "
-  onmouseover="this.style.boxShadow='0 4px 24px rgba(163,204,0,0.6)'"
-  onmouseout="this.style.boxShadow='0 2px 16px rgba(163,204,0,0.35)'"
+  onmouseover="this.style.transform='translateX(-50%) scale(1.04)'"
+  onmouseout="this.style.transform='translateX(-50%) scale(1)'"
 >
   Ver v&iacute;deo
 </button>
