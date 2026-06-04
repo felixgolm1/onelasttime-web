@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -1658,7 +1658,30 @@ window.onerror = function(msg, url, line, col, err) {
             <line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
           <div style="font-family:'Inter',sans-serif;font-weight:500;font-size:1.38rem;color:#fff;text-align:center;">Contenido sensible</div>
-          <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:1.05rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:85%;">Estas im&aacute;genes incluyen contenido que<br>algunas personas podr&iacute;a encontrar delicado.</div>
+          <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:1.05rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:85%;">Estas im&aacute;genes incluyen contenido que<br>algunas personas podr&iacute;a encontrar delicado</div>
+          <button
+            id="sens-cta-btn"
+            onclick="window.dismissSens(event)"
+            style="
+              margin-top:18px;
+              pointer-events:auto;
+              background:rgba(163,204,0,1);
+              color:#0a0a0a;
+              font-family:'Inter',sans-serif;
+              font-weight:700;
+              font-size:0.78rem;
+              letter-spacing:0.02em;
+              border-radius:999px;
+              padding:10px 26px;
+              box-shadow:0 2px 16px rgba(163,204,0,0.35);
+              cursor:pointer;
+              border:none;
+              white-space:nowrap;
+              transition:box-shadow 0.12s ease, transform 0.12s ease;
+            "
+            onmouseover="this.style.transform='scale(1.04)'"
+            onmouseout="this.style.transform='scale(1)'"
+          >Ver im&aacute;genes</button>
 
         </div>
       </div>
@@ -9750,37 +9773,6 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 <!-- sens-panel stub: referencia de posicionamiento -->
 <div id="sens-panel" style="position:fixed;z-index:10000020;pointer-events:none;display:none;"></div>
 
-<!-- BOTÓN SENSIBLE: position:fixed en el body, FUERA del carousel.
-     CSS centrado horizontalmente, sin coordenadas dinámicas. -->
-<button id="sens-cta-btn"
-  onclick="window.dismissSens(event)"
-  style="
-    display:none;
-    position:fixed;
-    left:50%;
-    top:72vh;
-    transform:translateX(-50%);
-    z-index:99999999;
-    pointer-events:auto;
-    background:rgba(163,204,0,1);
-    color:#0a0a0a;
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:0.78rem;
-    letter-spacing:0.02em;
-    border-radius:999px;
-    padding:10px 26px;
-    box-shadow:0 2px 16px rgba(163,204,0,0.35);
-    cursor:pointer;
-    border:none;
-    white-space:nowrap;
-    transition:box-shadow 0.12s ease, transform 0.12s ease;
-  "
-  onmouseover="this.style.transform='translateX(-50%) scale(1.04)'"
-  onmouseout="this.style.transform='translateX(-50%) scale(1)'"
->
-  Ver im&aacute;genes
-</button>
 
 <!-- Panel final feliz: vive dentro de #final-feliz-panel-clip -->
 <div id="final-feliz-panel" style="
