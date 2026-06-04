@@ -5687,25 +5687,27 @@ window.onerror = function(msg, url, line, col, err) {
                   const _vp = document.querySelector('.carousel-viewport');
                   if (_slideEl && _vp) {
                     const _vpR = _vp.getBoundingClientRect();
-                    // Centro horizontal del slide = centro del viewport
                     const _bD = _bIdx - currIndex;
                     const _slideLeft = _vpR.left + 32 + _bD * 466;
                     const _slideWidth = _vpR.width - 64;
                     const _btnCenterX = _slideLeft + _slideWidth / 2;
-                    // Vertical: ~72% de la altura del viewport card
                     const _btnTop = _vpR.top + _vpR.height * 0.72;
-                    _btn.style.display     = 'block';
-                    _btn.style.left        = _btnCenterX + 'px';
-                    _btn.style.top         = _btnTop + 'px';
-                    _btn.style.transform   = 'translateX(-50%)';
+                    _btn.style.left          = _btnCenterX + 'px';
+                    _btn.style.top           = _btnTop + 'px';
+                    _btn.style.transform     = 'translateX(-50%)';
+                    _btn.style.opacity       = '1';
+                    _btn.style.pointerEvents = 'auto';
                   } else {
-                    _btn.style.display = 'block';
+                    _btn.style.opacity       = '1';
+                    _btn.style.pointerEvents = 'auto';
                   }
                 } else {
-                  _btn.style.display = 'none';
+                  _btn.style.opacity       = '0';
+                  _btn.style.pointerEvents = 'none';
                 }
               } else {
-                _btn.style.display = 'none';
+                _btn.style.opacity       = '0';
+                _btn.style.pointerEvents = 'none';
               }
             }
           }
@@ -9784,13 +9786,14 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   onpointerdown="event.stopPropagation();"
   onclick="window.dismissSens(event)"
   style="
-    display:none;
+    display:block;
     position:fixed;
     left:50%;
     top:calc(50% + 70px);
     transform:translateX(-50%);
     z-index:999999999;
-    pointer-events:auto;
+    pointer-events:none;
+    opacity:0;
     background:rgba(163,204,0,1);
     color:#0a0a0a;
     font-family:'Inter',sans-serif;
@@ -9803,7 +9806,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     cursor:pointer;
     border:none;
     white-space:nowrap;
-    transition:box-shadow 0.12s ease, transform 0.12s ease;
+    transition:opacity 0.35s ease, box-shadow 0.12s ease, transform 0.12s ease;
   "
   onmouseover="this.style.transform='translateX(-50%) scale(1.04)'"
   onmouseout="this.style.transform='translateX(-50%) scale(1)'"
@@ -9971,9 +9974,9 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
 
-  // Ocultar botón
+  // Ocultar botón con fade
   var btn = document.getElementById('sens-cta-btn');
-  if (btn) btn.style.display = 'none';
+  if (btn) { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
 
   // Inyectar regla CSS !important que destruye el overlay
   var ss = document.getElementById('__sens_dismiss_css');
@@ -9997,8 +10000,7 @@ window._resetSensOverlay = function() {
   var ss = document.getElementById('__sens_dismiss_css');
   if (ss) ss.textContent = '';
   window._sensDismissed = false;
-  var btn = document.getElementById('sens-cta-btn');
-  if (btn) btn.style.display = '';  // reset al estado del loop
+  // El loop se encargará de restaurar opacity cuando vuelva al slide
 };
 
 
