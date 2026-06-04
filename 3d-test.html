@@ -5702,7 +5702,7 @@ window.onerror = function(msg, url, line, col, err) {
                     _btn.style.display       = 'block';
                     _btn.style.pointerEvents = Math.abs(_bD) < 0.5 ? 'auto' : 'none';
                     _btn.style.clipPath      = (_clipL > 0 || _clipR > 0)
-                      ? `inset(0 ${_clipR}px 0 ${_clipL}px round 999px)`
+                      ? `inset(0 ${_clipR}px 0 ${_clipL}px)`
                       : 'none';
                   } else {
                     _btn.style.display       = 'none';
