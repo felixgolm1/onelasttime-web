@@ -5671,36 +5671,29 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- SENS PANEL: slide "besos parejas" - botón sigue la tarjeta dinámicamente ---
+          // --- SENS PANEL: botón CTA clipeado al recuadro grande (igual que aging-panel-clip) ---
           {
-            const _btn = document.getElementById('sens-cta-btn');
-            if (_btn) {
+            const _clip = document.getElementById('sens-btn-clip');
+            const _btn  = document.getElementById('sens-cta-btn');
+            if (_clip && _btn) {
               let _bIdx = -1;
               for (let k = 0; k < largeItems.length; k++) {
                 if (largeItems[k].id === 'besos-slide') { _bIdx = k; break; }
               }
               if (_bIdx >= 0) {
                 const _nearBesos = Math.abs(currIndex - _bIdx) < 0.45;
+                const _vp = document.querySelector('.carousel-viewport');
+                if (_vp) {
+                  const _vpR = _vp.getBoundingClientRect();
+                  // Clip = recuadro grande exacto (32px padding izq/der)
+                  _clip.style.left   = (_vpR.left + 32) + 'px';
+                  _clip.style.top    = _vpR.top + 'px';
+                  _clip.style.width  = (_vpR.width - 64) + 'px';
+                  _clip.style.height = _vpR.height + 'px';
+                }
                 if (!window._sensDismissed && _nearBesos) {
-                  // Obtener posición real de la tarjeta en el viewport
-                  const _slideEl = largeItems[_bIdx];
-                  const _vp = document.querySelector('.carousel-viewport');
-                  if (_slideEl && _vp) {
-                    const _vpR = _vp.getBoundingClientRect();
-                    const _bD = _bIdx - currIndex;
-                    const _slideLeft = _vpR.left + 32 + _bD * 466;
-                    const _slideWidth = _vpR.width - 64;
-                    const _btnCenterX = _slideLeft + _slideWidth / 2;
-                    const _btnTop = _vpR.top + _vpR.height * 0.72;
-                    _btn.style.left          = _btnCenterX + 'px';
-                    _btn.style.top           = _btnTop + 'px';
-                    _btn.style.transform     = 'translateX(-50%)';
-                    _btn.style.opacity       = '1';
-                    _btn.style.pointerEvents = 'auto';
-                  } else {
-                    _btn.style.opacity       = '1';
-                    _btn.style.pointerEvents = 'auto';
-                  }
+                  _btn.style.opacity       = '1';
+                  _btn.style.pointerEvents = 'auto';
                 } else {
                   _btn.style.opacity       = '0';
                   _btn.style.pointerEvents = 'none';
@@ -9781,36 +9774,43 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 <!-- sens-panel stub: referencia de posicionamiento -->
 <div id="sens-panel" style="position:fixed;z-index:10000020;pointer-events:none;display:none;"></div>
 
-<!-- Botón CTA sensible: fuera del carousel DOM para garantizar pointer-events -->
-<button id="sens-cta-btn"
-  onpointerdown="event.stopPropagation();"
-  onclick="window.dismissSens(event)"
-  style="
-    display:block;
-    position:fixed;
-    left:50%;
-    top:calc(50% + 70px);
-    transform:translateX(-50%);
-    z-index:999999999;
-    pointer-events:none;
-    opacity:0;
-    background:rgba(163,204,0,1);
-    color:#0a0a0a;
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:0.94rem;
-    letter-spacing:0.02em;
-    border-radius:999px;
-    padding:10px 26px;
-    box-shadow:0 2px 16px rgba(163,204,0,0.35);
-    cursor:pointer;
-    border:none;
-    white-space:nowrap;
-    transition:opacity 0.35s ease, box-shadow 0.12s ease, transform 0.12s ease;
-  "
-  onmouseover="this.style.transform='translateX(-50%) scale(1.04)'"
-  onmouseout="this.style.transform='translateX(-50%) scale(1)'"
->Ver im&aacute;genes</button>
+<!-- Clip wrapper para el botón CTA — recorta a los límites del recuadro grande, como aging-panel-clip -->
+<div id="sens-btn-clip" style="
+  position:fixed;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:999999999;
+  border-radius:4px;
+  left:0; top:0; width:0; height:0;
+">
+  <button id="sens-cta-btn"
+    onpointerdown="event.stopPropagation();"
+    onclick="window.dismissSens(event)"
+    style="
+      position:absolute;
+      left:50%;
+      top:72%;
+      transform:translateX(-50%);
+      pointer-events:none;
+      opacity:0;
+      background:rgba(163,204,0,1);
+      color:#0a0a0a;
+      font-family:'Inter',sans-serif;
+      font-weight:700;
+      font-size:0.94rem;
+      letter-spacing:0.02em;
+      border-radius:999px;
+      padding:10px 26px;
+      box-shadow:0 2px 16px rgba(163,204,0,0.35);
+      cursor:pointer;
+      border:none;
+      white-space:nowrap;
+      transition:opacity 0.35s ease, box-shadow 0.12s ease;
+    "
+    onmouseover="this.style.boxShadow='0 4px 24px rgba(163,204,0,0.55)'"
+    onmouseout="this.style.boxShadow='0 2px 16px rgba(163,204,0,0.35)'"
+  >Ver im&aacute;genes</button>
+</div>
 
 <!-- Panel final feliz: vive dentro de #final-feliz-panel-clip -->
 <div id="final-feliz-panel" style="
