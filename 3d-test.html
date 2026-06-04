@@ -5622,6 +5622,7 @@ window.onerror = function(msg, url, line, col, err) {
             
             // Movimiento estrictamente lineal (parallax)
             let translateXSmall = Math.sign(d) * (startOffset + (absD - 1) * step);let opacity = 1.0 - Math.min(absD, 2.0) * 0.2; // Menos agresivo
+            if (absD >= 5) opacity = 0; // Ocultar thumbnails muy lejanos (evita fragmento en borde de pantalla)
             let brightness = 1.0 - Math.min(absD, 2.0) * 0.2;
             let zIndex = Math.round(100 - absD * 10);
 
