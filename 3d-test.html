@@ -1661,8 +1661,25 @@ window.onerror = function(msg, url, line, col, err) {
           </svg>
           <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:1.38rem;color:#fff;text-align:center;">Contenido sensible</div>
           <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:1.05rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:85%;">Estas im&aacute;genes son algunas de las consecuencias de utilizar las cartas sin control y podr&iacute;as encontrarlas delicadas</div>
-          <!-- Ancla de posicionamiento para el botón CTA (vive en el body como fixed) -->
-          <div id="sens-btn-anchor" style="height:48px;"></div>
+          <!-- Botón visual para miniatura (pointer-events:none, solo display) -->
+          <button class="sens-visual-btn" style="
+            pointer-events:none;
+            background:rgba(163,204,0,1);
+            color:#0a0a0a;
+            font-family:'Inter',sans-serif;
+            font-weight:700;
+            font-size:0.94rem;
+            letter-spacing:0.02em;
+            border-radius:999px;
+            padding:10px 26px;
+            box-shadow:0 2px 16px rgba(163,204,0,0.35);
+            border:none;
+            white-space:nowrap;
+            cursor:default;
+            margin-top:2px;
+          ">Ver im&aacute;genes</button>
+          <!-- Ancla de posicionamiento para el botón CTA real (vive en el body como fixed) -->
+          <div id="sens-btn-anchor" style="height:4px;"></div>
         </div>
       </div>
       <!-- Slide 5 (Magazine) -->
@@ -3586,6 +3603,9 @@ window.onerror = function(msg, url, line, col, err) {
       if (_smallAnchor) _smallAnchor.removeAttribute('id');
       const _largeAnchor = largeTrack.querySelector('#sens-btn-anchor');
       if (_largeAnchor) _largeAnchor.id = 'sens-btn-anchor-large';
+      // Ocultar el botón visual en el largeTrack (la vista grande usa el botón fixed real)
+      const _largeVisualBtn = largeTrack.querySelector('.sens-visual-btn');
+      if (_largeVisualBtn) _largeVisualBtn.style.display = 'none';
 
 
 
