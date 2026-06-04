@@ -3606,6 +3606,9 @@ window.onerror = function(msg, url, line, col, err) {
       // Ocultar el botón visual en el largeTrack (la vista grande usa el botón fixed real)
       const _largeVisualBtn = largeTrack.querySelector('.sens-visual-btn');
       if (_largeVisualBtn) _largeVisualBtn.style.display = 'none';
+      // Dar ID único al overlay del largeTrack para que dismissSens no afecte la miniatura
+      const _largeOvEl = largeTrack.querySelector('#dummy-sens-ov');
+      if (_largeOvEl) _largeOvEl.id = 'dummy-sens-ov-large';
 
 
 
@@ -5735,6 +5738,10 @@ window.onerror = function(msg, url, line, col, err) {
                     _btn.style.pointerEvents = Math.abs(_bD) < 0.5 ? 'auto' : 'none';
                   } else {
                     _clip.style.display = 'none';
+                    // Auto-reset cuando el slide está claramente en miniatura
+                    if (Math.abs(_bD) > 1.0) {
+                      window._resetSensOverlay && window._resetSensOverlay();
+                    }
                   }
                 }
               } else {
@@ -10006,11 +10013,11 @@ window.dismissSens = function(e) {
   var btn = document.getElementById('sens-cta-btn');
   if (btn) { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
 
-  // Inyectar regla CSS !important que destruye el overlay
+  // Inyectar regla CSS !important que destruye el overlay del LARGE (miniatura no se toca)
   var ss = document.getElementById('__sens_dismiss_css');
   if (ss) {
     ss.textContent = [
-      '#dummy-sens-ov {',
+      '#dummy-sens-ov-large {',
       '  display: none !important;',
       '  backdrop-filter: none !important;',
       '  -webkit-backdrop-filter: none !important;',
@@ -10028,7 +10035,10 @@ window._resetSensOverlay = function() {
   var ss = document.getElementById('__sens_dismiss_css');
   if (ss) ss.textContent = '';
   window._sensDismissed = false;
-  // El loop se encargará de restaurar opacity cuando vuelva al slide
+  // Restaurar opacidad y estado del botón fixed
+  var btn = document.getElementById('sens-cta-btn');
+  if (btn) { btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
+  // El loop se encargará de mostrar/ocultar el clip container según posición
 };
 
 
