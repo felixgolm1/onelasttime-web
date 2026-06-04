@@ -3601,6 +3601,17 @@ window.onerror = function(msg, url, line, col, err) {
       // Agregar el viewport al magazine-scene (que es el padre de smallContainer)
       smallContainer.parentNode.insertBefore(viewport, smallContainer.nextSibling);
 
+      // cloneNode duplica los IDs → el getElementById devuelve el primero (smallTrack, invisible).
+      // Solución: quitar el ID del smallTrack para que getElementById apunte al largeTrack.
+      const _smallSensBtn = originalTrack.querySelector('#sens-cta-btn');
+      const _smallSensOv  = originalTrack.querySelector('#dummy-sens-ov');
+      if (_smallSensBtn) { _smallSensBtn.removeAttribute('id'); _smallSensBtn.style.pointerEvents = 'none'; }
+      if (_smallSensOv)  { _smallSensOv.removeAttribute('id'); }
+      // El botón del largeTrack ahora es el único con id="sens-cta-btn" → garantizar pointer-events:auto
+      const _largeSensBtn = largeTrack.querySelector('#sens-cta-btn');
+      if (_largeSensBtn) { _largeSensBtn.style.pointerEvents = 'auto'; }
+
+
       // Inyectar las 4 imágenes de envejecimiento DENTRO del aging-slide de la pista GRANDE
       // (no overlay, la imagen vive dentro del propio slide del carrusel)
 
@@ -5693,14 +5704,17 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
 
-          // --- SENS PANEL: botón CTA vive dentro del overlay, solo gestionar visibilidad ---
+          // --- SENS PANEL: botón CTA vive dentro del overlay ---
           {
             const _btn = document.getElementById('sens-cta-btn');
             if (_btn) {
               if (window._sensDismissed) {
                 _btn.style.display = 'none';
+                _btn.style.pointerEvents = 'none';
               } else {
                 _btn.style.display = '';
+                // Forzar pointer-events:auto aunque dummy-sens-ov sea pointer-events:none
+                _btn.style.pointerEvents = 'auto';
               }
             }
           }
