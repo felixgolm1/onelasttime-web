@@ -1661,8 +1661,8 @@ window.onerror = function(msg, url, line, col, err) {
           </svg>
           <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:1.38rem;color:#fff;text-align:center;">Contenido sensible</div>
           <div style="font-family:'Inter',sans-serif;font-weight:400;font-size:1.05rem;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4;max-width:85%;">Estas im&aacute;genes son algunas de las consecuencias de utilizar las cartas sin control y podr&iacute;as encontrarlas delicadas</div>
-          <!-- Espacio reservado para el botón CTA (vive en el body como fixed) -->
-          <div style="height:48px;"></div>
+          <!-- Ancla de posicionamiento para el botón CTA (vive en el body como fixed) -->
+          <div id="sens-btn-anchor" style="height:48px;"></div>
         </div>
       </div>
       <!-- Slide 5 (Magazine) -->
@@ -3581,6 +3581,11 @@ window.onerror = function(msg, url, line, col, err) {
 
       // Inyectar las 4 imágenes de envejecimiento DENTRO del aging-slide de la pista GRANDE
       // (no overlay, la imagen vive dentro del propio slide del carrusel)
+      // Ancla del botón sensible: renombrar la del largeTrack para que getElementById sea único
+      const _smallAnchor = originalTrack.querySelector('#sens-btn-anchor');
+      if (_smallAnchor) _smallAnchor.removeAttribute('id');
+      const _largeAnchor = largeTrack.querySelector('#sens-btn-anchor');
+      if (_largeAnchor) _largeAnchor.id = 'sens-btn-anchor-large';
 
 
 
@@ -5692,9 +5697,17 @@ window.onerror = function(msg, url, line, col, err) {
                   const _bD      = _bIdx - currIndex;
                   const _slideW  = _vpr.width - 64;
                   const _slideL  = _vpr.left + 32 + _bD * 466;
-                  // Posición relativa al clip container (no al viewport)
+                  // Posición relativa al clip container
                   const _relCX   = _slideL + _slideW / 2 - _vpr.left;
-                  const _relCY   = _vpr.height * 0.72;
+                  // Usar ancla del overlay para posicionar justo debajo del copy
+                  const _anchor  = document.getElementById('sens-btn-anchor-large');
+                  let _relCY;
+                  if (_anchor) {
+                    const _ar = _anchor.getBoundingClientRect();
+                    _relCY = _ar.top - _vpr.top + 10;
+                  } else {
+                    _relCY = _vpr.height * 0.62; // fallback
+                  }
                   _btn.style.left = _relCX + 'px';
                   _btn.style.top  = _relCY + 'px';
                   if (!window._sensDismissed) {
