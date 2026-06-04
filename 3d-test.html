@@ -5739,7 +5739,7 @@ window.onerror = function(msg, url, line, col, err) {
                   } else {
                     _clip.style.display = 'none';
                     // Auto-reset cuando el slide está claramente en miniatura
-                    if (Math.abs(_bD) > 1.0) {
+                    if (Math.abs(_bD) > 0.6) {
                       window._resetSensOverlay && window._resetSensOverlay();
                     }
                   }
