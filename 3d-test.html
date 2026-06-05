@@ -3562,7 +3562,7 @@ window.onerror = function(msg, url, line, col, err) {
       smallContainer.style.pointerEvents = 'none';
 
       // Ocultamos la pista pequeña en la zona del recuadro (480) + el gap a cada lado
-      let G = 16; // 30% más pequeño
+      let G = 40; // Gap entre miniatura y borde del frame
       smallContainer.style.webkitMaskImage = `linear-gradient(to right, black calc(50% - ${240 + G}px), transparent calc(50% - ${240 + G}px), transparent calc(50% + ${240 + G}px), black calc(50% + ${240 + G}px))`;
       smallContainer.style.maskImage = `linear-gradient(to right, black calc(50% - ${240 + G}px), transparent calc(50% - ${240 + G}px), transparent calc(50% + ${240 + G}px), black calc(50% + ${240 + G}px))`;
 
@@ -5616,7 +5616,7 @@ window.onerror = function(msg, url, line, col, err) {
             let translateXLarge = d * 466;
             
             // Cálculo de posiciones
-            let G = 16; // Gap físico respecto al recuadro y entre miniaturas (-30%)
+            let G = 40; // Gap entre miniatura y borde del frame
             let step = 156 + G; // Distancia para que el hueco entre miniaturas sea exactamente G
             let startOffset = 240 + 78 + G; // Posición exacta para que al estar en d=1, mantenga el gap G con el borde
             
