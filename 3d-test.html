@@ -5294,7 +5294,7 @@ window.onerror = function(msg, url, line, col, err) {
                   const stagger = idx * 0.02;
                   const lp = Math.min(Math.max(mapRange(exitP, 0.112 + stagger * 0.5, 0.512 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
-                  letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
+                  letter.style.transform = 'translateY(0px)'; // Evita que las letras suban y crucen la cara de la chica
                 });
               }); }
 
@@ -5452,7 +5452,7 @@ window.onerror = function(msg, url, line, col, err) {
                   const stagger = idx * 0.02;
                   const lp = Math.min(Math.max(mapRange(exitP, 0.112 + stagger * 0.5, 0.512 + stagger, 0, 1), 0), 1);
                   const eu = 1 - Math.pow(1 - lp, 2);
-                  letter.style.transform = 'translateY(' + (-300 * eu) + 'px)';
+                  letter.style.transform = 'translateY(0px)'; // Evita que las letras suban y crucen la cara de la chica
                 });
               }); }
 
