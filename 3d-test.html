@@ -6159,9 +6159,6 @@ window.onerror = function(msg, url, line, col, err) {
         updateFaceSwap();
         updateGlobalScenes();
 
-        // SAFEGUARD: fuerza stOverlay visible en toda la fase scatter (GSAP puede restablecerse a 0 en scrub)
-        if (stOverlay) stOverlay.style.opacity = (prog >= 0.82 && prog <= 2.2) ? '1' : '0';
-
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
 
@@ -6188,6 +6185,12 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
         }
+
+        // SAFEGUARD PERMANENTE: corre SIEMPRE cada frame (incluso cuando el scroll está parado)
+        // Evita que GSAP deje stOverlay / detailGlobal visibles fuera de su rango correcto
+        if (stOverlay) stOverlay.style.opacity = (prog >= 0.82 && prog <= 2.2) ? '1' : '0';
+        const _dg = document.getElementById('sc-detail-global');
+        if (_dg) _dg.style.opacity = (prog >= 0.93 && prog <= 2.2) ? '' : '0';
 
 
       
