@@ -3881,8 +3881,8 @@ window.onerror = function(msg, url, line, col, err) {
         }
       }
 
-      // Recordar que openP se basa en (prog - 2.2)/0.4
-      let openP = Math.max(0, Math.min(1, (p - 2.2) / 0.4));
+      // Recordar que openP se basa en (prog - 1.70)/0.4
+      let openP = Math.max(0, Math.min(1, (p - 1.70) / 0.4));
       if (peekingCard) {
         if (!hint.classList.contains('is-visible')) {
           // Limpiar overrides inline para que la transición CSS (0.5s ease)
@@ -3907,7 +3907,7 @@ window.onerror = function(msg, url, line, col, err) {
     });
 
     function updateBoxState() {
-      // Ampliamos el rango de scroll para la caja: de 2.2 a 2.6 (0.4 unidades)
+      // Ampliamos el rango de scroll para la caja: de 1.7 a 2.1 (0.4 unidades)
       let openP = 0; // ANULADO para que la caja no se abra en los testimonios
       // La caja se cierra a la misma velocidad (0.4) a partir de 9.12
       if (prog > 9.12) {
@@ -6134,21 +6134,21 @@ window.onerror = function(msg, url, line, col, err) {
         const lerpF = 0.40;
         
         // SALTO CUÁNTICO DE TIMELINE
-        if (targetProg > 2.2 && targetProg < 9.62) {
-            if (prog <= 2.2) {
+        if (targetProg > 1.70 && targetProg < 9.62) {
+            if (prog <= 1.70) {
                 targetProg = 9.62;
                 prog = 9.62;
             } else {
-                targetProg = 2.2;
-                prog = 2.2;
+                targetProg = 1.70;
+                prog = 1.70;
             }
         }
         
         // ANTI-LODO (Warp Lerp): Evita que la fricción interpole a través del salto
-        if (prog <= 2.2 && targetProg >= 9.62) {
+        if (prog <= 1.70 && targetProg >= 9.62) {
             prog = 9.62;
-        } else if (prog >= 9.62 && targetProg <= 2.2) {
-            prog = 2.2;
+        } else if (prog >= 9.62 && targetProg <= 1.70) {
+            prog = 1.70;
         }
 
       if (Math.abs(targetProg - prog) > 0.000005) {
@@ -6160,7 +6160,7 @@ window.onerror = function(msg, url, line, col, err) {
         updateGlobalScenes();
 
         // SAFEGUARD: fuerza stOverlay visible en toda la fase scatter (GSAP puede restablecerse a 0 en scrub)
-        if (stOverlay) stOverlay.style.opacity = (prog >= 0.82 && prog <= 2.2) ? '1' : '';
+        if (stOverlay) stOverlay.style.opacity = (prog >= 0.82 && prog <= 1.70) ? '1' : '';
 
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
@@ -6195,8 +6195,8 @@ window.onerror = function(msg, url, line, col, err) {
       const scrollThumb = document.getElementById('custom-scroll-thumb');
         if (scrollThumb && !window.isDraggingThumb) {
           let fakeProg = prog;
-          if (prog >= 9.62) fakeProg = prog - 7.42;
-          let fakeMax = maxProg - 7.42;
+          if (prog >= 9.62) fakeProg = prog - 7.92;
+          let fakeMax = maxProg - 7.92;
           const scrollPercent = Math.max(0, Math.min(1, fakeProg / fakeMax));
           // Asumimos un track de 100vh y thumb de 29vh, nos queda 71vh de recorrido libre
           scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
@@ -6532,7 +6532,7 @@ window.onerror = function(msg, url, line, col, err) {
       e.preventDefault();
       const cappedDY = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60);
       let divisor = 900;
-        if (targetProg < 2.20) divisor = 6000;
+        if (targetProg < 1.70) divisor = 6000;
       let rawDelta = cappedDY / divisor;
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
       const prevTarget = targetProg;
@@ -6586,9 +6586,9 @@ window.onerror = function(msg, url, line, col, err) {
         
         // Actualizar targetProg para que el loop lo alcance suavemente
         let scrollPercent = newY / maxMove;
-          let fakeMax = maxProg - 7.42;
+          let fakeMax = maxProg - 7.92;
           let fakeProg = scrollPercent * fakeMax;
-          targetProg = fakeProg > 2.2 ? fakeProg + 7.42 : fakeProg;
+          targetProg = fakeProg > 1.70 ? fakeProg + 7.92 : fakeProg;
       });
 
       customScrollThumb.addEventListener('pointerup', (e) => {
