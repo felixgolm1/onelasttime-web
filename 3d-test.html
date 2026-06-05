@@ -9165,11 +9165,11 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
   var SHOW_START = 16.93;
   var SHOW_FADE  = 17.08;
   var STEP_START = 17.0;
-  var STEP_END    = 26.1;  // 4 × (0.475 estatico + 0.60 entry + 1.20 exit) = 4×2.275
+  var STEP_END    = 21.6;  // Reducido ~50% (4 pasos de 1.15)
   var NUM_STEPS   = 4;
-  var STEP_SIZE   = (STEP_END - STEP_START) / NUM_STEPS; // 2.275 por paso
-  var TRANS_ENTRY = 0.60; // duracion animacion de ENTRADA (sin cambios)
-  var TRANS_EXIT  = 1.20; // duracion animacion de SALIDA  (x2 respecto a entrada)
+  var STEP_SIZE   = (STEP_END - STEP_START) / NUM_STEPS; // 1.15 por paso
+  var TRANS_ENTRY = 0.40; // duracion animacion de ENTRADA (reducida)
+  var TRANS_EXIT  = 0.50; // duracion animacion de SALIDA  (reducida)
   var TRANS       = TRANS_ENTRY; // alias — usado solo para fade-in del card
   var FEATHER     = 55;   // % de suavidad del gradiente
 
@@ -9507,7 +9507,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
       // 1. Translación fluida de la sección (hasta el centro de la pantalla)
-      var tSlide = clamp01((p - 26.2) / 1.6); // Termina en 28.2, justo cuando empieza a abrirse
+      var tSlide = clamp01((p - 21.7) / 1.6); // Termina en 23.3, justo cuando empieza a abrirse
       var slideY = (1 - ease(tSlide)) * 130; // Nunca baja de 0 para no romper el fondo
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
@@ -9516,7 +9516,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
       window._scrollUpVh = 130 - slideY;
 
       // Fase de salida (la cámara baja continuamente)
-      var tCamera = clamp01((p - 26.2) / 3.0);
+      var tCamera = clamp01((p - 21.7) / 3.0);
       var textY = 130 - (ease(tCamera) * 230);
       var contentY = Math.min(0, textY - slideY);
       var conectaTxt = document.getElementById('conecta-transition-text');
@@ -9543,7 +9543,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
          }
          
          // tOpen: animacion de apertura SEPARADA de la subida — arranca cuando la caja ya es visible
-         var tOpen = clamp01((p - 27.8) / 0.3); // 28.2 a 30.2
+         var tOpen = clamp01((p - 23.3) / 0.3); // 23.7 a 25.7
          let eOpen = ease(tOpen);
          if(deckClone) {
            let df1 = deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
@@ -9588,8 +9588,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
             tuckLip.style.transform = 'rotateX(' + lipRot + 'deg)';
          }
 
-         // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 26.0 ---
-         let localP = p - 25.6;
+         // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 21.5 ---
+         let localP = p - 21.1;
          // Cache card refs: una vez movidas a endCardTable, querySelector devuelve null — necesitamos la referencia persistente
          if (!window._ecCache || window._ecCache._deck !== deckClone) {
            window._ecCache = {
