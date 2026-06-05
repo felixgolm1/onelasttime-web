@@ -3562,7 +3562,7 @@ window.onerror = function(msg, url, line, col, err) {
       smallContainer.style.pointerEvents = 'none';
 
       // Ocultamos la pista pequeña en la zona del recuadro (480) + el gap a cada lado
-      let G = 40; // Gap entre miniatura y borde del frame
+      let G = 16; // 30% más pequeño
       smallContainer.style.webkitMaskImage = `linear-gradient(to right, black calc(50% - ${240 + G}px), transparent calc(50% - ${240 + G}px), transparent calc(50% + ${240 + G}px), black calc(50% + ${240 + G}px))`;
       smallContainer.style.maskImage = `linear-gradient(to right, black calc(50% - ${240 + G}px), transparent calc(50% - ${240 + G}px), transparent calc(50% + ${240 + G}px), black calc(50% + ${240 + G}px))`;
 
@@ -5616,7 +5616,7 @@ window.onerror = function(msg, url, line, col, err) {
             let translateXLarge = d * 466;
             
             // Cálculo de posiciones
-            let G = 40; // Gap entre miniatura y borde del frame
+            let G = 16; // Gap físico respecto al recuadro y entre miniaturas (-30%)
             let step = 156 + G; // Distancia para que el hueco entre miniaturas sea exactamente G
             let startOffset = 240 + 78 + G; // Posición exacta para que al estar en d=1, mantenga el gap G con el borde
             
@@ -5670,7 +5670,8 @@ window.onerror = function(msg, url, line, col, err) {
             if (largeItems[i]) {
               largeItems[i].style.transform = `translateX(${translateXLarge}px) scale(1.0)`;
               largeItems[i].style.zIndex = zIndex;
-              if (i === 8 && currIndex > 8) { largeItems[i].style.clipPath = 'inset(0 14px 0 0)'; } else { largeItems[i].style.clipPath = ''; }
+              // Recortar 7px por cada lado para que el slide de 480px encaje perfecto en el movimiento de 466px y no invada el slide adyacente
+              largeItems[i].style.clipPath = 'inset(0 7px 0 7px)';
               largeItems[i].style.pointerEvents = absD < 0.5 ? 'auto' : 'none';
             }
           }
