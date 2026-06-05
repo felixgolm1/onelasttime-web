@@ -5286,9 +5286,9 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP ola suave hasta desaparecer (sync 0.112-0.612 = prog 14.73)
+              // 3. CIENCIA — se desvanece casi al instante para evitar cualquier conflicto visual
             { document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
-                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.112, 0.612, 0, 1));
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.0, 0.1, 0, 1));
                 container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
                   const stagger = idx * 0.02;
@@ -5444,9 +5444,9 @@ window.onerror = function(msg, url, line, col, err) {
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
-            // 3. CIENCIA — slide UP ola suave hasta desaparecer (sync 0.112-0.612 = prog 14.73)
+              // 3. CIENCIA — se desvanece casi al instante para evitar cualquier conflicto visual
             { document.querySelectorAll('[id="mag-ciencia"]').forEach(function(container) {
-                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.112, 0.612, 0, 1));
+                const containerOpacity = Math.max(0, 1 - mapRange(exitP, 0.0, 0.1, 0, 1));
                 container.style.opacity = containerOpacity;
                 container.querySelectorAll('.ciencia-letter').forEach(function(letter, idx) {
                   const stagger = idx * 0.02;
