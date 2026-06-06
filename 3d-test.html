@@ -2323,6 +2323,13 @@ window.onerror = function(msg, url, line, col, err) {
         max-width: none !important;
         align-self: flex-start !important;
         text-align: left !important;
+        /* Opción C: glassmorphism solo mobile */
+        background: rgba(0, 8, 0, 0.50);
+        -webkit-backdrop-filter: blur(10px) brightness(0.72);
+        backdrop-filter: blur(10px) brightness(0.72);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 8px;
+        padding: 1.4rem 1.5rem;
       }
       .review-right-col {
         align-items: flex-start !important;
