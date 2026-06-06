@@ -3523,6 +3523,9 @@ window.onerror = function(msg, url, line, col, err) {
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
     const maxProg = 37.0;  // Extendido para acomodar el bloque final completo (localP hasta 10.22)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
+    // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
+    // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
+    if (prog > 2.20 && prog < 9.62) prog = 0;
 
     // --- MAGIC WINDOW CAROUSEL SETUP ---
     const originalTrack = document.querySelector('.carousel-track');
@@ -5547,7 +5550,7 @@ window.onerror = function(msg, url, line, col, err) {
           mainDeck.style.filter = '';
           gsap.set(scBoard, { y: '0vh' });
           scrollTl.progress(0);
-          scrollTl.progress(Math.min(1, (prog + 0.5) / 2.2));
+          scrollTl.progress(Math.min(1, prog / 2.2));
         
             let hiddenFaces = document.getElementById('mainDeck').querySelectorAll('.box-flap, .tuck-lip, .dust-flap, .face-back, .face-front, .face-bottom, .interior-card, .face-right');
             hiddenFaces.forEach(f => f.style.display = '');
@@ -6070,7 +6073,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Restore state instantly on load if preserved
     if (prog > 0) {
       requestAnimationFrame(() => {
-        scrollTl.progress(Math.min(1, (prog + 0.5) / 2.2)); // clamp scene logic
+        scrollTl.progress(Math.min(1, prog / 2.2)); // clamp scene logic
         updateFaceSwap();
         updateBoxState(1);
         updateGlobalScenes();
@@ -6082,7 +6085,7 @@ window.onerror = function(msg, url, line, col, err) {
           const eg = document.getElementById('edge-glow');
           if (eg) {
             let startP = 1.54;
-            let endP = 1.68;
+            let endP = 2.19;
             
             if (prog >= startP && prog <= endP) {
               if (prog < startP + 0.03) {
@@ -6134,28 +6137,28 @@ window.onerror = function(msg, url, line, col, err) {
         const lerpF = 0.40;
         
         // SALTO CUÁNTICO DE TIMELINE
-        if (targetProg > 1.70 && targetProg < 9.62) {
-            if (prog <= 1.70) {
+        if (targetProg > 2.20 && targetProg < 9.62) {
+            if (prog <= 2.20) {
                 targetProg = 9.62;
                 prog = 9.62;
             } else {
-                targetProg = 1.70;
-                prog = 1.70;
+                targetProg = 2.20;
+                prog = 2.20;
             }
         }
         
         // ANTI-LODO (Warp Lerp): Evita que la fricción interpole a través del salto
-        if (prog <= 1.70 && targetProg >= 9.62) {
+        if (prog <= 2.20 && targetProg >= 9.62) {
             prog = 9.62;
-        } else if (prog >= 9.62 && targetProg <= 1.70) {
-            prog = 1.70;
+        } else if (prog >= 9.62 && targetProg <= 2.20) {
+            prog = 2.20;
         }
 
       if (Math.abs(targetProg - prog) > 0.000005) {
         prog += (targetProg - prog) * lerpF;
         if (Math.abs(targetProg - prog) <= 0.000005) prog = targetProg;
         sessionStorage.setItem('dev_prog', prog);
-        scrollTl.progress(Math.min(1, (prog + 0.5) / 2.2));
+        scrollTl.progress(Math.min(1, prog / 2.2));
         updateFaceSwap();
         updateGlobalScenes();
 
@@ -6167,7 +6170,7 @@ window.onerror = function(msg, url, line, col, err) {
           const eg = document.getElementById('edge-glow');
           if (eg) {
             let startP = 1.54;
-            let endP = 1.68;
+            let endP = 2.19;
             
             if (prog >= startP && prog <= endP) {
               if (prog < startP + 0.03) {
@@ -6188,9 +6191,9 @@ window.onerror = function(msg, url, line, col, err) {
 
         // SAFEGUARD PERMANENTE: corre SIEMPRE cada frame (incluso cuando el scroll está parado)
         // Evita que GSAP deje stOverlay / detailGlobal visibles fuera de su rango correcto
-        if (stOverlay) stOverlay.style.opacity = (prog >= 0.38 && prog <= 1.70) ? '1' : '0';
+        if (stOverlay) stOverlay.style.opacity = (prog >= 0.88 && prog <= 2.20) ? '1' : '0';
         const _dg = document.getElementById('sc-detail-global');
-        if (_dg) _dg.style.opacity = (prog >= 0.38 && prog <= 1.70) ? '' : '0';
+        if (_dg) _dg.style.opacity = (prog >= 0.88 && prog <= 2.20) ? '' : '0';
 
 
       
@@ -6198,8 +6201,8 @@ window.onerror = function(msg, url, line, col, err) {
       const scrollThumb = document.getElementById('custom-scroll-thumb');
         if (scrollThumb && !window.isDraggingThumb) {
           let fakeProg = prog;
-          if (prog >= 9.62) fakeProg = prog - 7.92;
-          let fakeMax = maxProg - 7.92;
+          if (prog >= 9.62) fakeProg = prog - 7.42;
+          let fakeMax = maxProg - 7.42;
           const scrollPercent = Math.max(0, Math.min(1, fakeProg / fakeMax));
           // Asumimos un track de 100vh y thumb de 29vh, nos queda 71vh de recorrido libre
           scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
@@ -6535,7 +6538,7 @@ window.onerror = function(msg, url, line, col, err) {
       e.preventDefault();
       const cappedDY = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60);
       let divisor = 900;
-        if (targetProg < 1.70) divisor = 6000;
+        if (targetProg < 2.20) divisor = 6000;
       let rawDelta = cappedDY / divisor;
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
       const prevTarget = targetProg;
@@ -6589,9 +6592,9 @@ window.onerror = function(msg, url, line, col, err) {
         
         // Actualizar targetProg para que el loop lo alcance suavemente
         let scrollPercent = newY / maxMove;
-          let fakeMax = maxProg - 7.92;
+          let fakeMax = maxProg - 7.42;
           let fakeProg = scrollPercent * fakeMax;
-          targetProg = fakeProg > 1.70 ? fakeProg + 7.92 : fakeProg;
+          targetProg = fakeProg > 2.20 ? fakeProg + 7.42 : fakeProg;
       });
 
       customScrollThumb.addEventListener('pointerup', (e) => {
