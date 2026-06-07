@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -9177,6 +9177,18 @@ setInterval(function() {
     </div>
   
     </div>
+
+<!-- ── IMG STRIP CAROUSEL (after testimonios) ── -->
+<div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;">
+  <div id="img-strip-track" style="display:flex;height:100vh;will-change:transform;">
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;"><img src="assets/img/mesa sola.jfif" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;"><img src="assets/img/mesa sola.jfif" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;"><img src="assets/img/mesa sola.jfif" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;"><img src="assets/img/mesa sola.jfif" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;"><img src="assets/img/mesa sola.jfif" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+  </div>
+</div>
+
 <script>
 // Listener global para el botón de contenido sensible (capture phase para evitar bloqueos)
 window.addEventListener('click', function(e) {
@@ -9768,6 +9780,36 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
            if(eRev2){if(localP>4.72&&localP<6.32){var eRp2=mapRange(localP,4.72,6.32,0,1);eRev2.style.transform='translateY('+mapRange(localP,4.72,6.32,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev2.style.opacity=eRp2>0.85?mapRange(eRp2,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev2, eRp2);}else eRev2.style.opacity='0';}
            if(eRev3){if(localP>6.52&&localP<8.12){var eRp3=mapRange(localP,6.52,8.12,0,1);eRev3.style.transform='translateY('+mapRange(localP,6.52,8.12,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev3.style.opacity=eRp3>0.85?mapRange(eRp3,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev3, eRp3);}else eRev3.style.opacity='0';}
            if(eRev4){if(localP>8.32&&localP<9.92){var eRp4=mapRange(localP,8.32,9.92,0,1);eRev4.style.transform='translateY('+mapRange(localP,8.32,9.92,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev4.style.opacity=eRp4>0.85?mapRange(eRp4,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev4, eRp4);}else eRev4.style.opacity='0';}
+
+            // -- IMG STRIP CAROUSEL -- aparece al terminar eRev4
+            (function(){
+              var isCont  = document.getElementById('img-strip-container');
+              var isTrack = document.getElementById('img-strip-track');
+              if (!isCont || !isTrack) return;
+              var IS_ENTER  = 9.72;
+              var IS_CENTER = 10.3;
+              var IS_END    = 14.7;
+              if (localP >= IS_ENTER) {
+                var sfade = mapRange(localP, IS_ENTER, IS_ENTER + 0.4, 0, 1);
+                sfade = Math.max(0, Math.min(1, sfade));
+                isCont.style.opacity = sfade.toString();
+                var stx;
+                if (localP <= IS_CENTER) {
+                  var sep = mapRange(localP, IS_ENTER, IS_CENTER, 0, 1);
+                  sep = Math.max(0, Math.min(1, sep));
+                  sep = sep < 0.5 ? 2*sep*sep : 1 - Math.pow(-2*sep+2,2)/2;
+                  stx = 100 - (sep * 100);
+                } else {
+                  var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
+                  ssp = Math.max(0, Math.min(1, ssp));
+                  ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
+                  stx = -(ssp * 400);
+                }
+                isTrack.style.transform = 'translateX(' + stx + 'vw)';
+              } else {
+                isCont.style.opacity = '0';
+              }
+            })();
          }
       }
       
