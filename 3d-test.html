@@ -9180,12 +9180,12 @@ setInterval(function() {
 
 <!-- ── IMG STRIP CAROUSEL (after testimonios) ── -->
 <div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;">
-  <div id="img-strip-track" style="display:flex;height:100vh;will-change:transform;">
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#080808;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#080808;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#080808;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#080808;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#080808;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+  <div id="img-strip-track" style="display:flex;flex-direction:column;width:100vw;will-change:transform;">
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
   </div>
 </div>
 
@@ -9798,14 +9798,14 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   var sep = mapRange(localP, IS_ENTER, IS_CENTER, 0, 1);
                   sep = Math.max(0, Math.min(1, sep));
                   sep = sep < 0.5 ? 2*sep*sep : 1 - Math.pow(-2*sep+2,2)/2;
-                  stx = 100 - (sep * 100);
+                  stx = 100 - (sep * 100); // vh: entrando desde abajo
                 } else {
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  stx = -(ssp * 400);
+                  stx = -(ssp * 400); // -400vh para las 4 imagenes restantes
                 }
-                isTrack.style.transform = 'translateX(' + stx + 'vw)';
+                isTrack.style.transform = 'translateY(' + stx + 'vh)';
               } else {
                 isCont.style.opacity = '0';
               }
