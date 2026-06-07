@@ -9180,12 +9180,14 @@ setInterval(function() {
 
 <!-- ── IMG STRIP CAROUSEL (after testimonios) ── -->
 <div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;">
-  <div id="img-strip-track" style="display:flex;flex-direction:column;width:100vw;will-change:transform;">
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
-    <div style="flex-shrink:0;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+  <div id="img-strip-wrapper" style="position:absolute;top:0;left:0;width:100%;height:100%;will-change:transform;">
+    <div id="img-strip-track" style="display:flex;flex-direction:row;position:absolute;top:0;left:0;height:100%;will-change:transform;">
+      <div style="flex-shrink:0;width:100vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+      <div style="flex-shrink:0;width:100vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+      <div style="flex-shrink:0;width:100vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+      <div style="flex-shrink:0;width:100vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+      <div style="flex-shrink:0;width:100vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/mesa sola.jfif" style="width:50vw;height:75vh;object-fit:cover;display:block;border-radius:6px;"></div>
+    </div>
   </div>
 </div>
 
@@ -9781,33 +9783,42 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
            if(eRev3){if(localP>6.52&&localP<8.12){var eRp3=mapRange(localP,6.52,8.12,0,1);eRev3.style.transform='translateY('+mapRange(localP,6.52,8.12,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev3.style.opacity=eRp3>0.85?mapRange(eRp3,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev3, eRp3);}else eRev3.style.opacity='0';}
            if(eRev4){if(localP>8.32&&localP<9.92){var eRp4=mapRange(localP,8.32,9.92,0,1);eRev4.style.transform='translateY('+mapRange(localP,8.32,9.92,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev4.style.opacity=eRp4>0.85?mapRange(eRp4,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev4, eRp4);}else eRev4.style.opacity='0';}
 
-            // -- IMG STRIP CAROUSEL -- aparece al terminar eRev4
+
+            // -- IMG STRIP CAROUSEL -- entrada vertical + circulacion horizontal
             (function(){
-              var isCont  = document.getElementById('img-strip-container');
-              var isTrack = document.getElementById('img-strip-track');
-              if (!isCont || !isTrack) return;
-              var IS_ENTER  = 9.72;
-              var IS_CENTER = 10.3;
-              var IS_END    = 14.7;
+              var isCont    = document.getElementById('img-strip-container');
+              var isWrapper = document.getElementById('img-strip-wrapper');
+              var isTrack   = document.getElementById('img-strip-track');
+              if (!isCont || !isWrapper || !isTrack) return;
+              var IS_ENTER  = 9.72;   // empieza a aparecer
+              var IS_CENTER = 10.3;   // 1a imagen ya centrada, empieza horizontal
+              var IS_END    = 14.7;   // ultima imagen vista
               if (localP >= IS_ENTER) {
+                // Fade in del container
                 var sfade = mapRange(localP, IS_ENTER, IS_ENTER + 0.4, 0, 1);
                 sfade = Math.max(0, Math.min(1, sfade));
                 isCont.style.opacity = sfade.toString();
-                var stx;
                 if (localP <= IS_CENTER) {
+                  // FASE 1: entrada desde abajo (wrapper sube, track fijo en X=0)
                   var sep = mapRange(localP, IS_ENTER, IS_CENTER, 0, 1);
                   sep = Math.max(0, Math.min(1, sep));
                   sep = sep < 0.5 ? 2*sep*sep : 1 - Math.pow(-2*sep+2,2)/2;
-                  stx = 100 - (sep * 100); // vh: entrando desde abajo
+                  var ty = 100 - (sep * 100); // 100vh -> 0
+                  isWrapper.style.transform = 'translateY(' + ty + 'vh)';
+                  isTrack.style.transform = 'translateX(0)';
                 } else {
+                  // FASE 2: wrapper ya en posicion, track circula a la izquierda
+                  isWrapper.style.transform = 'translateY(0)';
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  stx = -(ssp * 400); // -400vh para las 4 imagenes restantes
+                  var tx = -(ssp * 400); // 0vw -> -400vw
+                  isTrack.style.transform = 'translateX(' + tx + 'vw)';
                 }
-                isTrack.style.transform = 'translateY(' + stx + 'vh)';
               } else {
                 isCont.style.opacity = '0';
+                isWrapper.style.transform = 'translateY(100vh)';
+                isTrack.style.transform = 'translateX(0)';
               }
             })();
          }
