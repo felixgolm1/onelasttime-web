@@ -9795,9 +9795,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
               var IS_END    = 14.7;   // ultima imagen vista
               if (localP >= IS_ENTER) {
                 // Fade in del container
-                var sfade = mapRange(localP, IS_ENTER, IS_ENTER + 0.4, 0, 1);
-                sfade = Math.max(0, Math.min(1, sfade));
-                isCont.style.opacity = sfade.toString();
+                isCont.style.opacity = '1';
                 if (localP <= IS_CENTER) {
                   // FASE 1: entrada desde abajo (wrapper sube, track fijo en X=0)
                   var sep = mapRange(localP, IS_ENTER, IS_CENTER, 0, 1);
