@@ -9784,38 +9784,40 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
            if(eRev4){if(localP>8.32&&localP<9.92){var eRp4=mapRange(localP,8.32,9.92,0,1);eRev4.style.transform='translateY('+mapRange(localP,8.32,9.92,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev4.style.opacity=eRp4>0.85?mapRange(eRp4,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev4, eRp4);}else eRev4.style.opacity='0';}
 
 
-            // -- IMG STRIP CAROUSEL -- entrada vertical + circulacion horizontal
+
+            // -- IMG STRIP CAROUSEL -- cortina izq->der estilo Oryzo + circulacion horizontal
             (function(){
               var isCont    = document.getElementById('img-strip-container');
               var isWrapper = document.getElementById('img-strip-wrapper');
               var isTrack   = document.getElementById('img-strip-track');
               if (!isCont || !isWrapper || !isTrack) return;
-              var IS_ENTER  = 9.7;   // empieza a aparecer
-              var IS_CENTER = 9.96;   // 1a imagen ya centrada, empieza horizontal
-              var IS_END    = 14.7;   // ultima imagen vista
+              var IS_ENTER  = 9.7;   // empieza la cortina
+              var IS_CENTER = 9.96;  // cortina completa, empieza circulacion horizontal
+              var IS_END    = 14.7;  // ultima imagen vista
               if (localP >= IS_ENTER) {
-                // Fade in del container
                 isCont.style.opacity = '1';
+                isWrapper.style.transform = 'none';
                 if (localP <= IS_CENTER) {
-                  // FASE 1: entrada desde abajo (wrapper sube, track fijo en X=0)
+                  // FASE 1: cortina de izquierda a derecha (clip-path inset right 100%->0%)
                   var sep = mapRange(localP, IS_ENTER, IS_CENTER, 0, 1);
                   sep = Math.max(0, Math.min(1, sep));
                   sep = sep < 0.5 ? 2*sep*sep : 1 - Math.pow(-2*sep+2,2)/2;
-                  var ty = 100 - (sep * 100); // 100vh -> 0
-                  isWrapper.style.transform = 'translateY(' + ty + 'vh)';
+                  var clipR = (1 - sep) * 100;
+                  isWrapper.style.clipPath = 'inset(0 ' + clipR + '% 0 0)';
                   isTrack.style.transform = 'translateX(25vw)';
                 } else {
-                  // FASE 2: wrapper ya en posicion, track circula a la izquierda
-                  isWrapper.style.transform = 'translateY(0)';
+                  // FASE 2: cortina completada, track circula a la izquierda
+                  isWrapper.style.clipPath = 'none';
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  var tx = 25 - (ssp * 200); // 25vw -> -175vw (centrado en 1a imagen)
+                  var tx = 25 - (ssp * 200); // 25vw -> -175vw
                   isTrack.style.transform = 'translateX(' + tx + 'vw)';
                 }
               } else {
                 isCont.style.opacity = '0';
-                isWrapper.style.transform = 'translateY(100vh)';
+                isWrapper.style.clipPath = 'inset(0 100% 0 0)';
+                isWrapper.style.transform = 'none';
                 isTrack.style.transform = 'translateX(25vw)';
               }
             })();
