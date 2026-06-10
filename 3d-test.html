@@ -9785,40 +9785,56 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 
 
 
-            // -- IMG STRIP CAROUSEL -- cortina izq->der estilo Oryzo + circulacion horizontal
+            // -- IMG STRIP CAROUSEL -- cortina per-slide estilo Oryzo
             (function(){
               var isCont    = document.getElementById('img-strip-container');
               var isWrapper = document.getElementById('img-strip-wrapper');
               var isTrack   = document.getElementById('img-strip-track');
               if (!isCont || !isWrapper || !isTrack) return;
-              var IS_ENTER  = 9.7;   // empieza la cortina
-              var IS_CENTER = 9.96;  // cortina completa, empieza circulacion horizontal
-              var IS_END    = 14.7;  // ultima imagen vista
+              var IS_ENTER  = 9.7;
+              var IS_CENTER = 9.96;
+              var IS_END    = 14.7;
+              var slides = isTrack.children;
+              isWrapper.style.clipPath = 'none';
+              isWrapper.style.transform = 'none';
               if (localP >= IS_ENTER) {
                 isCont.style.opacity = '1';
-                isWrapper.style.transform = 'none';
                 if (localP <= IS_CENTER) {
-                  // FASE 1: cortina de izquierda a derecha (clip-path inset right 100%->0%)
+                  // FASE 1: todas las slides revelan a la vez con cortina izq->der
                   var sep = mapRange(localP, IS_ENTER, IS_CENTER, 0, 1);
                   sep = Math.max(0, Math.min(1, sep));
                   sep = sep < 0.5 ? 2*sep*sep : 1 - Math.pow(-2*sep+2,2)/2;
                   var clipR = (1 - sep) * 100;
-                  isWrapper.style.clipPath = 'inset(0 ' + clipR + '% 0 0)';
+                  for (var s = 0; s < slides.length; s++) {
+                    slides[s].style.clipPath = 'inset(0 ' + clipR + '% 0 0)';
+                  }
                   isTrack.style.transform = 'translateX(25vw)';
                 } else {
-                  // FASE 2: cortina completada, track circula a la izquierda
-                  isWrapper.style.clipPath = 'none';
+                  // FASE 2: clip-path individual por posicion en el viewport
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  var tx = 25 - (ssp * 200); // 25vw -> -175vw
+                  var tx = 25 - (ssp * 200);
                   isTrack.style.transform = 'translateX(' + tx + 'vw)';
+                  var vpW = window.innerWidth;
+                  for (var s2 = 0; s2 < slides.length; s2++) {
+                    var rect = slides[s2].getBoundingClientRect();
+                    if (rect.left >= vpW) {
+                      slides[s2].style.clipPath = 'inset(0 100% 0 0)';
+                    } else if (rect.left > 0) {
+                      var visF = Math.max(0, Math.min(1, (vpW - rect.left) / rect.width));
+                      slides[s2].style.clipPath = 'inset(0 ' + ((1 - visF) * 100) + '% 0 0)';
+                    } else {
+                      slides[s2].style.clipPath = 'none';
+                    }
+                  }
                 }
               } else {
                 isCont.style.opacity = '0';
-                isWrapper.style.clipPath = 'inset(0 100% 0 0)';
-                isWrapper.style.transform = 'none';
                 isTrack.style.transform = 'translateX(25vw)';
+                for (var s3 = 0; s3 < slides.length; s3++) {
+                  slides[s3].style.clipPath = 'inset(0 100% 0 0)';
+                }
               }
             })();
          }
