@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -9815,8 +9815,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  // calc: start=0.5cm, end=-(209vw+0.5cm) para margen 0.5cm ambos lados
-                  isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 205) + 'vw - ' + (ssp * 0.5) + 'cm))';
+                  // calc: ancho total track 300vw + 2.5cm gap. Meta final para alinear 6a imagen = -200vw - 3cm
+                  isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 200) + 'vw - ' + (ssp * 3.5) + 'cm))';
                   var vpW = window.innerWidth;
                   for (var s2 = 0; s2 < slides.length; s2++) {
                     var rect = slides[s2].getBoundingClientRect();
