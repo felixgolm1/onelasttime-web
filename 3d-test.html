@@ -9793,7 +9793,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
               var isTrack   = document.getElementById('img-strip-track');
               if (!isCont || !isWrapper || !isTrack) return;
               var IS_ENTER  = 9.7;
-              var IS_CENTER = 9.96;
+              var IS_CENTER = 10.48; // 3x mas lento (duración 0.78 localP)
               var IS_END    = 17.5;  // 6 slides: 5a imagen centrada con margen final
               var slides = isTrack.children;
               isWrapper.style.clipPath = 'none';
@@ -9809,13 +9809,13 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   for (var s = 0; s < slides.length; s++) {
                     slides[s].style.clipPath = 'inset(0 ' + clipR + '% 0 0)';
                   }
-                  isTrack.style.transform = 'translateX(25vw)';
+                  isTrack.style.transform = 'translateX(0)'; // borde izq imagen 1 = borde izq pantalla
                 } else {
                   // FASE 2: clip-path individual por posicion en el viewport
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  var tx = 25 - (ssp * 235); // 25vw -> -210vw (ajuste con gaps 0.5cm)
+                  var tx = 0 - (ssp * 210); // 0vw -> -210vw (img1 borde izq, img6 borde der)
                   isTrack.style.transform = 'translateX(' + tx + 'vw)';
                   var vpW = window.innerWidth;
                   for (var s2 = 0; s2 < slides.length; s2++) {
@@ -9832,7 +9832,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                 }
               } else {
                 isCont.style.opacity = '0';
-                isTrack.style.transform = 'translateX(25vw)';
+                isTrack.style.transform = 'translateX(0)';
                 for (var s3 = 0; s3 < slides.length; s3++) {
                   slides[s3].style.clipPath = 'inset(0 100% 0 0)';
                 }
