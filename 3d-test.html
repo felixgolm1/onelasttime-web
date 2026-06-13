@@ -9809,14 +9809,14 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   for (var s = 0; s < slides.length; s++) {
                     slides[s].style.clipPath = 'inset(0 ' + clipR + '% 0 0)';
                   }
-                  isTrack.style.transform = 'translateX(0)'; // borde izq imagen 1 = borde izq pantalla
+                  isTrack.style.transform = 'translateX(0.5cm)';
                 } else {
                   // FASE 2: clip-path individual por posicion en el viewport
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  var tx = 0 - (ssp * 210); // 0vw -> -210vw (img1 borde izq, img6 borde der)
-                  isTrack.style.transform = 'translateX(' + tx + 'vw)';
+                  // calc: start=0.5cm, end=-(209vw+0.5cm) para margen 0.5cm ambos lados
+                  isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 210) + 'vw))';
                   var vpW = window.innerWidth;
                   for (var s2 = 0; s2 < slides.length; s2++) {
                     var rect = slides[s2].getBoundingClientRect();
@@ -9832,7 +9832,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                 }
               } else {
                 isCont.style.opacity = '0';
-                isTrack.style.transform = 'translateX(0)';
+                isTrack.style.transform = 'translateX(0.5cm)';
                 for (var s3 = 0; s3 < slides.length; s3++) {
                   slides[s3].style.clipPath = 'inset(0 100% 0 0)';
                 }
