@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -9182,7 +9182,132 @@ setInterval(function() {
 <div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;">
   <div id="img-strip-wrapper" style="position:absolute;top:0;left:0;width:100%;height:100%;will-change:transform;">
     <div id="img-strip-track" style="display:flex;flex-direction:row;position:absolute;top:0;left:0;height:100%;gap:0.5cm;will-change:transform;">
-      <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/mesa sola.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
+      <style>
+  .pill-track { display: flex; flex-direction: column; gap: 20px; padding: 20px 0; width: 100%; align-items: center; }
+  .pill-track-up { animation: scroll-up 25s linear infinite; }
+  .pill-track-down { animation: scroll-down 25s linear infinite; }
+  .pill { background: rgba(20, 20, 20, 0.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #ccff00; padding: 10px 18px; border-radius: 30px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; text-transform: uppercase; white-space: nowrap; border: 1px solid rgba(204, 255, 0, 0.2); box-shadow: 0 4px 12px rgba(0,0,0,0.2); letter-spacing: 0.5px; }
+  @keyframes scroll-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+  @keyframes scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+  
+  .spark-path { fill: none; stroke: #ccff00; stroke-width: 3; stroke-dasharray: 20 100; stroke-dashoffset: 120; animation: spark-shoot 2.5s infinite linear; filter: drop-shadow(0 0 6px #ccff00); }
+  .spark-path-left { animation-delay: 0s; }
+  .spark-path-right { animation-delay: 1.25s; }
+  @keyframes spark-shoot {
+    0% { stroke-dashoffset: 120; opacity: 0; }
+    5% { opacity: 1; }
+    40% { opacity: 1; }
+    50% { stroke-dashoffset: -20; opacity: 0; }
+    100% { stroke-dashoffset: -20; opacity: 0; }
+  }
+</style>
+<div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;">
+  <div style="position:relative; width:100%; height:79vh; margin-top:0.5cm; overflow:hidden;">
+    <img src="assets/img/mesa sola.jfif" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0;">
+    
+    <!-- Columna Izquierda (Sube) -->
+    <div style="position:absolute; left: 6%; top: 0; height: 100%; width: 180px; overflow: hidden; z-index: 10; display:flex; justify-content:center;">
+       <div class="pill-track pill-track-up">
+          <div class="pill">Introvertidos</div>
+          <div class="pill">Extrovertidos</div>
+          <div class="pill">Aventureros</div>
+          <div class="pill">Caseros</div>
+          <div class="pill">Competitivos</div>
+          <div class="pill">Tímidos</div>
+          <div class="pill">Espontáneos</div>
+          <div class="pill">Románticos</div>
+          <div class="pill">Curiosos</div>
+          <div class="pill">Inseparables</div>
+          <div class="pill">Racionales</div>
+          <div class="pill">Soñadores</div>
+          <div class="pill">Apasionados</div>
+          <div class="pill">Intelectuales</div>
+          <div class="pill">Divertidos</div>
+          <div class="pill">Intensos</div>
+          <div class="pill">Relajados</div>
+          <div class="pill">Polos opuestos</div>
+          <div class="pill">Recién conocidos</div>
+          <div class="pill">Los de toda la vida</div>
+          <div class="pill">Introvertidos</div>
+          <div class="pill">Extrovertidos</div>
+          <div class="pill">Aventureros</div>
+          <div class="pill">Caseros</div>
+          <div class="pill">Competitivos</div>
+          <div class="pill">Tímidos</div>
+          <div class="pill">Espontáneos</div>
+          <div class="pill">Románticos</div>
+          <div class="pill">Curiosos</div>
+          <div class="pill">Inseparables</div>
+          <div class="pill">Racionales</div>
+          <div class="pill">Soñadores</div>
+          <div class="pill">Apasionados</div>
+          <div class="pill">Intelectuales</div>
+          <div class="pill">Divertidos</div>
+          <div class="pill">Intensos</div>
+          <div class="pill">Relajados</div>
+          <div class="pill">Polos opuestos</div>
+          <div class="pill">Recién conocidos</div>
+          <div class="pill">Los de toda la vida</div>
+
+       </div>
+    </div>
+
+    <!-- Columna Derecha (Baja) -->
+    <div style="position:absolute; right: 6%; top: 0; height: 100%; width: 180px; overflow: hidden; z-index: 10; display:flex; justify-content:center;">
+       <div class="pill-track pill-track-down">
+          <div class="pill">Introvertidos</div>
+          <div class="pill">Extrovertidos</div>
+          <div class="pill">Aventureros</div>
+          <div class="pill">Caseros</div>
+          <div class="pill">Competitivos</div>
+          <div class="pill">Tímidos</div>
+          <div class="pill">Espontáneos</div>
+          <div class="pill">Románticos</div>
+          <div class="pill">Curiosos</div>
+          <div class="pill">Inseparables</div>
+          <div class="pill">Racionales</div>
+          <div class="pill">Soñadores</div>
+          <div class="pill">Apasionados</div>
+          <div class="pill">Intelectuales</div>
+          <div class="pill">Divertidos</div>
+          <div class="pill">Intensos</div>
+          <div class="pill">Relajados</div>
+          <div class="pill">Polos opuestos</div>
+          <div class="pill">Recién conocidos</div>
+          <div class="pill">Los de toda la vida</div>
+          <div class="pill">Introvertidos</div>
+          <div class="pill">Extrovertidos</div>
+          <div class="pill">Aventureros</div>
+          <div class="pill">Caseros</div>
+          <div class="pill">Competitivos</div>
+          <div class="pill">Tímidos</div>
+          <div class="pill">Espontáneos</div>
+          <div class="pill">Románticos</div>
+          <div class="pill">Curiosos</div>
+          <div class="pill">Inseparables</div>
+          <div class="pill">Racionales</div>
+          <div class="pill">Soñadores</div>
+          <div class="pill">Apasionados</div>
+          <div class="pill">Intelectuales</div>
+          <div class="pill">Divertidos</div>
+          <div class="pill">Intensos</div>
+          <div class="pill">Relajados</div>
+          <div class="pill">Polos opuestos</div>
+          <div class="pill">Recién conocidos</div>
+          <div class="pill">Los de toda la vida</div>
+
+       </div>
+    </div>
+
+    <!-- SVG Sparks -->
+    <svg class="sparks-svg" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index: 11; pointer-events: none;" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+       <!-- Spark Izquierda (de 150 a 460) -->
+       <path d="M 150 500 L 220 470 L 300 530 L 380 480 L 460 500" class="spark-path spark-path-left" pathLength="100" />
+       <!-- Spark Derecha (de 850 a 540) -->
+       <path d="M 850 500 L 780 530 L 700 470 L 620 520 L 540 500" class="spark-path spark-path-right" pathLength="100" />
+    </svg>
+  </div>
+</div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/pareja sofa.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/paseo.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/durmiendo.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
