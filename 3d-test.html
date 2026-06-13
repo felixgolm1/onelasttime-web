@@ -3553,7 +3553,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
-    const maxProg = 37.0;  // Extendido para acomodar el bloque final completo (localP hasta 10.22)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    const maxProg = 39.5;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
     // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
     // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
@@ -9794,7 +9794,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
               if (!isCont || !isWrapper || !isTrack) return;
               var IS_ENTER  = 9.7;
               var IS_CENTER = 9.96;
-              var IS_END    = 15.9;  // 6 slides: 5 transiciones x ~1.2 unidades
+              var IS_END    = 17.5;  // 6 slides: 5a imagen centrada con margen final
               var slides = isTrack.children;
               isWrapper.style.clipPath = 'none';
               isWrapper.style.transform = 'none';
