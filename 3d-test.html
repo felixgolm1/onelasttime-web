@@ -9815,7 +9815,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
-                  var tx = 25 - (ssp * 200);
+                  var tx = 25 - (ssp * 225); // 25vw -> -200vw (borde der imagen 6 = borde der pantalla)
                   isTrack.style.transform = 'translateX(' + tx + 'vw)';
                   var vpW = window.innerWidth;
                   for (var s2 = 0; s2 < slides.length; s2++) {
