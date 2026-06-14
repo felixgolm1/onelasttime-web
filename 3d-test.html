@@ -9271,14 +9271,6 @@ setInterval(function() {
           </div>
        </div>
     </div>
-
-    <!-- SVG Sparks -->
-    <svg class="sparks-svg" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index: 11; pointer-events: none;" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-       <!-- Spark Izquierda (de 150 a 460) -->
-       <path d="M 150 500 L 220 470 L 300 530 L 380 480 L 460 500" class="spark-path spark-path-left" pathLength="100" />
-       <!-- Spark Derecha (de 850 a 540) -->
-       <path d="M 850 500 L 780 530 L 700 470 L 620 520 L 540 500" class="spark-path spark-path-right" pathLength="100" />
-    </svg>
   </div>
 </div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/pareja sofa.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
@@ -9330,13 +9322,15 @@ window.addEventListener('click', function(e) {
       if (!copyHeight) copyHeight = getHeight();
 
       if (direction === 'up') {
+        // Columna izquierda: sube
         offset += speed * delta;
         if (offset >= copyHeight) offset -= copyHeight;
         trackEl.style.transform = 'translateY(-' + offset + 'px)';
       } else {
-        offset -= speed * delta;
-        if (offset <= -copyHeight) offset += copyHeight;
-        trackEl.style.transform = 'translateY(' + offset + 'px)';
+        // Columna derecha: baja (sentido contrario)
+        offset += speed * delta;
+        if (offset >= copyHeight) offset -= copyHeight;
+        trackEl.style.transform = 'translateY(' + (offset - copyHeight) + 'px)';
       }
 
       requestAnimationFrame(step);
