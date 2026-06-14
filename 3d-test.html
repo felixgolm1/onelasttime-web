@@ -9316,9 +9316,9 @@ setInterval(function() {
           <!-- Texto estático z:20 (siempre visible sobre todo) -->
           <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;pointer-events:none;display:flex;align-items:center;">
             <div style="padding-left:50%;text-align:left;transform:translateY(-2cm);">
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);">En los malos momentos</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);">y en los buenos</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);">sigue construyendo</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);" id="slide3-copy-1">En los malos momentos</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);" id="slide3-copy-2">y en los buenos</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);" id="slide3-copy-3">sigue construyendo</p>
             </div>
           </div>
         </div>
@@ -10061,6 +10061,12 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                         var _ease3 = _pf3 * _pf3 * (3 - 2 * _pf3);
                         var _r3 = (rect.left > _irisFullStart) ? _rEntry : (60 + _ease3 * (_maxR3 - 60));
                         _s3.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
+                        // Parallax alternado en el texto del slide3
+                        var _allP3 = (rect.left > _irisFullStart) ? (_entryP * 0.5) : (0.5 + _pf3 * 0.5);
+                        var _off3 = (_allP3 * 3).toFixed(2);
+                        var _c1 = document.getElementById('slide3-copy-1'); if (_c1) _c1.style.transform = 'translateX(-' + _off3 + 'vw)';
+                        var _c2 = document.getElementById('slide3-copy-2'); if (_c2) _c2.style.transform = 'translateX(' + _off3 + 'vw)';
+                        var _c3 = document.getElementById('slide3-copy-3'); if (_c3) _c3.style.transform = 'translateX(-' + _off3 + 'vw)';
 
                       }
                     }
