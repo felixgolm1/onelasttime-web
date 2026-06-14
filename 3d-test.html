@@ -9307,28 +9307,18 @@ setInterval(function() {
       </div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;">
         <div style="position:relative;width:100%;height:79vh;margin-top:0.5cm;overflow:hidden;background:#000;">
-          <!-- Imagen fantasma z:1 (siempre visible, full slide) -->
+          <!-- Imagen fantasma z:1 -->
           <img src="assets/img/paseo.jfif" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1;">
-          <!-- Overlay negro 50% z:2 (atenúa la imagen fantasma) -->
+          <!-- Overlay negro 90% z:2 -->
           <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:2;"></div>
-          <!-- Texto oscuro z:5 -->
-          <div id="slide3-text-dark" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;display:flex;align-items:center;">
-            <div style="padding-left:50%;text-align:left;transform:translateY(-2cm);">
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">Para</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">Romper la monoton&iacute;a</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">Superar una crisis</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">Y romper el silencio</p>
-            </div>
-          </div>
-          <!-- Imagen iris z:10 (revela imagen a 100% dentro del círculo) -->
+          <!-- Imagen iris z:10 -->
           <img id="slide3-iris-img" src="assets/img/paseo.jfif" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:10;will-change:clip-path;clip-path:circle(0px at 45% 64%);">
-          <!-- Texto luz z:15 (mismo clip que iris) -->
-          <div id="slide3-text-light" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:15;pointer-events:none;display:flex;align-items:center;clip-path:circle(0px at 45% 64%);">
+          <!-- Texto estático z:20 (siempre visible sobre todo) -->
+          <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;pointer-events:none;display:flex;align-items:center;">
             <div style="padding-left:50%;text-align:left;transform:translateY(-2cm);">
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.6);">O para</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.6);">La intensidad del inicio</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.6);">Conocerse non-stop</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.6);">Y seguir construyendo</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);">En los malos momentos</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);">y en los buenos</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);">sigue construyendo</p>
             </div>
           </div>
         </div>
@@ -10071,7 +10061,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                         var _ease3 = _pf3 * _pf3 * (3 - 2 * _pf3);
                         var _r3 = (rect.left > _irisFullStart) ? _rEntry : (60 + _ease3 * (_maxR3 - 60));
                         _s3.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
-                        var _s3TL = document.getElementById('slide3-text-light'); if (_s3TL) _s3TL.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
+
                       }
                     }
                   }
