@@ -10082,10 +10082,16 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                     if (s2 === 4) {
                       var _ifsS4 = vpW - rect.width;
                       var _pfS4 = Math.max(0, Math.min(1, (_ifsS4 - rect.left) / (_ifsS4 + rect.width)));
-                      var _oSpan = document.getElementById('slide4-o');
-                      if (_oSpan) {
+                      var _nochePara = document.getElementById('slide4-noche');
+                      if (_nochePara) {
                         var _oCount = Math.min(14, Math.floor(_pfS4 * 15) + 1);
-                        _oSpan.textContent = 'o'.repeat(_oCount);
+                        var _oStr = 'o'.repeat(_oCount);
+                        // Cuando las o's crecen suficiente, 'che' cae a la linea de abajo
+                        if (_oCount >= 7) {
+                          _nochePara.innerHTML = 'o para toda la n' + _oStr + '<br>che';
+                        } else {
+                          _nochePara.innerHTML = 'o para toda la n' + _oStr + 'che';
+                        }
                       }
                     }
                   }
