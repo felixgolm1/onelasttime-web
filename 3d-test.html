@@ -9305,7 +9305,24 @@ setInterval(function() {
           </div>
         </div>
       </div>
-      <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><div style="position:relative;width:100%;height:79vh;margin-top:0.5cm;overflow:hidden;background:#000;"><img id="slide3-iris-img" src="assets/img/paseo.jfif" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0;will-change:clip-path;"></div></div>
+      <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;">
+        <div style="position:relative;width:100%;height:79vh;margin-top:0.5cm;overflow:hidden;background:#000;">
+          <!-- Texto oscuro: visible sobre negro, debajo de la imagen -->
+          <div id="slide3-text-dark" style="position:absolute;z-index:5;left:8%;top:50%;transform:translateY(-50%);pointer-events:none;">
+            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.35;color:#ffffff;margin:0 0 0.7em 0;text-transform:uppercase;letter-spacing:-0.02em;">Romper la monoton&iacute;a</p>
+            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.35;color:#ffffff;margin:0 0 0.7em 0;text-transform:uppercase;letter-spacing:-0.02em;">Superar una crisis</p>
+            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.35;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">Romper el silencio</p>
+          </div>
+          <!-- Imagen con iris clip-path (z:10) -->
+          <img id="slide3-iris-img" src="assets/img/paseo.jfif" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;border-radius:0;will-change:clip-path;z-index:10;">
+          <!-- Texto luz: mismo iris clip-path que la imagen, visible solo en lo iluminado -->
+          <div id="slide3-text-light" style="position:absolute;z-index:15;left:8%;top:50%;transform:translateY(-50%);pointer-events:none;">
+            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.35;color:#ffffff;margin:0 0 0.7em 0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.55);">Para los inicios</p>
+            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.35;color:#ffffff;margin:0 0 0.7em 0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.55);">Seguir conoci&eacute;ndoos</p>
+            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.35;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.55);">Seguir construyendo</p>
+          </div>
+        </div>
+      </div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/durmiendo.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/mesa parada.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;"><img src="assets/img/cartas viejas.jfif" style="width:100%;height:79vh;object-fit:cover;display:block;border-radius:0;margin-top:0.5cm;"></div>
@@ -10038,6 +10055,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                         var _maxR3 = rect.width * 1.4;
                         var _r3 = 60 + Math.sqrt(_pf3) * (_maxR3 - 60);
                         _s3.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
+                        var _s3TL = document.getElementById('slide3-text-light'); if (_s3TL) _s3TL.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
                       }
                     }
                   }
