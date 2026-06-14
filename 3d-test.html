@@ -10061,9 +10061,15 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                       var _s3 = document.getElementById('slide3-iris-img');
                       if (_s3) {
                         var _irisFullStart = vpW - rect.width;
-                        var _pf3 = Math.max(0, Math.min(1, (_irisFullStart - rect.left) / (_irisFullStart + rect.width)));
                         var _maxR3 = rect.width * 1.4;
-                        var _ease3 = _pf3 * _pf3 * (3 - 2 * _pf3); var _r3 = 60 + _ease3 * (_maxR3 - 60);
+                        // Fase entrada: iris 5px -> 60px mientras el slide entra (clip reveal)
+                        var _entryP = Math.max(0, Math.min(1, (vpW - rect.left) / rect.width));
+                        var _entryEase = _entryP * _entryP * (3 - 2 * _entryP);
+                        var _rEntry = 5 + _entryEase * 55;
+                        // Fase pan: iris 60px -> maxR mientras el slide se desplaza
+                        var _pf3 = Math.max(0, Math.min(1, (_irisFullStart - rect.left) / (_irisFullStart + rect.width)));
+                        var _ease3 = _pf3 * _pf3 * (3 - 2 * _pf3);
+                        var _r3 = (rect.left > _irisFullStart) ? _rEntry : (60 + _ease3 * (_maxR3 - 60));
                         _s3.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
                         var _s3TL = document.getElementById('slide3-text-light'); if (_s3TL) _s3TL.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
                       }
