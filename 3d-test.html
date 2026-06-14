@@ -10010,8 +10010,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   // calc: ancho total track 300vw + 2.5cm gap. Meta final para alinear 6a imagen = -200vw - 3cm
                   isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 200) + 'vw - ' + (ssp * 3.5) + 'cm))';
                   // Parallax: textos se mueven al 85% de la velocidad del track (15% de contrarretraso)
-                  var _pxVw = (ssp * 200 * 0.15).toFixed(2);
-                  var _pxCm = (ssp * 3.5  * 0.15).toFixed(3);
+                  var _pxVw = (ssp * 200 * 0.075).toFixed(2);
+                  var _pxCm = (ssp * 3.5  * 0.075).toFixed(3);
                   var _ptx  = 'translateX(calc(-50% + 0.55cm + ' + _pxVw + 'vw + ' + _pxCm + 'cm))';
                   var _ptTop = document.getElementById('parallax-text-top');
                   var _ptBot = document.getElementById('parallax-text-bot');
