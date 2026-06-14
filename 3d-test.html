@@ -9207,7 +9207,7 @@ setInterval(function() {
     <img src="assets/img/mesa sola.jfif" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0;">
     
     <!-- Titulo superior: "Seáis como seáis" -->
-    <div style="
+    <div id="parallax-text-top" style="
       position: absolute;
       top: calc(28px + 0.2cm);
       left: 50%;
@@ -9230,7 +9230,7 @@ setInterval(function() {
     </div>
 
     <!-- Subtitulo inferior: "Sin filtros" -->
-    <div style="
+    <div id="parallax-text-bot" style="
       position: absolute;
       top: 62%;
       left: 50%;
@@ -9996,6 +9996,12 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                     slides[s].style.clipPath = 'inset(0 ' + clipR + '% 0 0)';
                   }
                   isTrack.style.transform = 'translateX(0.5cm)';
+                  // En fase de entrada, resetear parallax a base
+                  var _ptTopF1 = document.getElementById('parallax-text-top');
+                  var _ptBotF1 = document.getElementById('parallax-text-bot');
+                  var _ptxBase = 'translateX(calc(-50% + 0.55cm))';
+                  if (_ptTopF1) _ptTopF1.style.transform = _ptxBase;
+                  if (_ptBotF1) _ptBotF1.style.transform = _ptxBase;
                 } else {
                   // FASE 2: clip-path individual por posicion en el viewport
                   var ssp = mapRange(localP, IS_CENTER, IS_END, 0, 1);
@@ -10003,6 +10009,14 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
                   // calc: ancho total track 300vw + 2.5cm gap. Meta final para alinear 6a imagen = -200vw - 3cm
                   isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 200) + 'vw - ' + (ssp * 3.5) + 'cm))';
+                  // Parallax: textos se mueven al 85% de la velocidad del track (15% de contrarretraso)
+                  var _pxVw = (ssp * 200 * 0.15).toFixed(2);
+                  var _pxCm = (ssp * 3.5  * 0.15).toFixed(3);
+                  var _ptx  = 'translateX(calc(-50% + 0.55cm + ' + _pxVw + 'vw + ' + _pxCm + 'cm))';
+                  var _ptTop = document.getElementById('parallax-text-top');
+                  var _ptBot = document.getElementById('parallax-text-bot');
+                  if (_ptTop) _ptTop.style.transform = _ptx;
+                  if (_ptBot) _ptBot.style.transform = _ptx;
                   var vpW = window.innerWidth;
                   for (var s2 = 0; s2 < slides.length; s2++) {
                     var rect = slides[s2].getBoundingClientRect();
