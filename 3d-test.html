@@ -9306,8 +9306,12 @@ setInterval(function() {
         </div>
       </div>
       <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;">
-        <div style="position:relative;width:100%;height:79vh;margin-top:0.5cm;overflow:hidden;background:rgba(0,0,0,0.5);">
-          <!-- Capa 1 (z:5): frases negativas — full size, visibles en el negro, tapadas por la imagen dentro del iris -->
+        <div style="position:relative;width:100%;height:79vh;margin-top:0.5cm;overflow:hidden;background:#000;">
+          <!-- Imagen fantasma z:1 (siempre visible, full slide) -->
+          <img src="assets/img/paseo.jfif" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1;">
+          <!-- Overlay negro 50% z:2 (atenúa la imagen fantasma) -->
+          <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:2;"></div>
+          <!-- Texto oscuro z:5 -->
           <div id="slide3-text-dark" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;display:flex;align-items:center;">
             <div style="padding-left:50%;text-align:left;transform:translateY(-2cm);">
               <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">Romper la monoton&iacute;a</p>
@@ -9315,14 +9319,14 @@ setInterval(function() {
               <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">Romper el silencio</p>
             </div>
           </div>
-          <!-- Capa 2 (z:10): imagen con iris clip-path — tapa las frases negativas dentro del circulo -->
+          <!-- Imagen iris z:10 (revela imagen a 100% dentro del círculo) -->
           <img id="slide3-iris-img" src="assets/img/paseo.jfif" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:10;will-change:clip-path;clip-path:circle(0px at 45% 64%);">
-          <!-- Capa 3 (z:15): frases positivas — full size, mismo clip-path que la imagen, visibles solo dentro del iris -->
+          <!-- Texto luz z:15 (mismo clip que iris) -->
           <div id="slide3-text-light" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:15;pointer-events:none;display:flex;align-items:center;clip-path:circle(0px at 45% 64%);">
             <div style="padding-left:50%;text-align:left;transform:translateY(-2cm);">
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em; text-shadow:0 2px 18px rgba(0,0,0,0.6);">Para los inicios</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em; text-shadow:0 2px 18px rgba(0,0,0,0.6);">Seguir conoci&eacute;ndoos</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em; text-shadow:0 2px 18px rgba(0,0,0,0.6);">Seguir construyendo</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.6);">Para los inicios</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.6);">Seguir conoci&eacute;ndoos</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.6);">Seguir construyendo</p>
             </div>
           </div>
         </div>
