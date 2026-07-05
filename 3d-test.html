@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -3553,7 +3553,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
-    const maxProg = 39.5;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    const maxProg = 43.0;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
     // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
     // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
@@ -9357,11 +9357,11 @@ setInterval(function() {
 </div>
 
 <!-- OLT Logo Reveal: sube desde abajo cuando img-strip sale por arriba -->
-<div id="olt-logo-reveal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10000001;pointer-events:none;display:flex;align-items:center;justify-content:center;">
+<div id="olt-logo-reveal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10000001;pointer-events:none;">
   <img id="olt-logo-img-big"
        src="assets/img/logo one last time verde.png"
        alt="One Last Time"
-       style="width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;">
+       style="position:absolute;top:10vh;left:0;right:0;margin:0 auto;width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;">
 </div>
 
 <script>
@@ -10116,7 +10116,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   }
                 }
                   // ── EXIT PHASE: img-strip sube por arriba, logo OLT sube desde abajo ──
-                  var IS_EXIT_END = 19.0;
+                  var IS_EXIT_END = 20.0;
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
                   isCont.style.transform = 'translateY(' + (-_exitEA * 100).toFixed(2) + 'vh)';
