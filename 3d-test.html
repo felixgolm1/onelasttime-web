@@ -9357,11 +9357,14 @@ setInterval(function() {
 </div>
 
 <!-- OLT Logo Reveal: sube desde abajo cuando img-strip sale por arriba -->
-<div id="olt-logo-reveal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10000001;pointer-events:none;">
+<div id="olt-logo-reveal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10000001;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;">
   <img id="olt-logo-img-big"
        src="assets/img/logo one last time verde.png"
        alt="One Last Time"
-       style="position:absolute;top:10vh;left:0;right:0;margin:0 auto;width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;">
+       style="width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;">
+  <a href="#" id="olt-final-cta" class="btn btn-blue btn-full" style="margin-top:4rem; opacity:0; pointer-events:auto; text-decoration:none; padding: 1.2rem 2rem !important; height: auto; width:70vw; max-width:900px; display:flex; align-items:center; justify-content:center; box-sizing:border-box;">
+    <span style="font-family:'Inter', sans-serif; font-size:1.2rem; font-weight:800; letter-spacing:1px; color:#000;">RESERVAR MI CENA TRANSFORMADORA AHORA</span>
+  </a>
 </div>
 
 <script>
@@ -9784,7 +9787,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
     if (oryzoSec && oryzoTxtL && oryzoTxtR && oryzoDeck) {
       // 1. Translación fluida de la sección (hasta el centro de la pantalla)
       var tSlide = clamp01((p - 21.7) / 1.6); // Termina en 23.3, justo cuando empieza a abrirse
-      var slideY = (1 - ease(tSlide)) * 130; // Nunca baja de 0 para no romper el fondo
+      var tExitBox = Math.max(0, (p - 38.6) / 2.0); // Baja progresivamente
+      var slideY = (1 - ease(tSlide)) * 130 + (tExitBox * 150);
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
 
@@ -10121,9 +10125,20 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                   var IS_EXIT_END = 20.0;
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
-                  isCont.style.transform = 'translateY(' + (-_exitEA * 100).toFixed(2) + 'vh)';
+                  
+                  // El carrusel sigue subiendo sin limite
+                  var _carUpP = Math.max(0, (localP - IS_END) / (IS_EXIT_END - IS_END));
+                  isCont.style.transform = 'translateY(' + (-_carUpP * 100).toFixed(2) + 'vh)';
+                  
                   var _oltLogo = document.getElementById('olt-logo-img-big');
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                  
+                  var _oltCta = document.getElementById('olt-final-cta');
+                  if (_oltCta) {
+                    var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.7) / 0.3));
+                    _oltCta.style.opacity = _ctaP.toFixed(2);
+                    _oltCta.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                  }
               } else {
                 isCont.style.opacity = '0';
                 isTrack.style.transform = 'translateX(0.5cm)';
