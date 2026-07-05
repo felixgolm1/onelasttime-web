@@ -9820,8 +9820,8 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
          
          // tOpen: animacion de apertura SEPARADA de la subida — arranca cuando la caja ya es visible
          var tOpen = clamp01((p - 23.3) / 0.3); // 23.3 a 23.6
-         // tClose: cierra la caja a la misma velocidad cuando arranca la subida del carrusel (localP = 17.5 -> p = 38.6)
-         var tClose = clamp01((p - 38.6) / 0.3);
+         // tClose: cierra la caja a la misma velocidad en p = 30.78
+         var tClose = clamp01((p - 30.78) / 0.3);
          let eOpen = ease(tOpen) * (1 - ease(tClose));
          if(deckClone) {
            let df1 = deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
