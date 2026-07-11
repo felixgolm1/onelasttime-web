@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -2303,6 +2303,32 @@ window.onerror = function(msg, url, line, col, err) {
       box-shadow: 0 20px 40px rgba(0,0,0,0.4);
       filter: grayscale(20%); /* Toque cinemático */
       transform-origin: right center;
+    }
+
+    /* Justificar a la izquierda la reseña 2 y 4 para dar variedad visual */
+    #end-review-panel-2 .review-right-col,
+    #end-review-panel-4 .review-right-col {
+      align-self: flex-start !important;
+      align-items: flex-start !important;
+      text-align: left !important;
+    }
+    #end-review-panel-2 .osr-top-line,
+    #end-review-panel-4 .osr-top-line,
+    #end-review-panel-2 .osr-stars-small,
+    #end-review-panel-4 .osr-stars-small,
+    #end-review-panel-2 .review-img-col,
+    #end-review-panel-4 .review-img-col {
+      justify-content: flex-start !important;
+    }
+    #end-review-panel-2 .review-quote,
+    #end-review-panel-4 .review-quote,
+    #end-review-panel-2 .review-author,
+    #end-review-panel-4 .review-author {
+      text-align: left !important;
+    }
+    #end-review-panel-2 .review-img-col img,
+    #end-review-panel-4 .review-img-col img {
+      transform-origin: left center;
     }
 
     @media (max-width: 768px) {
