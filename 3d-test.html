@@ -7591,6 +7591,14 @@ window.onerror = function(msg, url, line, col, err) {
       backMesh.material.needsUpdate  = true;
     };
 
+    // Exponemos una versión especial para el Matrix que sí fuerza el update del texto
+    window._applyDesignWithMatrix = function(t1, t2) {
+      const oldTex = frontMesh.material.map;
+      frontMesh.material.map = makeCardFrontTex(t1, t2);
+      if (oldTex) oldTex.dispose();
+      frontMesh.material.needsUpdate = true;
+    };
+
     // Llamar síncronamente (fuentes del sistema como fallback)
     // y de nuevo cuando Poppins/Bebas Neue estén listas
     applyDesign();
