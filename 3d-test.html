@@ -10163,6 +10163,8 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   var _oltText = document.getElementById('olt-final-text');
                   if (_oltText) {
                     var _txtP = Math.max(0, Math.min(1, (_exitP - 0.4) / 0.6));
+                    _oltText.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                    
                     if (_finalP >= 0.95) {
                       _oltText.style.opacity = '0';
                     } else {
