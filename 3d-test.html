@@ -9369,7 +9369,7 @@ setInterval(function() {
     <p style="margin-bottom: 1.5rem;">Y aunque esperamos que este día quede lejos, no hay duda de que nunca volveremos a vivir cada preciso instante de nuevo.</p>
     <p style="margin-bottom: 0;">Así que amemos a las personas que nos importan ahora, nunca sabremos cuando será la última oportunidad para hacerlo.</p>
   </div>
-  <a href="#" id="olt-final-cta" class="btn btn-blue btn-full" style="margin-top:3rem; opacity:0; pointer-events:auto; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
+  <a href="#" id="olt-final-cta" class="btn btn-blue btn-full" style="margin-top:3rem; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
     <div class="mini-marquee-container" style="animation-duration: 50s;">
       <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
       <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
@@ -10165,6 +10165,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   if (_oltCta) {
                     var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.7) / 0.3));
                     _oltCta.style.opacity = _ctaP.toFixed(2);
+                    _oltCta.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
                     _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
                   }
                   var _oltText = document.getElementById('olt-final-text');
@@ -10210,6 +10211,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   if (_oltCtaR) {
                       _oltCtaR.style.transform = 'translateY(100vh)';
                       _oltCtaR.style.opacity = '0';
+                      _oltCtaR.style.pointerEvents = 'none';
                   }
                   // Restaurar el scroll indicator al salir de la fase final
                   var _scrollIndR = document.querySelector('.scroll-indicator');
@@ -10384,7 +10386,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
 <div id="envej-panel" style="
   position: fixed;
   z-index: 10052;
-  pointer-events: auto;
+  pointer-events: none;
   opacity: 0;
   background: rgba(4,4,4,0.97);
   border-radius: 0 0 4px 4px;
