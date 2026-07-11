@@ -3784,7 +3784,7 @@ window.onerror = function(msg, url, line, col, err) {
           if (v.duration) v.currentTime = pct * v.duration;
           // Actualizar contador cita (1 - 10.000)
           var citaEl = document.getElementById('envej-cita-num');
-          if (citaEl) { var n = Math.round(1 + pct * 9999); citaEl.innerHTML = n >= 10000 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
+          if (citaEl) { var n = Math.round(1 + pct * 9499); citaEl.innerHTML = n.toLocaleString('es-ES'); }
         };
         // Sincronizar miniatura con el video principal al hacer seek
         var _thumbVid = document.getElementById('envej-thumb-vid');
@@ -3854,9 +3854,10 @@ window.onerror = function(msg, url, line, col, err) {
               if (_li[3]) window._envejVideoRef = _li[3].querySelector('video.envej-thumb-vid');
             }
           }
+          var maxR = 9499/9999;
           var v = window._envejVideoRef;
           if (v && v.duration) { 
-              v.currentTime = pct * v.duration; 
+              v.currentTime = pct * (v.duration * maxR); 
               var p = v.play();
               if (p && p.catch) { p.then(() => v.pause()).catch(() => {}); } else { v.pause(); }
           }
@@ -3869,7 +3870,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
           var sv = window._envejSmallVid;
           if (sv && sv.duration) { 
-              sv.currentTime = pct * sv.duration; 
+              sv.currentTime = pct * (sv.duration * maxR); 
               var sp = sv.play();
               if (sp && sp.catch) { sp.then(() => sv.pause()).catch(() => {}); } else { sv.pause(); }
           }
@@ -3882,7 +3883,7 @@ window.onerror = function(msg, url, line, col, err) {
           if (w) w.style.clipPath = 'inset(0 ' + (100 - (pct*100)) + '% 0 0)';
           
           window.updateEnvejCopy(pct);
-          if (c) { var n = Math.round(1 + pct * 9999); c.innerHTML = n >= 10000 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
+          if (c) { var n = Math.round(1 + pct * 9499); c.innerHTML = n.toLocaleString('es-ES'); }
         };
 
       }
@@ -5940,8 +5941,10 @@ window.onerror = function(msg, url, line, col, err) {
             }
             // Actualizar controles del player
             if (envejVideo) {
-              const vDur = envejVideo.duration || 0;
-              const vCur = envejVideo.currentTime || 0;
+              const maxR = 9499/9999;
+              const vDur = (envejVideo.duration || 0) * maxR;
+              let vCur = envejVideo.currentTime || 0;
+              if (vCur > vDur) vCur = vDur;
               const pct  = vDur > 0 ? (vCur / vDur * 100) : 0;
               const fillEl  = document.getElementById('envej-bar-fill');
               const thumbEl = document.getElementById('envej-bar-thumb');
@@ -5951,7 +5954,7 @@ window.onerror = function(msg, url, line, col, err) {
               if (thumbEl) thumbEl.style.left  = pct + '%';
               if (waveEl)  waveEl.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
               if (window.updateEnvejCopy) window.updateEnvejCopy(pct / 100);
-              if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; var n = Math.round(1+p2*9999); citaEl2.innerHTML = n >= 10000 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
+              if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; var n = Math.round(1+p2*9499); citaEl2.innerHTML = n.toLocaleString('es-ES'); }
             }
           }
 
@@ -10488,7 +10491,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
 ">
     <!-- Titulo verde superior -->
   <div style="text-align:center; margin-bottom: 14px;">
-    <span style="color:#a3cc00; font-family:'Inter','Helvetica Neue',sans-serif; font-size:12.5px; font-weight:400; line-height:1.6; letter-spacing:0.05em; text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:3px;">Desde la cita 1 hasta la <span style="font-size:26px; line-height:0; margin-top:-2px;">&infin;</span></span>
+    <span style="color:#a3cc00; font-family:'Inter','Helvetica Neue',sans-serif; font-size:12.5px; font-weight:400; line-height:1.6; letter-spacing:0.05em; text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:3px;">Desde la cita 1 hasta la 9.500</span>
   </div>
   <!-- Barra scrubber: input[range] nativo (con contador flotante) -->
   <div style="position:relative; height:28px; display:flex; align-items:center; margin-top:6px;">
