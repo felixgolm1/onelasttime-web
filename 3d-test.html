@@ -9442,6 +9442,7 @@ window.addEventListener('click', function(e) {
 </script></body>
 <script>
 document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
+document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
 </script>
 <script>
 // ── CONTROLADOR SECCIÓN NEUROCIENCIA — wipe Oryzo scroll-driven ──
@@ -10135,27 +10136,48 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
                 }
                   // ── EXIT PHASE: img-strip sube por arriba, logo OLT sube desde abajo ──
                   var IS_EXIT_END = 20.0;
+                  var IS_FINAL_END = 22.0;
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
+                  var _finalP = Math.max(0, Math.min(1, (localP - IS_EXIT_END) / (IS_FINAL_END - IS_EXIT_END)));
                   
                   // El carrusel sigue subiendo sin limite
                   var _carUpP = Math.max(0, (localP - IS_END) / (IS_EXIT_END - IS_END));
                   isCont.style.transform = 'translateY(' + (-_carUpP * 100).toFixed(2) + 'vh)';
                   
+                  var _logoBaseY = ((1 - _exitEA) * 100);
+                  var _logoY = _logoBaseY + (_finalP * 15);
+                  
                   var _oltLogo = document.getElementById('olt-logo-img-big');
-                  if (_oltLogo) _oltLogo.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                  if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
+                  
+                  var _ctaBaseY = ((1 - _exitEA) * 100);
+                  var _ctaY = _ctaBaseY - (_finalP * 15);
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
                     var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.7) / 0.3));
                     _oltCta.style.opacity = _ctaP.toFixed(2);
-                    _oltCta.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                    _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
                   }
                   var _oltText = document.getElementById('olt-final-text');
                   if (_oltText) {
                     var _txtP = Math.max(0, Math.min(1, (_exitP - 0.4) / 0.6));
                     _oltText.style.opacity = _txtP.toFixed(2);
                     _oltText.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                    
+                    var chars = _oltText.querySelectorAll('.char');
+                    if (chars.length > 0) {
+                      var total = chars.length;
+                      var eraseCount = Math.floor(_finalP * (total / 2));
+                      for (var k = 0; k < total; k++) {
+                        if (k < eraseCount || k >= total - eraseCount) {
+                          chars[k].style.opacity = '0';
+                        } else {
+                          chars[k].style.opacity = '1';
+                        }
+                      }
+                    }
                   }
               } else {
                 isCont.style.opacity = '0';
