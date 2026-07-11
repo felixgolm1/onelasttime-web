@@ -2142,7 +2142,7 @@ window.onerror = function(msg, url, line, col, err) {
   <div id="visible-input-overlay" style="position: fixed; inset: 0; pointer-events: none; z-index: 10050; display: flex; align-items: center; justify-content: center;">
     <div id="visible-input-group" style="width: 380px; height: 234px; pointer-events: none; transform-style: preserve-3d; opacity: 0;">
       <!-- scaleX(-1) deshace el espejo cuando rotationY llega a -180 o -540 -->
-      <div style="position: absolute; inset: 0; transform: scaleX(-1); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto;">
+      <div style="position: absolute; inset: 0; transform: scaleX(-1); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
         <div style="display: flex; align-items: center; justify-content: center;">
           <!-- Texto Hola transparente para ocupar el mismo espacio que en WebGL y empujar el input a la derecha -->
           <span style="font-family:'Poppins',sans-serif; font-weight:600; font-size:32px; color:transparent; pointer-events:none; user-select:none; -webkit-user-select:none;">Hola</span>
