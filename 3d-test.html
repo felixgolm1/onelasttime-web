@@ -1512,6 +1512,15 @@ window.onerror = function(msg, url, line, col, err) {
     #envej-range:active {
       cursor: grabbing !important;
     }
+    /* Efecto Fantasma (Teaser) */
+    @keyframes ghost-slide {
+      0%   { transform: translate(-50%, -50%); }
+      40%  { transform: translate(calc(-50% + 24px), -50%); }
+      100% { transform: translate(-50%, -50%); }
+    }
+    #envej-bar-thumb.ghost-anim:not(.has-interacted) {
+      animation: ghost-slide 1.5s ease-in-out 0.2s; /* 0.2s delay para que lo vea tras hacer snap */
+    }
   </style>
 </head>
 
@@ -5905,6 +5914,21 @@ window.onerror = function(msg, url, line, col, err) {
             const envejD = videoSlideIndex - currIndex;
             const slideX2 = envejD * 466;
             envejPanel.style.transform = `translateX(${slideX2}px)`;
+
+            // Efecto Fantasma (Teaser)
+            if (Math.abs(envejD) < 0.3) {
+              if (!envejPanel.dataset.ghostDone) {
+                envejPanel.dataset.ghostDone = 'true';
+                const thumb = document.getElementById('envej-bar-thumb');
+                if (thumb && !thumb.classList.contains('has-interacted')) {
+                  thumb.classList.add('ghost-anim');
+                }
+              }
+            } else if (Math.abs(envejD) > 0.8) {
+              envejPanel.dataset.ghostDone = '';
+              const thumb = document.getElementById('envej-bar-thumb');
+              if (thumb) thumb.classList.remove('ghost-anim');
+            }
 
             // Video siempre en pausa
             if (envejVideo && !envejVideo.paused) envejVideo.pause();
@@ -10470,7 +10494,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
   <div style="position:relative; height:28px; display:flex; align-items:center; margin-top:6px;">
     <div style="position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%); background:rgba(255,255,255,0.15); border-radius:2px; pointer-events:none;"></div>
     
-    <input id="envej-range" type="range" min="0" max="9999" value="0" step="1" oninput="window.envejSeekByRange(this.value);" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:grab; margin:0; padding:0; z-index:10;">
+    <input id="envej-range" type="range" min="0" max="9999" value="0" step="1" oninput="window.envejSeekByRange(this.value); document.getElementById('envej-bar-thumb').classList.add('has-interacted');" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:grab; margin:0; padding:0; z-index:10;">
     <div id="envej-bar-fill" style="position:absolute; left:0; top:50%; height:2px; transform:translateY(-50%); background:#ccff00; width:0%; border-radius:2px; pointer-events:none; transition: width 0.1s linear;"></div>
     <div id="envej-bar-thumb" style="position:absolute; top:50%; transform:translate(-50%,-50%); width:32px; height:18px; border-radius:9px; background:#ccff00; left:0%; pointer-events:none; box-shadow:0 0 8px rgba(204,255,0,0.4); display:flex; align-items:center; justify-content:space-between; padding:0 5px; box-sizing:border-box; transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;">
       <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-top:1px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
