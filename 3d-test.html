@@ -1339,6 +1339,9 @@ window.onerror = function(msg, url, line, col, err) {
       pointer-events: auto !important;
       transition: transform 2.4s cubic-bezier(0.15, 1, 0.3, 1);
     }
+    .card-peeking .card-face {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 0 0 1.5px rgba(255,255,255,0.8) !important;
+    }
 
     .card-on-table {
       position: absolute !important;  /* dentro de #card-table (position:fixed) */
