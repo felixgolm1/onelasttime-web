@@ -2384,12 +2384,16 @@ window.onerror = function(msg, url, line, col, err) {
             if (node.nodeType === Node.TEXT_NODE) {
                 const chars = node.textContent.split('');
                 chars.forEach(c => {
-                    const span = document.createElement('span');
-                    span.className = 'char';
-                    if (isHighlight) span.classList.add('review-highlight');
-                    span.textContent = c;
-                    span.style.opacity = '0.15';
-                    parentEl.appendChild(span);
+                    if (c === ' ') {
+                        parentEl.appendChild(document.createTextNode(' '));
+                    } else {
+                        const span = document.createElement('span');
+                        span.className = 'char';
+                        if (isHighlight) span.classList.add('review-highlight');
+                        span.textContent = c;
+                        span.style.opacity = '0.15';
+                        parentEl.appendChild(span);
+                    }
                 });
             } else if (node.nodeType === Node.ELEMENT_NODE) {
                 const newEl = document.createElement(node.tagName);
