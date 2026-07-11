@@ -7778,52 +7778,48 @@ window.onerror = function(msg, url, line, col, err) {
         }
         introMatrix.innerHTML = initHtml;
 
-        const totalDuration = 1200; // 1.2s para el texto
         const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
-        let startTime = Date.now();
+        let iteration = 0;
         console.log("Matrix effect initialized for intro text.");
         
-        // Empezar el matrix un poco después de que inicie el fade de la carta
+        // Empezar el matrix justo al terminar gran parte del fade de la carta (400ms)
         setTimeout(() => {
-          startTime = Date.now();
-          console.log("Matrix effect setInterval starting now!");
+          console.log("Matrix effect wave starting now!");
           const timer = setInterval(() => {
-            const elapsed = Date.now() - startTime;
-            let p = Math.min(1, Math.max(0, elapsed / totalDuration));
-            
             let html = '';
             for (let i = 0; i < finalStr.length; i++) {
-              const charP = i / finalStr.length;
               if (finalStr[i] === ' ') {
                 html += ' ';
-              } else if (p >= charP + 0.15) {
-                // Ya resuelto: color blanco suave
+              } else if (i < Math.floor(iteration)) {
+                // Letra fijada (blanco suave)
                 html += `<span style="color:rgba(255,255,255,0.85)">${finalStr[i]}</span>`;
-              } else if (p > charP) {
-                // En proceso de descifrado: verde matrix
+              } else if (i < Math.floor(iteration) + 6) {
+                // Ola de descifrado (verde matrix)
                 const r = Math.floor(Math.random() * glyphs.length);
                 html += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
               } else {
-                // Aún no alcanzado: invisible pero ocupa su espacio real
+                // Aún no alcanzado (invisible pero ocupa espacio exacto)
                 html += `<span style="opacity:0">${finalStr[i]}</span>`;
               }
             }
             introMatrix.innerHTML = html;
             
-            if (p >= 1) {
+            iteration += 1.2; // Avanza 1.2 caracteres por tick (aprox 43 ticks para 52 chars = 860ms)
+            
+            if (iteration >= finalStr.length + 6) {
               clearInterval(timer);
               introMatrix.innerHTML = finalStr;
               console.log("Matrix effect finished.");
             }
-          }, 30);
-        }, 200);
+          }, 20); // 20ms por tick
+        }, 300); // Dar 300ms de margen para que la carta se vea antes de empezar a escribir
       }
 
-      // 3. Transición a escena 3D a los 1.6s
+      // 3. Transición a escena 3D a los 1.8s
       setTimeout(() => {
         animReady = true;
         if (pendingGltf) buildScene(pendingGltf);
-      }, 1600);
+      }, 1800);
     };
   })();
 
