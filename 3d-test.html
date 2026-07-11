@@ -7781,10 +7781,12 @@ window.onerror = function(msg, url, line, col, err) {
         const totalDuration = 1200; // 1.2s para el texto
         const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
         let startTime = Date.now();
+        console.log("Matrix effect initialized for intro text.");
         
         // Empezar el matrix un poco después de que inicie el fade de la carta
         setTimeout(() => {
           startTime = Date.now();
+          console.log("Matrix effect setInterval starting now!");
           const timer = setInterval(() => {
             const elapsed = Date.now() - startTime;
             let p = Math.min(1, Math.max(0, elapsed / totalDuration));
@@ -7811,6 +7813,7 @@ window.onerror = function(msg, url, line, col, err) {
             if (p >= 1) {
               clearInterval(timer);
               introMatrix.innerHTML = finalStr;
+              console.log("Matrix effect finished.");
             }
           }, 30);
         }, 200);
