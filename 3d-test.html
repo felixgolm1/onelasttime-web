@@ -1771,26 +1771,16 @@ window.onerror = function(msg, url, line, col, err) {
 
   <div id="loader">
     <!-- Card draw animation plays immediately -->
-    <div id="intro-card" class="visible">
+    <div id="intro-card">
       <div id="card-morph-group">
-        <!-- SVG: viewBox exactamente 380×234 para que la silueta = tamaño real -->
-        <svg viewBox="0 0 380 234" xmlns="http://www.w3.org/2000/svg">
-          <rect id="intro-card-line"
-            x="1" y="1" width="378" height="232" rx="20" ry="20"
-            stroke-width="1.3"
-            pathLength="1175"
-          />
-        </svg>
-        <!-- Card div: cara frontal original -->
-        <div id="intro-real-card">
-          <!-- Solo el logo en el flex — texto es hermano absoluto, no afecta centrado -->
-          <div id="intro-card-inner">
-            <img id="intro-logo-img" src="assets/img/logo one last time verde.png" alt="One Last Time">
+        <div id="intro-real-card" style="border: 1px solid rgba(255,255,255,0.08); background: rgba(10,10,10,0.6);">
+          <!-- Solo el logo en el flex -->
+          <div id="intro-card-inner" style="transform: translateY(calc(-50% - 30px));">
+            <img id="intro-logo-img" src="assets/img/logo one last time verde.png" alt="One Last Time" class="visible green" style="opacity:1; filter:none; transform:none;">
           </div>
-          <!-- Texto absolutamente posicionado en su posición final dentro de la carta -->
-          <div id="intro-card-text">
-            <p class="irc-level">conexiones significativas</p>
-            <p class="irc-name">para personas que importan</p>
+          <!-- Texto Matrix posicionado en su lugar final -->
+          <div id="intro-card-text" class="visible" style="opacity:1; transform:none;">
+            <p id="intro-matrix-text" style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:11.5px; font-weight:400; line-height:1.6; letter-spacing:0.04em; color:rgba(255,255,255,0.85); width:200px;">conexiones significativas para personas que importan</p>
           </div>
         </div>
         <!-- Canto lateral: simula grosor de la carta proporcional al angulo de giro -->
@@ -7808,54 +7798,69 @@ window.onerror = function(msg, url, line, col, err) {
   }
   
   // ── INTRO CARD ANIMATION ────────────────────────────────────────
-  // La animación CSS (stroke-dashoffset) NO es compositable: requiere main thread.
-  // Si arrancamos antes de que GLTFLoader.parse() termine, el thread estará bloqueado
-  // y la animación se congelará mostrando dos estados distintos ("dos cartas").
-  // SOLUCIÓN: la animación empieza en paused (CSS). window._runIntroAnim() la activa
-  // desde el callback del GLTF loader — justo cuando el thread queda libre.
   (function startIntroAnim() {
-    const introLine = document.getElementById('intro-card-line');
-    const logoImg   = document.getElementById('intro-logo-img');
-    const cardInner = document.getElementById('intro-card-inner');
-    const cardText  = document.getElementById('intro-card-text');
+    const introCard = document.getElementById('intro-card');
+    const introMatrix = document.getElementById('intro-matrix-text');
 
     const savedProg = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
     if (savedProg > 0) {
-      // Reload con scroll previo: saltamos la animación de borde completamente.
-      // La animación está en paused → la línea es invisible (fill-mode:both, t=delay).
-      // Mostramos directamente el estado final de la carta.
-      if (logoImg)   logoImg.classList.add('visible', 'green');
-      if (cardInner) cardInner.style.transform = 'translateY(calc(-50% - 30px))';
-      if (cardText)  cardText.classList.add('visible');
+      if (introCard) introCard.classList.add('visible');
+      if (introMatrix) introMatrix.innerHTML = "conexiones significativas para personas que importan";
       animReady = true;
       if (pendingGltf) buildScene(pendingGltf);
-      // _runIntroAnim null → el callback del GLTF no arrancará la animación
       window._runIntroAnim = null;
       return;
     }
 
     // ── Primera carga (savedProg=0): exponer función que activa la animación ──
-    // Esta función la llama startLoading() cuando el GLTF termina de parsearse.
-    // En ese momento el main thread está libre → la animación corre sin saltos.
     window._runIntroAnim = function () {
-      // 1. Despausa la animación CSS ahora que el thread está libre
-      if (introLine) introLine.style.animationPlayState = 'running';
+      // 1. Fade in de la carta completa
+      if (introCard) introCard.classList.add('visible');
 
-      // 2. Logo blanco aparece a mitad de la animación de borde
-      setTimeout(() => { if (logoImg) logoImg.classList.add('visible'); }, 900);
+      // 2. Efecto Matrix en el texto
+      const finalStr = "conexiones significativas para personas que importan";
+      if (introMatrix) {
+        introMatrix.innerHTML = '';
+        let startT = null;
+        const totalDuration = 1000; // 1s para el texto
+        const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
+        
+        function drawMatrix(timestamp) {
+          if (!startT) startT = timestamp;
+          const elapsed = timestamp - startT;
+          let p = Math.min(1, elapsed / totalDuration);
+          
+          let html = '';
+          for (let i = 0; i < finalStr.length; i++) {
+            const charP = i / finalStr.length;
+            if (finalStr[i] === ' ') {
+              html += ' ';
+            } else if (p >= charP + 0.25) {
+              html += `<span style="color:rgba(255,255,255,0.85)">${finalStr[i]}</span>`;
+            } else if (p > charP) {
+              const r = Math.floor(Math.random() * glyphs.length);
+              html += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
+            } else {
+              html += `<span style="opacity:0">_</span>`;
+            }
+          }
+          introMatrix.innerHTML = html;
+          
+          if (p < 1) {
+            requestAnimationFrame(drawMatrix);
+          } else {
+            introMatrix.innerHTML = finalStr;
+          }
+        }
+        // Empezar el matrix un poco después de que inicie el fade de la carta
+        setTimeout(() => requestAnimationFrame(drawMatrix), 250);
+      }
 
-      // 3. Borde completo: logo sube, se vuelve verde, aparece el texto
-      setTimeout(() => {
-        if (logoImg)   logoImg.classList.add('green');
-        if (cardInner) cardInner.style.transform = 'translateY(calc(-50% - 30px))';
-        if (cardText)  cardText.classList.add('visible');
-      }, 1850);
-
-      // 4. Animación completa → construir escena 3D
+      // 3. Transición a escena 3D a los 1.5s
       setTimeout(() => {
         animReady = true;
         if (pendingGltf) buildScene(pendingGltf);
-      }, 2550);
+      }, 1500);
     };
   })();
 
