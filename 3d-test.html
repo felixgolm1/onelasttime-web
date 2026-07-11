@@ -2708,123 +2708,102 @@ window.onerror = function(msg, url, line, col, err) {
 
   function tryReveal() {
     if (!animReady || !gltfReady) return;
-    setTimeout(() => {
-      // Disparar matrix en la carta 3D
-      playMatrixOn3DCard();
+    
+    // Disparar matrix en la carta 3D
+    playMatrixOn3DCard();
       
-      requestAnimationFrame(() => {
-        const loaderEl   = document.getElementById('loader');
-        const morphGroup = document.getElementById('card-morph-group');
-        const realCard   = document.getElementById('intro-real-card');
-        const introLine  = document.getElementById('intro-card-line');
+    requestAnimationFrame(() => {
+      const loaderEl   = document.getElementById('loader');
+      const morphGroup = document.getElementById('card-morph-group');
+      const introLine  = document.getElementById('intro-card-line');
+      const svgWrap    = document.getElementById('intro-card-svg-wrap');
+      const cardCanvasEl = document.getElementById('card-canvas');
+      const realCard   = document.getElementById('intro-real-card');
 
-        if (!realCard || !morphGroup) return;
-        // targetRect: referencia fija de la sc-card (380×234px base, centrada en pantalla).
-        // NO usando getBoundingClientRect de sc-intro porque GSAP le aplica scale(1.2)
-        // y eso inflaría el rect devuelto, haciendo la carta más grande de lo esperado.
-        const SC_W = 380, SC_H = 234;
-        const targetRect = {
-          left:   (window.innerWidth  - SC_W) / 2,
-          top:    (window.innerHeight - SC_H) / 2,
-          width:  SC_W,
-          height: SC_H,
-        };
+      if (!morphGroup) return;
 
-        // El crossfade CSS→3D se hace en Step 2 (carta ya negra), no aquí.
-        const cardCanvasEl = document.getElementById('card-canvas');
+      // Ocultar elementos HTML falsos para usar 100% 3D
+      if (introLine) introLine.style.display = 'none';
+      if (svgWrap) svgWrap.style.display = 'none';
+      if (realCard) realCard.style.opacity = '0'; 
+      // Mantenemos realCard en el DOM porque GSAP scrollTl lo lee para visibility swaps
 
-        // Helper: posiciona la 3D card para que coincida con morphGroup (misma lógica que !inScatter)
-        function syncCard3DToMorphGroup() {
-          if (!globalGlbCard || !cardCanvasEl) return;
-          const gx  = gsap.getProperty(morphGroup, 'x') || 0;
-          const gy  = gsap.getProperty(morphGroup, 'y') || 0;
-          const gSY = Math.abs(gsap.getProperty(morphGroup, 'scaleY') || 1);
-          const gRY = gsap.getProperty(morphGroup, 'rotationY') || 0;
-          const gRZ = gsap.getProperty(morphGroup, 'rotation')  || 0;
-          const DIST = 6.0;
-          const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
-          const vW   = vH * (window.innerWidth / window.innerHeight);
-          const ndcX = ((window.innerWidth  / 2 + gx) / window.innerWidth ) * 2 - 1;
-          const ndcY = -((window.innerHeight / 2 + gy) / window.innerHeight) * 2 + 1;
-          globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
-          if (globalGlbCard._baseScaleFact) {
-            // Smooth zoom: gSY=1.0 (mesa) → gSY=1.22 (scatter entry)
-            // Mismo rango que scrollTl Phase 1 — la pantalla se va poniendo negra a la vez
-            const _GS_SC  = 1.22;
-            const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
-            const _scSmall = globalGlbCard._baseScaleFact * 0.65;
-            const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * 0.90;
-            globalGlbCard.scale.setScalar(_scSmall + _t * (_scLarge - _scSmall));
-          }
-          globalGlbCard.rotation.set(0, -gRY * Math.PI / 180, -gRZ * Math.PI / 180);
-          globalGlbCard.visible = true;
+      // Estado auxiliar para escalar la carta inicial
+      let introState = { scaleMult: 1.5 };
+
+      // Helper: posiciona la 3D card para que coincida con morphGroup
+      function syncCard3DToMorphGroup() {
+        if (!globalGlbCard || !cardCanvasEl) return;
+        const gx  = gsap.getProperty(morphGroup, 'x') || 0;
+        const gy  = gsap.getProperty(morphGroup, 'y') || 0;
+        const gSY = Math.abs(gsap.getProperty(morphGroup, 'scaleY') || 1);
+        const gRY = gsap.getProperty(morphGroup, 'rotationY') || 0;
+        const gRZ = gsap.getProperty(morphGroup, 'rotation')  || 0;
+        const DIST = 6.0;
+        const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
+        const vW   = vH * (window.innerWidth / window.innerHeight);
+        const ndcX = ((window.innerWidth  / 2 + gx) / window.innerWidth ) * 2 - 1;
+        const ndcY = -((window.innerHeight / 2 + gy) / window.innerHeight) * 2 + 1;
+        globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
+        
+        if (globalGlbCard._baseScaleFact) {
+          const _GS_SC  = 1.22;
+          const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
+          const _scSmall = globalGlbCard._baseScaleFact * 0.65;
+          const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * 0.90;
+          // Aplicamos el multiplicador inicial (1.5 -> 1.0)
+          globalGlbCard.scale.setScalar((_scSmall + _t * (_scLarge - _scSmall)) * introState.scaleMult);
         }
+        globalGlbCard.rotation.set(0, -gRY * Math.PI / 180, -gRZ * Math.PI / 180);
+        globalGlbCard.visible = true;
+      }
 
-        // ── Step 1: borde desaparece + ocultar wrapper del SVG ──────────
-        if (introLine) {
-          introLine.style.transition = 'stroke 0.25s ease';
-          introLine.style.stroke = 'rgba(255,255,255,0)';
-        }
-        setTimeout(() => {
-          const svgWrap = document.getElementById('intro-card-svg-wrap');
-          if (svgWrap) {
-            svgWrap.style.transition = 'opacity 0.3s ease';
-            svgWrap.style.opacity    = '0';
-            setTimeout(() => { svgWrap.style.display = 'none'; }, 350);
-          }
-        }, 280); // tras el fade de 0.25s del borde
+      // Preparar estado visual 3D instantáneamente
+      gsap.set(morphGroup, { x: 0, y: 0, scaleX: 1, scaleY: 1, rotation: 0 });
+      syncCard3DToMorphGroup();
 
-        // ── Step 2: carta morfea a color oscuro ─────────────────────────
-        setTimeout(() => {
-          realCard.classList.add('morphed');
+      if (cardCanvasEl) {
+        cardCanvasEl.style.transition = 'none';
+        cardCanvasEl.style.opacity = '1';
+      }
 
-          // ── Step 3: vuela + encoge — 3D card trackea via onUpdate ────
-          setTimeout(() => requestAnimationFrame(() => {
-            const srcRect = morphGroup.getBoundingClientRect();
-            const sCX = srcRect.left + srcRect.width  / 2;
-            const sCY = srcRect.top  + srcRect.height / 2;
-            const tCX = targetRect.left + targetRect.width  / 2;
-            const tCY = targetRect.top  + targetRect.height / 2;
-            const scaleX = targetRect.width  / srcRect.width;
-            const scaleY = targetRect.height / srcRect.height;
-
-            // Sincronizar carta 3D antes de que empiece el vuelo (misma posición inicial)
-            syncCard3DToMorphGroup();
-
-            gsap.to(morphGroup, {
-              x: tCX - sCX, y: tCY - sCY,
-              scaleX, scaleY,
-              rotation: -3,
-              duration: 1.1,
-              ease: 'power2.inOut',
-              transformOrigin: 'center center',
-              onUpdate: syncCard3DToMorphGroup, // carta 3D trackea la CSS card invisible frame a frame
-
-              onComplete: () => {
-                // Loader: fade out suave con CSS transition (1.4s existente)
-                loaderEl.style.opacity       = '0';
-                loaderEl.style.pointerEvents = 'none';
-                canvas.style.opacity         = '1';
-                setTimeout(() => { loaderEl.style.display = 'none'; }, 1500);
-                
-                // Hace aparecer todos los componentes del UI periférico suavemente!
-                gsap.to(['#nav-logo', '#nav-menu', '#cta-top-container', '#cta-bottom-container', '.scroll-indicator', '#headline', '#subheadline'], {
-                  opacity: 1,
-                  duration: 1.5,
-                  ease: 'power2.out',
-                  stagger: 0.15
-                });
-
-                // Guardar referencia y preparar animación de scroll
-                introMorphGroup = morphGroup;
-                setupScrollAnim(); // inicia smoothScrollLoop, que toma el control desde aquí
-              }
-            });
-
-          }), 280);
-        }, 150);
+      // Volar y encoger: de 1.5x a 1.0x, rotando -3 grados
+      gsap.to(introState, {
+        scaleMult: 1.0,
+        duration: 1.8,
+        ease: 'power2.out',
+        onUpdate: syncCard3DToMorphGroup
       });
-    }, 150);
+
+      gsap.to(morphGroup, {
+        rotation: -3,
+        duration: 1.8,
+        ease: 'power2.out',
+        onComplete: () => {
+          // Revelar escena de fondo
+          if (loaderEl) {
+            loaderEl.style.transition = 'opacity 1.4s ease';
+            loaderEl.style.opacity       = '0';
+            loaderEl.style.pointerEvents = 'none';
+            setTimeout(() => { loaderEl.style.display = 'none'; }, 1500);
+          }
+          
+          const canvas = document.querySelector('canvas:not(#card-canvas)');
+          if (canvas) canvas.style.opacity = '1';
+
+          // Reveal UI periférico
+          gsap.to(['#nav-logo', '#nav-menu', '#cta-top-container', '#cta-bottom-container', '.scroll-indicator', '#headline', '#subheadline'], {
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power2.out',
+            stagger: 0.15
+          });
+
+          introMorphGroup = morphGroup;
+          setupScrollAnim();
+        }
+      });
+    });
   }
 
   // ── SCROLL ANIMATION: zoom → flip → scatter → macro-camera ──────────
