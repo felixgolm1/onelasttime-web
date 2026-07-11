@@ -2653,14 +2653,7 @@ window.onerror = function(msg, url, line, col, err) {
     const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
     let iteration = 0;
     
-    // Necesitamos redibujar la textura canvas. Para mantener el color verde en el canvas, 
-    // modificaremos la forma en que se pintan las cadenas pasando los strings pre-formateados.
-    // Dado que no podemos usar HTML spans en canvas fillText, 
-    // simplemente inyectaremos una "ola" de caracteres aleatorios en el string original.
-    // Aunque todo será blanco, el efecto visual de desencriptado funcionará perfecto.
-    // Si queremos color verde, la lógica de canvas es muy compleja, así que usaremos strings puros.
-    
-    const timer = setInterval(() => {
+    function drawMatrixFrame() {
       let t1 = '', t2 = '';
       
       // Line 1
@@ -2690,12 +2683,18 @@ window.onerror = function(msg, url, line, col, err) {
         }
       }
       
-      // Esto actualiza la textura 3D en cada frame
       if (typeof window._applyDesignWithMatrix === 'function') {
         window._applyDesignWithMatrix(t1, t2);
       }
-      
+    }
+    
+    // Forzamos el primer frame INMEDIATAMENTE (todo borrado) para evitar 
+    // que se vea la carta con el texto normal durante 30ms.
+    drawMatrixFrame();
+
+    const timer = setInterval(() => {
       iteration += 1.2;
+      drawMatrixFrame();
       
       if (iteration >= final1.length + final2.length) {
         clearInterval(timer);
@@ -2761,6 +2760,14 @@ window.onerror = function(msg, url, line, col, err) {
       // Preparar estado visual 3D instantáneamente
       gsap.set(morphGroup, { x: 0, y: 0, scaleX: 1, scaleY: 1, rotation: 0 });
       syncCard3DToMorphGroup();
+
+      // Forzar 1 frame de renderizado 3D AHORA MISMO, antes de hacer visible el canvas.
+      // Esto evita que se vea un "flash" de 1 frame de la carta en su posición y textura antigua
+      // porque requestAnimationFrame() pintaría el DOM (opacity=1) antes de que el motor de render 3D
+      // pinte el buffer con las coordenadas nuevas.
+      if (typeof cardRenderer2 !== 'undefined' && cardScene2 && cardCam2) {
+        cardRenderer2.render(cardScene2, cardCam2);
+      }
 
       if (cardCanvasEl) {
         cardCanvasEl.style.transition = 'none';
