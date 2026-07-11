@@ -8250,6 +8250,7 @@ window.onerror = function(msg, url, line, col, err) {
       padding: 0 6vw;
       box-sizing: border-box;
       pointer-events: none;
+      visibility: hidden;
     ">
       <!-- Transition Word -->
       <h1 id="conecta-transition-text" style="
@@ -9811,6 +9812,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
       // La baraja de cartas baja independientemente de la pantalla (80vh es suficiente para ocultarla)
       oryzoDeck.style.transform = 'translateY(' + (tExitBox * 80) + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
+      oryzoSec.style.visibility = tSlide > 0 ? 'visible' : 'hidden';
 
       // Sincronizamos el fondo morado 
       window._scrollUpVh = 130 - slideY;
