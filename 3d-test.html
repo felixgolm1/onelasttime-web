@@ -2080,6 +2080,7 @@ window.onerror = function(msg, url, line, col, err) {
   <script>
     // Guardar un clon puro de la baraja antes de que ningún motor de JS la contamine
     window._pristineMainDeckClone = document.getElementById('mainDeck').cloneNode(true);
+    window._pristineMainDeckClone.querySelectorAll('.card-n1, .card-n2, .card-n3, .card-n4').forEach(function(c) { c.style.opacity = '0'; });
   </script>
 
 
@@ -10310,7 +10311,12 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   if (_scrollIndR) _scrollIndR.style.opacity = '';
               }
             })();
-         }
+          } else {
+            if (ec1) ec1.style.opacity = '0';
+            if (ec2) ec2.style.opacity = '0';
+            if (ec3) ec3.style.opacity = '0';
+            if (ec4) ec4.style.opacity = '0';
+          }
       }
       
       // 3. Reveal de texto tipo Oryzo (letra a letra con difuminado suave)
