@@ -8109,8 +8109,11 @@ window.onerror = function(msg, url, line, col, err) {
     cssRenderer.render(scene, camera);
 
     // Render separado de la carta GLB en su canvas transparente
-    if (cardRenderer2 && cardScene2 && cardCam2 && globalGlbCard && globalGlbCard.visible) {
-      cardRenderer2.render(cardScene2, cardCam2);
+    if (cardRenderer2 && cardScene2 && cardCam2 && globalGlbCard) {
+      if (globalGlbCard.visible || globalGlbCard._lastRenderVisible) {
+        cardRenderer2.render(cardScene2, cardCam2);
+        globalGlbCard._lastRenderVisible = globalGlbCard.visible;
+      }
     }
   })();
 
