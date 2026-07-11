@@ -6397,7 +6397,7 @@ window.onerror = function(msg, url, line, col, err) {
           // Con 3 flips el destino es -540°; el umbral de -179° disparaba tras el 1er flip
           // haciendo que la carta GLB se desacoplara y el scroll pareciera muerto.
           const flipRotY  = gsap.getProperty(mgEl, 'rotationY') || 0;
-          const inScatter = (prog >= 0.08 && flipRotY <= -539.0);
+          const inScatter = (prog >= 0.08 && flipRotY <= -539.0) || prog > 1.0;
           // Solo forzar opacity=1 y visible=true cuando el crossfade NO está activo
           // (si mainDeck es visible, el crossfade ya gestiona opacity y visible arriba)
           if (!mainDeckEl || mainDeckEl.style.display !== 'block') {
