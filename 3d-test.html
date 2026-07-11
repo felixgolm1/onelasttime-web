@@ -10164,9 +10164,21 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   if (_oltText) {
                     var _txtP = Math.max(0, Math.min(1, (_exitP - 0.4) / 0.6));
                     _oltText.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
-                    // Aparece con el scroll normal, se desvanece con _finalP
-                    var _textOpacity = _txtP * (1 - _finalP);
-                    _oltText.style.opacity = _textOpacity.toFixed(3);
+                    // Al 98% de _finalP el contenedor entero se oculta (fallback para texto no dividido en .char)
+                    _oltText.style.opacity = (_finalP >= 0.98) ? '0' : _txtP.toFixed(2);
+                    
+                    var chars = _oltText.querySelectorAll('.char');
+                    if (chars.length > 0) {
+                      var total = chars.length;
+                      var eraseHalf = (_finalP * total) / 2;
+                      for (var k = 0; k < total; k++) {
+                        if (_finalP >= 0.98 || k < eraseHalf || k >= total - eraseHalf) {
+                          chars[k].style.opacity = '0';
+                        } else {
+                          chars[k].style.opacity = '1';
+                        }
+                      }
+                    }
                   }
               } else {
                 isCont.style.opacity = '0';
