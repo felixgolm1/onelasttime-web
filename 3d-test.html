@@ -1773,14 +1773,15 @@ window.onerror = function(msg, url, line, col, err) {
     <!-- Card draw animation plays immediately -->
     <div id="intro-card">
       <div id="card-morph-group">
-        <div id="intro-real-card" style="border: 1px solid rgba(255,255,255,0.08); background: rgba(10,10,10,0.6);">
+        <div id="intro-real-card" style="border: 1px solid transparent; background: #151515;">
           <!-- Solo el logo en el flex -->
           <div id="intro-card-inner" style="transform: translateY(calc(-50% - 30px));">
             <img id="intro-logo-img" src="assets/img/logo one last time verde.png" alt="One Last Time" class="visible green" style="opacity:1; filter:none; transform:none;">
           </div>
           <!-- Texto Matrix posicionado en su lugar final -->
-          <div id="intro-card-text" class="visible" style="opacity:1; transform:none;">
-            <p id="intro-matrix-text" style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:11.5px; font-weight:400; line-height:1.6; letter-spacing:0.04em; color:rgba(255,255,255,0.85); width:200px;">conexiones significativas para personas que importan</p>
+          <div id="intro-card-text" class="visible" style="opacity:1; transform:none; top: 135px; width: 100%; gap: 6px;">
+            <p id="intro-matrix-text-1" style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:13.5px; font-weight:800; color:#fff; letter-spacing:0; line-height:1; text-transform:uppercase;">CONEXIONES SIGNIFICATIVAS</p>
+            <p id="intro-matrix-text-2" style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:13.5px; font-weight:800; color:#fff; letter-spacing:0; line-height:1; text-transform:uppercase;">PARA PERSONAS QUE IMPORTAN</p>
           </div>
         </div>
         <!-- Canto lateral: simula grosor de la carta proporcional al angulo de giro -->
@@ -7768,51 +7769,77 @@ window.onerror = function(msg, url, line, col, err) {
       if (introCard) introCard.classList.add('visible');
 
       // 2. Efecto Matrix en el texto
-      const finalStr = "conexiones significativas para personas que importan";
-      if (introMatrix) {
+      const introMatrix1 = document.getElementById('intro-matrix-text-1');
+      const introMatrix2 = document.getElementById('intro-matrix-text-2');
+      const finalStr1 = "CONEXIONES SIGNIFICATIVAS";
+      const finalStr2 = "PARA PERSONAS QUE IMPORTAN";
+      
+      if (introMatrix1 && introMatrix2) {
         // Inicializamos con los caracteres originales en opacidad 0 para mantener el layout intacto
-        let initHtml = '';
-        for (let i = 0; i < finalStr.length; i++) {
-          if (finalStr[i] === ' ') initHtml += ' ';
-          else initHtml += `<span style="opacity:0">${finalStr[i]}</span>`;
+        let initHtml1 = '', initHtml2 = '';
+        for (let i = 0; i < finalStr1.length; i++) {
+          if (finalStr1[i] === ' ') initHtml1 += ' ';
+          else initHtml1 += `<span style="opacity:0">${finalStr1[i]}</span>`;
         }
-        introMatrix.innerHTML = initHtml;
+        for (let i = 0; i < finalStr2.length; i++) {
+          if (finalStr2[i] === ' ') initHtml2 += ' ';
+          else initHtml2 += `<span style="opacity:0">${finalStr2[i]}</span>`;
+        }
+        introMatrix1.innerHTML = initHtml1;
+        introMatrix2.innerHTML = initHtml2;
 
         const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
         let iteration = 0;
-        console.log("Matrix effect initialized for intro text.");
+        console.log("Matrix effect initialized for intro text (2 lines).");
         
         // Empezar el matrix justo al terminar gran parte del fade de la carta (400ms)
         setTimeout(() => {
           console.log("Matrix effect wave starting now!");
           const timer = setInterval(() => {
-            let html = '';
-            for (let i = 0; i < finalStr.length; i++) {
-              if (finalStr[i] === ' ') {
-                html += ' ';
+            let html1 = '', html2 = '';
+            
+            // Line 1
+            for (let i = 0; i < finalStr1.length; i++) {
+              if (finalStr1[i] === ' ') {
+                html1 += ' ';
               } else if (i < Math.floor(iteration)) {
-                // Letra fijada (blanco suave)
-                html += `<span style="color:rgba(255,255,255,0.85)">${finalStr[i]}</span>`;
+                html1 += `<span style="color:#ffffff">${finalStr1[i]}</span>`;
               } else if (i < Math.floor(iteration) + 6) {
-                // Ola de descifrado (verde matrix)
                 const r = Math.floor(Math.random() * glyphs.length);
-                html += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
+                html1 += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
               } else {
-                // Aún no alcanzado (invisible pero ocupa espacio exacto)
-                html += `<span style="opacity:0">${finalStr[i]}</span>`;
+                html1 += `<span style="opacity:0">${finalStr1[i]}</span>`;
               }
             }
-            introMatrix.innerHTML = html;
             
-            iteration += 1.2; // Avanza 1.2 caracteres por tick (aprox 43 ticks para 52 chars = 860ms)
+            // Line 2 (con un desfase visual para que la ola baje)
+            for (let i = 0; i < finalStr2.length; i++) {
+              let j = i + Math.floor(finalStr1.length * 0.4); 
+              if (finalStr2[i] === ' ') {
+                html2 += ' ';
+              } else if (j < Math.floor(iteration)) {
+                html2 += `<span style="color:#ffffff">${finalStr2[i]}</span>`;
+              } else if (j < Math.floor(iteration) + 6) {
+                const r = Math.floor(Math.random() * glyphs.length);
+                html2 += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
+              } else {
+                html2 += `<span style="opacity:0">${finalStr2[i]}</span>`;
+              }
+            }
             
-            if (iteration >= finalStr.length + 6) {
+            introMatrix1.innerHTML = html1;
+            introMatrix2.innerHTML = html2;
+            
+            iteration += 1.2; 
+            
+            if (iteration >= finalStr1.length + finalStr2.length) {
               clearInterval(timer);
-              introMatrix.innerHTML = finalStr;
+              introMatrix1.innerHTML = finalStr1;
+              introMatrix2.innerHTML = finalStr2;
               console.log("Matrix effect finished.");
             }
-          }, 20); // 20ms por tick
-        }, 300); // Dar 300ms de margen para que la carta se vea antes de empezar a escribir
+          }, 20); 
+        }, 300); 
       }
 
       // 3. Transición a escena 3D a los 1.8s
