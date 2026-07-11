@@ -10209,6 +10209,9 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                       _oltCtaR.style.transform = 'translateY(100vh)';
                       _oltCtaR.style.opacity = '0';
                   }
+                  // Restaurar el scroll indicator al salir de la fase final
+                  var _scrollIndR = document.querySelector('.scroll-indicator');
+                  if (_scrollIndR) _scrollIndR.style.opacity = '';
               }
             })();
          }
