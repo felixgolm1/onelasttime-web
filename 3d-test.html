@@ -6517,22 +6517,19 @@ window.onerror = function(msg, url, line, col, err) {
                   globalGlbCard.scale.setScalar(lc.scale * boardScale);
 
               } else {
-                  globalGlbCard.visible = true;
                   const scBoardScale = gsap.getProperty(scBoard, 'scaleX') || 0.66;
                   const scIntroRot2D = scIntroEl ? (gsap.getProperty(scIntroEl, 'rotation') || 0) : -90;
-
                   let tP = 0;
-                  if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
 
-                  // Modificador de escala para que desaparezca durante el carrusel y reaparezca
+                  // Modificador de escala para que desaparezca durante el carrusel y YA NO reaparezca
                   let scaleMod = 1.0;
                   if (prog > 9.62 && prog <= 10.62) {
                       scaleMod = 1.0 - (prog - 9.62);
-                  } else if (prog > 10.62 && prog <= 13.62) {
-                      scaleMod = 0.001; // oculto
-                  } else if (prog > 13.62) {
-                      scaleMod = tP;
+                  } else if (prog > 10.62) {
+                      scaleMod = 0.00001; // oculto en carrusel y magazine
                   }
+                  
+                  globalGlbCard.visible = scaleMod > 0.01;
 
                   // Rotación: De giro de caja a plana contra la revista (ligeramente torcida Z=15deg)
                   let startRotY = -Math.PI + scBoardRY * Math.PI / 180;
