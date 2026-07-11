@@ -1247,8 +1247,6 @@ window.onerror = function(msg, url, line, col, err) {
       font-weight: 700;
       overflow: hidden;
       white-space: nowrap;
-      backface-visibility: hidden;
-      transform: translate3d(0, 0, 0);
       pointer-events: auto;
       -webkit-font-smoothing: antialiased;
     }
@@ -2922,6 +2920,9 @@ window.onerror = function(msg, url, line, col, err) {
       if (cbi) cbi.style.opacity = '1';
     }, null, 0);
 
+    // Garantizar estado inicial limpio del CTA inferior (sin transforms residuales de GSAP)
+    gsap.set('#heroCta', { clearProps: 'transform,visibility,opacity', transformOrigin: '50% 50%' });
+
     // ─ Fase 1 (0→0.16): Zoom + oscurecimiento suave ──────────────────
     scrollTl.to([mg, visGroup], {
       x: 0, y: 0, scaleX: 1.22, scaleY: 1.22,
@@ -3211,7 +3212,7 @@ window.onerror = function(msg, url, line, col, err) {
     }, 0.82);
 
     // El CTA original desaparece justo antes del scatter
-    scrollTl.to('#heroCta', { autoAlpha: 0, scale: 0.95, duration: 0.06, ease: 'power2.inOut' }, 0.84);
+    scrollTl.to('#heroCta', { autoAlpha: 0, scale: 0.95, transformOrigin: '50% 50%', duration: 0.06, ease: 'power2.inOut' }, 0.84);
 
     // La carta central desaparece MIENTRAS hace el último grado del giro
     scrollTl.to(mg, { opacity: 0, duration: 0.03 }, 0.85);
@@ -3450,7 +3451,7 @@ window.onerror = function(msg, url, line, col, err) {
     }, t2);
 
     // ─ CTA: fade in suave del botón cuando las cartas terminan de recogerse ──────────
-    scrollTl.to('#heroCta', { autoAlpha: 1, scale: 1, duration: 0.20, ease: 'power2.out' }, t2 + 0.075);
+    scrollTl.to('#heroCta', { autoAlpha: 1, scale: 1, transformOrigin: '50% 50%', duration: 0.20, ease: 'power2.out' }, t2 + 0.075);
 
     // ─ Fase 10: 2 Flips y cambianzo (1.33) ──────────────────────
     let t3 = t2 + 0.15;
