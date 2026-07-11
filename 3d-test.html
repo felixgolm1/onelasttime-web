@@ -4233,7 +4233,7 @@ window.onerror = function(msg, url, line, col, err) {
 
           // 4. Imagen se agranda 30% y se ilumina (DERECHA)
           if (rev1._img) {
-             let imgP = mapRange(pRev, 0.43, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.42, 0.58, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -4317,7 +4317,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (rev2._img) {
-             let imgP = mapRange(pRev, 0.43, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.42, 0.58, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -4401,7 +4401,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (rev3._img) {
-             let imgP = mapRange(pRev, 0.43, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.42, 0.58, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -4486,7 +4486,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (rev4._img) {
-             let imgP = mapRange(pRev, 0.43, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.42, 0.58, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -9777,7 +9777,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
 
       // 4. Imagen - Intacta
       if (panel._img) {
-         let imgP = mapRange(pRev, 0.28, 0.50, 0, 1); 
+         let imgP = mapRange(pRev, 0.42, 0.58, 0, 1); 
          imgP = Math.max(0, Math.min(1, imgP));
          let scale = 1.0 + (0.3 * imgP);
          let brightness = 0.3 + (0.7 * imgP);
