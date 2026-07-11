@@ -7752,7 +7752,7 @@ window.onerror = function(msg, url, line, col, err) {
     const introCard = document.getElementById('intro-card');
     const introMatrix = document.getElementById('intro-matrix-text');
 
-    const savedProg = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
+    const savedProg = 0; // TEMPORAL: Forzar intro anim siempre para testing
     if (savedProg > 0) {
       if (introCard) introCard.classList.add('visible');
       if (introMatrix) introMatrix.innerHTML = "conexiones significativas para personas que importan";
