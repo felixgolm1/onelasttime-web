@@ -88,7 +88,7 @@
             0% { opacity: 0; transform: translate(-50%, -50%) translate3d(var(--start-x), var(--start-y), -300px) rotate(var(--start-rot)) scale(0.5); }
             100% { opacity: 1; transform: translate(-50%, -50%) translate3d(var(--final-x), var(--final-y), 0) rotate(var(--final-rot)) scale(1); }
         }
-        .table-card { position: absolute; top: 50%; left: 50%; width: 100%; max-width: 320px; aspect-ratio: 3.5 / 1.98; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem; opacity: 0; will-change: transform, opacity; z-index: 30; }
+        .table-card { position: absolute; top: 50%; left: 50%; width: 100%; max-width: 420px; aspect-ratio: 3.5 / 1.98; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 2rem; opacity: 0; will-change: transform, opacity; z-index: 30; }
         .animate-deal { animation: dealOntoTable 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .intro-white { background: linear-gradient(135deg, #ffffff 0%, #fcfcfc 100%); border: none; box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 6px 12px -2px rgba(0,0,0, 0.15), 0 15px 25px -5px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,1); }
         .intro-green { background: linear-gradient(135deg, #CCFF00 0%, #d4ff33 100%); box-shadow: 0 0 2px rgba(0,0,0,0.15), 0 15px 35px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.5) !important; z-index: 50; }
@@ -109,7 +109,7 @@
             background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%); border-radius: 16px; border: none;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.08), 0 12px 24px rgba(0,0,0,0.1), 0 24px 48px rgba(0,0,0,0.08), inset 0 0 0 1.5px rgba(255,255,255,1);
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-            cursor: pointer; padding: 1.5rem 1rem; width: 100%; max-width: 320px; aspect-ratio: 3.5 / 1.98;
+            cursor: pointer; padding: 1.5rem 2rem; width: 100%; max-width: 420px; aspect-ratio: 3.5 / 1.98;
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden;
         }
         .n1-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 50%); opacity: 0; transition: opacity 0.6s ease; border-radius: 16px; }
@@ -185,7 +185,7 @@
         /* --- FASE: NORIA DE TONOS (V27) --- */
         .ferris-wheel-container { position: relative; width: 100%; height: 800px; display: flex; justify-content: center; align-items: flex-start; perspective: 1200px; overflow: visible; padding-top: 2rem; cursor: grab; }
         .ferris-wheel-container:active { cursor: grabbing; }
-        .deck-group { position: absolute; width: 100%; max-width: 320px; display: flex; flex-direction: column; align-items: center; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; }
+        .deck-group { position: absolute; width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; }
         
         .v27-card {
             background-color: #ffffff; border-radius: 14px; width: 100%; aspect-ratio: 3.5 / 1.98; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 2rem; cursor: pointer; position: relative; overflow: hidden; backface-visibility: hidden; 
