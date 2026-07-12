@@ -10345,6 +10345,16 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
             if (ec2) ec2.style.opacity = '0';
             if (ec3) ec3.style.opacity = '0';
             if (ec4) ec4.style.opacity = '0';
+            
+            var _eR1 = document.getElementById('end-review-panel-1'); if (_eR1) _eR1.style.opacity = '0';
+            var _eR2 = document.getElementById('end-review-panel-2'); if (_eR2) _eR2.style.opacity = '0';
+            var _eR3 = document.getElementById('end-review-panel-3'); if (_eR3) _eR3.style.opacity = '0';
+            var _eR4 = document.getElementById('end-review-panel-4'); if (_eR4) _eR4.style.opacity = '0';
+            
+            var _isCont = document.getElementById('img-strip-container'); if (_isCont) _isCont.style.opacity = '0';
+            var _oltL = document.getElementById('olt-logo-img-big'); if (_oltL) _oltL.style.transform = 'translateY(100vh)';
+            var _oltT = document.getElementById('olt-final-text'); if (_oltT) { _oltT.style.transform = 'translateY(100vh)'; _oltT.style.opacity = '0'; }
+            var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
           }
       }
       
