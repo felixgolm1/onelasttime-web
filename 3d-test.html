@@ -6329,6 +6329,28 @@ window.onerror = function(msg, url, line, col, err) {
       return outMin + (outMax - outMin) * ((p - inMin) / (inMax - inMin));
     }
 
+    function updateNavState(currentProg) {
+      const navLinks = Array.from(document.querySelectorAll('#nav-menu > a[data-scroll]'));
+      if (!navLinks.length) return;
+      
+      let activeLink = navLinks[0];
+      for (let i = 0; i < navLinks.length; i++) {
+        const linkProg = parseFloat(navLinks[i].getAttribute('data-scroll'));
+        if (currentProg >= linkProg - 0.5) {
+          activeLink = navLinks[i];
+        }
+      }
+
+      navLinks.forEach(a => {
+          if (a !== activeLink) {
+              a.classList.remove('active');
+          }
+      });
+      if (!activeLink.classList.contains('active')) {
+          activeLink.classList.add('active');
+      }
+    }
+
     function smoothScrollLoop() {
         const lerpF = 0.40;
         
@@ -6677,6 +6699,7 @@ window.onerror = function(msg, url, line, col, err) {
           }   // ── fin else scatter ──
       }   // ── fin if (globalGlbCard) ──
 
+      updateNavState(prog);
       requestAnimationFrame(smoothScrollLoop);
     }
 
