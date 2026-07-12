@@ -8101,7 +8101,7 @@ window.onerror = function(msg, url, line, col, err) {
         other.style.opacity = '';
       });
       const scrollInd = document.querySelector('.scroll-indicator');
-      if (scrollInd) scrollInd.style.opacity = '';
+      if (scrollInd) scrollInd.style.opacity = '1';
     });
 
     link.addEventListener('click', (e) => {
@@ -10363,7 +10363,7 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   }
                   // Restaurar el scroll indicator al salir de la fase final
                   var _scrollIndR = document.querySelector('.scroll-indicator');
-                  if (_scrollIndR) _scrollIndR.style.opacity = '';
+                  if (_scrollIndR) _scrollIndR.style.opacity = '1';
               }
             })();
           } else {
