@@ -458,10 +458,39 @@
             );
         };
 
+        const InputCard = ({ opt, handleClick }) => {
+            const [customInput, setCustomInput] = useState('');
+            return (
+                <div className="n1-card flex flex-col justify-center items-center gap-4" style={{ cursor: 'default' }}>
+                    <input 
+                        type="text"
+                        value={customInput}
+                        onChange={e => setCustomInput(e.target.value)}
+                        placeholder={opt.placeholder}
+                        className="w-full text-center text-[17px] font-medium tracking-wide outline-none border-b-2 border-gray-100 focus:border-[#CCFF00] pb-2 bg-transparent text-gray-800 placeholder-gray-400 transition-colors"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && customInput.trim() !== '') {
+                                handleClick({ ...opt, customValue: customInput });
+                            }
+                        }}
+                    />
+                    <button 
+                        className="bg-[#CCFF00] text-black font-semibold rounded-full px-6 py-2 text-sm transition-transform hover:scale-105 shadow-sm"
+                        onClick={() => {
+                            if (customInput.trim() !== '') {
+                                handleClick({ ...opt, customValue: customInput });
+                            }
+                        }}
+                    >
+                        Confirmar
+                    </button>
+                </div>
+            );
+        };
+
         const TreeEngine = ({ initialTitle, data, onComplete, onProgressUpdate, treeKey, treeStates, setTreeStates, onBack, progress }) => {
             const { currentParent, history } = treeStates[treeKey];
             const [isOut, setIsOut] = useState(false);
-            const [customInput, setCustomInput] = useState('');
 
             const visibleOptions = useMemo(() => data.filter(opt => opt.parent === currentParent || opt.parent_id === currentParent || (!opt.parent && !opt.parent_id && !currentParent)), [currentParent, data]);
 
@@ -546,30 +575,7 @@
                                 <div key={opt.id} className="w-full md:w-auto flex justify-center" style={{ animation: 'floatN1 6s ease-in-out infinite', animationDelay: `${index * 0.5}s` }}>
                                     <div className="w-full flex justify-center deal-n1" style={getCardStyles(index)}>
                                         {opt.type === 'input' ? (
-                                            <div className="n1-card flex flex-col justify-center items-center gap-4" style={{ cursor: 'default' }}>
-                                                <input 
-                                                    type="text"
-                                                    value={customInput}
-                                                    onChange={e => setCustomInput(e.target.value)}
-                                                    placeholder={opt.placeholder}
-                                                    className="w-full text-center text-[17px] font-medium tracking-wide outline-none border-b-2 border-gray-100 focus:border-[#CCFF00] pb-2 bg-transparent text-gray-800 placeholder-gray-400 transition-colors"
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter' && customInput.trim() !== '') {
-                                                            handleClick({ ...opt, customValue: customInput });
-                                                        }
-                                                    }}
-                                                />
-                                                <button 
-                                                    className="bg-[#CCFF00] text-black font-semibold rounded-full px-6 py-2 text-sm transition-transform hover:scale-105 shadow-sm"
-                                                    onClick={() => {
-                                                        if (customInput.trim() !== '') {
-                                                            handleClick({ ...opt, customValue: customInput });
-                                                        }
-                                                    }}
-                                                >
-                                                    Confirmar
-                                                </button>
-                                            </div>
+                                            <InputCard opt={opt} handleClick={handleClick} />
                                         ) : (
                                             <button className="n1-card group" onClick={() => handleClick(opt)}>
                                                 <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 px-2">{opt.label || opt.nombre_visible}</span>
