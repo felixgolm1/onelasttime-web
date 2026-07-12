@@ -460,24 +460,45 @@
 
         const InputCard = ({ opt, handleClick }) => {
             const [customInput, setCustomInput] = useState('');
+            const textareaRef = useRef(null);
+
+            const handleInput = (e) => {
+                setCustomInput(e.target.value);
+                if (textareaRef.current) {
+                    textareaRef.current.style.height = 'auto';
+                    textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+                }
+            };
+
             return (
-                <div className="n1-card flex flex-col justify-center items-center gap-4 relative" style={{ cursor: 'default' }}>
-                    <input 
-                        type="text"
-                        value={customInput}
-                        onChange={e => setCustomInput(e.target.value)}
-                        placeholder={opt.placeholder}
-                        className="w-full text-center text-[17px] font-medium tracking-wide outline-none border-b-2 border-gray-100 focus:border-[#CCFF00] pb-2 bg-transparent text-gray-800 placeholder-gray-400 transition-colors relative z-50"
-                        style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text' }}
-                        onClick={e => e.stopPropagation()}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && customInput.trim() !== '') {
-                                handleClick({ ...opt, customValue: customInput });
-                            }
-                        }}
-                    />
+                <div className="n1-card flex flex-col justify-center items-center gap-4 relative" style={{ cursor: 'default', aspectRatio: 'auto', minHeight: '238px' }}>
+                    <div className="relative w-full flex flex-col items-center justify-center min-h-[60px] flex-1">
+                        {customInput === '' && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-40">
+                                <span className="text-[17px] tracking-wide font-medium text-black">{opt.placeholder}</span>
+                                <span className="text-[14px] text-gray-500 mt-2 flex items-center">
+                                    Escríbelo aquí <span className="inline-block w-[2px] h-[15px] bg-black ml-[4px] animate-[pulse_1s_cubic-bezier(0.4,0,0.6,1)_infinite]"></span>
+                                </span>
+                            </div>
+                        )}
+                        <textarea 
+                            ref={textareaRef}
+                            rows={1}
+                            value={customInput}
+                            onChange={handleInput}
+                            className="w-full text-center text-[17px] font-medium tracking-wide outline-none bg-transparent text-gray-800 transition-colors relative z-50 resize-none overflow-hidden"
+                            style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text', lineHeight: '1.4' }}
+                            onClick={e => e.stopPropagation()}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey && customInput.trim() !== '') {
+                                    e.preventDefault();
+                                    handleClick({ ...opt, customValue: customInput });
+                                }
+                            }}
+                        />
+                    </div>
                     <button 
-                        className="bg-[#CCFF00] text-black font-semibold rounded-full px-6 py-2 text-sm transition-transform hover:scale-105 shadow-sm relative z-50"
+                        className="bg-black text-white font-semibold rounded-full px-8 py-2.5 text-sm transition-transform hover:scale-105 shadow-sm relative z-50 mt-auto"
                         style={{ pointerEvents: 'auto' }}
                         onClick={(e) => {
                             e.stopPropagation();
