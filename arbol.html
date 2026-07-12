@@ -461,13 +461,15 @@
         const InputCard = ({ opt, handleClick }) => {
             const [customInput, setCustomInput] = useState('');
             return (
-                <div className="n1-card flex flex-col justify-center items-center gap-4" style={{ cursor: 'default' }}>
+                <div className="n1-card flex flex-col justify-center items-center gap-4 relative" style={{ cursor: 'default' }}>
                     <input 
                         type="text"
                         value={customInput}
                         onChange={e => setCustomInput(e.target.value)}
                         placeholder={opt.placeholder}
-                        className="w-full text-center text-[17px] font-medium tracking-wide outline-none border-b-2 border-gray-100 focus:border-[#CCFF00] pb-2 bg-transparent text-gray-800 placeholder-gray-400 transition-colors"
+                        className="w-full text-center text-[17px] font-medium tracking-wide outline-none border-b-2 border-gray-100 focus:border-[#CCFF00] pb-2 bg-transparent text-gray-800 placeholder-gray-400 transition-colors relative z-50"
+                        style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text' }}
+                        onClick={e => e.stopPropagation()}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && customInput.trim() !== '') {
                                 handleClick({ ...opt, customValue: customInput });
@@ -475,8 +477,10 @@
                         }}
                     />
                     <button 
-                        className="bg-[#CCFF00] text-black font-semibold rounded-full px-6 py-2 text-sm transition-transform hover:scale-105 shadow-sm"
-                        onClick={() => {
+                        className="bg-[#CCFF00] text-black font-semibold rounded-full px-6 py-2 text-sm transition-transform hover:scale-105 shadow-sm relative z-50"
+                        style={{ pointerEvents: 'auto' }}
+                        onClick={(e) => {
+                            e.stopPropagation();
                             if (customInput.trim() !== '') {
                                 handleClick({ ...opt, customValue: customInput });
                             }
