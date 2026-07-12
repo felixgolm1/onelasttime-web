@@ -5679,6 +5679,14 @@ window.onerror = function(msg, url, line, col, err) {
         const _bOverlay = document.getElementById('mag-breakout-overlay');
         if (_bOverlay) _bOverlay.style.display = 'none';
         
+        // Limpiar el clone si el usuario sale de la seccion haciendo click en el menu
+        const _staleCloneMenu = document.getElementById('mag-model-clone');
+        if (_staleCloneMenu) {
+          const _staleOrigMenu = magazineScene?.querySelector('img[src*="modelo-sin-fondo"]');
+          if (_staleOrigMenu) _staleOrigMenu.style.visibility = '';
+          _staleCloneMenu.remove();
+        }
+        
         if (window.wasInMagazine) {
           window.wasInMagazine = false;
           if (volume) volume.style.transform = '';
