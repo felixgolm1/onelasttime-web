@@ -476,44 +476,43 @@
 
             return (
                 <div 
-                    className="n1-card flex flex-col justify-center items-center gap-4 relative" 
+                    className="n1-card flex flex-col justify-center items-center relative" 
                     style={{ cursor: 'text', aspectRatio: '3.5 / 1.98' }}
                     onClick={() => {
                         if (textareaRef.current) textareaRef.current.focus();
                     }}
                 >
-                    <div className="relative w-full flex flex-col items-center justify-center min-h-[60px] flex-1">
-                        {!showInput && (
-                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-40 text-[17px] tracking-wide font-medium text-gray-400">
-                                <span>En otro&nbsp;</span>
-                                <span className="inline-block w-[2px] h-[20px] bg-gray-600 mx-[1px]" style={{ animation: 'cursorBlink 1s step-end infinite' }}></span>
-                                <span>lugar...</span>
-                            </div>
-                        )}
-                        <textarea 
-                            ref={textareaRef}
-                            rows={1}
-                            value={customInput}
-                            onChange={handleInput}
-                            onFocus={() => setIsFocused(true)}
-                            onBlur={() => setIsFocused(false)}
-                            className={`w-full text-center text-[17px] font-medium tracking-wide outline-none bg-transparent text-gray-800 transition-opacity duration-300 relative z-50 resize-none overflow-hidden ${showInput ? 'opacity-100' : 'opacity-0'}`}
-                            style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text', lineHeight: '1.4' }}
-                            onClick={e => e.stopPropagation()}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' && !e.shiftKey && customInput.trim() !== '') {
-                                    e.preventDefault();
-                                    handleClick({ ...opt, customValue: customInput });
-                                }
-                            }}
-                        />
-                    </div>
+                    {!showInput && (
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40 whitespace-nowrap">
+                            <span className="text-[17px] tracking-wide font-medium text-gray-400 flex items-center">
+                                En otro
+                                <span className="inline-block w-[2px] h-[19px] bg-gray-500 mx-[3px] align-text-bottom" style={{ animation: 'cursorBlink 1s step-end infinite' }}></span>
+                                lugar...
+                            </span>
+                        </div>
+                    )}
+                    
+                    <textarea 
+                        ref={textareaRef}
+                        rows={1}
+                        value={customInput}
+                        onChange={handleInput}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
+                        className={`w-full text-center text-[17px] font-medium tracking-wide outline-none bg-transparent text-gray-800 transition-opacity duration-300 relative z-50 resize-none overflow-hidden ${showInput ? 'opacity-100' : 'opacity-0'}`}
+                        style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text', lineHeight: '1.4' }}
+                        onClick={e => e.stopPropagation()}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey && customInput.trim() !== '') {
+                                e.preventDefault();
+                                handleClick({ ...opt, customValue: customInput });
+                            }
+                        }}
+                    />
                     
                     <button 
-                        className={`bg-black text-white font-semibold rounded-full px-8 py-2.5 text-sm transition-all duration-300 hover:scale-105 shadow-sm relative z-50 mt-auto ${showInput ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none absolute bottom-4'}`}
-                        style={{ pointerEvents: showInput ? 'auto' : 'none' }}
+                        className={`bg-black text-white font-semibold rounded-full px-8 py-2.5 text-sm transition-all duration-300 hover:scale-105 shadow-sm absolute bottom-5 z-50 ${showInput ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}
                         onMouseDown={(e) => {
-                            // Usamos onMouseDown en lugar de onClick para que se dispare antes del onBlur del textarea
                             e.preventDefault(); 
                             e.stopPropagation();
                             if (customInput.trim() !== '') {
