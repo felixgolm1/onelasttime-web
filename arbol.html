@@ -461,6 +461,7 @@
         const TreeEngine = ({ initialTitle, data, onComplete, onProgressUpdate, treeKey, treeStates, setTreeStates, onBack, progress }) => {
             const { currentParent, history } = treeStates[treeKey];
             const [isOut, setIsOut] = useState(false);
+            const [customInput, setCustomInput] = useState('');
 
             const visibleOptions = useMemo(() => data.filter(opt => opt.parent === currentParent || opt.parent_id === currentParent || (!opt.parent && !opt.parent_id && !currentParent)), [currentParent, data]);
 
@@ -481,7 +482,7 @@
                 setIsOut(true);
                 setTimeout(() => {
                     if (node.final === true || node.es_final === 'TRUE' || node.final === 'TRUE') {
-                        onComplete(node.id);
+                        onComplete(node.id, node.customValue);
                     } else {
                         setTreeStates(prev => ({
                             ...prev,
@@ -548,20 +549,21 @@
                                             <div className="n1-card flex flex-col justify-center items-center gap-4" style={{ cursor: 'default' }}>
                                                 <input 
                                                     type="text"
+                                                    value={customInput}
+                                                    onChange={e => setCustomInput(e.target.value)}
                                                     placeholder={opt.placeholder}
                                                     className="w-full text-center text-[17px] font-medium tracking-wide outline-none border-b-2 border-gray-100 focus:border-[#CCFF00] pb-2 bg-transparent text-gray-800 placeholder-gray-400 transition-colors"
                                                     onKeyDown={(e) => {
-                                                        if (e.key === 'Enter' && e.target.value.trim() !== '') {
-                                                            handleClick({ ...opt, customValue: e.target.value });
+                                                        if (e.key === 'Enter' && customInput.trim() !== '') {
+                                                            handleClick({ ...opt, customValue: customInput });
                                                         }
                                                     }}
                                                 />
                                                 <button 
                                                     className="bg-[#CCFF00] text-black font-semibold rounded-full px-6 py-2 text-sm transition-transform hover:scale-105 shadow-sm"
-                                                    onClick={(e) => {
-                                                        const input = e.target.previousElementSibling;
-                                                        if (input && input.value.trim() !== '') {
-                                                            handleClick({ ...opt, customValue: input.value });
+                                                    onClick={() => {
+                                                        if (customInput.trim() !== '') {
+                                                            handleClick({ ...opt, customValue: customInput });
                                                         }
                                                     }}
                                                 >
@@ -1684,7 +1686,11 @@
                         initialTitle="¿Qué formato prefieres?" data={dbFormat} 
                         onProgressUpdate={(pct) => setTreeProgress(p => ({...p, format: pct}))}
                         progress={getProgress()}
-                        onComplete={id => advanceTo('secret1', {formatId: id})} 
+                        onComplete={(id, customValue) => {
+                            const dataUpdate = { formatId: id };
+                            if (customValue) dataUpdate.formatCustomPlace = customValue;
+                            advanceTo('secret1', dataUpdate);
+                        }} 
                         onBack={null} // Desactiva la navegación hacia la intro en la primera pregunta
                     />}
                     
