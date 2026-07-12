@@ -342,15 +342,10 @@
             return maxChildDepth;
         };
 
-        // Componente Logo Tipográfico Reutilizable
+        // Componente Logo Reutilizable (Imagen real)
         const Logo = () => (
-            <div className="flex items-center justify-center gap-1 pointer-events-auto opacity-90 select-none">
-                <span className="font-bold text-[1.4rem] tracking-tighter text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                    One Last Time
-                </span>
-                <div className="w-[1.4rem] h-[1.4rem] border-[2.5px] border-black rounded-full flex items-center justify-center -mt-3">
-                    <span className="text-[8px] font-bold leading-none mt-[1px] ml-[1px]">Co.</span>
-                </div>
+            <div className="flex items-center justify-center pointer-events-auto opacity-90 select-none">
+                <img src="assets/img/logo one last time.png" alt="One Last Time Co." className="h-[26px] w-auto object-contain" style={{ filter: 'brightness(0)' }} />
             </div>
         );
 
