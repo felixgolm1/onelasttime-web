@@ -5722,6 +5722,10 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
+          ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel'].forEach(id => {
+            var el = document.getElementById(id);
+            if (el) el.style.display = '';
+          });
           let currIndex = getCarouselIndex(prog);
           
           // Resetear overlay si el usuario se aleja del slide de besos parejas
@@ -6019,6 +6023,12 @@ window.onerror = function(msg, url, line, col, err) {
               }
             }
           }
+        } else {
+          // Ocultar todos los interactive panels del carrusel si retrocedemos antes del carrusel
+          ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel'].forEach(id => {
+            var el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+          });
         }
 
       }
@@ -6293,6 +6303,14 @@ window.onerror = function(msg, url, line, col, err) {
         },
         onComplete: function() {
           window.isAutoScrolling = false;
+          // Forzar último render para asegurar la posición final
+          sessionStorage.setItem('dev_prog', prog);
+          scrollTl.progress(Math.min(1, prog / 2.2));
+          updateFaceSwap();
+          updateGlobalScenes();
+          
+          const debugProg = document.getElementById('debug-scroll-prog');
+          if (debugProg) debugProg.innerText = prog.toFixed(2);
         }
       });
     };
@@ -6326,9 +6344,11 @@ window.onerror = function(msg, url, line, col, err) {
             }
         }
 
-      if (Math.abs(targetProg - prog) > 0.000005) {
-        prog += (targetProg - prog) * lerpF;
-        if (Math.abs(targetProg - prog) <= 0.000005) prog = targetProg;
+      if (Math.abs(targetProg - prog) > 0.000005 || window.isAutoScrolling) {
+        if (!window.isAutoScrolling) {
+            prog += (targetProg - prog) * lerpF;
+            if (Math.abs(targetProg - prog) <= 0.000005) prog = targetProg;
+        }
         sessionStorage.setItem('dev_prog', prog);
         scrollTl.progress(Math.min(1, prog / 2.2));
         updateFaceSwap();
