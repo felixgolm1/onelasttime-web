@@ -258,10 +258,15 @@
             { id: 'cartas_digitales', parent: null, label: 'Cartas digitales', nextTitle: '¿Dónde las usarás?', final: false },
             { id: 'cartas_digitales_en_un_restaurante', parent: 'cartas_digitales', label: 'En un restaurante', final: true },
             { id: 'cartas_digitales_en_mi_casa_o_en_la_de_alguien', parent: 'cartas_digitales', label: 'En mi casa o en la suya', final: true },
+            { id: 'cartas_digitales_otro', parent: 'cartas_digitales', label: 'En otro lugar', nextTitle: '¿Dónde exactamente?', final: false },
+            { id: 'cartas_digitales_otro_input', parent: 'cartas_digitales_otro', type: 'input', placeholder: 'Ej. de viaje, en la playa...', final: true },
+            
             { id: 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien', parent: 'cartas_fisicas', label: 'En mi casa o en la suya', final: true },
             { id: 'cartas_fisicas_en_un_restaurante', parent: 'cartas_fisicas', label: 'En un restaurante', nextTitle: 'Tu escoges...', final: false },
             { id: 'cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha', parent: 'cartas_fisicas_en_un_restaurante', label: 'Ya tengo una reserva hecha', final: true },
             { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', parent: 'cartas_fisicas_en_un_restaurante', label: 'Aun no he reservado', nextTitle: 'Tu escoges...', final: false },
+            { id: 'cartas_fisicas_otro', parent: 'cartas_fisicas', label: 'En otro lugar', nextTitle: '¿Dónde exactamente?', final: false },
+            { id: 'cartas_fisicas_otro_input', parent: 'cartas_fisicas_otro', type: 'input', placeholder: 'Ej. de viaje, en la playa...', final: true },
             { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_tengo_claro_el_restaurante_donde_quiero_reservar', parent: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', label: 'Tengo claro el restaurante', final: true },
             { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_recomendadme_vuestras_3_lugares_favoritos', parent: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', label: 'Recomendadme 3 lugares favoritos', final: true }
         ];
@@ -541,9 +546,36 @@
                             {visibleOptions.map((opt, index) => (
                                 <div key={opt.id} className="w-full md:w-auto flex justify-center" style={{ animation: 'floatN1 6s ease-in-out infinite', animationDelay: `${index * 0.5}s` }}>
                                     <div className="w-full flex justify-center deal-n1" style={getCardStyles(index)}>
-                                        <button className="n1-card group" onClick={() => handleClick(opt)}>
-                                            <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 px-2">{opt.label || opt.nombre_visible}</span>
-                                        </button>
+                                        {opt.type === 'input' ? (
+                                            <div className="n1-card flex flex-col justify-center items-center gap-6" style={{ cursor: 'default' }}>
+                                                <input 
+                                                    type="text"
+                                                    autoFocus
+                                                    placeholder={opt.placeholder}
+                                                    className="w-full text-center text-[19px] outline-none border-b-2 border-gray-200 focus:border-[#CCFF00] pb-2 bg-transparent text-gray-800 placeholder-gray-300 transition-colors"
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                                                            handleClick({ ...opt, customValue: e.target.value });
+                                                        }
+                                                    }}
+                                                />
+                                                <button 
+                                                    className="bg-black text-[#CCFF00] hover:bg-gray-800 font-semibold rounded-full px-8 py-3 text-sm transition-transform hover:scale-105 shadow-md flex items-center gap-2"
+                                                    onClick={(e) => {
+                                                        const input = e.target.previousElementSibling;
+                                                        if (input && input.value.trim() !== '') {
+                                                            handleClick({ ...opt, customValue: input.value });
+                                                        }
+                                                    }}
+                                                >
+                                                    Confirmar <span>→</span>
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <button className="n1-card group" onClick={() => handleClick(opt)}>
+                                                <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 px-2">{opt.label || opt.nombre_visible}</span>
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ))}
