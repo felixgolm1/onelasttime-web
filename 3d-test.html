@@ -2297,6 +2297,18 @@ window.onerror = function(msg, url, line, col, err) {
       text-transform: uppercase;
       letter-spacing: 0.1em;
       line-height: 1.6;
+      position: relative;
+      padding-bottom: 2rem;
+    }
+    .review-author::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      border-bottom: 1px dashed rgba(255,255,255,0.2);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .review-img-col {
@@ -2369,7 +2381,8 @@ window.onerror = function(msg, url, line, col, err) {
       .review-right-col .osr-top-line {
         justify-content: flex-start !important;
       }
-      .review-right-col .osr-top-line::before {
+      .review-right-col .osr-top-line::before,
+      .review-right-col .review-author::after {
         left: auto !important;
         right: 0 !important;
       }
