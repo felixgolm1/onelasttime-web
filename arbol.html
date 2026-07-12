@@ -1595,7 +1595,7 @@
         // ==========================================
 
         const App = () => {
-            const [phase, setPhase] = useState('intro'); 
+            const [phase, setPhase] = useState(sessionStorage.getItem('skipIntro') === 'true' ? 'format' : 'intro'); 
             const [phaseHistory, setPhaseHistory] = useState([]);
             const [treeProgress, setTreeProgress] = useState({ format: 0, audience: 0 });
             
@@ -1626,6 +1626,7 @@
             };
 
             const advanceTo = (newPhase, dataUpdate = {}) => {
+                sessionStorage.setItem('skipIntro', 'true');
                 if (dataUpdate) {
                     setGlobalData(prev => ({ ...prev, ...dataUpdate }));
                 }
