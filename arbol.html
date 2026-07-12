@@ -476,8 +476,8 @@
 
             return (
                 <div 
-                    className="n1-card flex flex-col justify-center items-center relative" 
-                    style={{ cursor: 'text', aspectRatio: '3.5 / 1.98' }}
+                    className="n1-card flex flex-col justify-center items-center relative transition-all duration-300" 
+                    style={{ cursor: 'text', aspectRatio: '3.5 / 1.98', paddingBottom: showInput ? '5rem' : '1.5rem' }}
                     onClick={() => {
                         if (textareaRef.current) textareaRef.current.focus();
                     }}
