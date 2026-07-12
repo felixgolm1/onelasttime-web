@@ -468,7 +468,7 @@
                 setCustomInput(e.target.value);
                 if (textareaRef.current) {
                     textareaRef.current.style.height = 'auto';
-                    textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+                    textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 119) + 'px';
                 }
             };
 
@@ -499,8 +499,8 @@
                         onChange={handleInput}
                         onFocus={() => setIsFocused(true)}
                         onBlur={() => setIsFocused(false)}
-                        className={`w-full text-center text-[17px] font-medium tracking-wide outline-none bg-transparent text-gray-800 transition-opacity duration-300 relative z-50 resize-none overflow-hidden ${showInput ? 'opacity-100' : 'opacity-0'}`}
-                        style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text', lineHeight: '1.4' }}
+                        className={`w-full text-center text-[17px] font-medium tracking-wide outline-none bg-transparent text-gray-800 transition-opacity duration-300 relative z-50 resize-none overflow-y-auto [&::-webkit-scrollbar]:hidden ${showInput ? 'opacity-100' : 'opacity-0'}`}
+                        style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text', lineHeight: '1.4', maxHeight: '119px' }}
                         onClick={e => e.stopPropagation()}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey && customInput.trim() !== '') {
