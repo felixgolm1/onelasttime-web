@@ -240,6 +240,7 @@
             width: 22px; height: 22px; border: 2.5px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body>
@@ -476,7 +477,7 @@
             return (
                 <div 
                     className="n1-card flex flex-col justify-center items-center gap-4 relative" 
-                    style={{ cursor: 'text', aspectRatio: 'auto', minHeight: '238px' }}
+                    style={{ cursor: 'text', aspectRatio: '3.5 / 1.98' }}
                     onClick={() => {
                         if (textareaRef.current) textareaRef.current.focus();
                     }}
@@ -484,8 +485,8 @@
                     <div className="relative w-full flex flex-col items-center justify-center min-h-[60px] flex-1">
                         {!showInput && (
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-40 text-[17px] tracking-wide font-medium text-gray-400">
-                                <span>En otro</span>
-                                <span className="inline-block w-[1.5px] h-[18px] bg-gray-400 mx-[2px] animate-[pulse_1s_cubic-bezier(0.4,0,0.6,1)_infinite]"></span>
+                                <span>En otro&nbsp;</span>
+                                <span className="inline-block w-[2px] h-[20px] bg-gray-600 mx-[1px]" style={{ animation: 'cursorBlink 1s step-end infinite' }}></span>
                                 <span>lugar...</span>
                             </div>
                         )}
