@@ -2136,11 +2136,11 @@ window.onerror = function(msg, url, line, col, err) {
   </div>
   <!-- Menú superior derecha -->
   <nav id="nav-menu">
-    <a href="#" class="active" data-text="INTRO">INTRO</a>
-    <a href="#" data-text="CÓMO FUNCIONA">CÓMO FUNCIONA</a>
-    <a href="#" data-text="FUNCIONALIDADES">FUNCIONALIDADES</a>
-    <a href="#" data-text="RESEÑAS">RESEÑAS</a>
-    <a href="#" data-text="ONE LAST TIME">ONE LAST TIME</a>
+    <a href="#" class="active" data-text="INTRO" data-scroll="0.00">INTRO</a>
+    <a href="#" data-text="CÓMO FUNCIONA" data-scroll="0.92">CÓMO FUNCIONA</a>
+    <a href="#" data-text="FUNCIONALIDADES" data-scroll="10.43">FUNCIONALIDADES</a>
+    <a href="#" data-text="RESEÑAS" data-scroll="23.17">RESEÑAS</a>
+    <a href="#" data-text="ONE LAST TIME" data-scroll="41.03">ONE LAST TIME</a>
     
     <!-- CTA superior derecha -->
     <div id="cta-top-container">
@@ -6281,6 +6281,18 @@ window.onerror = function(msg, url, line, col, err) {
     let glowVisible = false;
     let lastScrollTime = 0;
 
+    window.jumpToProg = function(val) {
+      gsap.to({ p: prog }, {
+        p: val,
+        duration: 0.5,
+        ease: "power2.inOut",
+        onUpdate: function() {
+          targetProg = this.targets()[0].p;
+          prog = targetProg;
+        }
+      });
+    };
+
     function mapRange(p, inMin, inMax, outMin, outMax) {
       if (p <= inMin) return outMin;
       if (p >= inMax) return outMax;
@@ -8064,6 +8076,16 @@ window.onerror = function(msg, url, line, col, err) {
       });
       const scrollInd = document.querySelector('.scroll-indicator');
       if (scrollInd) scrollInd.style.opacity = '';
+    });
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const scrollVal = parseFloat(link.getAttribute('data-scroll'));
+      if (!isNaN(scrollVal) && window.jumpToProg) {
+        window.jumpToProg(scrollVal);
+        document.querySelectorAll('#nav-menu > a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }
     });
   });
 
