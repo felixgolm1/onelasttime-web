@@ -1595,18 +1595,24 @@
         // ==========================================
 
         const App = () => {
-            const [phase, setPhase] = useState(sessionStorage.getItem('skipIntro') === 'true' ? 'format' : 'intro'); 
-            const [phaseHistory, setPhaseHistory] = useState([]);
-            const [treeProgress, setTreeProgress] = useState({ format: 0, audience: 0 });
+            const [phase, setPhase] = useState(() => sessionStorage.getItem('dev_phase') || (sessionStorage.getItem('skipIntro') === 'true' ? 'format' : 'intro'));
+            const [phaseHistory, setPhaseHistory] = useState(() => JSON.parse(sessionStorage.getItem('dev_phaseHistory')) || []);
+            const [treeProgress, setTreeProgress] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeProgress')) || { format: 0, audience: 0 });
             
-            const [treeStates, setTreeStates] = useState({
+            const [treeStates, setTreeStates] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeStates')) || {
                 format: { currentParent: null, history: [] },
                 audience: { currentParent: null, history: [] }
             });
             
-            const [globalData, setGlobalData] = useState({
+            const [globalData, setGlobalData] = useState(() => JSON.parse(sessionStorage.getItem('dev_globalData')) || {
                 formatId: null, logistics: null, audienceId: null, tones: [], n4: null
             });
+
+            useEffect(() => { sessionStorage.setItem('dev_phase', phase); }, [phase]);
+            useEffect(() => { sessionStorage.setItem('dev_phaseHistory', JSON.stringify(phaseHistory)); }, [phaseHistory]);
+            useEffect(() => { sessionStorage.setItem('dev_treeProgress', JSON.stringify(treeProgress)); }, [treeProgress]);
+            useEffect(() => { sessionStorage.setItem('dev_treeStates', JSON.stringify(treeStates)); }, [treeStates]);
+            useEffect(() => { sessionStorage.setItem('dev_globalData', JSON.stringify(globalData)); }, [globalData]);
 
             const getProgress = () => {
                 if (phase === 'intro') return 5;
