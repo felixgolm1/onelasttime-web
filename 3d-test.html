@@ -6336,7 +6336,7 @@ window.onerror = function(msg, url, line, col, err) {
       let activeLink = navLinks[0];
       for (let i = 0; i < navLinks.length; i++) {
         const linkProg = parseFloat(navLinks[i].getAttribute('data-scroll'));
-        if (currentProg >= linkProg - 0.5) {
+        if (currentProg >= linkProg - 0.05) {
           activeLink = navLinks[i];
         }
       }
