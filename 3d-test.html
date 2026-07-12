@@ -6282,6 +6282,7 @@ window.onerror = function(msg, url, line, col, err) {
     let lastScrollTime = 0;
 
     window.jumpToProg = function(val) {
+      window.isAutoScrolling = true;
       gsap.to({ p: prog }, {
         p: val,
         duration: 0.5,
@@ -6289,6 +6290,9 @@ window.onerror = function(msg, url, line, col, err) {
         onUpdate: function() {
           targetProg = this.targets()[0].p;
           prog = targetProg;
+        },
+        onComplete: function() {
+          window.isAutoScrolling = false;
         }
       });
     };
@@ -6303,21 +6307,23 @@ window.onerror = function(msg, url, line, col, err) {
         const lerpF = 0.40;
         
         // SALTO CUÁNTICO DE TIMELINE
-        if (targetProg > 2.20 && targetProg < 9.62) {
-            if (prog <= 2.20) {
-                targetProg = 9.62;
+        if (!window.isAutoScrolling) {
+            if (targetProg > 2.20 && targetProg < 9.62) {
+                if (prog <= 2.20) {
+                    targetProg = 9.62;
+                    prog = 9.62;
+                } else {
+                    targetProg = 2.20;
+                    prog = 2.20;
+                }
+            }
+            
+            // ANTI-LODO (Warp Lerp): Evita que la fricción interpole a través del salto
+            if (prog <= 2.20 && targetProg >= 9.62) {
                 prog = 9.62;
-            } else {
-                targetProg = 2.20;
+            } else if (prog >= 9.62 && targetProg <= 2.20) {
                 prog = 2.20;
             }
-        }
-        
-        // ANTI-LODO (Warp Lerp): Evita que la fricción interpole a través del salto
-        if (prog <= 2.20 && targetProg >= 9.62) {
-            prog = 9.62;
-        } else if (prog >= 9.62 && targetProg <= 2.20) {
-            prog = 2.20;
         }
 
       if (Math.abs(targetProg - prog) > 0.000005) {
