@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sensibles - Experiencia Completa V2.7</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0; font-family: 'Poppins', sans-serif;
+            background-color: #fcfcfc; color: #111827;
+            overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+            touch-action: pan-y; overscroll-behavior-x: none;
+        }
+
+        /* --- UTILIDADES GLOBALES --- */
+        .fade-in { animation: fadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .fade-out { animation: fadeOut 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .fade-in-opacity { animation: fadeInOpacity 1.2s ease-out forwards; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(25px); filter: blur(6px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); filter: blur(0); } to { opacity: 0; transform: translateY(-20px); filter: blur(6px); } }
+        @keyframes fadeInOpacity { from { opacity: 0; } to { opacity: 1; } }
+
+        .shake { animation: shakeAnim 0.4s ease-in-out; }
+        @keyframes shakeAnim { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+
+        /* --- COMPONENTES BASE (Botones, Píldoras) --- */
+        .btn-black { background: #000; color: #fff; padding: 1.1rem 1.5rem; border-radius: 9999px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.12), 0 20px 40px rgba(0,0,0,0.08); width: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border: none; position: relative; overflow: hidden; }
+        .btn-black::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); opacity: 0; transition: opacity 0.4s ease; }
+        .btn-black:hover:not(:disabled) { background: #1a1a1a; transform: translateY(-6px); box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 16px 32px rgba(0,0,0,0.2), 0 32px 60px rgba(0,0,0,0.12); z-index: 20; position: relative; }
+        .btn-black:hover:not(:disabled)::before { opacity: 1; }
+        .btn-black:active:not(:disabled) { transform: translateY(-2px) scale(0.96); box-shadow: 0 2px 6px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1); }
+        .btn-black:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .pill-input { width: 100%; padding: 1.05rem 1.5rem; background: #fff; border: 1.5px solid #000; border-radius: 9999px; text-align: center; font-size: 15px; outline: none; transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 10px rgba(0,0,0,0.06), 0 12px 24px rgba(0,0,0,0.05); position: relative; }
+        .pill-input:focus { box-shadow: 0 0 0 2px #000, 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.1); z-index: 10; transform: scale(1.01); }
+        .pill-input:hover { transform: translateY(-8px); box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.15), 0 24px 48px rgba(0,0,0,0.1); z-index: 20; }
+        .pill-input::placeholder { color: #d1d5db; }
+        input[type="datetime-local"].is-empty { color: #9ca3af; }
+        input[type="datetime-local"].pill-input { appearance: none; -webkit-appearance: none; display: block; font-family: 'Poppins', sans-serif; }
+
+        /* Estilo rectangular tipo carta para el Textarea Final */
+        .card-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 14px; 
+            text-align: center;
+            font-size: 15px;
+            font-weight: 400;
+            color: #000000;
+            outline: none;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            resize: none;
+            position: relative;
+        }
+        .card-input:focus { box-shadow: 0 0 0 1.5px #000; z-index: 10; }
+        .card-input:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(0,0,0,0.12); z-index: 20; }
+        .card-input::placeholder { color: #9ca3af; }
+
+        .label-style { font-size: 11px; font-weight: 600; color: #000; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.4rem; display: block; text-align: center; }
+
+        .pill-button { width: 100%; padding: 1.05rem 1.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; gap: 0.75rem; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s; cursor: pointer; position: relative; }
+
+        @keyframes floatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        .floating { animation: floatIdle 5s ease-in-out infinite; will-change: transform; }
+        .floating:hover, .floating:focus-within { animation-play-state: paused; }
+
+        /* --- FASE: INTRO CINEMATOGRÁFICA --- */
+        .scene { width: 100vw; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; perspective: 1200px; }
+        .title-wrapper { position: absolute; top: 50%; left: 50%; width: 100%; max-width: 800px; z-index: 100; transform: translate(-50%, -50%) scale(0.85); opacity: 0; transition: opacity 0.8s ease-in-out; pointer-events: none; text-shadow: 0 4px 20px rgba(204, 255, 0, 0.8), 0 0 40px rgba(255,255,255,0.8); }
+        .title-wrapper.is-animating { animation: zoomTitle 4.6s linear forwards; }
+        .title-wrapper.is-fixed { transform: translate(-50%, -50%) scale(1); animation: none; }
+        .title-wrapper.is-visible { opacity: 1; }
+        @keyframes zoomTitle { 0% { transform: translate(-50%, -50%) scale(0.85); } 100% { transform: translate(-50%, -50%) scale(1.05); } }
+
+        @keyframes dealOntoTable {
+            0% { opacity: 0; transform: translate(-50%, -50%) translate3d(var(--start-x), var(--start-y), -300px) rotate(var(--start-rot)) scale(0.5); }
+            100% { opacity: 1; transform: translate(-50%, -50%) translate3d(var(--final-x), var(--final-y), 0) rotate(var(--final-rot)) scale(1); }
+        }
+        .table-card { position: absolute; top: 50%; left: 50%; width: 100%; max-width: 320px; aspect-ratio: 3.5 / 1.98; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem; opacity: 0; will-change: transform, opacity; z-index: 30; }
+        .animate-deal { animation: dealOntoTable 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .intro-white { background: linear-gradient(135deg, #ffffff 0%, #fcfcfc 100%); border: none; box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 6px 12px -2px rgba(0,0,0, 0.15), 0 15px 25px -5px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,1); }
+        .intro-green { background: linear-gradient(135deg, #CCFF00 0%, #d4ff33 100%); box-shadow: 0 0 2px rgba(0,0,0,0.15), 0 15px 35px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.5) !important; z-index: 50; }
+        .intro-black { background: linear-gradient(135deg, #111111 0%, #000000 100%); border: none; padding: 0.75rem 1.25rem; box-shadow: 0 0 2px rgba(0,0,0,0.6), 0 6px 12px -2px rgba(0,0,0, 0.4), 0 15px 25px -5px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.08); z-index: 25; }
+
+        /* --- FASE: ÁRBOL (TreeEngine con inclinaciones variadas) --- */
+        @keyframes dealInN1 {
+            0% { opacity: 0; transform: translate3d(var(--start-x), var(--start-y), -300px) rotate(var(--start-rot)) scale(0.5); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--final-rot)) scale(1); }
+        }
+        .deal-n1 { animation: dealInN1 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; will-change: transform, opacity; }
+        @keyframes floatN1 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+
+        /* --- Animaciones para burbujas --- */
+        @keyframes floatBubble { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+
+        .n1-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%); border-radius: 16px; border: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.08), 0 12px 24px rgba(0,0,0,0.1), 0 24px 48px rgba(0,0,0,0.08), inset 0 0 0 1.5px rgba(255,255,255,1);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            cursor: pointer; padding: 1.5rem 1rem; width: 100%; max-width: 320px; aspect-ratio: 3.5 / 1.98;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden;
+        }
+        .n1-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 50%); opacity: 0; transition: opacity 0.6s ease; border-radius: 16px; }
+        .n1-card:hover { transform: translateY(-14px) scale(1.03); box-shadow: 0 2px 4px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.12), 0 24px 48px rgba(0,0,0,0.16), 0 40px 80px rgba(0,0,0,0.12), inset 0 0 0 1.5px rgba(255,255,255,1); z-index: 10; }
+        .n1-card:hover::before { opacity: 1; }
+
+        /* --- FASE: LOGÍSTICA (Burbujas) --- */
+        @keyframes bubbleFloat { 0%, 100% { transform: translateY(0px) translateX(0px); } 25% { transform: translateY(-6px) translateX(4px); } 50% { transform: translateY(-10px) translateX(-2px); } 75% { transform: translateY(-4px) translateX(3px); } }
+
+        .bubbles-container-centered {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            margin-top: 0.75rem !important;
+            margin-bottom: 0 !important;
+            display: block !important;
+            position: relative !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
+
+        .bubble-pill { border-radius: 50%; background-color: #ffffff; border: 1.5px solid #e5e7eb; color: #6b7280; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; font-weight: 500; cursor: pointer; transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 1; line-height: 1.05; padding: 1rem; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08); animation: bubbleFloat 6s ease-in-out infinite; }
+        .bubble-pill:hover { transform: scale(1.12) translateZ(0); box-shadow: 0 4px 12px rgba(0,0,0,0.1), 0 8px 20px rgba(0,0,0,0.12); }
+        .bubble-pill.is-selected { background: linear-gradient(135deg, #CCFF00 0%, #d4ff33 100%); color: #000 !important; border-color: #CCFF00 !important; box-shadow: 0 2px 8px rgba(204,255,0,0.2), 0 8px 20px rgba(204,255,0,0.3); animation: none; }
+        .input-error { border-color: #f87171 !important; background-color: #fef2f2 !important; }
+
+        /* --- FASE: CÁLCULO (SVG Animado) --- */
+        @keyframes dealInRandomCalc { 0% { opacity: 0; transform: translate3d(var(--start-x, 0), var(--start-y, 60vh), -200px) rotate(15deg); } 100% { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg); } }
+        .deal-in-animation-calc { animation: dealInRandomCalc 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+        
+        @keyframes floatEffectCardCalc { 0%, 100% { transform: translate3d(0px, 0px, 10px); } 50% { transform: translate3d(0px, -8px, 25px); } }
+        .card-container-calc { width: 100%; display: flex; justify-content: center; position: relative; transform-style: preserve-3d; animation: floatEffectCardCalc 6s ease-in-out infinite; transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .card-container-calc:hover { animation-play-state: paused; }
+
+        .border-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; overflow: visible; }
+        .border-path { fill: none; stroke: #CCFF00; stroke-width: 4px; stroke-linecap: round; filter: drop-shadow(0px 0px 6px rgba(204, 255, 0, 0.8)); }
+        
+        .border-path.is-fallo { stroke: #ef4444; filter: drop-shadow(0px 0px 6px rgba(239, 68, 68, 0.8)); }
+
+        .physical-card-calc {
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%); border-radius: 14px; border: none;
+            box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1), 0 6px 8px -2px rgba(156,163,175, 0.4), 0 15px 25px -5px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,1); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            width: 420px; max-width: 95vw; aspect-ratio: 3.5 / 1.98; min-height: 237px; position: relative; transform: translate3d(0px, 0px, 0px) scale(1); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .physical-card-calc::before { content: ''; position: absolute; inset: 0; border-radius: 14px; background: linear-gradient(135deg, #CCFF00 0%, #d4ff33 100%); opacity: 0; transition: opacity 1s ease-in-out; z-index: 1; pointer-events: none; }
+        .physical-card-calc.is-success::before { opacity: 1; }
+        .physical-card-calc.is-fallo::before { background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); opacity: 1; transition: opacity 0.5s ease-in-out; }
+
+        .text-content-calc { position: absolute; width: 100%; padding: 0 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: translateZ(12px); transition: opacity 0.8s ease-in-out; z-index: 20; }
+        .text-fade-out { opacity: 0; pointer-events: none; }
+        .text-fade-in { opacity: 1; }
+
+        /* --- FASE: SECRETOS (Efecto WoW) --- */
+        .deck-container-secrets { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; margin-top: 1rem; }
+        .card-wrapper-secret { position: absolute; top: 0; left: 0; right: 0; margin: 0 auto; display: flex; justify-content: center; transform-style: preserve-3d; transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0px) rotateY(var(--rot-y, 0deg)) rotateZ(var(--rot-z, 0deg)) scale(var(--scale, 1)); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); animation: floatEffectCardSecret 6s ease-in-out infinite; will-change: transform; }
+        .card-wrapper-secret:hover { z-index: 300 !important; animation-play-state: paused; }
+        
+        @keyframes floatEffectCardSecret { 0%, 100% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 10px) rotateY(var(--rot-y, 0deg)) rotateZ(var(--rot-z, 0deg)) scale(var(--scale, 1)); } 50% { transform: translate3d(var(--tx, 0px), calc(var(--ty, 0px) - 8px), 25px) rotateY(var(--rot-y, 0deg)) rotateZ(var(--rot-z, 0deg)) scale(var(--scale, 1)); } }
+
+        .physical-card-secret { border-radius: 14px; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; aspect-ratio: 3.5 / 1.98; cursor: pointer; position: relative; transform-style: preserve-3d; transform: translate3d(0px, 0px, 0px) scale(1); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .physical-card-secret:hover { transform: translate3d(0px, -15px, 50px) scale(1.02) !important; }
+
+        .card-active-secret { background: linear-gradient(135deg, #CCFF00 0%, #d4ff33 100%); width: 100%; max-width: 420px; padding: 1.5rem 2rem; box-shadow: 0 0 2px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.15), 0 20px 30px -5px rgba(0,0,0,0.25); color: #000; }
+        .card-active-secret:hover { box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 15px 25px rgba(0,0,0,0.2), 0 30px 50px -10px rgba(0,0,0,0.35); }
+        
+        .card-locked-secret { background: linear-gradient(135deg, #1a1a1a 0%, #050505 100%); color: #ffffff; width: 100%; max-width: 420px; padding: 1.5rem 2rem; border-radius: 14px; box-shadow: 0 0 2px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.2), 0 6px 8px -2px rgba(0,0,0, 0.5), 0 15px 25px -5px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.08); }
+        .card-locked-secret:hover { box-shadow: 0 0 2px rgba(0,0,0,0.6), 0 12px 20px rgba(0,0,0,0.3), 0 25px 40px -10px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.15); }
+
+        /* Estilo para cartas pasadas: MISMO COLOR VERDE, solo ligeramente oscurecidas */
+        .card-past-secret { background: linear-gradient(135deg, #CCFF00 0%, #d2ff26 100%); color: #000000; width: 100%; max-width: 420px; padding: 1.5rem 2rem; border-radius: 14px; box-shadow: 0 0 2px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.15), 0 10px 15px -5px rgba(0,0,0,0.25); filter: brightness(0.94); }
+        .card-past-secret:hover { filter: brightness(1); box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 15px 25px rgba(0,0,0,0.2), 0 30px 50px -10px rgba(0,0,0,0.35); }
+
+        /* --- FASE: NORIA DE TONOS (V27) --- */
+        .ferris-wheel-container { position: relative; width: 100%; height: 800px; display: flex; justify-content: center; align-items: flex-start; perspective: 1200px; overflow: visible; padding-top: 2rem; cursor: grab; }
+        .ferris-wheel-container:active { cursor: grabbing; }
+        .deck-group { position: absolute; width: 100%; max-width: 320px; display: flex; flex-direction: column; align-items: center; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; }
+        
+        .v27-card {
+            background-color: #ffffff; border-radius: 14px; width: 100%; aspect-ratio: 3.5 / 1.98; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 2rem; cursor: pointer; position: relative; overflow: hidden; backface-visibility: hidden; 
+            box-shadow: 0 0 2px rgba(0,0,0,0.05), 0 4px 10px rgba(0,0,0,0.08), 0 15px 25px -5px rgba(0,0,0,0.1), inset 0 0 0 1.5px rgba(255,255,255,1);
+            transform-style: preserve-3d; transform: rotateZ(var(--rot-z)) translateY(0) scale(1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s ease, z-index 0s linear 0.4s;
+        }
+        .v27-card::before { content: ''; position: absolute; inset: 0; border-radius: 14px; background: linear-gradient(135deg, #CCFF00 0%, #d4ff33 100%); opacity: 0; transition: opacity 0.8s ease; z-index: 1; }
+        .v27-card.is-selected { box-shadow: 0 0 2px rgba(0,0,0,0.15), 0 8px 12px rgba(0,0,0,0.3), 0 20px 30px -5px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.7); }
+        .v27-card.is-selected::before { opacity: 1; }
+        .v27-card:hover, .v27-card.is-selected:hover { transform: rotateZ(var(--rot-z)) translateY(-8px) scale(1.02) !important; z-index: 100 !important; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s ease, z-index 0s linear 0s !important; }
+        .v27-card:not(.is-selected):hover { box-shadow: 0 0 2px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.1), 0 20px 30px -5px rgba(0,0,0,0.15), inset 0 0 0 1.5px rgba(255,255,255,1); }
+        .v27-card.is-selected:hover { box-shadow: 0 0 2px rgba(0,0,0,0.15), 0 12px 18px rgba(0,0,0,0.35), 0 25px 35px -5px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.8); }
+
+        .sticky-bottom-bar { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background: linear-gradient(to top, rgba(252,252,252,1) 70%, rgba(252,252,252,0) 100%); 
+            padding: 1rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom)) 1.5rem; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            z-index: 9999; /* Z-Index MASIVO para que esté siempre por encima */
+            pointer-events: none; 
+        }
+
+        /* Sliders Custom */
+        .custom-range { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; outline: none; background: #e5e7eb; margin: 1rem 0; }
+        .custom-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; background: #000000; cursor: pointer; border: 3px solid #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.1s; }
+        .custom-range::-webkit-slider-thumb:hover { transform: scale(1.1); }
+        .custom-range::-webkit-slider-thumb:active { transform: scale(0.95); }
+
+        /* --- FASE: CHECKOUT (Pasarela de Pago) --- */
+        .pay-input {
+            width: 100%; padding: 1rem 1.25rem; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; outline: none; transition: all 0.2s ease; font-size: 0.95rem;
+        }
+        .pay-input:focus { border-color: #000; box-shadow: 0 0 0 4px rgba(0,0,0,0.03); }
+
+        .label-pay { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 0.4rem; display: block; }
+
+        .btn-pay {
+            width: 100%; background-color: #000; color: #fff; padding: 1.25rem; border-radius: 9999px; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; border: none;
+        }
+        .btn-pay:hover:not(:disabled) { background-color: #1f2937; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+        .btn-pay:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .summary-card { background: #f9fafb; border-radius: 20px; padding: 1.5rem; border: 1px solid #f3f4f6; }
+
+        .spinner {
+            width: 22px; height: 22px; border: 2.5px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo } = React;
+
+        // ==========================================
+        // 1. BASES DE DATOS
+        // ==========================================
+
+        const dbFormat = [
+            { id: 'cartas_fisicas', parent: null, label: 'Cartas físicas', nextTitle: '¿Dónde las usarás?', final: false },
+            { id: 'cartas_digitales', parent: null, label: 'Cartas digitales', nextTitle: '¿Dónde las usarás?', final: false },
+            { id: 'cartas_digitales_en_un_restaurante', parent: 'cartas_digitales', label: 'En un restaurante', final: true },
+            { id: 'cartas_digitales_en_mi_casa_o_en_la_de_alguien', parent: 'cartas_digitales', label: 'En mi casa o en la de alguien', final: true },
+            { id: 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien', parent: 'cartas_fisicas', label: 'En mi casa o en la de alguien', final: true },
+            { id: 'cartas_fisicas_en_un_restaurante', parent: 'cartas_fisicas', label: 'En un restaurante', nextTitle: 'Tu escoges...', final: false },
+            { id: 'cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha', parent: 'cartas_fisicas_en_un_restaurante', label: 'Ya tengo una reserva hecha', final: true },
+            { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', parent: 'cartas_fisicas_en_un_restaurante', label: 'Aun no he reservado', nextTitle: 'Tu escoges...', final: false },
+            { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_tengo_claro_el_restaurante_donde_quiero_reservar', parent: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', label: 'Tengo claro el restaurante', final: true },
+            { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_recomendadme_vuestras_3_lugares_favoritos', parent: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', label: 'Recomendadme 3 lugares favoritos', final: true }
+        ];
+
+        const dbLogistics = [
+            { id: 'ciudad', label: 'Ciudad o código postal', type: 'text', req: true, conditions: ['siempre'] },
+            { id: 'fecha', label: 'Día y hora de la comida', type: 'datetime-local', req: true, conditions: ['siempre'] },
+            { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha', 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_tengo_claro_el_restaurante_donde_quiero_reservar', 'cartas_digitales_en_un_restaurante'] },
+            { id: 'reserva', label: 'A nombre de quién está', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha'] },
+            { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] },
+            { id: 'comida', label: 'Marca las opciones de comida que quieres tener', subtitle: 'no selecciones ninguna si estas abiertx a todas', type: 'multi_pills', req: false, options: ['Carne','Pescado','Marisco','Veganx','Vegetarianx','Celíacx','Sin lactosa','Sin frutos secos','Sin cerdo'], conditions: ['cartas_fisicas_en_un_restaurante_aun_no_he_reservado_recomendadme_vuestras_3_lugares_favoritos'] }
+        ];
+
+        const dbAudience = [
+            { id: 'pareja', parent: null, label: 'Pareja', nextTitle: '¿En qué punto estáis?', final: false },
+            { id: 'amistad', parent: null, label: 'Amistades y/o conocidxs', nextTitle: '¿Qué formato de grupo sois?', final: false },
+            { id: 'familia', parent: null, label: 'Mi familia', nextTitle: '¿Quiénes os juntáis?', final: false },
+            { id: 'p_cita', parent: 'pareja', label: 'Primera cita', final: true },
+            { id: 'p_semanas', parent: 'pareja', label: 'Semanas o meses', final: true },
+            { id: 'p_estable', parent: 'pareja', label: 'Años o Matrimonio', final: true },
+            { id: 'a_2', parent: 'amistad', label: 'Mano a mano (2)', final: true },
+            { id: 'a_grupo', parent: 'amistad', label: 'Grupo de amigxs', final: true },
+            { id: 'f_nucleo', parent: 'familia', label: 'Padres, hijxs o hermanxs', final: true }
+        ];
+
+        const dbTones = [
+            {
+                id: 'deep', title: 'Conexión Emocional', subtitle: 'Para conectar de verdad',
+                subtones: [
+                    { id: 't_vulnerable', text: 'Vulnerable / Corazón Abierto' },
+                    { id: 't_agradecido', text: 'Gratitud / Reconocimiento' },
+                    { id: 't_sanador', text: 'Sanador / Reconciliación' },
+                    { id: 't_empatico', text: 'Empatía Pura' }
+                ]
+            },
+            {
+                id: 'fun', title: 'Divertidos y Sociales', subtitle: 'Salseo y anécdotas',
+                subtones: [
+                    { id: 't_rompehielo', text: 'Rompehielo / Superficial' },
+                    { id: 't_chismoso', text: 'Chismoso / Curiosidad' },
+                    { id: 't_absurdo', text: 'Absurdo / Surrealista' },
+                    { id: 't_competitivo', text: 'Picado / Reto' }
+                ]
+            },
+            {
+                id: 'intimate', title: 'Íntimos y Atrevidos', subtitle: 'Sube la temperatura',
+                subtones: [
+                    { id: 't_picante', text: 'Picante / Flirteo' },
+                    { id: 't_prohibido', text: 'Tabú / Sin Filtros' },
+                    { id: 't_confesion', text: 'Confesión / Verdad Desnuda' },
+                    { id: 't_provocador', text: 'Provocador / Incómodo' }
+                ]
+            }
+        ];
+
+        const tricksData = [
+            { id: 1, text: "El simple hecho de tener el móvil encima de la mesa, reduce drásticamente la probabilidad de generar una conversación profunda." },
+            { id: 2, text: "Regla de los 3 segundos: Al hacer silencio tras su respuesta, el 80% de las veces la persona añadirá el detalle más importante." },
+            { id: 3, text: "Efecto Espejo: Repetir sus últimas 3 palabras con tono de pregunta hace que el cerebro del otro sienta un interés profundo." },
+            { id: 4, text: "En lugar de decir 'te entiendo', etiqueta la emoción: 'Parece que eso te frustró bastante'. Calma instantáneamente la angustia." }
+        ];
+
+        // ==========================================
+        // 2. UTILIDADES GLOBALES Y LOGO
+        // ==========================================
+
+        const getMaxDepth = (db, parentId = null) => {
+            const children = db.filter(n => n.parent === parentId || n.parent_id === parentId || (!n.parent && !n.parent_id && !parentId));
+            if (children.length === 0) return 0;
+            let maxChildDepth = 0;
+            for (const child of children) {
+                if (child.final === true || child.es_final === 'TRUE' || child.final === 'TRUE') {
+                    maxChildDepth = Math.max(maxChildDepth, 1);
+                } else {
+                    maxChildDepth = Math.max(maxChildDepth, 1 + getMaxDepth(db, child.id));
+                }
+            }
+            return maxChildDepth;
+        };
+
+        // Componente Logo Tipográfico Reutilizable
+        const Logo = () => (
+            <div className="flex items-center justify-center gap-1 pointer-events-auto opacity-90 select-none">
+                <span className="font-bold text-[1.4rem] tracking-tighter text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    One Last Time
+                </span>
+                <div className="w-[1.4rem] h-[1.4rem] border-[2.5px] border-black rounded-full flex items-center justify-center -mt-3">
+                    <span className="text-[8px] font-bold leading-none mt-[1px] ml-[1px]">Co.</span>
+                </div>
+            </div>
+        );
+
+        // Header Global Fijo
+        const GlobalHeader = ({ progress, onBack, greenMode }) => (
+            <div className="fixed top-0 left-0 w-full px-6 pt-6 pb-4 z-[999] flex flex-col items-center justify-center pointer-events-none" style={{ backgroundColor: greenMode ? '#CCFF00' : '#fcfcfc', transition: 'background-color 2100ms ease-in-out' }}>
+                <div className="w-full max-w-lg flex justify-center items-center relative mb-4 mt-2">
+                    {onBack && (
+                        <button onClick={onBack} className="absolute left-0 top-1/2 -translate-y-1/2 text-2xl font-light leading-none text-black/40 hover:text-black/70 transition-colors pointer-events-auto">
+                            ←
+                        </button>
+                    )}
+                    <Logo />
+                </div>
+                <div className="w-48 h-1.5 bg-black/8 rounded-full overflow-hidden shadow-inner relative">
+                    <div className="h-full bg-gradient-to-r from-black via-gray-800 to-black transition-all duration-900 ease-out" style={{ width: `${progress}%` }} />
+                </div>
+            </div>
+        );
+
+        // Componente de iconos refactorizado con grupos (g) para evitar crasheos de React en Nivel 4
+        const ElegantIcon = ({ name, className = "" }) => {
+            const strokeWidth = "1.5";
+            const icons = {
+                plus: <g><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></g>,
+                minus: <g><line x1="5" y1="12" x2="19" y2="12" /></g>,
+                'corner-down-right': <g><polyline points="15 10 20 15 15 20" /><path d="M4 4v7a4 4 0 0 0 4 4h12" /></g>
+            };
+            return icons[name] ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    {icons[name]}
+                </svg>
+            ) : null;
+        };
+
+        const RangeSlider = ({ value, min, max, onChange, restrictedMin, isAdultTheme }) => {
+            const percentage = ((value - min) / (max - min)) * 100;
+            let bgStyle = `linear-gradient(to right, #000000 ${percentage}%, #e5e7eb ${percentage}%)`;
+
+            if (isAdultTheme && restrictedMin > min) {
+                const restrictedPct = ((restrictedMin - min) / (max - min)) * 100;
+                if (value >= restrictedMin) {
+                    bgStyle = `linear-gradient(to right, #ef4444 0%, #ef4444 ${restrictedPct}%, #000000 ${restrictedPct}%, #000000 ${percentage}%, #e5e7eb ${percentage}%)`;
+                } else {
+                    bgStyle = `linear-gradient(to right, #ef4444 0%, #ef4444 ${percentage}%, #e5e7eb ${percentage}%)`;
+                }
+            }
+
+            return (
+                <input type="range" min={min} max={max} value={value} onChange={onChange} className="custom-range" style={{ background: bgStyle }} />
+            );
+        };
+
+        // ==========================================
+        // 3. COMPONENTES DE FASES
+        // ==========================================
+
+        const IntroCinematic = ({ onComplete }) => {
+            const [bgGreen, setBgGreen] = useState(true);
+            const [showScene, setShowScene] = useState(true);
+            const [showTitle, setShowTitle] = useState(false);
+            const [titleAnimating, setTitleAnimating] = useState(false);
+            const [titleFixed, setTitleFixed] = useState(false);
+            const [text, setText] = useState("Hagamos de tu comida, la mejor que hayas tenido nunca.");
+            const [slideCards, setSlideCards] = useState(false);
+
+            useEffect(() => {
+                const timers = [];
+                timers.push(setTimeout(() => setShowTitle(true), 100));
+                setTitleAnimating(true);
+                timers.push(setTimeout(() => setSlideCards(true), 600));
+                timers.push(setTimeout(() => setShowTitle(false), 2800));
+                timers.push(setTimeout(() => { setText("Empecemos."); setTitleAnimating(false); setTitleFixed(true); setShowTitle(true); }, 3400));
+                timers.push(setTimeout(() => { setBgGreen(false); setShowScene(false); setShowTitle(false); }, 4200));
+                timers.push(setTimeout(() => onComplete(), 4800));
+                return () => timers.forEach(clearTimeout);
+            }, []);
+
+            const cards = [
+                { id: 1, type: 'black', sx: '-100vw', sy: '-50vh', sr: '-45deg', fx: '-50%', fy: '-85%', fr: '-12deg', paragraphs: ["Que tengas esta carta en tus manos significa que has tomado la iniciativa para tener conexiones más profundas con las personas que te importan. Así que enhorabuena por atreverte.", "Con las siguientes preguntas tendrás algunas de las conversaciones más honestas que hayas tenido.", "Te harán reír, pensar, aprender y quizás incluso llorar. Pero el valor de tenerlas será incalculable, ya que te acercarán más a cualquier persona con las que juegues.", "Solo asegúrate de disfrutar abriéndote, escuchando, aprendiendo y respetando mientras generas cambio positivo en ti y lxs demás.", "Bienvenidx a Sensibles."] },
+                { id: 2, type: 'white', sx: '100vw', sy: '50vh', sr: '45deg', fx: '60%', fy: '65%', fr: '168deg', text: "Si hoy fuera nuestra última cena, ¿de qué hablaríamos?" },
+                { id: 3, type: 'white', sx: '50vw', sy: '-100vh', sr: '90deg', fx: '58%', fy: '-80%', fr: '82deg', text: "¿En qué momento exacto sentiste que conectamos?" },
+                { id: 4, type: 'white', sx: '-100vw', sy: '50vh', sr: '-90deg', fx: '-60%', fy: '75%', fr: '-160deg', text: "¿Cuál es tu recuerdo favorito de nosotros?" },
+                { id: 5, type: 'white', sx: '0vw', sy: '-100vh', sr: '0deg', fx: '0%', fy: '-100%', fr: '-5deg', text: "Si pudieras cambiar algo de tu pasado, ¿qué sería?" },
+                { id: 6, type: 'green', sx: '0vw', sy: '100vh', sr: '0deg', fx: '10%', fy: '75%', fr: '4deg', text: "Sé vulnerable.\nNo juzgues." }
+            ];
+
+            return (
+                <div className={`h-screen w-full transition-colors duration-[1500ms] ease-in-out ${bgGreen ? 'bg-[#CCFF00]' : 'bg-[#fcfcfc]'} overflow-hidden relative`}>
+                    <div className={`transition-opacity duration-[1200ms] ${showScene ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className={`title-wrapper px-4 ${showTitle ? 'is-visible' : ''} ${titleAnimating ? 'is-animating' : ''} ${titleFixed ? 'is-fixed' : ''}`}>
+                            <h1 className="text-[1.7rem] md:text-5xl font-semibold tracking-tight text-gray-900 leading-[1.1] text-center mx-auto">{text}</h1>
+                        </div>
+                        {cards.map((card, i) => (
+                            <div key={card.id} className={`table-card ${card.type === 'white' ? 'intro-white' : card.type === 'green' ? 'intro-green' : 'intro-black'} ${slideCards ? 'animate-deal' : ''}`} style={{ animationDelay: `${Math.floor(i / 2) * 0.3}s`, '--start-x': card.sx, '--start-y': card.sy, '--start-rot': card.sr, '--final-x': card.fx, '--final-y': card.fy, '--final-rot': card.fr }}>
+                                {card.paragraphs ? (
+                                    <div className="flex flex-col gap-[0.25rem] w-full text-[#CCFF00] text-[8.5px] md:text-[9.5px] leading-tight font-normal text-center">
+                                        {card.paragraphs.map((p, pi) => <p key={pi} className="m-0">{p}</p>)}
+                                    </div>
+                                ) : (
+                                    <span className={`px-4 text-[11px] md:text-[12px] uppercase tracking-widest leading-relaxed font-medium ${card.type === 'green' ? 'text-black' : 'text-gray-800'}`}>{card.text}</span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const TreeEngine = ({ initialTitle, data, onComplete, onProgressUpdate, treeKey, treeStates, setTreeStates, onBack, progress }) => {
+            const { currentParent, history } = treeStates[treeKey];
+            const [isOut, setIsOut] = useState(false);
+
+            const visibleOptions = useMemo(() => data.filter(opt => opt.parent === currentParent || opt.parent_id === currentParent || (!opt.parent && !opt.parent_id && !currentParent)), [currentParent, data]);
+
+            const title = useMemo(() => {
+                if (!currentParent) return initialTitle;
+                const node = data.find(d => d.id === currentParent);
+                return node?.nextTitle || node?.título_siguiente || initialTitle;
+            }, [currentParent, data, initialTitle]);
+
+            useEffect(() => {
+                const maxDepth = getMaxDepth(data, currentParent);
+                const totalBranchSteps = history.length + maxDepth;
+                const localPct = totalBranchSteps === 0 ? 1 : history.length / totalBranchSteps;
+                onProgressUpdate(localPct);
+            }, [currentParent, history.length]);
+
+            const handleClick = (node) => {
+                setIsOut(true);
+                setTimeout(() => {
+                    if (node.final === true || node.es_final === 'TRUE' || node.final === 'TRUE') {
+                        onComplete(node.id);
+                    } else {
+                        setTreeStates(prev => ({
+                            ...prev,
+                            [treeKey]: {
+                                currentParent: node.id,
+                                history: [...prev[treeKey].history, currentParent]
+                            }
+                        }));
+                    }
+                    setIsOut(false);
+                }, 400); 
+            };
+
+            const handleBack = () => {
+                if (history.length === 0) {
+                    if (onBack) onBack();
+                    return; 
+                }
+                setIsOut(true);
+                setTimeout(() => {
+                    setTreeStates(prev => {
+                        const newHistory = [...prev[treeKey].history];
+                        const prevParent = newHistory.pop();
+                        return {
+                            ...prev,
+                            [treeKey]: {
+                                currentParent: prevParent,
+                                history: newHistory
+                            }
+                        };
+                    });
+                    setIsOut(false);
+                }, 400);
+            };
+
+            const getCardStyles = (index) => {
+                const origins = [
+                    { x: '-100vw', y: '50vh', rot: '-45deg' },
+                    { x: '100vw', y: '50vh', rot: '45deg' },
+                    { x: '0vw', y: '100vh', rot: '0deg' },
+                    { x: '0vw', y: '-100vh', rot: '180deg' }
+                ];
+                const origin = origins[index % origins.length];
+                const finalRots = ['-2.5deg', '3deg', '-1.5deg', '2deg', '0.5deg', '-3.5deg'];
+                const fRot = finalRots[index % finalRots.length];
+                return { '--start-x': origin.x, '--start-y': origin.y, '--start-rot': origin.rot, '--final-rot': fRot, animationDelay: `${index * 0.15}s` };
+            };
+
+            const canGoBack = history.length > 0 || onBack;
+
+            return (
+                <div className="scene flex-col justify-start pt-28 px-4 relative bg-[#fcfcfc] min-h-screen">
+                    <GlobalHeader progress={progress} onBack={canGoBack ? handleBack : null} />
+                    <div key={currentParent} className={`w-full max-w-4xl flex flex-col items-center transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'opacity-100'}`}>
+                        <div className="text-center mb-12">
+                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Configuración</span>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">{title}</h2>
+                        </div>
+                        <div className="w-full flex flex-wrap gap-6 md:gap-10 justify-center items-center">
+                            {visibleOptions.map((opt, index) => (
+                                <div key={opt.id} className="w-full md:w-auto flex justify-center" style={{ animation: 'floatN1 6s ease-in-out infinite', animationDelay: `${index * 0.5}s` }}>
+                                    <div className="w-full flex justify-center deal-n1" style={getCardStyles(index)}>
+                                        <button className="n1-card group" onClick={() => handleClick(opt)}>
+                                            <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 px-2">{opt.label || opt.nombre_visible}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack }) => {
+            const [form, setForm] = useState(initialData || { ciudad: '', fecha: '', restaurante: '', reserva: '', direccion: '', comida: [] });
+            const [errs, setErrs] = useState([]);
+            const [shakeFields, setShakeFields] = useState([]);
+            const [showGlobalError, setShowGlobalError] = useState(false);
+            const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
+
+            useEffect(() => {
+                const handleResize = () => setIsMobile(window.innerWidth < 768);
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            const fields = useMemo(() => dbLogistics.filter(f => f.conditions.includes('siempre') || f.conditions.some(c => contextId?.includes(c))), [contextId]);
+
+            const submit = () => {
+                const newErrs = fields.filter(f => f.req && (!form[f.id] || form[f.id].trim() === '')).map(f => f.id);
+                if (newErrs.length > 0) {
+                    setErrs(newErrs); setShakeFields(newErrs); setShowGlobalError(true);
+                    setTimeout(() => setShakeFields([]), 400); setTimeout(() => setShowGlobalError(false), 2000);
+                } else {
+                    onComplete(form);
+                }
+            };
+
+            const bubbleConfig = [{ size: 86, mt: 0, ml: 0 }, { size: 96, mt: 10, ml: -15 }, { size: 92, mt: -10, ml: -10 }, { size: 86, mt: 15, ml: -12 }, { size: 110, mt: -15, ml: -10 }, { size: 92, mt: 5, ml: -15 }, { size: 102, mt: -5, ml: -10 }, { size: 116, mt: 10, ml: -15 }, { size: 96, mt: -15, ml: -10 }];
+
+            return (
+                <div className="min-h-screen flex flex-col items-center pt-28 p-6 relative">
+                    <GlobalHeader progress={progress} onBack={onBack} />
+                    <div className="w-full max-w-[22rem] fade-in mt-4">
+                        <div className="mb-10 text-center">
+                            <h2 className="text-2xl font-medium tracking-tight text-gray-900">Detalles logísticos</h2>
+                            <p className="text-sm text-gray-500 mt-3 font-light px-2">Para organizar la logística y el envío.</p>
+                        </div>
+                        <div className="flex flex-col items-center px-1">
+                            {fields.map((f, i) => {
+                                const isMulti = f.type === 'multi_pills';
+                                const inputClasses = `pill-input ${errs.includes(f.id) ? 'input-error' : ''} ${shakeFields.includes(f.id) ? 'shake' : ''}`;
+                                return (
+                                    <div key={f.id} className={`w-full mb-4 ${!isMulti ? 'floating' : ''}`} style={!isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>
+                                        <label className={`label-style ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>{f.label}</label>
+                                        {f.subtitle && <p className={`text-[10px] text-gray-500 font-medium text-center mb-3 -mt-1 ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15 + 0.05}s`} : {}}>{f.subtitle}</p>}
+                                        {f.type === 'text' && <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'datetime-local' && <input type="datetime-local" className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'multi_pills' && (
+                                            (() => {
+                                                const bubbleSize = 95;
+                                                const gridCols = 3;
+                                                const gridWidth = 285;
+                                                const containerWidth = 350;
+                                                return (
+                                                    <div className="bubbles-container-centered" style={{ height: `${containerWidth}px`, width: `${containerWidth}px`, borderRadius: '50%', animationDelay: `${i * 0.15 + 0.1}s` }}>
+                                                        <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: `${gridWidth}px`, height: `${gridWidth}px` }}>
+                                                            {f.options.map((opt, oi) => {
+                                                                const isSel = form.comida.includes(opt);
+                                                                const col = oi % gridCols;
+                                                                const row = Math.floor(oi / gridCols);
+                                                                const perturbX = Math.sin(oi * 1.3) * 12;
+                                                                const perturbY = Math.cos(oi * 1.7) * 12;
+                                                                const baseX = col * bubbleSize + perturbX;
+                                                                const baseY = row * bubbleSize + perturbY;
+                                                                return (
+                                                                    <button
+                                                                        key={opt}
+                                                                        onClick={() => setForm({...form, comida: isSel ? form.comida.filter(c => c !== opt) : [...form.comida, opt]})}
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            left: `${baseX}px`,
+                                                                            top: `${baseY}px`,
+                                                                            width: `${bubbleSize}px`,
+                                                                            height: `${bubbleSize}px`,
+                                                                            borderRadius: '50%',
+                                                                            display: 'flex',
+                                                                            alignItems: 'center',
+                                                                            justifyContent: 'center',
+                                                                            fontSize: '13px',
+                                                                            fontWeight: '500',
+                                                                            textAlign: 'center',
+                                                                            padding: '0.5rem',
+                                                                            border: '1.5px solid #e5e7eb',
+                                                                            background: '#ffffff',
+                                                                            color: isSel ? '#000' : '#4b5563',
+                                                                            cursor: 'pointer',
+                                                                            boxShadow: isSel ? '0 0 2px rgba(0,0,0,0.3), 0 8px 16px rgba(0,0,0,0.15), 0 0 30px rgba(204, 255, 0, 0.5)' : '0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08)',
+                                                                            transition: 'all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                                                            animation: `floatBubble 5s ease-in-out infinite`,
+                                                                            animationDelay: `${oi * 0.1}s`,
+                                                                            letterSpacing: '0.2px'
+                                                                        }}
+                                                                        className="transition-all duration-300 hover:shadow-lg hover:scale-110 active:scale-95"
+                                                                        onMouseEnter={(e) => {
+                                                                            if (!isSel) {
+                                                                                e.currentTarget.style.transform = 'scale(1.12)';
+                                                                                e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.12)';
+                                                                                e.currentTarget.style.animationPlayState = 'paused';
+                                                                            }
+                                                                        }}
+                                                                        onMouseLeave={(e) => {
+                                                                            if (!isSel) {
+                                                                                e.currentTarget.style.transform = '';
+                                                                                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08)';
+                                                                                e.currentTarget.style.animationPlayState = 'running';
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <span style={{ position: 'relative', zIndex: 2 }}>{opt}</span>
+                                                                        <div style={{
+                                                                            position: 'absolute',
+                                                                            inset: 0,
+                                                                            borderRadius: '50%',
+                                                                            background: 'linear-gradient(135deg, #CCFF00 0%, #d4ff33 100%)',
+                                                                            opacity: isSel ? 1 : 0,
+                                                                            zIndex: 0,
+                                                                            pointerEvents: 'none',
+                                                                            transition: 'opacity 0.8s ease'
+                                                                        }} />
+                                                                    </button>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })()
+                                        )}
+                                    </div>
+                                );
+                            })}
+                            <div className="w-full mt-2 floating" style={{animationDelay: `${fields.length * 0.15}s`}}>
+                                <div className={`transition-all duration-300 overflow-hidden ${showGlobalError ? 'max-h-10 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
+                                    <p className="text-red-500 text-[11px] font-semibold text-center uppercase tracking-wider">Falta rellenar los campos en rojo</p>
+                                </div>
+                                <button className="btn-black" onClick={submit}>Continuar Personalizando</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Calculation = ({ data, formatId, onComplete, onBack, progress }) => {
+            const [estado, setEstado] = useState('calculando'); 
+            const [textoVisible, setTextoVisible] = useState(true);
+            const [textoActual, setTextoActual] = useState('calculando');
+            const [porcentaje, setPorcentaje] = useState(0);
+            const [dim, setDim] = useState({ w: 420, h: 237 });
+            const [mensajeFallo, setMensajeFallo] = useState('');
+            
+            const pathRef = useRef(null);
+            const cardRef = useRef(null);
+            const intervalRef = useRef(null);
+
+            const isDigital = formatId?.includes('digital');
+
+            const calculandoText = useMemo(() => {
+                if (isDigital) {
+                    return `Preparando tu edición digital...`;
+                }
+                if (data?.ciudad && data?.fecha) {
+                    const dateObj = new Date(data.fecha);
+                    if (!isNaN(dateObj)) {
+                        const dia = dateObj.getDate();
+                        const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+                        const mesStr = meses[dateObj.getMonth()];
+                        const horasStr = dateObj.getHours().toString().padStart(2, '0') + ':' + dateObj.getMinutes().toString().padStart(2, '0');
+                        return `Calculando si llegamos a ${data.ciudad} el ${dia} de ${mesStr} a las ${horasStr}...`;
+                    }
+                } else if (data?.ciudad) {
+                    return `Calculando si llegamos a ${data.ciudad} ahora mismo...`;
+                }
+                return `Calculando si llegamos a tu zona...`;
+            }, [data, isDigital]);
+
+            const startPos = useMemo(() => {
+                const origins = [
+                    { x: '-100vw', y: '-50vh' },  
+                    { x: '100vw', y: '50vh' },    
+                    { x: '-50vw', y: '100vh' },   
+                    { x: '50vw', y: '-100vh' }
+                ];
+                return origins[Math.floor(Math.random() * origins.length)];
+            }, []);
+
+            useEffect(() => {
+                const resizeObserver = new ResizeObserver(entries => {
+                    for (let entry of entries) {
+                        if (entry.contentRect.width > 0) setDim({ w: entry.contentRect.width, h: entry.contentRect.height });
+                    }
+                });
+                if (cardRef.current) resizeObserver.observe(cardRef.current);
+                return () => {
+                    resizeObserver.disconnect();
+                    if (intervalRef.current) clearInterval(intervalRef.current);
+                };
+            }, []);
+
+            useEffect(() => {
+                setTimeout(() => iniciarCalculo(), 800); 
+            }, []);
+
+            const iniciarCalculo = () => {
+                setEstado('calculando');
+                setTextoActual('calculando');
+                setTextoVisible(true);
+                setPorcentaje(0);
+                
+                let isFallo = false;
+                let msgFallo = '';
+
+                // Si no es digital, aplicamos la validación de tiempo
+                if (!isDigital) {
+                    const city = (data?.ciudad || '').toLowerCase();
+                    let isBcn = city.includes('barcelona') || city.includes('bcn') || city.includes('080');
+                    
+                    let diffHours = 0;
+                    if (data?.fecha) {
+                        diffHours = (new Date(data.fecha) - new Date()) / 36e5;
+                    }
+
+                    if (isBcn) {
+                        if (diffHours < 2) {
+                            isFallo = true;
+                            msgFallo = 'Para envíos físicos en Barcelona necesitamos al menos 2h de margen.';
+                        }
+                    } else {
+                        if (diffHours < 48) {
+                            isFallo = true;
+                            msgFallo = 'Los envíos físicos fuera de Barcelona tardan entre 24 y 48h.';
+                        }
+                    }
+                }
+                
+                setMensajeFallo(msgFallo);
+                
+                if (intervalRef.current) clearInterval(intervalRef.current);
+                
+                if (pathRef.current) {
+                    pathRef.current.style.transition = 'none';
+                    const length = pathRef.current.getTotalLength();
+                    pathRef.current.style.strokeDasharray = length;
+                    pathRef.current.style.strokeDashoffset = length;
+                    pathRef.current.getBoundingClientRect(); 
+                    pathRef.current.style.transition = 'stroke-dashoffset 5.2s linear';
+                    pathRef.current.style.strokeDashoffset = '0';
+                }
+
+                let step = 0;
+                intervalRef.current = setInterval(() => {
+                    step += 1;
+                    setPorcentaje(step > 100 ? 100 : step);
+                    if (step >= 100) clearInterval(intervalRef.current);
+                }, 52); 
+
+                setTimeout(() => {
+                    setTextoVisible(false); 
+                    setTimeout(() => {
+                        if (isFallo) {
+                            setEstado('fallo_opciones');
+                        } else {
+                            setEstado('exito');
+                            setTextoActual('exito');
+                            setTextoVisible(true);
+                            setTimeout(() => onComplete(false), 1500);
+                        }
+                    }, 800); 
+                }, 5200); 
+            };
+
+            const getDynamicPath = () => {
+                const strokeWidth = 4;
+                const cssRadius = 14; 
+                const inset = strokeWidth / 2; 
+                const r = cssRadius - inset;
+                const w = dim.w || 420;
+                const h = dim.h || 237;
+                if (w <= r * 2 || h <= r * 2) return "";
+                return `M ${w/2} ${inset} H ${w - r - inset} A ${r} ${r} 0 0 1 ${w - inset} ${r + inset} V ${h - r - inset} A ${r} ${r} 0 0 1 ${w - r - inset} ${h - inset} H ${r + inset} A ${r} ${r} 0 0 1 ${inset} ${h - r - inset} V ${r + inset} A ${r} ${r} 0 0 1 ${r + inset} ${inset} Z`;
+            };
+
+            if (estado === 'fallo_opciones') {
+                return (
+                    <div className="flex flex-col items-center justify-center w-full min-h-screen relative fade-in">
+                        <GlobalHeader progress={progress} onBack={onBack} />
+                        <div className="scene flex-col text-center px-4 max-w-md mx-auto mt-4">
+                            <div className="w-16 h-16 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <h2 className="text-2xl font-bold mb-3 text-gray-900">Ajuste logístico necesario</h2>
+                            <p className="text-sm font-medium text-gray-500 mb-8 px-2">{mensajeFallo}</p>
+                            
+                            <div className="space-y-4 w-full px-2">
+                                <button onClick={onBack} className="pill-button w-full bg-white text-gray-700 border border-gray-200 hover:border-black hover:text-black shadow-sm">
+                                    1. Cambiar día y/o lugar
+                                </button>
+                                <button onClick={() => onComplete(true)} className="pill-button btn-black w-full text-white shadow-xl">
+                                    2. Usar edición Digital ahora 📲
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            let isSuccessClass = estado === 'exito' ? 'is-success' : '';
+
+            return (
+                <div className="flex flex-col items-center justify-center w-full min-h-screen relative fade-in pt-8">
+                    <GlobalHeader progress={progress} onBack={onBack} />
+                    <div className="scene">
+                        <div className="deal-wrapper deal-in-animation-calc" style={{ '--start-x': startPos.x, '--start-y': startPos.y }}>
+                            <div className={`card-container-calc`} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                <div className={`physical-card-calc ${isSuccessClass}`} ref={cardRef}>
+                                    <svg className="border-svg" viewBox={`0 0 ${dim.w || 420} ${dim.h || 237}`}>
+                                        <path ref={pathRef} className="border-path" d={getDynamicPath()} />
+                                    </svg>
+                                    <div className={`text-content-calc ${textoVisible ? 'text-fade-in' : 'text-fade-out'}`}>
+                                        {textoActual === 'calculando' && (
+                                            <div className="flex flex-col items-center">
+                                                <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 text-center mb-3 px-4">
+                                                    {calculandoText}
+                                                </span>
+                                                <span className="text-xl font-medium tracking-widest text-black">
+                                                    {porcentaje}%
+                                                </span>
+                                            </div>
+                                        )}
+                                        {textoActual === 'exito' && (
+                                            <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 text-center">
+                                                ¡Sí, llegamos!
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const SecretReward = ({ secretIndex, onComplete, onBack, progress }) => {
+            const [pageLoaded, setPageLoaded] = useState(false);
+            const activeCardRef = useRef(null);
+            
+            useEffect(() => {
+                const timer = setTimeout(() => setPageLoaded(true), 10);
+                return () => clearTimeout(timer);
+            }, []);
+
+            useEffect(() => {
+                if (activeCardRef.current && pageLoaded) {
+                    setTimeout(() => {
+                        activeCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 500);
+                }
+            }, [secretIndex, pageLoaded]);
+
+            const getCard3DStyles = (pos) => {
+                const rotZ = [0, 1.5, -1, 2, -1.5, 1][pos % 6];
+                const rotY = [0, 1, -1, 1.5, -1, 0.5][pos % 6];
+                const tx = [0, 6, -4, 8, -5, 4][pos % 6];
+                return { '--rot-z': `${rotZ}deg`, '--rot-y': `${rotY}deg`, '--tx': `${tx}px` };
+            };
+
+            const containerMinHeight = 260 + ((tricksData.length - 1) * 140);
+
+            return (
+                <div className={`w-full min-h-screen flex flex-col items-center transition-colors duration-[2100ms] ease-in-out ${pageLoaded ? 'bg-[#CCFF00]' : 'bg-[#fcfcfc]'} relative pt-12`}>
+
+                    <GlobalHeader progress={progress} onBack={onBack} greenMode={pageLoaded} />
+
+                    <div className="scene max-w-xl mx-auto w-full !pt-16">
+                        <div className="text-center mb-8 z-10 transition-all duration-500 w-full px-4">
+                            <span className="text-[11px] font-bold text-gray-600 uppercase tracking-widest block mb-1 mt-6">
+                                Recompensa desbloqueada
+                            </span>
+                            <h2 className="text-2xl font-semibold tracking-tight text-gray-900">
+                                Secreto de Conexión
+                            </h2>
+                        </div>
+
+                        <div className="deck-container-secrets px-2" style={{ minHeight: `${containerMinHeight}px` }}>
+                            {tricksData.map((trick, index) => {
+                                const isAct = index === secretIndex;
+                                const isPast = index < secretIndex;
+                                const isLocked = index > secretIndex;
+                                
+                                const pos = index;
+                                const styles3D = getCard3DStyles(pos);
+                                const translateY = pos * 150; 
+                                const scale = isAct ? 1.05 : 1 - (pos * 0.015); 
+                                
+                                let zIndex = 100 - pos;
+                                if (isAct) zIndex = 200;
+
+                                const wrapperStyle = { 
+                                    ...styles3D, 
+                                    '--ty': `${translateY}px`, 
+                                    '--scale': scale, 
+                                    zIndex: zIndex, 
+                                    animationDelay: `${pos * -0.4}s` 
+                                };
+
+                                return (
+                                    <div key={trick.id} className="card-wrapper-secret" style={wrapperStyle} ref={isAct ? activeCardRef : null}>
+                                        <div className={`physical-card-secret ${isAct ? 'card-active-secret shadow-[0_20px_40px_rgba(0,0,0,0.2)]' : isLocked ? 'card-locked-secret' : 'card-past-secret'}`}>
+                                            {isAct && (
+                                                <div className="flex flex-col items-center justify-center h-full w-full">
+                                                    <span className="text-[13px] font-bold text-gray-700 uppercase tracking-widest mb-3 opacity-90">Secreto {trick.id}</span>
+                                                    <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-900 px-2">{trick.text}</span>
+                                                </div>
+                                            )}
+                                            {isLocked && (
+                                                <div className="flex flex-col items-center justify-center h-full w-full px-4">
+                                                    <span className="text-[13px] font-bold text-gray-400 uppercase tracking-widest mb-2">Secreto {trick.id}</span>
+                                                    <span className="text-[16px] font-medium text-gray-300 tracking-wide opacity-90 text-center">Se revelará más adelante</span>
+                                                </div>
+                                            )}
+                                            {isPast && (
+                                                <div className="flex flex-col items-center justify-center h-full w-full px-4 opacity-90">
+                                                    <span className="text-[13px] font-bold text-gray-700 uppercase tracking-widest mb-3 opacity-80">Secreto {trick.id}</span>
+                                                    <span className="text-[17px] tracking-wide leading-tight font-medium text-gray-900 px-2 line-clamp-3 text-center">{trick.text}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <button onClick={onComplete} className="mt-14 mb-10 relative z-50 px-8 py-3.5 bg-black text-white rounded-full text-sm font-semibold uppercase tracking-wider hover:bg-gray-800 transition shadow-xl hover:-translate-y-0.5 active:scale-95 w-full max-w-[320px]">
+                            Continuar personalizando
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const CurvedSlider = ({ value, max, onChange }) => {
+            const sliderRef = useRef(null);
+
+            const handleMove = (e) => {
+                if (e.buttons !== 1 && e.type !== 'touchmove') return;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const rect = sliderRef.current.getBoundingClientRect();
+                let x = clientX - rect.left - 15; 
+                let width = rect.width - 30;
+                let progress = Math.max(0, Math.min(1, x / width));
+                onChange(progress * max);
+            };
+
+            const t = max > 0 ? value / max : 0;
+            const thumbX = 15 + t * 170; 
+            const thumbY = Math.pow(1 - t, 2) * 10 + 2 * (1 - t) * t * 35 + Math.pow(t, 2) * 10;
+
+            return (
+                <div 
+                    className="relative w-full max-w-[240px] h-12 mx-auto cursor-pointer mb-4"
+                    ref={sliderRef}
+                    onPointerDown={(e) => { e.target.setPointerCapture(e.pointerId); handleMove(e); }}
+                    onPointerMove={handleMove}
+                    onTouchMove={handleMove}
+                    style={{ touchAction: 'none' }} 
+                >
+                    <svg width="100%" height="100%" viewBox="0 0 200 40" preserveAspectRatio="none" className="absolute inset-0 overflow-visible">
+                        <path d="M 15 10 Q 100 35 185 10" fill="none" stroke="#e5e7eb" strokeWidth="4" strokeLinecap="round" />
+                        <path d="M 15 10 Q 100 35 185 10" fill="none" stroke="#000" strokeWidth="4" strokeLinecap="round" strokeDasharray="180" strokeDashoffset={180 - (t * 180)} />
+                    </svg>
+                    <div 
+                        className="absolute w-6 h-6 bg-black rounded-full border-[3px] border-white shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-transform active:scale-95 pointer-events-none"
+                        style={{ left: `calc(${(thumbX / 200) * 100}% - 12px)`, top: `${thumbY - 12}px` }}
+                    />
+                </div>
+            );
+        };
+
+        const TonesNoria = ({ onComplete, progress, onBack }) => {
+            const [scrollPos, setScrollPos] = useState(0);
+            const maxScroll = dbTones.length - 1;
+
+            const [selectedCards, setSelectedCards] = useState([]);
+            const [shakeCardId, setShakeCardId] = useState(null);
+            const [limitWarning, setLimitWarning] = useState(false);
+
+            const containerRef = useRef(null);
+            const touchStartX = useRef(null);
+            const touchStartY = useRef(null);
+            const lastScrollPos = useRef(0);
+            const isDragging = useRef(false);
+
+            const DRAG_SENSITIVITY = window.innerWidth * 0.5;
+            const MAX_SELECTIONS = 5;
+
+            useEffect(() => {
+                window.scrollTo(0, 0);
+            }, []);
+
+            useEffect(() => {
+                const container = containerRef.current;
+                if (!container) return;
+                const handleWheel = (e) => {
+                    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                        e.preventDefault(); 
+                        setScrollPos(prev => {
+                            let newPos = prev + (e.deltaX * 0.002);
+                            return Math.max(0, Math.min(maxScroll, newPos));
+                        });
+                    }
+                };
+                container.addEventListener('wheel', handleWheel, { passive: false });
+                return () => container.removeEventListener('wheel', handleWheel);
+            }, [maxScroll]);
+
+            const handleDragStart = (clientX, clientY) => { 
+                touchStartX.current = clientX; 
+                touchStartY.current = clientY; 
+                lastScrollPos.current = scrollPos;
+                isDragging.current = false;
+            };
+
+            const handleDragMove = (clientX, clientY) => {
+                if (touchStartX.current !== null && touchStartY.current !== null) {
+                    const diffX = clientX - touchStartX.current;
+                    const diffY = clientY - touchStartY.current;
+                    if (Math.abs(diffY) > Math.abs(diffX) + 5 && !isDragging.current) {
+                        touchStartX.current = null; 
+                        return;
+                    }
+                    if (Math.abs(diffX) > 5) isDragging.current = true;
+                    let newPos = lastScrollPos.current - (diffX / DRAG_SENSITIVITY);
+                    newPos = Math.max(0, Math.min(maxScroll, newPos));
+                    setScrollPos(newPos);
+                }
+            };
+
+            const handleDragEnd = () => {
+                touchStartX.current = null;
+                touchStartY.current = null;
+                setTimeout(() => { isDragging.current = false; }, 50);
+            };
+
+            const toggleSelection = (cardId) => {
+                if (isDragging.current) return;
+                if (selectedCards.includes(cardId)) {
+                    setSelectedCards(prev => prev.filter(id => id !== cardId));
+                } else {
+                    if (selectedCards.length < MAX_SELECTIONS) {
+                        setSelectedCards(prev => [...prev, cardId]);
+                    } else {
+                        setShakeCardId(cardId);
+                        setLimitWarning(true);
+                        setTimeout(() => setLimitWarning(false), 2200);
+                        setTimeout(() => setShakeCardId(null), 400);
+                    }
+                }
+            };
+
+            const getGroupStyles = (index) => {
+                const offset = index - scrollPos;
+                const translateX = offset * 90; 
+                const rotateY = offset * -18; 
+                const scale = 1 - Math.min(Math.abs(offset) * 0.15, 0.3); 
+                const translateZ = Math.min(Math.abs(offset) * -120, 0); 
+                const zIndex = 20 - Math.round(Math.abs(offset) * 10);
+                return {
+                    transform: `translateX(${translateX}%) scale(${scale}) translateZ(${translateZ}px) rotateY(${rotateY}deg)`,
+                    opacity: 1, 
+                    zIndex: zIndex
+                };
+            };
+
+            return (
+                <>
+                    <div className="w-full min-h-screen flex flex-col pb-48 fade-in relative">
+                        <GlobalHeader progress={progress} onBack={onBack} />
+                        
+                        <div className={`fixed top-8 left-1/2 -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-full font-semibold text-sm shadow-[0_10px_30px_rgba(239,68,68,0.3)] transition-all duration-300 z-[200] flex items-center gap-2 ${limitWarning ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+                            Máximo {MAX_SELECTIONS} selecciones
+                        </div>
+
+                        <div className="w-full px-6 pt-28 pb-4 text-center z-20 pointer-events-none mt-4">
+                            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 mb-2">
+                                ¿Qué tonos queréis tocar?
+                            </h2>
+                            <p className="text-sm font-medium text-gray-500">
+                                Selecciona hasta {MAX_SELECTIONS} temas para la mesa.
+                            </p>
+                        </div>
+
+                        <div 
+                            className="ferris-wheel-container"
+                            ref={containerRef}
+                            onTouchStart={(e) => handleDragStart(e.touches[0].clientX, e.touches[0].clientY)}
+                            onTouchMove={(e) => handleDragMove(e.touches[0].clientX, e.touches[0].clientY)}
+                            onTouchEnd={handleDragEnd}
+                            onMouseDown={(e) => handleDragStart(e.clientX, e.clientY)}
+                            onMouseMove={(e) => handleDragMove(e.clientX, e.clientY)}
+                            onMouseUp={handleDragEnd}
+                            onMouseLeave={handleDragEnd}
+                        >
+                            {dbTones.map((group, groupIndex) => {
+                                const groupStyles = getGroupStyles(groupIndex);
+                                return (
+                                    <div key={group.id} className="deck-group" style={groupStyles}>
+                                        <div className="text-center mb-6">
+                                            <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2">
+                                                {group.subtitle}
+                                            </span>
+                                            <h3 className="text-xl font-semibold text-gray-900">
+                                                {group.title}
+                                            </h3>
+                                        </div>
+                                        <div className="relative w-full flex flex-col items-center">
+                                            {group.subtones.map((card, cardIndex) => {
+                                                const isSelected = selectedCards.includes(card.id);
+                                                const isShaking = shakeCardId === card.id;
+                                                const marginTop = cardIndex > 0 ? '-1.25rem' : '0';
+                                                const rotZ = [0, -1.5, 1.5, -2][cardIndex % 4];
+                                                const baseZIndex = 15 - cardIndex;
+
+                                                return (
+                                                    <div 
+                                                        key={card.id}
+                                                        onClick={() => toggleSelection(card.id)}
+                                                        className={`v27-card ${isSelected ? 'is-selected' : ''} ${isShaking ? 'shake-animation' : ''}`}
+                                                        style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
+                                                    >
+                                                        <span className={`text-[16px] tracking-wide font-medium relative z-10 transition-colors duration-700 ${isSelected ? 'text-gray-900' : 'text-gray-800'}`}>
+                                                            {card.text}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="sticky-bottom-bar pointer-events-none fade-in-opacity">
+                        <div className="w-full pointer-events-auto relative z-20">
+                            <CurvedSlider value={scrollPos} max={maxScroll} onChange={setScrollPos} />
+                        </div>
+                        <div className="pointer-events-auto w-full max-w-[320px] flex justify-center mt-2">
+                            <button 
+                                disabled={selectedCards.length === 0}
+                                onClick={() => onComplete(selectedCards)}
+                                className={`w-full px-8 py-4 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 shadow-xl flex items-center justify-center gap-2
+                                    ${selectedCards.length > 0 
+                                        ? 'bg-black text-white hover:bg-gray-800 hover:-translate-y-0.5 active:translate-y-0' 
+                                        : 'bg-gray-200 text-gray-500 cursor-not-allowed shadow-none'
+                                    }`}
+                            >
+                                {selectedCards.length > 0 ? (
+                                    <>
+                                        Continuar 
+                                        <span className="px-2 py-0.5 rounded-full text-[10px] bg-white text-black">
+                                            {selectedCards.length} / {MAX_SELECTIONS}
+                                        </span>
+                                    </>
+                                ) : (
+                                    "Selecciona como mínimo 1 carta"
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </>
+            );
+        };
+
+        const CustomizationN4 = ({ onComplete, onBack, globalData, progress }) => {
+            const [subStep, setSubStep] = useState(1);
+            const [isOut, setIsOut] = useState(false);
+
+            const [timeMinutes, setTimeMinutes] = useState(90); 
+            const [participants, setParticipants] = useState([{ name: '', role: '', details: '' }]);
+            const [age, setAge] = useState({ min: 18, max: 65 });
+            const [extraDetails, setExtraDetails] = useState('');
+
+            const isAdultTheme = useMemo(() => {
+                const str = [globalData.formatId, globalData.audienceId, ...(globalData.tones || [])].join(' ').toLowerCase();
+                return str.includes('sex') || str.includes('picante') || str.includes('deseos') || str.includes('intimo') || str.includes('íntimo');
+            }, [globalData]);
+
+            useEffect(() => {
+                if (isAdultTheme && age.min < 18) setAge(p => ({ ...p, min: 18 }));
+            }, [isAdultTheme, age.min]);
+
+            const formatTime = (tm) => { const h = Math.floor(tm / 60); const m = tm % 60; return h===0 ? `${m} min` : m===0 ? `${h} h` : `${h} h ${m} min`; };
+            
+            const handleParticipantChange = (index, field, value) => { 
+                const newParticipants = [...participants]; 
+                newParticipants[index] = { ...newParticipants[index], [field]: value }; 
+                setParticipants(newParticipants); 
+            };
+            
+            const addParticipant = () => setParticipants([...participants, { name: '', role: '', details: '' }]);
+            const removeParticipant = (index) => setParticipants(participants.filter((_, i) => i !== index));
+
+            const handleNextSubStep = () => {
+                if (subStep === 4) {
+                    onComplete({ time: timeMinutes, participants, age, extraDetails });
+                } else {
+                    setIsOut(true);
+                    setTimeout(() => { setSubStep(s => s + 1); setIsOut(false); }, 400);
+                }
+            };
+
+            const handlePrevSubStep = () => {
+                if (subStep === 1) {
+                    if (onBack) onBack();
+                } else { 
+                    setIsOut(true); 
+                    setTimeout(() => { setSubStep(s => s - 1); setIsOut(false); }, 400); 
+                }
+            };
+
+            const localProgress = progress + (subStep * 3);
+
+            return (
+                <div className="min-h-screen flex flex-col items-center pt-24 p-4 relative fade-in">
+                    
+                    <GlobalHeader progress={localProgress} onBack={handlePrevSubStep} />
+
+                    <div className={`w-full max-w-md transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
+                        
+                        {subStep === 1 && (
+                            <div>
+                                <h2 className="text-2xl font-medium text-center mb-8 text-gray-900 tracking-tight">¿De cuánto tiempo disponéis?</h2>
+                                <div className="w-full mb-10 floating">
+                                    <div className="text-center text-4xl font-light text-black mb-8 mt-4">{formatTime(timeMinutes)}</div>
+                                    <RangeSlider value={timeMinutes} min={10} max={300} isAdultTheme={false} restrictedMin={10} onChange={e => setTimeMinutes(Number(e.target.value))} />
+                                    <div className="flex justify-between text-xs text-gray-400 mt-3 font-medium tracking-wide">
+                                        <span>Express</span>
+                                        <span>Sobremesa</span>
+                                    </div>
+                                </div>
+                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Siguiente</button>
+                            </div>
+                        )}
+
+                        {subStep === 2 && (
+                            <div className="w-full">
+                                <h2 className="text-2xl font-medium text-center mb-6 text-gray-900 tracking-tight">¿Quiénes os sentáis a la mesa?</h2>
+                                <div className="w-full mb-8 floating">
+                                    {participants.map((p, index) => (
+                                        <div key={index} className={`flex items-start gap-3 ${index > 0 ? 'mt-6 pt-5 border-t border-gray-200' : ''}`}>
+                                            <div className="flex flex-col flex-1">
+                                                <input 
+                                                    type="text" 
+                                                    placeholder={`Nombre (o deja Persona ${index + 1}) *`} 
+                                                    value={p.name}
+                                                    onChange={(e) => handleParticipantChange(index, 'name', e.target.value)} 
+                                                    className="pill-input !mb-0 text-[15px]" 
+                                                />
+                                                
+                                                <div className="flex items-center mt-3 pl-3 pr-1">
+                                                    <ElegantIcon name="corner-down-right" className="text-black mr-2 w-5 h-5 shrink-0" />
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="Rol (ej: mi pareja, amigx)..." 
+                                                        value={p.role}
+                                                        onChange={(e) => handleParticipantChange(index, 'role', e.target.value)} 
+                                                        className="pill-input !mb-0 text-[13px] border-black bg-white focus:bg-white text-gray-700 flex-1"
+                                                        style={{ padding: '0.6rem 1.2rem' }} 
+                                                    />
+                                                </div>
+
+                                                <div className="flex items-center mt-3 pl-3 pr-1">
+                                                    <ElegantIcon name="corner-down-right" className="text-black mr-2 w-5 h-5 shrink-0" />
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="Info (ej: 35 años, muy tímido)..." 
+                                                        value={p.details}
+                                                        onChange={(e) => handleParticipantChange(index, 'details', e.target.value)} 
+                                                        className="pill-input !mb-0 text-[13px] border-black bg-white focus:bg-white text-gray-700 flex-1"
+                                                        style={{ padding: '0.6rem 1.2rem' }} 
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="pt-0">
+                                                {index === participants.length - 1 ? (
+                                                    <button onClick={addParticipant} className="bg-black rounded-full w-[52px] h-[52px] flex items-center justify-center shrink-0 transition-transform active:scale-95 shadow-md" title="Añadir otra persona" type="button">
+                                                        <ElegantIcon name="plus" className="text-white" />
+                                                    </button>
+                                                ) : (
+                                                    <button onClick={() => removeParticipant(index)} className="bg-white border-2 border-gray-300 hover:border-black rounded-full w-[52px] h-[52px] flex items-center justify-center shrink-0 transition-colors active:scale-95 shadow-sm" title="Quitar persona" type="button">
+                                                        <ElegantIcon name="minus" color="#000000" />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Siguiente</button>
+                            </div>
+                        )}
+
+                        {subStep === 3 && (
+                            <div className="w-full">
+                                <h2 className="text-2xl font-medium text-center mb-8 text-gray-900 tracking-tight">Rango de edad en la mesa</h2>
+                                {isAdultTheme && (
+                                    <div className="bg-red-50 text-red-600 text-[13px] px-5 py-3 rounded-2xl mb-8 text-center border border-red-100 font-medium shadow-sm floating">
+                                        Por la temática elegida, la edad mínima requerida es de 18 años.
+                                    </div>
+                                )}
+                                <div className="w-full mb-10 floating">
+                                    <div className="flex flex-col gap-8 mt-4">
+                                        <div className="w-full">
+                                            <span className="text-xs text-gray-500 font-semibold uppercase tracking-widest block mb-3">Mínima: {age.min}</span>
+                                            <RangeSlider value={age.min} min={10} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => setAge({...age, min: Math.min(e.target.value, age.max)})} />
+                                        </div>
+                                        <div className="w-full">
+                                            <span className="text-xs text-gray-500 font-semibold uppercase tracking-widest block mb-3">Máxima: {age.max}</span>
+                                            <RangeSlider value={age.max} min={10} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => setAge({...age, max: Math.max(e.target.value, age.min)})} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Siguiente</button>
+                            </div>
+                        )}
+
+                        {subStep === 4 && (
+                            <div className="w-full">
+                                <h2 className="text-2xl font-medium text-center mb-6 text-gray-900 tracking-tight">¿Algún detalle importante?</h2>
+                                <p className="text-center text-sm text-gray-500 mb-8">Última oportunidad para contarnos algo sobre vosotrxs que debamos tener en cuenta.</p>
+                                <div className="w-full mb-8 floating">
+                                    <textarea value={extraDetails} onChange={e => setExtraDetails(e.target.value)} className="card-input h-32 pt-4 mt-2" placeholder="Escribe aquí (opcional)..."></textarea>
+                                </div>
+                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Finalizar Personalización</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const Checkout = ({ globalData, progress, onBack }) => {
+            const [loading, setLoading] = useState(false);
+            const [outOfStock, setOutOfStock] = useState(false);
+            const [paymentSuccess, setPaymentSuccess] = useState(false);
+            const [emailLeft, setEmailLeft] = useState(false);
+
+            const isDigital = globalData.formatId?.includes('digital');
+            const price = isDigital ? '5,00€' : '10,00€';
+            const formatName = isDigital ? 'Edición Digital' : 'Edición Física';
+
+            const audNode = dbAudience.find(a => a.id === globalData.audienceId);
+            const audLabel = audNode ? (audNode.label || audNode.nombre_visible) : 'Mesa Sensibles';
+
+            const handlePayment = () => {
+                setLoading(true);
+                setTimeout(() => {
+                    setLoading(false);
+                    if (isDigital) {
+                        setPaymentSuccess(true);
+                    } else {
+                        setOutOfStock(true);
+                    }
+                }, 3200);
+            };
+
+            if (paymentSuccess) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
+                        <GlobalHeader progress={progress} onBack={onBack} />
+                        <div className="text-center max-w-md bg-white p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-gray-50 mt-12">
+                            <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
+                                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <h2 className="text-2xl font-bold mb-4">¡Pago Simulado Exitoso!</h2>
+                            <p className="text-gray-500 mb-6 leading-relaxed">
+                                Al ser edición digital, recibirías tus cartas inmediatamente para jugar ahora mismo. Como esto es un simulador, no se ha realizado ningún cobro real a tu tarjeta.
+                            </p>
+                            <button onClick={() => window.location.reload()} className="mt-4 text-xs font-bold text-gray-400 uppercase tracking-[0.2em] hover:text-black transition-colors">Volver al inicio</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (outOfStock) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
+                        <GlobalHeader progress={progress} onBack={onBack} />
+                        <div className="text-center max-w-md bg-white p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-gray-50 mt-12">
+                            <div className="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-8">
+                                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            </div>
+                            <h2 className="text-2xl font-bold mb-4">Stock agotado en tu zona</h2>
+                            <p className="text-gray-500 mb-4 leading-relaxed">
+                                Lo sentimos, acabamos de recibir un volumen inusual de pedidos en los últimos minutos y hemos agotado las cajas físicas para tu ubicación.
+                            </p>
+                            <div className="bg-gray-50 p-4 rounded-2xl mb-8 border border-dashed border-gray-200">
+                                <p className="text-xs font-semibold text-gray-600 uppercase tracking-widest mb-1">Aviso importante</p>
+                                <p className="text-sm text-gray-400">Tu tarjeta NO ha sido cargada. La operación ha sido cancelada automáticamente.</p>
+                            </div>
+                            
+                            {!emailLeft ? (
+                                <div className="space-y-4">
+                                    <p className="text-sm font-medium text-gray-700">¿Quieres que te avisemos en cuanto repongamos stock (24-48h)?</p>
+                                    <div className="flex gap-2">
+                                        <input type="email" placeholder="Tu email" className="pay-input !py-3 !text-sm" />
+                                        <button onClick={() => setEmailLeft(true)} className="bg-black text-white px-6 rounded-xl text-sm font-bold">Avisadme</button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <p className="text-green-600 font-bold text-sm animate-bounce">✨ ¡Te avisaremos pronto!</p>
+                            )}
+                            
+                            <button onClick={() => window.location.reload()} className="mt-10 text-xs font-bold text-gray-300 uppercase tracking-[0.2em] hover:text-black transition-colors">Volver al inicio</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen py-12 px-6 flex flex-col items-center relative fade-in">
+                    <GlobalHeader progress={progress} onBack={onBack} />
+                    
+                    <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
+                        
+                        <div className="space-y-8">
+                            <div>
+                                <h1 className="text-3xl font-semibold tracking-tight mb-4">Tu mazo personalizado</h1>
+                                <p className="text-gray-500">Hemos diseñado esta experiencia exclusivamente para tu cena basada en tus respuestas.</p>
+                            </div>
+
+                            <div className="summary-card space-y-4">
+                                <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center text-white text-xl">🃏</div>
+                                        <div>
+                                            <p className="font-semibold text-sm">Sensibles: {formatName}</p>
+                                            <p className="text-xs text-gray-400 italic">Personalizado para: {audLabel}</p>
+                                        </div>
+                                    </div>
+                                    <p className="font-bold">{price}</p>
+                                </div>
+                                
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-sm text-gray-500">
+                                        <span>{isDigital ? 'Envío Inmediato (Email/Web)' : `Envío a ${globalData.logistics?.ciudad || 'tu zona'}`}</span>
+                                        <span className="text-green-600 font-medium">Gratis</span>
+                                    </div>
+                                    <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-200">
+                                        <span>Total</span>
+                                        <span>{price}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-4 text-xs text-gray-400 font-medium uppercase tracking-wider">
+                                <div className="flex items-center gap-1">🔒 Pago Seguro</div>
+                                <div className="flex items-center gap-1">✨ Garantía Sensibles</div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-gray-100">
+                            <h3 className="text-lg font-semibold mb-6">Información de Pago</h3>
+                            
+                            <div className="space-y-5">
+                                <div className="grid grid-cols-2 gap-3 mb-6">
+                                    <button className="flex items-center justify-center py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all">
+                                        <span className="font-bold text-sm">Apple Pay</span>
+                                    </button>
+                                    <button className="flex items-center justify-center py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all">
+                                        <span className="font-bold text-sm">Google Pay</span>
+                                    </button>
+                                </div>
+
+                                <div className="relative flex items-center mb-6">
+                                    <div className="flex-grow border-t border-gray-100"></div>
+                                    <span className="flex-shrink mx-4 text-gray-300 text-[10px] font-bold uppercase tracking-widest">O tarjeta bancaria</span>
+                                    <div className="flex-grow border-t border-gray-100"></div>
+                                </div>
+
+                                <div>
+                                    <label className="label-pay">Número de tarjeta</label>
+                                    <div className="relative">
+                                        <input type="text" className="pay-input" placeholder="0000 0000 0000 0000" />
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-1">
+                                            <div className="w-6 h-4 bg-gray-100 rounded-sm"></div>
+                                            <div className="w-6 h-4 bg-gray-100 rounded-sm"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="label-pay">Caducidad</label>
+                                        <input type="text" className="pay-input" placeholder="MM / YY" />
+                                    </div>
+                                    <div>
+                                        <label className="label-pay">CVC</label>
+                                        <input type="text" className="pay-input" placeholder="123" />
+                                    </div>
+                                </div>
+
+                                <div className="pt-4">
+                                    <button 
+                                        onClick={handlePayment}
+                                        disabled={loading}
+                                        className="btn-pay shadow-lg"
+                                    >
+                                        {loading ? (
+                                            <div className="spinner"></div>
+                                        ) : (
+                                            <>Pagar {price}</>
+                                        )}
+                                    </button>
+                                </div>
+
+                                <p className="text-[10px] text-gray-400 text-center px-4 leading-relaxed mt-4">
+                                    Al confirmar el pago, aceptas nuestros términos de servicio y política de privacidad. Tu tarjeta será procesada de forma segura por Stripe.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Logos de confianza al pie */}
+                    <div className="mt-12 flex gap-8 grayscale opacity-30">
+                         <div className="font-bold text-sm tracking-tighter">VISA</div>
+                         <div className="font-bold text-sm tracking-tighter">Mastercard</div>
+                         <div className="font-bold text-sm tracking-tighter">Stripe</div>
+                         <div className="font-bold text-sm tracking-tighter">SSL Secure</div>
+                    </div>
+                </div>
+            );
+        };
+
+        // ==========================================
+        // 4. APP PRINCIPAL
+        // ==========================================
+
+        const App = () => {
+            const [phase, setPhase] = useState('intro'); 
+            const [phaseHistory, setPhaseHistory] = useState([]);
+            const [treeProgress, setTreeProgress] = useState({ format: 0, audience: 0 });
+            
+            const [treeStates, setTreeStates] = useState({
+                format: { currentParent: null, history: [] },
+                audience: { currentParent: null, history: [] }
+            });
+            
+            const [globalData, setGlobalData] = useState({
+                formatId: null, logistics: null, audienceId: null, tones: [], n4: null
+            });
+
+            const getProgress = () => {
+                if (phase === 'intro') return 5;
+                if (phase === 'format') return 5 + (10 * treeProgress.format); 
+                if (phase === 'secret1') return 15; 
+                if (phase === 'logistics') return 20;
+                if (phase === 'calc') return 25;
+                if (phase === 'calc_fallback') return 25;
+                if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
+                if (phase === 'occasion') return 40 + (15 * treeProgress.occasion); 
+                if (phase === 'secret2') return 60; 
+                if (phase === 'tones') return 75;
+                if (phase === 'n4') return 80;
+                if (phase === 'secret3') return 90;
+                if (phase === 'checkout') return 100;
+                return 0;
+            };
+
+            const advanceTo = (newPhase, dataUpdate = {}) => {
+                if (dataUpdate) {
+                    setGlobalData(prev => ({ ...prev, ...dataUpdate }));
+                }
+                setPhaseHistory(prev => [...prev, phase]);
+                setPhase(newPhase);
+            };
+
+            const goBackPhase = () => {
+                if (phaseHistory.length > 0) {
+                    const newHistory = [...phaseHistory];
+                    const prev = newHistory.pop();
+                    setPhaseHistory(newHistory);
+                    setPhase(prev);
+                }
+            };
+
+            return (
+                <div className="w-full relative min-h-screen">
+                    
+                    {phase === 'intro' && <IntroCinematic onComplete={() => advanceTo('format')} />}
+                    
+                    {/* Árbol 1: FORMATO */}
+                    {phase === 'format' && <TreeEngine 
+                        treeKey="format" treeStates={treeStates} setTreeStates={setTreeStates}
+                        initialTitle="¿Qué formato prefieres?" data={dbFormat} 
+                        onProgressUpdate={(pct) => setTreeProgress(p => ({...p, format: pct}))}
+                        progress={getProgress()}
+                        onComplete={id => advanceTo('secret1', {formatId: id})} 
+                        onBack={null} // Desactiva la navegación hacia la intro en la primera pregunta
+                    />}
+                    
+                    {/* SECRETO 1: Antes de logística */}
+                    {phase === 'secret1' && <SecretReward secretIndex={0} progress={getProgress()} onComplete={() => advanceTo('logistics')} onBack={goBackPhase} />}
+                    
+                    {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
+                        onComplete={data => advanceTo('calc', {logistics: data})} onBack={goBackPhase} />
+                    }
+                    
+                    {phase === 'calc' && <Calculation data={globalData.logistics} formatId={globalData.formatId} progress={getProgress()}
+                        onComplete={(forceDigital) => {
+                            if(forceDigital) {
+                                advanceTo('audience', { formatId: 'cartas_digitales_en_un_restaurante' }); 
+                            } else {
+                                advanceTo('audience');
+                            }
+                        }} 
+                        onBack={goBackPhase}
+                    />}
+                    
+                    {/* Árbol 2: AUDIENCIA */}
+                    {phase === 'audience' && <TreeEngine 
+                        treeKey="audience" treeStates={treeStates} setTreeStates={setTreeStates}
+                        initialTitle="¿Con quién es la cena?" data={dbAudience} 
+                        onProgressUpdate={(pct) => setTreeProgress(p => ({...p, audience: pct}))}
+                        progress={getProgress()}
+                        onComplete={id => advanceTo('secret2', {audienceId: id})} 
+                        onBack={goBackPhase} 
+                    />}
+                    
+                    {phase === 'secret2' && <SecretReward secretIndex={1} progress={getProgress()} onComplete={() => advanceTo('tones')} onBack={goBackPhase} />}
+                    
+                    {phase === 'tones' && <TonesNoria onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
+                    
+                    {phase === 'n4' && <CustomizationN4 globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('secret3', {n4: data})} onBack={goBackPhase} />}
+                    
+                    {phase === 'secret3' && <SecretReward secretIndex={2} progress={getProgress()} onComplete={() => advanceTo('checkout')} onBack={goBackPhase} />}
+
+                    {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
