@@ -2139,7 +2139,8 @@ window.onerror = function(msg, url, line, col, err) {
     <a href="#" class="active" data-text="INTRO">INTRO</a>
     <a href="#" data-text="CÓMO FUNCIONA">CÓMO FUNCIONA</a>
     <a href="#" data-text="FUNCIONALIDADES">FUNCIONALIDADES</a>
-    <a href="#" data-text="QUÍMICA, NO MAGIA">QUÍMICA, NO MAGIA</a>
+    <a href="#" data-text="NO ES MAGIA|ES QUÍMICA">NO ES MAGIA<br>ES QUÍMICA</a>
+    <a href="#" data-text="RESEÑAS">RESEÑAS</a>
     <a href="#" data-text="+FUNCIONALIDADES">+FUNCIONALIDADES</a>
     <a href="#" data-text="ONE LAST TIME">ONE LAST TIME</a>
     
@@ -7992,69 +7993,77 @@ window.onerror = function(msg, url, line, col, err) {
   const navOverlay = document.getElementById('nav-overlay');
   document.querySelectorAll('#nav-menu > a[data-text]').forEach(link => {
     const text = link.getAttribute('data-text');
-    const chars = text.split('');
-    const len = chars.length;
+    const lines = text.split('|');
     const allR1 = [], allR2 = [];
 
-    const makeRow = (dest) => {
-      const row = document.createElement('div');
-      row.className = 'nav-row';
-      chars.forEach(ch => {
-        const s = document.createElement('span');
-        s.className = 'nav-ch';
-        s.textContent = ch === ' ' ? '\u00a0' : ch;
-        row.appendChild(s);
-        dest.push(s);
-      });
-      return row;
-    };
-
-    const word = document.createElement('div');
-    word.className = 'nav-word';
-    word.appendChild(makeRow(allR1));
-    word.appendChild(makeRow(allR2));
-    const clip = document.createElement('div');
-    clip.className = 'nav-clip';
-    clip.appendChild(word);
     link.innerHTML = '';
-    link.appendChild(clip);
+    if (lines.length > 1) {
+      link.style.flexDirection = 'column';
+      link.style.alignItems = 'center';
+      link.style.gap = '0.3em';
+      link.style.textAlign = 'center';
+    }
+
+    lines.forEach((lineText) => {
+      const chars = lineText.split('');
+      const lineLen = chars.length;
+
+      const makeRow = (dest) => {
+        const row = document.createElement('div');
+        row.className = 'nav-row';
+        chars.forEach((ch, i) => {
+          const s = document.createElement('span');
+          s.className = 'nav-ch';
+          s.textContent = ch === ' ' ? '\u00a0' : ch;
+          row.appendChild(s);
+          dest.push({ el: s, delay: (lineLen - 1 - i) * 10 });
+        });
+        return row;
+      };
+
+      const word = document.createElement('div');
+      word.className = 'nav-word';
+      word.appendChild(makeRow(allR1));
+      word.appendChild(makeRow(allR2));
+      
+      const clip = document.createElement('div');
+      clip.className = 'nav-clip';
+      clip.appendChild(word);
+      link.appendChild(clip);
+    });
 
     link.addEventListener('mouseenter', () => {
-      allR1.forEach((s, i) => {
-        s.style.transitionDelay = `${(len - 1 - i) * 10}ms`;
-        s.style.transform = 'translateY(-1em)';
+      allR1.forEach(item => {
+        item.el.style.transitionDelay = `${item.delay}ms`;
+        item.el.style.transform = 'translateY(-1em)';
       });
-      allR2.forEach((s, i) => {
-        s.style.transitionDelay = `${(len - 1 - i) * 10}ms`;
-        s.style.transform = 'translateY(-1em)';
+      allR2.forEach(item => {
+        item.el.style.transitionDelay = `${item.delay}ms`;
+        item.el.style.transform = 'translateY(-1em)';
       });
       navOverlay.classList.add('active');
       link.classList.add('nav-link-active');
-      // Dim all other nav links directly
       document.querySelectorAll('#nav-menu > a[data-text]').forEach(other => {
         if (other !== link) other.style.opacity = '0.25';
       });
-      // Dim scroll indicator
       const scrollInd = document.querySelector('.scroll-indicator');
       if (scrollInd) scrollInd.style.opacity = '0.15';
     });
 
     link.addEventListener('mouseleave', () => {
-      allR1.forEach((s, i) => {
-        s.style.transitionDelay = `${(len - 1 - i) * 10}ms`;
-        s.style.transform = '';
+      allR1.forEach(item => {
+        item.el.style.transitionDelay = `${item.delay}ms`;
+        item.el.style.transform = '';
       });
-      allR2.forEach((s, i) => {
-        s.style.transitionDelay = `${(len - 1 - i) * 10}ms`;
-        s.style.transform = '';
+      allR2.forEach(item => {
+        item.el.style.transitionDelay = `${item.delay}ms`;
+        item.el.style.transform = '';
       });
       navOverlay.classList.remove('active');
       link.classList.remove('nav-link-active');
-      // Restore all nav links
       document.querySelectorAll('#nav-menu > a[data-text]').forEach(other => {
         other.style.opacity = '';
       });
-      // Restore scroll indicator
       const scrollInd = document.querySelector('.scroll-indicator');
       if (scrollInd) scrollInd.style.opacity = '';
     });
