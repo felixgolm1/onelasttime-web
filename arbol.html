@@ -280,12 +280,9 @@
         ];
 
         const dbAudience = [
-            { id: 'pareja', parent: null, label: 'Primera cita', nextTitle: '¿En qué punto estáis?', final: false },
+            { id: 'pareja', parent: null, label: 'Primera cita', final: true },
             { id: 'amistad', parent: null, label: 'Nos estamos conociendo', nextTitle: '¿En qué punto estáis?', final: false },
             { id: 'familia', parent: null, label: 'Pareja', nextTitle: '¿En qué punto estáis?', final: false },
-            { id: 'p_cita', parent: 'pareja', label: 'Primera cita', final: true },
-            { id: 'p_semanas', parent: 'pareja', label: 'Semanas o meses', final: true },
-            { id: 'p_estable', parent: 'pareja', label: 'Años o Matrimonio', final: true },
             { id: 'a_cita', parent: 'amistad', label: 'Primera cita', final: true },
             { id: 'a_semanas', parent: 'amistad', label: 'Semanas o meses', final: true },
             { id: 'a_estable', parent: 'amistad', label: 'Años o Matrimonio', final: true },
