@@ -482,28 +482,30 @@
                         if (textareaRef.current) textareaRef.current.focus();
                     }}
                 >
-                    {!showInput && (
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40 flex flex-col items-center gap-1 whitespace-nowrap">
-                            <span className="text-[17px] tracking-wide font-medium text-gray-800">
-                                En otro lugar
-                            </span>
-                            <span className="text-[17px] tracking-wide font-medium text-gray-400 flex items-center">
-                                escríbelo
-                                <span className="inline-block w-[2px] h-[19px] bg-gray-500 mx-[3px] align-text-bottom" style={{ animation: 'cursorBlink 1s step-end infinite' }}></span>
-                                aquí...
-                            </span>
-                        </div>
-                    )}
-                    
-                    <textarea 
-                        ref={textareaRef}
-                        rows={1}
-                        value={customInput}
-                        onChange={handleInput}
-                        onFocus={() => setIsFocused(true)}
-                        onBlur={() => setIsFocused(false)}
-                        className={`w-full text-center text-[17px] font-medium tracking-wide outline-none bg-transparent text-gray-800 transition-opacity duration-300 relative z-50 resize-none overflow-y-auto [&::-webkit-scrollbar]:hidden ${showInput ? 'opacity-100' : 'opacity-0'}`}
-                        style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text', lineHeight: '1.4', maxHeight: '119px' }}
+                    <div className="flex flex-col items-center justify-center w-full relative z-50 whitespace-nowrap gap-1">
+                        <span className="text-[17px] tracking-wide font-medium text-gray-800">
+                            En otro lugar
+                        </span>
+                        
+                        <div className="relative w-full flex justify-center">
+                            {!showInput && (
+                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <span className="text-[17px] tracking-wide font-medium text-gray-400 flex items-center">
+                                        escríbelo
+                                        <span className="inline-block w-[2px] h-[19px] bg-gray-500 mx-[3px] align-text-bottom" style={{ animation: 'cursorBlink 1s step-end infinite' }}></span>
+                                        aquí...
+                                    </span>
+                                </div>
+                            )}
+                            <textarea 
+                                ref={textareaRef}
+                                rows={1}
+                                value={customInput}
+                                onChange={handleInput}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
+                                className={`w-full text-center text-[17px] font-medium tracking-wide outline-none bg-transparent text-gray-800 transition-opacity duration-300 resize-none overflow-y-auto [&::-webkit-scrollbar]:hidden ${showInput ? 'opacity-100' : 'opacity-0'}`}
+                                style={{ pointerEvents: 'auto', userSelect: 'auto', WebkitUserSelect: 'text', lineHeight: '1.4', maxHeight: '119px' }}
                         onClick={e => e.stopPropagation()}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey && customInput.trim() !== '') {
@@ -512,6 +514,8 @@
                             }
                         }}
                     />
+                    </div>
+                    </div>
                     
                     <button 
                         className={`bg-black text-white font-semibold rounded-full px-8 py-2.5 text-sm transition-all duration-300 hover:scale-105 shadow-sm absolute bottom-5 z-50 ${showInput ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}
