@@ -1557,7 +1557,7 @@
                 }).join(', ');
 
                 // Formatear participantes
-                const participantesText = (globalData.n4Data?.participants || []).map(p => 
+                const participantesText = (globalData.n4?.participants || []).map(p => 
                     `Nombre: ${p.name} | Rol: ${p.role} | Info: ${p.details}`
                 ).join('\n');
 
@@ -1568,8 +1568,9 @@
                     Ciudad: globalData.logistics?.ciudad || 'N/A',
                     Fecha_Cena: globalData.logistics?.fecha || 'N/A',
                     Participantes: participantesText || 'Ninguno',
-                    Notas_Extra: globalData.n4Data?.extraNotes || 'Ninguna',
-                    _subject: "✨ ¡Nuevo mazo personalizado creado en Sensibles!"
+                    Objetivo_Cena: globalData.objective || 'N/A',
+                    Notas_Extra: globalData.n4?.extraDetails || 'Ninguna',
+                    _subject: "🔥 ¡Nuevo mazo personalizado creado en Sensibles!"
                 };
 
                 // --- 2. ENVIAR DATOS A TU CORREO (vía FormSubmit) ---
