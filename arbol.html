@@ -1116,6 +1116,41 @@
             );
         };
 
+        const ObjectiveScreen = ({ onComplete, progress, onBack }) => {
+            const [text, setText] = useState('');
+            return (
+                <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
+                    <GlobalHeader progress={progress} onBack={onBack} />
+                    <div className="text-center max-w-xl w-full z-10 mt-12">
+                        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-4">
+                            ¿Cuál es el objetivo de la cena?
+                        </h2>
+                        <p className="text-sm font-medium text-gray-500 mb-12 leading-relaxed">
+                            Conocernos más, planear algo, conseguir una siguiente cita, mejorar algun aspecto de la relación, terminar en la cama... lo que quieras
+                        </p>
+                        
+                        <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-12 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)] group">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#CCFF00] to-[#d4ff33] opacity-0 transition-opacity duration-700 group-hover:opacity-10 pointer-events-none"></div>
+                            <textarea
+                                className="w-full h-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center text-gray-900 placeholder:text-gray-400 relative z-10"
+                                placeholder="Descríbelo con tus palabras"
+                                value={text}
+                                onChange={e => setText(e.target.value)}
+                            />
+                        </div>
+
+                        <button 
+                            onClick={() => onComplete(text)}
+                            disabled={!text.trim()}
+                            className={`px-10 py-4 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 shadow-xl flex items-center justify-center gap-2 mx-auto ${text.trim() ? 'bg-black text-white hover:bg-gray-800 hover:-translate-y-0.5' : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'}`}
+                        >
+                            Continuar
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
         const TonesNoria = ({ onComplete, progress, onBack }) => {
             const [scrollPos, setScrollPos] = useState(0);
             const maxScroll = dbTones.length - 1;
@@ -1728,7 +1763,7 @@
             });
             
             const [globalData, setGlobalData] = useState(() => JSON.parse(sessionStorage.getItem('dev_globalData')) || {
-                formatId: null, logistics: null, audienceId: null, tones: [], n4: null
+                formatId: null, logistics: null, audienceId: null, objective: null, tones: [], n4: null
             });
 
             useEffect(() => { sessionStorage.setItem('dev_phase', phase); }, [phase]);
@@ -1745,6 +1780,7 @@
                 if (phase === 'calc') return 25;
                 if (phase === 'calc_fallback') return 25;
                 if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
+                if (phase === 'objective') return 45;
                 if (phase === 'occasion') return 40 + (15 * treeProgress.occasion); 
                 if (phase === 'secret2') return 60; 
                 if (phase === 'tones') return 75;
@@ -1822,10 +1858,12 @@
                         initialTitle="¿Con quién es la cena?" data={dbAudience} 
                         onProgressUpdate={(pct) => setTreeProgress(p => ({...p, audience: pct}))}
                         progress={getProgress()}
-                        onComplete={id => advanceTo('secret2', {audienceId: id})} 
+                        onComplete={id => advanceTo('objective', {audienceId: id})} 
                         onBack={goBackPhase} 
                     />}
                     
+                    {phase === 'objective' && <ObjectiveScreen progress={getProgress()} onComplete={txt => advanceTo('secret2', {objective: txt})} onBack={goBackPhase} />}
+
                     {phase === 'secret2' && <SecretReward secretIndex={1} progress={getProgress()} onComplete={() => advanceTo('tones')} onBack={goBackPhase} />}
                     
                     {phase === 'tones' && <TonesNoria onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
