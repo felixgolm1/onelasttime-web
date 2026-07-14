@@ -1773,8 +1773,8 @@
                 if (phase === 'occasion') return 40 + (15 * treeProgress.occasion); 
                 if (phase === 'secret2') return 60; 
                 if (phase === 'tones') return 75;
-                if (phase === 'n4') return 80;
-                if (phase === 'secret3') return 90;
+                if (phase === 'secret3') return 80;
+                if (phase === 'n4') return 90;
                 if (phase === 'checkout') return 100;
                 return 0;
             };
@@ -1855,11 +1855,11 @@
 
                     {phase === 'secret2' && <SecretReward secretIndex={1} progress={getProgress()} onComplete={() => advanceTo('tones')} onBack={goBackPhase} />}
                     
-                    {phase === 'tones' && <TonesNoria onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
+                    {phase === 'tones' && <TonesNoria onComplete={sel => advanceTo('secret3', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
                     
-                    {phase === 'n4' && <CustomizationN4 globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('secret3', {n4: data})} onBack={goBackPhase} />}
-                    
-                    {phase === 'secret3' && <SecretReward secretIndex={2} progress={getProgress()} onComplete={() => advanceTo('checkout')} onBack={goBackPhase} />}
+                    {phase === 'secret3' && <SecretReward secretIndex={2} progress={getProgress()} onComplete={() => advanceTo('n4')} onBack={goBackPhase} />}
+
+                    {phase === 'n4' && <CustomizationN4 globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
                     {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
                 </div>
