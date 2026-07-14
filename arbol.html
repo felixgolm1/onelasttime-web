@@ -271,9 +271,9 @@
         ];
 
         const dbLogistics = [
-            { id: 'ciudad', label: 'Ciudad o código postal', type: 'text', req: true, conditions: ['siempre'] },
+            { id: 'ciudad', label: 'Ciudad o código postal', type: 'text', req: true, conditions: ['cartas_fisicas'] },
             { id: 'fecha', label: 'Día y hora de la comida', type: 'datetime-local', req: true, conditions: ['siempre'] },
-            { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha', 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_tengo_claro_el_restaurante_donde_quiero_reservar', 'cartas_digitales_en_un_restaurante'] },
+            { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha', 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_tengo_claro_el_restaurante_donde_quiero_reservar'] },
             { id: 'reserva', label: 'A nombre de quién está', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha'] },
             { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] },
             { id: 'comida', label: 'Marca las opciones de comida que quieres tener', subtitle: 'no selecciones ninguna si estas abiertx a todas', type: 'multi_pills', req: false, options: ['Carne','Pescado','Marisco','Veganx','Vegetarianx','Celíacx','Sin lactosa','Sin frutos secos','Sin cerdo'], conditions: ['cartas_fisicas_en_un_restaurante_aun_no_he_reservado_recomendadme_vuestras_3_lugares_favoritos'] }
