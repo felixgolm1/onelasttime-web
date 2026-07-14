@@ -1392,7 +1392,7 @@
             const [isOut, setIsOut] = useState(false);
 
             const [timeMinutes, setTimeMinutes] = useState(90); 
-            const [participants, setParticipants] = useState([{ name: '', role: '', details: '' }]);
+            const [participants, setParticipants] = useState([{ name: '', role: '', details: '' }, { name: '', role: '', details: '' }]);
             const [age, setAge] = useState({ min: 18, max: 65 });
             const [extraDetails, setExtraDetails] = useState('');
 
@@ -1489,17 +1489,6 @@
                                                 </div>
                                             </div>
 
-                                            <div className="pt-0">
-                                                {index === participants.length - 1 ? (
-                                                    <button onClick={addParticipant} className="bg-black rounded-full w-[52px] h-[52px] flex items-center justify-center shrink-0 transition-transform active:scale-95 shadow-md" title="Añadir otra persona" type="button">
-                                                        <ElegantIcon name="plus" className="text-white" />
-                                                    </button>
-                                                ) : (
-                                                    <button onClick={() => removeParticipant(index)} className="bg-white border-2 border-gray-300 hover:border-black rounded-full w-[52px] h-[52px] flex items-center justify-center shrink-0 transition-colors active:scale-95 shadow-sm" title="Quitar persona" type="button">
-                                                        <ElegantIcon name="minus" color="#000000" />
-                                                    </button>
-                                                )}
-                                            </div>
                                         </div>
                                     ))}
                                 </div>
