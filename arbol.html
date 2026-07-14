@@ -853,29 +853,9 @@
                 let isFallo = false;
                 let msgFallo = '';
 
-                // Si no es digital, aplicamos la validación de tiempo
-                if (!isDigital) {
-                    const city = (data?.ciudad || '').toLowerCase();
-                    let isBcn = city.includes('barcelona') || city.includes('bcn') || city.includes('080');
-                    
-                    let diffHours = 0;
-                    if (data?.fecha) {
-                        diffHours = (new Date(data.fecha) - new Date()) / 36e5;
-                    }
-
-                    if (isBcn) {
-                        if (diffHours < 2) {
-                            isFallo = true;
-                            msgFallo = 'Para envíos físicos en Barcelona necesitamos al menos 2h de margen.';
-                        }
-                    } else {
-                        if (diffHours < 48) {
-                            isFallo = true;
-                            msgFallo = 'Los envíos físicos fuera de Barcelona tardan entre 24 y 48h.';
-                        }
-                    }
-                }
+                // Validación desactivada temporalmente: siempre es exitoso
                 
+
                 setMensajeFallo(msgFallo);
                 
                 if (intervalRef.current) clearInterval(intervalRef.current);
@@ -1567,11 +1547,7 @@
                 setLoading(true);
                 setTimeout(() => {
                     setLoading(false);
-                    if (isDigital) {
-                        setPaymentSuccess(true);
-                    } else {
-                        setOutOfStock(true);
-                    }
+                    setPaymentSuccess(true);
                 }, 3200);
             };
 
