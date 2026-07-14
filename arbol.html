@@ -280,15 +280,18 @@
         ];
 
         const dbAudience = [
-            { id: 'pareja', parent: null, label: 'Pareja', nextTitle: '¿En qué punto estáis?', final: false },
-            { id: 'amistad', parent: null, label: 'Amistades y/o conocidxs', nextTitle: '¿Qué formato de grupo sois?', final: false },
-            { id: 'familia', parent: null, label: 'Mi familia', nextTitle: '¿Quiénes os juntáis?', final: false },
+            { id: 'pareja', parent: null, label: 'Primera cita', nextTitle: '¿En qué punto estáis?', final: false },
+            { id: 'amistad', parent: null, label: 'Nos estamos conociendo', nextTitle: '¿En qué punto estáis?', final: false },
+            { id: 'familia', parent: null, label: 'Pareja', nextTitle: '¿En qué punto estáis?', final: false },
             { id: 'p_cita', parent: 'pareja', label: 'Primera cita', final: true },
             { id: 'p_semanas', parent: 'pareja', label: 'Semanas o meses', final: true },
             { id: 'p_estable', parent: 'pareja', label: 'Años o Matrimonio', final: true },
-            { id: 'a_2', parent: 'amistad', label: 'Mano a mano (2)', final: true },
-            { id: 'a_grupo', parent: 'amistad', label: 'Grupo de amigxs', final: true },
-            { id: 'f_nucleo', parent: 'familia', label: 'Padres, hijxs o hermanxs', final: true }
+            { id: 'a_cita', parent: 'amistad', label: 'Primera cita', final: true },
+            { id: 'a_semanas', parent: 'amistad', label: 'Semanas o meses', final: true },
+            { id: 'a_estable', parent: 'amistad', label: 'Años o Matrimonio', final: true },
+            { id: 'f_cita', parent: 'familia', label: 'Primera cita', final: true },
+            { id: 'f_semanas', parent: 'familia', label: 'Semanas o meses', final: true },
+            { id: 'f_estable', parent: 'familia', label: 'Años o Matrimonio', final: true }
         ];
 
         const dbTones = [
