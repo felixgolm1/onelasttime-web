@@ -318,6 +318,12 @@
                     { id: 't_confesion', text: 'Confesión / Verdad Desnuda' },
                     { id: 't_provocador', text: 'Provocador / Incómodo' }
                 ]
+            },
+            {
+                id: 'custom_tone', title: 'Personalizado', subtitle: 'A tu gusto',
+                subtones: [
+                    { id: 't_custom', text: 'Descríbelo con tus palabras' }
+                ]
             }
         ];
 
@@ -1253,6 +1259,44 @@
                                                 const marginTop = cardIndex > 0 ? '-1.25rem' : '0';
                                                 const rotZ = [0, -1.5, 1.5, -2][cardIndex % 4];
                                                 const baseZIndex = 15 - cardIndex;
+
+                                                if (card.id === 't_custom') {
+                                                    return (
+                                                        <div 
+                                                            key={card.id}
+                                                            className={`v27-card ${isSelected ? 'is-selected' : ''} ${isShaking ? 'shake-animation' : ''}`}
+                                                            style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
+                                                        >
+                                                            <textarea
+                                                                className={`w-full h-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 overflow-hidden pt-4 ${isSelected ? 'text-gray-900 placeholder:text-gray-900/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
+                                                                placeholder={card.text}
+                                                                onFocus={(e) => {
+                                                                    isDragging.current = true; 
+                                                                }}
+                                                                onBlur={(e) => {
+                                                                    isDragging.current = false;
+                                                                    const val = e.target.value.trim();
+                                                                    if (val !== '') {
+                                                                        if (!selectedCards.includes(card.id)) {
+                                                                            if (selectedCards.length < MAX_SELECTIONS) {
+                                                                                setSelectedCards(prev => [...prev, card.id]);
+                                                                            } else {
+                                                                                setShakeCardId(card.id);
+                                                                                setLimitWarning(true);
+                                                                                setTimeout(() => setLimitWarning(false), 2200);
+                                                                                setTimeout(() => setShakeCardId(null), 400);
+                                                                            }
+                                                                        }
+                                                                    } else {
+                                                                        if (selectedCards.includes(card.id)) {
+                                                                            setSelectedCards(prev => prev.filter(id => id !== card.id));
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    );
+                                                }
 
                                                 return (
                                                     <div 
