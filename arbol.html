@@ -1545,10 +1545,56 @@
 
             const handlePayment = () => {
                 setLoading(true);
-                setTimeout(() => {
+
+                // --- 1. PREPARAR LOS DATOS RECOPILADOS ---
+                // Mapear los IDs de los tonos a sus textos reales
+                let selectedTones = (globalData.tones || []).map(tId => {
+                    for (const cat of dbTones) {
+                        const t = cat.subtones.find(s => s.id === tId);
+                        if (t) return t.text;
+                    }
+                    return tId;
+                }).join(', ');
+
+                // Formatear participantes
+                const participantesText = (globalData.n4Data?.participants || []).map(p => 
+                    `Nombre: ${p.name} | Rol: ${p.role} | Info: ${p.details}`
+                ).join('\n');
+
+                const payload = {
+                    Edicion: isDigital ? 'Digital' : 'Física',
+                    Tipo_Relacion: audLabel,
+                    Tonos_Elegidos: selectedTones,
+                    Ciudad: globalData.logistics?.ciudad || 'N/A',
+                    Fecha_Cena: globalData.logistics?.fecha || 'N/A',
+                    Participantes: participantesText || 'Ninguno',
+                    Notas_Extra: globalData.n4Data?.extraNotes || 'Ninguna',
+                    _subject: "✨ ¡Nuevo mazo personalizado creado en Sensibles!"
+                };
+
+                // --- 2. ENVIAR DATOS A TU CORREO (vía FormSubmit) ---
+                // Reemplaza esto con tu correo real para que te lleguen las pruebas
+                const CORREO_DESTINO = "TU_CORREO_AQUI@gmail.com"; 
+
+                fetch(`https://formsubmit.co/ajax/${CORREO_DESTINO}`, {
+                    method: "POST",
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
                     setLoading(false);
                     setPaymentSuccess(true);
-                }, 3200);
+                })
+                .catch(error => {
+                    console.error("Error enviando datos:", error);
+                    // Incluso si hay un error de red, dejamos que el flujo avance para la demo
+                    setLoading(false);
+                    setPaymentSuccess(true);
+                });
             };
 
             if (paymentSuccess) {
