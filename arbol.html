@@ -483,11 +483,14 @@
                     }}
                 >
                     {!showInput && (
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40 whitespace-nowrap">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40 flex flex-col items-center gap-1 whitespace-nowrap">
+                            <span className="text-[17px] tracking-wide font-medium text-gray-800">
+                                En otro lugar
+                            </span>
                             <span className="text-[17px] tracking-wide font-medium text-gray-400 flex items-center">
-                                En otro
+                                escríbelo
                                 <span className="inline-block w-[2px] h-[19px] bg-gray-500 mx-[3px] align-text-bottom" style={{ animation: 'cursorBlink 1s step-end infinite' }}></span>
-                                lugar...
+                                aquí...
                             </span>
                         </div>
                     )}
