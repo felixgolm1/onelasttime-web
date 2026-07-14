@@ -1522,12 +1522,21 @@
 
                         {subStep === 4 && (
                             <div className="w-full">
-                                <h2 className="text-2xl font-medium text-center mb-6 text-gray-900 tracking-tight">¿Algún detalle importante?</h2>
-                                <p className="text-center text-sm text-gray-500 mb-8">Última oportunidad para contarnos algo sobre vosotrxs que debamos tener en cuenta.</p>
-                                <div className="w-full mb-8 floating">
-                                    <textarea value={extraDetails} onChange={e => setExtraDetails(e.target.value)} className="card-input h-32 pt-4 mt-2" placeholder="Escribe aquí (opcional)..."></textarea>
+                                <h2 className="text-2xl font-medium text-center mb-2 text-gray-900 tracking-tight">¿Quieres añadir algo más?</h2>
+                                <p className="text-sm font-medium text-gray-500 text-center mb-8">
+                                    Última oportunidad para darnos información de contexto antes que diseñemos tus cartas
+                                </p>
+                                
+                                <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-12 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)] floating">
+                                    <textarea
+                                        rows={3}
+                                        className="w-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center text-gray-900 placeholder:text-gray-400 relative z-10"
+                                        placeholder="Escribe aquí (opcional)..."
+                                        value={extraDetails}
+                                        onChange={e => setExtraDetails(e.target.value)}
+                                    />
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Finalizar Personalización</button>
+                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>FINALIZAR PERSONALIZACIÓN</button>
                             </div>
                         )}
                     </div>
