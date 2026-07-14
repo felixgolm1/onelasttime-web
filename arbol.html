@@ -255,8 +255,8 @@
         // ==========================================
 
         const dbFormat = [
-            { id: 'cartas_fisicas', parent: null, label: 'Cartas físicas', nextTitle: '¿Dónde las usarás?', final: false },
-            { id: 'cartas_digitales', parent: null, label: 'Cartas digitales', nextTitle: '¿Dónde las usarás?', final: false },
+            { id: 'cartas_fisicas', parent: null, label: 'Cartas físicas', subtitle: 'Danos 4 horas de antelación para Barcelona ciudad o 48 horas para cualquier otra :)', nextTitle: '¿Dónde las usarás?', final: false },
+            { id: 'cartas_digitales', parent: null, label: 'Cartas digitales', subtitle: 'Sin antelación, ya mismo', nextTitle: '¿Dónde las usarás?', final: false },
             { id: 'cartas_digitales_en_un_restaurante', parent: 'cartas_digitales', label: 'En un restaurante', final: true },
             { id: 'cartas_digitales_en_mi_casa_o_en_la_de_alguien', parent: 'cartas_digitales', label: 'En mi casa o en la suya', final: true },
             { id: 'cartas_digitales_otro', parent: 'cartas_digitales', type: 'input', placeholder: 'En otro lugar...', final: true },
@@ -622,8 +622,9 @@
                                         {opt.type === 'input' ? (
                                             <InputCard opt={opt} handleClick={handleClick} />
                                         ) : (
-                                            <button className="n1-card group" onClick={() => handleClick(opt)}>
+                                            <button className="n1-card group gap-1.5" onClick={() => handleClick(opt)}>
                                                 <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 px-2">{opt.label || opt.nombre_visible}</span>
+                                                {opt.subtitle && <span className="text-[11px] font-medium text-gray-400 mt-0.5 px-4">{opt.subtitle}</span>}
                                             </button>
                                         )}
                                     </div>
