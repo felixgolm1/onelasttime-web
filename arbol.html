@@ -1417,7 +1417,7 @@
             const removeParticipant = (index) => setParticipants(participants.filter((_, i) => i !== index));
 
             const handleNextSubStep = () => {
-                if (subStep === 4) {
+                if (subStep === 5) {
                     onComplete({ time: timeMinutes, participants, age, extraDetails });
                 } else {
                     setIsOut(true);
@@ -1435,6 +1435,10 @@
             };
 
             const localProgress = progress + (subStep * 3);
+
+            if (subStep === 4) {
+                return <SecretReward secretIndex={3} progress={localProgress} onComplete={() => setSubStep(5)} onBack={() => setSubStep(3)} />;
+            }
 
             return (
                 <div className="min-h-screen flex flex-col items-center pt-24 p-4 relative fade-in">
@@ -1520,7 +1524,7 @@
                             </div>
                         )}
 
-                        {subStep === 4 && (
+                        {subStep === 5 && (
                             <div className="w-full">
                                 <h2 className="text-2xl font-medium text-center mb-2 text-gray-900 tracking-tight">¿Quieres añadir algo más?</h2>
                                 <p className="text-sm font-medium text-gray-500 text-center mb-8">
