@@ -1748,7 +1748,14 @@
                     {phase === 'secret1' && <SecretReward secretIndex={0} progress={getProgress()} onComplete={() => advanceTo('logistics')} onBack={goBackPhase} />}
                     
                     {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
-                        onComplete={data => advanceTo('calc', {logistics: data})} onBack={goBackPhase} />
+                        onComplete={data => {
+                            if (globalData.formatId?.includes('digital')) {
+                                advanceTo('audience', {logistics: data});
+                            } else {
+                                advanceTo('calc', {logistics: data});
+                            }
+                        }} 
+                        onBack={goBackPhase} />
                     }
                     
                     {phase === 'calc' && <Calculation data={globalData.logistics} formatId={globalData.formatId} progress={getProgress()}
