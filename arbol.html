@@ -1264,12 +1264,15 @@
                                                     return (
                                                         <div 
                                                             key={card.id}
+                                                            onClick={() => toggleSelection(card.id)}
                                                             className={`v27-card ${isSelected ? 'is-selected' : ''} ${isShaking ? 'shake-animation' : ''}`}
                                                             style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
                                                         >
-                                                            <textarea
-                                                                className={`w-full h-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 overflow-hidden pt-4 ${isSelected ? 'text-gray-900 placeholder:text-gray-900/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
+                                                            <input
+                                                                type="text"
+                                                                className={`w-full bg-transparent outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 ${isSelected ? 'text-gray-900 placeholder:text-gray-900/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
                                                                 placeholder={card.text}
+                                                                onClick={(e) => e.stopPropagation()}
                                                                 onFocus={(e) => {
                                                                     isDragging.current = true; 
                                                                 }}
