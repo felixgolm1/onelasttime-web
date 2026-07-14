@@ -282,13 +282,15 @@
         const dbAudience = [
             { id: 'pareja', parent: null, label: 'Primera cita', final: true },
             { id: 'amistad', parent: null, label: 'Nos estamos conociendo', nextTitle: '¿Cuánto hace que os estáis conociendo?', final: false },
-            { id: 'familia', parent: null, label: 'Pareja', nextTitle: '¿En qué punto estáis?', final: false },
+            { id: 'familia', parent: null, label: 'Pareja', nextTitle: '¿Cuánto hace que sois pareja?', final: false },
             { id: 'a_cita', parent: 'amistad', label: 'Primeras citas', final: true },
             { id: 'a_semanas', parent: 'amistad', label: 'Desde hace meses', final: true },
             { id: 'a_estable', parent: 'amistad', label: 'Desde hace años', final: true },
-            { id: 'f_cita', parent: 'familia', label: 'Primera cita', final: true },
-            { id: 'f_semanas', parent: 'familia', label: 'Semanas o meses', final: true },
-            { id: 'f_estable', parent: 'familia', label: 'Años o Matrimonio', final: true }
+            { id: 'f_semanas', parent: 'familia', label: 'Hace semanas', final: true },
+            { id: 'f_meses', parent: 'familia', label: 'Hace meses', final: true },
+            { id: 'f_anos', parent: 'familia', label: 'Hace años', final: true },
+            { id: 'f_prometidos', parent: 'familia', label: 'Estamos prometidxs', final: true },
+            { id: 'f_casados', parent: 'familia', label: 'Estamos casadxs', final: true }
         ];
 
         const dbTones = [
