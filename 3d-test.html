@@ -9665,6 +9665,11 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
   var TRANS       = TRANS_ENTRY; // alias — usado solo para fade-in del card
   var FEATHER     = 55;   // % de suavidad del gradiente
 
+  function mapRange(p, inMin, inMax, outMin, outMax) {
+      let t = Math.max(0, Math.min(1, (p - inMin) / (inMax - inMin)));
+      return outMin + t * (outMax - outMin);
+  }
+
   var SRCS = [
     'assets/brain_zona1_vta.png',
     'assets/brain_zona2_acc.png',
