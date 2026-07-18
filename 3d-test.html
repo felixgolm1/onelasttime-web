@@ -6052,7 +6052,6 @@ window.onerror = function(msg, url, line, col, err) {
                 if (_btns[0]) { _btns[0].classList.remove('selected'); }
                 if (_btns[1]) { _btns[1].classList.remove('selected'); }
               }
-              }
             }
           }
         } else {
@@ -6861,6 +6860,7 @@ window.onerror = function(msg, url, line, col, err) {
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
       targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
     }, { passive: false });
+  }
 
   // (Antiguo bloque startIntroAnim eliminado para evitar duplicación con el de la línea 7800)
 
