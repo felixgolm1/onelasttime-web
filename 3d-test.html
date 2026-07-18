@@ -1536,6 +1536,29 @@ window.onerror = function(msg, url, line, col, err) {
     #envej-bar-thumb.ghost-anim:not(.has-interacted) {
       animation: ghost-slide 1.5s ease-in-out 0.2s; /* 0.2s delay para que lo vea tras hacer snap */
     }
+  
+.final-feliz-btn {
+  padding: 11px 26px;
+  background: #0a0a0a;
+  border: 1.5px solid rgba(163,204,0,1);
+  border-radius: 999px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+}
+.final-feliz-btn:hover {
+  transform: scale(1.04);
+  background: rgba(163,204,0,0.15);
+}
+.final-feliz-btn.selected {
+  background: rgba(163,204,0,1) !important;
+  color: #0a0a0a !important;
+}
+
   </style>
 </head>
 
@@ -6026,8 +6049,8 @@ window.onerror = function(msg, url, line, col, err) {
               var _fp2 = document.getElementById('final-feliz-panel');
               if (_fp2) {
                 var _btns = _fp2.querySelectorAll('button');
-                if (_btns[0]) { _btns[0].style.background = '#0a0a0a';  }
-                if (_btns[1]) { _btns[1].style.background = '#0a0a0a';  }
+                if (_btns[0]) { _btns[0].classList.remove('selected'); }
+                if (_btns[1]) { _btns[1].classList.remove('selected'); }
               }
             }
           }
@@ -10556,24 +10579,8 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
 ">
   <div style="font-weight: 600; flex-shrink: 0;">¿QUIERES AÑADIR<br>FINAL FELIZ?</div>
   <div style="display:flex; gap:10px; flex-shrink: 0;">
-    <button onclick="window.chooseFinal(event, true)" style="
-      padding:11px 26px;
-      background:#0a0a0a;
-      border:1.5px solid rgba(163,204,0,1); border-radius:999px;
-      color:#fff;
-      font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
-      cursor:pointer; white-space:nowrap;
-      transition:transform 0.12s ease, background 0.15s ease;
-    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Sí</button>
-    <button onclick="window.chooseFinal(event, false)" style="
-      padding:11px 26px;
-      background:#0a0a0a;
-      border:1.5px solid rgba(163,204,0,1); border-radius:999px;
-      color:#fff;
-      font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700;
-      cursor:pointer; white-space:nowrap;
-      transition:transform 0.12s ease, background 0.15s ease;
-    " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">No</button>
+    <button class="final-feliz-btn" onclick="window.chooseFinal(event, true)">Sí</button>
+    <button class="final-feliz-btn" onclick="window.chooseFinal(event, false)">No</button>
   </div>
 </div>
 <!-- Panel video envejecimiento: vive dentro de #envej-panel-clip (wrapper fixed+overflow:hidden) -->
@@ -10816,16 +10823,14 @@ window.chooseFinal = function(e, happy) {
     if (imgs[2]) imgs[2].style.opacity = happy ? '0' : '1';
   });
   // Feedback visual en los botones: activo = fondo verde; inactivo = negro con borde verde
-  var panel = document.getElementById('final-feliz-panel');
+    var panel = document.getElementById('final-feliz-panel');
   if (panel) {
     var btns = panel.querySelectorAll('button');
-    if (btns[0]) { // Sí
-      btns[0].style.background = happy ? 'rgba(163,204,0,1)' : '#0a0a0a';
-      
+    if (btns[0]) { 
+      if (happy) btns[0].classList.add('selected'); else btns[0].classList.remove('selected');
     }
-    if (btns[1]) { // No
-      btns[1].style.background = !happy ? 'rgba(163,204,0,1)' : '#0a0a0a';
-      
+    if (btns[1]) { 
+      if (!happy) btns[1].classList.add('selected'); else btns[1].classList.remove('selected');
     }
   }
 };
