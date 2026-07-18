@@ -6026,8 +6026,8 @@ window.onerror = function(msg, url, line, col, err) {
               var _fp2 = document.getElementById('final-feliz-panel');
               if (_fp2) {
                 var _btns = _fp2.querySelectorAll('button');
-                if (_btns[0]) { _btns[0].style.background = '#0a0a0a'; _btns[0].style.color = '#fff'; }
-                if (_btns[1]) { _btns[1].style.background = '#0a0a0a'; _btns[1].style.color = '#fff'; }
+                if (_btns[0]) { _btns[0].style.background = '#0a0a0a';  }
+                if (_btns[1]) { _btns[1].style.background = '#0a0a0a';  }
               }
             }
           }
@@ -10821,11 +10821,11 @@ window.chooseFinal = function(e, happy) {
     var btns = panel.querySelectorAll('button');
     if (btns[0]) { // Sí
       btns[0].style.background = happy ? 'rgba(163,204,0,1)' : '#0a0a0a';
-      btns[0].style.color = happy ? '#0a0a0a' : '#fff';
+      
     }
     if (btns[1]) { // No
       btns[1].style.background = !happy ? 'rgba(163,204,0,1)' : '#0a0a0a';
-      btns[1].style.color = !happy ? '#0a0a0a' : '#fff';
+      
     }
   }
 };
