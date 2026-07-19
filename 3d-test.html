@@ -10397,7 +10397,9 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                     var chars = _oltPricingText.querySelectorAll('.char');
                     if (chars.length > 0) {
                       var blurLen = 10;
-                      var fillIndex = Math.floor(_creditsP * (chars.length + blurLen));
+                      var speedFactor = 1.8; // Acelera la iluminación
+                      var animP = Math.min(1, _creditsP * speedFactor);
+                      var fillIndex = Math.floor(animP * (chars.length + blurLen));
                       chars.forEach(function(char, idx) {
                         var dist = fillIndex - idx;
                         if (dist < 0) {
