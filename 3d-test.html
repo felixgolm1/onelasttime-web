@@ -10531,10 +10531,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       _oltTextR.style.opacity = '0';
                   }
                   var _oltPhase1R = document.getElementById('olt-phase-1');
-                  if (_oltPhase1R) { _oltPhase1R.style.opacity = '0'; }
-                      var _oltPhase2R = document.getElementById('olt-phase-2');
-                      if (_oltPhase2R) { _oltPhase2R.style.opacity = '0'; }
-                  }
+                  if (_oltPhase1R) _oltPhase1R.style.opacity = '0';
+                  var _oltPhase2R = document.getElementById('olt-phase-2');
+                  if (_oltPhase2R) _oltPhase2R.style.opacity = '0';
                   var _oltCtaR = document.getElementById('olt-final-cta');
                   if (_oltCtaR) {
                       _oltCtaR.style.transform = 'translateY(100vh)';
