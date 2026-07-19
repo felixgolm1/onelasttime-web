@@ -10437,7 +10437,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
                       
                       // Ajustar la posición vertical al aparecer la garantía
-                      var dynOffsetY = _p2GuaranteeP * 40; // Sube hasta 40px progresivamente
+                      var dynOffsetY = _p1ReverseP * 40; // Sube hasta 40px progresivamente
                       _oltPhaseDyn.style.transform = 'translate(-50%, calc(-50% - ' + dynOffsetY + 'px))';
                       
                       // Iluminación de la pregunta
@@ -10539,12 +10539,12 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       // Guarantee Phase
                       var guaranteeRow = document.getElementById('p2-guarantee');
                       if (guaranteeRow) {
-                          guaranteeRow.style.opacity = _p2GuaranteeP.toFixed(2);
+                          guaranteeRow.style.opacity = _p1ReverseP.toFixed(2);
                           
                           var leafLeft = document.getElementById('leaf-left');
                           var leafRight = document.getElementById('leaf-right');
                           if (leafLeft && leafRight) {
-                              var leafOp = 0.15 + 0.85 * _p2GuaranteeP;
+                              var leafOp = 0.15 + 0.85 * _p1ReverseP;
                               leafLeft.style.opacity = leafOp.toFixed(2);
                               leafRight.style.opacity = leafOp.toFixed(2);
                           }
