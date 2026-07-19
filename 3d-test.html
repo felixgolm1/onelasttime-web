@@ -10511,14 +10511,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                   var stepIdx = Math.min(revSteps.length - 1, Math.floor(revP * revSteps.length));
                                   var countVal = revSteps[stepIdx];
                                   counterSpan.innerText = countVal.toLocaleString('es-ES') + '€';
-                                  counterSpan.style.color = '#ccff00';
+                                  counterSpan.style.color = '#ffffff';
                               } else {
                                   // Decimal down from 10 to 7.99
                                   var decP = (_p1ReverseP - 0.5) * 2.0; // 0 to 1
                                   var decVal = 10 - (10 - 7.99) * decP;
                                   var strVal = decVal.toFixed(2).replace('.', ',');
                                   counterSpan.innerText = strVal + '€';
-                                  counterSpan.style.color = '#ccff00';
+                                  counterSpan.style.color = '#ffffff';
                               }
                           }
                           
