@@ -9568,7 +9568,11 @@ setInterval(function() {
   <div id="olt-pricing-text" style="width:70vw; max-width:900px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1rem, 1.3vw, 1.2rem); font-weight:400; line-height:1.6; margin-top:3rem; text-align:center; transform:translateY(100vh); position:absolute; z-index: 10;">
   <p style="margin:0 0 1rem 0;"><i>¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</i></p>
   <p style="margin:0 0 1rem 0;">Ahora, por <span style="font-weight:700; color:#ccff00; font-size:1.2em;">7,99€</span>, te damos el poder de tenerla cuando quieras.</p>
-  <p style="margin:0;">Y si no es así, te devolvemos el dinero sin preguntas.</p>
+  <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-top:1rem;">
+    <img id="leaf-left" src="assets/img/hoja laurel izquierda blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
+    <p style="margin:0;">Y si no es así, te devolvemos el dinero sin preguntas.</p>
+    <img id="leaf-right" src="assets/img/hoja laurel derecha blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
+  </div>
 </div>
 <div id="olt-final-text" style="width:70vw; max-width:900px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1rem, 1.3vw, 1.2rem); font-weight:400; line-height:1.6; margin-top:3rem; text-align:center; transform:translateY(100vh); opacity:0; will-change:transform, opacity;">
     <p style="margin-bottom: 1.5rem;"><i>"Si vives cada día como si fuera el último, algún día estarás en lo cierto"</i></p>
@@ -10400,6 +10404,48 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                       var speedFactor = 3.5; // Acelera la iluminación
                       var animP = Math.min(1, _creditsP * speedFactor);
                       var fillIndex = Math.floor(animP * (chars.length + blurLen));
+                      
+                      // Lógica de hojas de laurel
+                      var leafLeft = document.getElementById('leaf-left');
+                      var leafRight = document.getElementById('leaf-right');
+                      var lastP = _oltPricingText.querySelector('div p'); 
+                      if (lastP && leafLeft && leafRight) {
+                        var lastChars = lastP.querySelectorAll('.char');
+                        if (lastChars.length > 0) {
+                          var charsArr = Array.from(chars);
+                          var firstIdx = charsArr.indexOf(lastChars[0]);
+                          var lastIdx = charsArr.indexOf(lastChars[lastChars.length - 1]);
+                          
+                          if (firstIdx !== -1) {
+                            var distLeft = fillIndex - firstIdx;
+                            if (distLeft < 0) {
+                              leafLeft.style.opacity = '0.15';
+                              leafLeft.style.filter = 'none';
+                            } else if (distLeft < blurLen) {
+                              leafLeft.style.opacity = '1';
+                              leafLeft.style.filter = 'drop-shadow(0 0 12px #ccff00)';
+                            } else {
+                              leafLeft.style.opacity = '1';
+                              leafLeft.style.filter = 'drop-shadow(0 0 12px #ffffff)';
+                            }
+                          }
+                          
+                          if (lastIdx !== -1) {
+                            var distRight = fillIndex - lastIdx;
+                            if (distRight < 0) {
+                              leafRight.style.opacity = '0.15';
+                              leafRight.style.filter = 'none';
+                            } else if (distRight < blurLen) {
+                              leafRight.style.opacity = '1';
+                              leafRight.style.filter = 'drop-shadow(0 0 12px #ccff00)';
+                            } else {
+                              leafRight.style.opacity = '1';
+                              leafRight.style.filter = 'drop-shadow(0 0 12px #ffffff)';
+                            }
+                          }
+                        }
+                      }
+
                       chars.forEach(function(char, idx) {
                         var dist = fillIndex - idx;
                         if (dist < 0) {
