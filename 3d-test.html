@@ -9600,7 +9600,16 @@ setInterval(function() {
 
     <!-- PHASE 3 (Final Image) -->
   <div id="olt-final-text" style="width:90vw; max-width:800px; position:absolute; top:50%; left:50%; transform:translate(-50%, calc(-50% + 2cm)); opacity:0; will-change:opacity, filter; display:flex; justify-content:center; align-items:center; z-index: 1;">
-      <img src="assets/img/polaroid.png" alt="Polaroid" style="width:100%; height:auto; display:block; filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4));">
+      <div id="polaroid-wrapper" style="position:relative; width:100%;">
+          <!-- Invisible placeholder to keep aspect ratio -->
+          <img src="assets/img/polaroid.png" style="width:100%; height:auto; display:block; visibility:hidden;">
+          
+          <!-- Left Half -->
+          <img id="polaroid-left" src="assets/img/polaroid.png" style="position:absolute; top:0; left:0; width:100%; height:100%; clip-path: inset(0 50% 0 0); filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4)); will-change:transform;">
+          
+          <!-- Right Half -->
+          <img id="polaroid-right" src="assets/img/polaroid.png" style="position:absolute; top:0; left:0; width:100%; height:100%; clip-path: inset(0 0 0 50%); filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4)); will-change:transform;">
+      </div>
       
       <!-- Handwritten Text Overlay -->
       <div id="polaroid-handwriting" style="position: absolute; left: 52%; top: 12%; width: 42%; transform: rotate(5.5deg); font-family: 'Caveat', cursive; color: #151515; font-size: clamp(0.9rem, 1.8vw, 1.6rem); line-height: 1.15; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 75%; padding: 0 10px; box-sizing: border-box;">
@@ -10563,46 +10572,61 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                       }
                   }
                   
-                                    // ----- PHASE 3: Reflexion Final (Efecto Matrix / Captura 3D) -----
+                                    // ----- PHASE 3: Reflexion Final (Colision de Mitades) -----
                   var _oltText = document.getElementById('olt-final-text');
                   var _cameraFlash = document.getElementById('camera-flash');
                   
                   if (_cameraFlash) {
                       var flashOp = 0;
-                      if (_p3FadeInP > 0 && _p3FadeInP <= 0.15) {
-                          flashOp = mapRange(_p3FadeInP, 0, 0.15, 0, 1);
-                      } else if (_p3FadeInP > 0.15 && _p3FadeInP <= 1.0) {
-                          flashOp = mapRange(_p3FadeInP, 0.15, 0.8, 1, 0);
+                      // Flash spikes exactly at the collision point (_p3FadeInP = 1.0) and fades out during _finalP
+                      if (_p3FadeInP > 0.8 && _p3FadeInP <= 1.0) {
+                          flashOp = mapRange(_p3FadeInP, 0.8, 1.0, 0, 1);
+                      } else if (_finalP > 0 && _finalP <= 0.2) {
+                          flashOp = mapRange(_finalP, 0, 0.2, 1, 0);
                       }
                       _cameraFlash.style.opacity = Math.max(0, Math.min(1, flashOp)).toFixed(2);
                   }
                   
                   if (_oltText) {
-                    var _finalOp = _p3FadeInP > 0.15 ? 1 : 0;
+                    var _finalOp = _p3FadeInP > 0.05 ? 1 : 0; // Container visible early
+                    _oltText.style.opacity = _finalOp.toFixed(2);
+                    _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm))';
+                    
+                    var pLeft = document.getElementById('polaroid-left');
+                    var pRight = document.getElementById('polaroid-right');
                     
                     if (_p3FadeInP > 0) {
-                        // Matrix Zoom-Out logic (tied to _finalP for slow cinematic pull-back)
-                        var scaleVal = mapRange(_finalP, 0, 1, 3.5, 1.0); // Starts huge, zooming out
-                        var shadowBlur = mapRange(_finalP, 0, 1, 150, 40);
-                        var shadowY = mapRange(_finalP, 0, 1, 80, 10);
+                        // Flying collision logic
+                        var moveX = mapRange(_p3FadeInP, 0, 1.0, 30, 0); // vw
+                        var moveY = mapRange(_p3FadeInP, 0, 1.0, 10, 0); // vh
+                        var rot = mapRange(_p3FadeInP, 0, 1.0, 20, 0); // deg
+                        var partOp = mapRange(_p3FadeInP, 0.1, 0.5, 0, 1);
                         
-                        _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm)) scale(' + scaleVal.toFixed(2) + ')';
-                        var polaroidImg = _oltText.querySelector('img');
-                        if (polaroidImg) {
-                            polaroidImg.style.filter = 'drop-shadow(0px ' + shadowY.toFixed(1) + 'px ' + shadowBlur.toFixed(1) + 'px rgba(0,0,0,0.4))';
+                        if (pLeft) {
+                            pLeft.style.transform = 'translate(-' + moveX.toFixed(2) + 'vw, ' + moveY.toFixed(2) + 'vh) rotate(-' + rot.toFixed(2) + 'deg)';
+                            pLeft.style.opacity = Math.max(0, Math.min(1, partOp)).toFixed(2);
+                        }
+                        if (pRight) {
+                            pRight.style.transform = 'translate(' + moveX.toFixed(2) + 'vw, -' + moveY.toFixed(2) + 'vh) rotate(' + rot.toFixed(2) + 'deg)';
+                            pRight.style.opacity = Math.max(0, Math.min(1, partOp)).toFixed(2);
                         }
                     }
-                    _oltText.style.opacity = _finalOp.toFixed(2);
-                    _oltText.style.filter = 'none'; 
                     
-                    // Handwriting logic (Visible from the start since it's a finished capture)
-                    var charsF = _oltText.querySelectorAll('.char');
-                    if (charsF.length > 0) {
-                      var total = charsF.length;
-                      for (var k = 0; k < total; k++) {
-                        charsF[k].style.opacity = '1';
-                        charsF[k].style.filter = 'none';
-                      }
+                    // Handwriting logic (Se estampa de golpe como un sello tras el flash)
+                    var handwritingContainer = document.getElementById('polaroid-handwriting');
+                    if (handwritingContainer) {
+                        var stampOp = mapRange(_finalP, 0.05, 0.2, 0, 1);
+                        var stampScale = mapRange(_finalP, 0.05, 0.2, 1.5, 1.0);
+                        
+                        handwritingContainer.style.opacity = Math.max(0, Math.min(1, stampOp)).toFixed(2);
+                        // We preserve the 5.5deg rotation it had originally
+                        handwritingContainer.style.transform = 'rotate(5.5deg) scale(' + stampScale.toFixed(2) + ')';
+                        
+                        var charsF = _oltText.querySelectorAll('.char');
+                        for (var k = 0; k < charsF.length; k++) {
+                            charsF[k].style.opacity = '1';
+                            charsF[k].style.filter = 'none';
+                        }
                     }
                   }
               } else {
