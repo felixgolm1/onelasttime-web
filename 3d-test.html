@@ -10417,7 +10417,8 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                           var lastIdx = charsArr.indexOf(lastChars[lastChars.length - 1]);
                           
                           if (firstIdx !== -1) {
-                            var distLeft = fillIndex - firstIdx;
+                            var leftLeafIndex = firstIdx - 1;
+                            var distLeft = fillIndex - leftLeafIndex;
                             if (distLeft < 0) {
                               leafLeft.style.opacity = '0.15';
                               leafLeft.style.filter = 'none';
@@ -10431,7 +10432,8 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                           }
                           
                           if (lastIdx !== -1) {
-                            var distRight = fillIndex - lastIdx;
+                            var rightLeafIndex = lastIdx + 1;
+                            var distRight = fillIndex - rightLeafIndex;
                             if (distRight < 0) {
                               leafRight.style.opacity = '0.15';
                               leafRight.style.filter = 'none';
