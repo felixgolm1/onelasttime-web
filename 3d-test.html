@@ -3681,7 +3681,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // ── Drivers ──────────────────────────────────────────────────
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
-    const maxProg = 43.0;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    const maxProg = 54.0;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
     // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
     // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
@@ -9565,7 +9565,12 @@ setInterval(function() {
        src="assets/img/logo one last time.png"
        alt="One Last Time"
        style="width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;filter: brightness(0) invert(1);">
-  <div id="olt-final-text" style="width:70vw; max-width:900px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1rem, 1.3vw, 1.2rem); font-weight:400; line-height:1.6; margin-top:3rem; text-align:center; transform:translateY(100vh); opacity:0; will-change:transform, opacity;">
+  <div id="olt-pricing-text" style="width:70vw; max-width:900px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1rem, 1.3vw, 1.2rem); font-weight:400; line-height:1.6; margin-top:3rem; text-align:center; transform:translateY(100vh); position:absolute; z-index: 10;">
+  <p style="margin:0 0 1rem 0;"><i>�Si tuvieras que vender la mejor conversaci�n que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os uni� y los<br>cambios que provoc�... qu� precio le pondr�as?</i></p>
+  <p style="margin:0 0 1rem 0;">Ahora, por <span style="font-weight:700; color:#ccff00; font-size:1.2em;">7,99�</span>, te damos el poder de tenerla cuando quieras.</p>
+  <p style="margin:0;">Y si no es as�, te devolvemos el dinero sin preguntas.</p>
+</div>
+<div id="olt-final-text" style="width:70vw; max-width:900px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1rem, 1.3vw, 1.2rem); font-weight:400; line-height:1.6; margin-top:3rem; text-align:center; transform:translateY(100vh); opacity:0; will-change:transform, opacity;">
     <p style="margin-bottom: 1.5rem;"><i>"Si vives cada día como si fuera el último, algún día estarás en lo cierto"</i></p>
     <p style="margin-bottom: 1.5rem;">Y aunque esperamos que este día quede lejos, no hay duda de que nunca volveremos a vivir cada preciso instante de nuevo.</p>
     <p style="margin-bottom: 0;">Así que amemos a las personas que nos importan ahora, ya que no sabemos cuando tendremos la última oportunidad para hacerlo.</p>
@@ -10345,10 +10350,15 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                 }
                   // ── EXIT PHASE: img-strip sube por arriba, logo OLT sube desde abajo ──
                   var IS_EXIT_END = 20.0;
-                  var IS_FINAL_END = 22.0;
+                  var IS_CREDITS_END = 28.0;
+                  var IS_FADE_END = 30.0;
+                  var IS_FINAL_END = 32.0;
+                  
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
-                  var _finalP = Math.max(0, Math.min(1, (localP - IS_EXIT_END) / (IS_FINAL_END - IS_EXIT_END)));
+                  var _creditsP = Math.max(0, Math.min(1, (localP - IS_EXIT_END) / (IS_CREDITS_END - IS_EXIT_END)));
+                  var _fadeP = Math.max(0, Math.min(1, (localP - IS_CREDITS_END) / (IS_FADE_END - IS_CREDITS_END)));
+                  var _finalP = Math.max(0, Math.min(1, (localP - IS_FADE_END) / (IS_FINAL_END - IS_FADE_END)));
                   
                   // El carrusel sigue subiendo sin limite
                   var _carUpP = Math.max(0, (localP - IS_END) / (IS_EXIT_END - IS_END));
@@ -10358,31 +10368,37 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   var _scrollInd = document.querySelector('.scroll-indicator');
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
-                  
                   var _logoBaseY = ((1 - _exitEA) * 100);
-                  var _logoY = _logoBaseY + (_finalP * 20);
+                  var _logoY = _logoBaseY + (_exitEA * -35);
                   
                   var _oltLogo = document.getElementById('olt-logo-img-big');
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
                   
                   var _ctaBaseY = ((1 - _exitEA) * 100);
-                  var _ctaY = _ctaBaseY - (_finalP * 20);
+                  var _ctaY = _ctaBaseY + (_exitEA * 35);
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
-                    var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.7) / 0.3));
+                    var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
                     _oltCta.style.opacity = _ctaP.toFixed(2);
                     _oltCta.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
                     _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
                   }
+                  
+                  var _oltPricingText = document.getElementById('olt-pricing-text');
+                  if (_oltPricingText) {
+                    var _creditsY = 100 - (_creditsP * 200);
+                    _oltPricingText.style.transform = 'translateY(' + _creditsY.toFixed(2) + 'vh)';
+                    _oltPricingText.style.opacity = (_creditsP > 0 && _creditsP < 1) ? '1' : '0';
+                  }
+
                   var _oltText = document.getElementById('olt-final-text');
                   if (_oltText) {
-                    var _txtP = Math.max(0, Math.min(1, (_exitP - 0.4) / 0.6));
-                    _oltText.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
-                    // _eraseFP es el doble de rapido: el texto queda borrado cuando _finalP = 0.5
+                    _oltText.style.transform = 'translateY(0vh)';
                     var _eraseFP = Math.min(1, _finalP * 2);
-                    // El contenedor se oculta cuando _eraseFP llega a 1 (fallback para texto sin .char)
-                    _oltText.style.opacity = (_eraseFP >= 1) ? '0' : _txtP.toFixed(2);
+                    var _finalOp = _fadeP;
+                    if (_eraseFP >= 1) _finalOp = 0;
+                    _oltText.style.opacity = _finalOp.toFixed(2);
                     
                     var chars = _oltText.querySelectorAll('.char');
                     if (chars.length > 0) {
@@ -10877,6 +10893,7 @@ window.chooseFinal = function(e, happy) {
 </script>
 
 </html>
+
 
 
 
