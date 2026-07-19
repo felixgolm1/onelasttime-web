@@ -9567,23 +9567,28 @@ setInterval(function() {
        style="width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;filter: brightness(0) invert(1);">
   <div id="pricing-clip-container" style="flex:1; width:100vw; position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; margin: 0;">
   
-  <!-- PHASE 1 -->
-  <div id="olt-phase-1" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 10; opacity: 0; will-change: opacity;">
-    <div id="p1-question">
-        <p style="margin:0 0 2rem 0;">¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</p>
+  <!-- DYNAMIC PHASE 1 & 2 -->
+  <div id="olt-phase-dynamic" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 10;">
+    
+    <!-- P1 Question -->
+    <div id="p1-question" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); width: 100%; opacity: 0; will-change: opacity;">
+        <p style="margin:0;">¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</p>
     </div>
-    <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
-        <span id="p1-counter" style="transition: color 0.2s ease-out;">¿0€?</span>
-        <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:3px; background-color:#ccff00; transform:translateY(-50%);"></div>
-    </div>
-  </div>
 
-  <!-- PHASE 2 -->
-  <div id="olt-phase-2" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 10; opacity: 0; will-change: opacity;">
-    <p style="margin:0 0 1rem 0;">Ahora, por <span style="font-weight:700; color:#ccff00; font-size:1.2em;">7,99€</span>, te damos el poder de tenerla cuando quieras.</p>
-    <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-top:1rem;">
+    <!-- P1/P2 Dynamic Price Row -->
+    <div id="dynamic-pricing-row" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 80px); display:flex; align-items:center; justify-content:center; white-space:nowrap; opacity: 0; will-change: transform, opacity;">
+        <span id="dp-left" style="overflow:hidden; max-width:0; opacity:0; transition: max-width 0.5s ease, opacity 0.5s ease;">Ahora, por&nbsp;</span>
+        <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
+            <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">¿0€?</span>
+            <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:3px; background-color:#ccff00; transform:translateY(-50%); transition: width 0.1s linear;"></div>
+        </div>
+        <span id="dp-right" style="overflow:hidden; max-width:0; opacity:0; transition: max-width 0.5s ease, opacity 0.5s ease;">, te damos la habilidad de tenerla cuando quieras.</span>
+    </div>
+
+    <!-- P2 Guarantee -->
+    <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 50px); width: 100%; display:flex; justify-content:center; align-items:center; gap:15px; opacity: 0; will-change: opacity;">
       <img id="leaf-left" src="assets/img/hoja laurel izquierda blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
-      <p id="garantia-text" style="margin:0;">Y si no es así, te devolvemos el dinero sin preguntas.</p>
+      <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700;">Y si no es así, te devolvemos el dinero sin preguntas.</p>
       <img id="leaf-right" src="assets/img/hoja laurel derecha blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
     </div>
   </div>
@@ -10374,11 +10379,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var IS_P1_LIGHT_END   = 21.5;
                   var IS_P1_COUNT_END   = 22.5;
                   var IS_P1_STRIKE_END  = 23.5;
-                  var IS_P1_END         = 24.0;
-                  var IS_P2_FADE_IN_END = 25.0;
-                  var IS_P2_END         = 27.0;
-                  var IS_P3_FADE_IN_END = 28.0;
-                  var IS_FINAL_END      = 32.0;
+                  var IS_P1_REVERSE_END = 25.0; 
+                  var IS_P2_GUARANTEE_END = 26.5; 
+                  var IS_P2_END         = 28.0;
+                  var IS_P3_FADE_IN_END = 29.0;
+                  var IS_FINAL_END      = 33.0;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
@@ -10388,10 +10393,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var _p1LightP  = Math.max(0, Math.min(1, (localP - IS_P1_FADE_IN_END) / (IS_P1_LIGHT_END - IS_P1_FADE_IN_END)));
                   var _p1CountP  = Math.max(0, Math.min(1, (localP - IS_P1_LIGHT_END) / (IS_P1_COUNT_END - IS_P1_LIGHT_END)));
                   var _p1StrikeP = Math.max(0, Math.min(1, (localP - IS_P1_COUNT_END) / (IS_P1_STRIKE_END - IS_P1_COUNT_END)));
-                  var _p1FadeOutP= Math.max(0, Math.min(1, (localP - IS_P1_END) / (IS_P2_FADE_IN_END - IS_P1_END)));
-                  
-                  var _p2FadeInP = Math.max(0, Math.min(1, (localP - IS_P1_END) / (IS_P2_FADE_IN_END - IS_P1_END)));
-                  var _p2FadeOutP= Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
+                  var _p1ReverseP = Math.max(0, Math.min(1, (localP - IS_P1_STRIKE_END) / (IS_P1_REVERSE_END - IS_P1_STRIKE_END)));
+                  var _p2GuaranteeP = Math.max(0, Math.min(1, (localP - IS_P1_REVERSE_END) / (IS_P2_GUARANTEE_END - IS_P1_REVERSE_END)));
+                  var _p2FadeOutP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
                   
                   var _p3FadeInP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
                   var _finalP    = Math.max(0, Math.min(1, (localP - IS_P3_FADE_IN_END) / (IS_FINAL_END - IS_P3_FADE_IN_END)));
@@ -10421,80 +10425,125 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
                   }
                   
-                  // ----- PHASE 1: Pregunta y Contador -----
-                  var _oltPhase1 = document.getElementById('olt-phase-1');
-                  if (_oltPhase1) {
-                    var op = _p1FadeInP - _p1FadeOutP;
-                    _oltPhase1.style.opacity = op.toFixed(2);
-                    
-                    // Iluminación de la pregunta
-                    var questionP = document.getElementById('p1-question');
-                    if (questionP) {
-                        var chars = questionP.querySelectorAll('.char');
-                        if (chars.length > 0) {
-                            var blurLen = 15;
-                            var fillIndex = Math.floor(_p1LightP * (chars.length + blurLen));
-                            chars.forEach(function(char, idx) {
-                                var dist = fillIndex - idx;
-                                if (dist < 0) {
-                                  char.style.opacity = '0.15';
-                                  char.style.color = '';
-                                  char.style.textShadow = 'none';
-                                } else if (dist < blurLen) {
-                                  var ratio = dist / blurLen;
-                                  var opC = 0.15 + 0.85 * Math.pow(ratio, 0.8);
-                                  char.style.opacity = opC.toFixed(2);
-                                  var r = Math.round(204 + 51 * ratio);
-                                  var g = 255;
-                                  var b = Math.round(255 * ratio);
-                                  char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
-                                  var shadowAlpha = (ratio * 0.6).toFixed(2);
-                                  char.style.textShadow = 'none';
-                                } else {
-                                  char.style.opacity = '1';
-                                  char.style.color = '#ffffff';
-                                  char.style.textShadow = 'none';
-                                }
-                            });
-                        }
-                    }
-                    
-                                        // Contador
-                    var counterContainer = document.getElementById('p1-counter-container');
-                    var counterSpan = document.getElementById('p1-counter');
-                    var strikeLine = document.getElementById('p1-strikethrough');
-                    if (counterSpan && strikeLine && counterContainer) {
-                        // Fade in the counter dimmed along with the question text
-                        var counterOp = Math.min(1, _p1FadeInP * 2.0);
-                        counterContainer.style.opacity = counterOp.toFixed(2);
-                        
-                        if (_p1CountP < 1) {
-                            var countVal = Math.floor(_p1CountP * 1000000);
-                            counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + '€?';
-                            counterSpan.style.color = (_p1CountP === 0) ? 'rgba(255, 255, 255, 0.15)' : '#ffffff';
-                            strikeLine.style.width = '0%';
-                        } else {
-                            counterSpan.innerText = '¿No está a la venta?';
-                            counterSpan.style.color = '#ffffff';
-                            strikeLine.style.width = (_p1StrikeP * 100).toFixed(1) + '%';
-                        }
-                    }
-                  }
-                  
-                  // ----- PHASE 2: Precio Real -----
-                  var _oltPhase2 = document.getElementById('olt-phase-2');
-                  if (_oltPhase2) {
-                    var op2 = _p2FadeInP - _p2FadeOutP;
-                    _oltPhase2.style.opacity = op2.toFixed(2);
-                    
-                    // Efecto de hojas de laurel al entrar la fase 2
-                    var leafLeft = document.getElementById('leaf-left');
-                    var leafRight = document.getElementById('leaf-right');
-                    if (leafLeft && leafRight) {
-                        var leafOp = 0.15 + 0.85 * _p2FadeInP;
-                        leafLeft.style.opacity = leafOp.toFixed(2);
-                        leafRight.style.opacity = leafOp.toFixed(2);
-                    }
+                  // ----- PHASE 1 & 2: Dynamic -----
+                  var _oltPhaseDyn = document.getElementById('olt-phase-dynamic');
+                  if (_oltPhaseDyn) {
+                      var opDyn = _p1FadeInP - _p2FadeOutP;
+                      _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
+                      
+                      // Iluminación de la pregunta
+                      var questionP = document.getElementById('p1-question');
+                      if (questionP) {
+                          // Fade out de la pregunta durante _p1ReverseP
+                          var qOp = 1 - _p1ReverseP;
+                          questionP.style.opacity = qOp.toFixed(2);
+
+                          var chars = questionP.querySelectorAll('.char');
+                          if (chars.length > 0) {
+                              var blurLen = 15;
+                              var fillIndex = Math.floor(_p1LightP * (chars.length + blurLen));
+                              chars.forEach(function(char, idx) {
+                                  var dist = fillIndex - idx;
+                                  if (dist < 0) {
+                                      char.style.opacity = '0.15';
+                                      char.style.color = '';
+                                      char.style.textShadow = 'none';
+                                  } else if (dist < blurLen) {
+                                      var ratio = dist / blurLen;
+                                      var opC = 0.15 + 0.85 * Math.pow(ratio, 0.8);
+                                      char.style.opacity = opC.toFixed(2);
+                                      var r = Math.round(204 + 51 * ratio);
+                                      var g = 255;
+                                      var b = Math.round(255 * ratio);
+                                      char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
+                                      char.style.textShadow = 'none';
+                                  } else {
+                                      char.style.opacity = '1';
+                                      char.style.color = '#ffffff';
+                                      char.style.textShadow = 'none';
+                                  }
+                              });
+                          }
+                      }
+                      
+                      // Contador y Regresión
+                      var dynRow = document.getElementById('dynamic-pricing-row');
+                      var counterContainer = document.getElementById('p1-counter-container');
+                      var counterSpan = document.getElementById('p1-counter');
+                      var strikeLine = document.getElementById('p1-strikethrough');
+                      var dpLeft = document.getElementById('dp-left');
+                      var dpRight = document.getElementById('dp-right');
+
+                      if (dynRow && counterSpan && strikeLine && counterContainer) {
+                          // Movement: initially 80px, finally -50% to be perfectly centered.
+                          // Wait, if dynRow has height 40px, 80px translates it below question.
+                          // Let's translate it smoothly based on _p1ReverseP.
+                          // calc(80px - (_p1ReverseP * 80px) - (_p1ReverseP * 50%))
+                          var transYStr = 'calc(80px - ' + (_p1ReverseP * 80) + 'px - ' + (_p1ReverseP * 50) + '%)';
+                          dynRow.style.transform = 'translate(-50%, ' + transYStr + ')';
+                          
+                          // Opacity is tied to _p1FadeInP
+                          var counterOp = Math.min(1, _p1FadeInP * 2.0);
+                          counterContainer.style.opacity = counterOp.toFixed(2);
+                          dynRow.style.opacity = counterOp.toFixed(2);
+                          
+                          // Counter Logic
+                          var countSteps = [0, 1, 10, 100, 10000, 100000, 1000000];
+                          if (_p1CountP < 1) {
+                              var stepIdx = Math.min(countSteps.length - 1, Math.floor(_p1CountP * countSteps.length));
+                              var countVal = countSteps[stepIdx];
+                              counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + '€?';
+                              counterSpan.style.color = (_p1CountP === 0) ? 'rgba(255, 255, 255, 0.15)' : '#ffffff';
+                              strikeLine.style.width = '0%';
+                          } else if (_p1StrikeP < 1) {
+                              counterSpan.innerText = '¿No está a la venta?';
+                              counterSpan.style.color = '#ffffff';
+                              strikeLine.style.width = (_p1StrikeP * 100).toFixed(1) + '%';
+                          } else {
+                              // Reverse phase
+                              strikeLine.style.width = '0%';
+                              if (_p1ReverseP < 0.5) {
+                                  // 1.000.000 down to 10
+                                  var revSteps = [1000000, 100000, 10000, 100, 10];
+                                  var revP = _p1ReverseP * 2.0; // 0 to 1
+                                  var stepIdx = Math.min(revSteps.length - 1, Math.floor(revP * revSteps.length));
+                                  var countVal = revSteps[stepIdx];
+                                  counterSpan.innerText = countVal.toLocaleString('es-ES') + '€';
+                                  counterSpan.style.color = '#ccff00';
+                              } else {
+                                  // Decimal down from 10 to 7.99
+                                  var decP = (_p1ReverseP - 0.5) * 2.0; // 0 to 1
+                                  var decVal = 10 - (10 - 7.99) * decP;
+                                  var strVal = decVal.toFixed(2).replace('.', ',');
+                                  counterSpan.innerText = strVal + '€';
+                                  counterSpan.style.color = '#ccff00';
+                              }
+                          }
+                          
+                          // Expansión lateral (Centrado)
+                          if (dpLeft && dpRight) {
+                              var maxWLeft = 200; 
+                              var maxWRight = 600;
+                              dpLeft.style.maxWidth = (_p1ReverseP * maxWLeft) + 'px';
+                              dpLeft.style.opacity = _p1ReverseP.toFixed(2);
+                              dpRight.style.maxWidth = (_p1ReverseP * maxWRight) + 'px';
+                              dpRight.style.opacity = _p1ReverseP.toFixed(2);
+                          }
+                      }
+                      
+                      // Guarantee Phase
+                      var guaranteeRow = document.getElementById('p2-guarantee');
+                      if (guaranteeRow) {
+                          guaranteeRow.style.opacity = _p2GuaranteeP.toFixed(2);
+                          
+                          var leafLeft = document.getElementById('leaf-left');
+                          var leafRight = document.getElementById('leaf-right');
+                          if (leafLeft && leafRight) {
+                              var leafOp = 0.15 + 0.85 * _p2GuaranteeP;
+                              leafLeft.style.opacity = leafOp.toFixed(2);
+                              leafRight.style.opacity = leafOp.toFixed(2);
+                          }
+                      }
                   }
                   
                   // ----- PHASE 3: Reflexión Final -----
