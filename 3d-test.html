@@ -10471,7 +10471,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                         if (_p1CountP < 1) {
                             var countVal = Math.floor(_p1CountP * 1000000);
                             counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + '€?';
-                            counterSpan.style.color = (_p1CountP === 0) ? '#4c4c4c' : '#ffffff';
+                            counterSpan.style.color = (_p1CountP === 0) ? 'rgba(255, 255, 255, 0.15)' : '#ffffff';
                             strikeLine.style.width = '0%';
                         } else {
                             counterSpan.innerText = '¿No está a la venta?';
