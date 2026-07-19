@@ -10436,6 +10436,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var opDyn = _p1FadeInP - _p2FadeOutP;
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
                       
+                      // Ajustar la posición vertical al aparecer la garantía
+                      var dynOffsetY = _p2GuaranteeP * 40; // Sube hasta 40px progresivamente
+                      _oltPhaseDyn.style.transform = 'translate(-50%, calc(-50% - ' + dynOffsetY + 'px))';
+                      
                       // Iluminación de la pregunta
                       var questionP = document.getElementById('p1-question');
                       if (questionP) {
