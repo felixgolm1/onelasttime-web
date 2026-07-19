@@ -10563,46 +10563,43 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                       }
                   }
                   
-                                    // ----- PHASE 3: Reflexion Final (Flash + Landing) -----
+                                    // ----- PHASE 3: Reflexion Final (Revelado Quimico) -----
                   var _oltText = document.getElementById('olt-final-text');
                   var _cameraFlash = document.getElementById('camera-flash');
                   
                   if (_cameraFlash) {
-                      var flashOp = 0;
-                      if (_p3FadeInP > 0 && _p3FadeInP <= 0.15) {
-                          flashOp = mapRange(_p3FadeInP, 0, 0.15, 0, 1);
-                      } else if (_p3FadeInP > 0.15 && _p3FadeInP <= 1.0) {
-                          flashOp = mapRange(_p3FadeInP, 0.15, 0.8, 1, 0);
-                      }
-                      _cameraFlash.style.opacity = Math.max(0, Math.min(1, flashOp)).toFixed(2);
+                      _cameraFlash.style.opacity = '0'; // Disabled
                   }
                   
                   if (_oltText) {
                     var _finalOp = _p3FadeInP > 0.15 ? 1 : 0;
                     
                     if (_p3FadeInP > 0) {
-                        // Landing logic
-                        var scaleVal = _p3FadeInP < 0.15 ? 3.0 : mapRange(_p3FadeInP, 0.15, 1.0, 3.0, 1.0);
-                        var rotVal = _p3FadeInP < 0.15 ? 15 : mapRange(_p3FadeInP, 0.15, 1.0, 15, 0);
-                        var shadowBlur = _p3FadeInP < 0.15 ? 100 : mapRange(_p3FadeInP, 0.15, 1.0, 100, 40);
-                        var shadowY = _p3FadeInP < 0.15 ? 50 : mapRange(_p3FadeInP, 0.15, 1.0, 50, 10);
-                        
-                        _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm)) scale(' + scaleVal.toFixed(2) + ') rotate(' + rotVal.toFixed(2) + 'deg)';
+                        _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm))';
                         var polaroidImg = _oltText.querySelector('img');
-                        if(polaroidImg) polaroidImg.style.filter = 'drop-shadow(0px ' + shadowY.toFixed(1) + 'px ' + shadowBlur.toFixed(1) + 'px rgba(0,0,0,0.4))';
+                        if (polaroidImg) {
+                            var bVal = mapRange(_finalP, 0, 1, 0.10, 1.0);
+                            var sVal = mapRange(_finalP, 0, 1, 0.9, 0.0);
+                            var cVal = mapRange(_finalP, 0, 1, 1.8, 1.0);
+                            var hVal = mapRange(_finalP, 0, 1, -120, 0); // blue/greenish dark film
+                            
+                            polaroidImg.style.filter = 'drop-shadow(0px 10px 40px rgba(0,0,0,0.4)) brightness(' + bVal.toFixed(2) + ') sepia(' + sVal.toFixed(2) + ') contrast(' + cVal.toFixed(2) + ') hue-rotate(' + hVal.toFixed(1) + 'deg)';
+                        }
                     }
                     _oltText.style.opacity = _finalOp.toFixed(2);
-                    _oltText.style.filter = 'none'; // Remove blur from container
+                    _oltText.style.filter = 'none'; 
                     
-                    // Handwriting logic (aparece letra a letra tras aterrizar, controlado por _finalP)
+                    // Handwriting logic (Revelado Quimico)
                     var charsF = _oltText.querySelectorAll('.char');
                     if (charsF.length > 0) {
                       var total = charsF.length;
                       for (var k = 0; k < total; k++) {
-                        var charProg = k / total;
-                        // Fade in quickly for each character
-                        var cOp = mapRange(_finalP, charProg - 0.05, charProg, 0, 1);
+                        var charProg = (k / total) * 0.3; // Slight organic offset
+                        var cOp = mapRange(_finalP, charProg, charProg + 0.7, 0, 1);
+                        var txtBlur = mapRange(_finalP, charProg, charProg + 0.7, 5, 0);
+                        
                         charsF[k].style.opacity = Math.max(0, Math.min(1, cOp)).toFixed(2);
+                        charsF[k].style.filter = 'blur(' + Math.max(0, txtBlur).toFixed(1) + 'px)';
                       }
                     }
                   }
