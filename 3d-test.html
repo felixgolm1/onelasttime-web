@@ -9570,7 +9570,7 @@ setInterval(function() {
   <p style="margin:0 0 1rem 0;">Ahora, por <span style="font-weight:700; color:#ccff00; font-size:1.2em;">7,99€</span>, te damos el poder de tenerla cuando quieras.</p>
   <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-top:1rem;">
     <img id="leaf-left" src="assets/img/hoja laurel izquierda blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
-    <p style="margin:0;">Y si no es así, te devolvemos el dinero sin preguntas.</p>
+    <p id="garantia-text" style="margin:0;">Y si no es así, te devolvemos el dinero sin preguntas.</p>
     <img id="leaf-right" src="assets/img/hoja laurel derecha blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
   </div>
 </div>
@@ -10408,7 +10408,7 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                       // Lógica de hojas de laurel
                       var leafLeft = document.getElementById('leaf-left');
                       var leafRight = document.getElementById('leaf-right');
-                      var lastP = _oltPricingText.querySelector('div p'); 
+                      var lastP = document.getElementById('garantia-text'); 
                       if (lastP && leafLeft && leafRight) {
                         var lastChars = lastP.querySelectorAll('.char');
                         if (lastChars.length > 0) {
