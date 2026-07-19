@@ -10422,12 +10422,9 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                             if (distLeft < 0) {
                               leafLeft.style.opacity = '0.15';
                               leafLeft.style.filter = 'none';
-                            } else if (distLeft < blurLen) {
-                              leafLeft.style.opacity = '1';
-                              leafLeft.style.filter = 'drop-shadow(0 0 12px #ccff00)';
                             } else {
                               leafLeft.style.opacity = '1';
-                              leafLeft.style.filter = 'drop-shadow(0 0 12px #ffffff)';
+                              leafLeft.style.filter = 'none';
                             }
                           }
                           
@@ -10437,12 +10434,9 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                             if (distRight < 0) {
                               leafRight.style.opacity = '0.15';
                               leafRight.style.filter = 'none';
-                            } else if (distRight < blurLen) {
-                              leafRight.style.opacity = '1';
-                              leafRight.style.filter = 'drop-shadow(0 0 12px #ccff00)';
                             } else {
                               leafRight.style.opacity = '1';
-                              leafRight.style.filter = 'drop-shadow(0 0 12px #ffffff)';
+                              leafRight.style.filter = 'none';
                             }
                           }
                         }
