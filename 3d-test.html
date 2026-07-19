@@ -10396,22 +10396,37 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                     
                     var chars = _oltPricingText.querySelectorAll('.char');
                     if (chars.length > 0) {
-                      var fillIndex = Math.floor(_creditsP * chars.length);
+                      var blurLen = 10;
+                      var fillIndex = Math.floor(_creditsP * (chars.length + blurLen));
                       chars.forEach(function(char, idx) {
-                        if (idx < fillIndex) {
-                          char.style.opacity = '1';
-                          var dist = fillIndex - idx;
-                          // Smooth gradient from green (#ccff00) to white (#ffffff) over 6 characters
-                          var t = Math.max(0, Math.min(1, (dist - 1) / 5)); 
-                          var r = Math.round(204 + 51 * t);
-                          var g = 255;
-                          var b = Math.round(255 * t);
-                          char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
-                          char.style.textShadow = '0 0 12px rgba(' + r + ',' + g + ',' + b + ',0.6)';
-                        } else {
+                        var dist = fillIndex - idx;
+                        if (dist < 0) {
+                          // Aún no revelado
                           char.style.opacity = '0.15';
                           char.style.color = '';
                           char.style.textShadow = 'none';
+                        } else if (dist < blurLen) {
+                          // Punta de la ola: revelado gradual, más difuminado
+                          var ratio = dist / blurLen; // de 0 (punta) a 1 (asentado)
+                          
+                          // Opacidad entra progresivamente
+                          var op = 0.15 + 0.85 * Math.pow(ratio, 0.8); // Un poco de curva para que no sea tan lineal
+                          char.style.opacity = op.toFixed(2);
+                          
+                          // Color: desde verde flúor (#ccff00) hasta blanco (#ffffff)
+                          var r = Math.round(204 + 51 * ratio);
+                          var g = 255;
+                          var b = Math.round(255 * ratio);
+                          char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
+                          
+                          // Sombra difuminada que va ganando fuerza muy suavemente
+                          var shadowAlpha = (ratio * 0.6).toFixed(2);
+                          char.style.textShadow = '0 0 18px rgba(' + r + ',' + g + ',' + b + ',' + shadowAlpha + ')';
+                        } else {
+                          // Asentado en blanco
+                          char.style.opacity = '1';
+                          char.style.color = '#ffffff';
+                          char.style.textShadow = '0 0 12px rgba(255,255,255,0.6)';
                         }
                       });
                     }
