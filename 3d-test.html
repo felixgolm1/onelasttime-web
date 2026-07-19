@@ -9566,7 +9566,7 @@ setInterval(function() {
        alt="One Last Time"
        style="width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;filter: brightness(0) invert(1);">
   <div id="pricing-clip-container" style="flex:1; width:100vw; overflow:hidden; position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; margin: 2rem 0;">
-  <div id="olt-pricing-text" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.5rem, 1.95vw, 1.8rem); font-weight:400; line-height:1.6; text-align:center; position:absolute; z-index: 10;">
+  <div id="olt-pricing-text" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.5rem, 1.95vw, 1.8rem); font-weight:400; line-height:1.6; text-align:center; position:absolute; z-index: 10; transform: translateY(100vh); opacity: 0;">
     <p style="margin:0 0 1rem 0;"><i>¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</i></p>
     <p style="margin:0 0 1rem 0;">Ahora, por <span style="font-weight:700; color:#ccff00; font-size:1.2em;">7,99€</span>, te damos el poder de tenerla cuando quieras.</p>
     <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-top:1rem;">
@@ -10523,6 +10523,11 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                       _oltTextR.style.transform = 'translate(-50%, 100vh)';
                       _oltTextR.style.opacity = '0';
                   }
+                  var _oltPricingTextR = document.getElementById('olt-pricing-text');
+                  if (_oltPricingTextR) {
+                      _oltPricingTextR.style.transform = 'translateY(100vh)';
+                      _oltPricingTextR.style.opacity = '0';
+                  }
                   var _oltCtaR = document.getElementById('olt-final-cta');
                   if (_oltCtaR) {
                       _oltCtaR.style.transform = 'translateY(100vh)';
@@ -10548,6 +10553,7 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
             var _isCont = document.getElementById('img-strip-container'); if (_isCont) _isCont.style.opacity = '0';
             var _oltL = document.getElementById('olt-logo-img-big'); if (_oltL) _oltL.style.transform = 'translateY(100vh)';
             var _oltT = document.getElementById('olt-final-text'); if (_oltT) { _oltT.style.transform = 'translate(-50%, 100vh)'; _oltT.style.opacity = '0'; }
+            var _oltPT = document.getElementById('olt-pricing-text'); if (_oltPT) { _oltPT.style.transform = 'translateY(100vh)'; _oltPT.style.opacity = '0'; }
             var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
           }
       }
