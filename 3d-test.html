@@ -9573,7 +9573,7 @@ setInterval(function() {
         <p style="margin:0 0 2rem 0;">¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</p>
     </div>
     <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
-        <span id="p1-counter">¿0€?</span>
+        <span id="p1-counter" style="transition: color 0.2s ease-out;">¿0€?</span>
         <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:3px; background-color:#ccff00; transform:translateY(-50%);"></div>
     </div>
   </div>
@@ -10464,14 +10464,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     var counterSpan = document.getElementById('p1-counter');
                     var strikeLine = document.getElementById('p1-strikethrough');
                     if (counterSpan && strikeLine && counterContainer) {
-                        // Fade in the counter only at the very end of the text illumination (from 0.30 to 0.35)
-                        var counterOp = Math.max(0, Math.min(1, (localP - (IS_P1_LIGHT_END - 0.05)) / 0.05));
+                        // Fade in the counter dimmed along with the question text
+                        var counterOp = Math.min(1, _p1FadeInP * 2.0);
                         counterContainer.style.opacity = counterOp.toFixed(2);
                         
                         if (_p1CountP < 1) {
                             var countVal = Math.floor(_p1CountP * 1000000);
                             counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + '€?';
-                            counterSpan.style.color = '#ffffff';
+                            counterSpan.style.color = (_p1CountP === 0) ? '#4c4c4c' : '#ffffff';
                             strikeLine.style.width = '0%';
                         } else {
                             counterSpan.innerText = '¿No está a la venta?';
