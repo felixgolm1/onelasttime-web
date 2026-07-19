@@ -10409,7 +10409,7 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                       var blurLen = 15;
                       // The text illuminates exactly as it passes the middle of the screen.
                       // It starts at _creditsP = 0.35 and finishes at 0.65 (duration 0.3).
-                      var animP = Math.max(0, Math.min(1, (_creditsP - 0.35) / 0.3));
+                      var animP = Math.max(0, Math.min(1, (_creditsP - 0.15) / 0.25));
                       var fillIndex = Math.floor(animP * (chars.length + blurLen));
                       
                       // Lógica de hojas de laurel
