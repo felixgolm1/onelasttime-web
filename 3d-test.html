@@ -9577,12 +9577,12 @@ setInterval(function() {
 
     <!-- P1/P2 Dynamic Price Row -->
     <div id="dynamic-pricing-row" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 80px); display:flex; align-items:center; justify-content:center; white-space:nowrap; opacity: 0; will-change: transform, opacity;">
-        <span id="dp-left" style="display:inline-block; margin-right: 5px;">Ahora, por</span>
+        <span id="dp-left" style="display:inline-block; margin-right: 5px; opacity:0; transition: opacity 0.1s linear;">Ahora, por</span>
         <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
             <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">¿0€?</span>
             <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:3px; background-color:#ccff00; transform:translateY(-50%); transition: width 0.1s linear;"></div>
         </div>
-        <span id="dp-right" style="display:inline-block; margin-left: 5px;">, te damos la habilidad de tenerla cuando quieras.</span>
+        <span id="dp-right" style="display:inline-block; margin-left: 5px; opacity:0; transition: opacity 0.1s linear;">, te damos la habilidad de tenerla cuando quieras.</span>
     </div>
 
     <!-- P2 Guarantee -->
@@ -10524,12 +10524,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           
                           // Expansión lateral (Centrado)
                           if (dpLeft && dpRight) {
-                              var maxWLeft = 200; 
-                              
-                              dpLeft.style.maxWidth = (_p2ExpandP * maxWLeft) + 'px';
                               dpLeft.style.opacity = _p2ExpandP.toFixed(2);
-                              
-                              
+                              dpRight.style.opacity = _p2ExpandP.toFixed(2);
                           }
                       }
                       
