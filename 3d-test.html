@@ -10380,10 +10380,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var IS_P1_COUNT_END   = 22.5;
                   var IS_P1_STRIKE_END  = 23.5;
                   var IS_P1_REVERSE_END = 25.0; 
-                  var IS_P2_GUARANTEE_END = 26.5; 
-                  var IS_P2_END         = 28.0;
-                  var IS_P3_FADE_IN_END = 29.0;
-                  var IS_FINAL_END      = 33.0;
+                  var IS_P2_EXPAND_END  = 26.0;
+                  var IS_P2_GUARANTEE_END = 27.5; 
+                  var IS_P2_END         = 29.0;
+                  var IS_P3_FADE_IN_END = 30.0;
+                  var IS_FINAL_END      = 34.0;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
@@ -10394,7 +10395,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var _p1CountP  = Math.max(0, Math.min(1, (localP - IS_P1_LIGHT_END) / (IS_P1_COUNT_END - IS_P1_LIGHT_END)));
                   var _p1StrikeP = Math.max(0, Math.min(1, (localP - IS_P1_COUNT_END) / (IS_P1_STRIKE_END - IS_P1_COUNT_END)));
                   var _p1ReverseP = Math.max(0, Math.min(1, (localP - IS_P1_STRIKE_END) / (IS_P1_REVERSE_END - IS_P1_STRIKE_END)));
-                  var _p2GuaranteeP = Math.max(0, Math.min(1, (localP - IS_P1_REVERSE_END) / (IS_P2_GUARANTEE_END - IS_P1_REVERSE_END)));
+                  var _p2ExpandP = Math.max(0, Math.min(1, (localP - IS_P1_REVERSE_END) / (IS_P2_EXPAND_END - IS_P1_REVERSE_END)));
+                  var _p2GuaranteeP = Math.max(0, Math.min(1, (localP - IS_P2_EXPAND_END) / (IS_P2_GUARANTEE_END - IS_P2_EXPAND_END)));
                   var _p2FadeOutP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
                   
                   var _p3FadeInP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
@@ -10498,7 +10500,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           } else if (_p1StrikeP < 1) {
                               counterSpan.innerText = '¿No está a la venta?';
                               counterSpan.style.color = '#ffffff';
-                              strikeLine.style.width = (_p1StrikeP * 100).toFixed(1) + '%';
+                              strikeLine.style.width = '0%';
                           } else {
                               // Reverse phase
                               strikeLine.style.width = '0%';
@@ -10524,10 +10526,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           if (dpLeft && dpRight) {
                               var maxWLeft = 200; 
                               var maxWRight = 600;
-                              dpLeft.style.maxWidth = (_p1ReverseP * maxWLeft) + 'px';
-                              dpLeft.style.opacity = _p1ReverseP.toFixed(2);
-                              dpRight.style.maxWidth = (_p1ReverseP * maxWRight) + 'px';
-                              dpRight.style.opacity = _p1ReverseP.toFixed(2);
+                              dpLeft.style.maxWidth = (_p2ExpandP * maxWLeft) + 'px';
+                              dpLeft.style.opacity = _p2ExpandP.toFixed(2);
+                              dpRight.style.maxWidth = (_p2ExpandP * maxWRight) + 'px';
+                              dpRight.style.opacity = _p2ExpandP.toFixed(2);
                           }
                       }
                       
