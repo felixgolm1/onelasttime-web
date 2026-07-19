@@ -10369,13 +10369,13 @@ document.querySelectorAll('#olt-final-text p').forEach(el => { if (typeof splitT
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
                   var _logoBaseY = ((1 - _exitEA) * 100);
-                  var _logoY = _logoBaseY + (_exitEA * -35);
+                  var _logoY = _logoBaseY + (_finalP * 20);
                   
                   var _oltLogo = document.getElementById('olt-logo-img-big');
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
                   
                   var _ctaBaseY = ((1 - _exitEA) * 100);
-                  var _ctaY = _ctaBaseY + (_exitEA * 35);
+                  var _ctaY = _ctaBaseY - (_finalP * 20);
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
@@ -10893,6 +10893,7 @@ window.chooseFinal = function(e, happy) {
 </script>
 
 </html>
+
 
 
 
