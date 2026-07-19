@@ -10397,7 +10397,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   var blackBg = document.getElementById('olt-black-bg');
                   if (blackBg) {
-                      blackBg.style.opacity = _exitP.toFixed(2);
+                      var blackOp = _exitP;
+                      if (_p3FadeInP > 0) {
+                          blackOp = 1 - _p3FadeInP;
+                      }
+                      blackBg.style.opacity = Math.max(0, blackOp).toFixed(2);
                   }
                   
                   // Variables de fase
@@ -10441,8 +10445,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // ----- PHASE 1 & 2: Dynamic -----
                   var _oltPhaseDyn = document.getElementById('olt-phase-dynamic');
                   if (_oltPhaseDyn) {
-                      var opDyn = _p1FadeInP - _p2FadeOutP;
+                      var blurAmount = Math.sin(_p3FadeInP * Math.PI) * 20;
+                      var opDyn = _p1FadeInP;
+                      if (_p3FadeInP > 0.5) opDyn = 0; // Swap happens at peak blur
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
+                      _oltPhaseDyn.style.filter = 'blur(' + blurAmount.toFixed(1) + 'px)';
                       
                       // Ajustar la posición vertical al aparecer la garantía
                       var dynOffsetY = _p1ReverseP * 40; // Sube hasta 40px progresivamente
@@ -10562,10 +10569,12 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // ----- PHASE 3: Reflexión Final -----
                   var _oltText = document.getElementById('olt-final-text');
                   if (_oltText) {
-                    var _finalOp = _p3FadeInP;
+                    var blurAmountText = Math.sin(_p3FadeInP * Math.PI) * 20;
+                    var _finalOp = _p3FadeInP > 0.5 ? 1 : 0;
                     var _eraseFP = Math.min(1, _finalP * 2);
                     if (_eraseFP >= 1) _finalOp = 0;
                     _oltText.style.opacity = _finalOp.toFixed(2);
+                    _oltText.style.filter = 'blur(' + blurAmountText.toFixed(1) + 'px)';
                     
                     var charsF = _oltText.querySelectorAll('.char');
                     if (charsF.length > 0) {
