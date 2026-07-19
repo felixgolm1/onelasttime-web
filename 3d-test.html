@@ -10449,11 +10449,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                   var b = Math.round(255 * ratio);
                                   char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
                                   var shadowAlpha = (ratio * 0.6).toFixed(2);
-                                  char.style.textShadow = '0 0 18px rgba(' + r + ',' + g + ',' + b + ',' + shadowAlpha + ')';
+                                  char.style.textShadow = 'none';
                                 } else {
                                   char.style.opacity = '1';
                                   char.style.color = '#ffffff';
-                                  char.style.textShadow = '0 0 12px rgba(255,255,255,0.6)';
+                                  char.style.textShadow = 'none';
                                 }
                             });
                         }
