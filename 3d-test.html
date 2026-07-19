@@ -10400,8 +10400,14 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                       chars.forEach(function(char, idx) {
                         if (idx < fillIndex) {
                           char.style.opacity = '1';
-                          char.style.color = '#ccff00';
-                          char.style.textShadow = '0 0 12px rgba(204,255,0,0.6)';
+                          var dist = fillIndex - idx;
+                          // Smooth gradient from green (#ccff00) to white (#ffffff) over 6 characters
+                          var t = Math.max(0, Math.min(1, (dist - 1) / 5)); 
+                          var r = Math.round(204 + 51 * t);
+                          var g = 255;
+                          var b = Math.round(255 * t);
+                          char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
+                          char.style.textShadow = '0 0 12px rgba(' + r + ',' + g + ',' + b + ',0.6)';
                         } else {
                           char.style.opacity = '0.15';
                           char.style.color = '';
