@@ -9574,12 +9574,12 @@ setInterval(function() {
   <div id="olt-phase-dynamic" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 10;">
     
     <!-- P1 Question -->
-    <div id="p1-question" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); width: 100%; opacity: 0; will-change: opacity;">
+    <div id="p1-question" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -100%); width: 100%; opacity: 0; will-change: opacity;">
         <p style="margin:0;">¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</p>
     </div>
 
     <!-- P1/P2 Dynamic Price Row -->
-    <div id="dynamic-pricing-row" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 80px); display:flex; align-items:center; justify-content:center; white-space:nowrap; opacity: 0; will-change: transform, opacity;">
+    <div id="dynamic-pricing-row" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 30px); display:flex; align-items:center; justify-content:center; white-space:nowrap; opacity: 0; will-change: transform, opacity;">
         <span id="dp-left" style="display:inline-block; margin-right: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;">Ahora, por</span>
         <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
             <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">¿0€?</span>
@@ -9589,7 +9589,7 @@ setInterval(function() {
     </div>
 
     <!-- P2 Guarantee -->
-    <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 50px); width: 100%; display:flex; justify-content:center; align-items:center; gap:15px; opacity: 0; will-change: opacity;">
+    <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 110px); width: 100%; display:flex; justify-content:center; align-items:center; gap:15px; opacity: 0; will-change: opacity;">
       <img id="leaf-left" src="assets/img/hoja laurel izquierda blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
       <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700;">Y si no es así, te devolvemos el dinero sin preguntas.</p>
       <img id="leaf-right" src="assets/img/hoja laurel derecha blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
@@ -10439,9 +10439,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       // Iluminación de la pregunta
                       var questionP = document.getElementById('p1-question');
                       if (questionP) {
-                          // Fade out de la pregunta durante _p1ReverseP
-                          var qOp = 1 - _p1ReverseP;
-                          questionP.style.opacity = qOp.toFixed(2);
+                          // Fade out desactivado por instrucción del usuario
+                          // var qOp = 1 - _p1ReverseP;
+                          // questionP.style.opacity = qOp.toFixed(2);
 
                           var chars = questionP.querySelectorAll('.char');
                           if (chars.length > 0) {
@@ -10480,12 +10480,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var dpRight = document.getElementById('dp-right');
 
                       if (dynRow && counterSpan && strikeLine && counterContainer) {
-                          // Movement: initially 80px, finally -50% to be perfectly centered.
-                          // Wait, if dynRow has height 40px, 80px translates it below question.
-                          // Let's translate it smoothly based on _p1ReverseP.
-                          // calc(80px - (_p1ReverseP * 80px) - (_p1ReverseP * 50%))
-                          var transYStr = 'calc(80px - ' + (_p1ReverseP * 80) + 'px - ' + (_p1ReverseP * 50) + '%)';
-                          dynRow.style.transform = 'translate(-50%, ' + transYStr + ')';
+                          // El precio se queda fijo en su línea
+                          dynRow.style.transform = 'translate(-50%, 30px)';
                           
                           // Opacity is tied to _p1FadeInP
                           var counterOp = Math.min(1, _p1FadeInP * 2.0);
