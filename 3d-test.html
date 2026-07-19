@@ -10439,9 +10439,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       // Iluminación de la pregunta
                       var questionP = document.getElementById('p1-question');
                       if (questionP) {
-                          // Fade out desactivado por instrucción del usuario
-                          // var qOp = 1 - _p1ReverseP;
-                          // questionP.style.opacity = qOp.toFixed(2);
+                          // El usuario pidió que no desaparezca la pregunta, por lo que su opacidad principal será 1
+                          questionP.style.opacity = '1';
 
                           var chars = questionP.querySelectorAll('.char');
                           if (chars.length > 0) {
