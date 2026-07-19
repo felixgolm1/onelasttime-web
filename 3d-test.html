@@ -1559,7 +1559,8 @@ window.onerror = function(msg, url, line, col, err) {
   color: #0a0a0a !important;
 }
 
-  </style>
+    @media (max-width: 768px) { #dynamic-pricing-row { font-size: 3.5vw !important; } }
+</style>
 </head>
 
 
@@ -2419,7 +2420,8 @@ window.onerror = function(msg, url, line, col, err) {
         flex-direction: column !important;
       }
     }
-  </style>
+    @media (max-width: 768px) { #dynamic-pricing-row { font-size: 3.5vw !important; } }
+</style>
   <div id="edge-glow" class="oryzo-glow">
     <div class="glow-edge glow-top"></div>
     <div class="glow-edge glow-bottom"></div>
@@ -9405,6 +9407,7 @@ setInterval(function() {
     50% { stroke-dashoffset: -20; opacity: 0; }
     100% { stroke-dashoffset: -20; opacity: 0; }
   }
+  @media (max-width: 768px) { #dynamic-pricing-row { font-size: 3.5vw !important; } }
 </style>
 <div style="flex-shrink:0;width:50vw;height:100%;display:flex;align-items:center;justify-content:center;">
   <div style="position:relative; width:100%; height:79vh; margin-top:0.5cm; overflow:hidden;">
@@ -9577,12 +9580,12 @@ setInterval(function() {
 
     <!-- P1/P2 Dynamic Price Row -->
     <div id="dynamic-pricing-row" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 80px); display:flex; align-items:center; justify-content:center; white-space:nowrap; opacity: 0; will-change: transform, opacity;">
-        <span id="dp-left" style="display:inline-block; margin-right: 5px; opacity:0; transition: opacity 0.1s linear;">Ahora, por</span>
+        <span id="dp-left" style="display:inline-block; margin-right: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;">Ahora, por</span>
         <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
             <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">¿0€?</span>
             <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:3px; background-color:#ccff00; transform:translateY(-50%); transition: width 0.1s linear;"></div>
         </div>
-        <span id="dp-right" style="display:inline-block; margin-left: 5px; opacity:0; transition: opacity 0.1s linear;">, te damos la habilidad de tenerla cuando quieras.</span>
+        <span id="dp-right" style="display:inline-block; margin-left: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;">, te damos la habilidad de tenerla cuando quieras.</span>
     </div>
 
     <!-- P2 Guarantee -->
@@ -10524,7 +10527,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           
                           // Expansión lateral (Centrado)
                           if (dpLeft && dpRight) {
+                              var maxWLeft = 200; 
+                              var maxWRight = 800; // Increased to ensure it fits the whole sentence
+                              dpLeft.style.maxWidth = (_p2ExpandP * maxWLeft) + 'px';
                               dpLeft.style.opacity = _p2ExpandP.toFixed(2);
+                              dpRight.style.maxWidth = (_p2ExpandP * maxWRight) + 'px';
                               dpRight.style.opacity = _p2ExpandP.toFixed(2);
                           }
                       }
