@@ -9603,7 +9603,7 @@ setInterval(function() {
       <img src="assets/img/polaroid.png" alt="Polaroid" style="width:100%; height:auto; display:block; filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4));">
       
       <!-- Handwritten Text Overlay -->
-      <div style="position: absolute; left: 52%; top: 12%; width: 42%; transform: rotate(5.5deg); font-family: 'Caveat', cursive; color: #151515; font-size: clamp(0.9rem, 1.8vw, 1.6rem); line-height: 1.15; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 75%; padding: 0 10px; box-sizing: border-box;">
+      <div id="polaroid-handwriting" style="position: absolute; left: 52%; top: 12%; width: 42%; transform: rotate(5.5deg); font-family: 'Caveat', cursive; color: #151515; font-size: clamp(0.9rem, 1.8vw, 1.6rem); line-height: 1.15; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 75%; padding: 0 10px; box-sizing: border-box;">
           <p style="margin-bottom: 5%; font-weight: 700; font-size: 1.15em;">"Si vives cada d&iacute;a como si fuera el &uacute;ltimo, alg&uacute;n d&iacute;a estar&aacute;s en lo cierto"</p>
           <p style="margin-bottom: 5%;">Y aunque esperamos que este d&iacute;a quede lejos, no hay duda de que nunca volveremos a vivir cada preciso instante de nuevo.</p>
           <p style="margin-bottom: 0;">As&iacute; que amemos a las personas que nos importan ahora, ya que no sabemos cuando tendremos la &uacute;ltima oportunidad para hacerlo.</p>
@@ -9685,7 +9685,7 @@ window.addEventListener('click', function(e) {
 </script></body>
 <script>
 document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
-document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
+document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
 </script>
 <script>
 // â”€â”€ CONTROLADOR SECCIÓN NEUROCIENCIA ”” wipe Oryzo scroll-driven â”€â”€
@@ -10444,7 +10444,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (_oltPhaseDyn) {
                       var blurAmount = Math.sin(_p3FadeInP * Math.PI) * 20;
                       var opDyn = _p1FadeInP;
-                      if (_p3FadeInP > 0.5) opDyn = 0; // Swap happens at peak blur
+                      if (_p3FadeInP > 0.15) opDyn = 0; // Swap happens at peak flash
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
                       _oltPhaseDyn.style.filter = 'blur(' + blurAmount.toFixed(1) + 'px)';
                       
@@ -10563,30 +10563,46 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       }
                   }
                   
-                  // ----- PHASE 3: Reflexión Final -----
+                                    // ----- PHASE 3: Reflexion Final (Flash + Landing) -----
                   var _oltText = document.getElementById('olt-final-text');
+                  var _cameraFlash = document.getElementById('camera-flash');
+                  
+                  if (_cameraFlash) {
+                      var flashOp = 0;
+                      if (_p3FadeInP > 0 && _p3FadeInP <= 0.15) {
+                          flashOp = mapRange(_p3FadeInP, 0, 0.15, 0, 1);
+                      } else if (_p3FadeInP > 0.15 && _p3FadeInP <= 1.0) {
+                          flashOp = mapRange(_p3FadeInP, 0.15, 0.8, 1, 0);
+                      }
+                      _cameraFlash.style.opacity = Math.max(0, Math.min(1, flashOp)).toFixed(2);
+                  }
+                  
                   if (_oltText) {
-                    var blurAmountText = Math.sin(_p3FadeInP * Math.PI) * 20;
-                    var _finalOp = _p3FadeInP > 0.5 ? 1 : 0;
-                    var _eraseFP = Math.min(1, _finalP * 2);
-                    if (_eraseFP >= 1) _finalOp = 0;
+                    var _finalOp = _p3FadeInP > 0.15 ? 1 : 0;
                     
                     if (_p3FadeInP > 0) {
-                        _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm))';
+                        // Landing logic
+                        var scaleVal = _p3FadeInP < 0.15 ? 3.0 : mapRange(_p3FadeInP, 0.15, 1.0, 3.0, 1.0);
+                        var rotVal = _p3FadeInP < 0.15 ? 15 : mapRange(_p3FadeInP, 0.15, 1.0, 15, 0);
+                        var shadowBlur = _p3FadeInP < 0.15 ? 100 : mapRange(_p3FadeInP, 0.15, 1.0, 100, 40);
+                        var shadowY = _p3FadeInP < 0.15 ? 50 : mapRange(_p3FadeInP, 0.15, 1.0, 50, 10);
+                        
+                        _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm)) scale(' + scaleVal.toFixed(2) + ') rotate(' + rotVal.toFixed(2) + 'deg)';
+                        var polaroidImg = _oltText.querySelector('img');
+                        if(polaroidImg) polaroidImg.style.filter = 'drop-shadow(0px ' + shadowY.toFixed(1) + 'px ' + shadowBlur.toFixed(1) + 'px rgba(0,0,0,0.4))';
                     }
                     _oltText.style.opacity = _finalOp.toFixed(2);
-                    _oltText.style.filter = 'blur(' + blurAmountText.toFixed(1) + 'px)';
+                    _oltText.style.filter = 'none'; // Remove blur from container
                     
+                    // Handwriting logic (aparece letra a letra tras aterrizar, controlado por _finalP)
                     var charsF = _oltText.querySelectorAll('.char');
                     if (charsF.length > 0) {
                       var total = charsF.length;
-                      var eraseHalf = (_eraseFP * total) / 2;
                       for (var k = 0; k < total; k++) {
-                        if (_eraseFP >= 1 || k < eraseHalf || k >= total - eraseHalf) {
-                          charsF[k].style.opacity = '0';
-                        } else {
-                          charsF[k].style.opacity = '1';
-                        }
+                        var charProg = k / total;
+                        // Fade in quickly for each character
+                        var cOp = mapRange(_finalP, charProg - 0.05, charProg, 0, 1);
+                        charsF[k].style.opacity = Math.max(0, Math.min(1, cOp)).toFixed(2);
                       }
                     }
                   }
@@ -10600,6 +10616,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                 var _ulReset = document.getElementById('compromiso-underline');
                 if (_ulReset) _ulReset.style.transform = 'scaleY(0)';
                   isCont.style.transform = '';
+                  var _cfR = document.getElementById('camera-flash'); if (_cfR) _cfR.style.opacity = '0';
                   var _oltLogoR = document.getElementById('olt-logo-img-big');
                   if (_oltLogoR) _oltLogoR.style.transform = 'translateY(100vh)';
                   var _oltTextR = document.getElementById('olt-final-text');
@@ -10634,6 +10651,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
             var _eR4 = document.getElementById('end-review-panel-4'); if (_eR4) _eR4.style.opacity = '0';
             
             var _isCont = document.getElementById('img-strip-container'); if (_isCont) _isCont.style.opacity = '0';
+            var _cfEnd = document.getElementById('camera-flash'); if (_cfEnd) _cfEnd.style.opacity = '0';
             var _oltL = document.getElementById('olt-logo-img-big'); if (_oltL) _oltL.style.transform = 'translateY(100vh)';
             var _oltT = document.getElementById('olt-final-text'); if (_oltT) { _oltT.style.transform = 'translate(-50%, 100vh)'; _oltT.style.opacity = '0'; }
             var _p1 = document.getElementById('olt-phase-1'); if (_p1) _p1.style.opacity = '0';
