@@ -9565,9 +9565,21 @@ setInterval(function() {
        src="assets/img/logo one last time.png"
        alt="One Last Time"
        style="width:70vw;max-width:900px;transform:translateY(100vh);will-change:transform;filter: brightness(0) invert(1);">
-  <div id="pricing-clip-container" style="flex:1; width:100vw; overflow:hidden; position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; margin: 0; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);">
-  <div id="olt-pricing-text" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.5rem, 1.95vw, 1.8rem); font-weight:400; line-height:1.6; text-align:center; position:absolute; z-index: 10; transform: translateY(100vh); opacity: 0;">
-    <p style="margin:0 0 1rem 0;"><i>¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</i></p>
+  <div id="pricing-clip-container" style="flex:1; width:100vw; position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; margin: 0;">
+  
+  <!-- PHASE 1 -->
+  <div id="olt-phase-1" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.5rem, 1.95vw, 1.8rem); font-weight:400; line-height:1.6; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 10; opacity: 0; will-change: opacity;">
+    <div id="p1-question">
+        <p style="margin:0 0 2rem 0;"><i>¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió y los<br>cambios que provocó... qué precio le pondrías?</i></p>
+    </div>
+    <div style="position:relative; display:inline-block; font-size: 2em; font-weight: 700; color: #ccff00;" id="p1-counter-container">
+        <span id="p1-counter">¿0€?</span>
+        <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:4px; background-color:#ccff00; transform:translateY(-50%);"></div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div id="olt-phase-2" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.5rem, 1.95vw, 1.8rem); font-weight:400; line-height:1.6; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 10; opacity: 0; will-change: opacity;">
     <p style="margin:0 0 1rem 0;">Ahora, por <span style="font-weight:700; color:#ccff00; font-size:1.2em;">7,99€</span>, te damos el poder de tenerla cuando quieras.</p>
     <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-top:1rem;">
       <img id="leaf-left" src="assets/img/hoja laurel izquierda blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
@@ -9575,6 +9587,8 @@ setInterval(function() {
       <img id="leaf-right" src="assets/img/hoja laurel derecha blanca.png" style="height:2.5em; object-fit:contain; opacity:0.15; transition: opacity 0.5s ease, filter 0.5s ease;">
     </div>
   </div>
+
+  <!-- PHASE 3 (Old olt-final-text) -->
   <div id="olt-final-text" style="width:70vw; max-width:900px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1rem, 1.3vw, 1.2rem); font-weight:400; line-height:1.6; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); opacity:0; will-change:opacity;">
       <p style="margin-bottom: 1.5rem;"><i>"Si vives cada día como si fuera el último, algún día estarás en lo cierto"</i></p>
       <p style="margin-bottom: 1.5rem;">Y aunque esperamos que este día quede lejos, no hay duda de que nunca volveremos a vivir cada preciso instante de nuevo.</p>
@@ -9656,7 +9670,7 @@ window.addEventListener('click', function(e) {
 </script></body>
 <script>
 document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
-document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
+document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
 </script>
 <script>
 // â”€â”€ CONTROLADOR SECCIÓN NEUROCIENCIA ”” wipe Oryzo scroll-driven â”€â”€
@@ -10356,16 +10370,32 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                 }
                   // â”€â”€ EXIT PHASE: img-strip sube por arriba, logo OLT sube desde abajo â”€â”€
                   var IS_EXIT_END = 20.0;
-                  var IS_CREDITS_END = 28.0;
-                  var IS_FADE_END = 30.0;
-                  var IS_FINAL_END = 32.0;
+                  var IS_P1_FADE_IN_END = 20.5;
+                  var IS_P1_LIGHT_END   = 21.5;
+                  var IS_P1_COUNT_END   = 22.5;
+                  var IS_P1_STRIKE_END  = 23.5;
+                  var IS_P1_END         = 24.0;
+                  var IS_P2_FADE_IN_END = 25.0;
+                  var IS_P2_END         = 27.0;
+                  var IS_P3_FADE_IN_END = 28.0;
+                  var IS_FINAL_END      = 32.0;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
-                  var _creditsP = Math.max(0, Math.min(1, (localP - IS_EXIT_END) / (IS_CREDITS_END - IS_EXIT_END)));
-                  var _fadeP = Math.max(0, Math.min(1, (localP - IS_CREDITS_END) / (IS_FADE_END - IS_CREDITS_END)));
-                  var _finalP = Math.max(0, Math.min(1, (localP - IS_FADE_END) / (IS_FINAL_END - IS_FADE_END)));
                   
+                  // Variables de fase
+                  var _p1FadeInP = Math.max(0, Math.min(1, (localP - IS_EXIT_END) / (IS_P1_FADE_IN_END - IS_EXIT_END)));
+                  var _p1LightP  = Math.max(0, Math.min(1, (localP - IS_P1_FADE_IN_END) / (IS_P1_LIGHT_END - IS_P1_FADE_IN_END)));
+                  var _p1CountP  = Math.max(0, Math.min(1, (localP - IS_P1_LIGHT_END) / (IS_P1_COUNT_END - IS_P1_LIGHT_END)));
+                  var _p1StrikeP = Math.max(0, Math.min(1, (localP - IS_P1_COUNT_END) / (IS_P1_STRIKE_END - IS_P1_COUNT_END)));
+                  var _p1FadeOutP= Math.max(0, Math.min(1, (localP - IS_P1_END) / (IS_P2_FADE_IN_END - IS_P1_END)));
+                  
+                  var _p2FadeInP = Math.max(0, Math.min(1, (localP - IS_P1_END) / (IS_P2_FADE_IN_END - IS_P1_END)));
+                  var _p2FadeOutP= Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
+                  
+                  var _p3FadeInP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
+                  var _finalP    = Math.max(0, Math.min(1, (localP - IS_P3_FADE_IN_END) / (IS_FINAL_END - IS_P3_FADE_IN_END)));
+
                   // El carrusel sigue subiendo sin limite
                   var _carUpP = Math.max(0, (localP - IS_END) / (IS_EXIT_END - IS_END));
                   isCont.style.transform = 'translateY(' + (-_carUpP * 100).toFixed(2) + 'vh)';
@@ -10391,115 +10421,94 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                     _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
                   }
                   
-                  var _oltPricingText = document.getElementById('olt-pricing-text');
-                  if (_oltPricingText) {
-                    // Scroll from bottom of container to top of container
-                    var startY = 100; // 100vh down
-                    var endY = -150;  // -150vh up (to ensure it clears the top)
-                    var _pricingY = startY + (endY - startY) * _creditsP;
-                    _oltPricingText.style.transform = 'translateY(' + _pricingY.toFixed(2) + 'vh)';
+                  // ----- PHASE 1: Pregunta y Contador -----
+                  var _oltPhase1 = document.getElementById('olt-phase-1');
+                  if (_oltPhase1) {
+                    var op = _p1FadeInP - _p1FadeOutP;
+                    _oltPhase1.style.opacity = op.toFixed(2);
                     
-                    // Fade in at the very start of its appearance, fade out at the very end
-                    var _pricingOp = Math.min(1, _creditsP * 5); 
-                    if (_fadeP > 0) _pricingOp = 1 - _fadeP; // Fallback fade out if it's still visible
-                    _oltPricingText.style.opacity = _pricingOp.toFixed(2);
-                    
-                    var chars = _oltPricingText.querySelectorAll('.char');
-                    if (chars.length > 0) {
-                      var blurLen = 15;
-                      // The text illuminates exactly as it passes the middle of the screen.
-                      // It starts at _creditsP = 0.35 and finishes at 0.65 (duration 0.3).
-                      var animP = Math.max(0, Math.min(1, (_creditsP - 0.25) / 0.3));
-                      var fillIndex = Math.floor(animP * (chars.length + blurLen));
-                      
-                      // Lógica de hojas de laurel
-                      var leafLeft = document.getElementById('leaf-left');
-                      var leafRight = document.getElementById('leaf-right');
-                      var lastP = document.getElementById('garantia-text'); 
-                      if (lastP && leafLeft && leafRight) {
-                        var lastChars = lastP.querySelectorAll('.char');
-                        if (lastChars.length > 0) {
-                          var charsArr = Array.from(chars);
-                          var firstIdx = charsArr.indexOf(lastChars[0]);
-                          var lastIdx = charsArr.indexOf(lastChars[lastChars.length - 1]);
-                          
-                          if (firstIdx !== -1) {
-                            var leftLeafIndex = firstIdx - 1;
-                            var distLeft = fillIndex - leftLeafIndex;
-                            if (distLeft < 0) {
-                              leafLeft.style.opacity = '0.15';
-                              leafLeft.style.filter = 'none';
-                            } else {
-                              leafLeft.style.opacity = '1';
-                              leafLeft.style.filter = 'none';
-                            }
-                          }
-                          
-                          if (lastIdx !== -1) {
-                            var rightLeafIndex = lastIdx + 1;
-                            var distRight = fillIndex - rightLeafIndex;
-                            if (distRight < 0) {
-                              leafRight.style.opacity = '0.15';
-                              leafRight.style.filter = 'none';
-                            } else {
-                              leafRight.style.opacity = '1';
-                              leafRight.style.filter = 'none';
-                            }
-                          }
+                    // Iluminación de la pregunta
+                    var questionP = document.getElementById('p1-question');
+                    if (questionP) {
+                        var chars = questionP.querySelectorAll('.char');
+                        if (chars.length > 0) {
+                            var blurLen = 15;
+                            var fillIndex = Math.floor(_p1LightP * (chars.length + blurLen));
+                            chars.forEach(function(char, idx) {
+                                var dist = fillIndex - idx;
+                                if (dist < 0) {
+                                  char.style.opacity = '0.15';
+                                  char.style.color = '';
+                                  char.style.textShadow = 'none';
+                                } else if (dist < blurLen) {
+                                  var ratio = dist / blurLen;
+                                  var opC = 0.15 + 0.85 * Math.pow(ratio, 0.8);
+                                  char.style.opacity = opC.toFixed(2);
+                                  var r = Math.round(204 + 51 * ratio);
+                                  var g = 255;
+                                  var b = Math.round(255 * ratio);
+                                  char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
+                                  var shadowAlpha = (ratio * 0.6).toFixed(2);
+                                  char.style.textShadow = '0 0 18px rgba(' + r + ',' + g + ',' + b + ',' + shadowAlpha + ')';
+                                } else {
+                                  char.style.opacity = '1';
+                                  char.style.color = '#ffffff';
+                                  char.style.textShadow = '0 0 12px rgba(255,255,255,0.6)';
+                                }
+                            });
                         }
-                      }
-
-                      chars.forEach(function(char, idx) {
-                        var dist = fillIndex - idx;
-                        if (dist < 0) {
-                          // Aún no revelado
-                          char.style.opacity = '0.15';
-                          char.style.color = '';
-                          char.style.textShadow = 'none';
-                        } else if (dist < blurLen) {
-                          // Punta de la ola: revelado gradual, más difuminado
-                          var ratio = dist / blurLen; // de 0 (punta) a 1 (asentado)
-                          
-                          // Opacidad entra progresivamente
-                          var op = 0.15 + 0.85 * Math.pow(ratio, 0.8); // Un poco de curva para que no sea tan lineal
-                          char.style.opacity = op.toFixed(2);
-                          
-                          // Color: desde verde flúor (#ccff00) hasta blanco (#ffffff)
-                          var r = Math.round(204 + 51 * ratio);
-                          var g = 255;
-                          var b = Math.round(255 * ratio);
-                          char.style.color = 'rgb(' + r + ',' + g + ',' + b + ')';
-                          
-                          // Sombra difuminada que va ganando fuerza muy suavemente
-                          var shadowAlpha = (ratio * 0.6).toFixed(2);
-                          char.style.textShadow = '0 0 18px rgba(' + r + ',' + g + ',' + b + ',' + shadowAlpha + ')';
+                    }
+                    
+                    // Contador
+                    var counterSpan = document.getElementById('p1-counter');
+                    var strikeLine = document.getElementById('p1-strikethrough');
+                    if (counterSpan && strikeLine) {
+                        if (_p1CountP < 1) {
+                            var countVal = Math.floor(_p1CountP * 1000000);
+                            counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + '€?';
+                            counterSpan.style.color = '#ccff00';
+                            strikeLine.style.width = '0%';
                         } else {
-                          // Asentado en blanco
-                          char.style.opacity = '1';
-                          char.style.color = '#ffffff';
-                          char.style.textShadow = '0 0 12px rgba(255,255,255,0.6)';
+                            counterSpan.innerText = '¿No está a la venta?';
+                            counterSpan.style.color = '#ffffff';
+                            strikeLine.style.width = (_p1StrikeP * 100).toFixed(1) + '%';
                         }
-                      });
                     }
                   }
-
+                  
+                  // ----- PHASE 2: Precio Real -----
+                  var _oltPhase2 = document.getElementById('olt-phase-2');
+                  if (_oltPhase2) {
+                    var op2 = _p2FadeInP - _p2FadeOutP;
+                    _oltPhase2.style.opacity = op2.toFixed(2);
+                    
+                    // Efecto de hojas de laurel al entrar la fase 2
+                    var leafLeft = document.getElementById('leaf-left');
+                    var leafRight = document.getElementById('leaf-right');
+                    if (leafLeft && leafRight) {
+                        var leafOp = 0.15 + 0.85 * _p2FadeInP;
+                        leafLeft.style.opacity = leafOp.toFixed(2);
+                        leafRight.style.opacity = leafOp.toFixed(2);
+                    }
+                  }
+                  
+                  // ----- PHASE 3: Reflexión Final -----
                   var _oltText = document.getElementById('olt-final-text');
                   if (_oltText) {
-                    _oltText.style.transform = 'translate(-50%, -50%)';
+                    var _finalOp = _p3FadeInP;
                     var _eraseFP = Math.min(1, _finalP * 2);
-                    var _finalOp = _fadeP;
                     if (_eraseFP >= 1) _finalOp = 0;
                     _oltText.style.opacity = _finalOp.toFixed(2);
                     
-                    var chars = _oltText.querySelectorAll('.char');
-                    if (chars.length > 0) {
-                      var total = chars.length;
+                    var charsF = _oltText.querySelectorAll('.char');
+                    if (charsF.length > 0) {
+                      var total = charsF.length;
                       var eraseHalf = (_eraseFP * total) / 2;
                       for (var k = 0; k < total; k++) {
                         if (_eraseFP >= 1 || k < eraseHalf || k >= total - eraseHalf) {
-                          chars[k].style.opacity = '0';
+                          charsF[k].style.opacity = '0';
                         } else {
-                          chars[k].style.opacity = '1';
+                          charsF[k].style.opacity = '1';
                         }
                       }
                     }
@@ -10521,10 +10530,10 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
                       _oltTextR.style.transform = 'translate(-50%, 100vh)';
                       _oltTextR.style.opacity = '0';
                   }
-                  var _oltPricingTextR = document.getElementById('olt-pricing-text');
-                  if (_oltPricingTextR) {
-                      _oltPricingTextR.style.transform = 'translateY(100vh)';
-                      _oltPricingTextR.style.opacity = '0';
+                  var _oltPhase1R = document.getElementById('olt-phase-1');
+                  if (_oltPhase1R) { _oltPhase1R.style.opacity = '0'; }
+                      var _oltPhase2R = document.getElementById('olt-phase-2');
+                      if (_oltPhase2R) { _oltPhase2R.style.opacity = '0'; }
                   }
                   var _oltCtaR = document.getElementById('olt-final-cta');
                   if (_oltCtaR) {
@@ -10551,7 +10560,8 @@ document.querySelectorAll('#olt-final-text p, #olt-pricing-text p').forEach(el =
             var _isCont = document.getElementById('img-strip-container'); if (_isCont) _isCont.style.opacity = '0';
             var _oltL = document.getElementById('olt-logo-img-big'); if (_oltL) _oltL.style.transform = 'translateY(100vh)';
             var _oltT = document.getElementById('olt-final-text'); if (_oltT) { _oltT.style.transform = 'translate(-50%, 100vh)'; _oltT.style.opacity = '0'; }
-            var _oltPT = document.getElementById('olt-pricing-text'); if (_oltPT) { _oltPT.style.transform = 'translateY(100vh)'; _oltPT.style.opacity = '0'; }
+            var _p1 = document.getElementById('olt-phase-1'); if (_p1) _p1.style.opacity = '0';
+            var _p2 = document.getElementById('olt-phase-2'); if (_p2) _p2.style.opacity = '0';
             var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
           }
       }
