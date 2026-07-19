@@ -10573,6 +10573,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     var _finalOp = _p3FadeInP > 0.5 ? 1 : 0;
                     var _eraseFP = Math.min(1, _finalP * 2);
                     if (_eraseFP >= 1) _finalOp = 0;
+                    
+                    if (_p3FadeInP > 0) {
+                        _oltText.style.transform = 'translate(-50%, -50%)';
+                    }
                     _oltText.style.opacity = _finalOp.toFixed(2);
                     _oltText.style.filter = 'blur(' + blurAmountText.toFixed(1) + 'px)';
                     
