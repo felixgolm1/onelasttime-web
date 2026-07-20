@@ -6379,9 +6379,10 @@ window.onerror = function(msg, url, line, col, err) {
               
               
               // Camera flies back to top
-              if (typeof camera !== 'undefined' && typeof THREE !== 'undefined' && typeof CAM_LOOK !== 'undefined') {
-                  let targetCamPos = new THREE.Vector3(-0.3, 12, 3);
-                  camera.position.lerp(targetCamPos, polProg);
+              if (typeof CAM_BASE !== 'undefined' && typeof CAM_LOOK !== 'undefined') {
+                  CAM_BASE.x += (-0.3 - CAM_BASE.x) * polProg;
+                  CAM_BASE.y += (12 - CAM_BASE.y) * polProg;
+                  CAM_BASE.z += (3 - CAM_BASE.z) * polProg;
                   
                   CAM_LOOK.x += (0 - CAM_LOOK.x) * polProg;
                   CAM_LOOK.y += (0 - CAM_LOOK.y) * polProg;
@@ -6394,6 +6395,8 @@ window.onerror = function(msg, url, line, col, err) {
               let shadowOp = 0.8 * (1 - polProg) + 0.2; // Doesn't go fully black
               
               polCont.style.transform = `translate3d(${swayX}px, ${yPos}vh, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
+              polCont.style.zIndex = '999999';
+              polCont.style.display = 'block';
               polCont.style.boxShadow = `0px ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowOp})`;
           } else {
               polCont.style.opacity = 0;
