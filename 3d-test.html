@@ -6361,14 +6361,7 @@ window.onerror = function(msg, url, line, col, err) {
               polCont.style.opacity = 1;
               
               // Fade out ALL HTML layer elements to reveal 3D canvas
-              Array.from(document.body.children).forEach(child => {
-                  const id = child.id;
-                  const tag = child.tagName;
-                  if (id !== 'c' && id !== 'polaroid-falling-container' && id !== 'custom-scroll-track' && tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'LINK') {
-                      child.style.opacity = 1 - polProg;
-                      child.style.pointerEvents = 'none';
-                  }
-              });
+              
               
               // Falling animation
               let yPos = polProg * 150; // From 0vh to 150vh (relative to -100vh top, ends at 50vh)
@@ -6401,25 +6394,11 @@ window.onerror = function(msg, url, line, col, err) {
           } else {
               polCont.style.opacity = 0;
               // Restore pointer-events
-              Array.from(document.body.children).forEach(child => {
-                  const id = child.id;
-                  const tag = child.tagName;
-                  if (id !== 'c' && id !== 'polaroid-falling-container' && id !== 'custom-scroll-track' && tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'LINK') {
-                      child.style.opacity = 1;
-                      child.style.pointerEvents = '';
-                  }
-              });
+              
           }
       } else if (polCont) {
           polCont.style.opacity = 0;
-          Array.from(document.body.children).forEach(child => {
-              const id = child.id;
-              const tag = child.tagName;
-              if (id !== 'c' && id !== 'polaroid-falling-container' && id !== 'custom-scroll-track' && tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'LINK') {
-                  child.style.opacity = 1;
-                  child.style.pointerEvents = '';
-              }
-          });
+          
       }
       // ---------------------------------
 
@@ -8399,12 +8378,23 @@ window.onerror = function(msg, url, line, col, err) {
 
     const PX = 0.3, PY = 0.125;
     // Cámara siempre posicionada en CAM_BASE + offset de parallax (cuando parallaxStr=0 => sin offset)
-    camera.position.x = CAM_BASE.x + mouseNX * PX * parallaxStr;
-    camera.position.y = CAM_BASE.y - mouseNY * PY * parallaxStr;
-    camera.position.z = CAM_BASE.z;
-    camera.lookAt(CAM_LOOK.x + mouseNX * 0.1 * parallaxStr,
-                  CAM_LOOK.y - mouseNY * 0.05 * parallaxStr,
-                  CAM_LOOK.z);
+    let pProg = window._finalPolProg || 0;
+    
+    // Interpolate camera base based on polProg
+    let currentCamX = CAM_BASE.x + (0 - CAM_BASE.x) * pProg;
+    let currentCamY = CAM_BASE.y + (16 - CAM_BASE.y) * pProg;
+    let currentCamZ = CAM_BASE.z + (0 - CAM_BASE.z) * pProg;
+    
+    let currentLookX = CAM_LOOK.x + (0 - CAM_LOOK.x) * pProg;
+    let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
+    let currentLookZ = CAM_LOOK.z + (0 - CAM_LOOK.z) * pProg;
+
+    camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
+    camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
+    camera.position.z = currentCamZ;
+    camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
+                  currentLookY - mouseNY * 0.05 * parallaxStr,
+                  currentLookZ);
     // cardCam2 siempre en el origen ”” carta congelada en viewport
 
     renderer.render(scene, camera);
