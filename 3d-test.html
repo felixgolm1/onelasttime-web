@@ -1560,6 +1560,45 @@ window.onerror = function(msg, url, line, col, err) {
 }
 
     @media (max-width: 768px) { #dynamic-pricing-row { font-size: 3.5vw !important; } }
+
+    /* POLAROID FALLING ENDING */
+    #polaroid-falling-container {
+      position: fixed;
+      top: -100vh;
+      left: 50%;
+      width: 320px;
+      margin-left: -160px;
+      z-index: 10020;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fcfcfc;
+      padding: 16px 16px 60px 16px;
+      box-shadow: 0px 50px 80px rgba(0,0,0,0.8);
+      border-radius: 2px;
+      will-change: transform, opacity, box-shadow;
+      opacity: 0;
+    }
+    #polaroid-falling-container img.polaroid-photo {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      background: #111;
+      border: 1px solid #ddd;
+    }
+    #polaroid-falling-container .polaroid-text {
+      position: absolute;
+      bottom: 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: #1a1a1a;
+      text-align: center;
+      width: 100%;
+      left: 0;
+      transform: rotate(-2deg);
+    }
+    
 </style>
 </head>
 
@@ -3683,7 +3722,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // â”€â”€ Drivers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
-    const maxProg = 54.0;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    const maxProg = 62.0;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
     // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
     // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
@@ -6312,6 +6351,42 @@ window.onerror = function(msg, url, line, col, err) {
       
       if (webglCanvas) { webglCanvas.style.opacity = op3D; webglCanvas.style.pointerEvents = op3D > 0 ? 'auto' : 'none'; }
       if (cssContainer) { cssContainer.style.opacity = op3D; cssContainer.style.pointerEvents = op3D > 0 ? 'auto' : 'none'; }
+
+      // --- FINAL POLAROID FALL LOGIC ---
+      let polCont = document.getElementById('polaroid-falling-container');
+      if (polCont && prog > 54.0) {
+          let polProg = Math.max(0, Math.min(1, (prog - 54.0) / 7.0)); // 0 to 1 over 7 prog units
+          
+          if (polProg > 0) {
+              polCont.style.opacity = 1;
+              
+              // Fade out the HTML layer to reveal 3D canvas
+              if (cssContainer) cssContainer.style.opacity = 1 - polProg;
+              
+              // Falling animation
+              let yPos = polProg * 150; // From 0vh to 150vh (relative to -100vh top, ends at 50vh)
+              let swayX = Math.sin(polProg * Math.PI * 5) * 40; // Sway left/right 40px
+              let rotZ = Math.sin(polProg * Math.PI * 4) * 15; // Rotate Z +/- 15deg
+              let rotX = 30 * (1 - polProg); // Flattens out as it lands
+              let rotY = Math.sin(polProg * Math.PI * 3) * 10;
+              
+              // Shadow becomes smaller and sharper as it lands
+              let shadowY = 50 * (1 - polProg);
+              let shadowBlur = 80 * (1 - polProg);
+              let shadowOp = 0.8 * (1 - polProg) + 0.2; // Doesn't go fully black
+              
+              polCont.style.transform = `translate3d(${swayX}px, ${yPos}vh, 0) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
+              polCont.style.boxShadow = `0px ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowOp})`;
+          } else {
+              polCont.style.opacity = 0;
+              if (cssContainer) cssContainer.style.opacity = 1;
+          }
+      } else if (polCont) {
+          polCont.style.opacity = 0;
+          if (cssContainer) cssContainer.style.opacity = 1;
+      }
+      // ---------------------------------
+
       // IMPORTANTE: cardTable (position:fixed inset:0 z-index:10005) NUNCA debe tener pointer-events:auto
       // porque absorbería TODOS los clicks de la pantalla, bloqueando las cartas peeking dentro de mainDeck.
       // Las cartas individuales .card-on-table tienen pointer-events:auto propios ”” eso es suficiente.
@@ -9691,7 +9766,13 @@ window.addEventListener('click', function(e) {
     if (down) initMarquee(down, 'down');
   });
 })();
-</script></body>
+</script>
+<div id="polaroid-falling-container">
+  <img class="polaroid-photo" src="assets/img/polaroid_placeholder.png" alt="Polaroid">
+  <div class="polaroid-text">La próxima puede ser la vuestra</div>
+</div>
+
+</body>
 <script>
 document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
 document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
