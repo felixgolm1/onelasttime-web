@@ -6381,9 +6381,11 @@ window.onerror = function(msg, url, line, col, err) {
               // Camera flies back to top
               if (typeof camera !== 'undefined' && typeof THREE !== 'undefined' && typeof CAM_LOOK !== 'undefined') {
                   let targetCamPos = new THREE.Vector3(-0.3, 12, 3);
-                  let targetCamLook = new THREE.Vector3(0, 0, 0);
                   camera.position.lerp(targetCamPos, polProg);
-                  CAM_LOOK.lerp(targetCamLook, polProg);
+                  
+                  CAM_LOOK.x += (0 - CAM_LOOK.x) * polProg;
+                  CAM_LOOK.y += (0 - CAM_LOOK.y) * polProg;
+                  CAM_LOOK.z += (0 - CAM_LOOK.z) * polProg;
               }
               
               // Shadow becomes smaller and sharper as it lands
