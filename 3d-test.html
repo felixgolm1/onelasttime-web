@@ -7272,7 +7272,7 @@ window.onerror = function(msg, url, line, col, err) {
 
   // â”€â”€ CONSTRUCCIÓN ESCENA BASE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Mesa de madera (base)
-  const tableTop = new THREE.Mesh(new THREE.PlaneGeometry(60,60), woodMat);
+  const tableTop = new THREE.Mesh(new THREE.PlaneGeometry(300,300), woodMat);
   tableTop.rotation.x = -Math.PI/2;
   tableTop.receiveShadow = true;
   scene.add(tableTop);
