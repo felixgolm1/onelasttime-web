@@ -6377,6 +6377,15 @@ window.onerror = function(msg, url, line, col, err) {
               let rotX = 30 * (1 - polProg); // Flattens out as it lands
               let rotY = Math.sin(polProg * Math.PI * 3) * 10;
               
+              
+              // Camera flies back to top
+              if (typeof camera !== 'undefined' && typeof THREE !== 'undefined' && typeof CAM_LOOK !== 'undefined') {
+                  let targetCamPos = new THREE.Vector3(-0.3, 12, 3);
+                  let targetCamLook = new THREE.Vector3(0, 0, 0);
+                  camera.position.lerp(targetCamPos, polProg);
+                  CAM_LOOK.lerp(targetCamLook, polProg);
+              }
+              
               // Shadow becomes smaller and sharper as it lands
               let shadowY = 50 * (1 - polProg);
               let shadowBlur = 80 * (1 - polProg);
@@ -9696,26 +9705,6 @@ setInterval(function() {
   </div>
 
     <!-- PHASE 3 (Final Image) -->
-  <div id="olt-final-text" style="width:90vw; max-width:800px; position:absolute; top:50%; left:50%; transform:translate(-50%, calc(-50% + 2cm)); opacity:0; will-change:opacity, filter; display:flex; justify-content:center; align-items:center; z-index: 1;">
-      <div id="polaroid-wrapper" style="position:relative; width:100%;">
-          <!-- Invisible placeholder to keep aspect ratio -->
-          <img src="assets/img/polaroid.png" style="width:100%; height:auto; display:block; visibility:hidden;">
-          
-          <!-- Left Half -->
-          <img id="polaroid-left" src="assets/img/polaroid.png" style="position:absolute; top:0; left:0; width:100%; height:100%; clip-path: inset(0 50% 0 0); filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4)); will-change:transform;">
-          
-          <!-- Right Half -->
-          <img id="polaroid-right" src="assets/img/polaroid.png" style="position:absolute; top:0; left:0; width:100%; height:100%; clip-path: inset(0 0 0 50%); filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4)); will-change:transform;">
-      </div>
-      
-      <!-- Handwritten Text Overlay -->
-      <div id="polaroid-handwriting" style="position: absolute; left: 52%; top: 12%; width: 42%; transform: rotate(5.5deg); font-family: 'Caveat', cursive; color: #151515; font-size: clamp(0.9rem, 1.8vw, 1.6rem); line-height: 1.15; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 75%; padding: 0 10px; box-sizing: border-box;">
-          <p style="margin-bottom: 5%; font-weight: 700; font-size: 1.15em;">"Si vives cada d&iacute;a como si fuera el &uacute;ltimo, alg&uacute;n d&iacute;a estar&aacute;s en lo cierto"</p>
-          <p style="margin-bottom: 5%;">Y aunque esperamos que este d&iacute;a quede lejos, no hay duda de que nunca volveremos a vivir cada preciso instante de nuevo.</p>
-          <p style="margin-bottom: 0;">As&iacute; que amemos a las personas que nos importan ahora, ya que no sabemos cuando tendremos la &uacute;ltima oportunidad para hacerlo.</p>
-      </div>
-  </div>
-</div>
   <a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:relative; z-index:10; margin-top:0; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
     <div class="mini-marquee-container" style="animation-duration: 50s;">
       <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
