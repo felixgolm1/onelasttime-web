@@ -6360,8 +6360,15 @@ window.onerror = function(msg, url, line, col, err) {
           if (polProg > 0) {
               polCont.style.opacity = 1;
               
-              // Fade out the HTML layer to reveal 3D canvas
-              if (cssContainer) cssContainer.style.opacity = 1 - polProg;
+              // Fade out ALL HTML layer elements to reveal 3D canvas
+              Array.from(document.body.children).forEach(child => {
+                  const id = child.id;
+                  const tag = child.tagName;
+                  if (id !== 'c' && id !== 'polaroid-falling-container' && id !== 'custom-scroll-track' && tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'LINK') {
+                      child.style.opacity = 1 - polProg;
+                      child.style.pointerEvents = 'none';
+                  }
+              });
               
               // Falling animation
               let yPos = polProg * 150; // From 0vh to 150vh (relative to -100vh top, ends at 50vh)
@@ -6375,15 +6382,30 @@ window.onerror = function(msg, url, line, col, err) {
               let shadowBlur = 80 * (1 - polProg);
               let shadowOp = 0.8 * (1 - polProg) + 0.2; // Doesn't go fully black
               
-              polCont.style.transform = `translate3d(${swayX}px, ${yPos}vh, 0) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
+              polCont.style.transform = `translate3d(${swayX}px, ${yPos}vh, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
               polCont.style.boxShadow = `0px ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowOp})`;
           } else {
               polCont.style.opacity = 0;
-              if (cssContainer) cssContainer.style.opacity = 1;
+              // Restore pointer-events
+              Array.from(document.body.children).forEach(child => {
+                  const id = child.id;
+                  const tag = child.tagName;
+                  if (id !== 'c' && id !== 'polaroid-falling-container' && id !== 'custom-scroll-track' && tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'LINK') {
+                      child.style.opacity = 1;
+                      child.style.pointerEvents = '';
+                  }
+              });
           }
       } else if (polCont) {
           polCont.style.opacity = 0;
-          if (cssContainer) cssContainer.style.opacity = 1;
+          Array.from(document.body.children).forEach(child => {
+              const id = child.id;
+              const tag = child.tagName;
+              if (id !== 'c' && id !== 'polaroid-falling-container' && id !== 'custom-scroll-track' && tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'LINK') {
+                  child.style.opacity = 1;
+                  child.style.pointerEvents = '';
+              }
+          });
       }
       // ---------------------------------
 
