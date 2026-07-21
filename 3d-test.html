@@ -10614,8 +10614,12 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   var _oltPhaseDyn = document.getElementById('olt-phase-dynamic');
                   if (_oltPhaseDyn) {
                       var opDyn = _p1FadeInP;
+                      // Si ya pasamos el flash, forzar a 0 para que no estorbe a la mesa 3d
+                      if (localP > IS_FLASH_PEAK) { opDyn = 0; }
+                      
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
                       _oltPhaseDyn.style.filter = 'none';
+                      _oltPhaseDyn.style.pointerEvents = opDyn > 0 ? 'auto' : 'none';
                       
                       // Ajustar la posición vertical al aparecer la garantía
                       var dynOffsetY = _p1ReverseP * 40; // Sube hasta 40px progresivamente
@@ -10747,9 +10751,9 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                       
                       // Nuevo flash al final que revela la mesa 3D
                       var finalFlashOp = 0;
-                      if (localP > IS_FINAL_END && localP <= IS_FLASH_END) {
+                      if (localP > IS_P3_FADE_IN_END && localP <= IS_FLASH_END) {
                           if (localP <= IS_FLASH_PEAK) {
-                              finalFlashOp = mapRange(localP, IS_FINAL_END, IS_FLASH_PEAK, 0, 1);
+                              finalFlashOp = mapRange(localP, IS_P3_FADE_IN_END, IS_FLASH_PEAK, 0, 1);
                           } else {
                               finalFlashOp = mapRange(localP, IS_FLASH_PEAK, IS_FLASH_END, 1, 0);
                           }
@@ -10759,6 +10763,13 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                       if (_finalFlash) {
                           _finalFlash.style.opacity = Math.max(0, Math.min(1, finalFlashOp)).toFixed(2);
                       }
+                      
+                      // Hacer zoom out de la camara despues del pico del flash
+                      var tableZoomOutP = 0;
+                      if (localP > IS_FLASH_PEAK) {
+                          tableZoomOutP = Math.max(0, Math.min(1, mapRange(localP, IS_FLASH_PEAK, IS_FLASH_END, 0, 1)));
+                      }
+                      window._finalPolProg = tableZoomOutP;
                       
                       // Ocultar los contenedores de fondo después del pico del flash
                       var _bgOp = (localP > IS_FLASH_PEAK) ? 0 : 1;
