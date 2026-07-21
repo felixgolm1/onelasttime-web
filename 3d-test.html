@@ -5231,6 +5231,13 @@ window.onerror = function(msg, url, line, col, err) {
           transP = Math.min(1, mapRange(prog, 9.62, 10.62, 0, 1)); // scroll-driven hasta el flash
         }
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
+        
+        // Devolver la mesa al centro si estamos pasando el pico del flash final (localP > 29.5)
+        let _currentLocalP = prog - 21.1;
+        if (_currentLocalP > 29.5) {
+            boardY = 0;
+        }
+        
         gsap.set(scBoard, { y: boardY + 'vh' });
         
         
@@ -10558,7 +10565,9 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   
                   var _p3FadeInP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
                   var _finalP    = Math.max(0, Math.min(1, (localP - IS_P3_FADE_IN_END) / (IS_FINAL_END - IS_P3_FADE_IN_END)));
-                  var _resetFlashP = Math.max(0, Math.min(1, (localP - IS_FINAL_END) / (IS_RESET_FLASH_END - IS_FINAL_END)));
+                  
+                  var IS_FLASH_PEAK = 29.5;
+                  var IS_FLASH_END = 30.0;
 
                   // Eliminado a petición del usuario: el scroll simplemente termina y no vuelve al inicio
                   // if (_resetFlashP >= 1.0 && window.instantResetToZero) {
@@ -10732,12 +10741,32 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                           flashOp = mapRange(_finalP, 0, 0.2, 1, 0);
                       }
                       
-                      // Eliminado el flash al final ya que el usuario no quiere que vuelva al inicio con el scroll
-                      // if (_resetFlashP > 0) {
-                      //    flashOp = mapRange(_resetFlashP, 0, 0.95, 0, 1);
-                      // }
+                      // Nuevo flash al final que revela la mesa 3D
+                      if (localP > IS_FINAL_END && localP <= IS_FLASH_END) {
+                          if (localP <= IS_FLASH_PEAK) {
+                              flashOp = mapRange(localP, IS_FINAL_END, IS_FLASH_PEAK, 0, 1);
+                          } else {
+                              flashOp = mapRange(localP, IS_FLASH_PEAK, IS_FLASH_END, 1, 0);
+                          }
+                      }
                       
                       _cameraFlash.style.opacity = Math.max(0, Math.min(1, flashOp)).toFixed(2);
+                      
+                      // Ocultar los contenedores de fondo después del pico del flash
+                      var _bgOp = (localP > IS_FLASH_PEAK) ? 0 : 1;
+                      var _isContOuter = document.getElementById('img-strip-container');
+                      if (_isContOuter) {
+                         // Mantener la lógica base de opacidad pero forzar a 0 tras el flash
+                         var baseOp = Math.max(0, Math.min(1, (_exitEA * 2.0)));
+                         _isContOuter.style.opacity = (baseOp * _bgOp).toFixed(2);
+                         _isContOuter.style.pointerEvents = _bgOp === 0 ? 'none' : _isContOuter.style.pointerEvents;
+                      }
+                      
+                      var _magSceneOuter = document.getElementById('magazine-scene');
+                      if (_magSceneOuter) {
+                         _magSceneOuter.style.opacity = _bgOp.toString();
+                         _magSceneOuter.style.pointerEvents = _bgOp === 0 ? 'none' : 'auto';
+                      }
                   }
                   
                   if (_oltText) {
