@@ -8432,10 +8432,10 @@ window.onerror = function(msg, url, line, col, err) {
     // Cámara siempre posicionada en CAM_BASE + offset de parallax (cuando parallaxStr=0 => sin offset)
     let pProg = window._finalPolProg || 0;
     
-    // Interpolate camera base based on polProg
-    let currentCamX = CAM_BASE.x + (0 - CAM_BASE.x) * pProg;
-    let currentCamY = CAM_BASE.y + (16 - CAM_BASE.y) * pProg;
-    let currentCamZ = CAM_BASE.z + (0 - CAM_BASE.z) * pProg;
+    // Interpolate camera base based on polProg to return to original angled view
+    let currentCamX = CAM_BASE.x + (-0.3 - CAM_BASE.x) * pProg;
+    let currentCamY = CAM_BASE.y + (12 - CAM_BASE.y) * pProg;
+    let currentCamZ = CAM_BASE.z + (3 - CAM_BASE.z) * pProg;
     
     let currentLookX = CAM_LOOK.x + (0 - CAM_LOOK.x) * pProg;
     let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
