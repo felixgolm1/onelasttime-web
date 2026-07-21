@@ -6843,6 +6843,11 @@ window.onerror = function(msg, url, line, col, err) {
                       scaleMod = 0.00001; // oculto en carrusel y magazine
                   }
                   
+                  // REAPARECER AL FINAL DEL SCROLL
+                  if (window._finalPolProg > 0) {
+                      scaleMod = Math.max(0.00001, window._finalPolProg);
+                  }
+                  
                   globalGlbCard.visible = scaleMod > 0.01;
 
                   // Rotación: De giro de caja a plana contra la revista (ligeramente torcida Z=15deg)
@@ -6862,6 +6867,16 @@ window.onerror = function(msg, url, line, col, err) {
                   let startScale = lc.scale * scBoardScale;
                   let endScale = startScale * 0.45;
                   globalGlbCard.scale.setScalar((startScale + tP * (endScale - startScale)) * scaleMod);
+                  
+                  // AL FINAL DEL SCROLL: forzar posición al centro de la mesa
+                  if (window._finalPolProg > 0) {
+                      let fp = window._finalPolProg;
+                      // Transición desde la esquina superior derecha (oculta) hacia el centro de la mesa
+                      globalGlbCard.position.set((1-fp) * 20, 0, (1-fp) * -20);
+                      globalGlbCard.rotation.set(0, 0, (12 + fp * 15) * Math.PI / 180);
+                      // Escala base normal de la caja
+                      globalGlbCard.scale.setScalar(lc.scale * scaleMod * 0.9);
+                  }
               }
 
           }   // â”€â”€ fin else scatter â”€â”€
@@ -8433,9 +8448,10 @@ window.onerror = function(msg, url, line, col, err) {
     let pProg = window._finalPolProg || 0;
     
     // Interpolate camera base based on polProg to return to original angled view
-    let currentCamX = CAM_BASE.x + (-0.3 - CAM_BASE.x) * pProg;
-    let currentCamY = CAM_BASE.y + (12 - CAM_BASE.y) * pProg;
-    let currentCamZ = CAM_BASE.z + (3 - CAM_BASE.z) * pProg;
+    // Usamos un ángulo mucho más bajo (y=4, z=8) para que se vea la perspectiva 3D y el horizonte de la mesa
+    let currentCamX = CAM_BASE.x + (-2 - CAM_BASE.x) * pProg;
+    let currentCamY = CAM_BASE.y + (4 - CAM_BASE.y) * pProg;
+    let currentCamZ = CAM_BASE.z + (8 - CAM_BASE.z) * pProg;
     
     let currentLookX = CAM_LOOK.x + (0 - CAM_LOOK.x) * pProg;
     let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
