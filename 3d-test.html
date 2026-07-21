@@ -5736,6 +5736,8 @@ window.onerror = function(msg, url, line, col, err) {
           magazineScene.style.display = 'none';
           magazineScene.style.opacity = 0;
         }
+        var _cF = document.getElementById('camera-flash');
+        if (_cF) _cF.style.opacity = '0';
         if (heroCta) {
           heroCta.style.opacity = '';
           heroCta.style.pointerEvents = '';
@@ -6448,6 +6450,18 @@ window.onerror = function(msg, url, line, col, err) {
           if (debugProg) debugProg.innerText = prog.toFixed(2);
         }
       });
+    };
+
+    window.instantResetToZero = function() {
+      targetProg = 0;
+      prog = 0;
+      window._carouselEntryStart = null;
+      sessionStorage.setItem('dev_prog', 0);
+      scrollTl.progress(0);
+      updateFaceSwap();
+      updateGlobalScenes();
+      const debugProg = document.getElementById('debug-scroll-prog');
+      if (debugProg) debugProg.innerText = prog.toFixed(2);
     };
 
     function mapRange(p, inMin, inMax, outMin, outMax) {
@@ -10505,6 +10519,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   var IS_P2_END         = 29.0;
                   var IS_P3_FADE_IN_END = 30.0;
                   var IS_FINAL_END      = 34.0;
+                  var IS_RESET_FLASH_END= 35.0;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
@@ -10523,6 +10538,12 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   
                   var _p3FadeInP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
                   var _finalP    = Math.max(0, Math.min(1, (localP - IS_P3_FADE_IN_END) / (IS_FINAL_END - IS_P3_FADE_IN_END)));
+                  var _resetFlashP = Math.max(0, Math.min(1, (localP - IS_FINAL_END) / (IS_RESET_FLASH_END - IS_FINAL_END)));
+
+                  if (_resetFlashP >= 1.0 && window.instantResetToZero) {
+                      window.instantResetToZero();
+                      return; // Cortar aquí para no sobrescribir nada
+                  }
 
                   // El carrusel sigue subiendo sin limite
                   var _carUpP = Math.max(0, (localP - IS_END) / (IS_EXIT_END - IS_END));
@@ -10691,6 +10712,12 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                       } else if (_finalP > 0 && _finalP <= 0.2) {
                           flashOp = mapRange(_finalP, 0, 0.2, 1, 0);
                       }
+                      
+                      // Nuevo flash al final
+                      if (_resetFlashP > 0) {
+                          flashOp = mapRange(_resetFlashP, 0, 0.95, 0, 1); // sube hasta casi el final, luego el snap lo corta
+                      }
+                      
                       _cameraFlash.style.opacity = Math.max(0, Math.min(1, flashOp)).toFixed(2);
                   }
                   
