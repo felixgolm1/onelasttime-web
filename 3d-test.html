@@ -10536,7 +10536,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
                   
                   var _ctaBaseY = ((1 - _exitEA) * 100);
-                  var _ctaY = _ctaBaseY - (_finalP * 20);
+                  var _ctaY = _ctaBaseY; // Eliminado - (_finalP * 20) para evitar colisión con el texto
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
@@ -10544,6 +10544,12 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                     _oltCta.style.opacity = _ctaP.toFixed(2);
                     _oltCta.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
                     _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
+                  }
+                  
+                  var _heroCta = document.getElementById('cta-bottom-container');
+                  if (_heroCta) {
+                    _heroCta.style.opacity = (1 - (typeof _ctaP !== 'undefined' ? _ctaP : 0)).toFixed(2);
+                    _heroCta.style.pointerEvents = (typeof _ctaP !== 'undefined' && _ctaP > 0) ? 'none' : 'auto';
                   }
                   
                   // ----- PHASE 1 & 2: Dynamic -----
