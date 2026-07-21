@@ -1600,6 +1600,21 @@ window.onerror = function(msg, url, line, col, err) {
     }
     
 </style>
+<script>
+window.addEventListener('error', function(e) {
+  var div = document.createElement('div');
+  div.style.position = 'fixed';
+  div.style.top = '0';
+  div.style.left = '0';
+  div.style.zIndex = '99999999';
+  div.style.background = 'red';
+  div.style.color = 'white';
+  div.style.padding = '20px';
+  div.style.fontSize = '20px';
+  div.innerText = 'ERROR: ' + e.message + ' at ' + e.lineno;
+  document.body.appendChild(div);
+});
+</script>
 </head>
 
 
