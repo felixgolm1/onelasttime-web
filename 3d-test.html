@@ -10560,10 +10560,11 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   var _finalP    = Math.max(0, Math.min(1, (localP - IS_P3_FADE_IN_END) / (IS_FINAL_END - IS_P3_FADE_IN_END)));
                   var _resetFlashP = Math.max(0, Math.min(1, (localP - IS_FINAL_END) / (IS_RESET_FLASH_END - IS_FINAL_END)));
 
-                  if (_resetFlashP >= 1.0 && window.instantResetToZero) {
-                      window.instantResetToZero();
-                      return; // Cortar aquí para no sobrescribir nada
-                  }
+                  // Eliminado a petición del usuario: el scroll simplemente termina y no vuelve al inicio
+                  // if (_resetFlashP >= 1.0 && window.instantResetToZero) {
+                  //    window.instantResetToZero();
+                  //    return;
+                  // }
 
                   // El carrusel sigue subiendo sin limite
                   var _carUpP = Math.max(0, (localP - IS_END) / (IS_EXIT_END - IS_END));
@@ -10731,10 +10732,10 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                           flashOp = mapRange(_finalP, 0, 0.2, 1, 0);
                       }
                       
-                      // Nuevo flash al final
-                      if (_resetFlashP > 0) {
-                          flashOp = mapRange(_resetFlashP, 0, 0.95, 0, 1); // sube hasta casi el final, luego el snap lo corta
-                      }
+                      // Eliminado el flash al final ya que el usuario no quiere que vuelva al inicio con el scroll
+                      // if (_resetFlashP > 0) {
+                      //    flashOp = mapRange(_resetFlashP, 0, 0.95, 0, 1);
+                      // }
                       
                       _cameraFlash.style.opacity = Math.max(0, Math.min(1, flashOp)).toFixed(2);
                   }
