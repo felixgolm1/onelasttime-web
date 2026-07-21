@@ -9711,7 +9711,7 @@ setInterval(function() {
   </div>
 
     <!-- PHASE 3 (Final Image) -->
-  <a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:relative; z-index:10; margin-top:0; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
+  <a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:absolute; bottom:3.7rem; left:50%; transform:translate(-50%, 100vh); z-index:10; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
     <div class="mini-marquee-container" style="animation-duration: 50s;">
       <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
       <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
@@ -10543,7 +10543,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                     var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
                     _oltCta.style.opacity = _ctaP.toFixed(2);
                     _oltCta.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
-                    _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
+                    _oltCta.style.transform = 'translate(-50%, ' + _ctaY.toFixed(2) + 'vh)';
                   }
                   
                   var _heroCta = document.getElementById('cta-bottom-container');
@@ -10757,7 +10757,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   if (_oltPhase2R) _oltPhase2R.style.opacity = '0';
                   var _oltCtaR = document.getElementById('olt-final-cta');
                   if (_oltCtaR) {
-                      _oltCtaR.style.transform = 'translateY(100vh)';
+                      _oltCtaR.style.transform = 'translate(-50%, 100vh)';
                       _oltCtaR.style.opacity = '0';
                       _oltCtaR.style.pointerEvents = 'none';
                   }
@@ -10783,7 +10783,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
             var _oltT = document.getElementById('olt-final-text'); if (_oltT) { _oltT.style.transform = 'translate(-50%, 100vh)'; _oltT.style.opacity = '0'; }
             var _p1 = document.getElementById('olt-phase-1'); if (_p1) _p1.style.opacity = '0';
             var _p2 = document.getElementById('olt-phase-2'); if (_p2) _p2.style.opacity = '0';
-            var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
+            var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translate(-50%, 100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
           }
       }
       
