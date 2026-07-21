@@ -9834,6 +9834,10 @@ window.addEventListener('click', function(e) {
 </div>
 
 </body>
+
+<!-- Flash a pantalla completa para la transición final -->
+<div id="final-camera-flash" style="position:fixed; inset:0; background:#ffffff; opacity:0; pointer-events:none; z-index:10000005; mix-blend-mode:screen;"></div>
+
 <script>
 document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
 document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
@@ -10742,15 +10746,19 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                       }
                       
                       // Nuevo flash al final que revela la mesa 3D
+                      var finalFlashOp = 0;
                       if (localP > IS_FINAL_END && localP <= IS_FLASH_END) {
                           if (localP <= IS_FLASH_PEAK) {
-                              flashOp = mapRange(localP, IS_FINAL_END, IS_FLASH_PEAK, 0, 1);
+                              finalFlashOp = mapRange(localP, IS_FINAL_END, IS_FLASH_PEAK, 0, 1);
                           } else {
-                              flashOp = mapRange(localP, IS_FLASH_PEAK, IS_FLASH_END, 1, 0);
+                              finalFlashOp = mapRange(localP, IS_FLASH_PEAK, IS_FLASH_END, 1, 0);
                           }
                       }
                       
-                      _cameraFlash.style.opacity = Math.max(0, Math.min(1, flashOp)).toFixed(2);
+                      var _finalFlash = document.getElementById('final-camera-flash');
+                      if (_finalFlash) {
+                          _finalFlash.style.opacity = Math.max(0, Math.min(1, finalFlashOp)).toFixed(2);
+                      }
                       
                       // Ocultar los contenedores de fondo después del pico del flash
                       var _bgOp = (localP > IS_FLASH_PEAK) ? 0 : 1;
