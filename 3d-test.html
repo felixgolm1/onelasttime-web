@@ -6355,7 +6355,18 @@ window.onerror = function(msg, url, line, col, err) {
       // --- FINAL POLAROID FALL LOGIC ---
       let polCont = document.getElementById('polaroid-falling-container');
       if (polCont && prog > 54.0) {
-          let polProg = Math.max(0, Math.min(1, (prog - 54.0) / 7.0)); // 0 to 1 over 7 prog units
+          let polProg = Math.max(0, Math.min(1, (prog - 54.0) / 7.0));
+              // Fade out UI at the very end to reveal 3D canvas (and prevent CTA overlap)
+              if (prog > 30.0) {
+                  ['nav-logo', 'nav-menu', 'cta-top-container', 'cta-bottom-container', 'headline', 'subheadline'].forEach(id => {
+                      const el = document.getElementById(id);
+                      if (el) {
+                          el.style.opacity = 1 - polProg;
+                          el.style.pointerEvents = polProg > 0 ? 'none' : '';
+                      }
+                  });
+              }
+ // 0 to 1 over 7 prog units
           
           if (polProg > 0) {
               polCont.style.opacity = 1;
