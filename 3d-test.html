@@ -3721,8 +3721,8 @@ window.onerror = function(msg, url, line, col, err) {
     }
 
     // â”€â”€ Drivers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // Reducido maxProg para que el scroll termine justo al completar la nueva sección
-    const maxProg = 62.0;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
+    // Reducido maxProg para que el scroll termine justo al detonar el flash (localP = 30.0 -> prog = 51.1)
+    const maxProg = 51.1; 
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
     // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
     // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
@@ -6455,7 +6455,12 @@ window.onerror = function(msg, url, line, col, err) {
     window.instantResetToZero = function() {
       targetProg = 0;
       prog = 0;
+      window.isDraggingThumb = false;
       window._carouselEntryStart = null;
+      const customScrollThumb = document.getElementById('custom-scroll-thumb');
+      if (customScrollThumb) {
+          customScrollThumb.style.transform = 'translateY(0px)';
+      }
       sessionStorage.setItem('dev_prog', 0);
       scrollTl.progress(0);
       updateFaceSwap();
@@ -9707,7 +9712,7 @@ setInterval(function() {
   <div id="pricing-clip-container" style="flex:1; width:100vw; position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; margin: 0;">
   
   <!-- DYNAMIC PHASE 1 & 2 -->
-  <div id="olt-phase-dynamic" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:calc(42% - 0.5cm); left:50%; transform:translate(-50%, -50%); z-index: 10;">
+  <div id="olt-phase-dynamic" style="pointer-events: none; width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:calc(42% - 0.5cm); left:50%; transform:translate(-50%, -50%); z-index: 10;">
     
     <!-- P1 Question -->
     <div id="p1-question" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -100%); width: 100%; opacity: 0; will-change: opacity;">
@@ -10517,9 +10522,9 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   var IS_P2_EXPAND_END  = 26.0;
                   var IS_P2_GUARANTEE_END = 27.5; 
                   var IS_P2_END         = 29.0;
-                  var IS_P3_FADE_IN_END = 30.0;
-                  var IS_FINAL_END      = 34.0;
-                  var IS_RESET_FLASH_END= 35.0;
+                  var IS_P3_FADE_IN_END = 29.001;
+                  var IS_FINAL_END      = 29.001;
+                  var IS_RESET_FLASH_END= 30.0;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
@@ -10554,7 +10559,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
                   var _logoBaseY = ((1 - _exitEA) * 100);
-                  var _logoY = _logoBaseY + (_finalP * 20);
+                  var _logoY = _logoBaseY; // Eliminado el movimiento hacia abajo en finalP
                   
                   var _oltLogo = document.getElementById('olt-logo-img-big');
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
@@ -10579,11 +10584,9 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   // ----- PHASE 1 & 2: Dynamic -----
                   var _oltPhaseDyn = document.getElementById('olt-phase-dynamic');
                   if (_oltPhaseDyn) {
-                      var blurAmount = Math.sin(_p3FadeInP * Math.PI) * 20;
                       var opDyn = _p1FadeInP;
-                      if (_p3FadeInP > 0.15) opDyn = 0; // Swap happens at peak flash
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
-                      _oltPhaseDyn.style.filter = 'blur(' + blurAmount.toFixed(1) + 'px)';
+                      _oltPhaseDyn.style.filter = 'none';
                       
                       // Ajustar la posición vertical al aparecer la garantía
                       var dynOffsetY = _p1ReverseP * 40; // Sube hasta 40px progresivamente
