@@ -1565,10 +1565,8 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-  <!-- CAMERA FLASH OVERLAY (Superpuesto a la caja verde, mismo tamaño que revista) -->
-  <div id="camera-flash-container">
-    <div id="camera-flash" style="position: absolute; inset: 0; background: #ffffff; opacity: 0; pointer-events: none; mix-blend-mode: screen;"></div>
-  </div>
+  <!-- CAMERA FLASH OVERLAY (Pantalla completa) -->
+  <div id="camera-flash" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; opacity: 0; pointer-events: none; mix-blend-mode: screen; z-index: 99999999;"></div>
 
   <!-- THE MAGAZINE SCENE (Initially hidden) -->
   <div id="magazine-scene" style="display: none; opacity: 0;">
@@ -6726,12 +6724,12 @@ window.onerror = function(msg, url, line, col, err) {
                   let endScale = startScale * 0.45;
                   globalGlbCard.scale.setScalar((startScale + tP * (endScale - startScale)) * scaleMod);
                   
-                  // AL FINAL DEL SCROLL: forzar posición al centro de la mesa
+                  // AL FINAL DEL SCROLL: forzar posición al centro de la mesa izquierda
                   if (window._finalPolProg > 0) {
                       let fp = window._finalPolProg;
-                      // Transición desde la esquina superior derecha (oculta) hacia el centro de la mesa
-                      globalGlbCard.position.set((1-fp) * 20, 0, (1-fp) * -20);
-                      globalGlbCard.rotation.set(0, 0, (12 + fp * 15) * Math.PI / 180);
+                      // Transición hacia la mesa izquierda
+                      globalGlbCard.position.set((1-fp) * 20 + fp * -7.0, 0, (1-fp) * -20);
+                      globalGlbCard.rotation.set(0, 0, (12 + fp * -102) * Math.PI / 180);
                       // Escala base normal de la caja
                       globalGlbCard.scale.setScalar(lc.scale * scaleMod * 0.9);
                   }
@@ -8306,12 +8304,12 @@ window.onerror = function(msg, url, line, col, err) {
     // Obtener el progreso del final para el zoom out
     let pProg = window._finalPolProg || 0;
     
-    // Interpolate camera base based on polProg to show a beautiful angled 3D view (y=4, z=8)
-    let currentCamX = CAM_BASE.x + (-2 - CAM_BASE.x) * pProg;
-    let currentCamY = CAM_BASE.y + (4 - CAM_BASE.y) * pProg;
-    let currentCamZ = CAM_BASE.z + (8 - CAM_BASE.z) * pProg;
+    // Interpolate camera base based on polProg to show a beautiful angled 3D view (y=7, z=6)
+    let currentCamX = CAM_BASE.x + (-9 - CAM_BASE.x) * pProg;
+    let currentCamY = CAM_BASE.y + (7 - CAM_BASE.y) * pProg;
+    let currentCamZ = CAM_BASE.z + (6 - CAM_BASE.z) * pProg;
     
-    let currentLookX = CAM_LOOK.x + (0 - CAM_LOOK.x) * pProg;
+    let currentLookX = CAM_LOOK.x + (-7 - CAM_LOOK.x) * pProg;
     let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
     let currentLookZ = CAM_LOOK.z + (0 - CAM_LOOK.z) * pProg;
 
@@ -10455,13 +10453,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
                   var _logoBaseY = ((1 - _exitEA) * 100);
-                  var _logoY = _logoBaseY + (_finalP * 20);
+                  var _logoY = _logoBaseY;
                   
                   var _oltLogo = document.getElementById('olt-logo-img-big');
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
                   
                   var _ctaBaseY = ((1 - _exitEA) * 100);
-                  var _ctaY = _ctaBaseY - (_finalP * 20);
+                  var _ctaY = _ctaBaseY;
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
@@ -10649,12 +10647,17 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       
                       // Guardar progreso global para que la cámara y los modelos lo usen
                       window._finalPolProg = tableZoomOutP;
+                      
+                      // Forzar fondo negro sólido
+                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x000000, 1);
                   } else {
                       var cssC = document.getElementById('css-container');
                       if (cssC) cssC.style.opacity = '1';
                       var textContainer = document.getElementById('pricing-clip-container');
                       if (textContainer) textContainer.style.opacity = '1';
                       window._finalPolProg = 0;
+                      
+                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x0d0b09, 0);
                   }
                   
               } else {
