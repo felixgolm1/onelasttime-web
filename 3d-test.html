@@ -10639,7 +10639,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                   // Ocultar TODO el HTML después del pico del flash para revelar el 3D
                   if (localP > IS_FLASH_PEAK) {
-                      if (cssContainer) cssContainer.style.opacity = '0';
+                      var cssC = document.getElementById('css-container');
+                      if (cssC) cssC.style.opacity = '0';
                       var textContainer = document.getElementById('pricing-clip-container');
                       if (textContainer) textContainer.style.opacity = '0';
                       
@@ -10649,6 +10650,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       // Guardar progreso global para que la cámara y los modelos lo usen
                       window._finalPolProg = tableZoomOutP;
                   } else {
+                      var cssC = document.getElementById('css-container');
+                      if (cssC) cssC.style.opacity = '1';
                       var textContainer = document.getElementById('pricing-clip-container');
                       if (textContainer) textContainer.style.opacity = '1';
                       window._finalPolProg = 0;
