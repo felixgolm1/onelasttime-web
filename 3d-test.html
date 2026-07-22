@@ -10423,10 +10423,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var IS_P2_END         = 29.0;
                   var IS_P3_FADE_IN_END = 30.0;
                   var IS_FINAL_END      = 34.0;
-                  var IS_FLASH_START    = 34.0;
-                  var IS_FLASH_PEAK     = 34.5;
-                  var IS_FLASH_END      = 36.0;
-                  var IS_TABLE_ZOOM_END = 41.0;
+                  var IS_FLASH_START    = 28.0;
+                  var IS_FLASH_PEAK     = 28.5;
+                  var IS_FLASH_END      = 30.0;
+                  var IS_TABLE_ZOOM_END = 32.9;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
@@ -10640,6 +10640,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // Ocultar TODO el HTML después del pico del flash para revelar el 3D
                   if (localP > IS_FLASH_PEAK) {
                       if (cssContainer) cssContainer.style.opacity = '0';
+                      var textContainer = document.getElementById('pricing-clip-container');
+                      if (textContainer) textContainer.style.opacity = '0';
                       
                       // Calcular progreso del zoom out de la mesa (de IS_FLASH_PEAK a IS_TABLE_ZOOM_END)
                       var tableZoomOutP = Math.max(0, Math.min(1, (localP - IS_FLASH_PEAK) / (IS_TABLE_ZOOM_END - IS_FLASH_PEAK)));
@@ -10647,6 +10649,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       // Guardar progreso global para que la cámara y los modelos lo usen
                       window._finalPolProg = tableZoomOutP;
                   } else {
+                      var textContainer = document.getElementById('pricing-clip-container');
+                      if (textContainer) textContainer.style.opacity = '1';
                       window._finalPolProg = 0;
                   }
                   
