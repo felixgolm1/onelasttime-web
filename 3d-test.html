@@ -6701,6 +6701,11 @@ window.onerror = function(msg, url, line, col, err) {
                       scaleMod = 0.00001; // oculto en carrusel y magazine
                   }
                   
+                  // REAPARECER AL FINAL DEL SCROLL
+                  if (window._finalPolProg > 0) {
+                      scaleMod = Math.max(0.00001, window._finalPolProg);
+                  }
+                  
                   globalGlbCard.visible = scaleMod > 0.01;
 
                   // Rotación: De giro de caja a plana contra la revista (ligeramente torcida Z=15deg)
@@ -6720,6 +6725,16 @@ window.onerror = function(msg, url, line, col, err) {
                   let startScale = lc.scale * scBoardScale;
                   let endScale = startScale * 0.45;
                   globalGlbCard.scale.setScalar((startScale + tP * (endScale - startScale)) * scaleMod);
+                  
+                  // AL FINAL DEL SCROLL: forzar posición al centro de la mesa
+                  if (window._finalPolProg > 0) {
+                      let fp = window._finalPolProg;
+                      // Transición desde la esquina superior derecha (oculta) hacia el centro de la mesa
+                      globalGlbCard.position.set((1-fp) * 20, 0, (1-fp) * -20);
+                      globalGlbCard.rotation.set(0, 0, (12 + fp * 15) * Math.PI / 180);
+                      // Escala base normal de la caja
+                      globalGlbCard.scale.setScalar(lc.scale * scaleMod * 0.9);
+                  }
               }
 
           }   // â”€â”€ fin else scatter â”€â”€
@@ -8287,13 +8302,26 @@ window.onerror = function(msg, url, line, col, err) {
     mouseNY += (mouseRawY - mouseNY) * lerpK;
 
     const PX = 0.3, PY = 0.125;
-    // Cámara siempre posicionada en CAM_BASE + offset de parallax (cuando parallaxStr=0 => sin offset)
-    camera.position.x = CAM_BASE.x + mouseNX * PX * parallaxStr;
-    camera.position.y = CAM_BASE.y - mouseNY * PY * parallaxStr;
-    camera.position.z = CAM_BASE.z;
-    camera.lookAt(CAM_LOOK.x + mouseNX * 0.1 * parallaxStr,
-                  CAM_LOOK.y - mouseNY * 0.05 * parallaxStr,
-                  CAM_LOOK.z);
+    
+    // Obtener el progreso del final para el zoom out
+    let pProg = window._finalPolProg || 0;
+    
+    // Interpolate camera base based on polProg to show a beautiful angled 3D view (y=4, z=8)
+    let currentCamX = CAM_BASE.x + (-2 - CAM_BASE.x) * pProg;
+    let currentCamY = CAM_BASE.y + (4 - CAM_BASE.y) * pProg;
+    let currentCamZ = CAM_BASE.z + (8 - CAM_BASE.z) * pProg;
+    
+    let currentLookX = CAM_LOOK.x + (0 - CAM_LOOK.x) * pProg;
+    let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
+    let currentLookZ = CAM_LOOK.z + (0 - CAM_LOOK.z) * pProg;
+
+    // Cámara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
+    camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
+    camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
+    camera.position.z = currentCamZ;
+    camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
+                  currentLookY - mouseNY * 0.05 * parallaxStr,
+                  currentLookZ);
     // cardCam2 siempre en el origen ”” carta congelada en viewport
 
     renderer.render(scene, camera);
@@ -10395,6 +10423,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var IS_P2_END         = 29.0;
                   var IS_P3_FADE_IN_END = 30.0;
                   var IS_FINAL_END      = 34.0;
+                  var IS_FLASH_START    = 34.0;
+                  var IS_FLASH_PEAK     = 34.5;
+                  var IS_FLASH_END      = 36.0;
+                  var IS_TABLE_ZOOM_END = 41.0;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
@@ -10590,6 +10622,34 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       }
                     }
                   }
+                  
+                  // ----- PHASE 4: Flash y Mesa 3D -----
+                  var _flashP = 0;
+                  if (localP > IS_FLASH_START && localP <= IS_FLASH_PEAK) {
+                      _flashP = (localP - IS_FLASH_START) / (IS_FLASH_PEAK - IS_FLASH_START);
+                  } else if (localP > IS_FLASH_PEAK && localP <= IS_FLASH_END) {
+                      _flashP = 1.0 - (localP - IS_FLASH_PEAK) / (IS_FLASH_END - IS_FLASH_PEAK);
+                  }
+                  var flashEl = document.getElementById('camera-flash');
+                  if (flashEl) {
+                      flashEl.style.opacity = _flashP.toFixed(2);
+                      // Make sure flash is on top of everything but pointer-events none
+                      flashEl.style.zIndex = '99999999';
+                  }
+
+                  // Ocultar TODO el HTML después del pico del flash para revelar el 3D
+                  if (localP > IS_FLASH_PEAK) {
+                      if (cssContainer) cssContainer.style.opacity = '0';
+                      
+                      // Calcular progreso del zoom out de la mesa (de IS_FLASH_PEAK a IS_TABLE_ZOOM_END)
+                      var tableZoomOutP = Math.max(0, Math.min(1, (localP - IS_FLASH_PEAK) / (IS_TABLE_ZOOM_END - IS_FLASH_PEAK)));
+                      
+                      // Guardar progreso global para que la cámara y los modelos lo usen
+                      window._finalPolProg = tableZoomOutP;
+                  } else {
+                      window._finalPolProg = 0;
+                  }
+                  
               } else {
                 isCont.style.opacity = '0';
                 isTrack.style.transform = 'translateX(0.5cm)';
