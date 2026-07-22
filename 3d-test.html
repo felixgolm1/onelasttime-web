@@ -750,7 +750,7 @@ window.onerror = function(msg, url, line, col, err) {
     /* SOLUCIÓN CORRECTA (igual que index.html):
        El wrapper tiene el MISMO TAMAÑO que la caja y NO tiene pointer-events:none.
        El hit-testing de preserve-3d sigue la posición 3D proyectada del elemento,
-       así que la carta que asoma por arriba SÍ recibe eventos aunque visualmente
+       así que la carta que asoma por arriba SÃ recibe eventos aunque visualmente
        esté fuera de los límites CSS del wrapper.
        No necesitamos pantalla completa: overflow:visible hace que sea visible. */
     .box-3d-wrapper {
@@ -1290,7 +1290,7 @@ window.onerror = function(msg, url, line, col, err) {
       100% { transform: translate3d(-50%, 0, 0); }
     }
 
-    /* â”€â”€ CARTAS INTERACTIVAS EXTRAÍBLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* â”€â”€ CARTAS INTERACTIVAS EXTRAÃBLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .card-wrap {
       position: absolute;
       width: 280px; height: 160px;
@@ -1560,61 +1560,7 @@ window.onerror = function(msg, url, line, col, err) {
 }
 
     @media (max-width: 768px) { #dynamic-pricing-row { font-size: 3.5vw !important; } }
-
-    /* POLAROID FALLING ENDING */
-    #polaroid-falling-container {
-      position: fixed;
-      top: -100vh;
-      left: 50%;
-      width: 320px;
-      margin-left: -160px;
-      z-index: 10020;
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #fcfcfc;
-      padding: 16px 16px 60px 16px;
-      box-shadow: 0px 50px 80px rgba(0,0,0,0.8);
-      border-radius: 2px;
-      will-change: transform, opacity, box-shadow;
-      opacity: 0;
-    }
-    #polaroid-falling-container img.polaroid-photo {
-      width: 100%;
-      height: 320px;
-      object-fit: cover;
-      background: #111;
-      border: 1px solid #ddd;
-    }
-    #polaroid-falling-container .polaroid-text {
-      position: absolute;
-      bottom: 20px;
-      font-family: 'Caveat', cursive;
-      font-size: 1.8rem;
-      color: #1a1a1a;
-      text-align: center;
-      width: 100%;
-      left: 0;
-      transform: rotate(-2deg);
-    }
-    
 </style>
-<script>
-window.addEventListener('error', function(e) {
-  var div = document.createElement('div');
-  div.style.position = 'fixed';
-  div.style.top = '0';
-  div.style.left = '0';
-  div.style.zIndex = '99999999';
-  div.style.background = 'red';
-  div.style.color = 'white';
-  div.style.padding = '20px';
-  div.style.fontSize = '20px';
-  div.innerText = 'ERROR: ' + e.message + ' at ' + e.lineno;
-  document.body.appendChild(div);
-});
-</script>
 </head>
 
 
@@ -1804,7 +1750,7 @@ window.addEventListener('error', function(e) {
 
 
 
-          <!-- CIENCIA: z-index 2 (queda DETRÁS de la modelo) -->
+          <!-- CIENCIA: z-index 2 (queda DETRÃS de la modelo) -->
           <div id="mag-ciencia" style="width: 100%; text-align: center; position: relative; z-index: 2; margin-top: 10px;">
             <h1 style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 6.76rem; color: #fff; letter-spacing: -0.04em; margin: 0; line-height: 0.9; text-shadow: 2px 2px 6px rgba(0,0,0,0.8); transform: scaleY(1.1);">
               <span class="ciencia-letter" style="display: inline-block;">C</span><span class="ciencia-letter" style="display: inline-block;">I</span><span class="ciencia-letter" style="display: inline-block;">E</span><span class="ciencia-letter" style="display: inline-block;">N</span><span class="ciencia-letter" style="display: inline-block;">C</span><span class="ciencia-letter" style="display: inline-block;">I</span><span class="ciencia-letter" style="display: inline-block;">A</span>
@@ -1814,7 +1760,7 @@ window.addEventListener('error', function(e) {
           <!-- MODELO: z-index 3 (tapa el título CIENCIA) -->
           <img src="assets/img/modelo-sin-fondo.png" style="position: absolute; height: 138%; width: auto; top: 0; left: 50%; transform: translateX(-50%); z-index: 3; pointer-events: none;">
 
-          <!-- SABER MÁS: z-index 4 (encima de todo, incluso de la modelo) -->
+          <!-- SABER MÃS: z-index 4 (encima de todo, incluso de la modelo) -->
           <div id="mag-saber-mas" style="width: 100%; text-align: center; position: absolute; top: 10px; left: 0; z-index: 4;">
             <div style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.3rem; color: #fff; letter-spacing: 0.1em; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></div>
           </div>
@@ -1838,8 +1784,8 @@ window.addEventListener('error', function(e) {
               <div style="font-family: 'Inter', sans-serif; text-transform: uppercase; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); color: #fff;">
                 <div class="copy-left-line" style="display: block; font-weight: 900; font-size: 2.1rem; line-height: 0.95; letter-spacing: -0.04em;">QUITÉMONOS</div>
                 <div class="copy-left-line" style="display: block; font-weight: 900; font-size: 2.1rem; line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 12px;">LA ROPA</div>
-                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">LA CIENCIA DETRÁS DEL</div>
-                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">ESTÍMULO QUE ESTÁ</div>
+                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">LA CIENCIA DETRÃS DEL</div>
+                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">ESTÃMULO QUE ESTÃ</div>
                 <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">REDISEÑANDO LAS</div>
                 <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">RELACIONES</div>
               </div>
@@ -1855,7 +1801,7 @@ window.addEventListener('error', function(e) {
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">COMO</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CREAR</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CONEXIÓN</div>
-                <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">BIOQUÍMICA</div>
+                <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">BIOQUÃMICA</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">EN UNA</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">SOLA CENA</div>
               </div>
@@ -2080,7 +2026,7 @@ window.addEventListener('error', function(e) {
         <!-- Cartas reales extraíbles ”” heredan perspectiva 3D del volumen -->
         <div class="card-wrap card-n1 card-in-deck" data-rot="0" data-z-depth="40" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%;">
-            <div class="card-question">TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÁL ES EL MENSAJE?</div>
+            <div class="card-question">TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÃL ES EL MENSAJE?</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
           </div>
           <div class="card-face card-back" style="position: absolute; top:0; left:0; width:100%; height:100%; transform: rotateX(180deg); background: #0d0d0d; background-image: none; display: none; flex-direction: column; justify-content: center; align-items: center; box-shadow: inset 0 0 0 1.5px #0d0d0d;">
@@ -2125,7 +2071,7 @@ window.addEventListener('error', function(e) {
         </div>
         <div class="card-wrap card-n4 card-in-deck" data-rot="0" data-z-depth="58" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%;">
-            <div class="card-question" style="font-size: clamp(0.6rem, 1vw, 0.8rem); line-height: 1.6;">DECIROS ENTRE VOSOTROS...<br><br>1 COSA QUE APRECIAS<br>1 COSA QUE CREES QUE PUEDE MEJORAR<br>1 COSA QUE HARÁS PARA ÉL O ELLA</div>
+            <div class="card-question" style="font-size: clamp(0.6rem, 1vw, 0.8rem); line-height: 1.6;">DECIROS ENTRE VOSOTROS...<br><br>1 COSA QUE APRECIAS<br>1 COSA QUE CREES QUE PUEDE MEJORAR<br>1 COSA QUE HARÃS PARA ÉL O ELLA</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
           </div>
           <div class="card-face card-back" style="position: absolute; top:0; left:0; width:100%; height:100%; transform: rotateX(180deg); background: #0d0d0d; background-image: none; display: none; flex-direction: column; justify-content: center; align-items: center; box-shadow: inset 0 0 0 1.5px #0d0d0d;">
@@ -2137,7 +2083,7 @@ window.addEventListener('error', function(e) {
 
 
         <div class="face-left">
-          <span>Ábreme para abrirte</span>
+          <span>Ãbreme para abrirte</span>
           <div class="dust-flap left">
             <div class="dust-front"></div>
             <div class="dust-back"></div>
@@ -2202,8 +2148,8 @@ window.addEventListener('error', function(e) {
   <div id="headline">
     <h1>
       <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">EXPERIMENTA LA CENA</span></span>
-      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">MÁS TRANSFORMADORA</span></span>
-      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">QUE HAS TENIDO JAMÁS</span></span>
+      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">MÃS TRANSFORMADORA</span></span>
+      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">QUE HAS TENIDO JAMÃS</span></span>
     </h1>
     <hr class="headline-divider">
     <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="headline-sub oh-inner" style="display:block; margin:0;">En tu restaurante favorito, o en casa</p></span>
@@ -3182,7 +3128,7 @@ window.addEventListener('error', function(e) {
       const card1Question = document.querySelector('.card-n1 .card-question');
       if (card1Question) {
         let nameToUse = val.trim().toUpperCase() || 'ANNA';
-        let newText = `${nameToUse}, TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÁL ES EL MENSAJE?`;
+        let newText = `${nameToUse}, TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÃL ES EL MENSAJE?`;
         if (card1Question.textContent !== newText) {
           card1Question.textContent = newText;
         }
@@ -3553,7 +3499,7 @@ window.addEventListener('error', function(e) {
         // Hacer el contenedor seleccionable solo cuando está activo
         scrollTl.set(stepTextData.wrapper, { pointerEvents: 'auto' }, t + textDelay);
 
-        // Slide up LÍNEAS INDIVIDUALES (empieza después del fade out del anterior)
+        // Slide up LÃNEAS INDIVIDUALES (empieza después del fade out del anterior)
         scrollTl.to(stepTextData.lines, {
           y: '0%',
           opacity: 1,
@@ -3736,8 +3682,8 @@ window.addEventListener('error', function(e) {
     }
 
     // â”€â”€ Drivers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // Reducido maxProg para que el scroll termine justo al detonar el flash (localP = 30.0 -> prog = 51.1)
-    const maxProg = 51.1; 
+    // Reducido maxProg para que el scroll termine justo al completar la nueva sección
+    const maxProg = 54.0;  // Extendido para 6 slides del carousel (localP hasta 18.4)  // TRANS_EXIT x2 (1.20) + TRANS_ENTRY (0.60) + estatico (0.475) ×4 steps
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
     // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
     // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
@@ -5246,13 +5192,6 @@ window.addEventListener('error', function(e) {
           transP = Math.min(1, mapRange(prog, 9.62, 10.62, 0, 1)); // scroll-driven hasta el flash
         }
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
-        
-        // Devolver la mesa al centro si estamos pasando el pico del flash final (localP > 29.5)
-        let _currentLocalP = prog - 21.1;
-        if (_currentLocalP > 29.5) {
-            boardY = 0;
-        }
-        
         gsap.set(scBoard, { y: boardY + 'vh' });
         
         
@@ -5333,7 +5272,7 @@ window.addEventListener('error', function(e) {
           heroCta.style.pointerEvents = ctaOp > 0 ? 'auto' : 'none';
         }
 
-        // EFECTO FLASH DE CÁMARA (blanco puro en pantalla completa)
+        // EFECTO FLASH DE CÃMARA (blanco puro en pantalla completa)
         const cameraFlash = document.getElementById('camera-flash');
         if (cameraFlash) {
            if (transP < 0.80) {
@@ -5551,7 +5490,7 @@ window.addEventListener('error', function(e) {
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. CÍRCULO Nº76 ”” shrink + fade (sync 0.112-0.612 = prog 14.73)
+            // 7. CÃRCULO Nº76 ”” shrink + fade (sync 0.112-0.612 = prog 14.73)
             { const p = Math.min(Math.max(mapRange(exitP, 0.112, 0.612, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
               document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
@@ -5567,7 +5506,7 @@ window.addEventListener('error', function(e) {
                 el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
               }); }
 
-            // 9. TÍTULO INFERIOR ”” sync 0.05-0.55
+            // 9. TÃTULO INFERIOR ”” sync 0.05-0.55
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
@@ -5709,7 +5648,7 @@ window.addEventListener('error', function(e) {
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. CÍRCULO Nº76 ”” shrink + fade (sync 0.112-0.612 = prog 14.73)
+            // 7. CÃRCULO Nº76 ”” shrink + fade (sync 0.112-0.612 = prog 14.73)
             { const p = Math.min(Math.max(mapRange(exitP, 0.112, 0.612, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
               document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
@@ -5725,7 +5664,7 @@ window.addEventListener('error', function(e) {
                 el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
               }); }
 
-            // 9. TÍTULO INFERIOR ”” sync 0.05-0.55
+            // 9. TÃTULO INFERIOR ”” sync 0.05-0.55
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
@@ -5754,27 +5693,10 @@ window.addEventListener('error', function(e) {
 
       } else {
 
-        // --- FORZAR LIMPIEZA DE LOS ELEMENTOS FINALES AL RESETEAR ---
-        var _isCont = document.getElementById('img-strip-container'); if (_isCont) _isCont.style.opacity = '0';
-        var _cfEnd = document.getElementById('camera-flash'); if (_cfEnd) _cfEnd.style.opacity = '0';
-        var _oltL = document.getElementById('olt-logo-img-big'); if (_oltL) _oltL.style.transform = 'translateY(100vh)';
-        var _oltT = document.getElementById('olt-final-text'); if (_oltT) { _oltT.style.transform = 'translate(-50%, 100vh)'; _oltT.style.opacity = '0'; }
-        var _p1 = document.getElementById('olt-phase-1'); if (_p1) _p1.style.opacity = '0';
-        var _p2 = document.getElementById('olt-phase-2'); if (_p2) _p2.style.opacity = '0';
-        var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translate(-50%, 100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
-        var _oltPhaseDyn = document.getElementById('olt-phase-dynamic'); if (_oltPhaseDyn) _oltPhaseDyn.style.opacity = '0';
-        var _eR1 = document.getElementById('end-review-panel-1'); if (_eR1) _eR1.style.opacity = '0';
-        var _eR2 = document.getElementById('end-review-panel-2'); if (_eR2) _eR2.style.opacity = '0';
-        var _eR3 = document.getElementById('end-review-panel-3'); if (_eR3) _eR3.style.opacity = '0';
-        var _eR4 = document.getElementById('end-review-panel-4'); if (_eR4) _eR4.style.opacity = '0';
-        var _scrollInd = document.querySelector('.scroll-indicator'); if (_scrollInd) _scrollInd.style.opacity = '1';
-        
         if (magazineScene) {
           magazineScene.style.display = 'none';
           magazineScene.style.opacity = 0;
         }
-        var _cF = document.getElementById('camera-flash');
-        if (_cF) _cF.style.opacity = '0';
         if (heroCta) {
           heroCta.style.opacity = '';
           heroCta.style.pointerEvents = '';
@@ -6390,68 +6312,6 @@ window.addEventListener('error', function(e) {
       
       if (webglCanvas) { webglCanvas.style.opacity = op3D; webglCanvas.style.pointerEvents = op3D > 0 ? 'auto' : 'none'; }
       if (cssContainer) { cssContainer.style.opacity = op3D; cssContainer.style.pointerEvents = op3D > 0 ? 'auto' : 'none'; }
-
-      // --- FINAL POLAROID FALL LOGIC ---
-      let polCont = document.getElementById('polaroid-falling-container');
-      if (polCont && prog > 54.0) {
-          let polProg = Math.max(0, Math.min(1, (prog - 54.0) / 7.0));
-              // Fade out UI at the very end to reveal 3D canvas (and prevent CTA overlap)
-              if (prog > 30.0) {
-                  ['nav-logo', 'nav-menu', 'cta-top-container', 'cta-bottom-container', 'headline', 'subheadline'].forEach(id => {
-                      const el = document.getElementById(id);
-                      if (el) {
-                          el.style.opacity = 1 - polProg;
-                          el.style.pointerEvents = polProg > 0 ? 'none' : '';
-                      }
-                  });
-              }
- // 0 to 1 over 7 prog units
-          
-          if (polProg > 0) {
-              polCont.style.opacity = 1;
-              
-              // Fade out ALL HTML layer elements to reveal 3D canvas
-              
-              
-              // Falling animation
-              let yPos = polProg * 150; // From 0vh to 150vh (relative to -100vh top, ends at 50vh)
-              let swayX = Math.sin(polProg * Math.PI * 5) * 40; // Sway left/right 40px
-              let rotZ = Math.sin(polProg * Math.PI * 4) * 15; // Rotate Z +/- 15deg
-              let rotX = 30 * (1 - polProg); // Flattens out as it lands
-              let rotY = Math.sin(polProg * Math.PI * 3) * 10;
-              
-              
-              // Camera flies back to top
-              if (typeof CAM_BASE !== 'undefined' && typeof CAM_LOOK !== 'undefined') {
-                  CAM_BASE.x += (-0.3 - CAM_BASE.x) * polProg;
-                  CAM_BASE.y += (12 - CAM_BASE.y) * polProg;
-                  CAM_BASE.z += (3 - CAM_BASE.z) * polProg;
-                  
-                  CAM_LOOK.x += (0 - CAM_LOOK.x) * polProg;
-                  CAM_LOOK.y += (0 - CAM_LOOK.y) * polProg;
-                  CAM_LOOK.z += (0 - CAM_LOOK.z) * polProg;
-              }
-              
-              // Shadow becomes smaller and sharper as it lands
-              let shadowY = 50 * (1 - polProg);
-              let shadowBlur = 80 * (1 - polProg);
-              let shadowOp = 0.8 * (1 - polProg) + 0.2; // Doesn't go fully black
-              
-              polCont.style.transform = `translate3d(${swayX}px, ${yPos}vh, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
-              polCont.style.zIndex = '999999';
-              polCont.style.display = 'block';
-              polCont.style.boxShadow = `0px ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowOp})`;
-          } else {
-              polCont.style.opacity = 0;
-              // Restore pointer-events
-              
-          }
-      } else if (polCont) {
-          polCont.style.opacity = 0;
-          
-      }
-      // ---------------------------------
-
       // IMPORTANTE: cardTable (position:fixed inset:0 z-index:10005) NUNCA debe tener pointer-events:auto
       // porque absorbería TODOS los clicks de la pantalla, bloqueando las cartas peeking dentro de mainDeck.
       // Las cartas individuales .card-on-table tienen pointer-events:auto propios ”” eso es suficiente.
@@ -6489,23 +6349,6 @@ window.addEventListener('error', function(e) {
       });
     };
 
-    window.instantResetToZero = function() {
-      targetProg = 0;
-      prog = 0;
-      window.isDraggingThumb = false;
-      window._carouselEntryStart = null;
-      const customScrollThumb = document.getElementById('custom-scroll-thumb');
-      if (customScrollThumb) {
-          customScrollThumb.style.transform = 'translateY(0px)';
-      }
-      sessionStorage.setItem('dev_prog', 0);
-      scrollTl.progress(0);
-      updateFaceSwap();
-      updateGlobalScenes();
-      const debugProg = document.getElementById('debug-scroll-prog');
-      if (debugProg) debugProg.innerText = prog.toFixed(2);
-    };
-
     function mapRange(p, inMin, inMax, outMin, outMax) {
       if (p <= inMin) return outMin;
       if (p >= inMax) return outMax;
@@ -6537,7 +6380,7 @@ window.addEventListener('error', function(e) {
     function smoothScrollLoop() {
         const lerpF = 0.40;
         
-        // SALTO CUÁNTICO DE TIMELINE
+        // SALTO CUÃNTICO DE TIMELINE
         if (!window.isAutoScrolling) {
             if (targetProg > 2.20 && targetProg < 9.62) {
                 if (prog <= 2.20) {
@@ -6858,11 +6701,6 @@ window.addEventListener('error', function(e) {
                       scaleMod = 0.00001; // oculto en carrusel y magazine
                   }
                   
-                  // REAPARECER AL FINAL DEL SCROLL
-                  if (window._finalPolProg > 0) {
-                      scaleMod = Math.max(0.00001, window._finalPolProg);
-                  }
-                  
                   globalGlbCard.visible = scaleMod > 0.01;
 
                   // Rotación: De giro de caja a plana contra la revista (ligeramente torcida Z=15deg)
@@ -6882,16 +6720,6 @@ window.addEventListener('error', function(e) {
                   let startScale = lc.scale * scBoardScale;
                   let endScale = startScale * 0.45;
                   globalGlbCard.scale.setScalar((startScale + tP * (endScale - startScale)) * scaleMod);
-                  
-                  // AL FINAL DEL SCROLL: forzar posición al centro de la mesa
-                  if (window._finalPolProg > 0) {
-                      let fp = window._finalPolProg;
-                      // Transición desde la esquina superior derecha (oculta) hacia el centro de la mesa
-                      globalGlbCard.position.set((1-fp) * 20, 0, (1-fp) * -20);
-                      globalGlbCard.rotation.set(0, 0, (12 + fp * 15) * Math.PI / 180);
-                      // Escala base normal de la caja
-                      globalGlbCard.scale.setScalar(lc.scale * scaleMod * 0.9);
-                  }
               }
 
           }   // â”€â”€ fin else scatter â”€â”€
@@ -7183,8 +7011,8 @@ window.addEventListener('error', function(e) {
 
     for (let y = 0; y < S; y++) {
       for (let x = 0; x < S; x++) {
-        const tx = Math.floor(x / T);   // Índice de hilo X (urdimbre)
-        const ty = Math.floor(y / T);   // Índice de hilo Y (trama)
+        const tx = Math.floor(x / T);   // Ãndice de hilo X (urdimbre)
+        const ty = Math.floor(y / T);   // Ãndice de hilo Y (trama)
         const px = (x % T) / T;         // Posición dentro del hilo X (0..1)
         const py = (y % T) / T;         // Posición dentro del hilo Y (0..1)
 
@@ -7333,7 +7161,7 @@ window.addEventListener('error', function(e) {
 
   // â”€â”€ CONSTRUCCIÓN ESCENA BASE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Mesa de madera (base)
-  const tableTop = new THREE.Mesh(new THREE.PlaneGeometry(300,300), woodMat);
+  const tableTop = new THREE.Mesh(new THREE.PlaneGeometry(60,60), woodMat);
   tableTop.rotation.x = -Math.PI/2;
   tableTop.receiveShadow = true;
   scene.add(tableTop);
@@ -8460,24 +8288,12 @@ window.addEventListener('error', function(e) {
 
     const PX = 0.3, PY = 0.125;
     // Cámara siempre posicionada en CAM_BASE + offset de parallax (cuando parallaxStr=0 => sin offset)
-    let pProg = window._finalPolProg || 0;
-    
-    // Interpolate camera base based on polProg to return to original angled view
-    // Usamos un ángulo mucho más bajo (y=4, z=8) para que se vea la perspectiva 3D y el horizonte de la mesa
-    let currentCamX = CAM_BASE.x + (-2 - CAM_BASE.x) * pProg;
-    let currentCamY = CAM_BASE.y + (4 - CAM_BASE.y) * pProg;
-    let currentCamZ = CAM_BASE.z + (8 - CAM_BASE.z) * pProg;
-    
-    let currentLookX = CAM_LOOK.x + (0 - CAM_LOOK.x) * pProg;
-    let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
-    let currentLookZ = CAM_LOOK.z + (0 - CAM_LOOK.z) * pProg;
-
-    camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
-    camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
-    camera.position.z = currentCamZ;
-    camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
-                  currentLookY - mouseNY * 0.05 * parallaxStr,
-                  currentLookZ);
+    camera.position.x = CAM_BASE.x + mouseNX * PX * parallaxStr;
+    camera.position.y = CAM_BASE.y - mouseNY * PY * parallaxStr;
+    camera.position.z = CAM_BASE.z;
+    camera.lookAt(CAM_LOOK.x + mouseNX * 0.1 * parallaxStr,
+                  CAM_LOOK.y - mouseNY * 0.05 * parallaxStr,
+                  CAM_LOOK.z);
     // cardCam2 siempre en el origen ”” carta congelada en viewport
 
     renderer.render(scene, camera);
@@ -8553,7 +8369,7 @@ window.addEventListener('error', function(e) {
         radial-gradient(ellipse 35% 30% at 38% 55%, rgba(80,0,130,0.45) 0%, transparent 52%),
         radial-gradient(ellipse 28% 22% at 90% 75%, rgba(110,0,95,0.38) 0%, transparent 52%),
         linear-gradient(170deg, rgba(12,0,30,1) 0%, rgba(35,0,62,1) 40%, rgba(22,0,45,1) 70%, rgba(14,0,32,1) 100%);"></div>
-    <!-- TÍTULO "NO ES MAGIA, ES OXITOCINA"
+    <!-- TÃTULO "NO ES MAGIA, ES OXITOCINA"
          ”“ Canvas de ignición neuronal: píxeles que se encienden como neuronas
          ”“ ANTES de la silueta en el DOM â†’ la silueta pinta encima (texto queda detrás) -->
     <div id="sciencia-title" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10;">
@@ -8578,7 +8394,7 @@ window.addEventListener('error', function(e) {
       margin:0;
       pointer-events:none;
       width:100%;
-    ">NO ES MAGIA, ES QUÍMICA</h2>
+    ">NO ES MAGIA, ES QUÃMICA</h2>
 
     <div id="thermal-model-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
       <img id="thermal-silhouette" src="assets/img/modelo-sin-fondo.png"
@@ -8632,7 +8448,7 @@ window.addEventListener('error', function(e) {
       <div style="position:relative; min-height:108px;">
         <p id="global-brain-label" style="position:absolute; top:0; left:0; right:0; margin:0; font-family:'Inter',sans-serif; font-size:.6rem; font-weight:600; letter-spacing:.17em; text-transform:uppercase; color:#fff; text-align:center; z-index:10; opacity:0; pointer-events:none;"></p>
         <div class="nsl" id="nsl-0" style="position:absolute;inset:0;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;text-align:center;">
-          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Área Tegmental Ventral</p>
+          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Ãrea Tegmental Ventral</p>
           <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">La chispa</h3>
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Las primeras cartas activan tu sistema de atención y recompensa con estímulos nuevos e inesperados. Empiezas a generar dopamina de alta calidad.</p>
         </div>
@@ -8781,11 +8597,11 @@ window.addEventListener('error', function(e) {
 
   // â”€â”€ ZONAS: cx/cy posición, rx/ry radio, heat base, phase y speed para animación â”€â”€
   var ZONES = [
-    // 1. VTA ”” Área tegmental ventral (más caliente, pulso más rápido)
+    // 1. VTA ”” Ãrea tegmental ventral (más caliente, pulso más rápido)
     { id:'VTA',  cx:0.52, cy:0.72, rx:0.08, ry:0.06, heat:1.00, phase:0.0,  speed:0.9  },
     // 2. ACC ”” Corteza cingulada anterior
     { id:'ACC',  cx:0.38, cy:0.30, rx:0.18, ry:0.09, heat:0.97, phase:1.1,  speed:0.7  },
-    // 3. Ínsula posterior
+    // 3. Ãnsula posterior
     { id:'INS',  cx:0.62, cy:0.45, rx:0.13, ry:0.10, heat:0.94, phase:2.3,  speed:0.75 },
     // 4. Núcleo caudado
     { id:'CAU',  cx:0.45, cy:0.40, rx:0.16, ry:0.10, heat:0.90, phase:3.5,  speed:0.65 }
@@ -9315,7 +9131,7 @@ setInterval(function() {
 (function() {
   var h2 = document.getElementById('oxitocina-title');
   if (!h2) return;
-  var TEXT = 'NO ES MAGIA\nES QUÍMICA';
+  var TEXT = 'NO ES MAGIA\nES QUÃMICA';
   var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
   var PROG_START = 14.85, PROG_END = 15.70;
   var spans = [];
@@ -9467,7 +9283,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
           <div class="review-quote" id="end-rev1-quote" style="text-align: left;">"Ya habíamos tenido 6 citas así que decidimos ponernos profundos con preguntas como esta. Creo que <span class="review-highlight">nos conocimos más con aquella cita que con todas las otras que hemos tenido juntas</span>"</div>
           <div class="review-author" style="text-align: left;">
             FRANCISCO ARBESÚ<br>
@@ -9494,7 +9310,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
           <div class="review-quote" id="end-rev2-quote" style="text-align: left;">"¡<span class="review-highlight">Flipé</span> al ver cartas hechas para nuestro aniversario! Nos hicieron tener <span class="review-highlight">conversaciones que nunca antes habíamos tenido en 9 años de relación</span>. Y sin duda ahora estamos más preparados para durar muchos años más. Ya <span class="review-highlight">he obligado a mis amigas a probarlo</span>."</div>
           <div class="review-author" style="text-align: left;">
             LAURA GIL<br>
@@ -9521,7 +9337,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
           <div class="review-quote" id="end-rev3-quote" style="text-align: left;">"Es brutal cómo una simple pregunta puede <span class="review-highlight">cambiar completamente el resultado de una cita</span>. Si tengo que tener más citas, nunca más iré sin tener preguntas profundas preparadas."</div>
           <div class="review-author" style="text-align: left;">
             ELSA NARANJO<br>
@@ -9548,7 +9364,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span><span class="star">â˜…</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
           <div class="review-quote" id="end-rev4-quote" style="text-align: left;">"Llevamos 12 años juntos, estamos casados, tenemos 1 hija y ahora mismo no nos podemos conocer más. Lo que sí que podemos hacer es seguir creciendo juntos y ser cada vez mejores como pareja, y One Last Time nos ayuda a esto cada vez que lo usamos. <span class="review-highlight">Si creéis que ya no podéis ir a mejor, probadlo y cambiaréis de opinión</span>"</div>
           <div class="review-author" style="text-align: left;">
             IRIA MUDARRA<br>
@@ -9568,16 +9384,8 @@ setInterval(function() {
     </div>
     </div>
 
-<!-- PHASE 3 (Final Image) CTA -->
-<a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:fixed; bottom:4.5rem; left:50%; transform:translate(-50%, 100vh); z-index:10000002; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
-  <div class="mini-marquee-container" style="animation-duration: 50s;">
-    <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
-    <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
-  </div>
-</a>
-
 <!-- â”€â”€ IMG STRIP CAROUSEL (after testimonios) â”€â”€ -->
-<div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;background:#141414;">
+<div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;">
   <div id="img-strip-wrapper" style="position:absolute;top:0;left:0;width:100%;height:100%;will-change:transform;">
     <div id="img-strip-track" style="display:flex;flex-direction:row;position:absolute;top:0;left:0;height:100%;gap:0.5cm;will-change:transform;">
       <style>
@@ -9669,7 +9477,7 @@ setInterval(function() {
             <div class="pill">Impulsivxs</div>
             <div class="pill">Dramáticxs</div>
             <div class="pill">Despreocupadxs</div>
-            <div class="pill">Íntimxs</div>
+            <div class="pill">Ãntimxs</div>
             <div class="pill">Diferentes</div>
             <div class="pill">Creativxs</div>
             <div class="pill">Transparentes</div>
@@ -9765,7 +9573,7 @@ setInterval(function() {
   <div id="pricing-clip-container" style="flex:1; width:100vw; position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; margin: 0;">
   
   <!-- DYNAMIC PHASE 1 & 2 -->
-  <div id="olt-phase-dynamic" style="pointer-events: none; width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:calc(42% - 0.5cm); left:50%; transform:translate(-50%, -50%); z-index: 10;">
+  <div id="olt-phase-dynamic" style="width:80vw; max-width:1000px; color:rgba(255,255,255,0.85); font-family:'Inter', sans-serif; font-size:clamp(1.1rem, 2vw, 1.6rem); font-weight:700; line-height:1.35; letter-spacing:-0.02em; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 10;">
     
     <!-- P1 Question -->
     <div id="p1-question" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -100%); width: 100%; opacity: 0; will-change: opacity;">
@@ -9791,7 +9599,23 @@ setInterval(function() {
   </div>
 
     <!-- PHASE 3 (Final Image) -->
-  
+  <div id="olt-final-text" style="width:90vw; max-width:800px; position:absolute; top:50%; left:50%; transform:translate(-50%, calc(-50% + 2cm)); opacity:0; will-change:opacity, filter; display:flex; justify-content:center; align-items:center; z-index: 1;">
+      <img src="assets/img/polaroid.png" alt="Polaroid" style="width:100%; height:auto; display:block; filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4));">
+      
+      <!-- Handwritten Text Overlay -->
+      <div style="position: absolute; left: 52%; top: 12%; width: 42%; transform: rotate(5.5deg); font-family: 'Caveat', cursive; color: #151515; font-size: clamp(0.9rem, 1.8vw, 1.6rem); line-height: 1.15; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 75%; padding: 0 10px; box-sizing: border-box;">
+          <p style="margin-bottom: 5%; font-weight: 700; font-size: 1.15em;">"Si vives cada d&iacute;a como si fuera el &uacute;ltimo, alg&uacute;n d&iacute;a estar&aacute;s en lo cierto"</p>
+          <p style="margin-bottom: 5%;">Y aunque esperamos que este d&iacute;a quede lejos, no hay duda de que nunca volveremos a vivir cada preciso instante de nuevo.</p>
+          <p style="margin-bottom: 0;">As&iacute; que amemos a las personas que nos importan ahora, ya que no sabemos cuando tendremos la &uacute;ltima oportunidad para hacerlo.</p>
+      </div>
+  </div>
+</div>
+  <a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:relative; z-index:10; margin-top:0; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
+    <div class="mini-marquee-container" style="animation-duration: 50s;">
+      <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
+      <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
+    </div>
+  </a>
 </div>
 
 <script>
@@ -9858,20 +9682,10 @@ window.addEventListener('click', function(e) {
     if (down) initMarquee(down, 'down');
   });
 })();
-</script>
-<div id="polaroid-falling-container">
-  <img class="polaroid-photo" src="assets/img/polaroid_placeholder.png" alt="Polaroid">
-  <div class="polaroid-text">La próxima puede ser la vuestra</div>
-</div>
-
-</body>
-
-<!-- Flash a pantalla completa para la transición final -->
-<div id="final-camera-flash" style="position:fixed; inset:0; background:#ffffff; opacity:0; pointer-events:none; z-index:10000005; mix-blend-mode:screen;"></div>
-
+</script></body>
 <script>
 document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-container .review-left-quote').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
-document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
+document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
 </script>
 <script>
 // â”€â”€ CONTROLADOR SECCIÓN NEUROCIENCIA ”” wipe Oryzo scroll-driven â”€â”€
@@ -10168,7 +9982,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
         var BRAIN_LABELS = [
           "ÃREA TEGMENTAL VENTRAL",
           "CORTEZA CINGULADA",
-          "HIPOTÁLAMO",
+          "HIPOTÃLAMO",
           "NÚCLEO CAUDADO"
         ];
         var cIdx = Math.max(0, Math.min(3, Math.floor((p - STEP_START) / STEP_SIZE)));
@@ -10319,7 +10133,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
          }
 
          // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 21.5 ---
-         let deckP = p - 21.1;
+         let localP = p - 21.1;
          // Cache card refs: una vez movidas a endCardTable, querySelector devuelve null ”” necesitamos la referencia persistente
          if (!window._ecCache || window._ecCache._deck !== deckClone) {
            window._ecCache = {
@@ -10348,12 +10162,12 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
        window._endCardTable = ect;
      }
      var endCardTable = window._endCardTable;
-         let ec1_peek = mapRange(deckP, 2.5, 3.0, 0, 1);
-         let ec2_peek = mapRange(deckP, 4.22, 4.72, 0, 1);
-         let ec3_peek = mapRange(deckP, 6.02, 6.52, 0, 1);
-         let ec4_peek = mapRange(deckP, 7.82, 8.32, 0, 1);
+         let ec1_peek = mapRange(localP, 2.5, 3.0, 0, 1);
+         let ec2_peek = mapRange(localP, 4.22, 4.72, 0, 1);
+         let ec3_peek = mapRange(localP, 6.02, 6.52, 0, 1);
+         let ec4_peek = mapRange(localP, 7.82, 8.32, 0, 1);
 
-         if (deckP >= 2.2) {
+         if (localP >= 2.2) {
            // CARTA 1
            if (ec1) {
              if (ec1_peek === 0) {
@@ -10368,7 +10182,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                  ec1.style.clipPath='inset(0 0 0 10px round 16px)';
                }
                const popY1 = -60 * eOpen; ec1.style.transform='translate(-50%, calc(-50% + '+popY1+'px)) translateZ(40px) rotate(-90deg) scale(0.81)';
-             } else if (ec1_peek > 0 && deckP <= 3.0) {
+             } else if (ec1_peek > 0 && localP <= 3.0) {
                ec1.style.opacity='1';ec1.dataset.endState='extracting';
                const ei1b=deckClone.querySelector('.interior-cards');
                if(ei1b&&ec1.parentNode!==ei1b){ei1b.insertBefore(ec1,ei1b.firstChild);ec1.style.position='';ec1.style.left='';ec1.style.top='';ec1.style.margin='';}
@@ -10388,67 +10202,67 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                const sX1=parseFloat(ec1.dataset.boxLeftEnd)||(window.innerWidth/2+132.5),sY1=parseFloat(ec1.dataset.boxTopEnd)||(window.innerHeight/2-114.75);
                const iD1=window.innerWidth>768,zS1=iD1?1.1:0.97,zX1=window.innerWidth/2,zY1=window.innerHeight/2-(iD1?100:150);
                let mi1=0,mo1=0;
-               if(deckP<=3.4)mi1=mapRange(deckP,3.0,3.4,0,0.8);
-               else if(deckP<=3.8)mi1=mapRange(deckP,3.4,3.8,0.8,1.0);
-               else if(deckP<=4.3){mi1=1.0;mo1=0;}
-               else{mi1=1.0;mo1=mapRange(deckP,4.3,4.9,0,1);}
+               if(localP<=3.4)mi1=mapRange(localP,3.0,3.4,0,0.8);
+               else if(localP<=3.8)mi1=mapRange(localP,3.4,3.8,0.8,1.0);
+               else if(localP<=4.3){mi1=1.0;mo1=0;}
+               else{mi1=1.0;mo1=mapRange(localP,4.3,4.9,0,1);}
                let rp1=0,hp1=0;
-               if(deckP>3.8&&deckP<=4.3)hp1=mapRange(deckP,3.8,4.3,0,1);else if(deckP>4.3)hp1=1.0;
-               if(deckP<=3.3)rp1=mapRange(deckP,3.0,3.3,0,0.85);
-               else if(deckP<=3.5)rp1=mapRange(deckP,3.3,3.5,0.85,0.95);
-               else if(deckP<=3.8)rp1=mapRange(deckP,3.5,3.8,0.95,1.0);
-               else if(deckP<=4.9)rp1=mapRange(deckP,3.8,4.9,1.0,0.95);
+               if(localP>3.8&&localP<=4.3)hp1=mapRange(localP,3.8,4.3,0,1);else if(localP>4.3)hp1=1.0;
+               if(localP<=3.3)rp1=mapRange(localP,3.0,3.3,0,0.85);
+               else if(localP<=3.5)rp1=mapRange(localP,3.3,3.5,0.85,0.95);
+               else if(localP<=3.8)rp1=mapRange(localP,3.5,3.8,0.95,1.0);
+               else if(localP<=4.9)rp1=mapRange(localP,3.8,4.9,1.0,0.95);
                else rp1=0.95;
-               let rz1=-90+(90*rp1),ry1=335+(25*rp1),fp1=mapRange(deckP,3.5,4.1,0,1),rx1=fp1*180;
+               let rz1=-90+(90*rp1),ry1=335+(25*rp1),fp1=mapRange(localP,3.5,4.1,0,1),rx1=fp1*180;
                let cx1,cy1,cs1,sha1;
                if(mo1===0){cx1=sX1+(zX1-sX1)*mi1;cy1=sY1+(zY1-sY1)*mi1+(60*hp1);cs1=0.9+(zS1-0.9)*mi1;sha1=0.16+(0.4-0.16)*mi1;}
                else{cx1=zX1-(window.innerWidth*1.5)*mo1;cy1=zY1+60+(window.innerHeight*1.5)*mo1;cs1=zS1;sha1=0.4-(0.4-0.16)*mo1;rx1+=120*mo1;ry1+=90*mo1;rz1-=60*mo1;}
-               if(deckP>3.0){ec1.style.transition='none';ec1.style.left=cx1+'px';ec1.style.top=cy1+'px';ec1.style.transform='translate(-50%,-50%) rotateY('+ry1+'deg) rotateX('+rx1+'deg) rotateZ('+rz1+'deg) scale('+cs1+')';ec1.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha1*0.75)+'),0 40px 80px rgba(0,0,0,'+sha1+')';const ef1=ec1.querySelector('.card-front'),eb1=ec1.querySelector('.card-back');if(ef1&&eb1){if(rx1>90){ef1.style.display='none';eb1.style.display='flex';}else{ef1.style.display='flex';eb1.style.display='none';}}ec1.style.zIndex='10020';}
+               if(localP>3.0){ec1.style.transition='none';ec1.style.left=cx1+'px';ec1.style.top=cy1+'px';ec1.style.transform='translate(-50%,-50%) rotateY('+ry1+'deg) rotateX('+rx1+'deg) rotateZ('+rz1+'deg) scale('+cs1+')';ec1.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha1*0.75)+'),0 40px 80px rgba(0,0,0,'+sha1+')';const ef1=ec1.querySelector('.card-front'),eb1=ec1.querySelector('.card-back');if(ef1&&eb1){if(rx1>90){ef1.style.display='none';eb1.style.display='flex';}else{ef1.style.display='flex';eb1.style.display='none';}}ec1.style.zIndex='10020';}
              }
            }
             // CARTA 2
            const efc2=deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
            if(ec2){
              if(ec2_peek===0){if(efc2)efc2.style.opacity='0';if(ec2.dataset.endState!=='deck-rest'){ec2.dataset.endState='deck-rest';ec2.style.opacity='1';const ei2=deckClone.querySelector('.interior-cards');if(ei2&&ec2.parentNode!==ei2)ei2.insertBefore(ec2,ei2.firstChild);ec2.style.position='';ec2.style.left='';ec2.style.top='';ec2.style.margin='';ec2.classList.remove('card-on-table','card-peeking');ec2.classList.add('card-in-deck');ec2.style.transition='none';ec2.style.clipPath='inset(0 0 0 10px round 16px)';}const popY2 = -50 * eOpen; ec2.style.transform='translate(-50%, calc(-50% + '+popY2+'px)) translateZ(46px) rotate(-90deg) scale(0.81)';}
-             else if(ec2_peek>0&&deckP<=4.72){if(efc2)efc2.style.opacity='0';ec2.style.opacity='1';ec2.dataset.endState='extracting';const ei2b=deckClone.querySelector('.interior-cards');if(ei2b&&ec2.parentNode!==ei2b){ei2b.insertBefore(ec2,ei2b.firstChild);ec2.style.position='';ec2.style.left='';ec2.style.top='';ec2.style.margin='';}ec2.classList.add('card-peeking');ec2.classList.remove('card-on-table','card-in-deck');ec2.style.transition='none';const ey2=-35-295*ec2_peek;ec2.style.transform='translate(-50%, calc(-50% + '+ey2+'px)) translateZ(46px) rotate(-90deg) scale(0.9)';ec2.style.clipPath=ey2>5?'inset(0 0 0 10px round 16px)':'';}
+             else if(ec2_peek>0&&localP<=4.72){if(efc2)efc2.style.opacity='0';ec2.style.opacity='1';ec2.dataset.endState='extracting';const ei2b=deckClone.querySelector('.interior-cards');if(ei2b&&ec2.parentNode!==ei2b){ei2b.insertBefore(ec2,ei2b.firstChild);ec2.style.position='';ec2.style.left='';ec2.style.top='';ec2.style.margin='';}ec2.classList.add('card-peeking');ec2.classList.remove('card-on-table','card-in-deck');ec2.style.transition='none';const ey2=-35-295*ec2_peek;ec2.style.transform='translate(-50%, calc(-50% + '+ey2+'px)) translateZ(46px) rotate(-90deg) scale(0.9)';ec2.style.clipPath=ey2>5?'inset(0 0 0 10px round 16px)':'';}
              else{if(efc2)efc2.style.opacity='0';ec2.style.opacity='1';ec2.dataset.endState='table';if(ec2.parentNode!==oryzoSec){const _dcr2=deckClone.getBoundingClientRect();ec2.dataset.boxLeftEnd=(_dcr2.left+_dcr2.width/2).toString();ec2.dataset.boxTopEnd=(_dcr2.top+_dcr2.height/2-330).toString();oryzoSec.appendChild(ec2);ec2.classList.remove('card-in-deck','card-peeking');ec2.classList.add('card-on-table');ec2.style.position='fixed';ec2.style.clipPath='';ec2.style.transition='none';}
                const sX2=parseFloat(ec2.dataset.boxLeftEnd)||(window.innerWidth/2+132.5),sY2=parseFloat(ec2.dataset.boxTopEnd)||(window.innerHeight/2-114.75);
                const iD2=window.innerWidth>768,zS2=iD2?1.1:0.97,zX2=window.innerWidth/2,zY2=window.innerHeight/2-(iD2?100:150);
-               let mi2=0,mo2=0;if(deckP<=5.12)mi2=mapRange(deckP,4.72,5.12,0,0.8);else if(deckP<=5.52)mi2=mapRange(deckP,5.12,5.52,0.8,1.0);else if(deckP<=6.02){mi2=1.0;mo2=0;}else{mi2=1.0;mo2=mapRange(deckP,6.02,6.62,0,1);}
-               let rp2=0,hp2=0;if(deckP>5.52&&deckP<=6.02)hp2=mapRange(deckP,5.52,6.02,0,1);else if(deckP>6.02)hp2=1.0;if(deckP<=5.02)rp2=mapRange(deckP,4.72,5.02,0,0.85);else if(deckP<=5.22)rp2=mapRange(deckP,5.02,5.22,0.85,0.95);else if(deckP<=5.52)rp2=mapRange(deckP,5.22,5.52,0.95,1.0);else if(deckP<=6.62)rp2=mapRange(deckP,5.52,6.62,1.0,0.95);else rp2=0.95;
-               let rz2=-90+(90*rp2),ry2=335+(25*rp2),fp2=mapRange(deckP,5.22,5.82,0,1),rx2=fp2*180;
+               let mi2=0,mo2=0;if(localP<=5.12)mi2=mapRange(localP,4.72,5.12,0,0.8);else if(localP<=5.52)mi2=mapRange(localP,5.12,5.52,0.8,1.0);else if(localP<=6.02){mi2=1.0;mo2=0;}else{mi2=1.0;mo2=mapRange(localP,6.02,6.62,0,1);}
+               let rp2=0,hp2=0;if(localP>5.52&&localP<=6.02)hp2=mapRange(localP,5.52,6.02,0,1);else if(localP>6.02)hp2=1.0;if(localP<=5.02)rp2=mapRange(localP,4.72,5.02,0,0.85);else if(localP<=5.22)rp2=mapRange(localP,5.02,5.22,0.85,0.95);else if(localP<=5.52)rp2=mapRange(localP,5.22,5.52,0.95,1.0);else if(localP<=6.62)rp2=mapRange(localP,5.52,6.62,1.0,0.95);else rp2=0.95;
+               let rz2=-90+(90*rp2),ry2=335+(25*rp2),fp2=mapRange(localP,5.22,5.82,0,1),rx2=fp2*180;
                let cx2,cy2,cs2,sha2;if(mo2===0){cx2=sX2+(zX2-sX2)*mi2;cy2=sY2+(zY2-sY2)*mi2+(60*hp2);cs2=0.9+(zS2-0.9)*mi2;sha2=0.16+(0.4-0.16)*mi2;}else{cx2=zX2+(window.innerWidth*1.5)*mo2;cy2=zY2+60+(window.innerHeight*1.5)*mo2;cs2=zS2;sha2=0.4-(0.4-0.16)*mo2;rx2+=120*mo2;ry2-=90*mo2;rz2+=60*mo2;}
-               if(deckP>4.72){ec2.style.transition='none';ec2.style.left=cx2+'px';ec2.style.top=cy2+'px';ec2.style.transform='translate(-50%,-50%) rotateY('+ry2+'deg) rotateX('+rx2+'deg) rotateZ('+rz2+'deg) scale('+cs2+')';ec2.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha2*0.75)+'),0 40px 80px rgba(0,0,0,'+sha2+')';const ef2=ec2.querySelector('.card-front'),eb2=ec2.querySelector('.card-back');if(ef2&&eb2){if(rx2>90){ef2.style.display='none';eb2.style.display='flex';}else{ef2.style.display='flex';eb2.style.display='none';}}ec2.style.zIndex='10019';}
+               if(localP>4.72){ec2.style.transition='none';ec2.style.left=cx2+'px';ec2.style.top=cy2+'px';ec2.style.transform='translate(-50%,-50%) rotateY('+ry2+'deg) rotateX('+rx2+'deg) rotateZ('+rz2+'deg) scale('+cs2+')';ec2.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha2*0.75)+'),0 40px 80px rgba(0,0,0,'+sha2+')';const ef2=ec2.querySelector('.card-front'),eb2=ec2.querySelector('.card-back');if(ef2&&eb2){if(rx2>90){ef2.style.display='none';eb2.style.display='flex';}else{ef2.style.display='flex';eb2.style.display='none';}}ec2.style.zIndex='10019';}
              }
            }
            // CARTA 3
            const efc3=deckClone.querySelector('.interior-cards .interior-card:nth-child(2)');
            if(ec3){
              if(ec3_peek===0){if(efc3)efc3.style.opacity='0';if(ec3.dataset.endState!=='deck-rest'){ec3.dataset.endState='deck-rest';ec3.style.opacity='1';const ei3=deckClone.querySelector('.interior-cards');if(ei3&&ec3.parentNode!==ei3)ei3.insertBefore(ec3,ei3.firstChild);ec3.style.position='';ec3.style.left='';ec3.style.top='';ec3.style.margin='';ec3.classList.remove('card-on-table','card-peeking');ec3.classList.add('card-in-deck');ec3.style.transition='none';const popY3 = -40 * eOpen; ec3.style.transform='translate(-50%, calc(-50% + '+popY3+'px)) translateZ(52px) rotate(-90deg) scale(0.81)';ec3.style.clipPath='inset(0 0 0 10px round 16px)';}const popY3 = -40 * eOpen; ec3.style.transform='translate(-50%, calc(-50% + '+popY3+'px)) translateZ(52px) rotate(-90deg) scale(0.81)';}
-             else if(ec3_peek>0&&deckP<=6.52){if(efc3)efc3.style.opacity='0';ec3.style.opacity='1';ec3.dataset.endState='extracting';const ei3b=deckClone.querySelector('.interior-cards');if(ei3b&&ec3.parentNode!==ei3b){ei3b.insertBefore(ec3,ei3b.firstChild);ec3.style.position='';ec3.style.left='';ec3.style.top='';ec3.style.margin='';}ec3.classList.add('card-peeking');ec3.classList.remove('card-on-table','card-in-deck');ec3.style.transition='none';const ey3=-35-295*ec3_peek;ec3.style.transform='translate(-50%, calc(-50% + '+ey3+'px)) translateZ(52px) rotate(-90deg) scale(0.9)';ec3.style.clipPath=ey3>5?'inset(0 0 0 10px round 16px)':'';}
+             else if(ec3_peek>0&&localP<=6.52){if(efc3)efc3.style.opacity='0';ec3.style.opacity='1';ec3.dataset.endState='extracting';const ei3b=deckClone.querySelector('.interior-cards');if(ei3b&&ec3.parentNode!==ei3b){ei3b.insertBefore(ec3,ei3b.firstChild);ec3.style.position='';ec3.style.left='';ec3.style.top='';ec3.style.margin='';}ec3.classList.add('card-peeking');ec3.classList.remove('card-on-table','card-in-deck');ec3.style.transition='none';const ey3=-35-295*ec3_peek;ec3.style.transform='translate(-50%, calc(-50% + '+ey3+'px)) translateZ(52px) rotate(-90deg) scale(0.9)';ec3.style.clipPath=ey3>5?'inset(0 0 0 10px round 16px)':'';}
              else{if(efc3)efc3.style.opacity='0';ec3.style.opacity='1';ec3.dataset.endState='table';if(ec3.parentNode!==oryzoSec){const _dcr3=deckClone.getBoundingClientRect();ec3.dataset.boxLeftEnd=(_dcr3.left+_dcr3.width/2).toString();ec3.dataset.boxTopEnd=(_dcr3.top+_dcr3.height/2-330).toString();oryzoSec.appendChild(ec3);ec3.classList.remove('card-in-deck','card-peeking');ec3.classList.add('card-on-table');ec3.style.position='fixed';ec3.style.clipPath='';ec3.style.transition='none';}
                const sX3=parseFloat(ec3.dataset.boxLeftEnd)||(window.innerWidth/2+132.5),sY3=parseFloat(ec3.dataset.boxTopEnd)||(window.innerHeight/2-114.75);
                const iD3=window.innerWidth>768,zS3=iD3?1.1:0.97,zX3=window.innerWidth/2,zY3=window.innerHeight/2-(iD3?100:150);
-               let mi3=0,mo3=0;if(deckP<=6.92)mi3=mapRange(deckP,6.52,6.92,0,0.8);else if(deckP<=7.32)mi3=mapRange(deckP,6.92,7.32,0.8,1.0);else if(deckP<=7.82){mi3=1.0;mo3=0;}else{mi3=1.0;mo3=mapRange(deckP,7.82,8.42,0,1);}
-               let rp3=0,hp3=0;if(deckP>7.32&&deckP<=7.82)hp3=mapRange(deckP,7.32,7.82,0,1);else if(deckP>7.82)hp3=1.0;if(deckP<=6.82)rp3=mapRange(deckP,6.52,6.82,0,0.85);else if(deckP<=7.02)rp3=mapRange(deckP,6.82,7.02,0.85,0.95);else if(deckP<=7.32)rp3=mapRange(deckP,7.02,7.32,0.95,1.0);else if(deckP<=8.42)rp3=mapRange(deckP,7.32,8.42,1.0,0.95);else rp3=0.95;
-               let rz3=-90+(90*rp3),ry3=335+(25*rp3),fp3=mapRange(deckP,7.02,7.62,0,1),rx3=fp3*180;
+               let mi3=0,mo3=0;if(localP<=6.92)mi3=mapRange(localP,6.52,6.92,0,0.8);else if(localP<=7.32)mi3=mapRange(localP,6.92,7.32,0.8,1.0);else if(localP<=7.82){mi3=1.0;mo3=0;}else{mi3=1.0;mo3=mapRange(localP,7.82,8.42,0,1);}
+               let rp3=0,hp3=0;if(localP>7.32&&localP<=7.82)hp3=mapRange(localP,7.32,7.82,0,1);else if(localP>7.82)hp3=1.0;if(localP<=6.82)rp3=mapRange(localP,6.52,6.82,0,0.85);else if(localP<=7.02)rp3=mapRange(localP,6.82,7.02,0.85,0.95);else if(localP<=7.32)rp3=mapRange(localP,7.02,7.32,0.95,1.0);else if(localP<=8.42)rp3=mapRange(localP,7.32,8.42,1.0,0.95);else rp3=0.95;
+               let rz3=-90+(90*rp3),ry3=335+(25*rp3),fp3=mapRange(localP,7.02,7.62,0,1),rx3=fp3*180;
                let cx3,cy3,cs3,sha3;if(mo3===0){cx3=sX3+(zX3-sX3)*mi3;cy3=sY3+(zY3-sY3)*mi3+(60*hp3);cs3=0.9+(zS3-0.9)*mi3;sha3=0.16+(0.4-0.16)*mi3;}else{cx3=zX3;cy3=zY3+60+(window.innerHeight*1.5)*mo3;cs3=zS3;sha3=0.4-(0.4-0.16)*mo3;rx3+=120*mo3;ry3-=90*mo3;rz3+=60*mo3;}
-               if(deckP>6.52){ec3.style.transition='none';ec3.style.left=cx3+'px';ec3.style.top=cy3+'px';ec3.style.transform='translate(-50%,-50%) rotateY('+ry3+'deg) rotateX('+rx3+'deg) rotateZ('+rz3+'deg) scale('+cs3+')';ec3.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha3*0.75)+'),0 40px 80px rgba(0,0,0,'+sha3+')';const ef3=ec3.querySelector('.card-front'),eb3=ec3.querySelector('.card-back');if(ef3&&eb3){if(rx3>90){ef3.style.display='none';eb3.style.display='flex';}else{ef3.style.display='flex';eb3.style.display='none';}}ec3.style.zIndex='10018';}
+               if(localP>6.52){ec3.style.transition='none';ec3.style.left=cx3+'px';ec3.style.top=cy3+'px';ec3.style.transform='translate(-50%,-50%) rotateY('+ry3+'deg) rotateX('+rx3+'deg) rotateZ('+rz3+'deg) scale('+cs3+')';ec3.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha3*0.75)+'),0 40px 80px rgba(0,0,0,'+sha3+')';const ef3=ec3.querySelector('.card-front'),eb3=ec3.querySelector('.card-back');if(ef3&&eb3){if(rx3>90){ef3.style.display='none';eb3.style.display='flex';}else{ef3.style.display='flex';eb3.style.display='none';}}ec3.style.zIndex='10018';}
              }
            }
            // CARTA 4
            const efc4=deckClone.querySelector('.interior-cards .interior-card:nth-child(3)');
            if(ec4){
              if(ec4_peek===0){if(efc4)efc4.style.opacity='0';if(ec4.dataset.endState!=='deck-rest'){ec4.dataset.endState='deck-rest';ec4.style.opacity='1';const ei4=deckClone.querySelector('.interior-cards');if(ei4&&ec4.parentNode!==ei4)ei4.insertBefore(ec4,ei4.firstChild);ec4.style.position='';ec4.style.left='';ec4.style.top='';ec4.style.margin='';ec4.classList.remove('card-on-table','card-peeking');ec4.classList.add('card-in-deck');ec4.style.transition='none';const popY4 = -30 * eOpen; ec4.style.transform='translate(-50%, calc(-50% + '+popY4+'px)) translateZ(58px) rotate(-90deg) scale(0.81)';ec4.style.clipPath='inset(0 0 0 10px round 16px)';}const popY4 = -30 * eOpen; ec4.style.transform='translate(-50%, calc(-50% + '+popY4+'px)) translateZ(58px) rotate(-90deg) scale(0.81)';}
-             else if(ec4_peek>0&&deckP<=8.32){if(efc4)efc4.style.opacity='0';ec4.style.opacity='1';ec4.dataset.endState='extracting';const ei4b=deckClone.querySelector('.interior-cards');if(ei4b&&ec4.parentNode!==ei4b){ei4b.insertBefore(ec4,ei4b.firstChild);ec4.style.position='';ec4.style.left='';ec4.style.top='';ec4.style.margin='';}ec4.classList.add('card-peeking');ec4.classList.remove('card-on-table','card-in-deck');ec4.style.transition='none';const ey4=-35-295*ec4_peek;ec4.style.transform='translate(-50%, calc(-50% + '+ey4+'px)) translateZ(58px) rotate(-90deg) scale(0.9)';ec4.style.clipPath=ey4>5?'inset(0 0 0 10px round 16px)':'';}
+             else if(ec4_peek>0&&localP<=8.32){if(efc4)efc4.style.opacity='0';ec4.style.opacity='1';ec4.dataset.endState='extracting';const ei4b=deckClone.querySelector('.interior-cards');if(ei4b&&ec4.parentNode!==ei4b){ei4b.insertBefore(ec4,ei4b.firstChild);ec4.style.position='';ec4.style.left='';ec4.style.top='';ec4.style.margin='';}ec4.classList.add('card-peeking');ec4.classList.remove('card-on-table','card-in-deck');ec4.style.transition='none';const ey4=-35-295*ec4_peek;ec4.style.transform='translate(-50%, calc(-50% + '+ey4+'px)) translateZ(58px) rotate(-90deg) scale(0.9)';ec4.style.clipPath=ey4>5?'inset(0 0 0 10px round 16px)':'';}
              else{if(efc4)efc4.style.opacity='0';ec4.style.opacity='1';ec4.dataset.endState='table';if(ec4.parentNode!==oryzoSec){const _dcr4=deckClone.getBoundingClientRect();ec4.dataset.boxLeftEnd=(_dcr4.left+_dcr4.width/2).toString();ec4.dataset.boxTopEnd=(_dcr4.top+_dcr4.height/2-330).toString();oryzoSec.appendChild(ec4);ec4.classList.remove('card-in-deck','card-peeking');ec4.classList.add('card-on-table');ec4.style.position='fixed';ec4.style.clipPath='';ec4.style.transition='none';}
                const sX4=parseFloat(ec4.dataset.boxLeftEnd)||(window.innerWidth/2+132.5),sY4=parseFloat(ec4.dataset.boxTopEnd)||(window.innerHeight/2-114.75);
                const iD4=window.innerWidth>768,zS4=iD4?1.1:0.97,zX4=window.innerWidth/2,zY4=window.innerHeight/2-(iD4?100:150);
-               let mi4=0,mo4=0;if(deckP<=8.72)mi4=mapRange(deckP,8.32,8.72,0,0.8);else if(deckP<=9.12)mi4=mapRange(deckP,8.72,9.12,0.8,1.0);else if(deckP<=9.62){mi4=1.0;mo4=0;}else{mi4=1.0;mo4=mapRange(deckP,9.62,10.22,0,1);}
-               let rp4=0,hp4=0;if(deckP>9.12&&deckP<=9.62)hp4=mapRange(deckP,9.12,9.62,0,1);else if(deckP>9.62)hp4=1.0;if(deckP<=8.62)rp4=mapRange(deckP,8.32,8.62,0,0.85);else if(deckP<=8.82)rp4=mapRange(deckP,8.62,8.82,0.85,0.95);else if(deckP<=9.12)rp4=mapRange(deckP,8.82,9.12,0.95,1.0);else if(deckP<=10.22)rp4=mapRange(deckP,9.12,10.22,1.0,0.95);else rp4=0.95;
-               let rz4=-90+(90*rp4),ry4=335+(25*rp4),fp4=mapRange(deckP,8.82,9.42,0,1),rx4=fp4*180;
+               let mi4=0,mo4=0;if(localP<=8.72)mi4=mapRange(localP,8.32,8.72,0,0.8);else if(localP<=9.12)mi4=mapRange(localP,8.72,9.12,0.8,1.0);else if(localP<=9.62){mi4=1.0;mo4=0;}else{mi4=1.0;mo4=mapRange(localP,9.62,10.22,0,1);}
+               let rp4=0,hp4=0;if(localP>9.12&&localP<=9.62)hp4=mapRange(localP,9.12,9.62,0,1);else if(localP>9.62)hp4=1.0;if(localP<=8.62)rp4=mapRange(localP,8.32,8.62,0,0.85);else if(localP<=8.82)rp4=mapRange(localP,8.62,8.82,0.85,0.95);else if(localP<=9.12)rp4=mapRange(localP,8.82,9.12,0.95,1.0);else if(localP<=10.22)rp4=mapRange(localP,9.12,10.22,1.0,0.95);else rp4=0.95;
+               let rz4=-90+(90*rp4),ry4=335+(25*rp4),fp4=mapRange(localP,8.82,9.42,0,1),rx4=fp4*180;
                let cx4,cy4,cs4,sha4;if(mo4===0){cx4=sX4+(zX4-sX4)*mi4;cy4=sY4+(zY4-sY4)*mi4+(60*hp4);cs4=0.9+(zS4-0.9)*mi4;sha4=0.16+(0.4-0.16)*mi4;}else{cx4=zX4;cy4=zY4+60-(window.innerHeight*1.5)*mo4;cs4=zS4;sha4=0.4-(0.4-0.16)*mo4;rx4+=120*mo4;ry4-=90*mo4;rz4+=60*mo4;}
-               if(deckP>8.32){ec4.style.transition='none';ec4.style.left=cx4+'px';ec4.style.top=cy4+'px';ec4.style.transform='translate(-50%,-50%) rotateY('+ry4+'deg) rotateX('+rx4+'deg) rotateZ('+rz4+'deg) scale('+cs4+')';ec4.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha4*0.75)+'),0 40px 80px rgba(0,0,0,'+sha4+')';const ef4=ec4.querySelector('.card-front'),eb4=ec4.querySelector('.card-back');if(ef4&&eb4){if(rx4>90){ef4.style.display='none';eb4.style.display='flex';}else{ef4.style.display='flex';eb4.style.display='none';}}ec4.style.zIndex='10017';}
+               if(localP>8.32){ec4.style.transition='none';ec4.style.left=cx4+'px';ec4.style.top=cy4+'px';ec4.style.transform='translate(-50%,-50%) rotateY('+ry4+'deg) rotateX('+rx4+'deg) rotateZ('+rz4+'deg) scale('+cs4+')';ec4.style.boxShadow='0 8px 16px rgba(0,0,0,'+(sha4*0.75)+'),0 40px 80px rgba(0,0,0,'+sha4+')';const ef4=ec4.querySelector('.card-front'),eb4=ec4.querySelector('.card-back');if(ef4&&eb4){if(rx4>90){ef4.style.display='none';eb4.style.display='flex';}else{ef4.style.display='flex';eb4.style.display='none';}}ec4.style.zIndex='10017';}
              }
            }
            // REVIEWS FINALES ”” slide-up identico a testimonios
@@ -10456,14 +10270,13 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
            var eRev2=document.getElementById('end-review-panel-2');
            var eRev3=document.getElementById('end-review-panel-3');
            var eRev4=document.getElementById('end-review-panel-4');
-           if(eRev1){if(deckP>3.0&&deckP<4.6){var eRp1=mapRange(deckP,3.0,4.6,0,1);eRev1.style.transform='translateY('+mapRange(deckP,3.0,4.6,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev1.style.opacity=eRp1>0.85?mapRange(eRp1,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev1, eRp1);}else eRev1.style.opacity='0';}
-           if(eRev2){if(deckP>4.72&&deckP<6.32){var eRp2=mapRange(deckP,4.72,6.32,0,1);eRev2.style.transform='translateY('+mapRange(deckP,4.72,6.32,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev2.style.opacity=eRp2>0.85?mapRange(eRp2,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev2, eRp2);}else eRev2.style.opacity='0';}
-           if(eRev3){if(deckP>6.52&&deckP<8.12){var eRp3=mapRange(deckP,6.52,8.12,0,1);eRev3.style.transform='translateY('+mapRange(deckP,6.52,8.12,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev3.style.opacity=eRp3>0.85?mapRange(eRp3,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev3, eRp3);}else eRev3.style.opacity='0';}
-           if(eRev4){if(deckP>8.32&&deckP<9.92){var eRp4=mapRange(deckP,8.32,9.92,0,1);eRev4.style.transform='translateY('+mapRange(deckP,8.32,9.92,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev4.style.opacity=eRp4>0.85?mapRange(eRp4,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev4, eRp4);}else eRev4.style.opacity='0';}
+           if(eRev1){if(localP>3.0&&localP<4.6){var eRp1=mapRange(localP,3.0,4.6,0,1);eRev1.style.transform='translateY('+mapRange(localP,3.0,4.6,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev1.style.opacity=eRp1>0.85?mapRange(eRp1,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev1, eRp1);}else eRev1.style.opacity='0';}
+           if(eRev2){if(localP>4.72&&localP<6.32){var eRp2=mapRange(localP,4.72,6.32,0,1);eRev2.style.transform='translateY('+mapRange(localP,4.72,6.32,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev2.style.opacity=eRp2>0.85?mapRange(eRp2,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev2, eRp2);}else eRev2.style.opacity='0';}
+           if(eRev3){if(localP>6.52&&localP<8.12){var eRp3=mapRange(localP,6.52,8.12,0,1);eRev3.style.transform='translateY('+mapRange(localP,6.52,8.12,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev3.style.opacity=eRp3>0.85?mapRange(eRp3,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev3, eRp3);}else eRev3.style.opacity='0';}
+           if(eRev4){if(localP>8.32&&localP<9.92){var eRp4=mapRange(localP,8.32,9.92,0,1);eRev4.style.transform='translateY('+mapRange(localP,8.32,9.92,window.innerHeight*1.5,-window.innerHeight*1.5)+'px)';eRev4.style.opacity=eRp4>0.85?mapRange(eRp4,0.85,1.0,1,0):1; updateReviewPanelInternals(eRev4, eRp4);}else eRev4.style.opacity='0';}
 
 
 
-            let localP = p;
             // -- IMG STRIP CAROUSEL -- cortina per-slide estilo Oryzo
             (function(){
               var isCont    = document.getElementById('img-strip-container');
@@ -10580,9 +10393,8 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   var IS_P2_EXPAND_END  = 26.0;
                   var IS_P2_GUARANTEE_END = 27.5; 
                   var IS_P2_END         = 29.0;
-                  var IS_P3_FADE_IN_END = 29.001;
-                  var IS_FINAL_END      = 29.001;
-                  var IS_RESET_FLASH_END= 30.0;
+                  var IS_P3_FADE_IN_END = 30.0;
+                  var IS_FINAL_END      = 34.0;
                   
                   var _exitP  = Math.max(0, Math.min(1, (localP - IS_END) / (IS_EXIT_END - IS_END)));
                   var _exitEA = _exitP < 0.5 ? 2*_exitP*_exitP : 1 - Math.pow(-2*_exitP+2,2)/2;
@@ -10601,15 +10413,6 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   
                   var _p3FadeInP = Math.max(0, Math.min(1, (localP - IS_P2_END) / (IS_P3_FADE_IN_END - IS_P2_END)));
                   var _finalP    = Math.max(0, Math.min(1, (localP - IS_P3_FADE_IN_END) / (IS_FINAL_END - IS_P3_FADE_IN_END)));
-                  
-                  var IS_FLASH_PEAK = 29.5;
-                  var IS_FLASH_END = 30.0;
-
-                  // Eliminado a petición del usuario: el scroll simplemente termina y no vuelve al inicio
-                  // if (_resetFlashP >= 1.0 && window.instantResetToZero) {
-                  //    window.instantResetToZero();
-                  //    return;
-                  // }
 
                   // El carrusel sigue subiendo sin limite
                   var _carUpP = Math.max(0, (localP - IS_END) / (IS_EXIT_END - IS_END));
@@ -10620,38 +10423,30 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
                   var _logoBaseY = ((1 - _exitEA) * 100);
-                  var _logoY = _logoBaseY; // Eliminado el movimiento hacia abajo en finalP
+                  var _logoY = _logoBaseY + (_finalP * 20);
                   
                   var _oltLogo = document.getElementById('olt-logo-img-big');
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
                   
                   var _ctaBaseY = ((1 - _exitEA) * 100);
-                  var _ctaY = _ctaBaseY; // Eliminado - (_finalP * 20) para evitar colisión con el texto
+                  var _ctaY = _ctaBaseY - (_finalP * 20);
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
                     var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
                     _oltCta.style.opacity = _ctaP.toFixed(2);
                     _oltCta.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
-                    _oltCta.style.transform = 'translate(-50%, ' + _ctaY.toFixed(2) + 'vh)';
-                  }
-                  
-                  var _heroCta = document.getElementById('cta-bottom-container');
-                  if (_heroCta) {
-                    _heroCta.style.opacity = (1 - (typeof _ctaP !== 'undefined' ? _ctaP : 0)).toFixed(2);
-                    _heroCta.style.pointerEvents = (typeof _ctaP !== 'undefined' && _ctaP > 0) ? 'none' : 'auto';
+                    _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
                   }
                   
                   // ----- PHASE 1 & 2: Dynamic -----
                   var _oltPhaseDyn = document.getElementById('olt-phase-dynamic');
                   if (_oltPhaseDyn) {
+                      var blurAmount = Math.sin(_p3FadeInP * Math.PI) * 20;
                       var opDyn = _p1FadeInP;
-                      // Si ya pasamos el flash, forzar a 0 para que no estorbe a la mesa 3d
-                      if (localP > IS_FLASH_PEAK) { opDyn = 0; }
-                      
+                      if (_p3FadeInP > 0.5) opDyn = 0; // Swap happens at peak blur
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
-                      _oltPhaseDyn.style.filter = 'none';
-                      _oltPhaseDyn.style.pointerEvents = opDyn > 0 ? 'auto' : 'none';
+                      _oltPhaseDyn.style.filter = 'blur(' + blurAmount.toFixed(1) + 'px)';
                       
                       // Ajustar la posición vertical al aparecer la garantía
                       var dynOffsetY = _p1ReverseP * 40; // Sube hasta 40px progresivamente
@@ -10768,98 +10563,31 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                       }
                   }
                   
-                                    // ----- PHASE 3: Reflexion Final (Colision de Mitades) -----
+                  // ----- PHASE 3: Reflexión Final -----
                   var _oltText = document.getElementById('olt-final-text');
-                  var _cameraFlash = document.getElementById('camera-flash');
-                  
-                  if (_cameraFlash) {
-                      var flashOp = 0;
-                      // Flash spikes exactly at the collision point (_p3FadeInP = 1.0) and fades out during _finalP
-                      if (_p3FadeInP > 0.8 && _p3FadeInP <= 1.0) {
-                          flashOp = mapRange(_p3FadeInP, 0.8, 1.0, 0, 1);
-                      } else if (_finalP > 0 && _finalP <= 0.2) {
-                          flashOp = mapRange(_finalP, 0, 0.2, 1, 0);
-                      }
-                      
-                      // Nuevo flash al final que revela la mesa 3D
-                      var finalFlashOp = 0;
-                      if (localP > IS_P3_FADE_IN_END && localP <= IS_FLASH_END) {
-                          if (localP <= IS_FLASH_PEAK) {
-                              finalFlashOp = mapRange(localP, IS_P3_FADE_IN_END, IS_FLASH_PEAK, 0, 1);
-                          } else {
-                              finalFlashOp = mapRange(localP, IS_FLASH_PEAK, IS_FLASH_END, 1, 0);
-                          }
-                      }
-                      
-                      var _finalFlash = document.getElementById('final-camera-flash');
-                      if (_finalFlash) {
-                          _finalFlash.style.opacity = Math.max(0, Math.min(1, finalFlashOp)).toFixed(2);
-                      }
-                      
-                      // Hacer zoom out de la camara despues del pico del flash
-                      var tableZoomOutP = 0;
-                      if (localP > IS_FLASH_PEAK) {
-                          tableZoomOutP = Math.max(0, Math.min(1, mapRange(localP, IS_FLASH_PEAK, IS_FLASH_END, 0, 1)));
-                      }
-                      window._finalPolProg = tableZoomOutP;
-                      
-                      // Ocultar los contenedores de fondo después del pico del flash
-                      var _bgOp = (localP > IS_FLASH_PEAK) ? 0 : 1;
-                      var _isContOuter = document.getElementById('img-strip-container');
-                      if (_isContOuter) {
-                         // Mantener la lógica base de opacidad pero forzar a 0 tras el flash
-                         var baseOp = Math.max(0, Math.min(1, (_exitEA * 2.0)));
-                         _isContOuter.style.opacity = (baseOp * _bgOp).toFixed(2);
-                         _isContOuter.style.pointerEvents = _bgOp === 0 ? 'none' : _isContOuter.style.pointerEvents;
-                      }
-                      
-                      var _magSceneOuter = document.getElementById('magazine-scene');
-                      if (_magSceneOuter) {
-                         _magSceneOuter.style.opacity = _bgOp.toString();
-                         _magSceneOuter.style.pointerEvents = _bgOp === 0 ? 'none' : 'auto';
-                      }
-                  }
-                  
                   if (_oltText) {
-                    var _finalOp = _p3FadeInP > 0.05 ? 1 : 0; // Container visible early
-                    _oltText.style.opacity = _finalOp.toFixed(2);
-                    _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm))';
-                    
-                    var pLeft = document.getElementById('polaroid-left');
-                    var pRight = document.getElementById('polaroid-right');
+                    var blurAmountText = Math.sin(_p3FadeInP * Math.PI) * 20;
+                    var _finalOp = _p3FadeInP > 0.5 ? 1 : 0;
+                    var _eraseFP = Math.min(1, _finalP * 2);
+                    if (_eraseFP >= 1) _finalOp = 0;
                     
                     if (_p3FadeInP > 0) {
-                        // Flying collision logic
-                        var moveX = mapRange(_p3FadeInP, 0, 1.0, 30, 0); // vw
-                        var moveY = mapRange(_p3FadeInP, 0, 1.0, 10, 0); // vh
-                        var rot = mapRange(_p3FadeInP, 0, 1.0, 20, 0); // deg
-                        var partOp = mapRange(_p3FadeInP, 0.1, 0.5, 0, 1);
-                        
-                        if (pLeft) {
-                            pLeft.style.transform = 'translate(-' + moveX.toFixed(2) + 'vw, ' + moveY.toFixed(2) + 'vh) rotate(-' + rot.toFixed(2) + 'deg)';
-                            pLeft.style.opacity = Math.max(0, Math.min(1, partOp)).toFixed(2);
-                        }
-                        if (pRight) {
-                            pRight.style.transform = 'translate(' + moveX.toFixed(2) + 'vw, -' + moveY.toFixed(2) + 'vh) rotate(' + rot.toFixed(2) + 'deg)';
-                            pRight.style.opacity = Math.max(0, Math.min(1, partOp)).toFixed(2);
-                        }
+                        _oltText.style.transform = 'translate(-50%, calc(-50% + 2cm))';
                     }
+                    _oltText.style.opacity = _finalOp.toFixed(2);
+                    _oltText.style.filter = 'blur(' + blurAmountText.toFixed(1) + 'px)';
                     
-                    // Handwriting logic (Se estampa de golpe como un sello tras el flash)
-                    var handwritingContainer = document.getElementById('polaroid-handwriting');
-                    if (handwritingContainer) {
-                        var stampOp = mapRange(_finalP, 0.05, 0.2, 0, 1);
-                        var stampScale = mapRange(_finalP, 0.05, 0.2, 1.5, 1.0);
-                        
-                        handwritingContainer.style.opacity = Math.max(0, Math.min(1, stampOp)).toFixed(2);
-                        // We preserve the 5.5deg rotation it had originally
-                        handwritingContainer.style.transform = 'rotate(5.5deg) scale(' + stampScale.toFixed(2) + ')';
-                        
-                        var charsF = _oltText.querySelectorAll('.char');
-                        for (var k = 0; k < charsF.length; k++) {
-                            charsF[k].style.opacity = '1';
-                            charsF[k].style.filter = 'none';
+                    var charsF = _oltText.querySelectorAll('.char');
+                    if (charsF.length > 0) {
+                      var total = charsF.length;
+                      var eraseHalf = (_eraseFP * total) / 2;
+                      for (var k = 0; k < total; k++) {
+                        if (_eraseFP >= 1 || k < eraseHalf || k >= total - eraseHalf) {
+                          charsF[k].style.opacity = '0';
+                        } else {
+                          charsF[k].style.opacity = '1';
                         }
+                      }
                     }
                   }
               } else {
@@ -10872,7 +10600,6 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                 var _ulReset = document.getElementById('compromiso-underline');
                 if (_ulReset) _ulReset.style.transform = 'scaleY(0)';
                   isCont.style.transform = '';
-                  var _cfR = document.getElementById('camera-flash'); if (_cfR) _cfR.style.opacity = '0';
                   var _oltLogoR = document.getElementById('olt-logo-img-big');
                   if (_oltLogoR) _oltLogoR.style.transform = 'translateY(100vh)';
                   var _oltTextR = document.getElementById('olt-final-text');
@@ -10886,7 +10613,7 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
                   if (_oltPhase2R) _oltPhase2R.style.opacity = '0';
                   var _oltCtaR = document.getElementById('olt-final-cta');
                   if (_oltCtaR) {
-                      _oltCtaR.style.transform = 'translate(-50%, 100vh)';
+                      _oltCtaR.style.transform = 'translateY(100vh)';
                       _oltCtaR.style.opacity = '0';
                       _oltCtaR.style.pointerEvents = 'none';
                   }
@@ -10907,12 +10634,11 @@ document.querySelectorAll('#polaroid-handwriting p, #p1-question p').forEach(el 
             var _eR4 = document.getElementById('end-review-panel-4'); if (_eR4) _eR4.style.opacity = '0';
             
             var _isCont = document.getElementById('img-strip-container'); if (_isCont) _isCont.style.opacity = '0';
-            var _cfEnd = document.getElementById('camera-flash'); if (_cfEnd) _cfEnd.style.opacity = '0';
             var _oltL = document.getElementById('olt-logo-img-big'); if (_oltL) _oltL.style.transform = 'translateY(100vh)';
             var _oltT = document.getElementById('olt-final-text'); if (_oltT) { _oltT.style.transform = 'translate(-50%, 100vh)'; _oltT.style.opacity = '0'; }
             var _p1 = document.getElementById('olt-phase-1'); if (_p1) _p1.style.opacity = '0';
             var _p2 = document.getElementById('olt-phase-2'); if (_p2) _p2.style.opacity = '0';
-            var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translate(-50%, 100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
+            var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
           }
       }
       
@@ -11277,7 +11003,7 @@ setTimeout(function() {
   });
 }, 800);
 
-// --- PANEL VÍDEO ENVEJECIMIENTO ---
+// --- PANEL VÃDEO ENVEJECIMIENTO ---
 window.envejPlayPause = function() {
   var v = document.getElementById('envej-video');
   if (!v) return;
