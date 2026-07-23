@@ -10625,56 +10625,40 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     }
                   }
                   
-                  // ----- PHASE 4: Reveal 3D Table smoothly in the dark -----
+                  // ----- PHASE 4: Fade out UI and Reveal 3D Table -----
                   
                   // Tiempos
-                  var START_3D_REVEAL = 28.5; // IS_FLASH_PEAK original
-                  var END_3D_REVEAL = 32.9; // IS_TABLE_ZOOM_END original
+                  var START_3D_REVEAL = 28.5; // Empieza el fade de la UI vieja
+                  var END_3D_REVEAL = 32.9; // Termina la interpolacion de la camara
                   
-                  // 1. Ocultar inmediatamente todo rastro de verde en el HTML y el Fog 3D
-                  if (localP > START_3D_REVEAL) {
-                      // Canvas opaco negro absoluto para tapar el CSS
-                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x000000, 1);
-                      // Fog negro absoluto para tapar el vacio verde del 3D
-                      if (typeof scene !== 'undefined' && scene.fog) scene.fog.color.setHex(0x000000);
-                      
-                      // Eliminar el overlay viejo por si acaso
-                      var flashEl = document.getElementById('camera-flash');
-                      if (flashEl) flashEl.style.display = 'none';
-                  } else {
-                      // Restaurar original si suben el scroll
-                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x000000, 0);
-                      if (typeof scene !== 'undefined' && scene.fog) scene.fog.color.setHex(0x0d0b09);
-                  }
+                  // 1. Restaurar ambiente 3D original
+                  if (typeof renderer !== 'undefined') renderer.setClearColor(0x000000, 0);
+                  if (typeof scene !== 'undefined' && scene.fog) scene.fog.color.setHex(0x0d0b09);
                   
-                  // 2. Ocultar UI de HTML progresivamente para que desaparezcan en la oscuridad
+                  // 2. Ocultar UI de HTML progresivamente para revelar el Canvas 3D que hay debajo
                   var uiOpacity = 1;
                   if (localP > START_3D_REVEAL) {
                       uiOpacity = 1.0 - Math.min(1, (localP - START_3D_REVEAL) / 1.5); // fade de 1.5s
                       uiOpacity = Math.max(0, uiOpacity).toFixed(3);
                   }
                   
-                  var cssC = document.getElementById('css-container');
-                  if (cssC) cssC.style.opacity = uiOpacity;
-                  var textContainer = document.getElementById('pricing-clip-container');
-                  if (textContainer) textContainer.style.opacity = uiOpacity;
+                  // Ocultar elementos UI (IMPORTANTE: ocultar oryzo-section para quitar el fondo verde-negro)
+                  var elementsToHide = [
+                      'css-container', 'pricing-clip-container', 'nav-menu', 'nav-logo', 
+                      'cta-bottom-container', 'cta-top-container', 'mag-breakout-overlay', 
+                      'olt-logo-reveal', 'camera-flash', 'oryzo-section'
+                  ];
+                  for (var i = 0; i < elementsToHide.length; i++) {
+                      var el = document.getElementById(elementsToHide[i]);
+                      if (el) {
+                          el.style.opacity = uiOpacity;
+                      }
+                  }
                   
-                  var topMenu = document.getElementById('nav-menu');
-                  if (topMenu) topMenu.style.opacity = uiOpacity;
-                  var topLogo = document.getElementById('nav-logo');
-                  if (topLogo) topLogo.style.opacity = uiOpacity;
-                  var botCta = document.getElementById('cta-bottom-container');
-                  if (botCta) botCta.style.opacity = uiOpacity;
-                  var topCta = document.getElementById('cta-top-container');
-                  if (topCta) topCta.style.opacity = uiOpacity;
-                  var magOverlay = document.getElementById('mag-breakout-overlay');
-                  if (magOverlay) magOverlay.style.opacity = uiOpacity;
                   var sInd = document.querySelector('.scroll-indicator');
                   if (sInd) sInd.style.opacity = uiOpacity;
-                  var oltLogoR = document.getElementById('olt-logo-reveal');
-                  if (oltLogoR) oltLogoR.style.opacity = uiOpacity;
                   
-                  // 3. Movimiento de camara: vuela suavemente hacia la mesa en la oscuridad
+                  // 3. Movimiento de camara hacia la mesa 3D
                   var tableZoomOutP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / (END_3D_REVEAL - START_3D_REVEAL)));
                   window._finalPolProg = tableZoomOutP;
                   
