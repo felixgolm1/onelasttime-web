@@ -10627,36 +10627,79 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   // ----- PHASE 4: Fade out UI and Reveal 3D Table -----
                   
-                  // Tiempos
                   var START_3D_REVEAL = 28.5; // Empieza el fade de la UI vieja
                   var END_3D_REVEAL = 32.9; // Termina la interpolacion de la camara
                   
-                  // 1. Restaurar ambiente 3D original
                   if (typeof renderer !== 'undefined') renderer.setClearColor(0x0d0b09, 1);
                   if (typeof scene !== 'undefined' && scene.fog) scene.fog.color.setHex(0x0d0b09);
                   
-                  // 2. Ocultar UI de HTML progresivamente para revelar el Canvas 3D que hay debajo
-                  var uiOpacity = 1;
+                  var fadeProg = 0;
                   if (localP > START_3D_REVEAL) {
-                      uiOpacity = 1.0 - Math.min(1, (localP - START_3D_REVEAL) / 1.5); // fade de 1.5s
-                      uiOpacity = Math.max(0, uiOpacity).toFixed(3);
+                      fadeProg = Math.min(1, (localP - START_3D_REVEAL) / 1.5);
                   }
                   
-                  // Ocultar elementos UI (IMPORTANTE: ocultar oryzo-section para quitar el fondo verde-negro)
-                  var elementsToHide = [
-                      'css-container', 'pricing-clip-container', 'nav-menu', 'nav-logo', 
-                      'cta-bottom-container', 'cta-top-container', 'mag-breakout-overlay', 
-                      'olt-logo-reveal', 'camera-flash', 'oryzo-section', 'img-strip-container', 'thermal-overlay'
-                  ];
-                  for (var i = 0; i < elementsToHide.length; i++) {
-                      var el = document.getElementById(elementsToHide[i]);
-                      if (el) {
-                          el.style.opacity = uiOpacity;
+                  var _c = document.getElementById('c');
+                  var _cc = document.getElementById('card-canvas');
+                  var oryzo = document.getElementById('oryzo-section');
+                  
+                  var finals = ['olt-final-text', 'olt-logo-img-big', 'olt-phase-1', 'olt-phase-2', 'olt-final-cta', 'end-reviews-container'];
+                  
+                  if (localP > START_3D_REVEAL) {
+                      // 1. Move 3D Canvas to front and fade it in over everything
+                      if (_c) {
+                          _c.style.zIndex = '10000005';
+                          _c.style.opacity = fadeProg.toFixed(3);
+                      }
+                      
+                      // 2. Move Card Canvas above 3D Canvas
+                      if (_cc) {
+                          _cc.style.zIndex = '10000006';
+                      }
+                      
+                      // 3. Extract final UI from oryzo-section so it's not covered by 3D Canvas
+                      for (var i = 0; i < finals.length; i++) {
+                          var _el = document.getElementById(finals[i]);
+                          if (_el && _el.parentNode !== document.body) {
+                              document.body.appendChild(_el);
+                              _el.style.position = 'fixed';
+                              _el.style.zIndex = '10000007';
+                          }
+                      }
+                      
+                      // 4. Force hide the old UI elements when fully faded in
+                      if (fadeProg >= 1) {
+                          if (oryzo) oryzo.style.opacity = '0';
+                          var _strip = document.getElementById('img-strip-container');
+                          if (_strip) _strip.style.opacity = '0';
+                          var _thermal = document.getElementById('thermal-overlay');
+                          if (_thermal) _thermal.style.opacity = '0';
+                      }
+                      
+                  } else {
+                      // Restore original state if user scrolls back up
+                      if (_c) {
+                          _c.style.zIndex = '10000';
+                          _c.style.opacity = '1';
+                      }
+                      
+                      if (_cc) {
+                          _cc.style.zIndex = '10003';
+                      }
+                      
+                      if (oryzo) {
+                          oryzo.style.opacity = '1';
+                          for (var i = 0; i < finals.length; i++) {
+                              var _el = document.getElementById(finals[i]);
+                              if (_el && _el.parentNode === document.body) {
+                                  oryzo.appendChild(_el);
+                                  _el.style.position = 'absolute';
+                              }
+                          }
                       }
                   }
                   
                   var sInd = document.querySelector('.scroll-indicator');
-                  if (sInd) sInd.style.opacity = uiOpacity;
+                  if (sInd) sInd.style.opacity = (1 - fadeProg).toFixed(3);
                   
                   // 3. Movimiento de camara hacia la mesa 3D
                   var tableZoomOutP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / (END_3D_REVEAL - START_3D_REVEAL)));
