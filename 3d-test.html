@@ -10625,38 +10625,34 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     }
                   }
                   
-                  // ----- PHASE 4: Fade to Black & Reveal 3D Table -----
-                  // Usamos el elemento camera-flash pero lo convertimos en negro y modo normal para una transicion suave
-                  var flashEl = document.getElementById('camera-flash');
-                  if (flashEl) {
-                      flashEl.style.background = '#000000'; // Fade a negro
-                      flashEl.style.mixBlendMode = 'normal'; // IMPORTANTE: quitar screen para que el negro se vea
-                      flashEl.style.display = 'block';
-                      flashEl.style.zIndex = '99999999';
+                  // ----- PHASE 4: Reveal 3D Table smoothly in the dark -----
+                  
+                  // Tiempos
+                  var START_3D_REVEAL = 28.5; // IS_FLASH_PEAK original
+                  var END_3D_REVEAL = 32.9; // IS_TABLE_ZOOM_END original
+                  
+                  // 1. Ocultar inmediatamente todo rastro de verde en el HTML y el Fog 3D
+                  if (localP > START_3D_REVEAL) {
+                      // Canvas opaco negro absoluto para tapar el CSS
+                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x000000, 1);
+                      // Fog negro absoluto para tapar el vacio verde del 3D
+                      if (typeof scene !== 'undefined' && scene.fog) scene.fog.color.setHex(0x000000);
+                      
+                      // Eliminar el overlay viejo por si acaso
+                      var flashEl = document.getElementById('camera-flash');
+                      if (flashEl) flashEl.style.display = 'none';
+                  } else {
+                      // Restaurar original si suben el scroll
+                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x000000, 0);
+                      if (typeof scene !== 'undefined' && scene.fog) scene.fog.color.setHex(0x0d0b09);
                   }
                   
-                  // FADE IN TO BLACK (28.5 a 30.0) -> similar a los tiempos originales del flash
-                  var FADE_OUT_UI_START = 28.5; // IS_FLASH_PEAK original
-                  var FADE_OUT_UI_END = 30.0; // IS_FLASH_END original
-                  
-                  // FADE OUT FROM BLACK (30.0 a 32.9)
-                  var FADE_IN_SCENE_END = 32.9; // IS_TABLE_ZOOM_END original
-                  
-                  var blackOpacity = 0;
-                  if (localP > FADE_OUT_UI_START && localP <= FADE_OUT_UI_END) {
-                      // Yendo a negro
-                      blackOpacity = (localP - FADE_OUT_UI_START) / (FADE_OUT_UI_END - FADE_OUT_UI_START);
-                  } else if (localP > FADE_OUT_UI_END) {
-                      // Revelando escena
-                      blackOpacity = 1.0 - Math.min(1, (localP - FADE_OUT_UI_END) / (FADE_IN_SCENE_END - FADE_OUT_UI_END));
+                  // 2. Ocultar UI de HTML progresivamente para que desaparezcan en la oscuridad
+                  var uiOpacity = 1;
+                  if (localP > START_3D_REVEAL) {
+                      uiOpacity = 1.0 - Math.min(1, (localP - START_3D_REVEAL) / 1.5); // fade de 1.5s
+                      uiOpacity = Math.max(0, uiOpacity).toFixed(3);
                   }
-                  
-                  if (flashEl) {
-                      flashEl.style.opacity = Math.max(0, Math.min(1, blackOpacity)).toFixed(3);
-                  }
-                  
-                  // Ocultar UI de HTML definitivamente cuando empezamos el fade out
-                  var uiOpacity = (localP > FADE_OUT_UI_START) ? '0' : '1';
                   
                   var cssC = document.getElementById('css-container');
                   if (cssC) cssC.style.opacity = uiOpacity;
@@ -10678,14 +10674,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var oltLogoR = document.getElementById('olt-logo-reveal');
                   if (oltLogoR) oltLogoR.style.opacity = uiOpacity;
                   
-                  // Movimiento de camara suave sincronizado con el fade out
-                  var tableZoomOutP = Math.max(0, Math.min(1, (localP - FADE_OUT_UI_START) / (FADE_IN_SCENE_END - FADE_OUT_UI_START)));
+                  // 3. Movimiento de camara: vuela suavemente hacia la mesa en la oscuridad
+                  var tableZoomOutP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / (END_3D_REVEAL - START_3D_REVEAL)));
                   window._finalPolProg = tableZoomOutP;
-                  
-                  // Hacer el clearColor opaco progresivamente
-                  if (typeof renderer !== 'undefined') {
-                      renderer.setClearColor(0x000000, tableZoomOutP);
-                  }
                   
               } else {
                 isCont.style.opacity = '0';
