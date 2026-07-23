@@ -10625,72 +10625,44 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     }
                   }
                   
-                  // ----- PHASE 4: Flash y Mesa 3D -----
-                  var _flashP = 0;
-                  if (localP > IS_FLASH_START && localP <= IS_FLASH_PEAK) {
-                      _flashP = (localP - IS_FLASH_START) / (IS_FLASH_PEAK - IS_FLASH_START);
-                  } else if (localP > IS_FLASH_PEAK && localP <= IS_FLASH_END) {
-                      _flashP = 1.0 - (localP - IS_FLASH_PEAK) / (IS_FLASH_END - IS_FLASH_PEAK);
-                  }
+                  // ----- PHASE 4: Fade to 3D Table -----
+                  // Start fading out UI and fading in black background at IS_P2_END (after pricing)
+                  var FADE_START = IS_P2_END;
+                  var FADE_END = IS_P3_FADE_IN_END; // UI fades out fully here
+                  
+                  var fadeOutUI = Math.max(0, Math.min(1, (localP - FADE_START) / (FADE_END - FADE_START)));
+                  var uiOpacity = (1.0 - fadeOutUI).toFixed(3);
+                  
                   var flashEl = document.getElementById('camera-flash');
-                  if (flashEl) {
-                      flashEl.style.opacity = _flashP.toFixed(2);
-                      // Make sure flash is on top of everything but pointer-events none
-                      flashEl.style.zIndex = '99999999';
-                  }
-
-                  // Ocultar TODO el HTML después del pico del flash para revelar el 3D
-                  if (localP > IS_FLASH_PEAK) {
-                      var cssC = document.getElementById('css-container');
-                      if (cssC) cssC.style.opacity = '0';
-                      var textContainer = document.getElementById('pricing-clip-container');
-                      if (textContainer) textContainer.style.opacity = '0';
-                      
-                      var topMenu = document.getElementById('nav-menu');
-                      if (topMenu) topMenu.style.opacity = '0';
-                      var topLogo = document.getElementById('nav-logo');
-                      if (topLogo) topLogo.style.opacity = '0';
-                      var botCta = document.getElementById('cta-bottom-container');
-                      if (botCta) botCta.style.opacity = '0';
-                      var topCta = document.getElementById('cta-top-container');
-                      if (topCta) topCta.style.opacity = '0';
-                      var magOverlay = document.getElementById('mag-breakout-overlay');
-                      if (magOverlay) magOverlay.style.opacity = '0';
-                      var sInd = document.querySelector('.scroll-indicator');
-                      if (sInd) sInd.style.opacity = '0';
-                      var oltLogoR = document.getElementById('olt-logo-reveal');
-                      if (oltLogoR) oltLogoR.style.opacity = '0';
-                      
-                      // Calcular progreso del zoom out de la mesa (de IS_FLASH_PEAK a IS_TABLE_ZOOM_END)
-                      var tableZoomOutP = Math.max(0, Math.min(1, (localP - IS_FLASH_PEAK) / (IS_TABLE_ZOOM_END - IS_FLASH_PEAK)));
-                      
-                      // Guardar progreso global para que la cámara y los modelos lo usen
-                      window._finalPolProg = tableZoomOutP;
-                      
-                      // Forzar fondo negro sólido
-                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x000000, 1);
-                  } else {
-                      var cssC = document.getElementById('css-container');
-                      if (cssC) cssC.style.opacity = '1';
-                      var textContainer = document.getElementById('pricing-clip-container');
-                      if (textContainer) textContainer.style.opacity = '1';
-                      
-                      var topMenu = document.getElementById('nav-menu');
-                      if (topMenu) topMenu.style.opacity = '1';
-                      var topLogo = document.getElementById('nav-logo');
-                      if (topLogo) topLogo.style.opacity = '1';
-                      var botCta = document.getElementById('cta-bottom-container');
-                      if (botCta) botCta.style.opacity = '1';
-                      var topCta = document.getElementById('cta-top-container');
-                      if (topCta) topCta.style.opacity = '1';
-                      var sInd = document.querySelector('.scroll-indicator');
-                      if (sInd) sInd.style.opacity = '1';
-                      var oltLogoR = document.getElementById('olt-logo-reveal');
-                      if (oltLogoR) oltLogoR.style.opacity = '1';
-                      
-                      window._finalPolProg = 0;
-                      
-                      if (typeof renderer !== 'undefined') renderer.setClearColor(0x0d0b09, 0);
+                  if (flashEl) { flashEl.style.display = 'none'; }
+                  
+                  var cssC = document.getElementById('css-container');
+                  if (cssC) cssC.style.opacity = uiOpacity;
+                  var textContainer = document.getElementById('pricing-clip-container');
+                  if (textContainer) textContainer.style.opacity = uiOpacity;
+                  
+                  var topMenu = document.getElementById('nav-menu');
+                  if (topMenu) topMenu.style.opacity = uiOpacity;
+                  var topLogo = document.getElementById('nav-logo');
+                  if (topLogo) topLogo.style.opacity = uiOpacity;
+                  var botCta = document.getElementById('cta-bottom-container');
+                  if (botCta) botCta.style.opacity = uiOpacity;
+                  var topCta = document.getElementById('cta-top-container');
+                  if (topCta) topCta.style.opacity = uiOpacity;
+                  var magOverlay = document.getElementById('mag-breakout-overlay');
+                  if (magOverlay) magOverlay.style.opacity = uiOpacity;
+                  var sInd = document.querySelector('.scroll-indicator');
+                  if (sInd) sInd.style.opacity = uiOpacity;
+                  var oltLogoR = document.getElementById('olt-logo-reveal');
+                  if (oltLogoR) oltLogoR.style.opacity = uiOpacity;
+                  
+                  // Zoom out smoothly
+                  var tableZoomOutP = Math.max(0, Math.min(1, (localP - FADE_START) / (IS_TABLE_ZOOM_END - FADE_START)));
+                  window._finalPolProg = tableZoomOutP;
+                  
+                  if (typeof renderer !== 'undefined') {
+                      // Alpha goes from 0 to 1, effectively hiding the green body background smoothly
+                      renderer.setClearColor(0x000000, tableZoomOutP); 
                   }
                   
               } else {
