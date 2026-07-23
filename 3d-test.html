@@ -10678,24 +10678,29 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   } else {
                       // Restore original state if user scrolls back up
                       if (_c) {
-                          _c.style.zIndex = '10000';
-                          _c.style.opacity = '1';
+                          _c.style.zIndex = '';
+                          _c.style.opacity = '';
                       }
                       
                       if (_cc) {
-                          _cc.style.zIndex = '10003';
+                          _cc.style.zIndex = '';
                       }
                       
                       if (oryzo) {
-                          oryzo.style.opacity = '1';
+                          oryzo.style.opacity = '';
                           for (var i = 0; i < finals.length; i++) {
                               var _el = document.getElementById(finals[i]);
                               if (_el && _el.parentNode === document.body) {
                                   oryzo.appendChild(_el);
-                                  _el.style.position = 'absolute';
+                                  _el.style.position = '';
+                                  _el.style.zIndex = '';
                               }
                           }
                       }
+                      var _strip = document.getElementById('img-strip-container');
+                      if (_strip) _strip.style.opacity = '';
+                      var _thermal = document.getElementById('thermal-overlay');
+                      if (_thermal) _thermal.style.opacity = '';
                   }
                   
                   var sInd = document.querySelector('.scroll-indicator');
