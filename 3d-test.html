@@ -10625,16 +10625,42 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     }
                   }
                   
-                  // ----- PHASE 4: Fade to 3D Table -----
-                  // Start fading out UI and fading in black background at IS_P2_END (after pricing)
-                  var FADE_START = IS_P2_END;
-                  var FADE_END = IS_P3_FADE_IN_END; // UI fades out fully here
-                  
-                  var fadeOutUI = Math.max(0, Math.min(1, (localP - FADE_START) / (FADE_END - FADE_START)));
-                  var uiOpacity = (1.0 - fadeOutUI).toFixed(3);
-                  
+                  // ----- PHASE 4: Fade to Black & Reveal 3D Table -----
+                  // Usamos el elemento camera-flash pero lo convertimos en negro para una transicion suave
                   var flashEl = document.getElementById('camera-flash');
-                  if (flashEl) { flashEl.style.display = 'none'; }
+                  if (flashEl) {
+                      flashEl.style.background = '#000000'; // Fade a negro
+                      flashEl.style.display = 'block';
+                      flashEl.style.zIndex = '99999999';
+                  }
+                  
+                  // FADE IN TO BLACK (29.0 a 30.0)
+                  var FADE_OUT_UI_START = IS_P2_END;
+                  var FADE_OUT_UI_END = IS_P3_FADE_IN_END;
+                  
+                  // FADE OUT FROM BLACK (30.0 a 32.9)
+                  var FADE_IN_SCENE_END = IS_TABLE_ZOOM_END;
+                  
+                  var blackOpacity = 0;
+                  if (localP > FADE_OUT_UI_START && localP <= FADE_OUT_UI_END) {
+                      // Yendo a negro
+                      blackOpacity = (localP - FADE_OUT_UI_START) / (FADE_OUT_UI_END - FADE_OUT_UI_START);
+                      window._finalPolProg = 0; // Camara aun no se mueve
+                  } else if (localP > FADE_OUT_UI_END) {
+                      // Revelando escena
+                      blackOpacity = 1.0 - Math.min(1, (localP - FADE_OUT_UI_END) / (FADE_IN_SCENE_END - FADE_OUT_UI_END));
+                      window._finalPolProg = 1; // Camara ya en la mesa
+                  } else {
+                      window._finalPolProg = 0;
+                  }
+                  
+                  if (flashEl) {
+                      flashEl.style.opacity = Math.max(0, Math.min(1, blackOpacity)).toFixed(3);
+                  }
+                  
+                  // Ocultar UI de HTML definitivamente cuando ya estamos en negro (localP > 30.0)
+                  var uiOpacity = (localP > FADE_OUT_UI_END) ? '0' : '1';
+                  // Si estamos desvaneciendo, la UI sigue visible debajo del negro hasta que el negro la cubre
                   
                   var cssC = document.getElementById('css-container');
                   if (cssC) cssC.style.opacity = uiOpacity;
@@ -10656,13 +10682,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var oltLogoR = document.getElementById('olt-logo-reveal');
                   if (oltLogoR) oltLogoR.style.opacity = uiOpacity;
                   
-                  // Zoom out smoothly
-                  var tableZoomOutP = Math.max(0, Math.min(1, (localP - FADE_START) / (IS_TABLE_ZOOM_END - FADE_START)));
-                  window._finalPolProg = tableZoomOutP;
-                  
+                  // Hacer el clearColor negro por debajo para que cuando quite el overlay, el fondo sea negro
                   if (typeof renderer !== 'undefined') {
-                      // Alpha goes from 0 to 1, effectively hiding the green body background smoothly
-                      renderer.setClearColor(0x000000, tableZoomOutP); 
+                      renderer.setClearColor(0x000000, localP > FADE_OUT_UI_START ? 1 : 0);
                   }
                   
               } else {
