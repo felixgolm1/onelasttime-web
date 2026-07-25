@@ -10479,7 +10479,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (_oltPhaseDyn) {
                       var blurAmount = Math.sin(_p3FadeInP * Math.PI) * 20;
                       var opDyn = _p1FadeInP;
-                      if (_p3FadeInP > 0.5) opDyn = 0; // Swap happens at peak blur
+                      if (localP >= 28.5) opDyn = 0; // Hide at flash peak
                       _oltPhaseDyn.style.opacity = opDyn.toFixed(2);
                       _oltPhaseDyn.style.filter = 'blur(' + blurAmount.toFixed(1) + 'px)';
                       
@@ -10535,6 +10535,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           
                           // Opacity is tied to _p1FadeInP
                           var counterOp = Math.min(1, _p1FadeInP * 2.0);
+                          if (localP >= 28.5) counterOp = 0; // Hide at flash peak
                           counterContainer.style.opacity = counterOp.toFixed(2);
                           dynRow.style.opacity = counterOp.toFixed(2);
                           
@@ -10628,12 +10629,41 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   // ----- PHASE 4: Fade out UI and Reveal 3D Table -----
                   
-                  var START_3D_REVEAL = 28.5; // Empieza el fade de la UI vieja
-                  var END_3D_REVEAL = 32.9; // Termina la interpolacion de la camara
+                  var START_3D_REVEAL = 28.5; // El peak del flash
+                  var END_3D_REVEAL = 32.9;
+                  
+                  // Flash effects
+                  var FLASH_START = 27.5;
+                  var FLASH_PEAK = 28.5;
+                  var FLASH_END = 29.5;
+                  var flashOpacity = 0;
+                  if (localP >= FLASH_START && localP <= FLASH_PEAK) {
+                      flashOpacity = (localP - FLASH_START) / (FLASH_PEAK - FLASH_START);
+                  } else if (localP > FLASH_PEAK && localP <= FLASH_END) {
+                      flashOpacity = 1.0 - ((localP - FLASH_PEAK) / (FLASH_END - FLASH_PEAK));
+                  }
+                  
+                  var tFlash = document.getElementById('transition-flash');
+                  if (!tFlash) {
+                      tFlash = document.createElement('div');
+                      tFlash.id = 'transition-flash';
+                      tFlash.style.position = 'fixed';
+                      tFlash.style.top = '0';
+                      tFlash.style.left = '0';
+                      tFlash.style.width = '100vw';
+                      tFlash.style.height = '100vh';
+                      tFlash.style.background = '#ffffff';
+                      tFlash.style.zIndex = '99999999';
+                      tFlash.style.pointerEvents = 'none';
+                      tFlash.style.opacity = '0';
+                      document.body.appendChild(tFlash);
+                  }
+                  tFlash.style.opacity = flashOpacity.toFixed(3);
                   
                   var fadeProg = 0;
                   if (localP > START_3D_REVEAL) {
-                      fadeProg = Math.min(1, (localP - START_3D_REVEAL) / 1.5);
+                      // Instant cut while hidden by flash
+                      fadeProg = 1;
                   }
                   
                   var EARLY_FADE_START = 27.5;
