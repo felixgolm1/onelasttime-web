@@ -1561,6 +1561,24 @@ window.onerror = function(msg, url, line, col, err) {
 
     @media (max-width: 768px) { #dynamic-pricing-row { font-size: 3.5vw !important; } }
 </style>
+
+  <style>
+    body.hide-all-cards-final-scene #card-canvas,
+    body.hide-all-cards-final-scene #oryzo-deck-clone,
+    body.hide-all-cards-final-scene #mainDeck,
+    body.hide-all-cards-final-scene #oryzo-deck-container,
+    body.hide-all-cards-final-scene .card-on-table,
+    body.hide-all-cards-final-scene .card-peeking,
+    body.hide-all-cards-final-scene .interior-card,
+    body.hide-all-cards-final-scene #intro-card,
+    body.hide-all-cards-final-scene #card-table,
+    body.hide-all-cards-final-scene #end-card-table {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+  </style>
 </head>
 
 
@@ -10681,6 +10699,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var magClone = document.getElementById('mag-model-clone');
                   
                   if (localP > EARLY_FADE_START) {
+                      document.body.classList.add("hide-all-cards-final-scene");
+                      if (typeof globalGlbCard !== "undefined" && globalGlbCard) { globalGlbCard.visible = false; }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       
@@ -10714,6 +10734,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var _c = document.getElementById('c');
                       if (_c) _c.style.backgroundColor = '#0d0b09';
                   } else {
+                      document.body.classList.remove("hide-all-cards-final-scene");
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
                       if (oryzoBg) oryzoBg.style.opacity = '1';
