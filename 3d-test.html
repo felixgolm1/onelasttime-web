@@ -10696,6 +10696,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (_deckC) _deckC.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       var _endT = document.getElementById('end-card-table');
                       if (_endT) _endT.style.opacity = (1 - earlyFadeProg).toFixed(3);
+                      var _cCanvas = document.getElementById('card-canvas');
+                      if (_cCanvas) _cCanvas.style.opacity = (1 - earlyFadeProg).toFixed(3);
                   }
                   
                   if (localP > START_3D_REVEAL) {
@@ -10722,6 +10724,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (_deckC) _deckC.style.opacity = '1';
                       var _endT = document.getElementById('end-card-table');
                       if (_endT) _endT.style.opacity = '1';
+                      var _cCanvas = document.getElementById('card-canvas');
+                      if (_cCanvas) _cCanvas.style.opacity = '1';
                       if (typeof renderer !== 'undefined') {
                           renderer.setClearColor(0x000000, 0); // volver a transparente
                       }
