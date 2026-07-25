@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -6496,7 +6496,9 @@ window.onerror = function(msg, url, line, col, err) {
             _tOvr.style.display = 'none';
           } else {
             _tOvr.style.display = 'block';
-            _tOvr.style.opacity  = '1';
+            if (prog < 49.6) {
+                _tOvr.style.opacity  = '1';
+            }
             _tOvr.style.webkitMaskImage = '';
             _tOvr.style.maskImage = '';
             var _bgEl  = document.getElementById('thermal-bg');
