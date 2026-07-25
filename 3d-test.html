@@ -9756,6 +9756,19 @@ window.addEventListener('click', function(e) {
                 });
                 if (typeof globalGlbCard !== 'undefined' && globalGlbCard) globalGlbCard.visible = false;
                 if (typeof cards !== 'undefined' && Array.isArray(cards)) cards.forEach(function(c) { if (c) c.visible = false; });
+            } else {
+                var els = document.querySelectorAll('#mainDeck, #oryzo-deck-clone, #card-canvas, .card-on-table, .card-peeking, .interior-card, #intro-card, #card-table, .olt-card-div');
+                els.forEach(function(el) {
+                    if (el.classList.contains('olt-card-div')) {
+                        el.style.setProperty('display', 'flex');
+                    } else {
+                        el.style.removeProperty('display');
+                    }
+                    el.style.removeProperty('opacity');
+                    el.style.removeProperty('visibility');
+                });
+                // No tocamos globalGlbCard.visible = true porque Phase 4 lo maneja.
+                // Tampoco tocamos cards porque buildAllCards y el CSS base lo manejan.
             }
         }
     }, 100);
