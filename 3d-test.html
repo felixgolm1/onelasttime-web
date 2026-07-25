@@ -8502,8 +8502,6 @@ window.onerror = function(msg, url, line, col, err) {
     <!-- â•â• NUEVA SECCIÓN: ORYZO DECK â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <div id="oryzo-section" style="
       position:fixed; top:0; left:0; width:100vw; height:100vh;
-      background-color: #000;
-      background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
       z-index: 10000000;
       transform: translateY(100%);
       display: flex;
@@ -8514,6 +8512,7 @@ window.onerror = function(msg, url, line, col, err) {
       pointer-events: none;
       visibility: hidden;
     ">
+      <div id="oryzo-bg" style="position:absolute; inset:0; z-index:-1; background-color: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);"></div>
       <!-- Transition Word -->
       <h1 id="conecta-transition-text" style="
         position: absolute; 
@@ -10097,7 +10096,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       var deckClone = document.getElementById('oryzo-deck-clone');
       if (!deckClone) {
           deckClone = document.createElement('div');
-          deckClone.innerHTML = '<div class="box-3d-volume"></div><div class="box-flap"></div><div class="dust-flap left"></div><div class="dust-flap right"></div><div class="tuck-lip"></div><div class="interior-cards"><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div></div><div class="card-n1"></div><div class="card-n2"></div><div class="card-n3"></div><div class="card-n4"></div>';
+          deckClone.innerHTML = '<div class="box-3d-volume"></div><div class="box-flap"></div><div class="dust-flap left"></div><div class="dust-flap right"></div><div class="tuck-lip"></div><div class="interior-cards"><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div><div class="interior-card"></div></div><div class="card-n1" style="display:none;"></div><div class="card-n2" style="display:none;"></div><div class="card-n3" style="display:none;"></div><div class="card-n4" style="display:none;"></div>';
       }
       if (deckClone) {
          var volume = deckClone.querySelector('.box-3d-volume');
@@ -10630,84 +10629,31 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var START_3D_REVEAL = 28.5; // Empieza el fade de la UI vieja
                   var END_3D_REVEAL = 32.9; // Termina la interpolacion de la camara
                   
-                  if (typeof renderer !== 'undefined') renderer.setClearColor(0x0d0b09, 1);
-                  if (typeof scene !== 'undefined' && scene.fog) scene.fog.color.setHex(0x0d0b09);
-                  
                   var fadeProg = 0;
                   if (localP > START_3D_REVEAL) {
                       fadeProg = Math.min(1, (localP - START_3D_REVEAL) / 1.5);
                   }
                   
-                  var _c = document.getElementById('c');
-                  var _cc = document.getElementById('card-canvas');
-                  var oryzo = document.getElementById('oryzo-section');
-                  
-                  var finals = ['olt-final-text', 'olt-logo-img-big', 'olt-phase-1', 'olt-phase-2', 'olt-final-cta', 'end-reviews-container'];
+                  var oryzoBg = document.getElementById('oryzo-bg');
                   
                   if (localP > START_3D_REVEAL) {
-                      // 1. Move 3D Canvas to front and fade it in over everything
-                      if (_c) {
-                          _c.style.zIndex = '10000005';
-                          _c.style.opacity = fadeProg.toFixed(3);
-                      }
+                      if (oryzoBg) oryzoBg.style.opacity = (1 - fadeProg).toFixed(3);
                       
-                      // 2. Move Card Canvas above 3D Canvas
-                      if (_cc) {
-                          _cc.style.zIndex = '10000006';
-                      }
-                      
-                      // 3. Extract final UI from oryzo-section so it's not covered by 3D Canvas
-                      for (var i = 0; i < finals.length; i++) {
-                          var _el = document.getElementById(finals[i]);
-                          if (_el && _el.parentNode !== document.body) {
-                              document.body.appendChild(_el);
-                              _el.style.position = 'fixed';
-                              _el.style.zIndex = '10000007';
-                          }
-                      }
-                      
-                      // 4. Force hide the old UI elements when fully faded in
-                      if (fadeProg >= 1) {
-                          if (oryzo) oryzo.style.opacity = '0';
-                          var _strip = document.getElementById('img-strip-container');
-                          if (_strip) _strip.style.opacity = '0';
-                          var _thermal = document.getElementById('thermal-overlay');
-                          if (_thermal) _thermal.style.opacity = '0';
-                      }
-                      
-                  } else {
-                      // Restore original state if user scrolls back up
-                      if (_c) {
-                          _c.style.zIndex = '';
-                          _c.style.opacity = '';
-                      }
-                      
-                      if (_cc) {
-                          _cc.style.zIndex = '';
-                      }
-                      
-                      if (oryzo) {
-                          oryzo.style.opacity = '';
-                          for (var i = 0; i < finals.length; i++) {
-                              var _el = document.getElementById(finals[i]);
-                              if (_el && _el.parentNode === document.body) {
-                                  oryzo.appendChild(_el);
-                                  _el.style.position = '';
-                                  _el.style.zIndex = '';
-                              }
-                          }
-                      }
                       var _strip = document.getElementById('img-strip-container');
-                      if (_strip) _strip.style.opacity = '';
+                      if (_strip) _strip.style.opacity = (1 - fadeProg).toFixed(3);
+                      
                       var _thermal = document.getElementById('thermal-overlay');
-                      if (_thermal) _thermal.style.opacity = '';
+                      if (_thermal) _thermal.style.opacity = (1 - fadeProg).toFixed(3);
+                  } else {
+                      if (oryzoBg) oryzoBg.style.opacity = '1';
                   }
                   
                   var sInd = document.querySelector('.scroll-indicator');
                   if (sInd) sInd.style.opacity = (1 - fadeProg).toFixed(3);
                   
                   // 3. Movimiento de camara hacia la mesa 3D
-                  var tableZoomOutP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / (END_3D_REVEAL - START_3D_REVEAL)));
+                  // Se fuerza la camara a estar en initialCameraPos inmediatamente
+                  var tableZoomOutP = 1;
                   window._finalPolProg = tableZoomOutP;
                   
               } else {
