@@ -6496,7 +6496,7 @@ window.onerror = function(msg, url, line, col, err) {
             _tOvr.style.display = 'none';
           } else {
             _tOvr.style.display = 'block';
-            if (prog < 49.6) {
+            if (prog < 48.6) {
                 _tOvr.style.opacity  = '1';
             }
             _tOvr.style.webkitMaskImage = '';
@@ -10636,20 +10636,29 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       fadeProg = Math.min(1, (localP - START_3D_REVEAL) / 1.5);
                   }
                   
+                  var EARLY_FADE_START = 27.5;
+                  var earlyFadeProg = 0;
+                  if (localP > EARLY_FADE_START) {
+                      earlyFadeProg = Math.min(1, (localP - EARLY_FADE_START) / 1.0);
+                  }
+                  
                   var oryzoBg = document.getElementById('oryzo-bg');
                   var magClone = document.getElementById('mag-model-clone');
+                  
+                  if (localP > EARLY_FADE_START) {
+                      if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
+                      if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
+                      
+                      var _strip = document.getElementById('img-strip-container');
+                      if (_strip) _strip.style.opacity = (1 - earlyFadeProg).toFixed(3);
+                      
+                      var _thermal = document.getElementById('thermal-overlay');
+                      if (_thermal) _thermal.style.opacity = (1 - earlyFadeProg).toFixed(3);
+                  }
                   
                   if (localP > START_3D_REVEAL) {
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = (1 - fadeProg).toFixed(3);
-                      if (oryzoBg) oryzoBg.style.opacity = (1 - fadeProg).toFixed(3);
-                      if (magClone) magClone.style.opacity = (1 - fadeProg).toFixed(3);
-                      
-                      var _strip = document.getElementById('img-strip-container');
-                      if (_strip) _strip.style.opacity = (1 - fadeProg).toFixed(3);
-                      
-                      var _thermal = document.getElementById('thermal-overlay');
-                      if (_thermal) _thermal.style.opacity = (1 - fadeProg).toFixed(3);
                       
                       // Ponemos el fondo gris oscuro para tapar el verde del body
                       if (typeof renderer !== 'undefined') {
