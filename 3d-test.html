@@ -6394,6 +6394,7 @@ window.onerror = function(msg, url, line, col, err) {
     }
 
     function smoothScrollLoop() {
+        try {
         const lerpF = 0.40;
         
         // SALTO CUÃNTICO DE TIMELINE
@@ -6759,7 +6760,16 @@ window.onerror = function(msg, url, line, col, err) {
       }   // â”€â”€ fin if (globalGlbCard) â”€â”€
 
       updateNavState(prog);
-      requestAnimationFrame(smoothScrollLoop);
+      } catch(err) { 
+            if(!window.didAlertErr) { 
+                var eD = document.createElement('div'); 
+                eD.style.cssText = 'position:fixed;inset:0;background:red;color:white;z-index:99999999;font-size:30px;padding:50px;'; 
+                eD.innerText = 'CRASH: ' + err.message + '\n' + err.stack; 
+                document.body.appendChild(eD); 
+                window.didAlertErr = true; 
+            } 
+        }
+requestAnimationFrame(smoothScrollLoop);
     }
 
     smoothScrollLoop();
@@ -10691,6 +10701,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       fadeProg = 1;
                   }
                   
+                  
+                  // DEBUG INJECT
+                  var debugEl = document.getElementById('debug-scroll-prog');
+                  if (debugEl) {
+                      debugEl.innerHTML = "p:" + p.toFixed(2) + " locP:" + localP.toFixed(2) + " clss:" + document.body.classList.contains("hide-all-cards-final-scene") + " isRet:" + ("OK");
+                  }
+                  
                   var EARLY_FADE_START = 27.5;
                   var earlyFadeProg = 0;
                   if (localP > EARLY_FADE_START) {
@@ -10703,6 +10720,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (localP > EARLY_FADE_START) {
                       document.body.classList.add("hide-all-cards-final-scene");
                       if (typeof globalGlbCard !== "undefined" && globalGlbCard) { globalGlbCard.visible = false; }
+                      if (typeof cards !== 'undefined' && Array.isArray(cards)) {
+                          cards.forEach(function(c) { if (c) c.visible = false; });
+                      }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       
@@ -10737,6 +10757,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (_c) _c.style.backgroundColor = '#0d0b09';
                   } else {
                       document.body.classList.remove("hide-all-cards-final-scene");
+                      if (typeof cards !== 'undefined' && Array.isArray(cards)) {
+                          cards.forEach(function(c) { if (c) c.visible = true; });
+                      }
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
                       if (oryzoBg) oryzoBg.style.opacity = '1';
