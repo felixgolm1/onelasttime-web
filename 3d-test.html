@@ -10635,17 +10635,28 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   }
                   
                   var oryzoBg = document.getElementById('oryzo-bg');
+                  var magClone = document.getElementById('mag-model-clone');
                   
                   if (localP > START_3D_REVEAL) {
                       if (oryzoBg) oryzoBg.style.opacity = (1 - fadeProg).toFixed(3);
+                      if (magClone) magClone.style.opacity = (1 - fadeProg).toFixed(3);
                       
                       var _strip = document.getElementById('img-strip-container');
                       if (_strip) _strip.style.opacity = (1 - fadeProg).toFixed(3);
                       
                       var _thermal = document.getElementById('thermal-overlay');
                       if (_thermal) _thermal.style.opacity = (1 - fadeProg).toFixed(3);
+                      
+                      // Ponemos el fondo gris oscuro para tapar el verde del body
+                      if (typeof renderer !== 'undefined') {
+                          renderer.setClearColor(0x0d0b09, 1);
+                      }
                   } else {
                       if (oryzoBg) oryzoBg.style.opacity = '1';
+                      if (magClone) magClone.style.opacity = '1';
+                      if (typeof renderer !== 'undefined') {
+                          renderer.setClearColor(0x000000, 0); // volver a transparente
+                      }
                   }
                   
                   var sInd = document.querySelector('.scroll-indicator');
