@@ -10689,6 +10689,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       
                       var _thermal = document.getElementById('thermal-overlay');
                       if (_thermal) _thermal.style.opacity = (1 - earlyFadeProg).toFixed(3);
+                      
+                      var _oryzoSec = document.getElementById('oryzo-section');
+                      if (_oryzoSec) _oryzoSec.style.opacity = (1 - earlyFadeProg).toFixed(3);
                   }
                   
                   if (localP > START_3D_REVEAL) {
@@ -10709,6 +10712,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (_scOverlay) _scOverlay.style.opacity = '1';
                       if (oryzoBg) oryzoBg.style.opacity = '1';
                       if (magClone) magClone.style.opacity = '1';
+                      var _oryzoSec = document.getElementById('oryzo-section');
+                      if (_oryzoSec) _oryzoSec.style.opacity = '1';
                       if (typeof renderer !== 'undefined') {
                           renderer.setClearColor(0x000000, 0); // volver a transparente
                       }
