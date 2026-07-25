@@ -10638,6 +10638,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var magClone = document.getElementById('mag-model-clone');
                   
                   if (localP > START_3D_REVEAL) {
+                      var _scOverlay = document.getElementById('scene-overlay');
+                      if (_scOverlay) _scOverlay.style.opacity = (1 - fadeProg).toFixed(3);
                       if (oryzoBg) oryzoBg.style.opacity = (1 - fadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - fadeProg).toFixed(3);
                       
@@ -10657,6 +10659,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var _c = document.getElementById('c');
                       if (_c) _c.style.backgroundColor = '#0d0b09';
                   } else {
+                      var _scOverlay = document.getElementById('scene-overlay');
+                      if (_scOverlay) _scOverlay.style.opacity = '1';
                       if (oryzoBg) oryzoBg.style.opacity = '1';
                       if (magClone) magClone.style.opacity = '1';
                       if (typeof renderer !== 'undefined') {
