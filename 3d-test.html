@@ -1572,7 +1572,7 @@ window.onerror = function(msg, url, line, col, err) {
     body.hide-all-cards-final-scene .interior-card,
     body.hide-all-cards-final-scene #intro-card,
     body.hide-all-cards-final-scene #card-table,
-    body.hide-all-cards-final-scene #end-card-table {
+    body.hide-all-cards-final-scene #end-card-table, body.hide-all-cards-final-scene .olt-card-div {
         display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
@@ -9748,7 +9748,7 @@ window.addEventListener('click', function(e) {
         if (dp) {
             var pVal = parseFloat(dp.innerText);
             if (pVal > 50) {
-                var els = document.querySelectorAll('#mainDeck, #oryzo-deck-clone, #card-canvas, .card-on-table, .card-peeking, .interior-card, #intro-card, #card-table');
+                var els = document.querySelectorAll('#mainDeck, #oryzo-deck-clone, #card-canvas, .card-on-table, .card-peeking, .interior-card, #intro-card, #card-table, .olt-card-div');
                 els.forEach(function(el) {
                     el.style.setProperty('display', 'none', 'important');
                     el.style.setProperty('opacity', '0', 'important');
