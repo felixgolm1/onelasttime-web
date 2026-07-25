@@ -8019,10 +8019,30 @@ requestAnimationFrame(smoothScrollLoop);
             c.receiveShadow = true;
           }
         });
-        // Posicionar en el centro de la mesa (donde estaban las cartas)
-        // La mesa esta en el origen X=0, Z=0 y un pelin por encima de Y=0
-        window.polaroidMesh.position.set(0, 0.05, 0); 
-        window.polaroidMesh.rotation.y = Math.PI / 8; // Girada un poco para darle un toque natural
+        
+        // Centrar y escalar el modelo (asumiendo que puede venir en cualquier escala de Blender)
+        const box = new THREE.Box3().setFromObject(window.polaroidMesh);
+        const size = box.getSize(new THREE.Vector3());
+        
+        // Escalar para que el lado mas grande mida aprox 1.5 unidades (como las cartas)
+        const maxDim = Math.max(size.x, size.y, size.z);
+        if (maxDim > 0) {
+            const targetScale = 1.8 / maxDim;
+            window.polaroidMesh.scale.setScalar(targetScale);
+        }
+        
+        // Recalcular caja tras escalar
+        const box2 = new THREE.Box3().setFromObject(window.polaroidMesh);
+        const center2 = box2.getCenter(new THREE.Vector3());
+        
+        // Colocar exactamente en X=0, Z=0, y con su base apoyada en Y=0.015 (mantel)
+        window.polaroidMesh.position.set(
+            -center2.x, 
+            -box2.min.y + 0.015, 
+            -center2.z
+        ); 
+        
+        window.polaroidMesh.rotation.y = Math.PI / 8; // Rotacion artistica
         window.polaroidMesh.visible = false; // Empezamos ocultos
         scene.add(window.polaroidMesh);
       },
@@ -10747,7 +10767,6 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           cards.forEach(function(c) { if (c) c.visible = false; });
                       }
                       if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = true; }
-                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = true; }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       
@@ -10785,7 +10804,6 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
                           cards.forEach(function(c) { if (c) c.visible = true; });
                       }
-                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = false; }
                       if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = false; }
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
