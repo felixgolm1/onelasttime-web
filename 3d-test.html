@@ -10651,12 +10651,22 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (typeof renderer !== 'undefined') {
                           renderer.setClearColor(0x0d0b09, 1);
                       }
+                      if (typeof scene !== 'undefined') {
+                          scene.background = new THREE.Color(0x0d0b09);
+                      }
+                      var _c = document.getElementById('c');
+                      if (_c) _c.style.backgroundColor = '#0d0b09';
                   } else {
                       if (oryzoBg) oryzoBg.style.opacity = '1';
                       if (magClone) magClone.style.opacity = '1';
                       if (typeof renderer !== 'undefined') {
                           renderer.setClearColor(0x000000, 0); // volver a transparente
                       }
+                      if (typeof scene !== 'undefined') {
+                          scene.background = null;
+                      }
+                      var _c = document.getElementById('c');
+                      if (_c) _c.style.backgroundColor = 'transparent';
                   }
                   
                   var sInd = document.querySelector('.scroll-indicator');
