@@ -10664,7 +10664,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   // 3. Movimiento de camara hacia la mesa 3D
                   // Se fuerza la camara a estar en initialCameraPos inmediatamente
-                  var tableZoomOutP = 1;
+                  var tableZoomOutP = 0;
+                  if (typeof camera !== 'undefined') {
+                      camera.position.set(-0.3, 12, 3);
+                      camera.lookAt(-0.3, 0, 0);
+                  }
                   window._finalPolProg = tableZoomOutP;
                   
               } else {
