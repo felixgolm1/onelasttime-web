@@ -8010,6 +8010,26 @@ requestAnimationFrame(smoothScrollLoop);
       (err) => { console.error('Error copa:', err); }
     );
     
+    gltfLoader.load('assets/img/polaroid 3d.glb',
+      (gltf) => {
+        window.polaroidMesh = gltf.scene;
+        window.polaroidMesh.traverse(c => {
+          if (c.isMesh) {
+            c.castShadow = true;
+            c.receiveShadow = true;
+          }
+        });
+        // Posicionar en el centro de la mesa (donde estaban las cartas)
+        // La mesa esta en el origen X=0, Z=0 y un pelin por encima de Y=0
+        window.polaroidMesh.position.set(0, 0.05, 0); 
+        window.polaroidMesh.rotation.y = Math.PI / 8; // Girada un poco para darle un toque natural
+        window.polaroidMesh.visible = false; // Empezamos ocultos
+        scene.add(window.polaroidMesh);
+      },
+      null,
+      (err) => { console.error('Error cargando polaroid:', err); }
+    );
+    
     // Carga nuestro prisma/carta local (.glb proxy a B64)
     if (typeof ID_CARD_B64 !== 'undefined') {
       gltfLoader.load(ID_CARD_B64,
@@ -10726,6 +10746,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
                           cards.forEach(function(c) { if (c) c.visible = false; });
                       }
+                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = true; }
+                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = true; }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       
@@ -10763,6 +10785,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
                           cards.forEach(function(c) { if (c) c.visible = true; });
                       }
+                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = false; }
+                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = false; }
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
                       if (oryzoBg) oryzoBg.style.opacity = '1';
