@@ -8020,17 +8020,39 @@ requestAnimationFrame(smoothScrollLoop);
           }
         });
         
-        // 1. Aplicar rotacion para que quede plana en la mesa
-        // La mayoria de modelos 3D verticales se tumban con -PI/2 en X.
-        window.polaroidMesh.rotation.set(-Math.PI / 2, 0, Math.PI / 12);
-        
-        // Forzar actualizacion de las matrices despues de rotar
+        // AUTO-FLATTEN LOGIC
+        window.polaroidMesh.rotation.set(0, 0, 0);
+        window.polaroidMesh.updateMatrixWorld(true);
+        let bestRot = new THREE.Euler(0, 0, 0);
+        let minHeight = new THREE.Box3().setFromObject(window.polaroidMesh).getSize(new THREE.Vector3()).y;
+
+        const rotsToTest = [
+            new THREE.Euler(Math.PI / 2, 0, 0),
+            new THREE.Euler(-Math.PI / 2, 0, 0),
+            new THREE.Euler(0, 0, Math.PI / 2),
+            new THREE.Euler(0, 0, -Math.PI / 2)
+        ];
+
+        rotsToTest.forEach(rot => {
+            window.polaroidMesh.rotation.copy(rot);
+            window.polaroidMesh.updateMatrixWorld(true);
+            const h = new THREE.Box3().setFromObject(window.polaroidMesh).getSize(new THREE.Vector3()).y;
+            if (h < minHeight) {
+                minHeight = h;
+                bestRot.copy(rot);
+            }
+        });
+
+        // Apply best rotation to lay it flat, and add a small Y rotation (spin on table) for aesthetics
+        window.polaroidMesh.rotation.copy(bestRot);
+        // To spin it around its vertical axis after laying it flat, we rotate the mesh inside a parent group, or just use rotateOnWorldAxis
+        window.polaroidMesh.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI / 8);
         window.polaroidMesh.updateMatrixWorld(true);
         
         // 2. Escalar el modelo (hacerlo mas grande que antes, las cartas median 3.36)
         const box = new THREE.Box3().setFromObject(window.polaroidMesh);
         const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
+        const maxDim = Math.max(size.x, size.z); // use width/depth on table
         if (maxDim > 0) {
             const targetScale = 3.5 / maxDim;
             window.polaroidMesh.scale.setScalar(targetScale);
@@ -8042,7 +8064,6 @@ requestAnimationFrame(smoothScrollLoop);
         const centerFinal = boxFinal.getCenter(new THREE.Vector3());
         
         // 4. Colocar centro en X=0, Z=0, apoyada en Y=0.005 (justo sobre el mantel)
-        // NOTA: Si al rotar en X se invirtieron los ejes locales, setFromObject nos da el bounding box global (AABB) correcto
         window.polaroidMesh.position.set(
             window.polaroidMesh.position.x - centerFinal.x, 
             window.polaroidMesh.position.y - boxFinal.min.y + 0.005, 
