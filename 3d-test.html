@@ -8020,29 +8020,35 @@ requestAnimationFrame(smoothScrollLoop);
           }
         });
         
-        // Centrar y escalar el modelo (asumiendo que puede venir en cualquier escala de Blender)
+        // 1. Aplicar rotacion para que quede plana en la mesa
+        // La mayoria de modelos 3D verticales se tumban con -PI/2 en X.
+        window.polaroidMesh.rotation.set(-Math.PI / 2, 0, Math.PI / 12);
+        
+        // Forzar actualizacion de las matrices despues de rotar
+        window.polaroidMesh.updateMatrixWorld(true);
+        
+        // 2. Escalar el modelo (hacerlo mas grande que antes, las cartas median 3.36)
         const box = new THREE.Box3().setFromObject(window.polaroidMesh);
         const size = box.getSize(new THREE.Vector3());
-        
-        // Escalar para que el lado mas grande mida aprox 1.5 unidades (como las cartas)
         const maxDim = Math.max(size.x, size.y, size.z);
         if (maxDim > 0) {
-            const targetScale = 1.8 / maxDim;
+            const targetScale = 3.5 / maxDim;
             window.polaroidMesh.scale.setScalar(targetScale);
         }
+        window.polaroidMesh.updateMatrixWorld(true);
         
-        // Recalcular caja tras escalar
-        const box2 = new THREE.Box3().setFromObject(window.polaroidMesh);
-        const center2 = box2.getCenter(new THREE.Vector3());
+        // 3. Recalcular caja final para posicionamiento exacto
+        const boxFinal = new THREE.Box3().setFromObject(window.polaroidMesh);
+        const centerFinal = boxFinal.getCenter(new THREE.Vector3());
         
-        // Colocar exactamente en X=0, Z=0, y con su base apoyada en Y=0.015 (mantel)
+        // 4. Colocar centro en X=0, Z=0, apoyada en Y=0.005 (justo sobre el mantel)
+        // NOTA: Si al rotar en X se invirtieron los ejes locales, setFromObject nos da el bounding box global (AABB) correcto
         window.polaroidMesh.position.set(
-            -center2.x, 
-            -box2.min.y + 0.015, 
-            -center2.z
+            window.polaroidMesh.position.x - centerFinal.x, 
+            window.polaroidMesh.position.y - boxFinal.min.y + 0.005, 
+            window.polaroidMesh.position.z - centerFinal.z
         ); 
         
-        window.polaroidMesh.rotation.y = Math.PI / 8; // Rotacion artistica
         window.polaroidMesh.visible = false; // Empezamos ocultos
         scene.add(window.polaroidMesh);
       },
