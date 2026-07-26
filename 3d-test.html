@@ -8046,13 +8046,14 @@ requestAnimationFrame(smoothScrollLoop);
             const panel = document.createElement('div');
             panel.id = 'polaroid-debug-panel';
             panel.style.position = 'fixed';
-            panel.style.top = '10px';
-            panel.style.left = '10px';
+            panel.style.top = '100px';
+            panel.style.right = '20px';
             panel.style.backgroundColor = 'rgba(0,0,0,0.8)';
             panel.style.color = '#00ff00';
             panel.style.padding = '15px';
-            panel.style.zIndex = '999999';
+            panel.style.zIndex = '999999999';
             panel.style.fontFamily = 'monospace';
+            panel.style.pointerEvents = 'all';
             panel.style.border = '1px solid #00ff00';
             
             panel.innerHTML = `
