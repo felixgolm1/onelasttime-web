@@ -8035,20 +8035,71 @@ requestAnimationFrame(smoothScrollLoop);
         }
         window.polaroidMesh.updateMatrixWorld(true);
         
-        // Valores de calibracion finales aprobados por el usuario
+        // DEBUG UI LOGIC (Re-injected for scale adjustment)
         const rx = -14 * Math.PI / 180;
         const ry = 30 * Math.PI / 180;
         const rz = -25 * Math.PI / 180;
-        const py = -1.495;
+        let py = -1.495;
         
         window.polaroidMesh.rotation.set(rx, ry, rz);
         
-        // Posicionar centro en X=0, Z=0 y usar la altura calibrada
         const boxFinal = new THREE.Box3().setFromObject(window.polaroidMesh);
         const centerFinal = boxFinal.getCenter(new THREE.Vector3());
         window.polaroidMesh.position.set(-centerFinal.x, py, -centerFinal.z); 
-        
         window.polaroidMesh.visible = false;
+        
+        if (!document.getElementById('polaroid-debug-panel')) {
+            const panel = document.createElement('div');
+            panel.id = 'polaroid-debug-panel';
+            panel.style.position = 'fixed';
+            panel.style.top = '100px';
+            panel.style.right = '20px';
+            panel.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            panel.style.color = '#00ff00';
+            panel.style.padding = '15px';
+            panel.style.zIndex = '999999999';
+            panel.style.fontFamily = 'monospace';
+            panel.style.pointerEvents = 'all';
+            panel.style.border = '1px solid #00ff00';
+            
+            panel.innerHTML = `
+                <h3 style="margin-top:0;">POLAROID CALIBRATION</h3>
+                <p>Ajusta el Pos Y (los otros ya estan bien)</p>
+                Rot X: <input type="range" id="debug-rx" min="-180" max="180" value="-14" style="width:200px"> <span id="val-rx">-14</span><br>
+                Rot Y: <input type="range" id="debug-ry" min="-180" max="180" value="30" style="width:200px"> <span id="val-ry">30</span><br>
+                Rot Z: <input type="range" id="debug-rz" min="-180" max="180" value="-25" style="width:200px"> <span id="val-rz">-25</span><br>
+                Pos Y: <input type="range" id="debug-py" min="-4.0" max="1.0" step="0.005" value="-1.495" style="width:200px"> <span id="val-py">-1.495</span><br>
+            `;
+            document.body.appendChild(panel);
+            
+            function updatePolaroid() {
+                const rx = parseFloat(document.getElementById('debug-rx').value) * Math.PI / 180;
+                const ry = parseFloat(document.getElementById('debug-ry').value) * Math.PI / 180;
+                const rz = parseFloat(document.getElementById('debug-rz').value) * Math.PI / 180;
+                const py = parseFloat(document.getElementById('debug-py').value);
+                
+                document.getElementById('val-rx').innerText = (rx * 180 / Math.PI).toFixed(0) + ' deg';
+                document.getElementById('val-ry').innerText = (ry * 180 / Math.PI).toFixed(0) + ' deg';
+                document.getElementById('val-rz').innerText = (rz * 180 / Math.PI).toFixed(0) + ' deg';
+                document.getElementById('val-py').innerText = py.toFixed(3);
+                
+                if (window.polaroidMesh) {
+                    window.polaroidMesh.rotation.set(rx, ry, rz);
+                    window.polaroidMesh.position.y = py;
+                }
+            }
+            
+            document.getElementById('debug-rx').addEventListener('input', updatePolaroid);
+            document.getElementById('debug-ry').addEventListener('input', updatePolaroid);
+            document.getElementById('debug-rz').addEventListener('input', updatePolaroid);
+            document.getElementById('debug-py').addEventListener('input', updatePolaroid);
+            
+            setInterval(() => {
+                if (window.polaroidMesh && document.body.classList.contains("hide-all-cards-final-scene")) {
+                    window.polaroidMesh.visible = true;
+                }
+            }, 500);
+        }
         
 
         scene.add(window.polaroidMesh);
