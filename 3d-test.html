@@ -8030,7 +8030,7 @@ requestAnimationFrame(smoothScrollLoop);
         const size = box.getSize(new THREE.Vector3());
         const maxDim = Math.max(size.x, size.y, size.z); 
         if (maxDim > 0) {
-            const targetScale = 3.5 / maxDim;
+            const targetScale = 5.25 / maxDim;
             window.polaroidMesh.scale.setScalar(targetScale);
         }
         window.polaroidMesh.updateMatrixWorld(true);
