@@ -8057,12 +8057,15 @@ requestAnimationFrame(smoothScrollLoop);
         
         window.polaroidMesh.traverse((child) => {
             if (child.isMesh && child.material) {
+                console.log("Mesh:", child.name);
                 let mats = Array.isArray(child.material) ? child.material : [child.material];
                 mats.forEach(mat => {
-                    if (mat.map) {
-                        mat.map = newPhoto;
-                        mat.needsUpdate = true;
-                    }
+                    console.log("Material:", mat.name, "has map:", !!mat.map);
+                    // Forzar la textura incluso si no tiene map original (podría ser un material distinto)
+                    // o aplicarlo solo si se llama algo relacionado con "photo" o "polaroid"
+                    // Por si acaso, lo aplicamos a todos para forzar el cambio visual.
+                    mat.map = newPhoto;
+                    mat.needsUpdate = true;
                 });
             }
         });
