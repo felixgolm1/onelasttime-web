@@ -8052,7 +8052,7 @@ requestAnimationFrame(smoothScrollLoop);
         // SUSTITUIR LA FOTO DE LA POLAROID
         // -------------------------------------------------------------
         const texLoader = new THREE.TextureLoader();
-        const newPhoto = texLoader.load('assets/img/polaroid-foto.jpg');
+        const newPhoto = texLoader.load('assets/img/polaroid-atlas.jpg');
         // GLTF usa sRGB por defecto para color
         if (THREE.sRGBEncoding) newPhoto.encoding = THREE.sRGBEncoding; 
         newPhoto.flipY = false; // Crucial en GLTF para que no salga del reves
