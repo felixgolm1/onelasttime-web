@@ -8048,14 +8048,12 @@ requestAnimationFrame(smoothScrollLoop);
         window.polaroidMesh.position.set(-centerFinal.x, py, -centerFinal.z); 
         window.polaroidMesh.visible = false;
         // -------------------------------------------------------------
-        // SUSTITUIR TEXTURA POLAROID DIRECTAMENTE (Comentado temporalmente para aislar error)
+        // SUSTITUIR TEXTURA POLAROID DIRECTAMENTE
         // -------------------------------------------------------------
-        /*
         const texLoader = new THREE.TextureLoader();
-        // Usamos cache-buster para asegurar que carga la nueva
-        const newPhoto = texLoader.load('assets/img/polaroid-atlas-final.jpg?v=' + Date.now());
+        const newPhoto = texLoader.load('assets/img/anna-felix-jugando.jpg');
         if (THREE.sRGBEncoding) newPhoto.encoding = THREE.sRGBEncoding;
-        newPhoto.flipY = false; // El GLTF original usa flipY=false
+        newPhoto.flipY = false;
         
         window.polaroidMesh.traverse((child) => {
             if (child.isMesh && child.material) {
@@ -8068,7 +8066,6 @@ requestAnimationFrame(smoothScrollLoop);
                 });
             }
         });
-        */
 
 
 
