@@ -8048,8 +8048,9 @@ requestAnimationFrame(smoothScrollLoop);
         window.polaroidMesh.position.set(-centerFinal.x, py, -centerFinal.z); 
         window.polaroidMesh.visible = false;
         // -------------------------------------------------------------
-        // SUSTITUIR TEXTURA POLAROID DIRECTAMENTE
+        // SUSTITUIR TEXTURA POLAROID DIRECTAMENTE (Comentado temporalmente para aislar error)
         // -------------------------------------------------------------
+        /*
         const texLoader = new THREE.TextureLoader();
         // Usamos cache-buster para asegurar que carga la nueva
         const newPhoto = texLoader.load('assets/img/polaroid-atlas-final.jpg?v=' + Date.now());
@@ -8067,6 +8068,7 @@ requestAnimationFrame(smoothScrollLoop);
                 });
             }
         });
+        */
 
 
 
