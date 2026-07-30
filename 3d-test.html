@@ -8037,6 +8037,12 @@ requestAnimationFrame(smoothScrollLoop);
     
     const texLoader = new THREE.TextureLoader();
     const photoTex = texLoader.load('assets/img/anna-felix-jugando.jpg');
+    
+    // Recorte "cover" sin deformar (Imagen = 4:3, Geometria = 1:1)
+    // Mostramos el 100% del alto, pero solo el 75% del ancho (centrado)
+    photoTex.repeat.set(3840/5120, 1.0);
+    photoTex.offset.set((1.0 - (3840/5120)) / 2, 0);
+    
     if (THREE.sRGBEncoding) photoTex.encoding = THREE.sRGBEncoding;
     // (Por defecto flipY = true, lo cual pone la foto del derecho)
     
@@ -8055,60 +8061,20 @@ requestAnimationFrame(smoothScrollLoop);
     
     window.polaroidMesh = polaroidGroup;
     
-    // Rotacion y posicion
-    const rx = 0; // Perfectamente plana
-    const ry = 15 * Math.PI / 180; // Girada 15 grados hacia un lado para darle un toque natural
-    const rz = 0; // Perfectamente plana
-    const py = 0.01;
+    // Rotacion y posicion fijas elegidas por el usuario
+    const rx = 0; 
+    const ry = -0.26; 
+    const rz = 0; 
     
     window.polaroidMesh.rotation.set(rx, ry, rz);
     
-    // Posicion centrada en la mesa (X=0) y un poco hacia el fondo (Z=-0.5) para que no pise el CTA
-    window.polaroidMesh.position.set(0, py, -0.5); 
+    // Posicion final
+    window.polaroidMesh.position.set(0, 0.117, 0.03); 
     
-    // Escala reducida a un tamano realista comparado con los platos
-    window.polaroidMesh.scale.set(0.6, 0.6, 0.6); 
+    // Escala final
+    window.polaroidMesh.scale.set(0.83, 0.83, 0.83); 
     window.polaroidMesh.visible = true;
     scene.add(window.polaroidMesh);
-
-    // DAT.GUI CONTROLS
-    if (typeof dat !== 'undefined') {
-        const gui = new dat.GUI();
-        const folder = gui.addFolder('Polaroid Ajustes');
-        
-        // Proxy object to handle unified scale
-        const proxy = { 
-            scale: window.polaroidMesh.scale.x,
-            log: function() {
-                console.log("Scale:", proxy.scale);
-                console.log("Pos:", window.polaroidMesh.position.x, window.polaroidMesh.position.y, window.polaroidMesh.position.z);
-                console.log("Rot:", window.polaroidMesh.rotation.x, window.polaroidMesh.rotation.y, window.polaroidMesh.rotation.z);
-                alert("Scale: " + proxy.scale + "\nPos X: " + window.polaroidMesh.position.x + "\nPos Z: " + window.polaroidMesh.position.z + "\nRot Y: " + window.polaroidMesh.rotation.y);
-            }
-        };
-        
-        folder.add(proxy, 'scale', 0.1, 2.0).name('Tamano').onChange(v => window.polaroidMesh.scale.set(v, v, v));
-        folder.add(window.polaroidMesh.position, 'x', -5, 5).name('Pos X (Izq/Der)');
-        folder.add(window.polaroidMesh.position, 'y', -1, 1).name('Pos Y (Altura)');
-        folder.add(window.polaroidMesh.position, 'z', -5, 5).name('Pos Z (Adelante/Atras)');
-        
-        folder.add(window.polaroidMesh.rotation, 'x', -Math.PI, Math.PI).name('Rot X (Plana/De Pie)');
-        folder.add(window.polaroidMesh.rotation, 'y', -Math.PI, Math.PI).name('Rot Y (Giro Mesa)');
-        folder.add(window.polaroidMesh.rotation, 'z', -Math.PI, Math.PI).name('Rot Z (Inclinacion)');
-        
-        folder.add(proxy, 'log').name('VER VALORES FINALES');
-        folder.open();
-        
-        // Force very high z-index and move down to avoid top menu
-        setTimeout(() => {
-            const guiEl = document.querySelector('.dg.ac');
-            if(guiEl) {
-                guiEl.style.zIndex = '2147483647'; // Max z-index
-                guiEl.style.top = '100px'; // Move below the top menu
-                guiEl.style.pointerEvents = 'auto'; // Force interactivity
-            }
-        }, 1000);
-    }
 
 
     // OCULTAR LA POLAROID BAKEADA EN LA MESA
