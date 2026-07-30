@@ -8037,7 +8037,7 @@ requestAnimationFrame(smoothScrollLoop);
     const texLoader = new THREE.TextureLoader();
     const photoTex = texLoader.load('assets/img/anna-felix-jugando.jpg');
     if (THREE.sRGBEncoding) photoTex.encoding = THREE.sRGBEncoding;
-    photoTex.flipY = false;
+    // (Por defecto flipY = true, lo cual pone la foto del derecho)
     
     const photoMat = new THREE.MeshStandardMaterial({
         map: photoTex,
@@ -8055,17 +8055,18 @@ requestAnimationFrame(smoothScrollLoop);
     window.polaroidMesh = polaroidGroup;
     
     // Rotacion y posicion
-    const rx = -14 * Math.PI / 180;
-    const ry = 30 * Math.PI / 180;
-    const rz = -25 * Math.PI / 180;
-    const py = -2.255;
+    const rx = 0; // Perfectamente plana
+    const ry = 15 * Math.PI / 180; // Girada 15 grados hacia un lado para darle un toque natural
+    const rz = 0; // Perfectamente plana
+    const py = 0.01;
     
     window.polaroidMesh.rotation.set(rx, ry, rz);
     
-    // Posicion aproximada para la camara
-    window.polaroidMesh.position.set(-0.5, 0.01, 1.2); 
+    // Posicion centrada en la mesa (X=0) y un poco hacia el fondo (Z=-0.5) para que no pise el CTA
+    window.polaroidMesh.position.set(0, py, -0.5); 
     
-    window.polaroidMesh.scale.set(1.5, 1.5, 1.5); 
+    // Escala reducida a un tamano realista comparado con los platos
+    window.polaroidMesh.scale.set(0.6, 0.6, 0.6); 
     window.polaroidMesh.visible = true;
     scene.add(window.polaroidMesh);
 
