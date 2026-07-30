@@ -8099,10 +8099,14 @@ requestAnimationFrame(smoothScrollLoop);
         folder.add(proxy, 'log').name('VER VALORES FINALES');
         folder.open();
         
-        // Force very high z-index for the GUI just in case
+        // Force very high z-index and move down to avoid top menu
         setTimeout(() => {
             const guiEl = document.querySelector('.dg.ac');
-            if(guiEl) guiEl.style.zIndex = '999999';
+            if(guiEl) {
+                guiEl.style.zIndex = '2147483647'; // Max z-index
+                guiEl.style.top = '100px'; // Move below the top menu
+                guiEl.style.pointerEvents = 'auto'; // Force interactivity
+            }
         }, 1000);
     }
 
