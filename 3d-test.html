@@ -1579,6 +1579,7 @@ window.onerror = function(msg, url, line, col, err) {
         pointer-events: none !important;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
 </head>
 
 
@@ -8069,6 +8070,42 @@ requestAnimationFrame(smoothScrollLoop);
     window.polaroidMesh.scale.set(0.6, 0.6, 0.6); 
     window.polaroidMesh.visible = true;
     scene.add(window.polaroidMesh);
+
+    // DAT.GUI CONTROLS
+    if (typeof dat !== 'undefined') {
+        const gui = new dat.GUI();
+        const folder = gui.addFolder('Polaroid Ajustes');
+        
+        // Proxy object to handle unified scale
+        const proxy = { 
+            scale: window.polaroidMesh.scale.x,
+            log: function() {
+                console.log("Scale:", proxy.scale);
+                console.log("Pos:", window.polaroidMesh.position.x, window.polaroidMesh.position.y, window.polaroidMesh.position.z);
+                console.log("Rot:", window.polaroidMesh.rotation.x, window.polaroidMesh.rotation.y, window.polaroidMesh.rotation.z);
+                alert("Scale: " + proxy.scale + "\nPos X: " + window.polaroidMesh.position.x + "\nPos Z: " + window.polaroidMesh.position.z + "\nRot Y: " + window.polaroidMesh.rotation.y);
+            }
+        };
+        
+        folder.add(proxy, 'scale', 0.1, 2.0).name('Tamano').onChange(v => window.polaroidMesh.scale.set(v, v, v));
+        folder.add(window.polaroidMesh.position, 'x', -5, 5).name('Pos X (Izq/Der)');
+        folder.add(window.polaroidMesh.position, 'y', -1, 1).name('Pos Y (Altura)');
+        folder.add(window.polaroidMesh.position, 'z', -5, 5).name('Pos Z (Adelante/Atras)');
+        
+        folder.add(window.polaroidMesh.rotation, 'x', -Math.PI, Math.PI).name('Rot X (Plana/De Pie)');
+        folder.add(window.polaroidMesh.rotation, 'y', -Math.PI, Math.PI).name('Rot Y (Giro Mesa)');
+        folder.add(window.polaroidMesh.rotation, 'z', -Math.PI, Math.PI).name('Rot Z (Inclinacion)');
+        
+        folder.add(proxy, 'log').name('VER VALORES FINALES');
+        folder.open();
+        
+        // Force very high z-index for the GUI just in case
+        setTimeout(() => {
+            const guiEl = document.querySelector('.dg.ac');
+            if(guiEl) guiEl.style.zIndex = '999999';
+        }, 1000);
+    }
+
 
     // OCULTAR LA POLAROID BAKEADA EN LA MESA
     if (window.tableMesh) {
