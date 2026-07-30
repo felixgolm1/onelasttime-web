@@ -8047,27 +8047,7 @@ requestAnimationFrame(smoothScrollLoop);
         const centerFinal = boxFinal.getCenter(new THREE.Vector3());
         window.polaroidMesh.position.set(-centerFinal.x, py, -centerFinal.z); 
         window.polaroidMesh.visible = false;
-        // -------------------------------------------------------------
-        // SUSTITUIR TEXTURA POLAROID DIRECTAMENTE
-        // -------------------------------------------------------------
-        const texLoader = new THREE.TextureLoader();
-        const newPhoto = texLoader.load('assets/img/polaroid-atlas-final5.jpg?v=2');
-        if (THREE.sRGBEncoding) newPhoto.encoding = THREE.sRGBEncoding;
-        newPhoto.flipY = false;
-        
-        window.polaroidMesh.traverse((child) => {
-            if (child.isMesh && child.material) {
-                let mats = Array.isArray(child.material) ? child.material : [child.material];
-                mats.forEach(mat => {
-                    mat.map = newPhoto;
-                    mat.emissiveMap = newPhoto;
-                    mat.roughnessMap = null;
-                    mat.metalnessMap = null;
-                    mat.normalMap = null;
-                    mat.needsUpdate = true;
-                });
-            }
-        });
+
         
         // APLICAR TAMBIÉN A LA MESA (por si la polaroid que vemos está en TABLESET_B64)
         if (window.tableMesh) {
