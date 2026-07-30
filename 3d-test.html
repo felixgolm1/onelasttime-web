@@ -8010,77 +8010,78 @@ requestAnimationFrame(smoothScrollLoop);
       (err) => { console.error('Error copa:', err); }
     );
     
-    gltfLoader.load('assets/img/polaroid_3d.glb?v=47',
-      (gltf) => {
-        window.polaroidMesh = gltf.scene;
-        window.polaroidMesh.traverse(c => {
-          if (c.isMesh) {
-            c.castShadow = true;
-            c.receiveShadow = true;
-          }
-        });
-        
-        // DEBUG UI LOGIC
-        // Reset rotation to default
-        window.polaroidMesh.rotation.set(0, 0, 0);
-        window.polaroidMesh.updateMatrixWorld(true);
-        
-        // Escalar a un tamano decente
-        const box = new THREE.Box3().setFromObject(window.polaroidMesh);
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z); 
-        if (maxDim > 0) {
-            const targetScale = 5.25 / maxDim;
-            window.polaroidMesh.scale.setScalar(targetScale);
-        }
-        window.polaroidMesh.updateMatrixWorld(true);
-        
-        // FINAL CALIBRATION LOGIC (Scale 1.5x)
-        const rx = -14 * Math.PI / 180;
-        const ry = 30 * Math.PI / 180;
-        const rz = -25 * Math.PI / 180;
-        const py = -2.255;
-        
-        window.polaroidMesh.rotation.set(rx, ry, rz);
-        
-        const boxFinal = new THREE.Box3().setFromObject(window.polaroidMesh);
-        const centerFinal = boxFinal.getCenter(new THREE.Vector3());
-        window.polaroidMesh.position.set(-centerFinal.x, py, -centerFinal.z); 
-        window.polaroidMesh.visible = false;
-
-        
-        // APLICAR TAMBIÉN A LA MESA (por si la polaroid que vemos está en TABLESET_B64)
-        if (window.tableMesh) {
-            window.tableMesh.traverse((child) => {
-                if (child.isMesh && child.material) {
-                    let mats = Array.isArray(child.material) ? child.material : [child.material];
-                    mats.forEach(mat => {
-                        // Solo aplicar si el material se llama algo relacionado con polaroid o photo
-                        // o lo aplicamos a todo para estar seguros? ¡A todo! Así veremos si la mesa entera se vuelve la foto.
-                        if (mat.name && (mat.name.toLowerCase().includes('polaroid') || mat.name.toLowerCase().includes('photo') || mat.name.toLowerCase().includes('picture'))) {
-                            mat.map = newPhoto;
-                            mat.emissiveMap = newPhoto;
-                            mat.roughnessMap = null;
-                            mat.metalnessMap = null;
-                            mat.normalMap = null;
-                            mat.needsUpdate = true;
-                        }
-                    });
-                }
-            });
-        }
-
-
-
-        
-        
-
-        scene.add(window.polaroidMesh);
-      },
-      null,
-      (err) => { console.error('Error cargando polaroid:', err); }
-    );
+    // -------------------------------------------------------------
+    // POLAROID CREADA CON CODIGO (Sin .glb)
+    // -------------------------------------------------------------
+    const polaroidGroup = new THREE.Group();
     
+    // 1. Base de papel blanco (ligero grosor para realismo)
+    const paperW = 4.2; 
+    const paperH = 5.0; 
+    const paperD = 0.05;
+    const paperGeo = new THREE.BoxGeometry(paperW, paperD, paperH);
+    const paperMat = new THREE.MeshStandardMaterial({
+        color: 0xf5f5f5,
+        roughness: 0.9,
+        metalness: 0.1
+    });
+    const paperMesh = new THREE.Mesh(paperGeo, paperMat);
+    paperMesh.castShadow = true;
+    paperMesh.receiveShadow = true;
+    
+    // 2. Foto (ligeramente mas pequena y brillante)
+    const photoW = 3.8;
+    const photoH = 3.8;
+    const photoGeo = new THREE.PlaneGeometry(photoW, photoH);
+    
+    const texLoader = new THREE.TextureLoader();
+    const photoTex = texLoader.load('assets/img/anna-felix-jugando.jpg');
+    if (THREE.sRGBEncoding) photoTex.encoding = THREE.sRGBEncoding;
+    photoTex.flipY = false;
+    
+    const photoMat = new THREE.MeshStandardMaterial({
+        map: photoTex,
+        roughness: 0.3, // Brillo de foto
+        metalness: 0.2
+    });
+    const photoMesh = new THREE.Mesh(photoGeo, photoMat);
+    photoMesh.rotation.x = -Math.PI / 2; // Tumbar plano
+    photoMesh.position.y = paperD / 2 + 0.005; // Justo encima del papel
+    photoMesh.position.z = -0.4; // Desplazar hacia arriba (dejando margen ancho abajo)
+    
+    polaroidGroup.add(paperMesh);
+    polaroidGroup.add(photoMesh);
+    
+    window.polaroidMesh = polaroidGroup;
+    
+    // Rotacion y posicion
+    const rx = -14 * Math.PI / 180;
+    const ry = 30 * Math.PI / 180;
+    const rz = -25 * Math.PI / 180;
+    const py = -2.255;
+    
+    window.polaroidMesh.rotation.set(rx, ry, rz);
+    
+    // Posicion aproximada para la camara
+    window.polaroidMesh.position.set(-0.5, py, 1.2); 
+    
+    window.polaroidMesh.scale.set(1.5, 1.5, 1.5); 
+    window.polaroidMesh.visible = false;
+    scene.add(window.polaroidMesh);
+
+    // OCULTAR LA POLAROID BAKEADA EN LA MESA
+    if (window.tableMesh) {
+        window.tableMesh.traverse((child) => {
+            if (child.isMesh && child.material) {
+                let mats = Array.isArray(child.material) ? child.material : [child.material];
+                mats.forEach(mat => {
+                    if (mat.name && (mat.name.toLowerCase().includes('polaroid') || mat.name.toLowerCase().includes('photo') || mat.name.toLowerCase().includes('picture'))) {
+                        child.visible = false;
+                    }
+                });
+            }
+        });
+    }
     // Carga nuestro prisma/carta local (.glb proxy a B64)
     if (typeof ID_CARD_B64 !== 'undefined') {
       gltfLoader.load(ID_CARD_B64,
