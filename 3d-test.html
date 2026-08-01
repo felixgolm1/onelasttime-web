@@ -10998,14 +10998,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (_scOverlay) _scOverlay.style.opacity = (1 - fadeProg).toFixed(3);
                       
                       // Ponemos el fondo gris oscuro para tapar el verde del body
-                      if (typeof renderer !== 'undefined') {
-                          renderer.setClearColor(0x0d0b09, 1);
-                      }
-                      if (typeof scene !== 'undefined') {
-                          scene.background = new THREE.Color(0x0d0b09);
-                      }
-                      var _c = document.getElementById('c');
-                      if (_c) _c.style.backgroundColor = '#0d0b09';
+                      // (Se controla dinámicamente en la sección de convergencia más abajo)
                   } else {
                       document.body.classList.remove("hide-all-cards-final-scene");
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
