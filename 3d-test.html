@@ -8065,14 +8065,7 @@ requestAnimationFrame(smoothScrollLoop);
         uniform float uProgress;
         varying vec2 vUv;
         void main() {
-          float blur = (1.0 - uProgress) * 0.015;
-          vec4 c = vec4(0.0);
-          c += texture2D(tDiffuse, vUv + vec2(-blur, -blur));
-          c += texture2D(tDiffuse, vUv + vec2(blur, -blur));
-          c += texture2D(tDiffuse, vUv + vec2(-blur, blur));
-          c += texture2D(tDiffuse, vUv + vec2(blur, blur));
-          c += texture2D(tDiffuse, vUv);
-          c /= 5.0;
+          vec4 c = texture2D(tDiffuse, vUv);
           
           // Color base de polaroid sin revelar (gris oscuro / verdoso)
           vec3 baseColor = vec3(0.1, 0.15, 0.12);
