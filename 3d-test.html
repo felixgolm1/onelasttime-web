@@ -8510,6 +8510,12 @@ requestAnimationFrame(smoothScrollLoop);
     let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
     let currentLookZ = CAM_LOOK.z + (0 - CAM_LOOK.z) * pProg;
 
+    if (window._finalZoomP > 0) {
+        currentCamY = currentCamY + (6.1 - currentCamY) * window._finalZoomP;
+        currentCamZ = currentCamZ + (3.8 - currentCamZ) * window._finalZoomP;
+        currentLookZ = currentLookZ + (2.15 - currentLookZ) * window._finalZoomP;
+    }
+
     // CÃ¡mara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
     camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
@@ -10970,21 +10976,16 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // 3. Movimiento de camara hacia la mesa 3D
                   // Se fuerza la camara a estar en initialCameraPos inmediatamente
                   var tableZoomOutP = 0;
+                  var easeZoom = 0;
                   if (typeof camera !== 'undefined') {
                       var zoomP = 0;
                       if (localP > START_3D_REVEAL) {
                           zoomP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
                       }
                       // Suavizado del zoom (ease-in-out cuadrático)
-                      var easeZoom = zoomP < 0.5 ? 2 * zoomP * zoomP : -1 + (4 - 2 * zoomP) * zoomP;
-                      
-                      var cY = 12 + (6.1 - 12) * easeZoom;
-                      var cZ = 3 + (3.8 - 3) * easeZoom;
-                      var lZ = 0 + (2.15 - 0) * easeZoom;
-                      
-                      camera.position.set(-0.3, cY, cZ);
-                      camera.lookAt(-0.3, 0, lZ);
+                      easeZoom = zoomP < 0.5 ? 2 * zoomP * zoomP : -1 + (4 - 2 * zoomP) * zoomP;
                   }
+                  window._finalZoomP = easeZoom;
                   window._finalPolProg = tableZoomOutP;
                   
               } else {
