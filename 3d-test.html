@@ -9902,6 +9902,11 @@ setInterval(function() {
       </div>
   </div>
 </div>
+  
+  <div id="olt-final-question" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10000000; opacity:0; pointer-events:none; color:rgba(255,255,255,0.9); font-family:'Inter', sans-serif; font-size:clamp(1.2rem, 2vw, 1.8rem); font-style:italic; font-weight:300; text-align:center; width:90vw; letter-spacing: 0.5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+    ¿Vas a esperar a que sea demasiado tarde?
+  </div>
+
   <a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:relative; z-index:99999; margin-top:0; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
     <div class="mini-marquee-container" style="animation-duration: 50s;">
       <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
@@ -11066,6 +11071,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 26) + 'vh)';
                   }
                   
+                  var _oltQuestion = document.getElementById('olt-final-question');
+                  if (_oltQuestion) {
+                      // El fade de la pregunta va con el convergeP, empieza un poco despues para mayor impacto
+                      var qFade = Math.max(0, Math.min(1, (convergeP - 0.2) / 0.8));
+                      _oltQuestion.style.opacity = qFade.toFixed(2);
+                  }
+                  
                   // Fade in del fondo negro-verde (haciendo el gris transparente mediante CSS)
                   var bgAlpha = 1.0 - convergeP;
                   if (typeof renderer !== 'undefined') {
@@ -11095,6 +11107,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   isCont.style.transform = '';
                   var _oltLogoR = document.getElementById('olt-logo-img-big');
                   if (_oltLogoR) _oltLogoR.style.transform = 'translateY(100vh)';
+                  var _oltQuestionR = document.getElementById('olt-final-question');
+                  if (_oltQuestionR) _oltQuestionR.style.opacity = '0';
                   var _oltTextR = document.getElementById('olt-final-text');
                   if (_oltTextR) {
                       _oltTextR.style.transform = 'translate(-50%, 100vh)';
@@ -11132,6 +11146,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
             var _p1 = document.getElementById('olt-phase-1'); if (_p1) _p1.style.opacity = '0';
             var _p2 = document.getElementById('olt-phase-2'); if (_p2) _p2.style.opacity = '0';
             var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
+            var _oltQ = document.getElementById('olt-final-question'); if (_oltQ) _oltQ.style.opacity = '0';
           }
       }
       
