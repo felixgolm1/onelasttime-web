@@ -11055,7 +11055,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   window._finalPolProg = tableZoomOutP;
                   
                   // Convergencia del Logo y CTA al seguir haciendo scroll DESPUÉS del zoom (de 34.5 a 36.5)
-                  var convergeP = Math.max(0, Math.min(1, (localP - 34.5) / 2.0));
+                  var convergeP = Math.max(0, Math.min(1, (localP - 34.5) / 1.0));
                   
                   // Suavizado ease-out cuadrático para que frenen suavemente
                   var easeConverge = convergeP * (2 - convergeP);
@@ -11583,6 +11583,7 @@ window.chooseFinal = function(e, happy) {
 </script>
 
 </html>
+
 
 
 
