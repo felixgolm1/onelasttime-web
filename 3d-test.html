@@ -8128,12 +8128,23 @@ requestAnimationFrame(smoothScrollLoop);
         tCtx.translate(1280, 320);
         tCtx.rotate(-0.015); // Inclinacion sutil
         
-        tCtx.font = '600 72px "Caveat", cursive';
-        tCtx.fillText('"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"', 0, -160);
-        tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, -80);
-        tCtx.fillText('de que nunca volveremos a vivir cada preciso instante de nuevo.', 0, 0);
-        tCtx.fillText('As\u00ed que amemos a las personas que nos importan ahora, ya que no sabemos', 0, 80);
-        tCtx.fillText('cuando tendremos la \u00faltima oportunidad para hacerlo.', 0, 160);
+        let fontSize = 75;
+        tCtx.font = '600 ' + fontSize + 'px "Caveat", cursive';
+        let maxW = 2400; // Margen de 80px por lado (canvas es 2560)
+        const line1 = '"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"';
+        while (tCtx.measureText(line1).width > maxW && fontSize > 20) {
+            fontSize--;
+            tCtx.font = '600 ' + fontSize + 'px "Caveat", cursive';
+        }
+        
+        let gap = fontSize * 1.15;
+        let startY = -(gap * 2);
+
+        tCtx.fillText(line1, 0, startY);
+        tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, startY + gap);
+        tCtx.fillText('de que nunca volveremos a vivir cada preciso instante de nuevo.', 0, startY + gap * 2);
+        tCtx.fillText('As\u00ed que amemos a las personas que nos importan ahora, ya que no sabemos', 0, startY + gap * 3);
+        tCtx.fillText('cuando tendremos la \u00faltima oportunidad para hacerlo.', 0, startY + gap * 4);
         textTex.needsUpdate = true;
     });
     
