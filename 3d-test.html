@@ -10857,21 +10857,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var _scrollInd = document.querySelector('.scroll-indicator');
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
-                  var _logoBaseY = ((1 - _exitEA) * 100);
-                  var _logoY = _logoBaseY;
-                  
                   var _oltLogo = document.getElementById('olt-logo-img-big');
-                  if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
-                  
-                  var _ctaBaseY = ((1 - _exitEA) * 100);
-                  var _ctaY = _ctaBaseY;
+                  if (_oltLogo) _oltLogo.style.transform = 'translateY(100vh)';
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
                     var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
                     _oltCta.style.opacity = _ctaP.toFixed(2);
                     _oltCta.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
-                    _oltCta.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
+                    _oltCta.style.transform = 'translateY(100vh)';
                   }
                   
                   // ----- PHASE 1 & 2: Dynamic -----
@@ -11187,12 +11181,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   var _oltLogoBig = document.getElementById('olt-logo-img-big');
                   if (_oltLogoBig) {
-                      _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 19.5) + 'vh)';
+                      var _logoY = 100 - (easeConverge * 80.5); // de 100 a 19.5
+                      _oltLogoBig.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
                   }
                   
                   var _oltCtaBig = document.getElementById('olt-final-cta');
                   if (_oltCtaBig) {
-                      _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 19.5) + 'vh)';
+                      var _ctaY = 100 - (easeConverge * 119.5); // de 100 a -19.5
+                      _oltCtaBig.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
                   }
                   
                   var _oltQuestion = document.getElementById('olt-final-question');
