@@ -8100,6 +8100,47 @@ requestAnimationFrame(smoothScrollLoop);
     
     polaroidGroup.add(paperMesh);
     polaroidGroup.add(photoMesh);
+    // --- TEXTO MANUSCRITO EN EL LOMO INFERIOR ---
+    const textCanvas = document.createElement('canvas');
+    textCanvas.width = 1024;
+    textCanvas.height = 256;
+    const tCtx = textCanvas.getContext('2d');
+    
+    const textTex = new THREE.CanvasTexture(textCanvas);
+    if (THREE.sRGBEncoding) textTex.encoding = THREE.sRGBEncoding;
+    textTex.anisotropy = 16;
+    
+    const textMat = new THREE.MeshBasicMaterial({
+        map: textTex,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false
+    });
+    window.polaroidTextMat = textMat;
+    
+    document.fonts.ready.then(() => {
+        tCtx.clearRect(0,0,1024,256);
+        tCtx.fillStyle = 'rgba(15, 25, 45, 0.85)'; // Tinta boli azul oscura
+        tCtx.textAlign = 'center';
+        tCtx.textBaseline = 'middle';
+        
+        tCtx.translate(512, 128);
+        tCtx.rotate(-0.02); // Inclinacion sutil
+        
+        tCtx.font = '600 75px "Caveat", cursive';
+        tCtx.fillText('Conexiones significativas', 0, -30);
+        tCtx.font = '600 55px "Caveat", cursive';
+        tCtx.fillText('para personas que importan', 0, 40);
+        textTex.needsUpdate = true;
+    });
+    
+    const textGeo = new THREE.PlaneGeometry(3.6, 0.9);
+    const textMesh = new THREE.Mesh(textGeo, textMat);
+    textMesh.rotation.x = -Math.PI / 2;
+    textMesh.position.y = paperD / 2 + 0.008;
+    textMesh.position.z = 1.95; 
+    polaroidGroup.add(textMesh);
+
     
     window.polaroidMesh = polaroidGroup;
     window.polaroidMesh.visible = false; // Oculta por defecto al cargar la página
@@ -10854,6 +10895,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           // Queremos que se revele justo al final de la escena
                           let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 4.0));
                           window.polaroidPhotoMat.uniforms.uProgress.value = devProg;
+                          if (window.polaroidTextMat) {
+                              let textAlpha = Math.max(0, (devProg - 0.5) * 2.0);
+                              window.polaroidTextMat.opacity = textAlpha;
+                          }
                       }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
