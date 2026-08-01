@@ -8060,6 +8060,7 @@ requestAnimationFrame(smoothScrollLoop);
     polaroidGroup.add(photoMesh);
     
     window.polaroidMesh = polaroidGroup;
+    window.polaroidMesh.visible = false; // Oculta por defecto al cargar la página
     
     // Rotacion y posicion fijas elegidas por el usuario
     const rx = 0; 
@@ -10806,7 +10807,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
                           cards.forEach(function(c) { if (c) c.visible = false; });
                       }
-                      // if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = true; }
+                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = true; }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       
@@ -10844,7 +10845,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
                           cards.forEach(function(c) { if (c) c.visible = true; });
                       }
-                      // if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = false; }
+                      if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = false; }
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
                       if (oryzoBg) oryzoBg.style.opacity = '1';
