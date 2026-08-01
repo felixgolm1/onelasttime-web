@@ -10857,17 +10857,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var _scrollInd = document.querySelector('.scroll-indicator');
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
-                  var convergeP = Math.max(0, Math.min(1, (localP - 34.5) / 1.0));
-                  var easeConverge = convergeP * (2 - convergeP);
-                  
                   var _logoBaseY = ((1 - _exitEA) * 100);
-                  var _logoY = _logoBaseY + (easeConverge * 19.5);
+                  var _logoY = _logoBaseY;
                   
                   var _oltLogo = document.getElementById('olt-logo-img-big');
                   if (_oltLogo) _oltLogo.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
                   
                   var _ctaBaseY = ((1 - _exitEA) * 100);
-                  var _ctaY = _ctaBaseY - (easeConverge * 19.5);
+                  var _ctaY = _ctaBaseY;
                   
                   var _oltCta = document.getElementById('olt-final-cta');
                   if (_oltCta) {
