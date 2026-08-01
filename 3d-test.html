@@ -8156,7 +8156,7 @@ requestAnimationFrame(smoothScrollLoop);
     window.polaroidTextMat = textMat;
     
     // Forzar la carga de la fuente manuscrita antes de pintar
-    document.fonts.load('75px "Swanky and Moo Moo"').then(() => {
+    document.fonts.load('85px "Caveat"').then(() => {
         tCtx.clearRect(0,0,2560,640);
         tCtx.fillStyle = 'rgba(15, 25, 45, 0.95)'; // Tinta boli azul oscura
         tCtx.textAlign = 'center';
@@ -8165,13 +8165,13 @@ requestAnimationFrame(smoothScrollLoop);
         tCtx.translate(1280, 320);
         tCtx.rotate(-0.015); // Inclinacion sutil
         
-        let fontSize = 75;
-        tCtx.font = fontSize + 'px "Swanky and Moo Moo", cursive';
+        let fontSize = 85;
+        tCtx.font = fontSize + 'px "Caveat", cursive';
         let maxW = 2400; // Margen de 80px por lado (canvas es 2560)
         const line1 = '"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"';
         while (tCtx.measureText(line1).width > maxW && fontSize > 20) {
             fontSize--;
-            tCtx.font = fontSize + 'px "Swanky and Moo Moo", cursive';
+            tCtx.font = fontSize + 'px "Caveat", cursive';
         }
         
         let gap = fontSize * 1.15;
@@ -9903,8 +9903,7 @@ setInterval(function() {
   </div>
 </div>
   
-  <div id="olt-final-question" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10000000; opacity:0; pointer-events:none; color:rgba(255,255,255,0.85); font-family:'Caveat', cursive; font-size:clamp(1.8rem, 3.5vw, 2.8rem); font-weight:400; text-align:center; width:90vw; letter-spacing: 0.5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-    &iquest;Vas a esperar a que sea demasiado tarde?
+  <div id="olt-final-question" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10000000; opacity:0; pointer-events:none; color:rgba(255,255,255,0.85); font-family:'Caveat', cursive; font-size:clamp(1.8rem, 3.5vw, 2.8rem); font-weight:400; text-align:center; width:90vw; letter-spacing: 0.5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">&iquest;Vas a esperar a que sea demasiado tarde?
   </div>
 
   <a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:relative; z-index:99999; margin-top:0; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
