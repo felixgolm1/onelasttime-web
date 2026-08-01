@@ -12,7 +12,7 @@ window.onerror = function(msg, url, line, col, err) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One Last Time 3D V2</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Shadows+Into+Light&family=Caveat:wght@400;500;600;700&family=Archivo:wght@700&family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Dancing+Script:wght@400;600;700&family=Caveat:wght@400;500;600;700&family=Archivo:wght@700&family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
 
@@ -8129,12 +8129,12 @@ requestAnimationFrame(smoothScrollLoop);
         tCtx.rotate(-0.015); // Inclinacion sutil
         
         let fontSize = 75;
-        tCtx.font = fontSize + 'px "Shadows Into Light", cursive';
+        tCtx.font = '600 ' + fontSize + 'px "Dancing Script", cursive';
         let maxW = 2400; // Margen de 80px por lado (canvas es 2560)
         const line1 = '"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"';
         while (tCtx.measureText(line1).width > maxW && fontSize > 20) {
             fontSize--;
-            tCtx.font = fontSize + 'px "Shadows Into Light", cursive';
+            tCtx.font = '600 ' + fontSize + 'px "Dancing Script", cursive';
         }
         
         let gap = fontSize * 1.15;
