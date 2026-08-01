@@ -10807,6 +10807,12 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           cards.forEach(function(c) { if (c) c.visible = false; });
                       }
                       if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = true; }
+                      if (window.polaroidPhotoMat) {
+                          // localP va de START_3D_REVEAL (0) en adelante
+                          // Queremos que se revele de 0 a 10 de localP, por ejemplo
+                          let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 8.0));
+                          window.polaroidPhotoMat.uniforms.uProgress.value = devProg;
+                      }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       if (magClone) magClone.style.opacity = (1 - earlyFadeProg).toFixed(3);
                       
