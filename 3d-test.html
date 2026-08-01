@@ -11066,27 +11066,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (typeof renderer !== 'undefined') {
                       renderer.setClearColor(0x000000, 0); // WebGL 100% transparente
                   }
-                  if (typeof scene !== 'undefined') {
-                      scene.traverse(function(child) {
-                          if (child.isMesh) {
-                              // Comprobar si es parte del polaroid
-                              var isPol = false;
-                              var node = child;
-                              while (node) {
-                                  if (typeof window !== 'undefined' && window.polaroidMesh && node === window.polaroidMesh) isPol = true;
-                                  if (typeof globalGlbCard !== 'undefined' && globalGlbCard && node === globalGlbCard) isPol = true;
-                                  node = node.parent;
-                              }
-                              
-                              if (!isPol) {
-                                  if (!child.material.transparent) {
-                                      child.material.transparent = true;
-                                      child.material.needsUpdate = true;
-                                  }
-                                  child.material.opacity = bgAlpha;
-                              }
-                          }
-                      });
+                  // Hacemos que TODO el canvas 3D (incluyendo la polaroid) desaparezca
+                  var _c = document.getElementById('c');
+                  if (_c) {
+                      _c.style.opacity = bgAlpha;
                   }
                   if (typeof scene !== 'undefined') {
                       scene.background = null; // Necesario para que el clearColor alpha funcione
