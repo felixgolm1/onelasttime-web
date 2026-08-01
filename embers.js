@@ -1,7 +1,9 @@
 
+console.log("Embers script initializing...");
 const embersCanvas = document.getElementById("embers-canvas");
 const embersCtx = embersCanvas ? embersCanvas.getContext("2d") : null;
 const fakeBgFade = document.getElementById("fake-bg-fade");
+console.log("Canvas:", embersCanvas, "Context:", embersCtx);
 
 if (embersCanvas && embersCtx) {
     let width, height;
@@ -26,19 +28,18 @@ if (embersCanvas && embersCtx) {
     class Particle {
         constructor() {
             this.reset();
-            this.y = Math.random() * height; // initial random distribution
+            this.y = Math.random() * height; 
         }
 
         reset() {
             this.x = Math.random() * width;
             this.y = height + 10;
-            this.size = Math.random() * 2.5 + 0.5;
+            this.size = Math.random() * 4 + 1.5; // Made them bigger!
             this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = -(Math.random() * 1.5 + 0.5);
-            this.life = Math.random() * 0.5 + 0.5; // for blinking/fading
-            this.lifeSpeed = (Math.random() * 0.02) + 0.005;
+            this.vy = -(Math.random() * 2 + 1); // Made them faster!
+            this.life = Math.random() * 0.5 + 0.5;
+            this.lifeSpeed = (Math.random() * 0.02) + 0.01;
             
-            // Colores tipo brasa/fuego: dorados, naranjas
             const colors = [
                 "rgba(255, 200, 50,", 
                 "rgba(255, 150, 0,", 
@@ -48,30 +49,25 @@ if (embersCanvas && embersCtx) {
         }
 
         update() {
-            // Repulsión del ratón
             let dx = this.x - mouse.x;
             let dy = this.y - mouse.y;
             let distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < 150) {
-                let force = (150 - distance) / 150;
-                this.vx += (dx / distance) * force * 0.5;
-                this.vy += (dy / distance) * force * 0.5;
+            if (distance < 250) { // increased radius
+                let force = (250 - distance) / 250;
+                this.vx += (dx / distance) * force * 1.5;
+                this.vy += (dy / distance) * force * 1.5;
             }
 
-            // Fricción y movimiento
-            this.vx *= 0.98;
+            this.vx *= 0.96;
             this.x += this.vx;
             this.y += this.vy;
+            this.x += Math.sin(this.y * 0.01) * 0.4;
 
-            // Variación sutil en X (viento)
-            this.x += Math.sin(this.y * 0.01) * 0.2;
-
-            // Parpadeo
             this.life += this.lifeSpeed;
-            this.alpha = (Math.sin(this.life) * 0.5 + 0.5) * 0.8;
+            this.alpha = (Math.sin(this.life) * 0.5 + 0.5);
 
-            if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+            if (this.y < -50 || this.x < -50 || this.x > width + 50) {
                 this.reset();
             }
         }
@@ -84,16 +80,19 @@ if (embersCanvas && embersCtx) {
         }
     }
 
-    // Crear partículas
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 150; i++) { // increased count
         particles.push(new Particle());
     }
 
+    let started = false;
     function animate() {
         requestAnimationFrame(animate);
         
-        // Solo animar si la sección final es visible
-        if (fakeBgFade && parseFloat(fakeBgFade.style.opacity || 0) > 0.01) {
+        // Use getComputedStyle to ensure we get the real opacity, even if modified via JS on another ref
+        let opacity = parseFloat(window.getComputedStyle(fakeBgFade).opacity);
+        
+        if (opacity > 0.01) {
+            if (!started) { console.log("Embers animation started!"); started = true; }
             embersCtx.clearRect(0, 0, width, height);
             
             for (let i = 0; i < particles.length; i++) {
