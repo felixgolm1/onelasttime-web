@@ -11053,18 +11053,18 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   var _oltLogoBig = document.getElementById('olt-logo-img-big');
                   if (_oltLogoBig) {
-                      _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 22) + 'vh)';
+                      _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 16) + 'vh)';
                   }
                   
                   var _oltCtaBig = document.getElementById('olt-final-cta');
                   if (_oltCtaBig) {
-                      _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 22) + 'vh)';
+                      _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 16) + 'vh)';
                   }
                   
-                  // Fade in del fondo negro-verde (haciendo el gris transparente)
+                  // Fade in del fondo negro-verde (haciendo el gris transparente mediante CSS)
                   var bgAlpha = 1.0 - easeConverge;
                   if (typeof renderer !== 'undefined') {
-                      renderer.setClearColor(0x0d0b09, bgAlpha);
+                      renderer.setClearColor(0x000000, 0); // WebGL 100% transparente
                   }
                   if (typeof scene !== 'undefined') {
                       scene.background = null; // Necesario para que el clearColor alpha funcione
