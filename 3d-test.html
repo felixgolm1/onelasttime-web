@@ -11024,7 +11024,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           scene.background = null;
                       }
                       var _c = document.getElementById('c');
-                      if (_c) _c.style.backgroundColor = 'transparent';
+                      if (_c) {
+                          _c.style.backgroundColor = 'transparent';
+                          _c.style.opacity = '1';
+                          _c.style.transition = ''; // Restaurar transition si scrollea hacia arriba
+                      }
                   }
                   
                   var sInd = document.querySelector('.scroll-indicator');
@@ -11069,6 +11073,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // Hacemos que TODO el canvas 3D (incluyendo la polaroid) desaparezca
                   var _c = document.getElementById('c');
                   if (_c) {
+                      _c.style.transition = 'none'; // Desactivar transición CSS para que vaya anclado al scroll
                       _c.style.opacity = bgAlpha;
                   }
                   if (typeof scene !== 'undefined') {
