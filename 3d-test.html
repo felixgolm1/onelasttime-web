@@ -8102,8 +8102,8 @@ requestAnimationFrame(smoothScrollLoop);
     polaroidGroup.add(photoMesh);
     // --- TEXTO MANUSCRITO EN EL LOMO INFERIOR ---
     const textCanvas = document.createElement('canvas');
-    textCanvas.width = 1024;
-    textCanvas.height = 256;
+    textCanvas.width = 2048;
+    textCanvas.height = 512;
     const tCtx = textCanvas.getContext('2d');
     
     const textTex = new THREE.CanvasTexture(textCanvas);
@@ -8119,18 +8119,21 @@ requestAnimationFrame(smoothScrollLoop);
     window.polaroidTextMat = textMat;
     
     document.fonts.ready.then(() => {
-        tCtx.clearRect(0,0,1024,256);
-        tCtx.fillStyle = 'rgba(15, 25, 45, 0.85)'; // Tinta boli azul oscura
+        tCtx.clearRect(0,0,2048,512);
+        tCtx.fillStyle = 'rgba(15, 25, 45, 0.95)'; // Tinta boli azul oscura
         tCtx.textAlign = 'center';
         tCtx.textBaseline = 'middle';
         
-        tCtx.translate(512, 128);
-        tCtx.rotate(-0.02); // Inclinacion sutil
+        tCtx.translate(1024, 256);
+        tCtx.rotate(-0.015); // Inclinacion sutil
         
-        tCtx.font = '600 75px "Caveat", cursive';
-        tCtx.fillText('Conexiones significativas', 0, -30);
-        tCtx.font = '600 55px "Caveat", cursive';
-        tCtx.fillText('para personas que importan', 0, 40);
+        tCtx.font = '600 65px "Caveat", cursive';
+        tCtx.fillText('"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"', 0, -145);
+        tCtx.font = '600 52px "Caveat", cursive';
+        tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, -60);
+        tCtx.fillText('de que nunca volveremos a vivir cada preciso instante de nuevo.', 0, 0);
+        tCtx.fillText('As\u00ed que amemos a las personas que nos importan ahora, ya que no sabemos', 0, 80);
+        tCtx.fillText('cuando tendremos la \u00faltima oportunidad para hacerlo.', 0, 140);
         textTex.needsUpdate = true;
     });
     
