@@ -8031,21 +8031,17 @@ requestAnimationFrame(smoothScrollLoop);
     paperMesh.castShadow = true;
     paperMesh.receiveShadow = true;
     
-    // 2. Foto (ligeramente mas pequena y brillante)
+    // 2. Foto interactiva (VideoTexture enlazado al scroll)
     const photoW = 3.8;
     const photoH = 3.8;
     const photoGeo = new THREE.PlaneGeometry(photoW, photoH);
     
-    const texLoader = new THREE.TextureLoader();
-    const photoTex = texLoader.load('assets/img/anna-felix-jugando.jpg');
-    
-    // Recorte "cover" sin deformar (Imagen = 4:3, Geometria = 1:1)
-    // Mostramos el 100% del alto, pero solo el 75% del ancho (centrado)
-    photoTex.repeat.set(3840/5120, 1.0);
-    photoTex.offset.set((1.0 - (3840/5120)) / 2, 0);
-    
+    const polaroidVideoEl = document.getElementById('polaroid-video');
+    const photoTex = new THREE.VideoTexture(polaroidVideoEl);
+    photoTex.minFilter = THREE.LinearFilter;
+    photoTex.magFilter = THREE.LinearFilter;
+    photoTex.format = THREE.RGBAFormat;
     if (THREE.sRGBEncoding) photoTex.encoding = THREE.sRGBEncoding;
-    // (Por defecto flipY = true, lo cual pone la foto del derecho)
     
     const polaroidShader = {
       uniforms: {
@@ -8055,8 +8051,9 @@ requestAnimationFrame(smoothScrollLoop);
       vertexShader: `
         varying vec2 vUv;
         void main() {
-          // Recorte cover (3840/5120 = 0.75 de ancho)
-          vUv = uv * vec2(0.75, 1.0) + vec2(0.125, 0.0);
+          // Recorte cover para video vertical (720x1280, aspect ratio = 9:16)
+          // Mostramos 100% de ancho, y escalamos altura a 0.5625 (720/1280), centrado
+          vUv = uv * vec2(1.0, 0.5625) + vec2(0.0, 0.21875);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
@@ -9985,6 +9982,7 @@ window.addEventListener('click', function(e) {
 <div id="fake-bg-fade" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:50000; opacity:0; background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);">
 </div>
 <canvas id="embers-canvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:50001; pointer-events:none; opacity:0;"></canvas>
+<video id="polaroid-video" src="assets/img/embejecimiento_fast.mp4" muted playsinline preload="auto" style="display:none;"></video>
 </body>
 
 <script>
@@ -11088,6 +11086,16 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
                               let textProgress = Math.min(1.0, devProg / 0.75);
                               window.polaroidTextMat.uniforms.uWriteProgress.value = textProgress;
+                          }
+                          // Sincronizar video de la polaroid
+                          const pVid = document.getElementById('polaroid-video');
+                          if (pVid && pVid.duration) {
+                              // El video avanza hasta el final del scroll (8.0 unidades desde START_3D_REVEAL)
+                              let vidProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 8.0));
+                              pVid.currentTime = vidProg * pVid.duration;
+                              if (window.polaroidPhotoMat && window.polaroidPhotoMat.uniforms.tDiffuse.value) {
+                                  window.polaroidPhotoMat.uniforms.tDiffuse.value.needsUpdate = true;
+                              }
                           }
                       }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
