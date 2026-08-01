@@ -102,7 +102,7 @@ window.onerror = function(msg, url, line, col, err) {
     #loader-bar-wrap { width:160px; height:2px; background:rgba(255,255,255,0.1); border-radius:2px; transition: opacity 0.4s ease; }
     #loader-bar { height:100%; width:0%; background:#ccff00; border-radius:2px; transition: width 0.2s ease; }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ INTRO CARD ANIMATION Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ INTRO CARD ANIMATION Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #intro-card {
       position: absolute;
       inset: 0;
@@ -116,7 +116,7 @@ window.onerror = function(msg, url, line, col, err) {
     }
     #intro-card.visible { opacity: 1; }
 
-    /* Ã¢â€â‚¬ card-morph-group: contiene SVG + card div superpuestos Ã¢â€â‚¬ */
+    /* Ã¢â€€ card-morph-group: contiene SVG + card div superpuestos Ã¢â€€ */
     #card-morph-group {
       position: relative;
       width: 380px;
@@ -124,7 +124,7 @@ window.onerror = function(msg, url, line, col, err) {
       flex-shrink: 0;
     }
     
-    /* Grosor simulado: canto lateral 3D Ã¢â€â‚¬ JS escribe el gradiente directo */
+    /* Grosor simulado: canto lateral 3D Ã¢â€€ JS escribe el gradiente directo */
     #card-edge {
       position: absolute; top: 0; left: 0;
       width: 380px; height: 234px;
@@ -144,8 +144,8 @@ window.onerror = function(msg, url, line, col, err) {
       z-index: 10;
     }
 
-    /* Ã¢â€â‚¬ Intro card animation system Ã¢â€â‚¬ */
-    /* Perímetro de la carta: calculado como 2*(380+234)-4*2*(1-Ãâ‚¬/4)*20 Ã¢â€°Ë† 1175px */
+    /* Ã¢â€€ Intro card animation system Ã¢â€€ */
+    /* Perímetro de la carta: calculado como 2*(380+234)-4*2*(1-Ã€/4)*20 Ã¢â€°Ë† 1175px */
     /* NOTA: stroke-dashoffset NO es una propiedad compositable â€â€ requiere repintar
        en el main thread. Si arrancamos la animación ANTES de que el GLTFLoader.parse()
        termine, el main thread estará bloqueado y la animación se congelará a medias.
@@ -191,7 +191,7 @@ window.onerror = function(msg, url, line, col, err) {
       box-shadow: 14px 10px 28px rgba(0,0,0,0.55);
     }
 
-    /* Ã¢â€â‚¬ Logo: empieza centrado (translateY 0) en negro, sube a posición final Ã¢â€â‚¬ */
+    /* Ã¢â€€ Logo: empieza centrado (translateY 0) en negro, sube a posición final Ã¢â€€ */
     #intro-card-inner {
       position: absolute;
       /* Posición final: centrado vertical como en la carta real (flex center con gap:18px) */
@@ -215,7 +215,7 @@ window.onerror = function(msg, url, line, col, err) {
       transition: filter 0.65s ease, opacity 0.6s ease;
     }
 
-    /* Ã¢â€â‚¬ Revista Scene Ã¢â€â‚¬ */
+    /* Ã¢â€€ Revista Scene Ã¢â€€ */
     #magazine-scene, #camera-flash-container {
       position: fixed;
       top: 50%; left: 50%;
@@ -476,7 +476,7 @@ window.onerror = function(msg, url, line, col, err) {
       line-height: 1.1;
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ CARD BACK (flip) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ CARD BACK (flip) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #card-back {
       position: absolute; top: 0; left: 0;
       width: 380px; height: 234px;
@@ -506,7 +506,7 @@ window.onerror = function(msg, url, line, col, err) {
       margin: 0;
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ NAME INPUT en el dorso de la carta Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ NAME INPUT en el dorso de la carta Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #card-back-inner {
       display: flex;
       flex-direction: column;
@@ -543,7 +543,7 @@ window.onerror = function(msg, url, line, col, err) {
       color: rgba(204, 255, 0, 0.3);
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ SCENE OVERLAY Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ SCENE OVERLAY Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #scene-overlay {
       position: fixed; inset: 0;
       background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
@@ -567,7 +567,7 @@ window.onerror = function(msg, url, line, col, err) {
       transition: opacity 0.08s ease;
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ STEPS SCATTER OVERLAY Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ STEPS SCATTER OVERLAY Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #steps-overlay {
       position: fixed; inset: 0;
       pointer-events: none; z-index: 10002; opacity: 0;
@@ -617,7 +617,7 @@ window.onerror = function(msg, url, line, col, err) {
       transform: rotate(-8deg);
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ FLIP TITLE (Cómo funciona) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ FLIP TITLE (Cómo funciona) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #flip-title {
       position: fixed;
       top: 12vh;
@@ -1290,7 +1290,7 @@ window.onerror = function(msg, url, line, col, err) {
       100% { transform: translate3d(-50%, 0, 0); }
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ CARTAS INTERACTIVAS EXTRAÃƒÂBLES Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ CARTAS INTERACTIVAS EXTRAÃƒÂBLES Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     .card-wrap {
       position: absolute;
       width: 280px; height: 160px;
@@ -1359,7 +1359,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ FLIP SIDE TEXTS (estilo Oryzo: izq + der durante el flip) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ FLIP SIDE TEXTS (estilo Oryzo: izq + der durante el flip) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #flip-left-text, #flip-right-text {
       position: fixed;
       top: 50%;
@@ -1393,7 +1393,7 @@ window.onerror = function(msg, url, line, col, err) {
     /* Contenedor de cada línea: simple bloque, sin clip (fade-in puro) */
     .flt-oh { display: block; }
     .flt-in, .flt-in-up { display: block; }
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ SCATTER NAME INPUT Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ SCATTER NAME INPUT Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     .sc-name-field {
       background: transparent;
       border: none;
@@ -1480,7 +1480,7 @@ window.onerror = function(msg, url, line, col, err) {
       text-decoration: none;
     }
   
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ ORYZO STYLE CSS Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ ORYZO STYLE CSS Ã¢â€€Ã¢â€€ */
     .osr-top-line {
       display: flex; justify-content: space-between; align-items: center;
       width: 100%; border-bottom: none;
@@ -1514,7 +1514,7 @@ window.onerror = function(msg, url, line, col, err) {
     .review-quote span.word, .review-left-quote span.word { will-change: opacity; }
     .review-highlight { color: #ccff00; }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ ENVEJ SLIDER THUMB HOVER Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ ENVEJ SLIDER THUMB HOVER Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     #envej-range:hover ~ #envej-bar-thumb {
       transform: translate(-50%, -50%) scale(1.15) !important;
       box-shadow: 0 0 12px rgba(204,255,0,0.8) !important;
@@ -1945,8 +1945,8 @@ window.onerror = function(msg, url, line, col, err) {
         <div id="sc-cta" style="position: relative; z-index: 10; transform: scale(0.833); width: 115%; margin: 10px -7.5% 0 -7.5%; visibility: hidden; opacity: 0;">
           <a href="arbol.html" class="btn btn-blue btn-full" style="padding: 0.85rem 2rem !important; height: auto;">
             <div class="mini-marquee-container">
-              <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; </div>
-              <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; </div>
+              <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; </div>
+              <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; </div>
             </div>
           </a>
         </div>
@@ -2066,10 +2066,10 @@ window.onerror = function(msg, url, line, col, err) {
             <div style="font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 800; color: #ffffff; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.05em;">EL RESULTADO</div>
             <div style="font-family: 'Poppins', sans-serif; font-size: clamp(0.65rem, 0.85vw, 0.8rem); font-weight: 400; line-height: 1.4; color: #ffffff; text-align: left; width: 100%; padding: 0 1.5rem 1rem 1.5rem;">
               <ul style="list-style-type: none; margin: 0; padding: 0;">
-                <li style="margin-bottom: 0.2rem; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">â€¢</span> Laura lloró de emoción</li>
-                <li style="margin-bottom: 0.2rem; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">â€¢</span> Ricard también al pagar la cuenta</li>
-                <li style="margin-bottom: 0.2rem; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">â€¢</span> El post-cena fue bien</li>
-                <li style="margin-bottom: 0; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">â€¢</span> Siguen felizmente enamorados conociéndose mejor</li>
+                <li style="margin-bottom: 0.2rem; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">•</span> Laura lloró de emoción</li>
+                <li style="margin-bottom: 0.2rem; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">•</span> Ricard también al pagar la cuenta</li>
+                <li style="margin-bottom: 0.2rem; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">•</span> El post-cena fue bien</li>
+                <li style="margin-bottom: 0; position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0; color: #ffffff;">•</span> Siguen felizmente enamorados conociéndose mejor</li>
               </ul>
             </div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo" style="filter: brightness(0) invert(1); opacity: 1;"></div>
@@ -2181,15 +2181,15 @@ window.onerror = function(msg, url, line, col, err) {
     <a href="#" data-text="CÓMO FUNCIONA" data-scroll="0.98">CÓMO FUNCIONA</a>
     <a href="#" data-text="LA EXPERIENCIA" data-scroll="10.65">LA EXPERIENCIA</a>
     <a href="#" data-text="RESEÑAS" data-scroll="23.17">RESEÑAS</a>
-    <a href="#" data-text="MÃS..." data-scroll="31.58">MÃS...</a>
+    <a href="#" data-text="MÁS..." data-scroll="31.58">MÁS...</a>
     <a href="#" data-text="ONE LAST TIME" data-scroll="41.03">ONE LAST TIME</a>
     
     <!-- CTA superior derecha -->
     <div id="cta-top-container">
       <a href="arbol.html" class="btn btn-blue btn-full" style="padding: 0.8rem 0; font-size: 0.85rem;">
         <div class="mini-marquee-container">
-          <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; </div>
-          <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; </div>
+          <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; </div>
+          <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; </div>
         </div>
       </a>
     </div>
@@ -2202,8 +2202,8 @@ window.onerror = function(msg, url, line, col, err) {
   <div id="cta-bottom-container">
     <a href="arbol.html" class="btn btn-blue btn-full btn-floating" id="heroCta">
       <div class="mini-marquee-container">
-        <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; </div>
-        <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;â€¢&nbsp; </div>
+        <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; </div>
+        <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp;•&nbsp; </div>
       </div>
     </a>
   </div>
@@ -2286,7 +2286,7 @@ window.onerror = function(msg, url, line, col, err) {
     @keyframes breatheC { 0% { opacity: 0.6; } 100% { opacity: 1; } }
     @keyframes breatheD { 0% { opacity: 1; } 100% { opacity: 0.6; } }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ Estilos de las Reseñas Cinemáticas (Estilo Oryzo) Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* Ã¢â€€Ã¢â€€ Estilos de las Reseñas Cinemáticas (Estilo Oryzo) Ã¢â€€Ã¢â€€ */
     .oryzo-reviews-container {
       position: fixed;
       inset: 0;
@@ -2400,7 +2400,7 @@ window.onerror = function(msg, url, line, col, err) {
         border-radius: 0px;
         transform-origin: center center;
       }
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Historia + Testimonios: full-width en mobile Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* Ã¢â€€Ã¢â€€ Historia + Testimonios: full-width en mobile Ã¢â€€Ã¢â€€ */
       .review-left-col,
       .review-right-col {
         width: 90% !important;
@@ -2481,13 +2481,13 @@ window.onerror = function(msg, url, line, col, err) {
     }
     document.querySelectorAll('.review-quote, .review-left-quote').forEach(el => splitTextIntoChars(el));
 
-  /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â EDGE GLOW â€â€ perimeter-following gradient Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+  /* Ã¢•ÂÃ¢•ÂÃ¢•Â EDGE GLOW â€â€ perimeter-following gradient Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â
      Reglas:
      1. Cada color = misma longitud de arc en el perímetro
      2. El espectro se usa UNA sola vez por vuelta (sin repetición en lados opuestos)
      3. Transiciones suaves: stop cada 50px + lerp RGB continuo
      4. Ola de brillo independiente: viaje a diferente velocidad
-  Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+  Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â */
   (function() {
     var cv  = document.getElementById('edge-glow');
     if (!cv.getContext) return; // Script desactivado porque ahora usamos CSS puro
@@ -2618,7 +2618,7 @@ window.onerror = function(msg, url, line, col, err) {
       drawPass(LW,  1.2, 1.0);  /* Aura ambiental */
       drawPass(LW2, 2.8, 2.0);  /* Cuerpo de color saturado */
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Bloom Stack: Sistema de destello multi-capa aditivo (Estilo Oryzo) Ã¢â€â‚¬Ã¢â€â‚¬
+      /* Ã¢â€€Ã¢â€€ Bloom Stack: Sistema de destello multi-capa aditivo (Estilo Oryzo) Ã¢â€€Ã¢â€€
          Dibuja 3 capas de luz sobre el mismo punto para crear volumen y deslumbramiento. */
       function drawBloom(spotPos) {
         ctx.save();
@@ -2721,7 +2721,7 @@ window.onerror = function(msg, url, line, col, err) {
 
   <script>
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ SETUP Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ SETUP Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   const canvas   = document.getElementById('c');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -2734,7 +2734,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ DUAL-FLAG REVEAL SYSTEM Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ DUAL-FLAG REVEAL SYSTEM Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Phase 1: GLTF data loaded (parse only, no scene build yet)
   let pendingGltf = null;
   // Phase 2: scene built and ready
@@ -2917,7 +2917,7 @@ window.onerror = function(msg, url, line, col, err) {
     });
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ SCROLL ANIMATION: zoom → flip → scatter → macro-camera Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ SCROLL ANIMATION: zoom → flip → scatter → macro-camera Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   function setupScrollAnim() {
     const mg        = introMorphGroup;
     if (!mg) return;
@@ -2931,7 +2931,7 @@ window.onerror = function(msg, url, line, col, err) {
     const scCta     = document.getElementById('sc-cta');
     const scIntroBackInner = scIntroBack.querySelector('div:last-child'); // El contenedor de los párrafos
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Diccionario de textos para los giros Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Diccionario de textos para los giros Ã¢â€€Ã¢â€€
     const stepTexts = [
       "4 PASOS",                                   // Inicio (Front)
       "Hola ",                                     // 1er Giro (Back)
@@ -2944,14 +2944,14 @@ window.onerror = function(msg, url, line, col, err) {
     const sc4       = document.getElementById('sc-4');
     const sCards    = [sc1, sc2, sc3, sc4];
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Perspectiva 3D para el flip Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Perspectiva 3D para el flip Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // No usamos preserve-3d (poco fiable con transforms complejos de GSAP).
     // Perspectiva 2D viene de CSS perspective:1200px en #intro-card (padre).
     const realCard   = document.getElementById('intro-real-card');
     const cardBackEl = document.getElementById('card-back');
     const ftChars    = document.querySelectorAll('.ft-c');
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Swap manual de caras + grosor visual simulado Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Swap manual de caras + grosor visual simulado Ã¢â€€Ã¢â€€
     const cardEdge = document.getElementById('card-edge');
     function updateFaceSwap() {
       const ry = gsap.getProperty(mg, 'rotationY');
@@ -2982,7 +2982,7 @@ window.onerror = function(msg, url, line, col, err) {
       }
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Estado inicial Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Estado inicial Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Las sCards empiezan con opacity 0 para que no asomen mientras gira el morphGroup
     gsap.set(sCards,  { xPercent: -50, yPercent: -50, x: 0, y: 0,
                         scale: 1.2, rotation: 0, opacity: 0, zIndex: 5 });
@@ -2998,7 +2998,7 @@ window.onerror = function(msg, url, line, col, err) {
     gsap.set(scCta,   { opacity: 0 });
     // Caracteres del título: invisible + blur + desplazados (GSAP sobreescribe el CSS)
     gsap.set(ftChars, { opacity: 0, filter: 'blur(10px)', x: -18 });
-    // Ã¢â€â‚¬ Split por caracteres para el efecto Oryzo letra a letra Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Split por caracteres para el efecto Oryzo letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 
     function splitFltChars(selector) {
       const chars = [];
@@ -3046,7 +3046,7 @@ window.onerror = function(msg, url, line, col, err) {
     let glowTSwap = 0; // expuesto al bucle de scroll â€â€ se rellena al construir el timeline
     const scrollTl = gsap.timeline({ paused: true });
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Reset state at the very beginning (for scroll back) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Reset state at the very beginning (for scroll back) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     scrollTl.call(() => {
       // Restaurar texturas originales de la carta WebGL
       if (typeof window.update3DCardTexture === 'function') {
@@ -3068,7 +3068,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Garantizar estado inicial limpio del CTA inferior (sin transforms residuales de GSAP)
     gsap.set('#heroCta', { clearProps: 'transform,visibility,opacity', transformOrigin: '50% 50%' });
 
-    // Ã¢â€â‚¬ Fase 1 (0→0.16): Zoom + oscurecimiento suave Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fase 1 (0→0.16): Zoom + oscurecimiento suave Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     scrollTl.to([mg, visGroup], {
       x: 0, y: 0, scaleX: 1.22, scaleY: 1.22,
       rotation: -2, rotationY: -30,
@@ -3094,7 +3094,7 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.to('#subheadline p', { autoAlpha: 0, duration: 0.08, ease: 'power2.inOut' }, 0);
 
 
-    // Ã¢â€â‚¬ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // (La pantalla ya está al 100% negro desde t=0.08 â€â€ sin tween adicional)
 
     // Un único movimiento continuo y cinemático para girar 3 veces (3 x 180 = 540)
@@ -3272,7 +3272,7 @@ window.onerror = function(msg, url, line, col, err) {
       if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('back', txt);
     }, null, 0.08 + (0.80 * 450/540));
 
-    // Ã¢â€â‚¬ Zoom in/out continuo durante toda la secuencia de flips (+20%) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Zoom in/out continuo durante toda la secuencia de flips (+20%) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Curva de campana suave: sine.in sube acelerando, sine.out baja desacelerando.
     // Los dos se encadenan con velocidad máxima en el pico (t=0.38) → sin costura.
     // 1.22 Ã— 1.20 = 1.464 en el pico
@@ -3286,11 +3286,11 @@ window.onerror = function(msg, url, line, col, err) {
       opacity: 1, filter: 'blur(0px)', x: 0,
       duration: 0.06, stagger: 0.008, ease: 'power2.out'
     }, 0.60);
-    // Ã¢â€â‚¬ Textos flanqueadores izq/der estilo Oryzo â€â€ letra a letra Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Textos flanqueadores izq/der estilo Oryzo â€â€ letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Hacer visibles los contenedores en t=0.08 (pantalla al 100% negra)
     scrollTl.set(['#flip-left-text', '#flip-right-text'], { autoAlpha: 1 }, 0.04);
 
-    // Ã¢â€â‚¬ Desplazamiento Y: arranca desde t=0, desplazamiento amplio (160px) para que
+    // Ã¢â€€ Desplazamiento Y: arranca desde t=0, desplazamiento amplio (160px) para que
     // el movimiento sea claramente visible durante el fade-in de los chars.
     scrollTl.fromTo('#flip-left-text',
       { y: -40 },
@@ -3303,7 +3303,7 @@ window.onerror = function(msg, url, line, col, err) {
       0
     );
 
-    // Ã¢â€â‚¬ Fade in chars Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fade in chars Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Izquierda: de última a primera letra
     scrollTl.to(leftChars, {
       opacity: 1,
@@ -3319,7 +3319,7 @@ window.onerror = function(msg, url, line, col, err) {
       ease: 'power2.out'
     }, 0.04);
 
-    // Ã¢â€â‚¬ Fade out chars Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fade out chars Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Izquierda: de última a primera letra
     scrollTl.to(leftChars, {
       opacity: 0,
@@ -3339,7 +3339,7 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.set(['#flip-left-text', '#flip-right-text'], { autoAlpha: 0 }, 0.60);
 
 
-    // Ã¢â€â‚¬ Fase 3: THE THROW (acelera y se acerca al flip para no tener "scroll muerto") Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fase 3: THE THROW (acelera y se acerca al flip para no tener "scroll muerto") Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     scrollTl.set(stOverlay, { opacity: 1 }, 0.82);
 
     // Título desaparece antes para dar paso a la esparción
@@ -3487,7 +3487,7 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.to(scTitle, { y: 0, duration: 0.05, ease: 'none' }, 0.86);
     scrollTl.to(scCta,   { autoAlpha: 1, duration: 0.05, ease: 'none' }, 0.88);
 
-    // Ã¢â€â‚¬ Fases 5â€â€œ8: MACRO CAMERA Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fases 5â€â€œ8: MACRO CAMERA Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     const PAN  = 0.05;
       const HOLD = 0.025;
     let t = 0.92;
@@ -3589,16 +3589,16 @@ window.onerror = function(msg, url, line, col, err) {
 
     let t2 = t + PAN; // ~1.18
 
-    // Ã¢â€â‚¬ Fase 9: Recoger (0.15s) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fase 9: Recoger (0.15s) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Escalan a 1.02 (0.85 equivalente bajo escala de 1.2 base) para quedar eclipsadas y escondidas a la perfección sin opacidades raras
     scrollTl.to([sc1, sc2, sc3, sc4], {
       x: '0%', y: '0%', rotation: 0, scale: 1.02, duration: 0.15, ease: 'power2.inOut'
     }, t2);
 
-    // Ã¢â€â‚¬ CTA: fade in suave del botón cuando las cartas terminan de recogerse Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ CTA: fade in suave del botón cuando las cartas terminan de recogerse Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     scrollTl.to('#heroCta', { autoAlpha: 1, scale: 1, transformOrigin: '50% 50%', duration: 0.20, ease: 'power2.out' }, t2 + 0.075);
 
-    // Ã¢â€â‚¬ Fase 10: 2 Flips y cambianzo (1.33) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Fase 10: 2 Flips y cambianzo (1.33) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     let t3 = t2 + 0.15;
     const mainDeck = document.getElementById('mainDeck');
     const maxProg = 57.0;
@@ -3633,7 +3633,7 @@ window.onerror = function(msg, url, line, col, err) {
     let tSwap = t3 + 0.27;
     glowTSwap = tSwap; // persiana: exponer tSwap al bucle de scroll
 
-    // Ã¢â€â‚¬ Animación del texto deslizable "hecho por personas"
+    // Ã¢â€€ Animación del texto deslizable "hecho por personas"
     // Lo subimos verticalmente (yPercent: -95) y encendemos su opacidad en posición inicial
     scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: -95, x: '92vw' }, t2 - 0.08);
     scrollTl.to('#made-by-humans', {
@@ -3648,12 +3648,12 @@ window.onerror = function(msg, url, line, col, err) {
 
       
 
-    // Ã¢â€â‚¬ Animación del segundo texto "personalizado con IA"
+    // Ã¢â€€ Animación del segundo texto "personalizado con IA"
     let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" → prog ~1.47
     scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -5, x: '-92vw' }, tAiStart);
     scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
-    // Ã¢â€â‚¬ Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€ Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     //   (sin tweens GSAP â€â€ la persiana la mueve el scroll puro)
 
     // Deriva lenta después de llegar al centro → continúan en la misma dirección mientras se desvanecen
@@ -3694,14 +3694,14 @@ window.onerror = function(msg, url, line, col, err) {
     // La carta plana sale volando hacia arriba coincidiendo con la transición al carrusel
     // Eliminados los tweens absolutos a 9.62 que alargaban el scrollTl artificialmente
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ SCATTER NAME INPUT: bloquea scroll mientras se escribe Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ SCATTER NAME INPUT: bloquea scroll mientras se escribe Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     const scNameInput = document.getElementById('sc-name-input');
     if (scNameInput) {
       scNameInput.addEventListener('wheel',     e => e.stopPropagation(), { passive: false });
       scNameInput.addEventListener('touchmove', e => e.stopPropagation(), { passive: false });
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Drivers Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Drivers Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Reducido maxProg para que el scroll termine justo al completar la nueva sección
     // Si sessionStorage tiene un valor legacy en la zona prohibida (entre el salto cuantico 2.20 y 9.62),
     // reiniciamos a 0 para evitar un quantum jump inmediato al cargar.
@@ -3971,7 +3971,7 @@ window.onerror = function(msg, url, line, col, err) {
       }
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ SPAWN CARD LOGIC (De index.html) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ SPAWN CARD LOGIC (De index.html) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     const hiddenCards   = Array.from(mainDeck.querySelectorAll('.card-wrap.card-in-deck'));
     const cardTable     = document.getElementById('card-table');
     let   currentDraw   = 0;
@@ -3982,7 +3982,7 @@ window.onerror = function(msg, url, line, col, err) {
       const nextCard = hiddenCards[currentDraw];
       if (!nextCard.classList.contains('card-in-deck')) return;
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ Igual que index.html: la carta permanece DENTRO de box-3d-volume Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€€Ã¢â€€ Igual que index.html: la carta permanece DENTRO de box-3d-volume Ã¢â€€Ã¢â€€
       // La perspectiva correcta viene GRATIS del contexto preserve-3d del padre.
       // transform: translate(-50%, calc(-50% + Y)) translateZ(Z) rotate(-90deg) scale(0.85)
       //   - Y = 15px (hundida), peekY = -110px (asomando)
@@ -5147,7 +5147,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
         }
       }
-      // Ã¢â€â‚¬ Fade de cartas en la mesa + drag-hint Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€€ Fade de cartas en la mesa + drag-hint Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
       // opacity = openP: empieza a desvanecerse cuando openP < 1 (caja empieza a cerrar)
       // y termina invisible en openP = 0 (caja completamente cerrada)
       const tableOpacity = Math.max(0, Math.min(1, openP));
@@ -5331,7 +5331,7 @@ window.onerror = function(msg, url, line, col, err) {
            lineR.setAttribute('y1', '100%'); lineR.setAttribute('y2', `${100 - (100 * dashP)}%`);
         }
 
-        // Ã¢â€â‚¬Ã¢â€â‚¬ MAGAZINE BREAKOUT Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+        // Ã¢â€€Ã¢â€€ MAGAZINE BREAKOUT Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
         // FASE 1 (prog 14.62→15.6): lines undraw + texts/images exit
         // FASE 2 (prog 15.6→16.8): frame expands to full screen
         const breakoutOverlay = document.getElementById('mag-breakout-overlay');
@@ -5367,7 +5367,7 @@ window.onerror = function(msg, url, line, col, err) {
             const expansionP = Math.min(Math.max(mapRange((prog + 0.5), 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
-            // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 2: clip-path:inset() en el clon â€â€ sin overlay, sin fondo Ã¢â€â‚¬Ã¢â€â‚¬
+            // Ã¢â€€Ã¢â€€ FASE 2: clip-path:inset() en el clon â€â€ sin overlay, sin fondo Ã¢â€€Ã¢â€€
             if (expansionP > 0) {
 
               if (!document.getElementById('mag-model-clone')) {
@@ -5441,7 +5441,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-            // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 1: Exit animations (lines + texts + images) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+            // Ã¢â€€Ã¢â€€ FASE 1: Exit animations (lines + texts + images) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 
 
             // 1. SVG LINES â€â€ se desdibujan en dirección inversa
@@ -5582,7 +5582,7 @@ window.onerror = function(msg, url, line, col, err) {
             const expansionP = Math.min(Math.max(mapRange((prog + 0.5), 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
-            // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 2: Overlay expansión del marco Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+            // Ã¢â€€Ã¢â€€ FASE 2: Overlay expansión del marco Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
             if (expansionP > 0) {
               breakoutOverlay.style.display = 'block';
               breakoutOverlay.style.overflow = 'hidden';
@@ -5600,7 +5600,7 @@ window.onerror = function(msg, url, line, col, err) {
               breakoutOverlay.style.display = 'none';
             }
 
-            // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 1: Exit animations (lines + texts + images) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+            // Ã¢â€€Ã¢â€€ FASE 1: Exit animations (lines + texts + images) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 
             // 1. SVG LINES â€â€ se desdibujan en dirección inversa
             if (lineT && lineB && lineL && lineR) {
@@ -6089,7 +6089,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       // dragHint es ahora fijo (no sigue el ratón)
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ DRAG CAJA Ã¢â€â‚¬Ã¢â€â‚¬ (igual que index.html: arrastramos el wrapper mainDeck)
+    // Ã¢â€€Ã¢â€€ DRAG CAJA Ã¢â€€Ã¢â€€ (igual que index.html: arrastramos el wrapper mainDeck)
     // Ahora mainDeck es del tamaño de la caja (como en index.html), así que
     // arrastrarlo mueve toda la caja+cartas juntas.
     let isBoxDragging = false;
@@ -6138,7 +6138,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ DRAG CARTAS Ã¢â€â‚¬Ã¢â€â‚¬ Funcionan con position:fixed en body (fuera de preserve-3d)
+    // Ã¢â€€Ã¢â€€ DRAG CARTAS Ã¢â€€Ã¢â€€ Funcionan con position:fixed en body (fuera de preserve-3d)
     document.querySelectorAll('.card-wrap').forEach(card => {
       let isDragging = false;
       let startX, startY, initialLeft, initialTop;
@@ -6297,7 +6297,7 @@ window.onerror = function(msg, url, line, col, err) {
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
 
-          // Ã¢â€â‚¬ Edge glow: matemáticamente atado a prog
+          // Ã¢â€€ Edge glow: matemáticamente atado a prog
           const eg = document.getElementById('edge-glow');
           if (eg) {
             let startP = 1.54;
@@ -6321,7 +6321,7 @@ window.onerror = function(msg, url, line, col, err) {
       });
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ GLOBAL SCENE ROUTER Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ GLOBAL SCENE ROUTER Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     const webglCanvas   = document.getElementById('c');
     const cssContainer  = document.getElementById('css-container');
     function updateGlobalScenes() {
@@ -6338,7 +6338,7 @@ window.onerror = function(msg, url, line, col, err) {
       // 5. Edge glow: se gestiona por estado en smoothScrollLoop
     }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ SCROLL DRIVERS & SMOOTH LERP (Lenis-style) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+// Ã¢â€€Ã¢â€€ SCROLL DRIVERS & SMOOTH LERP (Lenis-style) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     let targetProg = prog;
     let glowVisible = false;
     let lastScrollTime = 0;
@@ -6433,7 +6433,7 @@ window.onerror = function(msg, url, line, col, err) {
           if (debugProg) debugProg.innerText = prog.toFixed(2);
 
 
-          // Ã¢â€â‚¬ Edge glow: matemáticamente atado a prog
+          // Ã¢â€€ Edge glow: matemáticamente atado a prog
           const eg = document.getElementById('edge-glow');
           if (eg) {
             let startP = 1.54;
@@ -6475,7 +6475,7 @@ window.onerror = function(msg, url, line, col, err) {
           scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
         }
       
-      // Ã¢â€â‚¬Ã¢â€â‚¬ THERMAL CURTAIN Ã¢â€â‚¬Ã¢â€â‚¬ incondicional, ejecuta cada frame Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€€Ã¢â€€ THERMAL CURTAIN Ã¢â€€Ã¢â€€ incondicional, ejecuta cada frame Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
       {
         const _tP = Math.min(1, Math.max(0, ((prog + 0.5) - 16.27) / (17.2 - 16.27)));
         const _tc = document.getElementById('thermal-canvas');
@@ -6502,7 +6502,7 @@ window.onerror = function(msg, url, line, col, err) {
         }
       }
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ THERMAL OVERLAY Ã¢â€â‚¬Ã¢â€â‚¬ máscara gradiente suave en el overlay (sin línea dura)
+      // Ã¢â€€Ã¢â€€ THERMAL OVERLAY Ã¢â€€Ã¢â€€ máscara gradiente suave en el overlay (sin línea dura)
       {
         var _tPdiv = Math.min(1, Math.max(0, ((prog + 0.5) - 16.27) / (16.8 - 16.27)));
         window._brainScrollProg = prog;
@@ -6564,13 +6564,13 @@ window.onerror = function(msg, url, line, col, err) {
       // Llamar incondicionalmente a updateBoxState en cada fotograma
       updateBoxState();
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ SINC CSS card → GLB 3D overlay Ã¢â€â‚¬Ã¢â€â‚¬ (siempre, cada frame)
+      // Ã¢â€€Ã¢â€€ SINC CSS card → GLB 3D overlay Ã¢â€€Ã¢â€€ (siempre, cada frame)
       if (globalGlbCard && cardCanvasEl && document.getElementById('card-morph-group')) {
           const mgEl = document.getElementById('card-morph-group');
 
           mgEl.style.opacity = '0'; // CSS card siempre oculta â€â€ reemplazada por la 3D
 
-          // Ã¢â€â‚¬Ã¢â€â‚¬ CROSSFADE carta Ã¢â€ â€ caja Ã¢â€â‚¬Ã¢â€â‚¬
+          // Ã¢â€€Ã¢â€€ CROSSFADE carta Ã¢â€ â€ caja Ã¢â€€Ã¢â€€
           // Cuando mainDeck es display:'block', la carta se desvanece exactamente al ritmo
           // que la caja aparece: cardCanvas.opacity = 1 - mainDeck.opacity.
           // Así nunca hay un "vacío" entre carta oculta y caja visible.
@@ -6601,14 +6601,14 @@ window.onerror = function(msg, url, line, col, err) {
           const scIntroEl = document.getElementById('sc-intro');
 
           if (!inScatter) {
-              // Ã¢â€â‚¬Ã¢â€â‚¬ Tracking pre-scatter (Fase 1 zoom + Fase 2 flip) Ã¢â€â‚¬Ã¢â€â‚¬
+              // Ã¢â€€Ã¢â€€ Tracking pre-scatter (Fase 1 zoom + Fase 2 flip) Ã¢â€€Ã¢â€€
               // Usamos propiedades GSAP (x/y/scaleY) en lugar de getBoundingClientRect.
               // getBoundingClientRect incluye la distorsión de perspectiva CSS 3D (rotationY),
               // lo que hace que el centro y el tamaño del rect oscilen durante el flip.
               // Las propiedades x/y de GSAP son translaciones puras → sin distorsión.
-              //   â€¢ mgEl natural CSS center = (50vw, 50vh) [fixed, inset:0, flex-centered]
-              //   â€¢ GSAP x/y = offset aplicado encima del centro natural
-              //   â€¢ En Fase 2 (flip): GSAP x=0, y=0 → posición constante en centro
+              //   • mgEl natural CSS center = (50vw, 50vh) [fixed, inset:0, flex-centered]
+              //   • GSAP x/y = offset aplicado encima del centro natural
+              //   • En Fase 2 (flip): GSAP x=0, y=0 → posición constante en centro
               smoothScrollLoop._lockedCard = null;
               if (scIntroEl) scIntroEl.style.visibility = 'hidden';
               cardCanvasEl.style.transform = 'none';
@@ -6648,7 +6648,7 @@ window.onerror = function(msg, url, line, col, err) {
               );
 
           } else {
-              // Ã¢â€â‚¬Ã¢â€â‚¬ Scatter / 4 pasos Ã¢â€â‚¬Ã¢â€â‚¬
+              // Ã¢â€€Ã¢â€€ Scatter / 4 pasos Ã¢â€€Ã¢â€€
               if (scIntroEl) scIntroEl.style.visibility = 'hidden';
 
               // Snapshot una sola vez al entrar al scatter.
@@ -6701,7 +6701,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
               if (!inFlipBack) {
-                  // Ã¢â€â‚¬Ã¢â€â‚¬ SCATTER normal (4 pasos / macro-cámara) Ã¢â€â‚¬Ã¢â€â‚¬
+                  // Ã¢â€€Ã¢â€€ SCATTER normal (4 pasos / macro-cámara) Ã¢â€€Ã¢â€€
                   const boardRotDeg = gsap.getProperty(scBoard, 'rotation') || 0;
                   const totalRz     = lc.rotBaseZ + boardRotDeg * Math.PI / 180;
                   globalGlbCard.rotation.set(0, Math.PI, totalRz, 'XYZ');
@@ -6758,8 +6758,8 @@ window.onerror = function(msg, url, line, col, err) {
                   }
               }
 
-          }   // Ã¢â€â‚¬Ã¢â€â‚¬ fin else scatter Ã¢â€â‚¬Ã¢â€â‚¬
-      }   // Ã¢â€â‚¬Ã¢â€â‚¬ fin if (globalGlbCard) Ã¢â€â‚¬Ã¢â€â‚¬
+          }   // Ã¢â€€Ã¢â€€ fin else scatter Ã¢â€€Ã¢â€€
+      }   // Ã¢â€€Ã¢â€€ fin if (globalGlbCard) Ã¢â€€Ã¢â€€
 
       updateNavState(prog);
       } catch(err) { 
@@ -6785,7 +6785,7 @@ requestAnimationFrame(smoothScrollLoop);
       // Los 9 slides con factor 2.0 → cada 0.5 unidades de prog desde 10.62
       const snapPoints = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62, 15.12];
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ Caso 1: Bloqueado en un snap point Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€€Ã¢â€€ Caso 1: Bloqueado en un snap point Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
       if (_snapLockPoint !== null && Math.abs(current - _snapLockPoint) < 0.02) {
         if (_snapLockTicks > 0) {
           _snapLockTicks--;
@@ -6795,7 +6795,7 @@ requestAnimationFrame(smoothScrollLoop);
         }
       }
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ Caso 2: Cruza un snap point → snap + bloquear Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€€Ã¢â€€ Caso 2: Cruza un snap point → snap + bloquear Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
       let newProg = current + delta;
       for (let sp of snapPoints) {
         if ((current < sp && newProg >= sp) || (current > sp && newProg <= sp)) {
@@ -6807,7 +6807,7 @@ requestAnimationFrame(smoothScrollLoop);
         }
       }
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ Caso 3: Zona de gravedad (atracción suave hacia el centro) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€€Ã¢â€€ Caso 3: Zona de gravedad (atracción suave hacia el centro) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
       const minD = 0.14;
       for (let sp of snapPoints) {
         let dist = Math.abs(current - sp);
@@ -6835,7 +6835,7 @@ requestAnimationFrame(smoothScrollLoop);
       const prevTarget = targetProg;
       targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ Entrada carrusel TIME-BASED Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€€Ã¢â€€ Entrada carrusel TIME-BASED Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
       // Trigger en transP=0.80 (prog=10.42): el flash aparece → restá del reveal es automático
       if (prevTarget <= 10.42 && targetProg > 10.42 && !window._carouselEntryStart) {
         window._carouselEntryStart = Date.now();
@@ -6924,7 +6924,7 @@ requestAnimationFrame(smoothScrollLoop);
   camera.position.set(-0.3, 12, 3);
   camera.lookAt(0, 0, 0);
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ PARALLAX DE RATÓN Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ PARALLAX DE RATÓN Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Posición base de la cámara (sin parallax)
   const CAM_BASE = { x: -0.3, y: 12, z: 3 };
   const CAM_LOOK = { x: 0, y: 0, z: 0 };
@@ -6936,7 +6936,7 @@ requestAnimationFrame(smoothScrollLoop);
     mouseRawY = (e.clientY / window.innerHeight) * 2 - 1;  // -1 arr, +1 abj
   });
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ ENV MAP PROCEDURAL (simula HDRI de restaurante oscuro) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ ENV MAP PROCEDURAL (simula HDRI de restaurante oscuro) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Genera un cubeRenderTarget con gradiente cálido para que plates+cubiertos
   // tengan algo que reflejar (sin esto, los metales alta-roughness salen planos)
   function buildEnvMap() {
@@ -6969,7 +6969,7 @@ requestAnimationFrame(smoothScrollLoop);
   }
   buildEnvMap();
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ TEXTURA DE MADERA PROCEDURAL Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ TEXTURA DE MADERA PROCEDURAL Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   function makeWoodTex() {
     const S = 2048;
     const c = document.createElement('canvas');
@@ -7008,7 +7008,7 @@ requestAnimationFrame(smoothScrollLoop);
     return tex;
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ CARTAS "ONE LAST TIME" â€â€ diseño exacto de olt-hover-card Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ CARTAS "ONE LAST TIME" â€â€ diseño exacto de olt-hover-card Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Logo verde embebido como data URL (evita CORS/taint en file://)
   const LOGO_VERDE_IMG = (function(){
     const img = new Image();
@@ -7025,7 +7025,7 @@ requestAnimationFrame(smoothScrollLoop);
     { line1: 'conexiones significativas', line2: 'para personas que importan' },
   ];
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ MATERIALES BASE Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ MATERIALES BASE Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   const woodMat   = new THREE.MeshStandardMaterial({ map: makeWoodTex(), roughness:0.88, metalness:0.02 });
   const napkinMat = new THREE.MeshStandardMaterial({ color:0xe8e0d0, roughness:1.0, metalness:0.0 });
 
@@ -7204,7 +7204,7 @@ requestAnimationFrame(smoothScrollLoop);
     return w;
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ CONSTRUCCIÓN ESCENA BASE Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ CONSTRUCCIÓN ESCENA BASE Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Mesa de madera (base)
   const tableTop = new THREE.Mesh(new THREE.PlaneGeometry(60,60), woodMat);
   tableTop.rotation.x = -Math.PI/2;
@@ -7241,7 +7241,7 @@ requestAnimationFrame(smoothScrollLoop);
     OLT_LOGO.onerror = buildAllCards; // Construir de todos modos si falla
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ ILUMINACIÓN LUZ NATURAL â€â€ restaurante casual mediodía Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ ILUMINACIÓN LUZ NATURAL â€â€ restaurante casual mediodía Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Sin focos. Luz difusa de ventanas + techo, como en un bistró con luz natural.
 
   // 1. Skylight: luz ambiental muy baja (solo llena las sombras)
@@ -7279,11 +7279,11 @@ requestAnimationFrame(smoothScrollLoop);
   ceilLight.position.set(2, 18, 4);
   scene.add(ceilLight);
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ CARGA DEL MODELO GLB (llamado desde startLoading tras la animación) Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ CARGA DEL MODELO GLB (llamado desde startLoading tras la animación) Ã¢â€€Ã¢â€€
   const loaderBar = document.getElementById('loader-bar');
   const gltfLoader = new THREE.GLTFLoader();
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ ID CARD: RENDERER STANDALONE TRANSPARENTE (canvas #card-canvas) Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ ID CARD: RENDERER STANDALONE TRANSPARENTE (canvas #card-canvas) Ã¢â€€Ã¢â€€
   //
   // En lugar de meter el GLB en la cámara principal (que provoca bandas negras),
   // usamos un segundo WebGLRenderer con canvas propio, alpha:true y sin background.
@@ -7355,7 +7355,7 @@ requestAnimationFrame(smoothScrollLoop);
     });
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // clipCardShape: clip the canvas 2D context to a rounded-rect matching the
   // CSS card's border-radius:20px. Pixels outside go transparent (alpha=0).
   function clipCardShape(ctx, W, H) {
@@ -7380,7 +7380,7 @@ requestAnimationFrame(smoothScrollLoop);
     ctx.lineWidth   = 2;
     ctx.beginPath(); ctx.moveTo(0, 1); ctx.lineTo(W, 1); ctx.stroke();
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Logo Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Logo Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     const lH = H * (34 / 234);
     const lY = H * (70 / 234);
     if (logoImg && logoImg.complete && logoImg.naturalWidth > 0) {
@@ -7397,7 +7397,7 @@ requestAnimationFrame(smoothScrollLoop);
       ctx.restore();
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Texto Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Texto Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     const fs  = H * (19 / 234);
     const gap = H * ( 3.2 / 234);
     const ty  = H * (122 / 234);
@@ -7419,14 +7419,14 @@ requestAnimationFrame(smoothScrollLoop);
     ctx.fillStyle = '#151515';
     ctx.fillRect(0, 0, W, H);
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Logo (Solo si el texto es corto) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Logo (Solo si el texto es corto) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     if (text1.length <= 30 && LOGO_VERDE_IMG.naturalWidth > 0) {
       const lH = 68;
       const lW = LOGO_VERDE_IMG.naturalWidth * lH / LOGO_VERDE_IMG.naturalHeight;
       ctx.drawImage(LOGO_VERDE_IMG, (W - lW) / 2, 140, lW, lH);
     }
     
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Texto Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Texto Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -7686,8 +7686,8 @@ requestAnimationFrame(smoothScrollLoop);
 
   // Ã¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€Â
   // placeIdCard â€â€ estrategia definitiva:
-  //   â€¢ GLB cuerpo: aporta forma redondeada real del archivo 3D (bordes, cantos)
-  //   â€¢ PlaneGeometry x2: overlays con diseño canvas encima, sin offset de Z
+  //   • GLB cuerpo: aporta forma redondeada real del archivo 3D (bordes, cantos)
+  //   • PlaneGeometry x2: overlays con diseño canvas encima, sin offset de Z
   //     (depthTest:false evita Z-fighting, alphaTest deja ver esquinas del GLB)
   // Ã¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€ÂÃ¢â€Â
   function placeIdCard(gltf) {
@@ -7702,7 +7702,7 @@ requestAnimationFrame(smoothScrollLoop);
     // Material del canto 3D â€â€ MeshStandardMaterial para que la luz lo defina y recorte
     const edgeMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.75, metalness: 0.05 });
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ ENFOQUE LIMPIO Y SIMPLE Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€Ã¢â€€ ENFOQUE LIMPIO Y SIMPLE Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // 1. ExtrudeGeometry solo para los CANTOS (color negro, sin cara frontal/trasera)
     //    usamos el mismo shape pero sin las caras front/back del Extrude →
     //    conseguimos un "marco" 3D redondeado negro.
@@ -7745,7 +7745,7 @@ requestAnimationFrame(smoothScrollLoop);
 
     const halfT = D / 2;
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Helper: crea una ShapeGeometry REDONDEADA con UVs de 0→1 Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€Ã¢â€€ Helper: crea una ShapeGeometry REDONDEADA con UVs de 0→1 Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // La geometría ya tiene la forma exacta del canto → no hace falta clipCardShape
     // ni alphaTest → las esquinas son físicamente inexistentes (sin polígonos).
     function makeRoundedFaceGeo(flipU = false) {
@@ -7844,7 +7844,7 @@ requestAnimationFrame(smoothScrollLoop);
     pivot.scale.setScalar(scaleFact);
     pivot.position.set(0, 0, -dist);
     pivot.visible = false;
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Caras oscuras → MeshBasicMaterial (sin iluminación) Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Caras oscuras → MeshBasicMaterial (sin iluminación) Ã¢â€€Ã¢â€€
     // La iluminación de la escena gira el negro #151515 a gris al cambiar el ángulo de luz.
     // Con BasicMaterial, las caras oscuras siempre muestran su color exacto (negro puro),
     // igual que se ve encima de la mesa, independientemente del ángulo de cámara o de luz.
@@ -7880,7 +7880,7 @@ requestAnimationFrame(smoothScrollLoop);
     console.log('[Card3D] GLB W:', size.x.toFixed(3), 'H:', size.z.toFixed(3),
                 'T:', size.y.toFixed(3), '| scale:', scaleFact.toFixed(4));
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Mostrar 3D card de inmediato (ya es visible durante la carga) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Mostrar 3D card de inmediato (ya es visible durante la carga) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // 1) Mover el SVG de borde a un div en 
 
   
@@ -7980,7 +7980,7 @@ requestAnimationFrame(smoothScrollLoop);
     scene.add(glass);
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ startLoading: parse GLTF en background; animación arranca al terminar Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ startLoading: parse GLTF en background; animación arranca al terminar Ã¢â€€Ã¢â€€
   function startLoading() {
     gltfLoader.load(TABLESET_B64,
       (gltf) => {
@@ -8241,7 +8241,7 @@ requestAnimationFrame(smoothScrollLoop);
     } else { console.warn('ID_CARD_B64 not found - skipping 3D card mesh'); }
   }
   
-  // Ã¢â€â‚¬Ã¢â€â‚¬ INTRO CARD ANIMATION Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ INTRO CARD ANIMATION Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   (function startIntroAnim() {
     const introCard = document.getElementById('intro-card');
     const introMatrix = document.getElementById('intro-matrix-text');
@@ -8256,7 +8256,7 @@ requestAnimationFrame(smoothScrollLoop);
       return;
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Primera carga (savedProg=0): exponer función que activa la animación Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Primera carga (savedProg=0): exponer función que activa la animación Ã¢â€€Ã¢â€€
     window._runIntroAnim = function () {
       // 1. Fade in de la carta completa
       if (introCard) introCard.classList.add('visible');
@@ -8346,7 +8346,7 @@ requestAnimationFrame(smoothScrollLoop);
   // Start loading immediately (parse in background during animation)
   startLoading();
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ NAV HOVER Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ NAV HOVER Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   const navOverlay = document.getElementById('nav-overlay');
   document.querySelectorAll('#nav-menu > a[data-text]').forEach(link => {
     const text = link.getAttribute('data-text');
@@ -8436,14 +8436,14 @@ requestAnimationFrame(smoothScrollLoop);
     });
   });
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ PARALLAX DE RATÓN Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ PARALLAX DE RATÓN Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   let mX=0, mY=0, tX=0, tY=0;
   document.addEventListener('mousemove', e => {
     tX = (e.clientX/window.innerWidth  - 0.5) * 2;
     tY = (e.clientY/window.innerHeight - 0.5) * 2;
   });
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ SOMBRAS DE PERSONAS (canvas animado sobre la mesa) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ SOMBRAS DE PERSONAS (canvas animado sobre la mesa) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   function mapRange(p, inMin, inMax, outMin, outMax) {
       let t = Math.max(0, Math.min(1, (p - inMin) / (inMax - inMin)));
       return outMin + t * (outMax - outMin);
@@ -8532,7 +8532,7 @@ requestAnimationFrame(smoothScrollLoop);
     shadowTex.needsUpdate = true;
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ LOOP Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ LOOP Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   const clock = new THREE.Clock();
   let lastT = 0;
 
@@ -8542,7 +8542,7 @@ requestAnimationFrame(smoothScrollLoop);
     const dt = t - lastT;
     lastT = t;
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Parallax de ratón sobre la cámara principal Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Parallax de ratón sobre la cámara principal Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Intensidad máxima al inicio, se apaga al scrollear (progress > 0.15)
     const scrollProg = (typeof scrollTl !== 'undefined') ? scrollTl.progress() : 0;
     const parallaxStr = Math.max(0, 1 - scrollProg / 0.15); // 1→0 en los primeros 15% del scroll
@@ -8706,7 +8706,7 @@ requestAnimationFrame(smoothScrollLoop);
     <div id="thermal-vignette" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;
       background:radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(8,0,20,0.7) 100%);"></div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â SECCIÓN NEUROCIENCIA â€â€ usa brain-2d-wrap ya existente, sin div extra Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- Ã¢•ÂÃ¢•Â SECCIÓN NEUROCIENCIA â€â€ usa brain-2d-wrap ya existente, sin div extra Ã¢•ÂÃ¢•Â -->
 
 
     <!-- Tarjeta cristalizada: separada del cerebro, SIN mix-blend-mode -->
@@ -8754,9 +8754,9 @@ requestAnimationFrame(smoothScrollLoop);
     </div> <!-- fin neuro-card -->
   </div> <!-- fin thermal-overlay -->
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â FIN SECCIÓN NEUROCIENCIA Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+    <!-- Ã¢•ÂÃ¢•Â FIN SECCIÓN NEUROCIENCIA Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â -->
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â NUEVA SECCIÓN: ORYZO DECK Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+    <!-- Ã¢•ÂÃ¢•Â NUEVA SECCIÓN: ORYZO DECK Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â -->
     <div id="oryzo-section" style="
       position:fixed; top:0; left:0; width:100vw; height:100vh;
       z-index: 10000000;
@@ -8861,7 +8861,7 @@ requestAnimationFrame(smoothScrollLoop);
       </div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â FIN SECCIÓN ORYZO Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+    <!-- Ã¢•ÂÃ¢•Â FIN SECCIÓN ORYZO Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â -->
 
   </div>
 
@@ -8869,15 +8869,15 @@ requestAnimationFrame(smoothScrollLoop);
 
 
 <script>
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â
 //  MAPA DE CALOR 2D ANIMADO â€â€ zonas respiran, cerebro parece vivo
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â
 (function initHeatMap() {
   var wrap = document.getElementById('brain-2d-wrap');
   var hc   = document.getElementById('brain-2d-heat');
   if (!wrap || !hc) return;
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ ZONAS: cx/cy posición, rx/ry radio, heat base, phase y speed para animación Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ ZONAS: cx/cy posición, rx/ry radio, heat base, phase y speed para animación Ã¢â€€Ã¢â€€
   var ZONES = [
     // 1. VTA â€â€ ÃƒÂrea tegmental ventral (más caliente, pulso más rápido)
     { id:'VTA',  cx:0.52, cy:0.72, rx:0.08, ry:0.06, heat:1.00, phase:0.0,  speed:0.9  },
@@ -8889,7 +8889,7 @@ requestAnimationFrame(smoothScrollLoop);
     { id:'CAU',  cx:0.45, cy:0.40, rx:0.16, ry:0.10, heat:0.90, phase:3.5,  speed:0.65 }
   ];
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ Paleta Oryzo Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ Paleta Oryzo Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   function oryzoRGB(heat) {
     heat = Math.max(0, Math.min(1, heat));
     var stops = [
@@ -8977,18 +8977,18 @@ requestAnimationFrame(smoothScrollLoop);
 
 
 <script>
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â
 
 //  THERMAL CAMERA SYSTEM
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â
 //  BRAIN 3D THERMAL RENDERER  â€â€ Opción A: dual-model swap
 //  Carga human_brain.glb (completo) y human_brain_half.glb.
 //  Al inicio muestra el cerebro completo. Durante el scroll, mientras
 //  rota sobre Y, hace un crossfade al medio cerebro para revelar
 //  las estructuras internas de forma imperceptible.
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// Ã¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•ÂÃ¢•Â
 (function initBrainRenderer() {
   var _brainRenderer = null, _brainScene = null, _brainCamera = null;
   var _brainFull = null, _brainHalf = null, _brainClock = null;
@@ -9042,7 +9042,7 @@ requestAnimationFrame(smoothScrollLoop);
 
     _brainClock = new THREE.Clock();
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Helper: aplica material térmico a todos los meshes de un root Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Helper: aplica material térmico a todos los meshes de un root Ã¢â€€Ã¢â€€
     function applyThermalMat(root, isHalf) {
       root.traverse(function(c) {
         if (!c.isMesh || !c.material) return;
@@ -9078,7 +9078,7 @@ requestAnimationFrame(smoothScrollLoop);
           opacity:      1.0
         });
 
-        // Ã¢â€â‚¬Ã¢â€â‚¬ Shader: zona caliente cingulada â€â€ Three.js r128 Ã¢â€â‚¬Ã¢â€â‚¬
+        // Ã¢â€€Ã¢â€€ Shader: zona caliente cingulada â€â€ Three.js r128 Ã¢â€€Ã¢â€€
         m.onBeforeCompile = function(shader) {
           shader.uniforms.uBBCtr = { value: _ctr };
           shader.uniforms.uBBHsz = { value: _hsz };
@@ -9128,7 +9128,7 @@ requestAnimationFrame(smoothScrollLoop);
     }
 
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Helper: envuelve un root en un Group centrado y escalado Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Helper: envuelve un root en un Group centrado y escalado Ã¢â€€Ã¢â€€
     // El Group es lo que se mueve en el render loop.
     // El root interno queda centrado en el origen del Group.
     // Así position.set() en el Group no rompe el centrado.
@@ -9148,7 +9148,7 @@ requestAnimationFrame(smoothScrollLoop);
       return wrapper; // mover el wrapper, no el root
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Helper: cambia opacity de todos los meshes de un root Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Helper: cambia opacity de todos los meshes de un root Ã¢â€€Ã¢â€€
     function setOpacity(root, opacity) {
       root.traverse(function(c) {
         if (!c.isMesh) return;
@@ -9157,7 +9157,7 @@ requestAnimationFrame(smoothScrollLoop);
       });
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Arranca el loop cuando ambos modelos están listos Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Arranca el loop cuando ambos modelos están listos Ã¢â€€Ã¢â€€
     function checkReady() {
       if (!_fullLoaded) return;
       _brainReady = true;
@@ -9195,13 +9195,13 @@ requestAnimationFrame(smoothScrollLoop);
     if (!_brainReady || !_brainFull) return;
     _brainT = _brainClock.getElapsedTime();
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 1: Rotación â€â€ bProg 16.3 → 17.0 Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ FASE 1: Rotación â€â€ bProg 16.3 → 17.0 Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // rotEase va de 0 (frontal) a 1 (perfil lateral completo)
     var _bProg = window._brainScrollProg || 0; var _bProgM = _bProg + 0.5;
     var _rotT    = Math.max(0, Math.min(1, (_bProgM - 16.3) / (17.0 - 16.3)));
     var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 2: Swap â€â€ bProg 17.0 → 17.8 (DESPUÉS de la rotación completa) Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ FASE 2: Swap â€â€ bProg 17.0 → 17.8 (DESPUÉS de la rotación completa) Ã¢â€€Ã¢â€€
     var swapT       = Math.max(0, Math.min(1, (_bProgM - 17.0) / (17.8 - 17.0)));
     var fullOpacity = 1.0 - swapT;
     var halfOpacity = swapT;
@@ -9214,7 +9214,7 @@ requestAnimationFrame(smoothScrollLoop);
     var posX = -0.008 * vW / 2;
     var posY =  0.312 * vH / 2;
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Zoom CSS sobre el overlay completo Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Zoom CSS sobre el overlay completo Ã¢â€€Ã¢â€€
     var zoomScale = 1.0 + swapT * 0.4225;
     var overlay = document.getElementById('thermal-overlay');
     if (overlay) {
@@ -9223,7 +9223,7 @@ requestAnimationFrame(smoothScrollLoop);
       overlay.style.transform = 'translateY(-' + scrollUpVh + 'vh) scale(' + zoomScale + ')';
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Mapa de calor 2D: fade-in con swapT Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ Mapa de calor 2D: fade-in con swapT Ã¢â€€Ã¢â€€
     if (window._drawHeatMap) window._drawHeatMap(swapT);
 
     var halfPosX = -0.03 * vW / 2;
@@ -9383,7 +9383,7 @@ function updateThermalCurtain(progress) {
   ctx.restore();
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ Driver independiente: lee prog de sessionStorage cada 50ms Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+// Ã¢â€€Ã¢â€€ Driver independiente: lee prog de sessionStorage cada 50ms Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 setInterval(function() {
   var p  = parseFloat(sessionStorage.getItem('dev_prog') || '0');
     var pM = p + 0.5;
@@ -9666,7 +9666,7 @@ setInterval(function() {
     </div>
     </div>
 
-<!-- Ã¢â€â‚¬Ã¢â€â‚¬ IMG STRIP CAROUSEL (after testimonios) Ã¢â€â‚¬Ã¢â€â‚¬ -->
+<!-- Ã¢â€€Ã¢â€€ IMG STRIP CAROUSEL (after testimonios) Ã¢â€€Ã¢â€€ -->
 <div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;">
   <div id="img-strip-wrapper" style="position:absolute;top:0;left:0;width:100%;height:100%;will-change:transform;">
     <div id="img-strip-track" style="display:flex;flex-direction:row;position:absolute;top:0;left:0;height:100%;gap:0.5cm;will-change:transform;">
@@ -9866,7 +9866,7 @@ setInterval(function() {
     <div id="dynamic-pricing-row" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 30px); display:flex; align-items:center; justify-content:center; white-space:nowrap; opacity: 0; will-change: transform, opacity;">
         <span id="dp-left" style="display:inline-block; margin-right: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;">Ahora por</span>
         <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
-            <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">7,99â‚¬</span>
+            <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">7,99€</span>
             <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:3px; background-color:#ccff00; transform:translateY(-50%); transition: width 0.1s linear;"></div>
         </div>
         <span id="dp-right" style="display:inline-block; margin-left: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;"> tienes la habilidad de tenerla cuando quieras</span>
@@ -9894,8 +9894,8 @@ setInterval(function() {
 </div>
   <a href="arbol.html" id="olt-final-cta" class="btn btn-blue btn-full" style="position:relative; z-index:99999; margin-top:0; opacity:0; pointer-events:none; text-decoration:none; padding: 1.8rem 0 !important; height: auto; width:70vw; max-width:900px; box-sizing:border-box; font-size: 1.875rem !important;">
     <div class="mini-marquee-container" style="animation-duration: 50s;">
-      <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; </div>
-      <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; â€¢ &nbsp; </div>
+      <div class="marquee-content">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
+      <div class="marquee-content" aria-hidden="true">RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; RESERVAR MI CENA TRANSFORMADORA AHORA &nbsp; • &nbsp; </div>
     </div>
   </a>
 </div>
@@ -9975,7 +9975,7 @@ document.querySelectorAll('#end-reviews-container .review-quote, #end-reviews-co
 document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { if (typeof splitTextIntoChars === 'function') splitTextIntoChars(el); });
 </script>
 <script>
-// Ã¢â€â‚¬Ã¢â€â‚¬ CONTROLADOR SECCIÓN NEUROCIENCIA â€â€ wipe Oryzo scroll-driven Ã¢â€â‚¬Ã¢â€â‚¬
+// Ã¢â€€Ã¢â€€ CONTROLADOR SECCIÓN NEUROCIENCIA â€â€ wipe Oryzo scroll-driven Ã¢â€€Ã¢â€€
 // Barrido de máscara de gradiente 100% vinculado al scroll.
 // Título: barre izquierda→derecha. Párrafo: barre derecha→izquierda.
 // Todo computado en cada frame desde window._brainScrollProg. Cero timers.
@@ -10029,7 +10029,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
     return { el: sl, label: label, h3: h3, para: para };
   });
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ Aplicar máscara Oryzo â€â€ gradiente puro sin zonas sólidas Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ Aplicar máscara Oryzo â€â€ gradiente puro sin zonas sólidas Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Fórmula: la franja de degradado siempre ocupa el 100% del elemento.
   // Sólo se desplaza su posición. Nunca hay una zona sólida → ningún borde visible.
   //   showFrac = 1 → gradiente completamente fuera (todo visible)
@@ -10046,7 +10046,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
     el.style.maskImage = mask;
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ LABEL GLOBAL: Efecto decodificación random (scramble) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ LABEL GLOBAL: Efecto decodificación random (scramble) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   var SCRAMBLE_GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
   function applyGlobalScramble(el, frac, finalStr, isExit) {
     if (!el) return;
@@ -10092,7 +10092,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
     el.style.textShadow = '';
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ ENTRADA H3/P: clip-path reveal de abajo hacia arriba Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ ENTRADA H3/P: clip-path reveal de abajo hacia arriba Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // El stagger (STAGGER_IN) entre label→h3→para crea el efecto cascada.
   // Cada bloque usa un clip recto (inset) â€â€ sin inclinar nada.
   function applyEntryReveal(el, entryFrac) {
@@ -10114,7 +10114,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
 
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ STAGGER de entrada: cada elemento empieza más tarde que el anterior Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ STAGGER de entrada: cada elemento empieza más tarde que el anterior Ã¢â€€Ã¢â€€
   // n=0 label (más rápido), n=1 h3, n=2 para (más lento)
   // STAGGER: cuánto del rango de entryFrac se retrasa cada elemento
   var STAGGER_IN = 0.22;
@@ -10125,7 +10125,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
     return clamp01((ef - n * STAGGER_IN) / LEAD_IN);
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ SALIDA: limpia clip y aplica gradient mask wipe Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ SALIDA: limpia clip y aplica gradient mask wipe Ã¢â€€Ã¢â€€
   function applyExitMask(el, exitFrac, dir) {
     if (!el) return;
     el.style.clipPath  = '';
@@ -10133,7 +10133,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
     applyMask(el, 1 - exitFrac, dir);
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ Aplicar estado completo del slide (entry y exit separados) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ Aplicar estado completo del slide (entry y exit separados) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   function applySlide(sIdx, entryFrac, exitFrac) {
     var d = slideEls[sIdx];
     if (!d) return;
@@ -10151,7 +10151,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   }
 
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ Imagen del cerebro: crossfade discreto al cambiar step dominante Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€€Ã¢â€€ Imagen del cerebro: crossfade discreto al cambiar step dominante Ã¢â€€Ã¢â€€Ã¢â€€
   var curImgStep = -1;
   var frontIsA   = true;
 
@@ -10322,7 +10322,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       }
     }
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ LÓGICA DE LA SECCIÓN ORYZO Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€€Ã¢â€€ LÓGICA DE LA SECCIÓN ORYZO Ã¢â€€Ã¢â€€
     var oryzoSec = document.getElementById('oryzo-section');
     var oryzoTxtL = document.getElementById('oryzo-text-left');
     var oryzoTxtR = document.getElementById('oryzo-text-right');
@@ -10674,7 +10674,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     }
                   }
                 }
-                  // Ã¢â€â‚¬Ã¢â€â‚¬ EXIT PHASE: img-strip sube por arriba, logo OLT sube desde abajo Ã¢â€â‚¬Ã¢â€â‚¬
+                  // Ã¢â€€Ã¢â€€ EXIT PHASE: img-strip sube por arriba, logo OLT sube desde abajo Ã¢â€€Ã¢â€€
                   var IS_EXIT_END = 20.0;
                   var IS_P1_FADE_IN_END = 20.5;
                   var IS_P1_LIGHT_END   = 21.5;
@@ -10804,7 +10804,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           if (_p1CountP < 1) {
                               var stepIdx = Math.min(countSteps.length - 1, Math.floor(_p1CountP * countSteps.length));
                               var countVal = countSteps[stepIdx];
-                              counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + 'â‚¬?';
+                              counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + '€?';
                               counterSpan.style.color = (_p1CountP === 0) ? 'rgba(255, 255, 255, 0.15)' : '#ffffff';
                               strikeLine.style.width = '0%';
                           } else if (_p1StrikeP < 1) {
@@ -10820,7 +10820,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                   var revP = _p1ReverseP * 2.0; // 0 to 1
                                   var stepIdx = Math.min(revSteps.length - 1, Math.floor(revP * revSteps.length));
                                   var countVal = revSteps[stepIdx];
-                                  counterSpan.innerText = countVal.toLocaleString('es-ES') + 'â‚¬';
+                                  counterSpan.innerText = countVal.toLocaleString('es-ES') + '€';
                                   counterSpan.style.color = '#ffffff';
                               } else {
                                   // Enteros 9, 8 hasta precio final 7,99
@@ -10828,7 +10828,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                   var decP = (_p1ReverseP - 0.5) * 2.0; // 0 to 1
                                   var stepIdx = Math.min(intSteps.length - 1, Math.floor(decP * intSteps.length));
                                   var countVal = intSteps[stepIdx];
-                                  counterSpan.innerText = countVal + 'â‚¬';
+                                  counterSpan.innerText = countVal + '€';
                                   counterSpan.style.color = '#ffffff';
                               }
                           }
@@ -11137,7 +11137,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 </script>
 
 <script>
-// Ã¢â€â‚¬Ã¢â€â‚¬ ORYZO TEXT DRIFT â€â€ "NO ES MAGIA" se desplaza a esquina sup-izq durante zoom-in Ã¢â€â‚¬Ã¢â€â‚¬
+// Ã¢â€€Ã¢â€€ ORYZO TEXT DRIFT â€â€ "NO ES MAGIA" se desplaza a esquina sup-izq durante zoom-in Ã¢â€€Ã¢â€€
 (function() {
   var h2 = document.getElementById('oxitocina-title');
   if (!h2) return;
@@ -11343,7 +11343,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 <!-- SENSITIVE OVERLAY - fuera de toda jerarquía, z-index máximo
      Controlado desde la lógica JS del carousel (currIndex) -->
 <script>
-// Ã¢â€â‚¬Ã¢â€â‚¬ SENS OVERLAY CONTROL Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+// Ã¢â€€Ã¢â€€ SENS OVERLAY CONTROL Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 // Inyectamos un <style> en el <head> con !important.
 // Las reglas de hoja de estilo con !important ganan sobre CUALQUIER inline style,
 // incluyendo el backdrop-filter que Chrome composita en GPU.
