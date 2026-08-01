@@ -11066,22 +11066,17 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   }
                   
                   // Fade in del fondo negro-verde (haciendo el gris transparente mediante CSS)
-                  var bgAlpha = 1.0 - easeConverge;
+                  var bgAlpha = 1.0 - convergeP;
                   if (typeof renderer !== 'undefined') {
-                      renderer.setClearColor(0x000000, 0); // WebGL 100% transparente
+                      renderer.setClearColor(0x000000, 0);
                   }
-                  // Hacemos que TODO el canvas 3D (incluyendo la polaroid) desaparezca
                   var _c = document.getElementById('c');
                   if (_c) {
-                      _c.style.transition = 'none'; // Desactivar transición CSS para que vaya anclado al scroll
+                      if (_c.style.transition !== 'none') _c.style.transition = 'none';
                       _c.style.opacity = bgAlpha;
                   }
                   if (typeof scene !== 'undefined') {
                       scene.background = null; // Necesario para que el clearColor alpha funcione
-                  }
-                  var _c = document.getElementById('c');
-                  if (_c) {
-                      _c.style.backgroundColor = 'rgba(13, 11, 9, ' + bgAlpha + ')';
                   }
                   
               } else {
