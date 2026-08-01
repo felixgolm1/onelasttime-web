@@ -11068,6 +11068,19 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 22) + 'vh)';
                   }
                   
+                  // Fade in del fondo negro-verde (haciendo el gris transparente)
+                  var bgAlpha = 1.0 - easeConverge;
+                  if (typeof renderer !== 'undefined') {
+                      renderer.setClearColor(0x0d0b09, bgAlpha);
+                  }
+                  if (typeof scene !== 'undefined') {
+                      scene.background = null; // Necesario para que el clearColor alpha funcione
+                  }
+                  var _c = document.getElementById('c');
+                  if (_c) {
+                      _c.style.backgroundColor = 'rgba(13, 11, 9, ' + bgAlpha + ')';
+                  }
+                  
               } else {
                 isCont.style.opacity = '0';
                 isTrack.style.transform = 'translateX(0.5cm)';
