@@ -8127,8 +8127,8 @@ requestAnimationFrame(smoothScrollLoop);
           
           float invertedY = 1.0 - vUv.y;
           // El texto está centrado en 0.5. Calculamos el inicio de la primera franja (top).
-          // El bloque total mide 5.4 gaps. El centro está en 0.5. El inicio está a -2.7 gaps del centro.
-          float topEdge = 0.5 - (2.7 * uGap);
+          // Desplazamos el texto ligeramente hacia abajo, empezando en -2.4 gaps del centro.
+          float topEdge = 0.5 - (2.4 * uGap);
           float yDiff = (invertedY - topEdge) / uGap;
           
           float bandIndex = 0.0;
@@ -8175,8 +8175,8 @@ requestAnimationFrame(smoothScrollLoop);
         }
         
         let gap = fontSize * 1.15;
-        // Total = gap * 5.4, por tanto la primera línea empieza a -2.7
-        let startY = -(gap * 2.7);
+        // Total = gap * 5.4. Desplazamos ligeramente hacia abajo empezando en -2.4 en lugar de -2.7
+        let startY = -(gap * 2.4);
         
         // Pasar el gap normalizado al shader
         if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
