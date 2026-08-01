@@ -8523,9 +8523,9 @@ requestAnimationFrame(smoothScrollLoop);
     let currentLookZ = CAM_LOOK.z + (0 - CAM_LOOK.z) * pProg;
 
     if (window._finalZoomP > 0) {
-        currentCamY = currentCamY + (2.9 - currentCamY) * window._finalZoomP;
-        currentCamZ = currentCamZ + (2.0 - currentCamZ) * window._finalZoomP;
-        currentLookZ = currentLookZ + (0.6 - currentLookZ) * window._finalZoomP;
+        currentCamY = currentCamY + (4.35 - currentCamY) * window._finalZoomP;
+        currentCamZ = currentCamZ + (3.0 - currentCamZ) * window._finalZoomP;
+        currentLookZ = currentLookZ + (0.9 - currentLookZ) * window._finalZoomP;
     }
 
     // CÃ¡mara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
