@@ -11052,6 +11052,22 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   window._finalZoomP = easeZoom;
                   window._finalPolProg = tableZoomOutP;
                   
+                  // Convergencia del Logo y CTA al seguir haciendo scroll DESPUÉS del zoom (de 34.5 a 36.5)
+                  var convergeP = Math.max(0, Math.min(1, (localP - 34.5) / 2.0));
+                  
+                  // Suavizado ease-out cuadrático para que frenen suavemente
+                  var easeConverge = convergeP * (2 - convergeP);
+                  
+                  var _oltLogoBig = document.getElementById('olt-logo-img-big');
+                  if (_oltLogoBig) {
+                      _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 22) + 'vh)';
+                  }
+                  
+                  var _oltCtaBig = document.getElementById('olt-final-cta');
+                  if (_oltCtaBig) {
+                      _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 22) + 'vh)';
+                  }
+                  
               } else {
                 isCont.style.opacity = '0';
                 isTrack.style.transform = 'translateX(0.5cm)';
