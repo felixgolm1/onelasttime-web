@@ -8046,11 +8046,52 @@ requestAnimationFrame(smoothScrollLoop);
     if (THREE.sRGBEncoding) photoTex.encoding = THREE.sRGBEncoding;
     // (Por defecto flipY = true, lo cual pone la foto del derecho)
     
-    const photoMat = new THREE.MeshStandardMaterial({
-        map: photoTex,
-        roughness: 0.3, // Brillo de foto
-        metalness: 0.2
+    const polaroidShader = {
+      uniforms: {
+        tDiffuse: { value: photoTex },
+        uProgress: { value: 0.0 } // 0.0 = borrosa/blanca, 1.0 = nitida
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D tDiffuse;
+        uniform float uProgress;
+        varying vec2 vUv;
+        void main() {
+          float blur = (1.0 - uProgress) * 0.015;
+          vec4 c = vec4(0.0);
+          c += texture2D(tDiffuse, vUv + vec2(-blur, -blur));
+          c += texture2D(tDiffuse, vUv + vec2(blur, -blur));
+          c += texture2D(tDiffuse, vUv + vec2(-blur, blur));
+          c += texture2D(tDiffuse, vUv + vec2(blur, blur));
+          c += texture2D(tDiffuse, vUv);
+          c /= 5.0;
+          
+          // Color base de polaroid sin revelar (gris oscuro / verdoso)
+          vec3 baseColor = vec3(0.1, 0.15, 0.12);
+          // Mezclar con la foto usando un curve no lineal para que suba rapido
+          float mixAmt = smoothstep(0.0, 0.8, uProgress);
+          vec3 finalColor = mix(baseColor, c.rgb, mixAmt);
+          
+          // Anadir un efecto de "quemado" o "brillo" inicial que se desvanece
+          float flash = (1.0 - smoothstep(0.0, 0.3, uProgress)) * 0.8;
+          finalColor += vec3(flash);
+          
+          gl_FragColor = vec4(finalColor, 1.0);
+        }
+      `
+    };
+    const photoMat = new THREE.ShaderMaterial({
+      uniforms: polaroidShader.uniforms,
+      vertexShader: polaroidShader.vertexShader,
+      fragmentShader: polaroidShader.fragmentShader
     });
+    window.polaroidPhotoMat = photoMat;
     const photoMesh = new THREE.Mesh(photoGeo, photoMat);
     photoMesh.rotation.x = -Math.PI / 2; // Tumbar plano
     photoMesh.position.y = paperD / 2 + 0.005; // Justo encima del papel
