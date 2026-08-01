@@ -11072,7 +11072,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   }
                   var _c = document.getElementById('c');
                   if (_c) {
-                      if (_c.style.transition !== 'none') _c.style.transition = 'none';
+                      _c.style.setProperty('transition', 'none', 'important');
+                      _c.style.setProperty('transition-duration', '0s', 'important');
                       _c.style.opacity = bgAlpha;
                   }
                   if (typeof scene !== 'undefined') {
