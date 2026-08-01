@@ -11075,7 +11075,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // simplemente hacemos aparecer un div verde por encima que tapa todo menos el logo y CTA.
                   var _fakeBg = document.getElementById('fake-bg-fade');
                   if (_fakeBg) {
-                      _fakeBg.style.opacity = convergeP;
+                      // Hacemos que llegue a 1.0 antes (en localP 35.8) para garantizar el 100% al llegar al final de la página
+                      var fadeBgP = Math.max(0, Math.min(1, (localP - 34.5) / 1.3));
+                      _fakeBg.style.opacity = fadeBgP;
                   }
                   if (typeof scene !== 'undefined') {
                       scene.background = null; // Necesario para que el clearColor alpha funcione
