@@ -8119,7 +8119,8 @@ requestAnimationFrame(smoothScrollLoop);
     });
     window.polaroidTextMat = textMat;
     
-    document.fonts.ready.then(() => {
+    // Forzar la carga de la fuente manuscrita antes de pintar
+    document.fonts.load('600 75px "Dancing Script"').then(() => {
         tCtx.clearRect(0,0,2560,640);
         tCtx.fillStyle = 'rgba(15, 25, 45, 0.95)'; // Tinta boli azul oscura
         tCtx.textAlign = 'center';
