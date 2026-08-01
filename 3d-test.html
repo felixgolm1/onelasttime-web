@@ -11182,6 +11182,22 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   window._finalZoomP = easeZoom;
                   window._finalPolProg = tableZoomOutP;
                   
+                  // Convergencia del Logo y CTA al seguir haciendo scroll DESPUÉS del zoom (de 34.5 a 36.5)
+                  var convergeP = Math.max(0, Math.min(1, (localP - 34.5) / 1.0));
+                  
+                  // Suavizado ease-out cuadrático para que frenen suavemente
+                  var easeConverge = convergeP * (2 - convergeP);
+                  
+                  var _oltLogoBig = document.getElementById('olt-logo-img-big');
+                  if (_oltLogoBig) {
+                      _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 19.5) + 'vh)';
+                  }
+                  
+                  var _oltCtaBig = document.getElementById('olt-final-cta');
+                  if (_oltCtaBig) {
+                      _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 19.5) + 'vh)';
+                  }
+                  
                   var _oltQuestion = document.getElementById('olt-final-question');
                   if (_oltQuestion) {
                       // El fade de la pregunta va con el convergeP, empieza un poco despues para mayor impacto
@@ -11695,7 +11711,6 @@ window.chooseFinal = function(e, happy) {
 </script>
 
 </html>
-
 
 
 
