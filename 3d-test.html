@@ -11074,7 +11074,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (_c) {
                       _c.style.setProperty('transition', 'none', 'important');
                       _c.style.setProperty('transition-duration', '0s', 'important');
+                      _c.style.willChange = 'opacity';
+                      _c.style.transform = 'translateZ(0)';
                       _c.style.opacity = bgAlpha;
+                      // Forzar reflow para evitar que el navegador (Safari/Chrome compositing) aplace el render
+                      void _c.offsetHeight;
                   }
                   if (typeof scene !== 'undefined') {
                       scene.background = null; // Necesario para que el clearColor alpha funcione
