@@ -647,7 +647,7 @@ window.onerror = function(msg, url, line, col, err) {
       left: 5%;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 10;
+      z-index: 100000; /* Superpuesto a las cartas 3D */
       max-width: 40vw;
       opacity: 0;
       /* Frosted blur ”” sin color propio, hereda el fondo */
@@ -687,7 +687,7 @@ window.onerror = function(msg, url, line, col, err) {
       letter-spacing: 0.04em;
       line-height: 1.4;
     }
-    /* â”€â”€ NAV HOVER: Oryzo stagger effect â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ——— NAV HOVER: Oryzo stagger effect ————————————————————————— */
     #nav-overlay {
       position: fixed;
       inset: 0;
@@ -726,7 +726,7 @@ window.onerror = function(msg, url, line, col, err) {
       left: 65%;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 10;
+      z-index: 100000;
       max-width: 29vw;
       opacity: 0;
     }
