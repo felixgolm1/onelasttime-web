@@ -8104,10 +8104,35 @@ requestAnimationFrame(smoothScrollLoop);
     if (THREE.sRGBEncoding) textTex.encoding = THREE.sRGBEncoding;
     textTex.anisotropy = 16;
     
-    const textMat = new THREE.MeshBasicMaterial({
-        map: textTex,
+    const textShader = {
+      uniforms: {
+        tDiffuse: { value: textTex },
+        uWriteProgress: { value: 0.0 }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D tDiffuse;
+        uniform float uWriteProgress;
+        varying vec2 vUv;
+        void main() {
+          vec4 c = texture2D(tDiffuse, vUv);
+          // Suave transición en el eje X para revelar de izquierda a derecha (rango extra para suavidad)
+          float alpha = 1.0 - smoothstep(uWriteProgress - 0.05, uWriteProgress, vUv.x);
+          gl_FragColor = vec4(c.rgb, c.a * alpha);
+        }
+      `
+    };
+    const textMat = new THREE.ShaderMaterial({
+        uniforms: textShader.uniforms,
+        vertexShader: textShader.vertexShader,
+        fragmentShader: textShader.fragmentShader,
         transparent: true,
-        opacity: 0,
         depthWrite: false
     });
     window.polaroidTextMat = textMat;
@@ -10910,9 +10935,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           // Ralentizado un 50% (antes 4.0, ahora 6.0) para que tarde mÃ¡s en revelar
                           let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
                           window.polaroidPhotoMat.uniforms.uProgress.value = devProg;
-                          if (window.polaroidTextMat) {
-                              let textAlpha = Math.max(0, (devProg - 0.5) * 2.0);
-                              window.polaroidTextMat.opacity = textAlpha;
+                          if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
+                              let textProgress = Math.min(1.0, devProg / 0.95);
+                              window.polaroidTextMat.uniforms.uWriteProgress.value = textProgress;
                           }
                       }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
