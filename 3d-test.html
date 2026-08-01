@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -10971,8 +10971,19 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // Se fuerza la camara a estar en initialCameraPos inmediatamente
                   var tableZoomOutP = 0;
                   if (typeof camera !== 'undefined') {
-                      camera.position.set(-0.3, 12, 3);
-                      camera.lookAt(-0.3, 0, 0);
+                      var zoomP = 0;
+                      if (localP > START_3D_REVEAL) {
+                          zoomP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
+                      }
+                      // Suavizado del zoom (ease-in-out cuadrático)
+                      var easeZoom = zoomP < 0.5 ? 2 * zoomP * zoomP : -1 + (4 - 2 * zoomP) * zoomP;
+                      
+                      var cY = 12 + (6.1 - 12) * easeZoom;
+                      var cZ = 3 + (3.8 - 3) * easeZoom;
+                      var lZ = 0 + (2.15 - 0) * easeZoom;
+                      
+                      camera.position.set(-0.3, cY, cZ);
+                      camera.lookAt(-0.3, 0, lZ);
                   }
                   window._finalPolProg = tableZoomOutP;
                   
