@@ -8107,7 +8107,8 @@ requestAnimationFrame(smoothScrollLoop);
     const textShader = {
       uniforms: {
         tDiffuse: { value: textTex },
-        uWriteProgress: { value: 0.0 }
+        uWriteProgress: { value: 0.0 },
+        uGap: { value: 0.14 } // Se actualizará en JS
       },
       vertexShader: `
         varying vec2 vUv;
@@ -8119,20 +8120,19 @@ requestAnimationFrame(smoothScrollLoop);
       fragmentShader: `
         uniform sampler2D tDiffuse;
         uniform float uWriteProgress;
+        uniform float uGap;
         varying vec2 vUv;
         void main() {
           vec4 c = texture2D(tDiffuse, vUv);
           
-          // Dividir el canvas verticalmente en 5 franjas (para las 5 líneas de texto)
-          // vUv.y = 1.0 es arriba, 0.0 es abajo.
           float invertedY = 1.0 - vUv.y;
-          float bandIndex = clamp(floor(invertedY * 5.0), 0.0, 4.0); // 0 (arriba) a 4 (abajo)
+          // El texto está centrado en 0.5. Calculamos el inicio de la primera franja (top)
+          float topEdge = 0.5 - (2.5 * uGap);
+          float bandIndex = clamp(floor((invertedY - topEdge) / uGap), 0.0, 4.0);
           
-          // Progreso local para esta franja de texto (cada una ocupa un 20% del total)
           float startP = bandIndex * 0.2;
           float localProgress = clamp((uWriteProgress - startP) / 0.2, 0.0, 1.0);
           
-          // Suave transición en el eje X usando el progreso de ESTA línea
           float alpha = 1.0 - smoothstep(localProgress - 0.05, localProgress, vUv.x);
           
           gl_FragColor = vec4(c.rgb, c.a * alpha);
@@ -8169,6 +8169,11 @@ requestAnimationFrame(smoothScrollLoop);
         
         let gap = fontSize * 1.15;
         let startY = -(gap * 2);
+        
+        // Pasar el gap normalizado al shader
+        if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
+            window.polaroidTextMat.uniforms.uGap.value = gap / 640.0;
+        }
 
         tCtx.fillText(line1, 0, startY);
         tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, startY + gap);
