@@ -8103,8 +8103,8 @@ requestAnimationFrame(smoothScrollLoop);
     polaroidGroup.add(photoMesh);
     // --- TEXTO MANUSCRITO EN EL LOMO INFERIOR ---
     const textCanvas = document.createElement('canvas');
-    textCanvas.width = 2048;
-    textCanvas.height = 512;
+    textCanvas.width = 2560;
+    textCanvas.height = 640;
     const tCtx = textCanvas.getContext('2d');
     
     const textTex = new THREE.CanvasTexture(textCanvas);
@@ -8120,12 +8120,12 @@ requestAnimationFrame(smoothScrollLoop);
     window.polaroidTextMat = textMat;
     
     document.fonts.ready.then(() => {
-        tCtx.clearRect(0,0,2048,512);
+        tCtx.clearRect(0,0,2560,640);
         tCtx.fillStyle = 'rgba(15, 25, 45, 0.95)'; // Tinta boli azul oscura
         tCtx.textAlign = 'center';
         tCtx.textBaseline = 'middle';
         
-        tCtx.translate(1024, 256);
+        tCtx.translate(1280, 320);
         tCtx.rotate(-0.015); // Inclinacion sutil
         
         tCtx.font = '600 65px "Caveat", cursive';
@@ -8138,7 +8138,8 @@ requestAnimationFrame(smoothScrollLoop);
         textTex.needsUpdate = true;
     });
     
-    const textGeo = new THREE.PlaneGeometry(3.6, 0.9);
+    // El plano ocupa 4.2 de ancho (la polaroid mide 4.3), así el texto aprovecha todo el espacio disponible
+    const textGeo = new THREE.PlaneGeometry(4.2, 1.05);
     const textMesh = new THREE.Mesh(textGeo, textMat);
     textMesh.rotation.x = -Math.PI / 2;
     textMesh.position.y = paperD / 2 + 0.008;
