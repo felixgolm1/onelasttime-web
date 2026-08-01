@@ -9,6 +9,9 @@ window.onerror = function(msg, url, line, col, err) {
   document.body.appendChild(d);
 };
 </script>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One Last Time 3D V2</title>
@@ -750,7 +753,7 @@ window.onerror = function(msg, url, line, col, err) {
     /* SOLUCIÓN CORRECTA (igual que index.html):
        El wrapper tiene el MISMO TAMAÑO que la caja y NO tiene pointer-events:none.
        El hit-testing de preserve-3d sigue la posición 3D proyectada del elemento,
-       así que la carta que asoma por arriba SÃƒÂ recibe eventos aunque visualmente
+       así que la carta que asoma por arriba SÍ recibe eventos aunque visualmente
        esté fuera de los límites CSS del wrapper.
        No necesitamos pantalla completa: overflow:visible hace que sea visible. */
     .box-3d-wrapper {
@@ -1290,7 +1293,7 @@ window.onerror = function(msg, url, line, col, err) {
       100% { transform: translate3d(-50%, 0, 0); }
     }
 
-    /* Ã¢â€€Ã¢â€€ CARTAS INTERACTIVAS EXTRAÃƒÂBLES Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
+    /* Ã¢â€€Ã¢â€€ CARTAS INTERACTIVAS EXTRAÍBLES Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
     .card-wrap {
       position: absolute;
       width: 280px; height: 160px;
@@ -1767,7 +1770,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-          <!-- CIENCIA: z-index 2 (queda DETRÃƒÂS de la modelo) -->
+          <!-- CIENCIA: z-index 2 (queda DETRÁS de la modelo) -->
           <div id="mag-ciencia" style="width: 100%; text-align: center; position: relative; z-index: 2; margin-top: 10px;">
             <h1 style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 6.76rem; color: #fff; letter-spacing: -0.04em; margin: 0; line-height: 0.9; text-shadow: 2px 2px 6px rgba(0,0,0,0.8); transform: scaleY(1.1);">
               <span class="ciencia-letter" style="display: inline-block;">C</span><span class="ciencia-letter" style="display: inline-block;">I</span><span class="ciencia-letter" style="display: inline-block;">E</span><span class="ciencia-letter" style="display: inline-block;">N</span><span class="ciencia-letter" style="display: inline-block;">C</span><span class="ciencia-letter" style="display: inline-block;">I</span><span class="ciencia-letter" style="display: inline-block;">A</span>
@@ -1801,8 +1804,8 @@ window.onerror = function(msg, url, line, col, err) {
               <div style="font-family: 'Inter', sans-serif; text-transform: uppercase; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); color: #fff;">
                 <div class="copy-left-line" style="display: block; font-weight: 900; font-size: 2.1rem; line-height: 0.95; letter-spacing: -0.04em;">QUITÉMONOS</div>
                 <div class="copy-left-line" style="display: block; font-weight: 900; font-size: 2.1rem; line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 12px;">LA ROPA</div>
-                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">LA CIENCIA DETRÃƒÂS DEL</div>
-                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">ESTÃƒÂMULO QUE ESTÃƒÂ</div>
+                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">LA CIENCIA DETRÁS DEL</div>
+                <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">ESTÍMULO QUE ESTÁ</div>
                 <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">REDISEÑANDO LAS</div>
                 <div class="copy-left-line" style="display: block; font-weight: 600; font-size: 0.75rem; line-height: 1.4; color: #fff; letter-spacing: 0.04em; text-shadow: none;">RELACIONES</div>
               </div>
@@ -1818,7 +1821,7 @@ window.onerror = function(msg, url, line, col, err) {
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">COMO</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CREAR</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CONEXIÓN</div>
-                <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">BIOQUÃƒÂMICA</div>
+                <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">BIOQUÍMICA</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">EN UNA</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">SOLA CENA</div>
               </div>
@@ -2043,7 +2046,7 @@ window.onerror = function(msg, url, line, col, err) {
         <!-- Cartas reales extraíbles â€â€ heredan perspectiva 3D del volumen -->
         <div class="card-wrap card-n1 card-in-deck" data-rot="0" data-z-depth="40" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%;">
-            <div class="card-question">TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÃƒÂL ES EL MENSAJE?</div>
+            <div class="card-question">TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÁL ES EL MENSAJE?</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
           </div>
           <div class="card-face card-back" style="position: absolute; top:0; left:0; width:100%; height:100%; transform: rotateX(180deg); background: #0d0d0d; background-image: none; display: none; flex-direction: column; justify-content: center; align-items: center; box-shadow: inset 0 0 0 1.5px #0d0d0d;">
@@ -2088,7 +2091,7 @@ window.onerror = function(msg, url, line, col, err) {
         </div>
         <div class="card-wrap card-n4 card-in-deck" data-rot="0" data-z-depth="58" style="transform-style: preserve-3d;">
           <div class="card-face card-front" style="position: absolute; top:0; left:0; width:100%; height:100%;">
-            <div class="card-question" style="font-size: clamp(0.6rem, 1vw, 0.8rem); line-height: 1.6;">DECIROS ENTRE VOSOTROS...<br><br>1 COSA QUE APRECIAS<br>1 COSA QUE CREES QUE PUEDE MEJORAR<br>1 COSA QUE HARÃƒÂS PARA ÉL O ELLA</div>
+            <div class="card-question" style="font-size: clamp(0.6rem, 1vw, 0.8rem); line-height: 1.6;">DECIROS ENTRE VOSOTROS...<br><br>1 COSA QUE APRECIAS<br>1 COSA QUE CREES QUE PUEDE MEJORAR<br>1 COSA QUE HARÁS PARA ÉL O ELLA</div>
             <div class="card-footer"><img src="assets/img/logo one last time.png" alt="One Last Time" class="footer-logo"></div>
           </div>
           <div class="card-face card-back" style="position: absolute; top:0; left:0; width:100%; height:100%; transform: rotateX(180deg); background: #0d0d0d; background-image: none; display: none; flex-direction: column; justify-content: center; align-items: center; box-shadow: inset 0 0 0 1.5px #0d0d0d;">
@@ -2100,7 +2103,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
         <div class="face-left">
-          <span>ÃƒÂbreme para abrirte</span>
+          <span>Ábreme para abrirte</span>
           <div class="dust-flap left">
             <div class="dust-front"></div>
             <div class="dust-back"></div>
@@ -3145,7 +3148,7 @@ window.onerror = function(msg, url, line, col, err) {
       const card1Question = document.querySelector('.card-n1 .card-question');
       if (card1Question) {
         let nameToUse = val.trim().toUpperCase() || 'ANNA';
-        let newText = `${nameToUse}, TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÃƒÂL ES EL MENSAJE?`;
+        let newText = `${nameToUse}, TE QUEDAN POCAS HORAS DE VIDA Y TIENES 1 MINUTO PARA DEJAR UN MENSAJE QUE VA A LLEGAR A TODO EL MUNDO. ¿CUÁL ES EL MENSAJE?`;
         if (card1Question.textContent !== newText) {
           card1Question.textContent = newText;
         }
@@ -3516,7 +3519,7 @@ window.onerror = function(msg, url, line, col, err) {
         // Hacer el contenedor seleccionable solo cuando está activo
         scrollTl.set(stepTextData.wrapper, { pointerEvents: 'auto' }, t + textDelay);
 
-        // Slide up LÃƒ NEAS INDIVIDUALES (empieza después del fade out del anterior)
+        // Slide up LÍ NEAS INDIVIDUALES (empieza después del fade out del anterior)
         scrollTl.to(stepTextData.lines, {
           y: '0%',
           opacity: 1,
@@ -5290,7 +5293,7 @@ window.onerror = function(msg, url, line, col, err) {
           heroCta.style.pointerEvents = ctaOp > 0 ? 'auto' : 'none';
         }
 
-        // EFECTO FLASH DE CÃƒÂMARA (blanco puro en pantalla completa)
+        // EFECTO FLASH DE CÁMARA (blanco puro en pantalla completa)
         const cameraFlash = document.getElementById('camera-flash');
         if (cameraFlash) {
            if (transP < 0.80) {
@@ -5508,7 +5511,7 @@ window.onerror = function(msg, url, line, col, err) {
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. CÃƒÂRCULO NÂº76 â€â€ shrink + fade (sync 0.112-0.612 = prog 14.73)
+            // 7. CÍRCULO NÂº76 â€â€ shrink + fade (sync 0.112-0.612 = prog 14.73)
             { const p = Math.min(Math.max(mapRange(exitP, 0.112, 0.612, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
               document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
@@ -5524,7 +5527,7 @@ window.onerror = function(msg, url, line, col, err) {
                 el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
               }); }
 
-            // 9. TÃƒÂTULO INFERIOR â€â€ sync 0.05-0.55
+            // 9. TÍTULO INFERIOR â€â€ sync 0.05-0.55
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
@@ -5666,7 +5669,7 @@ window.onerror = function(msg, url, line, col, err) {
                 line.style.transform = 'translateX(' + (200 * eu) + 'px)';
               }); }
 
-            // 7. CÃƒÂRCULO NÂº76 â€â€ shrink + fade (sync 0.112-0.612 = prog 14.73)
+            // 7. CÍRCULO NÂº76 â€â€ shrink + fade (sync 0.112-0.612 = prog 14.73)
             { const p = Math.min(Math.max(mapRange(exitP, 0.112, 0.612, 0, 1), 0), 1);
               const eu = 1 - Math.pow(1 - p, 3);
               document.querySelectorAll('[id="mag-circle"]').forEach(function(el) {
@@ -5682,7 +5685,7 @@ window.onerror = function(msg, url, line, col, err) {
                 el.style.clipPath = 'inset(' + Math.round(eu * 100) + '% 0% 0% 0%)';
               }); }
 
-            // 9. TÃƒÂTULO INFERIOR â€â€ sync 0.05-0.55
+            // 9. TÍTULO INFERIOR â€â€ sync 0.05-0.55
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-bottom', `translateY(${35 * p}px)`, 1 - p); }
 
@@ -6399,7 +6402,7 @@ window.onerror = function(msg, url, line, col, err) {
         try {
         const lerpF = 0.40;
         
-        // SALTO CUÃƒÂNTICO DE TIMELINE
+        // SALTO CUÁNTICO DE TIMELINE
         if (!window.isAutoScrolling) {
             if (targetProg > 2.20 && targetProg < 9.62) {
                 if (prog <= 2.20) {
@@ -7056,8 +7059,8 @@ requestAnimationFrame(smoothScrollLoop);
 
     for (let y = 0; y < S; y++) {
       for (let x = 0; x < S; x++) {
-        const tx = Math.floor(x / T);   // ÃƒÂndice de hilo X (urdimbre)
-        const ty = Math.floor(y / T);   // ÃƒÂndice de hilo Y (trama)
+        const tx = Math.floor(x / T);   // Índice de hilo X (urdimbre)
+        const ty = Math.floor(y / T);   // Índice de hilo Y (trama)
         const px = (x % T) / T;         // Posición dentro del hilo X (0..1)
         const py = (y % T) / T;         // Posición dentro del hilo Y (0..1)
 
@@ -8666,7 +8669,7 @@ requestAnimationFrame(smoothScrollLoop);
         radial-gradient(ellipse 35% 30% at 38% 55%, rgba(80,0,130,0.45) 0%, transparent 52%),
         radial-gradient(ellipse 28% 22% at 90% 75%, rgba(110,0,95,0.38) 0%, transparent 52%),
         linear-gradient(170deg, rgba(12,0,30,1) 0%, rgba(35,0,62,1) 40%, rgba(22,0,45,1) 70%, rgba(14,0,32,1) 100%);"></div>
-    <!-- TÃƒÂTULO "NO ES MAGIA, ES OXITOCINA"
+    <!-- TÍTULO "NO ES MAGIA, ES OXITOCINA"
          â€â€œ Canvas de ignición neuronal: píxeles que se encienden como neuronas
          â€â€œ ANTES de la silueta en el DOM → la silueta pinta encima (texto queda detrás) -->
     <div id="sciencia-title" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10;">
@@ -8691,7 +8694,7 @@ requestAnimationFrame(smoothScrollLoop);
       margin:0;
       pointer-events:none;
       width:100%;
-    ">NO ES MAGIA, ES QUÃƒÂMICA</h2>
+    ">NO ES MAGIA, ES QUÍMICA</h2>
 
     <div id="thermal-model-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
       <img id="thermal-silhouette" src="assets/img/modelo-sin-fondo.png"
@@ -8745,7 +8748,7 @@ requestAnimationFrame(smoothScrollLoop);
       <div style="position:relative; min-height:108px;">
         <p id="global-brain-label" style="position:absolute; top:0; left:0; right:0; margin:0; font-family:'Inter',sans-serif; font-size:.6rem; font-weight:600; letter-spacing:.17em; text-transform:uppercase; color:#fff; text-align:center; z-index:10; opacity:0; pointer-events:none;"></p>
         <div class="nsl" id="nsl-0" style="position:absolute;inset:0;opacity:1;transition:opacity 0.75s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.45rem;text-align:center;">
-          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">ÃƒÂrea Tegmental Ventral</p>
+          <p style="visibility:hidden; margin:0;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:#fff;">Área Tegmental Ventral</p>
           <h3 style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(1rem,2.1vw,1.28rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em;">La chispa</h3>
           <p style="margin:0;font-family:'Inter',sans-serif;font-size:clamp(.76rem,1.3vw,.9rem);color:#fff;line-height:1.6;">Las primeras cartas activan tu sistema de atención y recompensa con estímulos nuevos e inesperados. Empiezas a generar dopamina de alta calidad.</p>
         </div>
@@ -8893,11 +8896,11 @@ requestAnimationFrame(smoothScrollLoop);
 
   // Ã¢â€€Ã¢â€€ ZONAS: cx/cy posición, rx/ry radio, heat base, phase y speed para animación Ã¢â€€Ã¢â€€
   var ZONES = [
-    // 1. VTA â€â€ ÃƒÂrea tegmental ventral (más caliente, pulso más rápido)
+    // 1. VTA â€â€ Área tegmental ventral (más caliente, pulso más rápido)
     { id:'VTA',  cx:0.52, cy:0.72, rx:0.08, ry:0.06, heat:1.00, phase:0.0,  speed:0.9  },
     // 2. ACC â€â€ Corteza cingulada anterior
     { id:'ACC',  cx:0.38, cy:0.30, rx:0.18, ry:0.09, heat:0.97, phase:1.1,  speed:0.7  },
-    // 3. ÃƒÂnsula posterior
+    // 3. Ínsula posterior
     { id:'INS',  cx:0.62, cy:0.45, rx:0.13, ry:0.10, heat:0.94, phase:2.3,  speed:0.75 },
     // 4. Núcleo caudado
     { id:'CAU',  cx:0.45, cy:0.40, rx:0.16, ry:0.10, heat:0.90, phase:3.5,  speed:0.65 }
@@ -9427,7 +9430,7 @@ setInterval(function() {
 (function() {
   var h2 = document.getElementById('oxitocina-title');
   if (!h2) return;
-  var TEXT = 'NO ES MAGIA\nES QUÃƒÂMICA';
+  var TEXT = 'NO ES MAGIA\nES QUÍMICA';
   var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
   var PROG_START = 14.85, PROG_END = 15.70;
   var spans = [];
@@ -9773,7 +9776,7 @@ setInterval(function() {
             <div class="pill">Impulsivxs</div>
             <div class="pill">Dramáticxs</div>
             <div class="pill">Despreocupadxs</div>
-            <div class="pill">ÃƒÂntimxs</div>
+            <div class="pill">Íntimxs</div>
             <div class="pill">Diferentes</div>
             <div class="pill">Creativxs</div>
             <div class="pill">Transparentes</div>
@@ -10411,9 +10414,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       
       if (activeProg > 0) {
         var BRAIN_LABELS = [
-          "ÃƒÂREA TEGMENTAL VENTRAL",
+          "ÁREA TEGMENTAL VENTRAL",
           "CORTEZA CINGULADA",
-          "HIPOTÃƒÂLAMO",
+          "HIPOTÁLAMO",
           "NÚCLEO CAUDADO"
         ];
         var cIdx = Math.max(0, Math.min(3, Math.floor((p - STEP_START) / STEP_SIZE)));
@@ -11651,7 +11654,7 @@ setTimeout(function() {
   });
 }, 800);
 
-// --- PANEL VÃƒÂDEO ENVEJECIMIENTO ---
+// --- PANEL VÍDEO ENVEJECIMIENTO ---
 window.envejPlayPause = function() {
   var v = document.getElementById('envej-video');
   if (!v) return;
