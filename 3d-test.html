@@ -9857,7 +9857,7 @@ setInterval(function() {
 
 
 <!-- OLT Logo Reveal: sube desde abajo cuando img-strip sale por arriba -->
-<div id="olt-logo-reveal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10000001;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10vh 0;box-sizing:border-box;">
+<div id="olt-logo-reveal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10000005;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10vh 0;box-sizing:border-box;">
   <img id="olt-logo-img-big"
        src="assets/img/logo one last time.png"
        alt="One Last Time"
@@ -10857,16 +10857,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var _scrollInd = document.querySelector('.scroll-indicator');
                   if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
-                  var _oltLogo = document.getElementById('olt-logo-img-big');
-                  if (_oltLogo) _oltLogo.style.transform = 'translateY(100vh)';
-                  
-                  var _oltCta = document.getElementById('olt-final-cta');
-                  if (_oltCta) {
-                    var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
-                    _oltCta.style.opacity = _ctaP.toFixed(2);
-                    _oltCta.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
-                    _oltCta.style.transform = 'translateY(100vh)';
-                  }
+                  // Fase de entrada de Logo y CTA movida al final de la función para unificar la lógica
+
                   
                   // ----- PHASE 1 & 2: Dynamic -----
                   var _oltPhaseDyn = document.getElementById('olt-phase-dynamic');
@@ -11180,15 +11172,29 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var easeConverge = convergeP * (2 - convergeP);
                   
                   var _oltLogoBig = document.getElementById('olt-logo-img-big');
-                  if (_oltLogoBig) {
-                      var _logoY = 100 - (easeConverge * 80.5); // de 100 a 19.5
-                      _oltLogoBig.style.transform = 'translateY(' + _logoY.toFixed(2) + 'vh)';
-                  }
-                  
                   var _oltCtaBig = document.getElementById('olt-final-cta');
-                  if (_oltCtaBig) {
-                      var _ctaY = 100 - (easeConverge * 119.5); // de 100 a -19.5
-                      _oltCtaBig.style.transform = 'translateY(' + _ctaY.toFixed(2) + 'vh)';
+                  
+                  if (localP < 34.5) {
+                      // Fase de entrada: de 100vh a 0vh (después del segundo carrusel: IS_END a IS_EXIT_END)
+                      if (_oltLogoBig) {
+                          _oltLogoBig.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                      }
+                      if (_oltCtaBig) {
+                          var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
+                          _oltCtaBig.style.opacity = _ctaP.toFixed(2);
+                          _oltCtaBig.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
+                          _oltCtaBig.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                      }
+                  } else {
+                      // Fase de convergencia final (en la escena 3D final)
+                      if (_oltLogoBig) {
+                          _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 19.5) + 'vh)';
+                      }
+                      if (_oltCtaBig) {
+                          _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 19.5) + 'vh)';
+                          _oltCtaBig.style.opacity = '1';
+                          _oltCtaBig.style.pointerEvents = 'auto';
+                      }
                   }
                   
                   var _oltQuestion = document.getElementById('olt-final-question');
