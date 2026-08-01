@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -12,7 +12,7 @@ window.onerror = function(msg, url, line, col, err) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One Last Time 3D V2</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Swanky+and+Moo+Moo&family=Caveat:wght@400;500;600;700&family=Archivo:wght@700&family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Caveat:wght@400;500;600;700&family=Archivo:wght@700&family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
 
@@ -376,7 +376,7 @@ window.onerror = function(msg, url, line, col, err) {
     /* NO está dentro del flex, así no afecta la posición del logo        */
     #intro-card-text {
       position: absolute;
-      /* card 234px: logo tope final = 70px, logo h = 34px, gap = 18px Ã¢â€ â€™ texto a 122px */
+      /* card 234px: logo tope final = 70px, logo h = 34px, gap = 18px → texto a 122px */
       top: 122px;
       left: 0; right: 0;
       display: flex; flex-direction: column;
@@ -1090,7 +1090,7 @@ window.onerror = function(msg, url, line, col, err) {
       transition: transform 2.4s cubic-bezier(0.15, 1, 0.3, 1) !important;
     }
     /* Clip overflow inferior solo en reposo dentro de la caja.
-       'round 16px' coincide con el border-radius de .card-face Ã¢â€ â€™ sin esquinas raras. */
+       'round 16px' coincide con el border-radius de .card-face → sin esquinas raras. */
     .card-in-deck {
       clip-path: inset(0 0 0 10px round 16px);
     }
@@ -1346,7 +1346,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     .card-on-table {
       position: absolute !important;  /* dentro de #card-table (position:fixed) */
-      opacity: 1;                     /* sin !important Ã¢â€ â€™ el JS puede sobrescribir para el fade */
+      opacity: 1;                     /* sin !important → el JS puede sobrescribir para el fade */
       pointer-events: auto !important;
       transform-style: flat !important;
       perspective: none !important;
@@ -1625,7 +1625,7 @@ window.onerror = function(msg, url, line, col, err) {
           Lo que quieras. Las cartas hacen el resto
         </div>
       </div>
-      <!-- Slide 1: Secuencia crossfade divertido Ã¢â€ â€™ sorprendente Ã¢â€ â€™ profundo Ã¢â€ â€™ emocional Ã¢â€ â€™ neutro -->
+      <!-- Slide 1: Secuencia crossfade divertido → sorprendente → profundo → emocional → neutro -->
       <div class="carousel-item" id="slide0-seq" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center;">
         <img src="assets/img/divertido.jfif"    class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:1;transition:opacity 0.8s ease;">
         <img src="assets/img/sorprendente.jfif" class="seq0-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;opacity:0;transition:opacity 0.8s ease;">
@@ -1777,7 +1777,7 @@ window.onerror = function(msg, url, line, col, err) {
           <!-- MODELO: z-index 3 (tapa el título CIENCIA) -->
           <img src="assets/img/modelo-sin-fondo.png" style="position: absolute; height: 138%; width: auto; top: 0; left: 50%; transform: translateX(-50%); z-index: 3; pointer-events: none;">
 
-          <!-- SABER MÃƒÂS: z-index 4 (encima de todo, incluso de la modelo) -->
+          <!-- SABER MÁS: z-index 4 (encima de todo, incluso de la modelo) -->
           <div id="mag-saber-mas" style="width: 100%; text-align: center; position: absolute; top: 10px; left: 0; z-index: 4;">
             <div style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.3rem; color: #fff; letter-spacing: 0.1em; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></div>
           </div>
@@ -2165,8 +2165,8 @@ window.onerror = function(msg, url, line, col, err) {
   <div id="headline">
     <h1>
       <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">EXPERIMENTA LA CENA</span></span>
-      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">MÃƒÂS TRANSFORMADORA</span></span>
-      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">QUE HAS TENIDO JAMÃƒÂS</span></span>
+      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">MÁS TRANSFORMADORA</span></span>
+      <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">QUE HAS TENIDO JAMÁS</span></span>
     </h1>
     <hr class="headline-divider">
     <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="headline-sub oh-inner" style="display:block; margin:0;">En tu restaurante favorito, o en casa</p></span>
@@ -2181,7 +2181,7 @@ window.onerror = function(msg, url, line, col, err) {
     <a href="#" data-text="CÓMO FUNCIONA" data-scroll="0.98">CÓMO FUNCIONA</a>
     <a href="#" data-text="LA EXPERIENCIA" data-scroll="10.65">LA EXPERIENCIA</a>
     <a href="#" data-text="RESEÑAS" data-scroll="23.17">RESEÑAS</a>
-    <a href="#" data-text="MÃS..." data-scroll="31.58">MÃS...</a>
+    <a href="#" data-text="MÁS..." data-scroll="31.58">MÁS...</a>
     <a href="#" data-text="ONE LAST TIME" data-scroll="41.03">ONE LAST TIME</a>
     
     <!-- CTA superior derecha -->
@@ -2563,7 +2563,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       /* sp1: foco rápido en sentido horario (1 vuelta cada 2.5s)
          sp2: foco lento en sentido antihorario (1 vuelta cada 5s)
-         Gaussiana estrecha Ã¢â€ â€™ cuando el foco pasa, el color se satura a blanco */
+         Gaussiana estrecha → cuando el foco pasa, el color se satura a blanco */
       var sp1 = (ts / 2500) % 1;
       var sp2 = 1 - (ts / 5000) % 1;
 
@@ -2917,7 +2917,7 @@ window.onerror = function(msg, url, line, col, err) {
     });
   }
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ SCROLL ANIMATION: zoom Ã¢â€ â€™ flip Ã¢â€ â€™ scatter Ã¢â€ â€™ macro-camera Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Ã¢â€â‚¬Ã¢â€â‚¬ SCROLL ANIMATION: zoom → flip → scatter → macro-camera Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
   function setupScrollAnim() {
     const mg        = introMorphGroup;
     if (!mg) return;
@@ -3068,21 +3068,21 @@ window.onerror = function(msg, url, line, col, err) {
     // Garantizar estado inicial limpio del CTA inferior (sin transforms residuales de GSAP)
     gsap.set('#heroCta', { clearProps: 'transform,visibility,opacity', transformOrigin: '50% 50%' });
 
-    // Ã¢â€â‚¬ Fase 1 (0Ã¢â€ â€™0.16): Zoom + oscurecimiento suave Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€â‚¬ Fase 1 (0→0.16): Zoom + oscurecimiento suave Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
     scrollTl.to([mg, visGroup], {
       x: 0, y: 0, scaleX: 1.22, scaleY: 1.22,
       rotation: -2, rotationY: -30,
       duration: 0.08, ease: 'power2.inOut'
     }, 0);
-    // Overlay: 0Ã¢â€ â€™100% â€â€ power3.inOut: lento al inicio, se dispara, y suaviza al llegar al negro total
+    // Overlay: 0→100% â€â€ power3.inOut: lento al inicio, se dispara, y suaviza al llegar al negro total
     scrollTl.to(scOverlay, { opacity: 1, duration: 0.08, ease: 'power3.inOut' }, 0);
     // Logo se hace más pequeño al hacer scroll hacia adelante
     scrollTl.to('#nav-logo', { scale: 0.5, transformOrigin: 'top left', ease: 'power1.inOut', duration: 0.08 }, 0);
     
     // Los recuadros de texto desaparecen con efectos hiper-específicos (Oryzo style)
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
-    //    stagger from:'end' Ã¢â€ â€™ la última .oh-inner (más abajo) empieza en t=0, cada línea superior espera 0.02 más.
-    //    duration 0.10 + 3Ã—0.02 = 0.16 Ã¢â€ â€™ encaja exacto con la duración de Fase 1.
+    //    stagger from:'end' → la última .oh-inner (más abajo) empieza en t=0, cada línea superior espera 0.02 más.
+    //    duration 0.10 + 3Ã—0.02 = 0.16 → encaja exacto con la duración de Fase 1.
     scrollTl.to('.oh-inner:not(.headline-sub)', { y: '110%', duration: 0.04, ease: 'power2.in', stagger: { each: 0.005, from: 'end' } }, 0);
     scrollTl.to('.headline-sub', { y: '110%', duration: 0.08, ease: 'power2.inOut' }, 0);
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
@@ -3094,7 +3094,7 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.to('#subheadline p', { autoAlpha: 0, duration: 0.08, ease: 'power2.inOut' }, 0);
 
 
-    // Ã¢â€â‚¬ Fase 2: LOS 3 FLIPS CONTINUOS (0Ã¢â€ â€™Ã¢Ë†â€™540Â°) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€â‚¬ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
     // (La pantalla ya está al 100% negro desde t=0.08 â€â€ sin tween adicional)
 
     // Un único movimiento continuo y cinemático para girar 3 veces (3 x 180 = 540)
@@ -3274,7 +3274,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€â‚¬ Zoom in/out continuo durante toda la secuencia de flips (+20%) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
     // Curva de campana suave: sine.in sube acelerando, sine.out baja desacelerando.
-    // Los dos se encadenan con velocidad máxima en el pico (t=0.38) Ã¢â€ â€™ sin costura.
+    // Los dos se encadenan con velocidad máxima en el pico (t=0.38) → sin costura.
     // 1.22 Ã— 1.20 = 1.464 en el pico
     scrollTl.to([mg, visGroup], { scaleX: 1.464, scaleY: 1.464, duration: 0.30, ease: 'sine.in'  }, 0.08);
     scrollTl.to([mg, visGroup], { scaleX: 1.22,  scaleY: 1.22,  duration: 0.30, ease: 'sine.out' }, 0.38);
@@ -3380,7 +3380,7 @@ window.onerror = function(msg, url, line, col, err) {
     const detailStepTexts = [];
 
     if (detailGlobal) {
-      // position:fixed Ã¢â€ â€™ posicionamos directamente en el viewport
+      // position:fixed → posicionamos directamente en el viewport
       gsap.set(detailGlobal, { 
         x: '45.5vw', xPercent: -50, 
         y: '70vh', yPercent: -50,
@@ -3492,7 +3492,7 @@ window.onerror = function(msg, url, line, col, err) {
       const HOLD = 0.025;
     let t = 0.92;
     // sCards[i] corresponds to which card is the FOCUS of each panData step
-    // panData[0] Ã¢â€ â€™ sc1 focused, panData[1] Ã¢â€ â€™ sc2, panData[2] Ã¢â€ â€™ sc3, panData[3] Ã¢â€ â€™ sc4
+    // panData[0] → sc1 focused, panData[1] → sc2, panData[2] → sc3, panData[3] → sc4
     const focusOrder = [sc1, sc2, sc3, sc4];
     panData.forEach(({ x, y, r }, i) => {
       scrollTl.to(scBoard, { x, y, rotation: r, scale: focusZoom,
@@ -3649,14 +3649,14 @@ window.onerror = function(msg, url, line, col, err) {
       
 
     // Ã¢â€â‚¬ Animación del segundo texto "personalizado con IA"
-    let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" Ã¢â€ â€™ prog ~1.47
+    let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" → prog ~1.47
     scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -5, x: '-92vw' }, tAiStart);
     scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
     // Ã¢â€â‚¬ Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
     //   (sin tweens GSAP â€â€ la persiana la mueve el scroll puro)
 
-    // Deriva lenta después de llegar al centro Ã¢â€ â€™ continúan en la misma dirección mientras se desvanecen
+    // Deriva lenta después de llegar al centro → continúan en la misma dirección mientras se desvanecen
     // 'none' = velocidad perfectamente constante, sensación de movimiento que no para nunca
     scrollTl.to('#made-by-humans', { x: '-10vw', ease: 'none', duration: 0.35 }, tSwap);
     scrollTl.to('#made-by-ai',     { x: '10vw',  ease: 'none', duration: 0.35 }, tSwap);
@@ -3685,7 +3685,7 @@ window.onerror = function(msg, url, line, col, err) {
     );
 
     // La inercia de giro de la caja 3D comparte exactamente el mismo
-    // ángulo que el scBoard Ã¢â€ â€™ la geometría encaja sin salto visual.
+    // ángulo que el scBoard → la geometría encaja sin salto visual.
     scrollTl.fromTo(mainDeck.querySelector('.box-3d-volume'),
       { rotationY: 270, rotationX: 0, rotationZ: 0 },
       { rotationY: 335, rotationX: 0, rotationZ: 0, duration: 0.35, ease: 'none' },
@@ -3805,8 +3805,8 @@ window.onerror = function(msg, url, line, col, err) {
 
 
       // Crear wrapper-clip para el panel interactivo del aging-slide:
-      // position:fixed + overflow:hidden + tamaño del viewport Ã¢â€ â€™ el panel queda clipado al frame
-      // pointer-events:none en el wrapper pero auto en el panel Ã¢â€ â€™ botones siguen siendo clicables
+      // position:fixed + overflow:hidden + tamaño del viewport → el panel queda clipado al frame
+      // pointer-events:none en el wrapper pero auto en el panel → botones siguen siendo clicables
       const _agingPanelWrap = document.createElement('div');
       _agingPanelWrap.id = 'aging-panel-clip';
       _agingPanelWrap.style.cssText = 'position:fixed;overflow:hidden;pointer-events:none;z-index:10051;';
@@ -5164,7 +5164,7 @@ window.onerror = function(msg, url, line, col, err) {
         });
       }
       // Drag-hint: sigue la misma curva de retracción que la carta.
-      // La carta desaparece en openP=0.55 Ã¢â€ â€™ el hint también.
+      // La carta desaparece en openP=0.55 → el hint también.
       // hintT = 1 cuando la carta asoma (openP=1), = 0 cuando ya está dentro (openPÃ¢â€°Â¤0.55)
       const hint = document.getElementById('dragHint');
       if (hint) {
@@ -5179,7 +5179,7 @@ window.onerror = function(msg, url, line, col, err) {
           hint.style.opacity    = '';
         }
         // Cuando is-visible && openP === 1: no tocar inline styles
-        // Ã¢â€ â€™ el CSS puede hacer el fade-in limpio cuando aparece una nueva carta
+        // → el CSS puede hacer el fade-in limpio cuando aparece una nueva carta
       }
       updateHint(prog);
 
@@ -5201,11 +5201,11 @@ window.onerror = function(msg, url, line, col, err) {
         }
         
         // Animación TIME-BASED desde el flash (transP=0.80 a 1.0 en 400ms)
-        // El scroll es manual hasta transP=0.80 (prog 9.62Ã¢â€ â€™10.42). Desde el flash, tiempo real.
+        // El scroll es manual hasta transP=0.80 (prog 9.62→10.42). Desde el flash, tiempo real.
         let transP;
         if (window._carouselEntryStart !== null && window._carouselEntryStart !== undefined) {
           const elapsed = Date.now() - window._carouselEntryStart;
-          transP = 0.80 + Math.min(0.20, (elapsed / 400) * 0.20); // 0.80 Ã¢â€ â€™ 1.0 en 400ms
+          transP = 0.80 + Math.min(0.20, (elapsed / 400) * 0.20); // 0.80 → 1.0 en 400ms
         } else {
           transP = Math.min(1, mapRange(prog, 9.62, 10.62, 0, 1)); // scroll-driven hasta el flash
         }
@@ -5332,8 +5332,8 @@ window.onerror = function(msg, url, line, col, err) {
         }
 
         // Ã¢â€â‚¬Ã¢â€â‚¬ MAGAZINE BREAKOUT Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-        // FASE 1 (prog 14.62Ã¢â€ â€™15.6): lines undraw + texts/images exit
-        // FASE 2 (prog 15.6Ã¢â€ â€™16.8): frame expands to full screen
+        // FASE 1 (prog 14.62→15.6): lines undraw + texts/images exit
+        // FASE 2 (prog 15.6→16.8): frame expands to full screen
         const breakoutOverlay = document.getElementById('mag-breakout-overlay');
         if (breakoutOverlay) {
           // Safeguard: restaurar modelo si el usuario vuelve por debajo del breakout
@@ -5360,10 +5360,10 @@ window.onerror = function(msg, url, line, col, err) {
               startLeft = (vw - boxW) / 2;  startTop = (vh - boxH) / 2;
             }
 
-            // FASE 1: progress para exits (0Ã¢â€ â€™1 en prog 14.62Ã¢â€ â€™15.6)
+            // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
             const exitP = Math.min(Math.max(mapRange((prog + 0.5), 15.12, 16.1, 0, 1), 0), 1);
 
-            // FASE 2: progress para expansión del marco (0Ã¢â€ â€™1 en prog 14.72Ã¢â€ â€™15.92)
+            // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
             const expansionP = Math.min(Math.max(mapRange((prog + 0.5), 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
@@ -5378,7 +5378,7 @@ window.onerror = function(msg, url, line, col, err) {
                 if (carouselVp && origImg && origImg.naturalWidth && magEl) {
                   const vpr    = carouselVp.getBoundingClientRect();
                   const magR   = magEl.getBoundingClientRect(); // rect real del item (incluyendo borde)
-                  // Usar el item real como referencia de tamaño (vpr excluye 7px de borde Ã¢â€ â€™ 2% error)
+                  // Usar el item real como referencia de tamaño (vpr excluye 7px de borde → 2% error)
                   const modelH = magR.height * 1.38;
                   const ar     = origImg.naturalWidth / origImg.naturalHeight;
                   const modelW = modelH * ar;
@@ -5407,7 +5407,7 @@ window.onerror = function(msg, url, line, col, err) {
 
               }
 
-              // Actualizar clip cada frame: clip shrinks de iX Ã¢â€ â€™ 0
+              // Actualizar clip cada frame: clip shrinks de iX → 0
               const clone = document.getElementById('mag-model-clone');
               if (clone) {
                 const f  = 1 - easeExpand;
@@ -5466,7 +5466,7 @@ window.onerror = function(msg, url, line, col, err) {
               });
             };
 
-            // 2. SABER MÃƒÂS â€â€ sync 0.05-0.55
+            // 2. SABER MÁS â€â€ sync 0.05-0.55
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
@@ -5575,10 +5575,10 @@ window.onerror = function(msg, url, line, col, err) {
               startLeft = (vw - boxW) / 2;  startTop = (vh - boxH) / 2;
             }
 
-            // FASE 1: progress para exits (0Ã¢â€ â€™1 en prog 14.62Ã¢â€ â€™15.6)
+            // FASE 1: progress para exits (0→1 en prog 14.62→15.6)
             const exitP = Math.min(Math.max(mapRange((prog + 0.5), 15.12, 16.1, 0, 1), 0), 1);
 
-            // FASE 2: progress para expansión del marco (0Ã¢â€ â€™1 en prog 14.72Ã¢â€ â€™15.92)
+            // FASE 2: progress para expansión del marco (0→1 en prog 14.72→15.92)
             const expansionP = Math.min(Math.max(mapRange((prog + 0.5), 15.22, 16.42, 0, 1), 0), 1);
             const easeExpand = 1 - Math.pow(1 - expansionP, 3); // ease-out cubic
 
@@ -5624,7 +5624,7 @@ window.onerror = function(msg, url, line, col, err) {
               });
             };
 
-            // 2. SABER MÃƒÂS â€â€ sync 0.05-0.55
+            // 2. SABER MÁS â€â€ sync 0.05-0.55
             { const p = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
               applyExit('mag-saber-mas', `translateY(${-40 * p}px)`, 1 - p); }
 
@@ -5748,7 +5748,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
       // --- MAGIC WINDOW CAROUSEL LOGIC ---
-      // Función que mapea prog Ã¢â€ â€™ currIndex con zonas planas en cada slide
+      // Función que mapea prog → currIndex con zonas planas en cada slide
       // Cuando prog está Â±HOLD alrededor de cada centro, currIndex = entero exacto (pausa visual)
       function getCarouselIndex(p) {
         // Hold por slide: el primero tiene el doble de zona plana
@@ -5763,7 +5763,7 @@ window.onerror = function(msg, url, line, col, err) {
           const fromEdge = centers[i] + holds[i];
           const toEdge   = centers[i + 1] - holds[i + 1];
           if (p >= fromEdge && p <= toEdge) {
-            const t = (p - fromEdge) / (toEdge - fromEdge); // 0Ã¢â€ â€™1
+            const t = (p - fromEdge) / (toEdge - fromEdge); // 0→1
             return i + t; // currIndex interpolado entre i e i+1
           }
         }
@@ -5832,7 +5832,7 @@ window.onerror = function(msg, url, line, col, err) {
                 if (elapsed < SIDE_DUR) {
                   const slideP = elapsed / SIDE_DUR;
                   const easeSlide = 1 - Math.pow(1 - slideP, 5); // ease-out quíntico (muy suave)
-                  entryOffset   = (1 - easeSlide) * 900;         // 900Ã¢â€ â€™0 px
+                  entryOffset   = (1 - easeSlide) * 900;         // 900→0 px
                   extraBrightness = (1 - slideP) * 1.2;
                 }
                 // Una vez terminado el timer: entryOffset = 0 (posición final)
@@ -6564,7 +6564,7 @@ window.onerror = function(msg, url, line, col, err) {
       // Llamar incondicionalmente a updateBoxState en cada fotograma
       updateBoxState();
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ SINC CSS card Ã¢â€ â€™ GLB 3D overlay Ã¢â€â‚¬Ã¢â€â‚¬ (siempre, cada frame)
+      // Ã¢â€â‚¬Ã¢â€â‚¬ SINC CSS card → GLB 3D overlay Ã¢â€â‚¬Ã¢â€â‚¬ (siempre, cada frame)
       if (globalGlbCard && cardCanvasEl && document.getElementById('card-morph-group')) {
           const mgEl = document.getElementById('card-morph-group');
 
@@ -6605,10 +6605,10 @@ window.onerror = function(msg, url, line, col, err) {
               // Usamos propiedades GSAP (x/y/scaleY) en lugar de getBoundingClientRect.
               // getBoundingClientRect incluye la distorsión de perspectiva CSS 3D (rotationY),
               // lo que hace que el centro y el tamaño del rect oscilen durante el flip.
-              // Las propiedades x/y de GSAP son translaciones puras Ã¢â€ â€™ sin distorsión.
+              // Las propiedades x/y de GSAP son translaciones puras → sin distorsión.
               //   â€¢ mgEl natural CSS center = (50vw, 50vh) [fixed, inset:0, flex-centered]
               //   â€¢ GSAP x/y = offset aplicado encima del centro natural
-              //   â€¢ En Fase 2 (flip): GSAP x=0, y=0 Ã¢â€ â€™ posición constante en centro
+              //   â€¢ En Fase 2 (flip): GSAP x=0, y=0 → posición constante en centro
               smoothScrollLoop._lockedCard = null;
               if (scIntroEl) scIntroEl.style.visibility = 'hidden';
               cardCanvasEl.style.transform = 'none';
@@ -6627,7 +6627,7 @@ window.onerror = function(msg, url, line, col, err) {
               const ndcY  = -(screenCY / window.innerHeight) * 2 + 1;
               globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
 
-              // Smooth zoom: gSY=1.0 (mesa) Ã¢â€ â€™ gSY=1.22 (scatter entry)
+              // Smooth zoom: gSY=1.0 (mesa) → gSY=1.22 (scatter entry)
               // Mismo rango que scrollTl Phase 1 â€â€ la pantalla se va poniendo negra a la vez
               if (globalGlbCard._baseScaleFact && gSY > 0) {
                   const _GS_SC  = 1.22;
@@ -6675,7 +6675,7 @@ window.onerror = function(msg, url, line, col, err) {
               const scBoardRY   = gsap.getProperty(scBoard, 'rotationY') || 0;
               const inFlipBack  = Math.abs(scBoardRY) > 5;
 
-              // Posición: flip-back Ã¢â€ â€™ screen center (= mainDeck, z-index lo cubre) / scatter Ã¢â€ â€™ scIntroEl
+              // Posición: flip-back → screen center (= mainDeck, z-index lo cubre) / scatter → scIntroEl
               cardCanvasEl.style.transform = 'none';
               const DIST = 6.0;
               const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
@@ -6782,7 +6782,7 @@ requestAnimationFrame(smoothScrollLoop);
     const SNAP_LOCK_TICKS = 5;  // ticks de scroll necesarios para pasar al siguiente slide
 
     function applyMagneticFriction(current, delta) {
-      // Los 9 slides con factor 2.0 Ã¢â€ â€™ cada 0.5 unidades de prog desde 10.62
+      // Los 9 slides con factor 2.0 → cada 0.5 unidades de prog desde 10.62
       const snapPoints = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62, 15.12];
 
       // Ã¢â€â‚¬Ã¢â€â‚¬ Caso 1: Bloqueado en un snap point Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
@@ -6791,11 +6791,11 @@ requestAnimationFrame(smoothScrollLoop);
           _snapLockTicks--;
           return 0; // bloqueo total: el scroll no avanza
         } else {
-          _snapLockPoint = null; // suficientes ticks Ã¢â€ â€™ soltar
+          _snapLockPoint = null; // suficientes ticks → soltar
         }
       }
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬ Caso 2: Cruza un snap point Ã¢â€ â€™ snap + bloquear Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // Ã¢â€â‚¬Ã¢â€â‚¬ Caso 2: Cruza un snap point → snap + bloquear Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
       let newProg = current + delta;
       for (let sp of snapPoints) {
         if ((current < sp && newProg >= sp) || (current > sp && newProg <= sp)) {
@@ -6836,7 +6836,7 @@ requestAnimationFrame(smoothScrollLoop);
       targetProg = Math.max(0, Math.min(maxProg, targetProg + magneticDelta));
 
       // Ã¢â€â‚¬Ã¢â€â‚¬ Entrada carrusel TIME-BASED Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-      // Trigger en transP=0.80 (prog=10.42): el flash aparece Ã¢â€ â€™ restá del reveal es automático
+      // Trigger en transP=0.80 (prog=10.42): el flash aparece → restá del reveal es automático
       if (prevTarget <= 10.42 && targetProg > 10.42 && !window._carouselEntryStart) {
         window._carouselEntryStart = Date.now();
         // Primera vez que el usuario entra en el carrusel: vídeo slide 0 empieza desde 0
@@ -7359,7 +7359,7 @@ requestAnimationFrame(smoothScrollLoop);
   // clipCardShape: clip the canvas 2D context to a rounded-rect matching the
   // CSS card's border-radius:20px. Pixels outside go transparent (alpha=0).
   function clipCardShape(ctx, W, H) {
-    const R = W * (20 / 380); // 20px at 380px card width Ã¢â€ â€™ proportional
+    const R = W * (20 / 380); // 20px at 380px card width → proportional
     ctx.beginPath();
     ctx.moveTo(R, 0); ctx.lineTo(W - R, 0);
     ctx.quadraticCurveTo(W, 0, W, R);
@@ -7674,9 +7674,9 @@ requestAnimationFrame(smoothScrollLoop);
       alphaTest:          0.04,
       depthTest:          false,
       depthWrite:         false,
-      roughness:          0.18,    // bajo Ã¢â€ â€™ material base también refleja
+      roughness:          0.18,    // bajo → material base también refleja
       clearcoat:          0.95,    // capa de barniz/plastificado potente
-      clearcoatRoughness: 0.06,    // muy liso Ã¢â€ â€™ reflejo nítido del key light
+      clearcoatRoughness: 0.06,    // muy liso → reflejo nítido del key light
       metalness:          0.03,
       reflectivity:       0.85,
       bumpMap:            cardGrainTex,
@@ -7704,7 +7704,7 @@ requestAnimationFrame(smoothScrollLoop);
 
     // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ ENFOQUE LIMPIO Y SIMPLE Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
     // 1. ExtrudeGeometry solo para los CANTOS (color negro, sin cara frontal/trasera)
-    //    usamos el mismo shape pero sin las caras front/back del Extrude Ã¢â€ â€™
+    //    usamos el mismo shape pero sin las caras front/back del Extrude →
     //    conseguimos un "marco" 3D redondeado negro.
     // 2. Dos PlaneGeometry transparentes (canvas clipeado) para front y back.
     //    alphaTest descarta los píxeles transparentes fuera de la curva,
@@ -7745,9 +7745,9 @@ requestAnimationFrame(smoothScrollLoop);
 
     const halfT = D / 2;
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Helper: crea una ShapeGeometry REDONDEADA con UVs de 0Ã¢â€ â€™1 Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-    // La geometría ya tiene la forma exacta del canto Ã¢â€ â€™ no hace falta clipCardShape
-    // ni alphaTest Ã¢â€ â€™ las esquinas son físicamente inexistentes (sin polígonos).
+    // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Helper: crea una ShapeGeometry REDONDEADA con UVs de 0→1 Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // La geometría ya tiene la forma exacta del canto → no hace falta clipCardShape
+    // ni alphaTest → las esquinas son físicamente inexistentes (sin polígonos).
     function makeRoundedFaceGeo(flipU = false) {
       const faceShape = new THREE.Shape();
       faceShape.moveTo(-w2 + R, -h2);
@@ -7761,14 +7761,14 @@ requestAnimationFrame(smoothScrollLoop);
       faceShape.quadraticCurveTo(-w2, -h2, -w2 + R, -h2);
 
       const geo = new THREE.ShapeGeometry(faceShape, 12);
-      // Remapear UVs de espacio de forma (Ã¢Ë†â€™w2â€Â¦w2 Ã— Ã¢Ë†â€™h2â€Â¦h2) Ã¢â€ â€™ 0â€Â¦1
-      // Three.js UV: v=0 abajo, v=1 arriba Ã¢â€ â€™ canvas Y=0 arriba, Y=H abajo
+      // Remapear UVs de espacio de forma (Ã¢Ë†â€™w2â€Â¦w2 Ã— Ã¢Ë†â€™h2â€Â¦h2) → 0â€Â¦1
+      // Three.js UV: v=0 abajo, v=1 arriba → canvas Y=0 arriba, Y=H abajo
       // ShapeGeometry ya genera UVs correctas: v=1 en top, v=0 en bottom. NO invertir V.
       const uv  = geo.attributes.uv;
       const pos = geo.attributes.position;
       for (let i = 0; i < pos.count; i++) {
         let u = (pos.getX(i) + w2) / W;
-        let v = (pos.getY(i) + h2) / H;   // v correcto: Three.js v=1 Ã¢â€ â€™ top Ã¢â€ â€™ canvas Y=0
+        let v = (pos.getY(i) + h2) / H;   // v correcto: Three.js v=1 → top → canvas Y=0
         if (flipU) u = 1 - u;
         uv.setXY(i, u, v);
       }
@@ -7829,7 +7829,7 @@ requestAnimationFrame(smoothScrollLoop);
 
     cardScene2.add(pivot);
 
-    // 7. Escala: la carta CSS mide N píxeles de alto Ã¢â€ â€™ calculamos el scaleFact
+    // 7. Escala: la carta CSS mide N píxeles de alto → calculamos el scaleFact
     //    que hace que el pivot ocupe exactamente ese alto en pantalla.
     //    Usamos la altura real del card-morph-group en el momento de la carga.
     const mgEl0    = document.getElementById('card-morph-group');
@@ -7844,7 +7844,7 @@ requestAnimationFrame(smoothScrollLoop);
     pivot.scale.setScalar(scaleFact);
     pivot.position.set(0, 0, -dist);
     pivot.visible = false;
-    // Ã¢â€â‚¬Ã¢â€â‚¬ Caras oscuras Ã¢â€ â€™ MeshBasicMaterial (sin iluminación) Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€â‚¬Ã¢â€â‚¬ Caras oscuras → MeshBasicMaterial (sin iluminación) Ã¢â€â‚¬Ã¢â€â‚¬
     // La iluminación de la escena gira el negro #151515 a gris al cambiar el ángulo de luz.
     // Con BasicMaterial, las caras oscuras siempre muestran su color exacto (negro puro),
     // igual que se ve encima de la mesa, independientemente del ángulo de cámara o de luz.
@@ -7855,8 +7855,8 @@ requestAnimationFrame(smoothScrollLoop);
         if (!mat) return;
         // Convertir a BasicMaterial todas las caras con textura (mat.map).
         // El color base de MeshStandardMaterial con textura suele ser (1,1,1): blanco.
-        // El check anterior (r<0.15) nunca se cumplía Ã¢â€ â€™ cara frontal permanecía como
-        // StandardMaterial Ã¢â€ â€™ se veía gris con la iluminación de la escena.
+        // El check anterior (r<0.15) nunca se cumplía → cara frontal permanecía como
+        // StandardMaterial → se veía gris con la iluminación de la escena.
         // Las caras sin textura (cantos blancos) se dejan como StandardMaterial.
         if (mat.map) {
           const basic = new THREE.MeshBasicMaterial({
@@ -7930,7 +7930,7 @@ requestAnimationFrame(smoothScrollLoop);
     const center2 = box2.getCenter(new THREE.Vector3());
     setting.position.set(xOff - center2.x, -box2.min.y + 0.003, zOff - center2.z);
 
-    // Sombras + detección de cubiertos por forma alargada Ã¢â€ â€™ material plata
+    // Sombras + detección de cubiertos por forma alargada → material plata
     const silverMat = new THREE.MeshStandardMaterial({
       color:           0xf5f6f8,
       roughness:       0.15,
@@ -7984,13 +7984,13 @@ requestAnimationFrame(smoothScrollLoop);
   function startLoading() {
     gltfLoader.load(TABLESET_B64,
       (gltf) => {
-        // GLTFLoader.parse() ha terminado Ã¢â€ â€™ main thread libre de nuevo.
+        // GLTFLoader.parse() ha terminado → main thread libre de nuevo.
         if (animReady) {
           // savedProg > 0: la escena se construye inmediatamente
           buildScene(gltf);
         } else {
           // Primera carga: guardar GLTF y arrancar la animación de intro AHORA
-          // (el thread está libre Ã¢â€ â€™ stroke-dashoffset puede animarse sin saltos)
+          // (el thread está libre → stroke-dashoffset puede animarse sin saltos)
           pendingGltf = gltf;
           if (typeof window._runIntroAnim === 'function') {
             window._runIntroAnim();
@@ -8065,7 +8065,14 @@ requestAnimationFrame(smoothScrollLoop);
         uniform float uProgress;
         varying vec2 vUv;
         void main() {
-          vec4 c = texture2D(tDiffuse, vUv);
+          float blur = (1.0 - uProgress) * 0.015;
+          vec4 c = vec4(0.0);
+          c += texture2D(tDiffuse, vUv + vec2(-blur, -blur));
+          c += texture2D(tDiffuse, vUv + vec2(blur, -blur));
+          c += texture2D(tDiffuse, vUv + vec2(-blur, blur));
+          c += texture2D(tDiffuse, vUv + vec2(blur, blur));
+          c += texture2D(tDiffuse, vUv);
+          c /= 5.0;
           
           // Color base de polaroid sin revelar (gris oscuro / verdoso)
           vec3 baseColor = vec3(0.1, 0.15, 0.12);
@@ -8096,103 +8103,42 @@ requestAnimationFrame(smoothScrollLoop);
     polaroidGroup.add(photoMesh);
     // --- TEXTO MANUSCRITO EN EL LOMO INFERIOR ---
     const textCanvas = document.createElement('canvas');
-    textCanvas.width = 2560;
-    textCanvas.height = 640;
+    textCanvas.width = 2048;
+    textCanvas.height = 512;
     const tCtx = textCanvas.getContext('2d');
     
     const textTex = new THREE.CanvasTexture(textCanvas);
     if (THREE.sRGBEncoding) textTex.encoding = THREE.sRGBEncoding;
     textTex.anisotropy = 16;
     
-    const textShader = {
-      uniforms: {
-        tDiffuse: { value: textTex },
-        uWriteProgress: { value: 0.0 },
-        uGap: { value: 0.14 } // Se actualizará en JS
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D tDiffuse;
-        uniform float uWriteProgress;
-        uniform float uGap;
-        varying vec2 vUv;
-        void main() {
-          vec4 c = texture2D(tDiffuse, vUv);
-          
-          float invertedY = 1.0 - vUv.y;
-          // El texto está centrado en 0.5. Calculamos el inicio de la primera franja (top).
-          // Desplazamos el texto ligeramente hacia abajo, empezando en -2.4 gaps del centro.
-          float topEdge = 0.5 - (2.4 * uGap);
-          float yDiff = (invertedY - topEdge) / uGap;
-          
-          float bandIndex = 0.0;
-          if (yDiff > 4.9) bandIndex = 4.0;
-          else if (yDiff > 3.55) bandIndex = 3.0;
-          else if (yDiff > 2.2) bandIndex = 2.0;
-          else if (yDiff > 0.85) bandIndex = 1.0;
-          
-          float startP = bandIndex * 0.2;
-          float localProgress = clamp((uWriteProgress - startP) / 0.2, 0.0, 1.0);
-          
-          float alpha = 1.0 - smoothstep(localProgress - 0.05, localProgress, vUv.x);
-          
-          gl_FragColor = vec4(c.rgb, c.a * alpha);
-        }
-      `
-    };
-    const textMat = new THREE.ShaderMaterial({
-        uniforms: textShader.uniforms,
-        vertexShader: textShader.vertexShader,
-        fragmentShader: textShader.fragmentShader,
+    const textMat = new THREE.MeshBasicMaterial({
+        map: textTex,
         transparent: true,
+        opacity: 0,
         depthWrite: false
     });
     window.polaroidTextMat = textMat;
     
-    // Forzar la carga de la fuente manuscrita antes de pintar
-    document.fonts.load('75px "Swanky and Moo Moo"').then(() => {
-        tCtx.clearRect(0,0,2560,640);
+    document.fonts.ready.then(() => {
+        tCtx.clearRect(0,0,2048,512);
         tCtx.fillStyle = 'rgba(15, 25, 45, 0.95)'; // Tinta boli azul oscura
         tCtx.textAlign = 'center';
         tCtx.textBaseline = 'middle';
         
-        tCtx.translate(1280, 320);
+        tCtx.translate(1024, 256);
         tCtx.rotate(-0.015); // Inclinacion sutil
         
-        let fontSize = 75;
-        tCtx.font = fontSize + 'px "Swanky and Moo Moo", cursive';
-        let maxW = 2400; // Margen de 80px por lado (canvas es 2560)
-        const line1 = '"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"';
-        while (tCtx.measureText(line1).width > maxW && fontSize > 20) {
-            fontSize--;
-            tCtx.font = fontSize + 'px "Swanky and Moo Moo", cursive';
-        }
-        
-        let gap = fontSize * 1.15;
-        // Total = gap * 5.4. Desplazamos ligeramente hacia abajo empezando en -2.4 en lugar de -2.7
-        let startY = -(gap * 2.4);
-        
-        // Pasar el gap normalizado al shader
-        if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
-            window.polaroidTextMat.uniforms.uGap.value = gap / 640.0;
-        }
-
-        tCtx.fillText(line1, 0, startY); // Línea 1 (Párrafo 1)
-        tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, startY + gap * 1.7); // Línea 2 (Párrafo 2)
-        tCtx.fillText('de que nunca volveremos a vivir cada preciso instante de nuevo.', 0, startY + gap * 2.7); // Línea 3 (Párrafo 2)
-        tCtx.fillText('As\u00ed que amemos a las personas que nos importan ahora, ya que no sabemos', 0, startY + gap * 4.4); // Línea 4 (Párrafo 3)
-        tCtx.fillText('cuando tendremos la \u00faltima oportunidad para hacerlo.', 0, startY + gap * 5.4); // Línea 5 (Párrafo 3)
+        tCtx.font = '600 65px "Caveat", cursive';
+        tCtx.fillText('"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"', 0, -145);
+        tCtx.font = '600 52px "Caveat", cursive';
+        tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, -60);
+        tCtx.fillText('de que nunca volveremos a vivir cada preciso instante de nuevo.', 0, 0);
+        tCtx.fillText('As\u00ed que amemos a las personas que nos importan ahora, ya que no sabemos', 0, 80);
+        tCtx.fillText('cuando tendremos la \u00faltima oportunidad para hacerlo.', 0, 140);
         textTex.needsUpdate = true;
     });
     
-    // El plano ocupa 4.2 de ancho (la polaroid mide 4.3), así el texto aprovecha todo el espacio disponible
-    const textGeo = new THREE.PlaneGeometry(4.2, 1.05);
+    const textGeo = new THREE.PlaneGeometry(3.6, 0.9);
     const textMesh = new THREE.Mesh(textGeo, textMat);
     textMesh.rotation.x = -Math.PI / 2;
     textMesh.position.y = paperD / 2 + 0.008;
@@ -8518,9 +8464,9 @@ requestAnimationFrame(smoothScrollLoop);
 
     // â€â€ Camarero: cruza la escena muy despacio, aparece cada ~25s â€â€
     const waiterCycle = 25.0;
-    const waiterPhase = (t % waiterCycle) / waiterCycle;     // 0 Ã¢â€ â€™ 1
+    const waiterPhase = (t % waiterCycle) / waiterCycle;     // 0 → 1
     if (waiterPhase < 0.55) {                                 // Solo visible durante 55% del ciclo
-      const eased = waiterPhase / 0.55;                      // 0 Ã¢â€ â€™ 1 dentro de la ventana
+      const eased = waiterPhase / 0.55;                      // 0 → 1 dentro de la ventana
       const wx = -17 + eased * 34;                           // Cruza de -17 a +17
       const wz = -8.5;                                        // Por detras de los platos
       const fadeIn  = Math.min(eased * 8, 1);                // Fade in primeros 12.5%
@@ -8545,7 +8491,7 @@ requestAnimationFrame(smoothScrollLoop);
     // Ã¢â€â‚¬Ã¢â€â‚¬ Parallax de ratón sobre la cámara principal Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
     // Intensidad máxima al inicio, se apaga al scrollear (progress > 0.15)
     const scrollProg = (typeof scrollTl !== 'undefined') ? scrollTl.progress() : 0;
-    const parallaxStr = Math.max(0, 1 - scrollProg / 0.15); // 1Ã¢â€ â€™0 en los primeros 15% del scroll
+    const parallaxStr = Math.max(0, 1 - scrollProg / 0.15); // 1→0 en los primeros 15% del scroll
     const lerpK = 1 - Math.pow(0.04, dt);  // suavizado independiente de FPS
     mouseNX += (mouseRawX - mouseNX) * lerpK;
     mouseNY += (mouseRawY - mouseNY) * lerpK;
@@ -8563,12 +8509,6 @@ requestAnimationFrame(smoothScrollLoop);
     let currentLookX = CAM_LOOK.x + (-7 - CAM_LOOK.x) * pProg;
     let currentLookY = CAM_LOOK.y + (0 - CAM_LOOK.y) * pProg;
     let currentLookZ = CAM_LOOK.z + (0 - CAM_LOOK.z) * pProg;
-
-    if (window._finalZoomP > 0) {
-        currentCamY = currentCamY + (4.35 - currentCamY) * window._finalZoomP;
-        currentCamZ = currentCamZ + (3.0 - currentCamZ) * window._finalZoomP;
-        currentLookZ = currentLookZ + (1.4 - currentLookZ) * window._finalZoomP;
-    }
 
     // Cámara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
     camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
@@ -8654,7 +8594,7 @@ requestAnimationFrame(smoothScrollLoop);
         linear-gradient(170deg, rgba(12,0,30,1) 0%, rgba(35,0,62,1) 40%, rgba(22,0,45,1) 70%, rgba(14,0,32,1) 100%);"></div>
     <!-- TÃƒÂTULO "NO ES MAGIA, ES OXITOCINA"
          â€â€œ Canvas de ignición neuronal: píxeles que se encienden como neuronas
-         â€â€œ ANTES de la silueta en el DOM Ã¢â€ â€™ la silueta pinta encima (texto queda detrás) -->
+         â€â€œ ANTES de la silueta en el DOM → la silueta pinta encima (texto queda detrás) -->
     <div id="sciencia-title" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10;">
       <canvas id="neural-text-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
     </div>
@@ -9105,7 +9045,7 @@ requestAnimationFrame(smoothScrollLoop);
           ].join('\n');
           shader.fragmentShader = fHead + '\n' + shader.fragmentShader;
 
-          // DIAGNÓSTICO: gradiente naranjaÃ¢â€ â€™amarillo según posición Y normalizada
+          // DIAGNÓSTICO: gradiente naranja→amarillo según posición Y normalizada
           // El cíngulo está ARRIBA del cuerpo calloso, así que aparecerá en la parte amarilla.
           // Dime en qué "nivel" de amarillo aparece el cíngulo para calibrar.
           shader.fragmentShader = shader.fragmentShader.replace(
@@ -9195,13 +9135,13 @@ requestAnimationFrame(smoothScrollLoop);
     if (!_brainReady || !_brainFull) return;
     _brainT = _brainClock.getElapsedTime();
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 1: Rotación â€â€ bProg 16.3 Ã¢â€ â€™ 17.0 Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 1: Rotación â€â€ bProg 16.3 → 17.0 Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
     // rotEase va de 0 (frontal) a 1 (perfil lateral completo)
     var _bProg = window._brainScrollProg || 0; var _bProgM = _bProg + 0.5;
     var _rotT    = Math.max(0, Math.min(1, (_bProgM - 16.3) / (17.0 - 16.3)));
     var _rotEase = _rotT < 0.5 ? 2 * _rotT * _rotT : 1 - Math.pow(-2 * _rotT + 2, 2) / 2;
 
-    // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 2: Swap â€â€ bProg 17.0 Ã¢â€ â€™ 17.8 (DESPUÉS de la rotación completa) Ã¢â€â‚¬Ã¢â€â‚¬
+    // Ã¢â€â‚¬Ã¢â€â‚¬ FASE 2: Swap â€â€ bProg 17.0 → 17.8 (DESPUÉS de la rotación completa) Ã¢â€â‚¬Ã¢â€â‚¬
     var swapT       = Math.max(0, Math.min(1, (_bProgM - 17.0) / (17.8 - 17.0)));
     var fullOpacity = 1.0 - swapT;
     var halfOpacity = swapT;
@@ -9977,7 +9917,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 <script>
 // Ã¢â€â‚¬Ã¢â€â‚¬ CONTROLADOR SECCIÓN NEUROCIENCIA â€â€ wipe Oryzo scroll-driven Ã¢â€â‚¬Ã¢â€â‚¬
 // Barrido de máscara de gradiente 100% vinculado al scroll.
-// Título: barre izquierdaÃ¢â€ â€™derecha. Párrafo: barre derechaÃ¢â€ â€™izquierda.
+// Título: barre izquierda→derecha. Párrafo: barre derecha→izquierda.
 // Todo computado en cada frame desde window._brainScrollProg. Cero timers.
 (function() {
   var SHOW_START = 16.93;
@@ -10031,14 +9971,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
   // Ã¢â€â‚¬Ã¢â€â‚¬ Aplicar máscara Oryzo â€â€ gradiente puro sin zonas sólidas Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
   // Fórmula: la franja de degradado siempre ocupa el 100% del elemento.
-  // Sólo se desplaza su posición. Nunca hay una zona sólida Ã¢â€ â€™ ningún borde visible.
-  //   showFrac = 1 Ã¢â€ â€™ gradiente completamente fuera (todo visible)
-  //   showFrac = 0.5 Ã¢â€ â€™ gradiente centrado (fade suave de esquina a esquina)
-  //   showFrac = 0 Ã¢â€ â€™ gradiente completamente fuera (todo oculto)
-  // dir: 'ltr' = 135deg (top-leftÃ¢â€ â€™bottom-right) | 'rtl' = 315deg (opuesto)
+  // Sólo se desplaza su posición. Nunca hay una zona sólida → ningún borde visible.
+  //   showFrac = 1 → gradiente completamente fuera (todo visible)
+  //   showFrac = 0.5 → gradiente centrado (fade suave de esquina a esquina)
+  //   showFrac = 0 → gradiente completamente fuera (todo oculto)
+  // dir: 'ltr' = 135deg (top-left→bottom-right) | 'rtl' = 315deg (opuesto)
   function applyMask(el, showFrac, dir) {
     if (!el) return;
-    var X   = showFrac * 200 - 100; // -100 (todo oculto) Ã¢â€ â€™ +100 (todo visible)
+    var X   = showFrac * 200 - 100; // -100 (todo oculto) → +100 (todo visible)
     var deg = (dir === 'ltr') ? '135deg' : '315deg';
     // black = muestra, transparent = oculta. La franja siempre es de 100%.
     var mask = 'linear-gradient(' + deg + ', black ' + X.toFixed(1) + '%, transparent ' + (X + 100).toFixed(1) + '%)';
@@ -10093,7 +10033,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   }
 
   // Ã¢â€â‚¬Ã¢â€â‚¬ ENTRADA H3/P: clip-path reveal de abajo hacia arriba Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-  // El stagger (STAGGER_IN) entre labelÃ¢â€ â€™h3Ã¢â€ â€™para crea el efecto cascada.
+  // El stagger (STAGGER_IN) entre label→h3→para crea el efecto cascada.
   // Cada bloque usa un clip recto (inset) â€â€ sin inclinar nada.
   function applyEntryReveal(el, entryFrac) {
     if (!el) return;
@@ -10118,7 +10058,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   // n=0 label (más rápido), n=1 h3, n=2 para (más lento)
   // STAGGER: cuánto del rango de entryFrac se retrasa cada elemento
   var STAGGER_IN = 0.22;
-  var LEAD_IN    = 1 - 2 * STAGGER_IN; // fracción que usa cada elemento para ir 0Ã¢â€ â€™1
+  var LEAD_IN    = 1 - 2 * STAGGER_IN; // fracción que usa cada elemento para ir 0→1
 
   function staggerFrac(ef, n) {
     // Elemento n empieza cuando ef = n*STAGGER_IN y termina cuando ef = n*STAGGER_IN + LEAD_IN
@@ -10959,9 +10899,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           // Ralentizado un 50% (antes 4.0, ahora 6.0) para que tarde más en revelar
                           let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
                           window.polaroidPhotoMat.uniforms.uProgress.value = devProg;
-                          if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
-                              let textProgress = Math.min(1.0, devProg / 0.95);
-                              window.polaroidTextMat.uniforms.uWriteProgress.value = textProgress;
+                          if (window.polaroidTextMat) {
+                              let textAlpha = Math.max(0, (devProg - 0.5) * 2.0);
+                              window.polaroidTextMat.opacity = textAlpha;
                           }
                       }
                       if (oryzoBg) oryzoBg.style.opacity = (1 - earlyFadeProg).toFixed(3);
@@ -11030,16 +10970,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // 3. Movimiento de camara hacia la mesa 3D
                   // Se fuerza la camara a estar en initialCameraPos inmediatamente
                   var tableZoomOutP = 0;
-                  var easeZoom = 0;
                   if (typeof camera !== 'undefined') {
-                      var zoomP = 0;
-                      if (localP > START_3D_REVEAL) {
-                          zoomP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
-                      }
-                      // Suavizado del zoom (ease-in-out cuadrático)
-                      easeZoom = zoomP < 0.5 ? 2 * zoomP * zoomP : -1 + (4 - 2 * zoomP) * zoomP;
+                      camera.position.set(-0.3, 12, 3);
+                      camera.lookAt(-0.3, 0, 0);
                   }
-                  window._finalZoomP = easeZoom;
                   window._finalPolProg = tableZoomOutP;
                   
               } else {
@@ -11379,7 +11313,7 @@ window.dismissSens = function(e) {
   window._sensDismissed = true;
 };
 
-// Función de reset: borra la regla CSS Ã¢â€ â€™ overlay vuelve a sus estilos inline originales
+// Función de reset: borra la regla CSS → overlay vuelve a sus estilos inline originales
 window._resetSensOverlay = function() {
   var ss = document.getElementById('__sens_dismiss_css');
   if (ss) ss.textContent = '';
@@ -11491,7 +11425,7 @@ window.chooseFinal = function(e, happy) {
   }
 };
 
-// --- SLIDE 1: SECUENCIA CROSSFADE (divertido Ã¢â€ â€™ sorprendente Ã¢â€ â€™ profundo Ã¢â€ â€™ emocional Ã¢â€ â€™ neutro) ---
+// --- SLIDE 1: SECUENCIA CROSSFADE (divertido → sorprendente → profundo → emocional → neutro) ---
 (function() {
   var _seq0Index = 0;
   var _seq0Total = 5;
