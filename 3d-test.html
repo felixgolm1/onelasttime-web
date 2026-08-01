@@ -8122,8 +8122,19 @@ requestAnimationFrame(smoothScrollLoop);
         varying vec2 vUv;
         void main() {
           vec4 c = texture2D(tDiffuse, vUv);
-          // Suave transición en el eje X para revelar de izquierda a derecha (rango extra para suavidad)
-          float alpha = 1.0 - smoothstep(uWriteProgress - 0.05, uWriteProgress, vUv.x);
+          
+          // Dividir el canvas verticalmente en 5 franjas (para las 5 líneas de texto)
+          // vUv.y = 1.0 es arriba, 0.0 es abajo.
+          float invertedY = 1.0 - vUv.y;
+          float bandIndex = clamp(floor(invertedY * 5.0), 0.0, 4.0); // 0 (arriba) a 4 (abajo)
+          
+          // Progreso local para esta franja de texto (cada una ocupa un 20% del total)
+          float startP = bandIndex * 0.2;
+          float localProgress = clamp((uWriteProgress - startP) / 0.2, 0.0, 1.0);
+          
+          // Suave transición en el eje X usando el progreso de ESTA línea
+          float alpha = 1.0 - smoothstep(localProgress - 0.05, localProgress, vUv.x);
+          
           gl_FragColor = vec4(c.rgb, c.a * alpha);
         }
       `
