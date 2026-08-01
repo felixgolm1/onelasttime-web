@@ -8036,7 +8036,14 @@ requestAnimationFrame(smoothScrollLoop);
     const photoH = 3.8;
     const photoGeo = new THREE.PlaneGeometry(photoW, photoH);
     
-    const polaroidVideoEl = document.getElementById('polaroid-video');
+    const polaroidVideoEl = document.createElement('video');
+    polaroidVideoEl.id = 'polaroid-video';
+    polaroidVideoEl.src = 'assets/img/embejecimiento_fast.mp4';
+    polaroidVideoEl.muted = true;
+    polaroidVideoEl.playsInline = true;
+    polaroidVideoEl.preload = 'auto';
+    window.polaroidVideoEl = polaroidVideoEl; // Lo exponemos al objeto global para usarlo en el scroll
+    // No hace falta añadirlo al body, THREE.VideoTexture lo puede leer de memoria.
     const photoTex = new THREE.VideoTexture(polaroidVideoEl);
     photoTex.minFilter = THREE.LinearFilter;
     photoTex.magFilter = THREE.LinearFilter;
@@ -9982,7 +9989,6 @@ window.addEventListener('click', function(e) {
 <div id="fake-bg-fade" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:50000; opacity:0; background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);">
 </div>
 <canvas id="embers-canvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:50001; pointer-events:none; opacity:0;"></canvas>
-<video id="polaroid-video" src="assets/img/embejecimiento_fast.mp4" muted playsinline preload="auto" style="display:none;"></video>
 </body>
 
 <script>
@@ -11088,7 +11094,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                               window.polaroidTextMat.uniforms.uWriteProgress.value = textProgress;
                           }
                           // Sincronizar video de la polaroid
-                          const pVid = document.getElementById('polaroid-video');
+                          const pVid = window.polaroidVideoEl;
                           if (pVid && pVid.duration) {
                               // El video avanza hasta el final del scroll (8.0 unidades desde START_3D_REVEAL)
                               let vidProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 8.0));
