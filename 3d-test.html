@@ -8126,9 +8126,16 @@ requestAnimationFrame(smoothScrollLoop);
           vec4 c = texture2D(tDiffuse, vUv);
           
           float invertedY = 1.0 - vUv.y;
-          // El texto está centrado en 0.5. Calculamos el inicio de la primera franja (top)
-          float topEdge = 0.5 - (2.5 * uGap);
-          float bandIndex = clamp(floor((invertedY - topEdge) / uGap), 0.0, 4.0);
+          // El texto está centrado en 0.5. Calculamos el inicio de la primera franja (top).
+          // El bloque total mide 4.4 gaps. El centro está en 0.5. El inicio está a -2.2 gaps del centro.
+          float topEdge = 0.5 - (2.2 * uGap);
+          float yDiff = (invertedY - topEdge) / uGap;
+          
+          float bandIndex = 0.0;
+          if (yDiff > 3.9) bandIndex = 4.0;
+          else if (yDiff > 2.8) bandIndex = 3.0;
+          else if (yDiff > 1.7) bandIndex = 2.0;
+          else if (yDiff > 0.6) bandIndex = 1.0;
           
           float startP = bandIndex * 0.2;
           float localProgress = clamp((uWriteProgress - startP) / 0.2, 0.0, 1.0);
@@ -8168,18 +8175,19 @@ requestAnimationFrame(smoothScrollLoop);
         }
         
         let gap = fontSize * 1.15;
-        let startY = -(gap * 2);
+        // Total = gap * 4.4, por tanto la primera línea empieza a -2.2
+        let startY = -(gap * 2.2);
         
         // Pasar el gap normalizado al shader
         if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
             window.polaroidTextMat.uniforms.uGap.value = gap / 640.0;
         }
 
-        tCtx.fillText(line1, 0, startY);
-        tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, startY + gap);
-        tCtx.fillText('de que nunca volveremos a vivir cada preciso instante de nuevo.', 0, startY + gap * 2);
-        tCtx.fillText('As\u00ed que amemos a las personas que nos importan ahora, ya que no sabemos', 0, startY + gap * 3);
-        tCtx.fillText('cuando tendremos la \u00faltima oportunidad para hacerlo.', 0, startY + gap * 4);
+        tCtx.fillText(line1, 0, startY); // Línea 1 (Párrafo 1)
+        tCtx.fillText('Y aunque esperamos que este d\u00eda quede lejos, no hay duda', 0, startY + gap * 1.2); // Línea 2 (Párrafo 2)
+        tCtx.fillText('de que nunca volveremos a vivir cada preciso instante de nuevo.', 0, startY + gap * 2.2); // Línea 3 (Párrafo 2)
+        tCtx.fillText('As\u00ed que amemos a las personas que nos importan ahora, ya que no sabemos', 0, startY + gap * 3.4); // Línea 4 (Párrafo 3)
+        tCtx.fillText('cuando tendremos la \u00faltima oportunidad para hacerlo.', 0, startY + gap * 4.4); // Línea 5 (Párrafo 3)
         textTex.needsUpdate = true;
     });
     
