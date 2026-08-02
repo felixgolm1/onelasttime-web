@@ -5388,8 +5388,8 @@ window.addEventListener('error', function(e) {
                 this.y += this.vy;
 
                 if (explosionActive) {
-                    this.vy -= (Math.random() * 0.15 + 0.05); // accelerate upwards
-                    this.x += Math.sin(this.life * 2) * 1; // wider sway
+                    this.vy -= (Math.random() * 0.05 + 0.02); // accelerate upwards
+                    this.x += Math.sin(this.life * 1.5) * 0.5; // wider sway
                     this.alpha = Math.min(1, this.alpha * 1.5); // brighter
                 }
 
