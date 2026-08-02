@@ -696,7 +696,7 @@
                                         <label className={`label-style ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>{f.label}</label>
                                         {f.subtitle && <p className={`text-[10px] text-gray-500 font-medium text-center mb-3 -mt-1 ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15 + 0.05}s`} : {}}>{f.subtitle}</p>}
                                         {f.type === 'text' && <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
-                                        {f.type === 'datetime-local' && <input type="datetime-local" className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'datetime-local' && <input type="datetime-local" onClick={e => { try { e.target.showPicker(); } catch(err){} }} onFocus={e => { try { e.target.showPicker(); } catch(err){} }} className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'multi_pills' && (
                                             (() => {
                                                 const bubbleSize = 95;
