@@ -244,6 +244,12 @@
     </style>
 </head>
 <body>
+    <div id="raw-black-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:#040404;z-index:999999999;transition:opacity 1.5s ease-in-out;"></div>
+    <script>
+        if (!window.location.search.includes('skipIntro=true')) {
+            document.getElementById('raw-black-overlay').style.display = 'none';
+        }
+    </script>
 
     <div id="root"></div>
 
@@ -1767,7 +1773,13 @@
             
             useEffect(() => {
                 if (premiumFade) {
-                    // Start black, then fade out the black overlay after a brief moment
+                    const rawOverlay = document.getElementById('raw-black-overlay');
+                    if (rawOverlay) {
+                        setTimeout(() => {
+                            rawOverlay.style.opacity = '0';
+                            setTimeout(() => rawOverlay.style.display = 'none', 1500);
+                        }, 100);
+                    }
                     setTimeout(() => setPremiumFade(false), 100);
                 }
             }, [premiumFade]);
