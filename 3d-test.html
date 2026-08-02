@@ -6349,13 +6349,45 @@ window.onerror = function(msg, url, line, col, err) {
       if (Math.abs(val - 2.18) < 0.01) {
           window.isAutoScrolling = true;
           
-          function doInertiaPull() {
-              prog = 9.62;
-              targetProg = 9.62;
-              gsap.to({ p: 9.62 }, {
-                  p: 9.96,
-                  duration: 2.8,
-                  ease: "power3.out",
+          if (prog > 9.62) {
+              // 1. Estamos en el carrusel. Rebobinamos hasta el borde del vacio.
+              gsap.to({ p: prog }, {
+                  p: 9.62,
+                  duration: 0.5,
+                  ease: "power2.inOut",
+                  onUpdate: function() {
+                      targetProg = this.targets()[0].p;
+                      prog = targetProg;
+                  },
+                  onComplete: function() {
+                      // 2. Saltamos el vacio matematico
+                      prog = 2.20; targetProg = 2.20;
+                      // 3. Aterrizamos en 2.19 y nos quedamos ahi
+                      gsap.to({ p: 2.20 }, {
+                          p: 2.19,
+                          duration: 0.3,
+                          ease: "power2.out",
+                          onUpdate: function() {
+                              targetProg = this.targets()[0].p;
+                              prog = targetProg;
+                          },
+                          onComplete: function() {
+                              window.isAutoScrolling = false;
+                              sessionStorage.setItem('dev_prog', prog);
+                              if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
+                              if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+                              if (typeof updateBoxState === 'function') updateBoxState();
+                              if (typeof updateFaceSwap === 'function') updateFaceSwap();
+                          }
+                      });
+                  }
+              });
+          } else {
+              // Estamos antes del vacio. Vamos directo a 2.19 y nos quedamos ahi
+              gsap.to({ p: Math.min(prog, 2.20) }, {
+                  p: 2.19,
+                  duration: 0.8,
+                  ease: "power2.inOut",
                   onUpdate: function() {
                       targetProg = this.targets()[0].p;
                       prog = targetProg;
@@ -6368,46 +6400,6 @@ window.onerror = function(msg, url, line, col, err) {
                       if (typeof updateBoxState === 'function') updateBoxState();
                       if (typeof updateFaceSwap === 'function') updateFaceSwap();
                   }
-              });
-          }
-
-          if (prog > 9.62) {
-              // 1. Estamos en el carrusel. Rebobinamos hasta el borde del vacio.
-              gsap.to({ p: prog }, {
-                  p: 9.62,
-                  duration: 0.4,
-                  ease: "power2.inOut",
-                  onUpdate: function() {
-                      targetProg = this.targets()[0].p;
-                      prog = targetProg;
-                  },
-                  onComplete: function() {
-                      // 2. Saltamos el vacio matematico
-                      prog = 2.20; targetProg = 2.20;
-                      // 3. Pequeño rebobinado en la caja (solo para asentar la camara)
-                      gsap.to({ p: 2.20 }, {
-                          p: 2.18,
-                          duration: 0.15,
-                          ease: "power2.out",
-                          onUpdate: function() {
-                              targetProg = this.targets()[0].p;
-                              prog = targetProg;
-                          },
-                          onComplete: doInertiaPull
-                      });
-                  }
-              });
-          } else {
-              // Estamos en la caja o antes. Vamos directo a 2.18 saltandonos el vacio si venimos de atras
-              gsap.to({ p: Math.min(prog, 2.20) }, {
-                  p: 2.18,
-                  duration: 0.5,
-                  ease: "power2.inOut",
-                  onUpdate: function() {
-                      targetProg = this.targets()[0].p;
-                      prog = targetProg;
-                  },
-                  onComplete: doInertiaPull
               });
           }
           return;
