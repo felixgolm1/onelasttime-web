@@ -5411,16 +5411,18 @@
             embersCanvas.style.setProperty('opacity', finalOpacity, 'important');
             embersCanvas.style.setProperty('z-index', '9999999', 'important'); // PUSH TO ABSOLUTE FRONT
             
-            if (finalOpacity > 0.01) {
-                embersCtx.clearRect(0, 0, width, height);
-                // Draw a blue debug box if active
-                if (window._ctaHoverActive) {
+            // ALWAYS update particles so they are distributed naturally even when invisible
+            embersCtx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                // Draw a blue debug box if active (temporarily)
+                if (window._ctaHoverActive && i === 0) {
                     embersCtx.fillStyle = "blue";
                     embersCtx.fillRect(10, 10, 50, 50);
                 }
                 
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
+                if (finalOpacity > 0.01) {
                     particles[i].draw(embersCtx);
                 }
             }
