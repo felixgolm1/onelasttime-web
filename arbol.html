@@ -1784,7 +1784,7 @@
             
             const [phase, setPhase] = useState(() => {
                 if (forceSkip) return 'format';
-                return sessionStorage.getItem('dev_phase') || (sessionStorage.getItem('skipIntro') === 'true' ? 'format' : 'intro');
+                return sessionStorage.getItem('dev_phase') || 'format';
             });
             const [phaseHistory, setPhaseHistory] = useState(() => JSON.parse(sessionStorage.getItem('dev_phaseHistory')) || []);
             const [treeProgress, setTreeProgress] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeProgress')) || { format: 0, audience: 0 });
@@ -1914,3 +1914,4 @@
     </script>
 </body>
 </html>
+
