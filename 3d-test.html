@@ -8692,7 +8692,7 @@ requestAnimationFrame(smoothScrollLoop);
 
 
   <!-- Debug: Mostrar scroll prog -->
-  <div id="debug-scroll-prog" style="display: block; position: fixed; bottom: 20px; left: 20px; color: #00ff00; font-family: monospace; font-size: 24px; font-weight: bold; z-index: 99999999; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">0.00</div>
+  <div id="debug-scroll-prog" style="display: none; position: fixed; bottom: 20px; left: 20px; color: #00ff00; font-family: monospace; font-size: 24px; font-weight: bold; z-index: 99999999; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">0.00</div>
   <!-- MAGAZINE BREAKOUT OVERLAY â€â€ body-level para evitar problemas con transforms del carrusel -->
   <div id="mag-breakout-overlay" style="display:none;position:fixed;z-index:99998;background:transparent;pointer-events:none;border:none;will-change:top,left,width,height;"></div>
   <!-- THERMAL OVERLAY â€â€ efecto cámara termográfica -->
@@ -11654,7 +11654,7 @@ window.chooseFinal = function(e, happy) {
 </script>
 
 
-<div id="hover-logger" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.8); color:lime; padding:10px; z-index:99999999; font-family:monospace; max-width: 400px; font-size: 14px;">Waiting...</div>
+<div id="hover-logger" style="display:none; position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.8); color:lime; padding:10px; z-index:99999999; font-family:monospace; max-width: 400px; font-size: 14px;">Waiting...</div>
 <script>
 window.addEventListener('error', function(e) {
     let errBox = document.getElementById('js-err-box');
