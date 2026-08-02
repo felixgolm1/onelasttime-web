@@ -10781,7 +10781,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   // Fade out del scroll indicator: desaparece justo al final del scroll
                   var _scrollInd = document.querySelector('.scroll-indicator');
-                  if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
+                  // if (_scrollInd) _scrollInd.style.opacity = Math.max(0, 1 - _finalP * 1.15).toFixed(3);
                   
                   // Fase de entrada de Logo y CTA movida al final de la función para unificar la lógica
 
@@ -11089,7 +11089,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   }
                   
                   var sInd = document.querySelector('.scroll-indicator');
-                  if (sInd) sInd.style.opacity = (1 - fadeProg).toFixed(3);
+                  if (sInd) {
+                      var scrollIndP = Math.max(0, Math.min(1, (localP - 34.5) / 1.4));
+                      sInd.style.opacity = (1 - scrollIndP).toFixed(3);
+                  }
                   
                   // 3. Movimiento de camara hacia la mesa 3D
                   // Se fuerza la camara a estar en initialCameraPos inmediatamente
