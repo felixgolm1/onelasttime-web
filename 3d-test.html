@@ -8991,33 +8991,6 @@ requestAnimationFrame(smoothScrollLoop);
   window.HEAT_ZONES = ZONES;
 
     
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                // Restore state if returning via Back button
-                explosionActive = false;
-                window._ctaHoverActive = false;
-                
-                // Reset DOM overlays
-                let whiteBg = document.getElementById('premium-white-bg');
-                if (whiteBg) whiteBg.style.opacity = '0';
-                
-                let bg = document.getElementById('premium-bg');
-                if (bg) bg.style.opacity = '0';
-                
-                let h1 = document.getElementById('premium-h1');
-                if (h1) {
-                    h1.style.opacity = '0';
-                    h1.style.transform = 'translateY(20px)';
-                }
-                
-                // Reset particles
-                particles = [];
-                for (let i = 0; i < 150; i++) { 
-                    particles.push(new Particle());
-                }
-            }
-        });
-
 })();
 </script>
 
@@ -9598,33 +9571,6 @@ setInterval(function() {
   };
 
     
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                // Restore state if returning via Back button
-                explosionActive = false;
-                window._ctaHoverActive = false;
-                
-                // Reset DOM overlays
-                let whiteBg = document.getElementById('premium-white-bg');
-                if (whiteBg) whiteBg.style.opacity = '0';
-                
-                let bg = document.getElementById('premium-bg');
-                if (bg) bg.style.opacity = '0';
-                
-                let h1 = document.getElementById('premium-h1');
-                if (h1) {
-                    h1.style.opacity = '0';
-                    h1.style.transform = 'translateY(20px)';
-                }
-                
-                // Reset particles
-                particles = [];
-                for (let i = 0; i < 150; i++) { 
-                    particles.push(new Particle());
-                }
-            }
-        });
-
 })();
 </script>
 </script>
@@ -10044,33 +9990,6 @@ window.addEventListener('click', function(e) {
   });
 
     
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                // Restore state if returning via Back button
-                explosionActive = false;
-                window._ctaHoverActive = false;
-                
-                // Reset DOM overlays
-                let whiteBg = document.getElementById('premium-white-bg');
-                if (whiteBg) whiteBg.style.opacity = '0';
-                
-                let bg = document.getElementById('premium-bg');
-                if (bg) bg.style.opacity = '0';
-                
-                let h1 = document.getElementById('premium-h1');
-                if (h1) {
-                    h1.style.opacity = '0';
-                    h1.style.transform = 'translateY(20px)';
-                }
-                
-                // Reset particles
-                particles = [];
-                for (let i = 0; i < 150; i++) { 
-                    particles.push(new Particle());
-                }
-            }
-        });
-
 })();
 </script>
   <div id="transition-flash" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:#ffffff; opacity:0; pointer-events:none; z-index:99998; will-change:opacity;"></div>
@@ -11336,33 +11255,6 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   };
 
     
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                // Restore state if returning via Back button
-                explosionActive = false;
-                window._ctaHoverActive = false;
-                
-                // Reset DOM overlays
-                let whiteBg = document.getElementById('premium-white-bg');
-                if (whiteBg) whiteBg.style.opacity = '0';
-                
-                let bg = document.getElementById('premium-bg');
-                if (bg) bg.style.opacity = '0';
-                
-                let h1 = document.getElementById('premium-h1');
-                if (h1) {
-                    h1.style.opacity = '0';
-                    h1.style.transform = 'translateY(20px)';
-                }
-                
-                // Reset particles
-                particles = [];
-                for (let i = 0; i < 150; i++) { 
-                    particles.push(new Particle());
-                }
-            }
-        });
-
 })();
 </script>
 
@@ -11890,6 +11782,31 @@ document.addEventListener('mouseover', e => {
         }
         animate();
 
+        
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                explosionActive = false;
+                window._ctaHoverActive = false;
+                
+                let whiteBg = document.getElementById('premium-white-bg');
+                if (whiteBg) whiteBg.style.opacity = '0';
+                
+                let bg = document.getElementById('premium-bg');
+                if (bg) bg.style.opacity = '0';
+                
+                let h1 = document.getElementById('premium-h1');
+                if (h1) {
+                    h1.style.opacity = '0';
+                    h1.style.transform = 'translateY(20px)';
+                }
+                
+                particles = [];
+                for (let i = 0; i < 400; i++) { 
+                    particles.push(new Particle());
+                }
+            }
+        });
+
         document.addEventListener('click', (e) => {
             const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
             if (cta) {
@@ -11941,33 +11858,6 @@ document.addEventListener('mouseover', e => {
     }
 
     
-
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                // Restore state if returning via Back button
-                explosionActive = false;
-                window._ctaHoverActive = false;
-                
-                // Reset DOM overlays
-                let whiteBg = document.getElementById('premium-white-bg');
-                if (whiteBg) whiteBg.style.opacity = '0';
-                
-                let bg = document.getElementById('premium-bg');
-                if (bg) bg.style.opacity = '0';
-                
-                let h1 = document.getElementById('premium-h1');
-                if (h1) {
-                    h1.style.opacity = '0';
-                    h1.style.transform = 'translateY(20px)';
-                }
-                
-                // Reset particles
-                particles = [];
-                for (let i = 0; i < 150; i++) { 
-                    particles.push(new Particle());
-                }
-            }
-        });
 
 })();
 </script>
