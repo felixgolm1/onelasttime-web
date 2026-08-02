@@ -6803,10 +6803,8 @@ window.onerror = function(msg, url, line, col, err) {
 
                   // Modificador de escala para que desaparezca durante el carrusel y YA NO reaparezca
                   let scaleMod = 1.0;
-                  if (prog > 9.62 && prog <= 10.62) {
-                      scaleMod = 1.0 - (prog - 9.62);
-                  } else if (prog > 10.62) {
-                      scaleMod = 0.00001; // oculto en carrusel y magazine
+                  if (prog >= 2.2) {
+                      scaleMod = 0.00001; // oculto al aparecer mainDeck y no reaparece en carrusel
                   }
                   
                   // REAPARECER AL FINAL DEL SCROLL
