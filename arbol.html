@@ -973,13 +973,6 @@
         };
 
         const SecretReward = ({ secretIndex, onComplete, onBack, progress }) => {
-            const [pageLoaded, setPageLoaded] = useState(false);
-            
-            useEffect(() => {
-                const timer = setTimeout(() => setPageLoaded(true), 10);
-                return () => clearTimeout(timer);
-            }, []);
-
             const trick = tricksData[secretIndex] || tricksData[0];
 
             return (
