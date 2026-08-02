@@ -11033,7 +11033,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var _cCanvas = document.getElementById('card-canvas');
                       if (_cCanvas) _cCanvas.style.opacity = '1';
                       if (typeof renderer !== 'undefined') {
-                          renderer.setClearColor(0x000000, 0); // volver a transparente
+                          renderer.setClearColor(0x0d0b09, 1); // restaurar fondo original en lugar de transparente
                       }
                       if (typeof scene !== 'undefined') {
                           scene.background = null;
@@ -11105,9 +11105,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   // Fade in del fondo negro-verde (haciendo el gris transparente mediante CSS)
                   var bgAlpha = 1.0 - convergeP;
-                  if (typeof renderer !== 'undefined') {
-                      renderer.setClearColor(0x000000, 0);
-                  }
+                  // ANULADO: Hacía que el fondo base se viera verde si se interrumpía el scroll
+                  // if (typeof renderer !== 'undefined') {
+                  //     renderer.setClearColor(0x000000, 0);
+                  // }
                   // En lugar de hacer transparente el canvas (que da bugs en navegadores),
                   // simplemente hacemos aparecer un div verde por encima que tapa todo menos el logo y CTA.
                   var _fakeBg = document.getElementById('fake-bg-fade');
