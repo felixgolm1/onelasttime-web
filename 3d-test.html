@@ -6346,33 +6346,29 @@ window.onerror = function(msg, url, line, col, err) {
     let lastScrollTime = 0;
 
     window.jumpToProg = function(val) {
-      window.isAutoScrolling = true;
-
       if (Math.abs(val - 2.18) < 0.01) {
-          // Vamos a 1.0 al instante para que haya recorrido visual y scrolleamos hasta 2.18 con inercia
-          prog = 1.0;
-          targetProg = 1.0;
+          // Nos trae a 2.18 instantneamente
+          prog = 2.18;
+          targetProg = 2.18;
+          window.isAutoScrolling = false;
           
-          gsap.to({ p: 1.0 }, {
-              p: 2.18,
-              duration: 3.5,
-              ease: "power3.out", // envalentonado y frenando poco a poco
-              onUpdate: function() {
-                  targetProg = this.targets()[0].p;
-                  prog = targetProg;
-              },
-              onComplete: function() {
-                  window.isAutoScrolling = false;
-                  sessionStorage.setItem('dev_prog', prog);
-                  if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
-                  if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
-                  if (typeof updateBoxState === 'function') updateBoxState();
-                  if (typeof updateFaceSwap === 'function') updateFaceSwap();
-                  if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
-              }
-          });
+          // Renderizamos el frame actual de 2.18
+          sessionStorage.setItem('dev_prog', prog);
+          if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
+          if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+          if (typeof updateBoxState === 'function') updateBoxState();
+          if (typeof updateFaceSwap === 'function') updateFaceSwap();
+          if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
+          
+          // Avanza automticamente hacia 9.96 dejando que el motor de scroll nativo simule al usuario
+          setTimeout(() => {
+              targetProg = 9.96;
+              window.isAutoScrolling = false; // El motor nativo har el salto cuntico y el lerp suave final
+          }, 400);
           return;
       }
+      
+      window.isAutoScrolling = true;
 
       gsap.to({ p: prog }, {
         p: val,
