@@ -6363,11 +6363,16 @@ window.onerror = function(msg, url, line, col, err) {
                   prog = targetProg;
               },
               onComplete: function() {
-                  // 2. Salto matemtico invisible (porque 2.20 y 9.62 se ven exactamente igual en pantalla)
+                  // 2. Salto matematico invisible
                   prog = 9.62;
                   targetProg = 9.62;
                   
-                  // 3. Animacin pesada tipo inercia hacia 9.96
+                  // FAKE ENTRY START: Simulamos que ya pasaron los 400ms del flash
+                  // Para que la inercia del carrusel sea siempre con el carrusel visible (transP=1.0)
+                  // y no con la caja semi-transparente.
+                  window._carouselEntryStart = Date.now() - 500;
+                  
+                  // 3. Animacion pesada tipo inercia hacia 9.96
                   gsap.to({ p: 9.62 }, {
                       p: 9.96,
                       duration: 2.5,
