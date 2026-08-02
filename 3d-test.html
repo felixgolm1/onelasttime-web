@@ -6296,6 +6296,7 @@ window.onerror = function(msg, url, line, col, err) {
         updateFaceSwap();
         updateBoxState(1);
         updateGlobalScenes();
+        if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
 
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
@@ -6363,6 +6364,7 @@ window.onerror = function(msg, url, line, col, err) {
           scrollTl.progress(Math.min(1, prog / 2.2));
           updateFaceSwap();
           updateGlobalScenes();
+          if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
           
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
@@ -6431,6 +6433,7 @@ window.onerror = function(msg, url, line, col, err) {
         scrollTl.progress(Math.min(1, prog / 2.2));
         updateFaceSwap();
         updateGlobalScenes();
+        if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
 
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
@@ -6916,14 +6919,17 @@ requestAnimationFrame(smoothScrollLoop);
   // (Antiguo bloque startIntroAnim eliminado para evitar duplicación con el de la línea 7800)
 
   const cssRenderer = new THREE.CSS3DRenderer();
+  window.cssRenderer = cssRenderer;
   cssRenderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('css-container').appendChild(cssRenderer.domElement);
 
   const scene  = new THREE.Scene();
+  window.scene = scene;
   // Sin background â€â€ el canvas es transparente fuera de los objetos 3D (alpha:true)
   scene.fog    = new THREE.FogExp2(0x0d0b09, 0.028);
 
   const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+  window.camera = camera;
   camera.position.set(-0.3, 12, 3);
   camera.lookAt(0, 0, 0);
 
