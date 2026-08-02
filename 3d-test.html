@@ -8557,7 +8557,7 @@ requestAnimationFrame(smoothScrollLoop);
     mouseNX += (mouseRawX - mouseNX) * lerpK;
     mouseNY += (mouseRawY - mouseNY) * lerpK;
 
-    const PX = 0.3, PY = 0.125;
+    const PX = 0.05, PY = 0.02;
     
     // Obtener el progreso del final para el zoom out
     let pProg = window._finalPolProg || 0;
@@ -11851,6 +11851,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
