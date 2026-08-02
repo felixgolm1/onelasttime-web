@@ -6349,50 +6349,67 @@ window.onerror = function(msg, url, line, col, err) {
       if (Math.abs(val - 2.18) < 0.01) {
           window.isAutoScrolling = true;
           
-          // 1. Saltamos a 1.0 (caja grande) para forzar que siempre haya recorrido visual hasta la caja pequea
-          prog = 1.0;
-          targetProg = 1.0;
-          
-          // Hacemos el viaje visual de la caja cerrndose y rotando hasta 2.18
-          gsap.to({ p: 1.0 }, {
-              p: 2.18,
-              duration: 0.8,
-              ease: "power2.out",
-              onUpdate: function() {
-                  targetProg = this.targets()[0].p;
-                  prog = targetProg;
-              },
-              onComplete: function() {
-                  // 2. Salto matematico invisible
-                  prog = 9.62;
-                  targetProg = 9.62;
-                  
-                  // FAKE ENTRY START: Simulamos que ya pasaron los 400ms del flash
-                  // Para que la inercia del carrusel sea siempre con el carrusel visible (transP=1.0)
-                  // y no con la caja semi-transparente.
-                  window._carouselEntryStart = Date.now() - 500;
-                  
-                  // 3. Animacion pesada tipo inercia hacia 9.96
-                  gsap.to({ p: 9.62 }, {
-                      p: 9.96,
-                      duration: 2.5,
-                      ease: "power3.out", // Efecto "tirar de la cuerda y frenar poco a poco"
-                      onUpdate: function() {
-                          targetProg = this.targets()[0].p;
-                          prog = targetProg;
-                      },
-                      onComplete: function() {
-                          window.isAutoScrolling = false;
-                          sessionStorage.setItem('dev_prog', prog);
-                          if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
-                          if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
-                          if (typeof updateBoxState === 'function') updateBoxState();
-                          if (typeof updateFaceSwap === 'function') updateFaceSwap();
-                          if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
-                      }
-                  });
-              }
-          });
+          function doInertiaPull() {
+              prog = 9.62;
+              targetProg = 9.62;
+              gsap.to({ p: 9.62 }, {
+                  p: 9.96,
+                  duration: 2.8,
+                  ease: "power3.out",
+                  onUpdate: function() {
+                      targetProg = this.targets()[0].p;
+                      prog = targetProg;
+                  },
+                  onComplete: function() {
+                      window.isAutoScrolling = false;
+                      sessionStorage.setItem('dev_prog', prog);
+                      if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
+                      if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+                      if (typeof updateBoxState === 'function') updateBoxState();
+                      if (typeof updateFaceSwap === 'function') updateFaceSwap();
+                  }
+              });
+          }
+
+          if (prog > 9.62) {
+              // 1. Estamos en el carrusel. Rebobinamos hasta el borde del vacio.
+              gsap.to({ p: prog }, {
+                  p: 9.62,
+                  duration: 0.4,
+                  ease: "power2.inOut",
+                  onUpdate: function() {
+                      targetProg = this.targets()[0].p;
+                      prog = targetProg;
+                  },
+                  onComplete: function() {
+                      // 2. Saltamos el vacio matematico
+                      prog = 2.20; targetProg = 2.20;
+                      // 3. Pequeño rebobinado en la caja (solo para asentar la camara)
+                      gsap.to({ p: 2.20 }, {
+                          p: 2.18,
+                          duration: 0.15,
+                          ease: "power2.out",
+                          onUpdate: function() {
+                              targetProg = this.targets()[0].p;
+                              prog = targetProg;
+                          },
+                          onComplete: doInertiaPull
+                      });
+                  }
+              });
+          } else {
+              // Estamos en la caja o antes. Vamos directo a 2.18 saltandonos el vacio si venimos de atras
+              gsap.to({ p: Math.min(prog, 2.20) }, {
+                  p: 2.18,
+                  duration: 0.5,
+                  ease: "power2.inOut",
+                  onUpdate: function() {
+                      targetProg = this.targets()[0].p;
+                      prog = targetProg;
+                  },
+                  onComplete: doInertiaPull
+              });
+          }
           return;
       }
       
