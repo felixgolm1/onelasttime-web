@@ -6347,6 +6347,40 @@ window.onerror = function(msg, url, line, col, err) {
 
     window.jumpToProg = function(val) {
       window.isAutoScrolling = true;
+
+      if (Math.abs(val - 2.18) < 0.01) {
+          gsap.to({ p: prog }, {
+            p: 2.18,
+            duration: 0.4,
+            ease: "power2.inOut",
+            onUpdate: function() {
+                targetProg = this.targets()[0].p;
+                prog = targetProg;
+            },
+            onComplete: function() {
+                gsap.to({ p: 2.18 }, {
+                    p: 9.97,
+                    duration: 3.5,
+                    ease: "power3.out",
+                    onUpdate: function() {
+                        targetProg = this.targets()[0].p;
+                        prog = targetProg;
+                    },
+                    onComplete: function() {
+                        window.isAutoScrolling = false;
+                        sessionStorage.setItem('dev_prog', prog);
+                        if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
+                        if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+                        if (typeof updateBoxState === 'function') updateBoxState();
+                        if (typeof updateFaceSwap === 'function') updateFaceSwap();
+                        if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
+                    }
+                });
+            }
+          });
+          return;
+      }
+
       gsap.to({ p: prog }, {
         p: val,
         duration: 0.5,
