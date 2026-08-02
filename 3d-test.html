@@ -8588,11 +8588,11 @@ requestAnimationFrame(smoothScrollLoop);
     }
 
     // Cámara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
-    camera.position.x = currentCamX;
-    camera.position.y = currentCamY;
+    camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
+    camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
-    camera.lookAt(currentLookX,
-                  currentLookY,
+    camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
+                  currentLookY - mouseNY * 0.05 * parallaxStr,
                   currentLookZ);
     // cardCam2 siempre en el origen â€â€ carta congelada en viewport
 
@@ -11852,6 +11852,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
