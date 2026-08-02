@@ -6551,6 +6551,27 @@ window.onerror = function(msg, url, line, col, err) {
             // Sincronizar posición de la silueta con el modelo real
             var _sil = document.getElementById('thermal-silhouette');
             var _realModel = document.getElementById('mag-model-clone');
+            // --- FIX DE SINCRONIZACIÓN ---
+            // Como mag-model-clone se creó antes de aplicar los transforms del carrusel,
+            // actualizamos su posición y tamaño AQUÍ basándonos en la revista ya transformada:
+            var _magScene = document.getElementById('magazine-scene');
+            var _magEl = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
+            if (_realModel && _magScene && _magEl) {
+                var _magR = _magEl.getBoundingClientRect();
+                var _modelH = _magR.height * 1.38;
+                var _origImg = _magEl.querySelector('img[src*="modelo-sin-fondo"]') || _magScene.querySelector('.carousel-track-large img[src*="modelo-sin-fondo"]');
+                if (_origImg && _origImg.naturalHeight) {
+                    var _ar = _origImg.naturalWidth / _origImg.naturalHeight;
+                    var _modelW = _modelH * _ar;
+                    var _modelT = _magR.top;
+                    var _modelL = _magR.left + _magR.width / 2 - _modelW / 2;
+                    _realModel.style.left = _modelL + 'px';
+                    _realModel.style.top = _modelT + 'px';
+                    _realModel.style.width = _modelW + 'px';
+                    _realModel.style.height = _modelH + 'px';
+                }
+            }
+            // -----------------------------
             if (_sil && _realModel) {
               var _r = _realModel.getBoundingClientRect();
               _sil.style.position = 'absolute';
