@@ -11785,25 +11785,8 @@ document.addEventListener('mouseover', e => {
         
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                explosionActive = false;
-                window._ctaHoverActive = false;
-                
-                let whiteBg = document.getElementById('premium-white-bg');
-                if (whiteBg) whiteBg.style.opacity = '0';
-                
-                let bg = document.getElementById('premium-bg');
-                if (bg) bg.style.opacity = '0';
-                
-                let h1 = document.getElementById('premium-h1');
-                if (h1) {
-                    h1.style.opacity = '0';
-                    h1.style.transform = 'translateY(20px)';
-                }
-                
-                particles = [];
-                for (let i = 0; i < 400; i++) { 
-                    particles.push(new Particle());
-                }
+                // Force a full reload to correctly reset WebGL, GSAP, and scroll state
+                window.location.reload();
             }
         });
 
