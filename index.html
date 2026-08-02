@@ -5292,8 +5292,10 @@
 
 
 \n
+
+\n
 <!-- EFECTO BOLITAS HOVER CTAs -->
-<canvas id="cta-sparks-canvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:999999;"></canvas>
+<canvas id="cta-sparks-canvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:999999; opacity: 1 !important;"></canvas>
 <script>
 (function() {
     const canvas = document.getElementById('cta-sparks-canvas');
@@ -5357,14 +5359,7 @@
 
     function animate() {
         requestAnimationFrame(animate);
-        
         ctx.clearRect(0, 0, width, height);
-        // Draw a giant red test dot at mouse
-        ctx.fillStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(mouseX, mouseY, 50, 0, Math.PI*2);
-        ctx.fill();
-    
         
         for (let i = particles.length - 1; i >= 0; i--) {
             particles[i].update();
@@ -5374,11 +5369,7 @@
             }
         }
     }
-    
-    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
-    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
     animate();
-    
 
     let spawnInterval = null;
     let hoveredRect = null;
