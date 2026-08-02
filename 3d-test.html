@@ -6358,9 +6358,13 @@ window.onerror = function(msg, url, line, col, err) {
                 prog = targetProg;
             },
             onComplete: function() {
-                gsap.to({ p: 2.18 }, {
+                // Simulamos el salto cuntico (dead zone 2.20 -> 9.62) para que el animado sea slo el tramo visible
+                prog = 9.62;
+                targetProg = 9.62;
+                
+                gsap.to({ p: 9.62 }, {
                     p: 9.97,
-                    duration: 3.5,
+                    duration: 3.0,
                     ease: "power3.out",
                     onUpdate: function() {
                         targetProg = this.targets()[0].p;
