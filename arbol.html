@@ -277,8 +277,7 @@
                 draw(ctx) {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = 
-gba(204, 255, 0, );
+                    ctx.fillStyle = `rgba(204, 255, 0, ${this.maxAlpha})`;
                     ctx.fill();
                 }
             }
