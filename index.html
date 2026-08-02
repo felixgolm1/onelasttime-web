@@ -5357,7 +5357,14 @@
 
     function animate() {
         requestAnimationFrame(animate);
+        
         ctx.clearRect(0, 0, width, height);
+        // Draw a giant red test dot at mouse
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(mouseX, mouseY, 50, 0, Math.PI*2);
+        ctx.fill();
+    
         
         for (let i = particles.length - 1; i >= 0; i--) {
             particles[i].update();
@@ -5367,7 +5374,11 @@
             }
         }
     }
+    
+    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
     animate();
+    
 
     let spawnInterval = null;
     let hoveredRect = null;
