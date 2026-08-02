@@ -5311,6 +5311,13 @@ window.addEventListener('error', function(e) {
 
 \n
 
+
+<!-- PREMIUM TRANSITION OVERLAYS -->
+<div id="premium-bg" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#040404; opacity:0; z-index:89999999; pointer-events:none; transition: opacity 1s ease;"></div>
+<div id="premium-text" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:90000001; pointer-events:none; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <h1 id="premium-h1" style="color: #ffffff; font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 4vw, 3.5rem); font-weight: 700; text-align: center; line-height: 1.2; letter-spacing: -0.02em; padding: 0 20px; opacity: 0; transform: translateY(20px); transition: all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);">Hagamos de tu cena,<br><span style="color: #CCFF00;">la mejor que hayas tenido nunca.</span></h1>
+</div>
+
 <canvas id="embers-canvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999998; pointer-events:none; opacity:0;"></canvas>
 <script>
 (function() {
@@ -5322,6 +5329,7 @@ window.addEventListener('error', function(e) {
         let width, height;
         let particles = [];
         let mouse = { x: -1000, y: -1000 };
+        let explosionActive = false;
 
         function resizeCanvas() {
             width = window.innerWidth;
@@ -5378,6 +5386,13 @@ window.addEventListener('error', function(e) {
                 this.vx *= 0.95; 
                 this.x += this.vx;
                 this.y += this.vy;
+
+                if (explosionActive) {
+                    this.vy -= (Math.random() * 0.4 + 0.1); // accelerate upwards
+                    this.x += Math.sin(this.life * 4) * 2; // wider sway
+                    this.alpha = Math.min(1, this.alpha * 1.5); // brighter
+                }
+
                 
                 this.x += Math.sin(this.life * 2 + this.swayOffset) * 0.3;
                 this.y += Math.cos(this.life * 1.5) * 0.1;
@@ -5460,7 +5475,39 @@ window.addEventListener('error', function(e) {
             }
         });
     }
-})();
+
+        document.addEventListener('click', (e) => {
+            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
+            if (cta) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (explosionActive) return;
+                explosionActive = true;
+                window._ctaHoverActive = true; // force opacity to 1
+                
+                // Show overlays
+                document.getElementById('premium-bg').style.opacity = '1';
+                setTimeout(() => {
+                    let h1 = document.getElementById('premium-h1');
+                    h1.style.opacity = '1';
+                    h1.style.transform = 'translateY(0)';
+                }, 400); 
+                
+                // Multiply particles for explosion
+                for (let i = 0; i < 200; i++) {
+                    let p = new Particle();
+                    p.y = Math.random() * height; // scatter them randomly instantly
+                    particles.push(p);
+                }
+                
+                // Redirect after reading time
+                setTimeout(() => {
+                    window.location.href = 'arbol.html?skipIntro=true';
+                }, 3800);
+            }
+        }, true); // use capture phase
+
+    })();
 </script>
 \n
 <div id="hover-logger" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.8); color:lime; padding:10px; z-index:99999999; font-family:monospace; max-width: 400px;">Waiting...</div>

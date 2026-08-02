@@ -1761,7 +1761,24 @@
         // ==========================================
 
         const App = () => {
-            const [phase, setPhase] = useState(() => sessionStorage.getItem('dev_phase') || (sessionStorage.getItem('skipIntro') === 'true' ? 'format' : 'intro'));
+            const urlParams = new URLSearchParams(window.location.search);
+            const forceSkip = urlParams.get('skipIntro') === 'true';
+            
+            if (forceSkip && !sessionStorage.getItem('forceSkipApplied')) {
+                // Clear session storage if coming fresh from landing page
+                sessionStorage.removeItem('dev_phase');
+                sessionStorage.removeItem('dev_phaseHistory');
+                sessionStorage.removeItem('dev_treeProgress');
+                sessionStorage.removeItem('dev_treeStates');
+                sessionStorage.removeItem('dev_globalData');
+                sessionStorage.setItem('skipIntro', 'true');
+                sessionStorage.setItem('forceSkipApplied', 'true'); // Only do this once per navigation
+            }
+            
+            const [phase, setPhase] = useState(() => {
+                if (forceSkip) return 'format';
+                return sessionStorage.getItem('dev_phase') || (sessionStorage.getItem('skipIntro') === 'true' ? 'format' : 'intro');
+            });
             const [phaseHistory, setPhaseHistory] = useState(() => JSON.parse(sessionStorage.getItem('dev_phaseHistory')) || []);
             const [treeProgress, setTreeProgress] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeProgress')) || { format: 0, audience: 0 });
             
