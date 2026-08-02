@@ -10072,7 +10072,7 @@ window.addEventListener('click', function(e) {
     animate();
 
     // En 3d-test los cta tambien pueden ser elementos .btn u otras cosas
-    const ctas = document.querySelectorAll('a[href="wizard.html"]');
+    const ctas = document.querySelectorAll('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue');
     
     ctas.forEach(cta => {
         let isHovered = false;
