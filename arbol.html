@@ -41,6 +41,13 @@
         .btn-black:hover:not(:disabled)::before { opacity: 1; }
         .btn-black:active:not(:disabled) { transform: translateY(-2px) scale(0.96); box-shadow: 0 2px 6px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1); }
         .btn-black:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-white { background: #fff; color: #000; padding: 1.1rem 1.5rem; border-radius: 9999px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.12), 0 20px 40px rgba(0,0,0,0.08); width: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; border: none; position: relative; overflow: hidden; }
+        .btn-white::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0)); opacity: 0; transition: opacity 0.4s ease; }
+        .btn-white:hover:not(:disabled) { background: #fcfcfc; transform: translateY(-6px); box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 16px 32px rgba(0,0,0,0.2), 0 32px 60px rgba(0,0,0,0.12); z-index: 20; position: relative; }
+        .btn-white:hover:not(:disabled)::before { opacity: 1; }
+        .btn-white:active:not(:disabled) { transform: translateY(-2px) scale(0.96); box-shadow: 0 2px 6px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1); }
+        .btn-white:disabled { opacity: 0.5; cursor: not-allowed; }
+
 
         .pill-input { width: 100%; padding: 1.05rem 1.5rem; background: #fff; color: #000; border: 1.5px solid #000; border-radius: 9999px; text-align: center; font-size: 15px; outline: none; transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 10px rgba(0,0,0,0.06), 0 12px 24px rgba(0,0,0,0.05); position: relative; }
         .pill-input:focus { box-shadow: 0 0 0 2px #000, 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.1); z-index: 10; transform: scale(1.01); }
@@ -997,7 +1004,7 @@
                             </div>
                         )}
 
-                        <button onClick={onComplete} className="btn-black w-full max-w-[320px] fade-in" style={{ animationDelay: '0.5s' }}>
+                        <button onClick={onComplete} className="btn-white w-full max-w-[320px] fade-in" style={{ animationDelay: '0.5s' }}>
                             Continuar
                         </button>
                     </div>
