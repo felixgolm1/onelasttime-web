@@ -8990,37 +8990,6 @@ requestAnimationFrame(smoothScrollLoop);
 
   window.HEAT_ZONES = ZONES;
 
-        document.addEventListener('click', (e) => {
-            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
-            if (cta) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (explosionActive) return;
-                explosionActive = true;
-                window._ctaHoverActive = true; // force opacity to 1
-                
-                // Show overlays
-                document.getElementById('premium-bg').style.opacity = '1';
-                setTimeout(() => {
-                    let h1 = document.getElementById('premium-h1');
-                    h1.style.opacity = '1';
-                    h1.style.transform = 'translateY(0)';
-                }, 400); 
-                
-                // Multiply particles for explosion
-                for (let i = 0; i < 200; i++) {
-                    let p = new Particle();
-                    p.y = Math.random() * height; // scatter them randomly instantly
-                    particles.push(p);
-                }
-                
-                // Redirect after reading time
-                setTimeout(() => {
-                    window.location.href = 'arbol.html?skipIntro=true';
-                }, 3800);
-            }
-        }, true); // use capture phase
-
     })();
 </script>
 
@@ -9600,37 +9569,6 @@ setInterval(function() {
     }
   };
 
-        document.addEventListener('click', (e) => {
-            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
-            if (cta) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (explosionActive) return;
-                explosionActive = true;
-                window._ctaHoverActive = true; // force opacity to 1
-                
-                // Show overlays
-                document.getElementById('premium-bg').style.opacity = '1';
-                setTimeout(() => {
-                    let h1 = document.getElementById('premium-h1');
-                    h1.style.opacity = '1';
-                    h1.style.transform = 'translateY(0)';
-                }, 400); 
-                
-                // Multiply particles for explosion
-                for (let i = 0; i < 200; i++) {
-                    let p = new Particle();
-                    p.y = Math.random() * height; // scatter them randomly instantly
-                    particles.push(p);
-                }
-                
-                // Redirect after reading time
-                setTimeout(() => {
-                    window.location.href = 'arbol.html?skipIntro=true';
-                }, 3800);
-            }
-        }, true); // use capture phase
-
     })();
 </script>
 </script>
@@ -10048,37 +9986,6 @@ window.addEventListener('click', function(e) {
     if (up) initMarquee(up, 'up');
     if (down) initMarquee(down, 'down');
   });
-
-        document.addEventListener('click', (e) => {
-            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
-            if (cta) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (explosionActive) return;
-                explosionActive = true;
-                window._ctaHoverActive = true; // force opacity to 1
-                
-                // Show overlays
-                document.getElementById('premium-bg').style.opacity = '1';
-                setTimeout(() => {
-                    let h1 = document.getElementById('premium-h1');
-                    h1.style.opacity = '1';
-                    h1.style.transform = 'translateY(0)';
-                }, 400); 
-                
-                // Multiply particles for explosion
-                for (let i = 0; i < 200; i++) {
-                    let p = new Particle();
-                    p.y = Math.random() * height; // scatter them randomly instantly
-                    particles.push(p);
-                }
-                
-                // Redirect after reading time
-                setTimeout(() => {
-                    window.location.href = 'arbol.html?skipIntro=true';
-                }, 3800);
-            }
-        }, true); // use capture phase
 
     })();
 </script>
@@ -11344,37 +11251,6 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
     h2.style.textAlign       = 'center';
   };
 
-        document.addEventListener('click', (e) => {
-            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
-            if (cta) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (explosionActive) return;
-                explosionActive = true;
-                window._ctaHoverActive = true; // force opacity to 1
-                
-                // Show overlays
-                document.getElementById('premium-bg').style.opacity = '1';
-                setTimeout(() => {
-                    let h1 = document.getElementById('premium-h1');
-                    h1.style.opacity = '1';
-                    h1.style.transform = 'translateY(0)';
-                }, 400); 
-                
-                // Multiply particles for explosion
-                for (let i = 0; i < 200; i++) {
-                    let p = new Particle();
-                    p.y = Math.random() * height; // scatter them randomly instantly
-                    particles.push(p);
-                }
-                
-                // Redirect after reading time
-                setTimeout(() => {
-                    window.location.href = 'arbol.html?skipIntro=true';
-                }, 3800);
-            }
-        }, true); // use capture phase
-
     })();
 </script>
 
@@ -11913,6 +11789,7 @@ document.addEventListener('mouseover', e => {
         });
     }
 
+    
         document.addEventListener('click', (e) => {
             const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
             if (cta) {
@@ -11944,7 +11821,7 @@ document.addEventListener('mouseover', e => {
             }
         }, true); // use capture phase
 
-    })();
+})();
 </script>
 \n</html>
 
