@@ -6293,10 +6293,10 @@ window.onerror = function(msg, url, line, col, err) {
     if (prog > 0) {
       requestAnimationFrame(() => {
         scrollTl.progress(Math.min(1, prog / 2.2)); // clamp scene logic
-        updateFaceSwap();
-        updateBoxState(1);
-        updateGlobalScenes();
         if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+        updateBoxState(1);
+        updateFaceSwap();
+        updateGlobalScenes();
 
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
@@ -6362,9 +6362,10 @@ window.onerror = function(msg, url, line, col, err) {
           // Forzar último render para asegurar la posición final
           sessionStorage.setItem('dev_prog', prog);
           scrollTl.progress(Math.min(1, prog / 2.2));
+          if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+          updateBoxState();
           updateFaceSwap();
           updateGlobalScenes();
-          if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
           
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
@@ -6431,9 +6432,10 @@ window.onerror = function(msg, url, line, col, err) {
         }
         sessionStorage.setItem('dev_prog', prog);
         scrollTl.progress(Math.min(1, prog / 2.2));
+        if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+        updateBoxState();
         updateFaceSwap();
         updateGlobalScenes();
-        if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
 
           const debugProg = document.getElementById('debug-scroll-prog');
           if (debugProg) debugProg.innerText = prog.toFixed(2);
@@ -6567,8 +6569,8 @@ window.onerror = function(msg, url, line, col, err) {
         window._updateBrainReveal(_tPdiv, (_tPdiv <= 0) ? null : ('linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)'));
       }
 
-      // Llamar incondicionalmente a updateBoxState en cada fotograma
-      updateBoxState();
+      // (Llamada a updateBoxState movida antes de updateGlobalScenes para sincronizar bounds correctamente)
+      // updateBoxState();
 
       // Ã¢â€€Ã¢â€€ SINC CSS card → GLB 3D overlay Ã¢â€€Ã¢â€€ (siempre, cada frame)
       if (globalGlbCard && cardCanvasEl && document.getElementById('card-morph-group')) {
