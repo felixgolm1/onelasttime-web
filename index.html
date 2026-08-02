@@ -2518,6 +2518,20 @@
 </head>
 
 <body>
+
+<script>
+window.addEventListener('error', function(e) {
+    let errBox = document.getElementById('js-err-box');
+    if (!errBox) {
+        errBox = document.createElement('div');
+        errBox.id = 'js-err-box';
+        errBox.style = 'position:fixed; top:0; left:0; width:100%; background:red; color:white; z-index:99999999; padding:20px; font-size:20px; font-weight:bold;';
+        document.body.prepend(errBox);
+    }
+    errBox.innerHTML += "JS ERROR: " + e.message + "<br>Line: " + e.lineno + "<br>";
+});
+</script>
+
   <div class="film-grain"></div>
 
   <!-- NAV -->
@@ -5445,6 +5459,23 @@
     }
 })();
 </script>
-\n</body>
+\n
+<div id="hover-logger" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.8); color:lime; padding:10px; z-index:99999999; font-family:monospace; max-width: 400px;">Waiting...</div>
+<script>
+document.addEventListener('mouseover', e => {
+    const logger = document.getElementById('hover-logger');
+    if (logger) {
+        let path = [];
+        let el = e.target;
+        while(el && el.tagName) {
+            path.push(el.tagName + (el.id ? '#' + el.id : '') + (el.className ? '.' + el.className.split(' ').join('.') : ''));
+            el = el.parentElement;
+        }
+        logger.innerHTML = 'Hovered: ' + path[0] + '<br>Path: ' + path.slice(0, 3).join(' -> ');
+    }
+});
+</script>
+
+</body>
 
 </html>
