@@ -5515,7 +5515,35 @@ window.addEventListener('error', function(e) {
         });
     }
 
-    })();
+    
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                // Restore state if returning via Back button
+                explosionActive = false;
+                window._ctaHoverActive = false;
+                
+                // Reset DOM overlays
+                let whiteBg = document.getElementById('premium-white-bg');
+                if (whiteBg) whiteBg.style.opacity = '0';
+                
+                let bg = document.getElementById('premium-bg');
+                if (bg) bg.style.opacity = '0';
+                
+                let h1 = document.getElementById('premium-h1');
+                if (h1) {
+                    h1.style.opacity = '0';
+                    h1.style.transform = 'translateY(20px)';
+                }
+                
+                // Reset particles
+                particles = [];
+                for (let i = 0; i < 150; i++) { 
+                    particles.push(new Particle());
+                }
+            }
+        });
+
+})();
 </script>
 \n
 <div id="hover-logger" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.8); color:lime; padding:10px; z-index:99999999; font-family:monospace; max-width: 400px;">Waiting...</div>
