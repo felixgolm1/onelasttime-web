@@ -11016,10 +11016,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       // (Se controla dinámicamente en la sección de convergencia más abajo)
                   } else {
                       document.body.classList.remove("hide-all-cards-final-scene");
+                      if (typeof globalGlbCard !== "undefined" && globalGlbCard) { globalGlbCard.visible = true; }
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
                           cards.forEach(function(c) { if (c) c.visible = true; });
                       }
                       if (typeof window.polaroidMesh !== 'undefined' && window.polaroidMesh) { window.polaroidMesh.visible = false; }
+                      var _strip = document.getElementById('img-strip-container');
+                      if (_strip) _strip.style.opacity = '1';
+                      var _thermal = document.getElementById('thermal-overlay');
+                      if (_thermal) _thermal.style.opacity = '1';
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
                       if (oryzoBg) oryzoBg.style.opacity = '1';
