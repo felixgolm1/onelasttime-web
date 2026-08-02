@@ -244,60 +244,7 @@
     </style>
 </head>
 <body>
-    <div id="raw-black-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:#040404;z-index:999999999;transition:opacity 1.5s ease-in-out;">
-        <canvas id="transition-embers" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></canvas>
-    </div>
-    <script>
-        (function() {
-            if (!window.location.search.includes('skipIntro=true')) return;
-            const canvas = document.getElementById('transition-embers');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let width = window.innerWidth;
-            let height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-            let particles = [];
-            
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.size = Math.random() * 2 + 1;
-                    this.vy = -(Math.random() * 1.5 + 0.5); // same upward speed as explosion
-                    this.life = Math.random();
-                    this.maxAlpha = Math.random() * 0.7 + 0.3; // slightly brighter
-                }
-                update() {
-                    this.vy -= (Math.random() * 0.05 + 0.02); // same smooth acceleration as explosion
-                    this.y += this.vy;
-                    this.x += Math.sin(this.life * 1.5) * 0.5;
-                    this.life += 0.01;
-                }
-                draw(ctx) {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(204, 255, 0, ${this.maxAlpha})`;
-                    ctx.fill();
-                }
-            }
-            
-            for(let i=0; i<400; i++) particles.push(new Particle());
-            
-            function animate() {
-                ctx.clearRect(0, 0, width, height);
-                for(let i=0; i<particles.length; i++){
-                    particles[i].update();
-                    particles[i].draw(ctx);
-                }
-                // Stop animating once the overlay is hidden to save performance
-                if(document.getElementById('raw-black-overlay').style.display !== 'none') {
-                    requestAnimationFrame(animate);
-                }
-            }
-            animate();
-        })();
-    </script>
+    
     <script>
         if (!window.location.search.includes('skipIntro=true')) {
             document.getElementById('raw-black-overlay').style.display = 'none';
@@ -1822,20 +1769,7 @@
         const App = () => {
             const urlParams = new URLSearchParams(window.location.search);
             const forceSkip = urlParams.get('skipIntro') === 'true';
-            const [premiumFade, setPremiumFade] = useState(forceSkip);
             
-            useEffect(() => {
-                if (premiumFade) {
-                    const rawOverlay = document.getElementById('raw-black-overlay');
-                    if (rawOverlay) {
-                        setTimeout(() => {
-                            rawOverlay.style.opacity = '0';
-                            setTimeout(() => rawOverlay.style.display = 'none', 1500);
-                        }, 100);
-                    }
-                    setTimeout(() => setPremiumFade(false), 100);
-                }
-            }, [premiumFade]);
             
             if (forceSkip && !sessionStorage.getItem('forceSkipApplied')) {
                 // Clear session storage if coming fresh from landing page

@@ -5487,7 +5487,12 @@ window.addEventListener('error', function(e) {
                     particles.push(p);
                 }
                 
-                // Redirect after reading time
+                // Fade to white
+                setTimeout(() => {
+                    document.getElementById('premium-white-bg').style.opacity = '1';
+                }, 2800);
+                
+                // Redirect after reading time and white fade
                 setTimeout(() => {
                     window.location.href = 'arbol.html?skipIntro=true';
                 }, 3800);
