@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="bg-black">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -15,7 +15,9 @@
     <style>
         body {
             margin: 0; font-family: 'Poppins', sans-serif;
-            background-color: #fcfcfc; color: #111827;
+            background-color: #000; color: #fff;
+            background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
+            min-height: 100vh;
             overflow-x: hidden; -webkit-tap-highlight-color: transparent;
             touch-action: pan-y; overscroll-behavior-x: none;
         }
@@ -234,7 +236,7 @@
         .btn-pay:hover:not(:disabled) { background-color: #1f2937; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
         .btn-pay:disabled { opacity: 0.7; cursor: not-allowed; }
 
-        .summary-card { background: #f9fafb; border-radius: 20px; padding: 1.5rem; border: 1px solid #f3f4f6; }
+        .summary-card text-black { background: #f9fafb; border-radius: 20px; padding: 1.5rem; border: 1px solid #f3f4f6; }
 
         .spinner {
             width: 22px; height: 22px; border: 2.5px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite;
@@ -243,7 +245,7 @@
         @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
-<body>
+<body class="bg-black text-white" style="background-color: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); min-height: 100vh; overflow-x: hidden;">
     
     <script>
         if (!window.location.search.includes('skipIntro=true')) {
@@ -363,16 +365,16 @@
         // Componente Logo Reutilizable (Imagen real)
         const Logo = () => (
             <div className="flex items-center justify-center pointer-events-auto opacity-90 select-none">
-                <img src="assets/img/logo one last time.png" alt="One Last Time Co." className="h-[39px] w-auto object-contain" style={{ filter: 'brightness(0)' }} />
+                <img src="assets/img/logo one last time.png" alt="One Last Time Co." className="h-[39px] w-auto object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
             </div>
         );
 
         // Header Global Fijo
         const GlobalHeader = ({ progress, onBack, greenMode, animateIn }) => (
-            <div className={`fixed top-0 left-0 w-full px-6 pt-6 pb-4 z-[999] flex flex-col items-center justify-center pointer-events-none ${animateIn ? 'fade-in' : ''}`} style={{ backgroundColor: greenMode ? '#CCFF00' : '#fcfcfc', transition: 'background-color 2100ms ease-in-out' }}>
+            <div className={`fixed top-0 left-0 w-full px-6 pt-6 pb-4 z-[999] flex flex-col items-center justify-center pointer-events-none ${animateIn ? 'fade-in' : ''}`} style={{ backgroundColor: greenMode ? '#CCFF00' : 'transparent', transition: 'background-color 2100ms ease-in-out' }}>
                 <div className="w-full max-w-lg flex justify-center items-center relative mb-4 mt-2">
                     {onBack && (
-                        <button onClick={onBack} className="absolute left-0 top-1/2 -translate-y-1/2 text-2xl font-light leading-none text-black hover:text-gray-600 transition-all pointer-events-auto">
+                        <button onClick={onBack} className="absolute left-0 top-1/2 -translate-y-1/2 text-2xl font-light leading-none text-white hover:text-gray-300 transition-all pointer-events-auto">
                             &#8592;
                         </button>
                     )}
@@ -452,10 +454,10 @@
             ];
 
             return (
-                <div className={`h-screen w-full transition-colors duration-[1500ms] ease-in-out ${bgGreen ? 'bg-[#CCFF00]' : 'bg-[#fcfcfc]'} overflow-hidden relative`}>
+                <div className={`h-screen w-full transition-colors duration-[1500ms] ease-in-out ${bgGreen ? 'bg-[#CCFF00]' : 'bg-transparent'} overflow-hidden relative`}>
                     <div className={`transition-opacity duration-[1200ms] ${showScene ? 'opacity-100' : 'opacity-0'}`}>
                         <div className={`title-wrapper px-4 ${showTitle ? 'is-visible' : ''} ${titleAnimating ? 'is-animating' : ''} ${titleFixed ? 'is-fixed' : ''}`}>
-                            <h1 className="text-[1.7rem] md:text-5xl font-semibold tracking-tight text-gray-900 leading-[1.1] text-center mx-auto">{text}</h1>
+                            <h1 className="text-[1.7rem] md:text-5xl font-semibold tracking-tight text-white leading-[1.1] text-center mx-auto">{text}</h1>
                         </div>
                         {cards.map((card, i) => (
                             <div key={card.id} className={`table-card ${card.type === 'white' ? 'intro-white' : card.type === 'green' ? 'intro-green' : 'intro-black'} ${slideCards ? 'animate-deal' : ''}`} style={{ animationDelay: `${Math.floor(i / 2) * 0.3}s`, '--start-x': card.sx, '--start-y': card.sy, '--start-rot': card.sr, '--final-x': card.fx, '--final-y': card.fy, '--final-rot': card.fr }}>
@@ -622,12 +624,12 @@
             const canGoBack = history.length > 0 || onBack;
 
             return (
-                <div className="scene flex-col justify-start pt-28 px-4 relative bg-[#fcfcfc] min-h-screen">
+                <div className="scene flex-col justify-start pt-28 px-4 relative bg-transparent min-h-screen">
                     <GlobalHeader progress={progress} onBack={canGoBack ? handleBack : null} animateIn={treeKey === 'format' && history.length === 0} />
                     <div key={currentParent} className={`w-full max-w-4xl flex flex-col items-center transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'opacity-100'}`}>
                         <div className={`text-center mb-12 ${treeKey === 'format' && history.length === 0 ? 'fade-in' : ''}`}>
 
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">{title}</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">{title}</h2>
                         </div>
                         <div className="w-full flex flex-wrap gap-6 md:gap-10 justify-center items-center">
                             {visibleOptions.map((opt, index) => (
@@ -682,7 +684,7 @@
                     <GlobalHeader progress={progress} onBack={onBack} />
                     <div className="w-full max-w-[22rem] fade-in mt-4">
                         <div className="mb-10 text-center">
-                            <h2 className="text-2xl font-medium tracking-tight text-gray-900">Detalles logísticos</h2>
+                            <h2 className="text-2xl font-medium tracking-tight text-white">Detalles logísticos</h2>
                             <p className="text-sm text-gray-500 mt-3 font-light px-2">Para organizar la logística y el envío.</p>
                         </div>
                         <div className="flex flex-col items-center px-1">
@@ -917,7 +919,7 @@
                             <div className="w-16 h-16 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
                                 <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
-                            <h2 className="text-2xl font-bold mb-3 text-gray-900">Ajuste logístico necesario</h2>
+                            <h2 className="text-2xl font-bold mb-3 text-white">Ajuste logístico necesario</h2>
                             <p className="text-sm font-medium text-gray-500 mb-8 px-2">{mensajeFallo}</p>
                             
                             <div className="space-y-4 w-full px-2">
@@ -997,14 +999,14 @@
             const containerMinHeight = 260 + ((tricksData.length - 1) * 140);
 
             return (
-                <div className={`w-full min-h-screen flex flex-col items-center transition-colors duration-[2100ms] ease-in-out ${pageLoaded ? 'bg-[#CCFF00]' : 'bg-[#fcfcfc]'} relative pt-12 pb-32`}>
+                <div className={`w-full min-h-screen flex flex-col items-center transition-colors duration-[2100ms] ease-in-out ${pageLoaded ? 'bg-[#CCFF00]' : 'bg-transparent'} relative pt-12 pb-32`}>
 
                     <GlobalHeader progress={progress} onBack={onBack} greenMode={pageLoaded} />
 
                     <div className="scene max-w-xl mx-auto w-full !pt-16">
                         <div className="text-center mb-8 z-10 transition-all duration-500 w-full px-4">
 
-                            <h2 className="text-2xl font-semibold tracking-tight text-gray-900">
+                            <h2 className="text-2xl font-semibold tracking-tight text-white">
                                 Psssst, ayúdate con esto si quieres conectar de verdad ;)
                             </h2>
                         </div>
@@ -1037,7 +1039,7 @@
                                             {isAct && (
                                                 <div className="flex flex-col items-center justify-center h-full w-full">
                                                     <span className="text-[13px] font-bold text-gray-700 uppercase tracking-widest mb-3 opacity-90">Secreto {trick.id}</span>
-                                                    <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-900 px-2">{trick.text}</span>
+                                                    <span className="text-[17px] tracking-wide leading-snug font-medium text-white px-2">{trick.text}</span>
                                                 </div>
                                             )}
                                             {isLocked && (
@@ -1049,7 +1051,7 @@
                                             {isPast && (
                                                 <div className="flex flex-col items-center justify-center h-full w-full px-4 opacity-90">
                                                     <span className="text-[13px] font-bold text-gray-700 uppercase tracking-widest mb-3 opacity-80">Secreto {trick.id}</span>
-                                                    <span className="text-[17px] tracking-wide leading-tight font-medium text-gray-900 px-2 line-clamp-3 text-center">{trick.text}</span>
+                                                    <span className="text-[17px] tracking-wide leading-tight font-medium text-white px-2 line-clamp-3 text-center">{trick.text}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -1110,7 +1112,7 @@
                 <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
                     <GlobalHeader progress={progress} onBack={onBack} />
                     <div className="text-center max-w-xl w-full z-10 mt-12">
-                        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-4">
+                        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-4">
                             ¿Cuál es el objetivo de la cena?
                         </h2>
                         <p className="text-sm font-medium text-gray-500 mb-12 leading-relaxed">
@@ -1120,7 +1122,7 @@
                         <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-12 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
                             <textarea
                                 rows={6}
-                                className="w-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center text-gray-900 placeholder:text-gray-400 relative z-10"
+                                className="w-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center text-white placeholder:text-gray-400 relative z-10"
                                 placeholder="Descríbelo con tus palabras"
                                 value={text}
                                 onChange={e => setText(e.target.value)}
@@ -1245,7 +1247,7 @@
                         </div>
 
                         <div className="w-full px-6 pt-28 pb-4 text-center z-20 pointer-events-none mt-4">
-                            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 mb-2">
+                            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-2">
                                 ¿Qué tono quieres que tenga la cena?
                             </h2>
                             <p className="text-sm font-medium text-gray-500">
@@ -1272,7 +1274,7 @@
                                             <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2">
                                                 {group.subtitle}
                                             </span>
-                                            <h3 className="text-xl font-semibold text-gray-900">
+                                            <h3 className="text-xl font-semibold text-white">
                                                 {group.title}
                                             </h3>
                                         </div>
@@ -1294,7 +1296,7 @@
                                                         >
                                                             <input
                                                                 type="text"
-                                                                className={`w-full bg-transparent outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 ${isSelected ? 'text-gray-900 placeholder:text-gray-900/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
+                                                                className={`w-full bg-transparent outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 ${isSelected ? 'text-white placeholder:text-white/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
                                                                 placeholder={card.text}
                                                                 value={customToneText}
                                                                 onChange={(e) => setCustomToneText(e.target.value)}
@@ -1334,7 +1336,7 @@
                                                         className={`v27-card ${isSelected ? 'is-selected' : ''} ${isShaking ? 'shake-animation' : ''}`}
                                                         style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
                                                     >
-                                                        <span className={`text-[16px] tracking-wide font-medium relative z-10 transition-colors duration-700 ${isSelected ? 'text-gray-900' : 'text-gray-800'}`}>
+                                                        <span className={`text-[16px] tracking-wide font-medium relative z-10 transition-colors duration-700 ${isSelected ? 'text-white' : 'text-gray-800'}`}>
                                                             {card.text}
                                                         </span>
                                                     </div>
@@ -1443,7 +1445,7 @@
                         
                         {subStep === 1 && (
                             <div>
-                                <h2 className="text-2xl font-medium text-center mb-8 text-gray-900 tracking-tight">¿Cuánto tiempo tenéis?</h2>
+                                <h2 className="text-2xl font-medium text-center mb-8 text-white tracking-tight">¿Cuánto tiempo tenéis?</h2>
                                 <div className="w-full mb-10 floating">
                                     <div className="text-center text-4xl font-light text-black mb-8 mt-4">{formatTime(timeMinutes)}</div>
                                     <RangeSlider value={timeMinutes} min={10} max={300} isAdultTheme={false} restrictedMin={10} onChange={e => setTimeMinutes(Number(e.target.value))} />
@@ -1458,7 +1460,7 @@
 
                         {subStep === 2 && (
                             <div className="w-full">
-                                <h2 className="text-2xl font-medium text-center mb-2 text-gray-900 tracking-tight">¿Quiénes os sentáis a la mesa?</h2>
+                                <h2 className="text-2xl font-medium text-center mb-2 text-white tracking-tight">¿Quiénes os sentáis a la mesa?</h2>
                                 <p className="text-sm font-medium text-gray-500 text-center mb-8">
                                     Escribe todo el contexto que quieras que tengamos en cuenta
                                 </p>
@@ -1496,7 +1498,7 @@
 
                         {subStep === 3 && (
                             <div className="w-full">
-                                <h2 className="text-2xl font-medium text-center mb-8 text-gray-900 tracking-tight">Rango de edad en la mesa</h2>
+                                <h2 className="text-2xl font-medium text-center mb-8 text-white tracking-tight">Rango de edad en la mesa</h2>
                                 {isAdultTheme && (
                                     <div className="bg-red-50 text-red-600 text-[13px] px-5 py-3 rounded-2xl mb-8 text-center border border-red-100 font-medium shadow-sm floating">
                                         Por la temática elegida, la edad mínima requerida es de 18 años.
@@ -1520,7 +1522,7 @@
 
                         {subStep === 5 && (
                             <div className="w-full">
-                                <h2 className="text-2xl font-medium text-center mb-2 text-gray-900 tracking-tight">¿Quieres añadir algo más?</h2>
+                                <h2 className="text-2xl font-medium text-center mb-2 text-white tracking-tight">¿Quieres añadir algo más?</h2>
                                 <p className="text-sm font-medium text-gray-500 text-center mb-8">
                                     Última oportunidad para darnos información de contexto antes que diseñemos tus cartas
                                 </p>
@@ -1528,7 +1530,7 @@
                                 <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-12 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)] floating">
                                     <textarea
                                         rows={6}
-                                        className="w-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center text-gray-900 placeholder:text-gray-400 relative z-10"
+                                        className="w-full bg-transparent resize-none outline-none text-[16px] tracking-wide font-medium text-center text-white placeholder:text-gray-400 relative z-10"
                                         placeholder="Escribe aquí (opcional)..."
                                         value={extraDetails}
                                         onChange={e => setExtraDetails(e.target.value)}
@@ -1620,7 +1622,7 @@
                 return (
                     <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
                         <GlobalHeader progress={progress} />
-                        <div className="text-center max-w-md bg-white p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-gray-50 mt-12">
+                        <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
                             </div>
@@ -1628,7 +1630,7 @@
                             <p className="text-gray-500 mb-6 leading-relaxed">
                                 Nos ponemos a trabajar para hacer de tu cena una de las más auténticas que hayas vivido hasta ahora.
                             </p>
-                            <p className="text-xl font-medium text-gray-900 mb-8">Hasta muy pronto</p>
+                            <p className="text-xl font-medium text-white mb-8">Hasta muy pronto</p>
                             <button onClick={() => window.location.href = '3d-test.html'} className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] hover:text-black transition-colors">Volver al inicio</button>
                         </div>
                     </div>
@@ -1639,7 +1641,7 @@
                 return (
                     <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
                         <GlobalHeader progress={progress} onBack={onBack} />
-                        <div className="text-center max-w-md bg-white p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-gray-50 mt-12">
+                        <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                             </div>
@@ -1682,7 +1684,7 @@
                                 <p className="text-gray-500">Hemos diseñado esta experiencia exclusivamente para tu cena basada en tus respuestas.</p>
                             </div>
 
-                            <div className="summary-card space-y-4">
+                            <div className="summary-card text-black space-y-4">
                                 <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                                     <div className="flex items-center gap-3">
                                         <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center p-2.5">
@@ -1717,7 +1719,7 @@
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col justify-between">
+                        <div className="bg-[#111] rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-[#222] flex flex-col justify-between">
                             <div>
                                 <h3 className="text-lg font-semibold mb-6">Información de Pago</h3>
                                 
