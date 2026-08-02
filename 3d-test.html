@@ -8588,11 +8588,11 @@ requestAnimationFrame(smoothScrollLoop);
     }
 
     // Cámara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
-    camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
-    camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
+    camera.position.x = currentCamX;
+    camera.position.y = currentCamY;
     camera.position.z = currentCamZ;
-    camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
-                  currentLookY - mouseNY * 0.05 * parallaxStr,
+    camera.lookAt(currentLookX,
+                  currentLookY,
                   currentLookZ);
     // cardCam2 siempre en el origen â€â€ carta congelada en viewport
 
@@ -11714,9 +11714,10 @@ document.addEventListener('mouseover', e => {
                 let distance = Math.sqrt(dx * dx + dy * dy);
                 
                 if (distance < 150) { 
-                    let force = (150 - distance) / 150;
-                    this.vx += (dx / distance) * force * 0.15;
-                    this.vy += (dy / distance) * force * 0.15;
+                    // Repulsión deshabilitada para que las "luces" (bolitas) no desaparezcan al mover el ratón rápido
+                    // let force = (150 - distance) / 150;
+                    // this.vx += (dx / distance) * force * 0.15;
+                    // this.vy += (dy / distance) * force * 0.15;
                 }
 
                 this.vx *= 0.95; 
@@ -11851,6 +11852,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
