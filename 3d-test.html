@@ -6349,38 +6349,27 @@ window.onerror = function(msg, url, line, col, err) {
       window.isAutoScrolling = true;
 
       if (Math.abs(val - 2.18) < 0.01) {
-          gsap.to({ p: prog }, {
-            p: 2.18,
-            duration: 0.4,
-            ease: "power2.inOut",
-            onUpdate: function() {
-                targetProg = this.targets()[0].p;
-                prog = targetProg;
-            },
-            onComplete: function() {
-                // Simulamos el salto cuntico (dead zone 2.20 -> 9.62) para que el animado sea slo el tramo visible
-                prog = 9.62;
-                targetProg = 9.62;
-                
-                gsap.to({ p: 9.62 }, {
-                    p: 9.97,
-                    duration: 3.0,
-                    ease: "power3.out",
-                    onUpdate: function() {
-                        targetProg = this.targets()[0].p;
-                        prog = targetProg;
-                    },
-                    onComplete: function() {
-                        window.isAutoScrolling = false;
-                        sessionStorage.setItem('dev_prog', prog);
-                        if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
-                        if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
-                        if (typeof updateBoxState === 'function') updateBoxState();
-                        if (typeof updateFaceSwap === 'function') updateFaceSwap();
-                        if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
-                    }
-                });
-            }
+          // Vamos a 1.0 al instante para que haya recorrido visual y scrolleamos hasta 2.18 con inercia
+          prog = 1.0;
+          targetProg = 1.0;
+          
+          gsap.to({ p: 1.0 }, {
+              p: 2.18,
+              duration: 3.5,
+              ease: "power3.out", // envalentonado y frenando poco a poco
+              onUpdate: function() {
+                  targetProg = this.targets()[0].p;
+                  prog = targetProg;
+              },
+              onComplete: function() {
+                  window.isAutoScrolling = false;
+                  sessionStorage.setItem('dev_prog', prog);
+                  if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
+                  if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+                  if (typeof updateBoxState === 'function') updateBoxState();
+                  if (typeof updateFaceSwap === 'function') updateFaceSwap();
+                  if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
+              }
           });
           return;
       }
