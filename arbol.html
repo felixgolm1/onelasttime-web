@@ -691,7 +691,7 @@
                     <GlobalHeader progress={progress} onBack={onBack} />
                     <div className="w-full max-w-[22rem] fade-in mt-4">
                         <div className="mb-10 text-center">
-                            <h2 className="text-2xl font-medium tracking-tight text-white">Detalles logísticos</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">Detalles logísticos</h2>
                             <p className="text-sm text-gray-500 mt-3 font-light px-2">Para organizar la logística y el envío.</p>
                         </div>
                         <div className="flex flex-col items-center px-1">
@@ -926,7 +926,7 @@
                             <div className="w-16 h-16 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
                                 <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
-                            <h2 className="text-2xl font-bold mb-3 text-white">Ajuste logístico necesario</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3">Ajuste logístico necesario</h2>
                             <p className="text-sm font-medium text-gray-500 mb-8 px-2">{mensajeFallo}</p>
                             
                             <div className="space-y-4 w-full px-2">
@@ -983,12 +983,12 @@
             const trick = tricksData[secretIndex] || tricksData[0];
 
             return (
-                <div className="w-full min-h-screen flex flex-col items-center transition-colors duration-[2100ms] ease-in-out bg-transparent relative pt-12 pb-32">
+                <div className="w-full min-h-screen flex flex-col items-center transition-colors duration-[2100ms] ease-in-out bg-transparent relative pt-28 pb-32">
                     <GlobalHeader progress={progress} onBack={onBack} />
 
-                    <div className="scene max-w-xl mx-auto w-full !pt-16 px-4 flex flex-col items-center">
+                    <div className="scene max-w-xl mx-auto w-full mt-4 px-4 flex flex-col items-center">
                         <div className="text-center mb-12 z-10 w-full fade-in" style={{ animationDelay: '0.1s' }}>
-                            <h2 className="text-2xl font-semibold tracking-tight text-white">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
                                 Pssst, ayudate de estos trucos para conectar aun más durante la cena ;)
                             </h2>
                         </div>
@@ -1193,7 +1193,7 @@
                         </div>
 
                         <div className="w-full px-6 pt-28 pb-4 text-center z-20 pointer-events-none mt-4">
-                            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-2">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
                                 ¿Qué tono quieres que tenga la cena?
                             </h2>
                             <p className="text-sm font-medium text-gray-500">
@@ -1383,7 +1383,7 @@
             }
 
             return (
-                <div className="min-h-screen flex flex-col items-center pt-24 p-4 relative fade-in">
+                <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
                     
                     <GlobalHeader progress={localProgress} onBack={handlePrevSubStep} />
 
@@ -1391,7 +1391,7 @@
                         
                         {subStep === 1 && (
                             <div>
-                                <h2 className="text-2xl font-medium text-center mb-8 text-white tracking-tight">¿Cuánto tiempo tenéis?</h2>
+                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">¿Cuánto tiempo tenéis?</h2>
                                 <div className="w-full mb-10 floating">
                                     <div className="text-center text-4xl font-light text-black mb-8 mt-4">{formatTime(timeMinutes)}</div>
                                     <RangeSlider value={timeMinutes} min={10} max={300} isAdultTheme={false} restrictedMin={10} onChange={e => setTimeMinutes(Number(e.target.value))} />
@@ -1406,7 +1406,7 @@
 
                         {subStep === 2 && (
                             <div className="w-full">
-                                <h2 className="text-2xl font-medium text-center mb-2 text-white tracking-tight">¿Quiénes os sentáis a la mesa?</h2>
+                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">¿Quiénes os sentáis a la mesa?</h2>
                                 <p className="text-sm font-medium text-gray-500 text-center mb-8">
                                     Escribe todo el contexto que quieras que tengamos en cuenta
                                 </p>
@@ -1444,7 +1444,7 @@
 
                         {subStep === 3 && (
                             <div className="w-full">
-                                <h2 className="text-2xl font-medium text-center mb-8 text-white tracking-tight">Rango de edad en la mesa</h2>
+                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">Rango de edad en la mesa</h2>
                                 {isAdultTheme && (
                                     <div className="bg-red-50 text-red-600 text-[13px] px-5 py-3 rounded-2xl mb-8 text-center border border-red-100 font-medium shadow-sm floating">
                                         Por la temática elegida, la edad mínima requerida es de 18 años.
@@ -1468,7 +1468,7 @@
 
                         {subStep === 5 && (
                             <div className="w-full">
-                                <h2 className="text-2xl font-medium text-center mb-2 text-white tracking-tight">¿Quieres añadir algo más?</h2>
+                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">¿Quieres añadir algo más?</h2>
                                 <p className="text-sm font-medium text-gray-500 text-center mb-8">
                                     Última oportunidad para darnos información de contexto antes que diseñemos tus cartas
                                 </p>
@@ -1572,7 +1572,7 @@
                             <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
                             </div>
-                            <h2 className="text-2xl font-bold mb-4">¡Nos ponemos a trabajar!</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-4">¡Nos ponemos a trabajar!</h2>
                             <p className="text-gray-500 mb-6 leading-relaxed">
                                 Nos ponemos a trabajar para hacer de tu cena una de las más auténticas que hayas vivido hasta ahora.
                             </p>
@@ -1591,7 +1591,7 @@
                             <div className="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                             </div>
-                            <h2 className="text-2xl font-bold mb-4">Stock agotado en tu zona</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-4">Stock agotado en tu zona</h2>
                             <p className="text-gray-500 mb-4 leading-relaxed">
                                 Lo sentimos, acabamos de recibir un volumen inusual de pedidos en los últimos minutos y hemos agotado las cajas físicas para tu ubicación.
                             </p>
