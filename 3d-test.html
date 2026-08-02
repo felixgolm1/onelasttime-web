@@ -8195,7 +8195,7 @@ requestAnimationFrame(smoothScrollLoop);
     window.polaroidTextMat = textMat;
     
     // Forzar la carga de la fuente manuscrita antes de pintar
-    document.fonts.load('85px "Caveat"').then(() => {
+    document.fonts.load('85px "Inter"').then(() => {
         tCtx.clearRect(0,0,2560,640);
         tCtx.fillStyle = 'rgba(15, 25, 45, 0.95)'; // Tinta boli azul oscura
         tCtx.textAlign = 'center';
@@ -8205,12 +8205,12 @@ requestAnimationFrame(smoothScrollLoop);
         tCtx.rotate(-0.015); // Inclinacion sutil
         
         let fontSize = 85;
-        tCtx.font = fontSize + 'px "Caveat", cursive';
+        tCtx.font = '500 ' + fontSize + 'px "Inter", sans-serif';
         let maxW = 2400; // Margen de 80px por lado (canvas es 2560)
         const line1 = '"Si vives cada d\u00eda como si fuera el \u00faltimo, alg\u00fan d\u00eda estar\u00e1s en lo cierto"';
         while (tCtx.measureText(line1).width > maxW && fontSize > 20) {
             fontSize--;
-            tCtx.font = fontSize + 'px "Caveat", cursive';
+            tCtx.font = '500 ' + fontSize + 'px "Inter", sans-serif';
         }
         
         let gap = fontSize * 0.92;
@@ -9943,7 +9943,7 @@ setInterval(function() {
       <img src="assets/img/polaroid.png" alt="Polaroid" style="width:100%; height:auto; display:block; filter: drop-shadow(0px 10px 40px rgba(0,0,0,0.4));">
       
       <!-- Handwritten Text Overlay -->
-      <div style="position: absolute; left: 52%; top: 12%; width: 42%; transform: rotate(5.5deg); font-family: 'Caveat', cursive; color: #151515; font-size: clamp(0.9rem, 1.8vw, 1.6rem); line-height: 1.15; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 75%; padding: 0 10px; box-sizing: border-box;">
+      <div style="position: absolute; left: 52%; top: 12%; width: 42%; transform: rotate(5.5deg); font-family: 'Inter', sans-serif; font-weight: 500; color: #151515; font-size: clamp(0.9rem, 1.8vw, 1.6rem); line-height: 1.15; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 75%; padding: 0 10px; box-sizing: border-box;">
           <p style="margin-bottom: 5%; font-weight: 700; font-size: 1.15em;">"Si vives cada d&iacute;a como si fuera el &uacute;ltimo, alg&uacute;n d&iacute;a estar&aacute;s en lo cierto"</p>
           <p style="margin-bottom: 5%;">Y aunque esperamos que este d&iacute;a quede lejos, no hay duda de que nunca volveremos a vivir cada preciso instante de nuevo.</p>
           <p style="margin-bottom: 0;">As&iacute; que amemos a las personas que nos importan ahora, ya que no sabemos cuando tendremos la &uacute;ltima oportunidad para hacerlo.</p>
