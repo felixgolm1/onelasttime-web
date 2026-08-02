@@ -8552,7 +8552,7 @@ requestAnimationFrame(smoothScrollLoop);
     // Ã¢â€€Ã¢â€€ Parallax de ratón sobre la cámara principal Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Intensidad máxima al inicio, se apaga al scrollear (progress > 0.15)
     const scrollProg = (typeof scrollTl !== 'undefined') ? scrollTl.progress() : 0;
-    const parallaxStr = Math.max(0, Math.min(1, (scrollProg - 0.85) / 0.15)); // 1→0 en los primeros 15% del scroll
+    const parallaxStr = Math.max(0, Math.min(1, (scrollProg - 0.85) / 0.15)); if (scrollProg < 0.80) { mouseNX = 0; mouseNY = 0; } // HARD DISABLE // 1→0 en los primeros 15% del scroll
     const lerpK = 1 - Math.pow(0.04, dt);  // suavizado independiente de FPS
     mouseNX += (mouseRawX - mouseNX) * lerpK;
     mouseNY += (mouseRawY - mouseNY) * lerpK;
@@ -11851,6 +11851,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
