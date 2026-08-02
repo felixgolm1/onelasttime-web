@@ -5422,7 +5422,10 @@ window.addEventListener('error', function(e) {
             // AGGRESSIVE OVERRIDE TO TEST RENDER
             if (window._ctaHoverActive) finalOpacity = 1;
             
+            
+            embersCanvas.style.transition = 'none';
             embersCanvas.style.setProperty('opacity', finalOpacity, 'important');
+    
             embersCanvas.style.setProperty('z-index', '9999999', 'important'); // PUSH TO ABSOLUTE FRONT
             
             // ALWAYS update particles so they are distributed naturally even when invisible
