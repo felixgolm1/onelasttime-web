@@ -7247,8 +7247,11 @@ requestAnimationFrame(smoothScrollLoop);
   // Ã¢â€€Ã¢â€€ ILUMINACIÓN LUZ NATURAL â€â€ restaurante casual mediodía Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Sin focos. Luz difusa de ventanas + techo, como en un bistró con luz natural.
 
+  const mainLightGroup = new THREE.Group();
+  scene.add(mainLightGroup);
+
   // 1. Skylight: luz ambiental muy baja (solo llena las sombras)
-  scene.add(new THREE.AmbientLight(0xd0dde8, 0.65));
+  mainLightGroup.add(new THREE.AmbientLight(0xd0dde8, 0.65));
 
   // 2. Ventana principal izquierda â€â€ SpotLight amplio para falloff natural en la mesa
   const winLeft = new THREE.SpotLight(0xfff4e0, 3.8);
@@ -7270,17 +7273,17 @@ requestAnimationFrame(smoothScrollLoop);
   // 3. Relleno del lado derecho â€â€ luz ambiental de sala, más fría
   const winRight = new THREE.DirectionalLight(0xe8eef5, 0.35);
   winRight.position.set(10, 8, 2);
-  scene.add(winRight);
+  mainLightGroup.add(winRight);
 
   // 4. Rim trasero muy suave â€â€ separa los platos del mantel
   const rimLight = new THREE.DirectionalLight(0xfff0e0, 0.22);
   rimLight.position.set(0, 5, -14);
-  scene.add(rimLight);
+  mainLightGroup.add(rimLight);
 
   // 5. Luz de techo del restaurante â€â€ cenital suave desde arriba
   const ceilLight = new THREE.DirectionalLight(0xfff5e8, 0.3);
   ceilLight.position.set(2, 18, 4);
-  scene.add(ceilLight);
+  mainLightGroup.add(ceilLight);
 
   // Ã¢â€€Ã¢â€€ CARGA DEL MODELO GLB (llamado desde startLoading tras la animación) Ã¢â€€Ã¢â€€
   const loaderBar = document.getElementById('loader-bar');
@@ -8591,6 +8594,11 @@ requestAnimationFrame(smoothScrollLoop);
     camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
+    // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
+    if (typeof mainLightGroup !== 'undefined') {
+        mainLightGroup.position.x = mouseNX * PX * parallaxStr;
+        mainLightGroup.position.y = -mouseNY * PY * parallaxStr;
+    }
     camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
                   currentLookY - mouseNY * 0.05 * parallaxStr,
                   currentLookZ);
