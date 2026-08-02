@@ -3087,8 +3087,8 @@ window.onerror = function(msg, url, line, col, err) {
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
     //    stagger from:'end' → la última .oh-inner (más abajo) empieza en t=0, cada línea superior espera 0.02 más.
     //    duration 0.10 + 3Ã—0.02 = 0.16 → encaja exacto con la duración de Fase 1.
-    scrollTl.to('.oh-inner:not(.headline-sub)', { y: '110%', duration: 0.04, ease: 'power2.in', stagger: { each: 0.005, from: 'end' } }, 0);
-    scrollTl.to('.headline-sub', { y: '110%', duration: 0.08, ease: 'power2.inOut' }, 0);
+    scrollTl.to('.oh-inner:not(.headline-sub)', { y: '150%', duration: 0.04, ease: 'power2.in', stagger: { each: 0.005, from: 'end' } }, 0);
+    scrollTl.to('.headline-sub', { y: '150%', duration: 0.08, ease: 'power2.inOut' }, 0);
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.06, ease: 'power3.in' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
