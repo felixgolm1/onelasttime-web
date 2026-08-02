@@ -368,8 +368,8 @@
         );
 
         // Header Global Fijo
-        const GlobalHeader = ({ progress, onBack, greenMode }) => (
-            <div className="fixed top-0 left-0 w-full px-6 pt-6 pb-4 z-[999] flex flex-col items-center justify-center pointer-events-none" style={{ backgroundColor: greenMode ? '#CCFF00' : '#fcfcfc', transition: 'background-color 2100ms ease-in-out' }}>
+        const GlobalHeader = ({ progress, onBack, greenMode, animateIn }) => (
+            <div className={`fixed top-0 left-0 w-full px-6 pt-6 pb-4 z-[999] flex flex-col items-center justify-center pointer-events-none ${animateIn ? 'fade-in' : ''}`} style={{ backgroundColor: greenMode ? '#CCFF00' : '#fcfcfc', transition: 'background-color 2100ms ease-in-out' }}>
                 <div className="w-full max-w-lg flex justify-center items-center relative mb-4 mt-2">
                     {onBack && (
                         <button onClick={onBack} className="absolute left-0 top-1/2 -translate-y-1/2 text-2xl font-light leading-none text-black hover:text-gray-600 transition-all pointer-events-auto">
@@ -625,7 +625,7 @@
                 <div className="scene flex-col justify-start pt-28 px-4 relative bg-[#fcfcfc] min-h-screen">
                     <GlobalHeader progress={progress} onBack={canGoBack ? handleBack : null} animateIn={treeKey === 'format' && history.length === 0} />
                     <div key={currentParent} className={`w-full max-w-4xl flex flex-col items-center transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'opacity-100'}`}>
-                        <div className="text-center mb-12">
+                        <div className={`text-center mb-12 ${treeKey === 'format' && history.length === 0 ? 'fade-in' : ''}`}>
 
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">{title}</h2>
                         </div>
