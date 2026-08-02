@@ -4271,7 +4271,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
           
           // 3.5 Texto iluminado (DERECHA)
-          let readPRight = mapRange(pRev, 0.39, 0.50, 0, 1);
+          let readPRight = mapRange(pRev, 0.37, 0.48, 0, 1);
           readPRight = Math.max(0, Math.min(1, readPRight));
           
           if (rev1._charsRight && rev1._charsRight.length > 0) {
@@ -4288,7 +4288,7 @@ window.onerror = function(msg, url, line, col, err) {
 
           // 4. Imagen se agranda 30% y se ilumina (DERECHA)
           if (rev1._img) {
-             let imgP = mapRange(pRev, 0.38, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.36, 0.52, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -4356,7 +4356,7 @@ window.onerror = function(msg, url, line, col, err) {
              });
           }
           
-          let readPRight = mapRange(pRev, 0.39, 0.50, 0, 1);
+          let readPRight = mapRange(pRev, 0.37, 0.48, 0, 1);
           readPRight = Math.max(0, Math.min(1, readPRight));
           
           if (rev2._charsRight && rev2._charsRight.length > 0) {
@@ -4372,7 +4372,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (rev2._img) {
-             let imgP = mapRange(pRev, 0.38, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.36, 0.52, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -4440,7 +4440,7 @@ window.onerror = function(msg, url, line, col, err) {
              });
           }
           
-          let readPRight = mapRange(pRev, 0.39, 0.50, 0, 1);
+          let readPRight = mapRange(pRev, 0.37, 0.48, 0, 1);
           readPRight = Math.max(0, Math.min(1, readPRight));
           
           if (rev3._charsRight && rev3._charsRight.length > 0) {
@@ -4456,7 +4456,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (rev3._img) {
-             let imgP = mapRange(pRev, 0.38, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.36, 0.52, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -4525,7 +4525,7 @@ window.onerror = function(msg, url, line, col, err) {
              });
           }
           
-          let readPRight = mapRange(pRev, 0.39, 0.50, 0, 1);
+          let readPRight = mapRange(pRev, 0.37, 0.48, 0, 1);
           readPRight = Math.max(0, Math.min(1, readPRight));
           
           if (rev4._charsRight && rev4._charsRight.length > 0) {
@@ -4541,7 +4541,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (rev4._img) {
-             let imgP = mapRange(pRev, 0.38, 0.54, 0, 1); 
+             let imgP = mapRange(pRev, 0.36, 0.52, 0, 1); 
              imgP = Math.max(0, Math.min(1, imgP));
              let scale = 1.0 + (0.3 * imgP);
              let brightness = 0.3 + (0.7 * imgP);
@@ -10335,7 +10335,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       }
 
       // 3. Texto Derecho (Reseña) - Ajustado en cascada
-      let readPRight = mapRange(pRev, 0.34, 0.50, 0, 1);
+      let readPRight = mapRange(pRev, 0.32, 0.48, 0, 1);
       readPRight = Math.max(0, Math.min(1, readPRight));
       if (panel._charsRight && panel._charsRight.length > 0) {
          const totalR = panel._charsRight.length;
@@ -10351,7 +10351,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
       // 4. Imagen - Intacta
       if (panel._img) {
-         let imgP = mapRange(pRev, 0.34, 0.50, 0, 1); 
+         let imgP = mapRange(pRev, 0.32, 0.48, 0, 1); 
          imgP = Math.max(0, Math.min(1, imgP));
          let scale = 1.0 + (0.3 * imgP);
          let brightness = 0.3 + (0.7 * imgP);
@@ -11939,6 +11939,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
