@@ -1515,7 +1515,7 @@ window.onerror = function(msg, url, line, col, err) {
       stroke: rgba(255,255,255,0.2); stroke-width: 1px; z-index: 10000;
     }
     .osr-stars-small { font-size: 1.35rem; color: #ffffff; margin-bottom: 2rem; letter-spacing: 0.1em; }
-    .osr-stars-small .star { opacity: 0.2; display: inline-block; }
+    .osr-stars-small .star { opacity: 1; display: inline-block; }
     .review-quote, .review-left-quote { position: relative; }
     .review-quote span.word, .review-left-quote span.word { will-change: opacity; }
     .review-highlight { color: #ccff00; }
@@ -4236,7 +4236,7 @@ window.onerror = function(msg, url, line, col, err) {
 
           // 2.5 Estrellas se iluminan de 1 en 1 antes de que empiece el texto (DERECHA)
           if (!rev1._ratingNum) rev1._ratingNum = rev1.querySelector('.rating-number');
-          if (rev1._stars && rev1._stars.length > 0) {
+          if (false && rev1._stars && rev1._stars.length > 0) {
              let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
              starP = Math.max(0, Math.min(1, starP));
              
@@ -4323,7 +4323,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (!rev2._ratingNum) rev2._ratingNum = rev2.querySelector('.rating-number');
-          if (rev2._stars && rev2._stars.length > 0) {
+          if (false && rev2._stars && rev2._stars.length > 0) {
              let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
              starP = Math.max(0, Math.min(1, starP));
              
@@ -4407,7 +4407,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (!rev3._ratingNum) rev3._ratingNum = rev3.querySelector('.rating-number');
-          if (rev3._stars && rev3._stars.length > 0) {
+          if (false && rev3._stars && rev3._stars.length > 0) {
              let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
              starP = Math.max(0, Math.min(1, starP));
              
@@ -4492,7 +4492,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           if (!rev4._ratingNum) rev4._ratingNum = rev4.querySelector('.rating-number');
-          if (rev4._stars && rev4._stars.length > 0) {
+          if (false && rev4._stars && rev4._stars.length > 0) {
              let starP = mapRange(pRev, 0.36, 0.49, 0, 1); 
              starP = Math.max(0, Math.min(1, starP));
              
@@ -9670,7 +9670,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
           <div class="review-quote" id="end-rev1-quote" style="text-align: left;">"Ya habíamos tenido 6 citas así que decidimos ponernos profundos con preguntas como esta. Creo que <span class="review-highlight">nos conocimos más con aquella cita que con todas las otras que hemos tenido juntas</span>"</div>
           <div class="review-author" style="text-align: left;">
             FRANCISCO ARBESÚ<br>
@@ -9697,7 +9697,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
           <div class="review-quote" id="end-rev2-quote" style="text-align: left;">"¡<span class="review-highlight">Flipé</span> al ver cartas hechas para nuestro aniversario! Nos hicieron tener <span class="review-highlight">conversaciones que nunca antes habíamos tenido en 9 años de relación</span>. Y sin duda ahora estamos más preparados para durar muchos años más. Ya <span class="review-highlight">he obligado a mis amigas a probarlo</span>."</div>
           <div class="review-author" style="text-align: left;">
             LAURA GIL<br>
@@ -9724,7 +9724,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
           <div class="review-quote" id="end-rev3-quote" style="text-align: left;">"Es brutal cómo una simple pregunta puede <span class="review-highlight">cambiar completamente el resultado de una cita</span>. Si tengo que tener más citas, nunca más iré sin tener preguntas profundas preparadas."</div>
           <div class="review-author" style="text-align: left;">
             ELSA NARANJO<br>
@@ -9751,7 +9751,7 @@ setInterval(function() {
           <div class="osr-top-line" style="justify-content: flex-start;">
             
           </div>
-          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[0/5]</span></div>
+          <div class="osr-stars-small" style="font-family:'Inter', sans-serif; justify-content: flex-start; width: auto;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> <span class="rating-number" style="opacity: 0.5; margin-left: 8px; font-weight: 400;">[5/5]</span></div>
           <div class="review-quote" id="end-rev4-quote" style="text-align: left;">"Llevamos 12 años juntos, estamos casados, tenemos 1 hija y ahora mismo no nos podemos conocer más. Lo que sí que podemos hacer es seguir creciendo juntos y ser cada vez mejores como pareja, y One Last Time nos ayuda a esto cada vez que lo usamos. <span class="review-highlight">Si creéis que ya no podéis ir a mejor, probadlo y cambiaréis de opinión</span>"</div>
           <div class="review-author" style="text-align: left;">
             IRIA MUDARRA<br>
@@ -10321,7 +10321,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       }
 
       // 2. Estrellas
-      if (panel._stars && panel._stars.length > 0) {
+      if (false && panel._stars && panel._stars.length > 0) {
          let starP = mapRange(pRev, 0.28, 0.38, 0, 1); 
          starP = Math.max(0, Math.min(1, starP));
          const totalStars = panel._stars.length;
@@ -11939,6 +11939,10 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
+
+
+
 
 
 
