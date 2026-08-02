@@ -6347,24 +6347,43 @@ window.onerror = function(msg, url, line, col, err) {
 
     window.jumpToProg = function(val) {
       if (Math.abs(val - 2.18) < 0.01) {
-          // Nos trae a 2.18 instantneamente
-          prog = 2.18;
-          targetProg = 2.18;
-          window.isAutoScrolling = false;
+          window.isAutoScrolling = true;
           
-          // Renderizamos el frame actual de 2.18
-          sessionStorage.setItem('dev_prog', prog);
-          if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
-          if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
-          if (typeof updateBoxState === 'function') updateBoxState();
-          if (typeof updateFaceSwap === 'function') updateFaceSwap();
-          if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
-          
-          // Avanza automticamente hacia 9.96 dejando que el motor de scroll nativo simule al usuario
-          setTimeout(() => {
-              targetProg = 9.96;
-              window.isAutoScrolling = false; // El motor nativo har el salto cuntico y el lerp suave final
-          }, 400);
+          // 1. Te trae suavemente a 2.18 desde donde ests
+          gsap.to({ p: prog }, {
+              p: 2.18,
+              duration: 0.5,
+              ease: "power2.inOut",
+              onUpdate: function() {
+                  targetProg = this.targets()[0].p;
+                  prog = targetProg;
+              },
+              onComplete: function() {
+                  // 2. Salto matemtico invisible (porque 2.20 y 9.62 se ven exactamente igual en pantalla)
+                  prog = 9.62;
+                  targetProg = 9.62;
+                  
+                  // 3. Animacin pesada tipo inercia hacia 9.96
+                  gsap.to({ p: 9.62 }, {
+                      p: 9.96,
+                      duration: 2.8,
+                      ease: "power3.out", // Efecto "tirar de la cuerda y frenar poco a poco"
+                      onUpdate: function() {
+                          targetProg = this.targets()[0].p;
+                          prog = targetProg;
+                      },
+                      onComplete: function() {
+                          window.isAutoScrolling = false;
+                          sessionStorage.setItem('dev_prog', prog);
+                          if (typeof scrollTl !== 'undefined') scrollTl.progress(Math.min(1, prog / 2.2));
+                          if (window.cssRenderer && window.scene && window.camera) { window.cssRenderer.render(window.scene, window.camera); }
+                          if (typeof updateBoxState === 'function') updateBoxState();
+                          if (typeof updateFaceSwap === 'function') updateFaceSwap();
+                          if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
+                      }
+                  });
+              }
+          });
           return;
       }
       
