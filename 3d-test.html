@@ -11712,8 +11712,8 @@ document.addEventListener('mouseover', e => {
                 this.y += this.vy;
 
                 if (explosionActive) {
-                    this.vy -= (Math.random() * 0.4 + 0.1); // accelerate upwards
-                    this.x += Math.sin(this.life * 4) * 2; // wider sway
+                    this.vy -= (Math.random() * 0.15 + 0.05); // accelerate upwards
+                    this.x += Math.sin(this.life * 2) * 1; // wider sway
                     this.alpha = Math.min(1, this.alpha * 1.5); // brighter
                 }
 
@@ -11794,7 +11794,7 @@ document.addEventListener('mouseover', e => {
                 }, 400); 
                 
                 // Multiply particles for explosion
-                for (let i = 0; i < 200; i++) {
+                for (let i = 0; i < 400; i++) {
                     let p = new Particle();
                     p.y = Math.random() * height; // scatter them randomly instantly
                     particles.push(p);

@@ -1763,6 +1763,14 @@
         const App = () => {
             const urlParams = new URLSearchParams(window.location.search);
             const forceSkip = urlParams.get('skipIntro') === 'true';
+            const [premiumFade, setPremiumFade] = useState(forceSkip);
+            
+            useEffect(() => {
+                if (premiumFade) {
+                    // Start black, then fade out the black overlay after a brief moment
+                    setTimeout(() => setPremiumFade(false), 100);
+                }
+            }, [premiumFade]);
             
             if (forceSkip && !sessionStorage.getItem('forceSkipApplied')) {
                 // Clear session storage if coming fresh from landing page
