@@ -6932,9 +6932,9 @@ requestAnimationFrame(smoothScrollLoop);
         if (targetProg >= 0.07 && targetProg <= 0.93) {
           divisor = 888;
         } else if (targetProg >= 0.98 && targetProg <= 1.37) {
-          divisor = 4800;
+          divisor = 2400; // Efecto de pausa 50% más corto
         } else {
-          divisor = 6000;
+          divisor = 3000; // Efecto de pausa 50% más corto
         }
       }
       
