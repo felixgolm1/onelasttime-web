@@ -6866,7 +6866,7 @@ requestAnimationFrame(smoothScrollLoop);
     // --- Snap Lock: pausa real en cada imagen del carrusel ---
     let _snapLockPoint = null;   // snap point actualmente bloqueado
     let _snapLockTicks = 0;      // ticks restantes para escapar
-    const SNAP_LOCK_TICKS = 2;  // ticks de scroll necesarios para pasar al siguiente slide
+    const SNAP_LOCK_TICKS = 1;  // ticks de scroll necesarios para pasar al siguiente slide
 
     function applyMagneticFriction(current, delta) {
       // Los 9 slides con factor 2.0 → cada 0.5 unidades de prog desde 10.62
