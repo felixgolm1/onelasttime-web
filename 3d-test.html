@@ -6866,7 +6866,7 @@ requestAnimationFrame(smoothScrollLoop);
     // --- Snap Lock: pausa real en cada imagen del carrusel ---
     let _snapLockPoint = null;   // snap point actualmente bloqueado
     let _snapLockTicks = 0;      // ticks restantes para escapar
-    const SNAP_LOCK_TICKS = 5;  // ticks de scroll necesarios para pasar al siguiente slide
+    const SNAP_LOCK_TICKS = 2;  // ticks de scroll necesarios para pasar al siguiente slide
 
     function applyMagneticFriction(current, delta) {
       // Los 9 slides con factor 2.0 → cada 0.5 unidades de prog desde 10.62
@@ -6938,9 +6938,9 @@ requestAnimationFrame(smoothScrollLoop);
         }
       }
       
-      // Ajuste pedido: de 1.65 a 2.21 un 50% más rápido (fricción / 1.5)
-      if (targetProg >= 1.65 && targetProg <= 2.21) {
-        divisor = divisor / 1.5;
+      // Ajuste pedido: de 1.84 a 2.20 un 100% más rápido (fricción / 2)
+      if (targetProg >= 1.84 && targetProg <= 2.20) {
+        divisor = divisor / 2;
       }
       // Ajuste pedido: de 3.05 a 24.21 un 50% más rápido (fricción / 1.5)
       if (targetProg >= 3.05 && targetProg <= 24.21) {
