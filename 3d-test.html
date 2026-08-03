@@ -6902,7 +6902,7 @@ requestAnimationFrame(smoothScrollLoop);
           let newDist = Math.abs(newProg - sp);
           let intensity = (minD - dist) / minD;
           if (newDist > dist) {
-            delta /= (1 + intensity * 2.0); // resistencia al salir
+            delta /= (1 + intensity * 1.0); // resistencia al salir
           } else {
             delta *= (1 + intensity * 0.4); // aceleración al entrar
           }
