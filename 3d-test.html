@@ -6895,16 +6895,16 @@ requestAnimationFrame(smoothScrollLoop);
       }
 
       // Ã¢â€€Ã¢â€€ Caso 3: Zona de gravedad (atracción suave hacia el centro) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-      const minD = 0.07;
+      const minD = 0.035; // Paradas reducidas a la mitad
       for (let sp of snapPoints) {
         let dist = Math.abs(current - sp);
         if (dist < minD) {
           let newDist = Math.abs(newProg - sp);
           let intensity = (minD - dist) / minD;
           if (newDist > dist) {
-            delta /= (1 + intensity * 1.0); // resistencia al salir
+            delta /= (1 + intensity * 0.5); // resistencia al salir
           } else {
-            delta *= (1 + intensity * 0.4); // aceleración al entrar
+            delta *= (1 + intensity * 0.2); // aceleración al entrar
           }
           break;
         }
