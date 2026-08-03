@@ -6957,6 +6957,11 @@ requestAnimationFrame(smoothScrollLoop);
         divisor = divisor / 2.0;
       }
       
+      // Ajuste pedido: de 16.68 a 17.98 un 100% mas rapido (friccion / 2)
+      if (targetProg >= 16.68 && targetProg <= 17.98) {
+        divisor = divisor / 2.0;
+      }
+      
       let rawDelta = cappedDY / divisor;
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
       const prevTarget = targetProg;
@@ -11979,6 +11984,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
