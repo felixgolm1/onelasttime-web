@@ -6300,7 +6300,7 @@ window.onerror = function(msg, url, line, col, err) {
         updateGlobalScenes();
 
           const debugProg = document.getElementById('debug-scroll-prog');
-          if (debugProg) debugProg.innerText = prog.toFixed(2);
+          if (debugProg) debugProg.innerText = (prog >= 9.62 ? prog - 7.42 : prog).toFixed(2);
 
           // Ã¢â€€ Edge glow: matemáticamente atado a prog
           const eg = document.getElementById('edge-glow');
@@ -6429,7 +6429,7 @@ window.onerror = function(msg, url, line, col, err) {
           updateGlobalScenes();
           
           const debugProg = document.getElementById('debug-scroll-prog');
-          if (debugProg) debugProg.innerText = prog.toFixed(2);
+          if (debugProg) debugProg.innerText = (prog >= 9.62 ? prog - 7.42 : prog).toFixed(2);
         }
       });
     };
@@ -6499,7 +6499,7 @@ window.onerror = function(msg, url, line, col, err) {
         updateGlobalScenes();
 
           const debugProg = document.getElementById('debug-scroll-prog');
-          if (debugProg) debugProg.innerText = prog.toFixed(2);
+          if (debugProg) debugProg.innerText = (prog >= 9.62 ? prog - 7.42 : prog).toFixed(2);
 
 
           // Ã¢â€€ Edge glow: matemáticamente atado a prog
@@ -6917,13 +6917,17 @@ requestAnimationFrame(smoothScrollLoop);
       const cappedDY = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60);
       let divisor = 900;
       if (targetProg >= 1.55 && targetProg <= 9.62) {
-        if (targetProg >= 1.72 && targetProg <= 2.19) {
+        if (targetProg >= 1.72 && targetProg <= 1.86) {
           divisor = 3296;
+        } else if (targetProg >= 1.87 && targetProg <= 2.19) {
+          divisor = 2197;
         } else if (targetProg < 2.20) {
           divisor = 4615;
         } else {
           divisor = 692;
         }
+      } else if (targetProg > 9.62 && targetProg <= 9.68) {
+        divisor = 600;
       } else if (targetProg < 2.20) {
         if (targetProg >= 0.07 && targetProg <= 0.93) {
           divisor = 888;
@@ -6933,6 +6937,12 @@ requestAnimationFrame(smoothScrollLoop);
           divisor = 6000;
         }
       }
+      
+      // Ajuste pedido: de 1.71 a 2.23 un 50% más rápido (fricción / 1.5)
+      if (targetProg >= 1.71 && targetProg <= 2.23) {
+        divisor = divisor / 1.5;
+      }
+      
       let rawDelta = cappedDY / divisor;
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
       const prevTarget = targetProg;
@@ -11049,7 +11059,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // DEBUG INJECT
                   var debugEl = document.getElementById('debug-scroll-prog');
                   if (debugEl) {
-                      debugEl.innerHTML = "p:" + p.toFixed(2) + " locP:" + localP.toFixed(2) + " clss:" + document.body.classList.contains("hide-all-cards-final-scene") + " isRet:" + ("OK");
+                      debugEl.innerHTML = "p:" + (p >= 9.62 ? p - 7.42 : p).toFixed(2) + " locP:" + localP.toFixed(2) + " clss:" + document.body.classList.contains("hide-all-cards-final-scene") + " isRet:" + ("OK");
                   }
                   
                   var EARLY_FADE_START = 27.5;
