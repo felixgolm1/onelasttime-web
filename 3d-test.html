@@ -6938,9 +6938,9 @@ requestAnimationFrame(smoothScrollLoop);
         }
       }
       
-      // Ajuste pedido: de 1.88 a 2.34 un 30% más rápido (fricción / 1.3)
-      if (targetProg >= 1.88 && targetProg <= 2.34) {
-        divisor = divisor / 1.3;
+      // Ajuste pedido: de 1.65 a 2.21 un 50% más rápido (fricción / 1.5)
+      if (targetProg >= 1.65 && targetProg <= 2.21) {
+        divisor = divisor / 1.5;
       }
       
       let rawDelta = cappedDY / divisor;
