@@ -5757,7 +5757,7 @@ window.onerror = function(msg, url, line, col, err) {
       function getCarouselIndex(p) {
         // Hold por slide: el primero tiene el doble de zona plana
         const centers = [10.62, 11.12, 11.62, 12.12, 12.62, 13.12, 13.62, 14.12, 14.62];
-        const holds   = [0.112, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056, 0.056];
+        const holds   = [0.056, 0.028, 0.028, 0.028, 0.028, 0.028, 0.028, 0.028, 0.028];
         // Zona plana: devolver entero exacto
         for (let i = 0; i < centers.length; i++) {
           if (Math.abs(p - centers[i]) <= holds[i]) return i;
