@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -6962,9 +6962,9 @@ requestAnimationFrame(smoothScrollLoop);
         divisor = divisor / 2.0;
       }
       
-      // Ajuste pedido: de 24.16 a 34.17 un 200% más rapido (fricción / 3)
+      // Ajuste pedido: de 24.16 a 34.17 un 100% más rapido extra (fricción / 6)
       if (targetProg >= 24.16 && targetProg <= 34.17) {
-        divisor = divisor / 3.0;
+        divisor = divisor / 6.0;
       }
       
       let rawDelta = cappedDY / divisor;
