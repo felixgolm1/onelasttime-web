@@ -6916,7 +6916,13 @@ requestAnimationFrame(smoothScrollLoop);
       e.preventDefault();
       const cappedDY = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60);
       let divisor = 900;
-      if (targetProg < 2.20) {
+      if (targetProg >= 1.55 && targetProg <= 9.62) {
+        if (targetProg < 2.20) {
+          divisor = 4615;
+        } else {
+          divisor = 692;
+        }
+      } else if (targetProg < 2.20) {
         if (targetProg >= 0.07 && targetProg <= 0.93) {
           divisor = 888;
         } else if (targetProg >= 0.98 && targetProg <= 1.37) {
