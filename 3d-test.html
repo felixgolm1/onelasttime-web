@@ -6962,6 +6962,21 @@ requestAnimationFrame(smoothScrollLoop);
         divisor = divisor / 2.0;
       }
       
+      // Ajuste pedido: de 18.40 a 19.70 un 100% más rápido
+      if (targetProg >= 18.40 && targetProg <= 19.70) {
+        divisor = divisor / 2.0;
+      }
+      
+      // Ajuste pedido: de 20.20 a 21.50 un 100% más rápido
+      if (targetProg >= 20.20 && targetProg <= 21.50) {
+        divisor = divisor / 2.0;
+      }
+      
+      // Ajuste pedido: de 22.00 a 23.30 un 100% más rápido
+      if (targetProg >= 22.00 && targetProg <= 23.30) {
+        divisor = divisor / 2.0;
+      }
+      
       let rawDelta = cappedDY / divisor;
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
       const prevTarget = targetProg;
