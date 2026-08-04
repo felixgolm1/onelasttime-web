@@ -7002,6 +7002,11 @@ requestAnimationFrame(smoothScrollLoop);
         divisor = divisor / 3.0;
       }
       
+      // Ajuste pedido: de 48.10 al final (visual) un 100% más rápido (fricción / 2.0)
+      if (targetProg >= 55.52) {
+        divisor = divisor / 2.0;
+      }
+      
       let rawDelta = cappedDY / divisor;
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
       const prevTarget = targetProg;
@@ -7115,6 +7120,11 @@ requestAnimationFrame(smoothScrollLoop);
       // Ajuste pedido: de 42.8 a 48.15 (visual) 3 veces más rápido (fricción / 3.0)
       if (targetProg >= 50.22 && targetProg <= 55.57) {
         divisorT = divisorT / 3.0;
+      }
+      
+      // Ajuste pedido: de 48.10 al final (visual) un 100% más rápido (fricción / 2.0)
+      if (targetProg >= 55.52) {
+        divisorT = divisorT / 2.0;
       }
         
       let rawDelta = cappedDY / divisorT;
