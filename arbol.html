@@ -588,6 +588,7 @@
             const handleSubmit = () => {
                 if (status === 'casados') onComplete('f_casados');
                 else if (status === 'prometidos') onComplete('f_prometidos');
+                else if (status === 'vivimos_juntos') onComplete('f_vivimos_juntos');
                 else {
                     if (timeValue === 0) onComplete('f_semanas');
                     else if (timeValue <= 48) onComplete('f_meses');
@@ -617,6 +618,16 @@
                     {/* Status Toggles (Pill Sliders) */}
                     <div className="flex flex-col gap-4 mt-6">
                         <div className="flex flex-col gap-4 items-center w-full fade-in" style={{ animationDelay: '0.2s' }}>
+                            <button onClick={() => setStatus(status === 'vivimos_juntos' ? null : 'vivimos_juntos')}
+                                className={`relative w-40 h-12 rounded-full border-2 transition-all duration-300 overflow-hidden flex items-center focus:outline-none ${status === 'vivimos_juntos' ? 'bg-[#CCFF00] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-transparent border-gray-700 hover:border-gray-500'}`}
+                            >
+                                <div className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${status === 'vivimos_juntos' ? 'left-[calc(100%-40px)]' : 'left-1'}`}></div>
+                                <div className={`absolute inset-0 flex flex-col items-center justify-center text-[10px] font-bold uppercase tracking-wider leading-tight transition-colors duration-300 z-10 ${status === 'vivimos_juntos' ? 'text-black' : 'text-gray-300'}`}>
+                                    <span>Vivimos</span>
+                                    <span>Juntos</span>
+                                </div>
+                            </button>
+
                             <button onClick={() => setStatus(status === 'prometidos' ? null : 'prometidos')}
                                 className={`relative w-40 h-12 rounded-full border-2 transition-all duration-300 overflow-hidden flex items-center focus:outline-none ${status === 'prometidos' ? 'bg-[#CCFF00] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-transparent border-gray-700 hover:border-gray-500'}`}
                             >
