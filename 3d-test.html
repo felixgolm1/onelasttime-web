@@ -6484,6 +6484,8 @@ window.onerror = function(msg, url, line, col, err) {
          
          line.style.left = lineLeft + 'px';
          line.style.width = fullLineWidth + 'px';
+         line.style.top = (firstRect.bottom - menuRect.top + 4) + 'px';
+         line.style.bottom = 'auto';
          
          const cRect = currentLink.getBoundingClientRect();
          const nRect = nextLink.getBoundingClientRect();
@@ -6491,7 +6493,7 @@ window.onerror = function(msg, url, line, col, err) {
          const nextRight = nRect.right - menuRect.left;
          
          const targetRight = currentRight + (nextRight - currentRight) * fraction;
-         const currentWidth = targetRight - firstRect.left + 10;
+         const currentWidth = (targetRight + 6) - lineLeft;
          
          let percentRight = (currentWidth / fullLineWidth) * 100;
          percentRight = Math.max(0, Math.min(100, percentRight));
@@ -12113,6 +12115,8 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
+
 
 
 
