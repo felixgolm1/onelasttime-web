@@ -6472,13 +6472,14 @@ window.onerror = function(msg, url, line, col, err) {
          let visibleProg = currentProg >= 9.62 ? currentProg - 7.42 : currentProg;
          
          const points = [];
-         points.push({ p: 0, x: lineLeft });
-         for (let i = 1; i < navLinks.length; i++) {
+         for (let i = 0; i < navLinks.length; i++) {
             let rawScroll = parseFloat(navLinks[i].getAttribute('data-scroll'));
             let visScroll = rawScroll >= 9.62 ? rawScroll - 7.42 : rawScroll;
+            let rectRight = navLinks[i].getBoundingClientRect().right - menuRect.left + 2;
+            if (i === navLinks.length - 1) rectRight = lineRight; // Asegurar que el último toque el borde
             points.push({
                p: visScroll,
-               x: navLinks[i].getBoundingClientRect().left - menuRect.left - 2
+               x: rectRight
             });
          }
          points.push({ p: 49.58, x: lineRight });
@@ -12119,6 +12120,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
