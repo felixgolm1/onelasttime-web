@@ -6456,24 +6456,6 @@ window.onerror = function(msg, url, line, col, err) {
       const line = document.getElementById('nav-progress-line');
       const navMenu = document.getElementById('nav-menu');
       if (line && navMenu && navLinks.length > 0) {
-         let currentIndex = 0;
-         for (let i = 0; i < navLinks.length; i++) {
-           const lp = parseFloat(navLinks[i].getAttribute('data-scroll'));
-           if (currentProg >= lp) {
-             currentIndex = i;
-           }
-         }
-         
-         const currentLink = navLinks[currentIndex];
-         const nextLink = navLinks[Math.min(currentIndex + 1, navLinks.length - 1)];
-         const lpCurrent = parseFloat(currentLink.getAttribute('data-scroll'));
-         const lpNext = parseFloat(nextLink.getAttribute('data-scroll'));
-         
-         let fraction = 0;
-         if (lpNext > lpCurrent) {
-            fraction = Math.max(0, Math.min(1, (currentProg - lpCurrent) / (lpNext - lpCurrent)));
-         }
-         
          const menuRect = navMenu.getBoundingClientRect();
          const firstRect = navLinks[0].getBoundingClientRect();
          const lastRect = navLinks[navLinks.length - 1].getBoundingClientRect();
@@ -6487,14 +6469,32 @@ window.onerror = function(msg, url, line, col, err) {
          line.style.top = (firstRect.bottom - menuRect.top + 4) + 'px';
          line.style.bottom = 'auto';
          
-         const cRect = currentLink.getBoundingClientRect();
-         const nRect = nextLink.getBoundingClientRect();
-         const currentRight = cRect.right - menuRect.left;
-         const nextRight = nRect.right - menuRect.left;
+         const points = [];
+         points.push({ p: 0, x: lineLeft });
+         for (let i = 1; i < navLinks.length; i++) {
+            points.push({
+               p: parseFloat(navLinks[i].getAttribute('data-scroll')),
+               x: navLinks[i].getBoundingClientRect().left - menuRect.left - 2
+            });
+         }
+         points.push({ p: 49.58, x: lineRight });
          
-         const targetRight = currentRight + (nextRight - currentRight) * fraction;
-         const currentWidth = (targetRight + 6) - lineLeft;
+         let targetX = lineLeft;
+         if (currentProg >= points[points.length - 1].p) {
+             targetX = points[points.length - 1].x;
+         } else if (currentProg <= points[0].p) {
+             targetX = points[0].x;
+         } else {
+             for (let i = 0; i < points.length - 1; i++) {
+                if (currentProg >= points[i].p && currentProg < points[i + 1].p) {
+                   let fraction = (currentProg - points[i].p) / (points[i+1].p - points[i].p);
+                   targetX = points[i].x + fraction * (points[i+1].x - points[i].x);
+                   break;
+                }
+             }
+         }
          
+         const currentWidth = targetX - lineLeft;
          let percentRight = (currentWidth / fullLineWidth) * 100;
          percentRight = Math.max(0, Math.min(100, percentRight));
          
@@ -12115,6 +12115,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
