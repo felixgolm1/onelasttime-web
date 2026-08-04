@@ -411,7 +411,7 @@
             ) : null;
         };
 
-        const RangeSlider = ({ value, min, max, onChange, restrictedMin, isAdultTheme }) => {
+        const RangeSlider = ({ value, min, max, onChange, restrictedMin, isAdultTheme, activeColor = '#000000' }) => {
             const percentage = ((value - min) / (max - min)) * 100;
             let bgStyle = `linear-gradient(to right, #000000 ${percentage}%, #e5e7eb ${percentage}%)`;
 
@@ -560,66 +560,83 @@
         };
 
         const ParejaCustomUI = ({ onComplete }) => {
-            const [timeValue, setTimeValue] = useState(2);
+            const [timeValue, setTimeValue] = useState(48); // Default a 4 años
             const [status, setStatus] = useState(null);
 
-            const timeOptions = [
-                { id: 'f_semanas', label: 'Semanas' },
-                { id: 'f_meses', label: 'Meses' },
-                { id: 'f_anos', label: 'Años' }
-            ];
+            let timeDisplay = '';
+            let isYears = timeValue > 48;
+            if (timeValue === 0) {
+                timeDisplay = 'Semanas';
+            } else if (!isYears) {
+                timeDisplay = `${timeValue} ${timeValue === 1 ? 'mes' : 'meses'}`;
+            } else {
+                timeDisplay = `${timeValue - 48 + 4} años`;
+            }
 
             const handleSubmit = () => {
                 if (status === 'casados') onComplete('f_casados');
                 else if (status === 'prometidos') onComplete('f_prometidos');
-                else onComplete(timeOptions[timeValue].id);
+                else {
+                    if (timeValue === 0) onComplete('f_semanas');
+                    else if (timeValue <= 48) onComplete('f_meses');
+                    else onComplete('f_anos');
+                }
             };
 
             return (
-                <div className="w-full max-w-md mx-auto flex flex-col gap-10 mt-6 fade-in deal-n1" style={{ animationDelay: '0.1s' }}>
-                    <div className="flex flex-col gap-4">
-                        <div className="flex justify-between px-1 text-xs font-semibold text-gray-400 uppercase tracking-[0.2em]">
-                            {timeOptions.map((opt, i) => (
-                                <span key={i} className={`cursor-pointer transition-colors duration-300 px-2 py-1 ${timeValue === i ? 'text-white' : 'hover:text-gray-200'}`} onClick={() => setTimeValue(i)}>
-                                    {opt.label}
-                                </span>
-                            ))}
-                        </div>
-                        <div className="relative w-full h-2.5 bg-gray-800 rounded-full cursor-pointer overflow-hidden shadow-inner" onClick={(e) => {
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const pct = x / rect.width;
-                            if (pct < 0.33) setTimeValue(0);
-                            else if (pct < 0.66) setTimeValue(1);
-                            else setTimeValue(2);
-                        }}>
-                            <div className="absolute top-0 left-0 h-full bg-[#CCFF00] rounded-full transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1)" style={{ width: `${(timeValue / 2) * 100}%` }}></div>
-                        </div>
-                        <div className="relative w-full h-0 pointer-events-none">
-                             <div className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full shadow-[0_0_15px_rgba(204,255,0,0.4)] transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) flex items-center justify-center -mt-[5px]" style={{ left: `calc(${(timeValue / 2) * 100}% - 12px)` }}>
-                                <div className="w-2 h-2 rounded-full bg-black"></div>
-                            </div>
+                <div className="w-full max-w-md mx-auto flex flex-col gap-10 mt-2 fade-in deal-n1" style={{ animationDelay: '0.1s' }}>
+                    
+                    {/* Time Slider */}
+                    <div className="flex flex-col gap-2 mt-4">
+                        <span className="text-2xl md:text-3xl font-inter font-bold tracking-tight text-[#CCFF00] text-center mb-4 transition-all duration-200">
+                            {timeDisplay}
+                        </span>
+                        <div className="w-full px-2">
+                            <RangeSlider 
+                                value={timeValue} 
+                                min={0} 
+                                max={124} 
+                                activeColor="#CCFF00"
+                                onChange={e => setTimeValue(parseInt(e.target.value))} 
+                            />
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 mt-2">
-                        <div className="flex gap-4 justify-center">
-                            <button 
-                                onClick={() => setStatus(status === 'prometidos' ? null : 'prometidos')}
-                                className={`px-5 py-3 rounded-full text-[13px] font-bold uppercase tracking-wider transition-all duration-300 border flex items-center gap-2 ${status === 'prometidos' ? 'bg-[#CCFF00] text-black border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-transparent text-gray-400 border-gray-700 hover:border-gray-500 hover:text-white'}`}
+                    {/* Status Bubbles */}
+                    <div className="flex flex-col gap-4 mt-4">
+                        <div className="flex gap-6 justify-center w-full floating" style={{ animationDelay: '0.2s' }}>
+                            <button onClick={() => setStatus(status === 'prometidos' ? null : 'prometidos')}
+                                className="relative flex flex-col items-center justify-center rounded-full transition-all duration-400 cursor-pointer focus:outline-none"
+                                style={{
+                                    width: '110px', height: '110px',
+                                    border: status === 'prometidos' ? '1.5px solid #CCFF00' : '1.5px solid #e5e7eb',
+                                    background: status === 'prometidos' ? '#CCFF00' : '#ffffff',
+                                    boxShadow: status === 'prometidos' ? '0 12px 24px rgba(204,255,0,0.3), inset 0 0 0 2px rgba(255,255,255,0.8)' : '0 12px 24px rgba(0,0,0,0.08), inset 0 0 0 1.5px rgba(255,255,255,1)',
+                                    transform: status === 'prometidos' ? 'scale(1.05)' : 'scale(1)',
+                                    animation: 'bubbleFloat 6s ease-in-out infinite', animationDelay: '0s'
+                                }}
                             >
-                                💍 Prometidxs
+                                <span className={`text-2xl mb-1 ${status === 'prometidos' ? 'opacity-100' : 'opacity-80'}`}>💍</span>
+                                <span className={`text-[11px] font-bold uppercase tracking-wider ${status === 'prometidos' ? 'text-black' : 'text-gray-500'}`}>Prometidxs</span>
                             </button>
-                            <button 
-                                onClick={() => setStatus(status === 'casados' ? null : 'casados')}
-                                className={`px-5 py-3 rounded-full text-[13px] font-bold uppercase tracking-wider transition-all duration-300 border flex items-center gap-2 ${status === 'casados' ? 'bg-[#CCFF00] text-black border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-transparent text-gray-400 border-gray-700 hover:border-gray-500 hover:text-white'}`}
+                            <button onClick={() => setStatus(status === 'casados' ? null : 'casados')}
+                                className="relative flex flex-col items-center justify-center rounded-full transition-all duration-400 cursor-pointer focus:outline-none"
+                                style={{
+                                    width: '110px', height: '110px',
+                                    border: status === 'casados' ? '1.5px solid #CCFF00' : '1.5px solid #e5e7eb',
+                                    background: status === 'casados' ? '#CCFF00' : '#ffffff',
+                                    boxShadow: status === 'casados' ? '0 12px 24px rgba(204,255,0,0.3), inset 0 0 0 2px rgba(255,255,255,0.8)' : '0 12px 24px rgba(0,0,0,0.08), inset 0 0 0 1.5px rgba(255,255,255,1)',
+                                    transform: status === 'casados' ? 'scale(1.05)' : 'scale(1)',
+                                    animation: 'bubbleFloat 6s ease-in-out infinite', animationDelay: '0.8s'
+                                }}
                             >
-                                ⛪ Casadxs
+                                <span className={`text-2xl mb-1 ${status === 'casados' ? 'opacity-100' : 'opacity-80'}`}>⛪</span>
+                                <span className={`text-[11px] font-bold uppercase tracking-wider ${status === 'casados' ? 'text-black' : 'text-gray-500'}`}>Casadxs</span>
                             </button>
                         </div>
                     </div>
 
-                    <button onClick={handleSubmit} className="btn-black mt-2">Continuar</button>
+                    <button onClick={handleSubmit} className="btn-black mt-8 w-full md:w-auto">Continuar</button>
                 </div>
             );
         };
