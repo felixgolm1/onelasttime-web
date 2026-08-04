@@ -6895,7 +6895,7 @@ requestAnimationFrame(smoothScrollLoop);
       }
 
       // Ã¢â€€Ã¢â€€ Caso 3: Zona de gravedad (atracción suave hacia el centro) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-      const minD = 0.00875; // Paradas reducidas a la mitad
+      const minD = 0.0175; // Paradas aumentadas (original)
       for (let sp of snapPoints) {
         let dist = Math.abs(current - sp);
         if (dist < minD) {
