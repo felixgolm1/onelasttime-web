@@ -6471,39 +6471,27 @@ window.onerror = function(msg, url, line, col, err) {
          
          let visibleProg = currentProg >= 9.62 ? currentProg - 7.42 : currentProg;
          
-         const sections = [];
+         const points = [];
          for (let i = 0; i < navLinks.length; i++) {
             let rawScroll = parseFloat(navLinks[i].getAttribute('data-scroll'));
             let visScroll = rawScroll >= 9.62 ? rawScroll - 7.42 : rawScroll;
-            let rectLeft = navLinks[i].getBoundingClientRect().left - menuRect.left - 2;
-            let rectRight = navLinks[i].getBoundingClientRect().right - menuRect.left + 2;
-            if (i === 0) rectLeft = lineLeft;
-            if (i === navLinks.length - 1) rectRight = lineRight;
-            
-            let nextScroll = 49.58;
-            if (i < navLinks.length - 1) {
-                let nextRaw = parseFloat(navLinks[i+1].getAttribute('data-scroll'));
-                nextScroll = nextRaw >= 9.62 ? nextRaw - 7.42 : nextRaw;
-            }
-            
-            sections.push({
-               startP: visScroll,
-               endP: nextScroll,
-               startX: rectLeft,
-               endX: rectRight
+            points.push({
+               p: visScroll,
+               x: (i === 0) ? lineLeft : navLinks[i].getBoundingClientRect().left - menuRect.left - 2
             });
          }
+         points.push({ p: 49.58, x: lineRight });
          
          let targetX = lineLeft;
-         if (visibleProg >= sections[sections.length - 1].endP) {
-             targetX = sections[sections.length - 1].endX;
-         } else if (visibleProg <= sections[0].startP) {
-             targetX = sections[0].startX;
+         if (visibleProg >= points[points.length - 1].p) {
+             targetX = points[points.length - 1].x;
+         } else if (visibleProg <= points[0].p) {
+             targetX = points[0].x;
          } else {
-             for (let i = 0; i < sections.length; i++) {
-                if (visibleProg >= sections[i].startP && visibleProg <= sections[i].endP) {
-                   let fraction = (visibleProg - sections[i].startP) / (sections[i].endP - sections[i].startP);
-                   targetX = sections[i].startX + fraction * (sections[i].endX - sections[i].startX);
+             for (let i = 0; i < points.length - 1; i++) {
+                if (visibleProg >= points[i].p && visibleProg < points[i + 1].p) {
+                   let fraction = (visibleProg - points[i].p) / (points[i+1].p - points[i].p);
+                   targetX = points[i].x + fraction * (points[i+1].x - points[i].x);
                    break;
                 }
              }
@@ -12130,6 +12118,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
