@@ -6962,8 +6962,8 @@ requestAnimationFrame(smoothScrollLoop);
         divisor = divisor / 2.0;
       }
       
-      // Ajuste pedido: de 24.16 a 34.17 un 100% más rapido extra (fricción / 6)
-      if (targetProg >= 24.16 && targetProg <= 34.17) {
+      // Ajuste pedido: de 24.16 a 41.54 (para homogeneizar tramo visual hasta 34.12) (fricción / 6)
+      if (targetProg >= 24.16 && targetProg <= 41.54) {
         divisor = divisor / 6.0;
       }
       
@@ -7051,6 +7051,11 @@ requestAnimationFrame(smoothScrollLoop);
       const cappedDY = Math.sign(dy) * Math.min(Math.abs(dy), 30);
       let divisorT = 450;
         if (targetProg < 0.50) divisorT = 3000;
+        
+      // Ajuste pedido: de 24.16 a 41.54 (para homogeneizar tramo visual hasta 34.12) (fricción / 6)
+      if (targetProg >= 24.16 && targetProg <= 41.54) {
+        divisorT = divisorT / 6.0;
+      }
         
       // Ajuste pedido: de 3.00 a 7.10 (visual) un 50% más lento extra (fricción * 3.0)
       if (targetProg >= 10.42 && targetProg <= 14.52) {
