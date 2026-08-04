@@ -614,36 +614,25 @@
                         </div>
                     </div>
 
-                    {/* Status Bubbles */}
+                    {/* Status Toggles (Pill Sliders) */}
                     <div className="flex flex-col gap-4 mt-4">
-                        <div className="flex gap-6 justify-center w-full floating" style={{ animationDelay: '0.2s' }}>
+                        <div className="flex gap-4 justify-center w-full fade-in" style={{ animationDelay: '0.2s' }}>
                             <button onClick={() => setStatus(status === 'prometidos' ? null : 'prometidos')}
-                                className="relative flex flex-col items-center justify-center rounded-full transition-all duration-400 cursor-pointer focus:outline-none"
-                                style={{
-                                    width: '110px', height: '110px',
-                                    border: status === 'prometidos' ? '1.5px solid #CCFF00' : '1.5px solid #e5e7eb',
-                                    background: status === 'prometidos' ? '#CCFF00' : '#ffffff',
-                                    boxShadow: status === 'prometidos' ? '0 12px 24px rgba(204,255,0,0.3), inset 0 0 0 2px rgba(255,255,255,0.8)' : '0 12px 24px rgba(0,0,0,0.08), inset 0 0 0 1.5px rgba(255,255,255,1)',
-                                    transform: status === 'prometidos' ? 'scale(1.05)' : 'scale(1)',
-                                    animation: 'bubbleFloat 6s ease-in-out infinite', animationDelay: '0s'
-                                }}
+                                className={`relative w-40 h-12 rounded-full border-2 transition-all duration-300 overflow-hidden flex items-center focus:outline-none ${status === 'prometidos' ? 'bg-[#CCFF00] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-transparent border-gray-700 hover:border-gray-500'}`}
                             >
-                                <span className={`text-2xl mb-1 ${status === 'prometidos' ? 'opacity-100' : 'opacity-80'}`}>💍</span>
-                                <span className={`text-[11px] font-bold uppercase tracking-wider ${status === 'prometidos' ? 'text-black' : 'text-gray-500'}`}>Prometidxs</span>
+                                <div className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${status === 'prometidos' ? 'left-[calc(100%-40px)]' : 'left-1'}`}></div>
+                                <div className={`absolute inset-0 flex items-center justify-center text-[12px] font-bold uppercase tracking-wider transition-colors duration-300 z-10 ${status === 'prometidos' ? 'text-black' : 'text-gray-300'}`}>
+                                    <span className="mr-1.5 text-base">💍</span> Prometidxs
+                                </div>
                             </button>
+                            
                             <button onClick={() => setStatus(status === 'casados' ? null : 'casados')}
-                                className="relative flex flex-col items-center justify-center rounded-full transition-all duration-400 cursor-pointer focus:outline-none"
-                                style={{
-                                    width: '110px', height: '110px',
-                                    border: status === 'casados' ? '1.5px solid #CCFF00' : '1.5px solid #e5e7eb',
-                                    background: status === 'casados' ? '#CCFF00' : '#ffffff',
-                                    boxShadow: status === 'casados' ? '0 12px 24px rgba(204,255,0,0.3), inset 0 0 0 2px rgba(255,255,255,0.8)' : '0 12px 24px rgba(0,0,0,0.08), inset 0 0 0 1.5px rgba(255,255,255,1)',
-                                    transform: status === 'casados' ? 'scale(1.05)' : 'scale(1)',
-                                    animation: 'bubbleFloat 6s ease-in-out infinite', animationDelay: '0.8s'
-                                }}
+                                className={`relative w-40 h-12 rounded-full border-2 transition-all duration-300 overflow-hidden flex items-center focus:outline-none ${status === 'casados' ? 'bg-[#CCFF00] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-transparent border-gray-700 hover:border-gray-500'}`}
                             >
-                                <span className={`text-2xl mb-1 ${status === 'casados' ? 'opacity-100' : 'opacity-80'}`}>⛪</span>
-                                <span className={`text-[11px] font-bold uppercase tracking-wider ${status === 'casados' ? 'text-black' : 'text-gray-500'}`}>Casadxs</span>
+                                <div className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${status === 'casados' ? 'left-[calc(100%-40px)]' : 'left-1'}`}></div>
+                                <div className={`absolute inset-0 flex items-center justify-center text-[12px] font-bold uppercase tracking-wider transition-colors duration-300 z-10 ${status === 'casados' ? 'text-black' : 'text-gray-300'}`}>
+                                    <span className="mr-1.5 text-base">⛪</span> Casadxs
+                                </div>
                             </button>
                         </div>
                     </div>
