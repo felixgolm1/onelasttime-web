@@ -2178,7 +2178,7 @@ window.onerror = function(msg, url, line, col, err) {
     <a href="#" data-text="COMO FUNCIONA" data-scroll="0.91">COMO FUNCIONA</a>
     <a href="#" data-text="LA EXPERIENCIA" data-scroll="2.18">LA EXPERIENCIA</a>
     <a href="#" data-text="ONE LAST TIME" data-scroll="41.87">ONE LAST TIME</a>
-    <div id="nav-progress-line" style="position: absolute; bottom: -10px; height: 14px; background: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 20\' preserveAspectRatio=\'none\'%3E%3Cfilter id=\'ink\' x=\'-10%25\' y=\'-50%25\' width=\'120%25\' height=\'200%25\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.5\' numOctaves=\'3\' result=\'n\'/%3E%3CfeDisplacementMap in=\'SourceGraphic\' in2=\'n\' scale=\'2.5\' xChannelSelector=\'R\' yChannelSelector=\'G\'/%3E%3C/filter%3E%3Cpath filter=\'url(%23ink)\' d=\'M 1,8 Q 30,9 60,11 T 98,13 C 100,13 100,17 98,17 Q 60,14 30,14 T 1,13 C -1,13 -1,8 1,8 Z\' fill=\'rgba(255,255,255,0.95)\'/%3E%3C/svg%3E') no-repeat left center; background-size: 100% 100%; pointer-events: none; clip-path: inset(0 100% 0 0); will-change: clip-path; transition: clip-path 0.2s cubic-bezier(0.25, 1, 0.5, 1);"></div>
+    <div id="nav-progress-line" style="position: absolute; bottom: -10px; height: 14px; background: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 20\' preserveAspectRatio=\'none\'%3E%3Cfilter id=\'ink\' x=\'-10%25\' y=\'-50%25\' width=\'120%25\' height=\'200%25\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.5\' numOctaves=\'3\' result=\'n\'/%3E%3CfeDisplacementMap in=\'SourceGraphic\' in2=\'n\' scale=\'2.5\' xChannelSelector=\'R\' yChannelSelector=\'G\'/%3E%3C/filter%3E%3Cpath filter=\'url(%23ink)\' d=\'M 1,8 Q 30,9 60,11 T 98,13 C 100,13 100,17 98,17 Q 60,14 30,14 T 1,13 C -1,13 -1,8 1,8 Z\' fill=\'rgba(255,255,255,0.95)\'/%3E%3C/svg%3E') no-repeat left center; background-size: 100% 100%; pointer-events: none; clip-path: inset(0 100% 0 0); will-change: clip-path;"></div>
     
     <!-- CTA superior derecha -->
     <div id="cta-top-container">
@@ -6905,6 +6905,16 @@ window.onerror = function(msg, url, line, col, err) {
       }   // Ã¢â€€Ã¢â€€ fin if (globalGlbCard) Ã¢â€€Ã¢â€€
 
       updateNavState(prog);
+      const line = document.getElementById('nav-progress-line');
+      if (line && window.targetNavWidth !== undefined && window.fullNavLineWidth) {
+          if (typeof window.lerpedNavWidth === 'undefined') {
+              window.lerpedNavWidth = window.targetNavWidth;
+          }
+          window.lerpedNavWidth += (window.targetNavWidth - window.lerpedNavWidth) * 0.05;
+          let percentRight = (window.lerpedNavWidth / window.fullNavLineWidth) * 100;
+          percentRight = Math.max(0, Math.min(100, percentRight));
+          line.style.clipPath = `inset(0 ${100 - percentRight}% 0 0)`;
+      }
       } catch(err) { 
             if(!window.didAlertErr) { 
                 var eD = document.createElement('div'); 
@@ -12131,6 +12141,8 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
+
 
 
 
