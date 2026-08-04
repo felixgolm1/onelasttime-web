@@ -508,7 +508,7 @@
                         if (textareaRef.current) textareaRef.current.focus();
                     }}
                 >
-                    <div className="flex flex-col items-center justify-center w-full relative z-50 whitespace-nowrap gap-1">
+                    <div className="flex flex-col items-center justify-center w-full relative z-50 text-center px-4 gap-1">
                         <span className="text-xl md:text-2xl font-inter font-bold tracking-tight text-gray-900 leading-[1.35]">
                             En otro lugar
                         </span>
@@ -516,10 +516,10 @@
                         <div className="relative w-full flex justify-center">
                             {!showInput && (
                                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <span className="text-xl md:text-2xl font-inter font-bold tracking-tight text-gray-400 flex items-center leading-[1.35]">
-                                        escríbelo
+                                    <span className="text-xl md:text-2xl font-inter font-bold tracking-tight text-gray-400 inline-block leading-[1.35] text-center">
+                                        En un yate, en el avión, en la luna... escríbelo
                                         <span className="inline-block w-[2px] h-[19px] bg-gray-500 mx-[3px] align-text-bottom" style={{ animation: 'cursorBlink 1s step-end infinite' }}></span>
-                                        aquí...
+                                        aquí
                                     </span>
                                 </div>
                             )}
