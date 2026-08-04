@@ -1212,16 +1212,7 @@ window.onerror = function(msg, url, line, col, err) {
     #nav-menu > a.nav-link-active {
       color: #ccff00 !important;
     }
-    #nav-menu > a.active::after {
-      content: '';
-      position: absolute;
-      left: -4px;
-      right: -6px;
-      bottom: -10px;
-      height: 14px;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cfilter id='ink' x='-10%25' y='-50%25' width='120%25' height='200%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='2.5' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Cpath filter='url(%23ink)' d='M 1,8 Q 30,9 60,11 T 98,13 C 100,13 100,17 98,17 Q 60,14 30,14 T 1,13 C -1,13 -1,8 1,8 Z' fill='rgba(255,255,255,0.95)'/%3E%3C/svg%3E") no-repeat center;
-      background-size: 100% 100%;
-    }
+    
     
     /* CTA BUTTON (Ported from index.html hero) */
     #cta-bottom-container {
@@ -2187,6 +2178,7 @@ window.onerror = function(msg, url, line, col, err) {
     <a href="#" data-text="COMO FUNCIONA" data-scroll="0.91">COMO FUNCIONA</a>
     <a href="#" data-text="LA EXPERIENCIA" data-scroll="2.18">LA EXPERIENCIA</a>
     <a href="#" data-text="ONE LAST TIME" data-scroll="41.87">ONE LAST TIME</a>
+    <div id="nav-progress-line" style="position: absolute; bottom: -10px; height: 14px; background: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 20\' preserveAspectRatio=\'none\'%3E%3Cfilter id=\'ink\' x=\'-10%25\' y=\'-50%25\' width=\'120%25\' height=\'200%25\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.5\' numOctaves=\'3\' result=\'n\'/%3E%3CfeDisplacementMap in=\'SourceGraphic\' in2=\'n\' scale=\'2.5\' xChannelSelector=\'R\' yChannelSelector=\'G\'/%3E%3C/filter%3E%3Cpath filter=\'url(%23ink)\' d=\'M 1,8 Q 30,9 60,11 T 98,13 C 100,13 100,17 98,17 Q 60,14 30,14 T 1,13 C -1,13 -1,8 1,8 Z\' fill=\'rgba(255,255,255,0.95)\'/%3E%3C/svg%3E') no-repeat left center; background-size: 100% 100%; pointer-events: none; clip-path: inset(0 100% 0 0); will-change: clip-path;"></div>
     
     <!-- CTA superior derecha -->
     <div id="cta-top-container">
@@ -6459,6 +6451,52 @@ window.onerror = function(msg, url, line, col, err) {
       });
       if (!activeLink.classList.contains('active')) {
           activeLink.classList.add('active');
+      }
+      // PROGRESS LINE LOGIC
+      const line = document.getElementById('nav-progress-line');
+      const navMenu = document.getElementById('nav-menu');
+      if (line && navMenu && navLinks.length > 0) {
+         let currentIndex = 0;
+         for (let i = 0; i < navLinks.length; i++) {
+           const lp = parseFloat(navLinks[i].getAttribute('data-scroll'));
+           if (currentProg >= lp) {
+             currentIndex = i;
+           }
+         }
+         
+         const currentLink = navLinks[currentIndex];
+         const nextLink = navLinks[Math.min(currentIndex + 1, navLinks.length - 1)];
+         const lpCurrent = parseFloat(currentLink.getAttribute('data-scroll'));
+         const lpNext = parseFloat(nextLink.getAttribute('data-scroll'));
+         
+         let fraction = 0;
+         if (lpNext > lpCurrent) {
+            fraction = Math.max(0, Math.min(1, (currentProg - lpCurrent) / (lpNext - lpCurrent)));
+         }
+         
+         const menuRect = navMenu.getBoundingClientRect();
+         const firstRect = navLinks[0].getBoundingClientRect();
+         const lastRect = navLinks[navLinks.length - 1].getBoundingClientRect();
+         
+         const lineLeft = firstRect.left - menuRect.left - 4;
+         const lineRight = lastRect.right - menuRect.left + 6;
+         const fullLineWidth = lineRight - lineLeft;
+         
+         line.style.left = lineLeft + 'px';
+         line.style.width = fullLineWidth + 'px';
+         
+         const cRect = currentLink.getBoundingClientRect();
+         const nRect = nextLink.getBoundingClientRect();
+         const currentRight = cRect.right - menuRect.left;
+         const nextRight = nRect.right - menuRect.left;
+         
+         const targetRight = currentRight + (nextRight - currentRight) * fraction;
+         const currentWidth = targetRight - firstRect.left + 10;
+         
+         let percentRight = (currentWidth / fullLineWidth) * 100;
+         percentRight = Math.max(0, Math.min(100, percentRight));
+         
+         line.style.clipPath = `inset(0 ${100 - percentRight}% 0 0)`;
       }
     }
 
@@ -12075,6 +12113,10 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
+
+
+
 
 
 
