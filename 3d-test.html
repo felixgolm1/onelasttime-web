@@ -6497,11 +6497,9 @@ window.onerror = function(msg, url, line, col, err) {
              }
          }
          
-         const currentWidth = targetX - lineLeft;
-         let percentRight = (currentWidth / fullLineWidth) * 100;
-         percentRight = Math.max(0, Math.min(100, percentRight));
-         
-         line.style.clipPath = `inset(0 ${100 - percentRight}% 0 0)`;
+         const targetWidth = targetX - lineLeft;
+         window.targetNavWidth = targetWidth;
+         window.fullNavLineWidth = fullLineWidth;
       }
     }
 
@@ -12118,6 +12116,8 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
+
 
 
 
