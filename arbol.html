@@ -566,11 +566,23 @@
             let timeDisplay = '';
             let isYears = timeValue > 48;
             if (timeValue === 0) {
-                timeDisplay = 'Semanas';
+                timeDisplay = 'Desde hace semanas';
             } else if (!isYears) {
-                timeDisplay = `${timeValue} ${timeValue === 1 ? 'mes' : 'meses'}`;
+                if (timeValue < 12) {
+                    timeDisplay = `Desde hace ${timeValue} ${timeValue === 1 ? 'mes' : 'meses'}`;
+                } else {
+                    const years = Math.floor(timeValue / 12);
+                    const months = timeValue % 12;
+                    let yearStr = `${years} ${years === 1 ? 'año' : 'años'}`;
+                    if (months === 0) {
+                        timeDisplay = `Desde hace ${yearStr}`;
+                    } else {
+                        let monthStr = `${months} ${months === 1 ? 'mes' : 'meses'}`;
+                        timeDisplay = `Desde hace ${yearStr} y ${monthStr}`;
+                    }
+                }
             } else {
-                timeDisplay = `${timeValue - 48 + 4} años`;
+                timeDisplay = `Desde hace ${timeValue - 48 + 4} años`;
             }
 
             const handleSubmit = () => {
