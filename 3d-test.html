@@ -6469,25 +6469,29 @@ window.onerror = function(msg, url, line, col, err) {
          line.style.top = (firstRect.bottom - menuRect.top + 4) + 'px';
          line.style.bottom = 'auto';
          
+         let visibleProg = currentProg >= 9.62 ? currentProg - 7.42 : currentProg;
+         
          const points = [];
          points.push({ p: 0, x: lineLeft });
          for (let i = 1; i < navLinks.length; i++) {
+            let rawScroll = parseFloat(navLinks[i].getAttribute('data-scroll'));
+            let visScroll = rawScroll >= 9.62 ? rawScroll - 7.42 : rawScroll;
             points.push({
-               p: parseFloat(navLinks[i].getAttribute('data-scroll')),
+               p: visScroll,
                x: navLinks[i].getBoundingClientRect().left - menuRect.left - 2
             });
          }
          points.push({ p: 49.58, x: lineRight });
          
          let targetX = lineLeft;
-         if (currentProg >= points[points.length - 1].p) {
+         if (visibleProg >= points[points.length - 1].p) {
              targetX = points[points.length - 1].x;
-         } else if (currentProg <= points[0].p) {
+         } else if (visibleProg <= points[0].p) {
              targetX = points[0].x;
          } else {
              for (let i = 0; i < points.length - 1; i++) {
-                if (currentProg >= points[i].p && currentProg < points[i + 1].p) {
-                   let fraction = (currentProg - points[i].p) / (points[i+1].p - points[i].p);
+                if (visibleProg >= points[i].p && visibleProg < points[i + 1].p) {
+                   let fraction = (visibleProg - points[i].p) / (points[i+1].p - points[i].p);
                    targetX = points[i].x + fraction * (points[i+1].x - points[i].x);
                    break;
                 }
@@ -12115,6 +12119,7 @@ document.addEventListener('mouseover', e => {
 })();
 </script>
 \n</html>
+
 
 
 
