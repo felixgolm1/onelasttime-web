@@ -12056,13 +12056,13 @@ document.addEventListener('mouseover', e => {
             window._ctaHoverOpacity += (targetCtaOpacity - window._ctaHoverOpacity) * 0.1;
             
             let finalOpacity = Math.max(scrollOpacity, window._ctaHoverOpacity);
-            
             if (window._forceEmbersFadeOut) {
-                finalOpacity = 0;
-                embersCanvas.style.transition = 'opacity 1s ease-out';
-            } else {
-                embersCanvas.style.transition = 'none';
+                window._embersFadeOutMult = (window._embersFadeOutMult === undefined) ? 1.0 : window._embersFadeOutMult;
+                window._embersFadeOutMult += (0.0 - window._embersFadeOutMult) * 0.05;
+                finalOpacity *= window._embersFadeOutMult;
             }
+            
+            embersCanvas.style.transition = 'none';
             embersCanvas.style.setProperty('opacity', finalOpacity, 'important');
             // ALWAYS update particles so they are distributed naturally even when invisible
             embersCtx.clearRect(0, 0, width, height);
