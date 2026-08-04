@@ -6471,16 +6471,49 @@ window.onerror = function(msg, url, line, col, err) {
          
          let visibleProg = currentProg >= 9.62 ? currentProg - 7.42 : currentProg;
          
-         // Mapeo lineal puro basado EXCLUSIVAMENTE en el visibleProg ("el numerito")
-         let fraction = visibleProg / 49.58;
-         fraction = Math.max(0, Math.min(1, fraction));
-         let targetX = lineLeft + fraction * (lineRight - lineLeft);
+         const sections = [];
+         for (let i = 0; i < navLinks.length; i++) {
+            let rawScroll = parseFloat(navLinks[i].getAttribute('data-scroll'));
+            let visScroll = rawScroll >= 9.62 ? rawScroll - 7.42 : rawScroll;
+            let rectLeft = navLinks[i].getBoundingClientRect().left - menuRect.left - 2;
+            let rectRight = navLinks[i].getBoundingClientRect().right - menuRect.left + 2;
+            if (i === 0) rectLeft = lineLeft;
+            if (i === navLinks.length - 1) rectRight = lineRight;
+            
+            let nextScroll = 49.58;
+            if (i < navLinks.length - 1) {
+                let nextRaw = parseFloat(navLinks[i+1].getAttribute('data-scroll'));
+                nextScroll = nextRaw >= 9.62 ? nextRaw - 7.42 : nextRaw;
+            }
+            
+            sections.push({
+               startP: visScroll,
+               endP: nextScroll,
+               startX: rectLeft,
+               endX: rectRight
+            });
+         }
          
-         const currentWidth = targetX - lineLeft;
-         let percentRight = (currentWidth / fullLineWidth) * 100;
-         percentRight = Math.max(0, Math.min(100, percentRight));
+         let targetX = lineLeft;
+         if (visibleProg >= sections[sections.length - 1].endP) {
+             targetX = sections[sections.length - 1].endX;
+         } else if (visibleProg <= sections[0].startP) {
+             targetX = sections[0].startX;
+         } else {
+             for (let i = 0; i < sections.length; i++) {
+                if (visibleProg >= sections[i].startP && visibleProg <= sections[i].endP) {
+                   let fraction = (visibleProg - sections[i].startP) / (sections[i].endP - sections[i].startP);
+                   // Animación creativa: la barra crece proporcionalmente al ancho exacto de la palabra activa.
+                   targetX = sections[i].startX + fraction * (sections[i].endX - sections[i].startX);
+                   break;
+                }
+             }
+         }
          
-         line.style.clipPath = `inset(0 ${100 - percentRight}% 0 0)`;
+         // Inyectamos el valor objetivo al scope global para que el lerp en smoothScrollLoop lo suavice
+         const targetWidth = targetX - lineLeft;
+         window.targetNavWidth = targetWidth;
+         window.fullNavLineWidth = fullLineWidth;
       }
     }
 
@@ -6871,6 +6904,16 @@ window.onerror = function(msg, url, line, col, err) {
       }   // Ã¢â€€Ã¢â€€ fin if (globalGlbCard) Ã¢â€€Ã¢â€€
 
       updateNavState(prog);
+      const line = document.getElementById('nav-progress-line');
+      if (line && window.targetNavWidth !== undefined && window.fullNavLineWidth) {
+          if (typeof window.lerpedNavWidth === 'undefined') {
+              window.lerpedNavWidth = window.targetNavWidth;
+          }
+          window.lerpedNavWidth += (window.targetNavWidth - window.lerpedNavWidth) * 0.05;
+          let percentRight = (window.lerpedNavWidth / window.fullNavLineWidth) * 100;
+          percentRight = Math.max(0, Math.min(100, percentRight));
+          line.style.clipPath = `inset(0 ${100 - percentRight}% 0 0)`;
+      }
       } catch(err) { 
             if(!window.didAlertErr) { 
                 var eD = document.createElement('div'); 
