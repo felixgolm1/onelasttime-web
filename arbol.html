@@ -1200,10 +1200,12 @@
                 }
             };
 
-            const isPrimeraCita = globalData?.audienceId === 'pareja';
-            const placeholderText = isPrimeraCita 
-                ? "Ej: Romper el hielo, ver si hay química real, descubrir cosas en común, o simplemente pasar un rato sin presión..."
-                : "Ej: Celebrar nuestro aniversario, reírnos hasta llorar, intentar reconectar, mejorar nuestra comunicación, o simplemente salir de la rutina...";
+            let placeholderText = "Ej: Celebrar nuestro aniversario, conocernos aun más, intentar reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
+            if (globalData?.audienceId === 'pareja') {
+                placeholderText = "Ej: Romper el hielo, conseguir una segunda cita, descubrir si encajamos para algo más, hacerla una cita divertida...";
+            } else if (globalData?.audienceId === 'amistad') {
+                placeholderText = "Ej: Conocernos aun más, intentar reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
+            }
 
             return (
                 <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
