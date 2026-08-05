@@ -566,9 +566,11 @@
 
             let timeDisplay = '';
             let isYears = timeValue > 48;
+            let currentYears = 0;
             if (timeValue === 0) {
                 timeDisplay = 'Desde hace semanas';
             } else if (!isYears) {
+                currentYears = Math.floor(timeValue / 12);
                 if (timeValue < 12) {
                     timeDisplay = `Desde hace ${timeValue} ${timeValue === 1 ? 'mes' : 'meses'}`;
                 } else {
@@ -583,7 +585,23 @@
                     }
                 }
             } else {
-                timeDisplay = `Desde hace ${timeValue - 48 + 4} años`;
+                currentYears = timeValue - 48 + 4;
+                timeDisplay = `Desde hace ${currentYears} años`;
+            }
+
+            let reactionText = "";
+            if (currentYears < 5) {
+                reactionText = "Y lo que os queda aún :)";
+            } else if (currentYears >= 5 && currentYears <= 9) {
+                reactionText = "Esto promete, ¡seguid así! :)";
+            } else if (currentYears >= 10 && currentYears <= 14) {
+                reactionText = "Una década ya... el tiempo vuela";
+            } else if (currentYears >= 15 && currentYears <= 29) {
+                reactionText = "Wow :)";
+            } else if (currentYears >= 30 && currentYears <= 49) {
+                reactionText = "Palabras mayores. ¡Nos quitamos el sombrero!";
+            } else {
+                reactionText = "¿¡No te creo!? Sois leyenda ❤️";
             }
 
             const handleSubmit = () => {
@@ -612,8 +630,11 @@
                     
                     {/* Time Slider */}
                     <div className="flex flex-col gap-2 mt-4">
-                        <span className="text-2xl md:text-3xl font-inter font-bold tracking-tight text-[#CCFF00] text-center mb-4 transition-all duration-200">
+                        <span className="text-2xl md:text-3xl font-inter font-bold tracking-tight text-[#CCFF00] text-center mb-1 transition-all duration-200">
                             {timeDisplay}
+                        </span>
+                        <span className="text-[13px] md:text-sm font-poppins font-medium tracking-wide text-gray-400 text-center transition-all duration-300 mb-4 h-5">
+                            {reactionText}
                         </span>
                         <div className="w-full px-2">
                             <RangeSlider 
