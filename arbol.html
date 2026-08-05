@@ -1189,6 +1189,17 @@
 
         const ObjectiveScreen = ({ onComplete, progress, onBack }) => {
             const [text, setText] = useState('');
+            const [showError, setShowError] = useState(false);
+
+            const handleContinue = () => {
+                if (!text.trim()) {
+                    setShowError(true);
+                    setTimeout(() => setShowError(false), 800);
+                } else {
+                    onComplete(text);
+                }
+            };
+
             return (
                 <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
                     <GlobalHeader progress={progress} onBack={onBack} />
@@ -1196,24 +1207,29 @@
                         <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-4">
                             ¿Cuál es el objetivo de la cena?
                         </h2>
-                        <p className="text-sm font-medium text-gray-500 mb-12 leading-relaxed">
-                            Conocernos más, planear algo, conseguir una siguiente cita, celebrar algún hito, terminar en la cama, mejorar algún aspecto de la relación, simplemente reír... que tu imaginación sea el límite
+                        <p className="text-sm font-medium text-[#CCFF00] mb-12 leading-relaxed">
+                            Expláyate todo lo que necesites, esta es la parte más importante para diseñar tu experiencia.
                         </p>
                         
-                        <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-12 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
+                        <div className={`w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-8 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)] ${showError ? 'shake' : ''}`}>
                             <textarea
                                 rows={6}
                                 className="w-full bg-transparent resize-none outline-none text-xl md:text-2xl font-inter font-bold tracking-tight leading-[1.35] text-center text-black placeholder:text-gray-400 relative z-10"
-                                placeholder="Descríbelo con tus palabras"
+                                placeholder="Ej: Celebrar nuestro aniversario, reírnos hasta llorar, intentar reconectar, o simplemente salir de la rutina..."
                                 value={text}
                                 onChange={e => setText(e.target.value)}
                             />
                         </div>
 
+                        <div className="h-6 mb-2">
+                            <p className={`text-red-500 text-xs font-semibold transition-opacity duration-300 ${showError ? 'opacity-100' : 'opacity-0'}`}>
+                                Porfa, cuéntanos un poquito más arriba 👆
+                            </p>
+                        </div>
+
                         <button 
-                            onClick={() => onComplete(text)}
-                            disabled={!text.trim()}
-                            className={`px-10 py-4 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 shadow-xl flex items-center justify-center gap-2 mx-auto ${text.trim() ? 'bg-black text-white hover:bg-gray-800 hover:-translate-y-0.5' : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'}`}
+                            onClick={handleContinue}
+                            className="bg-black text-white px-10 py-4 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 shadow-xl flex items-center justify-center gap-2 mx-auto hover:bg-gray-800 hover:-translate-y-0.5"
                         >
                             Continuar
                         </button>
