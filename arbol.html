@@ -1194,17 +1194,17 @@
             const handleContinue = () => {
                 if (!text.trim()) {
                     setShowError(true);
-                    setTimeout(() => setShowError(false), 800);
+                    setTimeout(() => setShowError(false), 1600);
                 } else {
                     onComplete(text);
                 }
             };
 
-            let placeholderText = "Ej: Celebrar nuestro aniversario, conocernos aun más, intentar reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
+            let placeholderTextFinal = "Ej: Celebrar nuestro aniversario, conocernos aun más, intentar reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
             if (globalData?.audienceId === 'pareja') {
-                placeholderText = "Ej: Romper el hielo, conseguir una segunda cita, descubrir si encajamos para algo más, hacerla una cita divertida...";
+                placeholderTextFinal = "Ej: Romper el hielo, conseguir una segunda cita, descubrir si encajamos para algo más, hacerla una cita divertida...";
             } else if (globalData?.audienceId === 'amistad') {
-                placeholderText = "Ej: Conocernos aun más, intentar reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
+                placeholderTextFinal = "Ej: Conocernos aun más, intentar reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
             }
 
             return (
@@ -1222,7 +1222,7 @@
                             <textarea
                                 rows={6}
                                 className="w-full bg-transparent resize-none outline-none text-xl md:text-2xl font-inter font-bold tracking-tight leading-[1.35] text-center text-black placeholder:text-gray-400 relative z-10"
-                                placeholder={placeholderText}
+                                placeholder={placeholderTextFinal}
                                 value={text}
                                 onChange={e => setText(e.target.value)}
                             />
@@ -1230,7 +1230,7 @@
 
                         <div className="h-6 mb-2">
                             <p className={`text-red-500 text-xs font-semibold transition-opacity duration-300 ${showError ? 'opacity-100' : 'opacity-0'}`}>
-                                Porfa, cuéntanos un poquito más arriba 👆
+                                Danos algo de contexto :')
                             </p>
                         </div>
 
