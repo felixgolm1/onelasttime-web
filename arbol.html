@@ -1187,7 +1187,7 @@
             );
         };
 
-        const ObjectiveScreen = ({ onComplete, progress, onBack }) => {
+        const ObjectiveScreen = ({ onComplete, progress, onBack, globalData }) => {
             const [text, setText] = useState('');
             const [showError, setShowError] = useState(false);
 
@@ -1199,6 +1199,11 @@
                     onComplete(text);
                 }
             };
+
+            const isPrimeraCita = globalData?.audienceId === 'pareja';
+            const placeholderText = isPrimeraCita 
+                ? "Ej: Romper el hielo, ver si hay química real, descubrir cosas en común, o simplemente pasar un rato sin presión..."
+                : "Ej: Celebrar nuestro aniversario, reírnos hasta llorar, intentar reconectar, mejorar nuestra comunicación, o simplemente salir de la rutina...";
 
             return (
                 <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
@@ -1215,7 +1220,7 @@
                             <textarea
                                 rows={6}
                                 className="w-full bg-transparent resize-none outline-none text-xl md:text-2xl font-inter font-bold tracking-tight leading-[1.35] text-center text-black placeholder:text-gray-400 relative z-10"
-                                placeholder="Ej: Celebrar nuestro aniversario, reírnos hasta llorar, intentar reconectar, mejorar nuestra comunicación, o simplemente salir de la rutina..."
+                                placeholder={placeholderText}
                                 value={text}
                                 onChange={e => setText(e.target.value)}
                             />
@@ -1993,7 +1998,7 @@
                         onBack={goBackPhase} 
                     />}
                     
-                    {phase === 'objective' && <ObjectiveScreen progress={getProgress()} onComplete={txt => advanceTo('secret2', {objective: txt})} onBack={goBackPhase} />}
+                    {phase === 'objective' && <ObjectiveScreen progress={getProgress()} globalData={globalData} onComplete={txt => advanceTo('secret2', {objective: txt})} onBack={goBackPhase} />}
 
                     {phase === 'secret2' && <SecretReward secretIndex={1} progress={getProgress()} onComplete={() => advanceTo('tones')} onBack={goBackPhase} />}
                     
