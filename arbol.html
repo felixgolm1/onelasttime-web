@@ -1190,7 +1190,6 @@
         const ObjectiveScreen = ({ onComplete, progress, onBack, globalData }) => {
             const [text, setText] = useState('');
             const [showWarning, setShowWarning] = useState(false);
-            const [isShaking, setIsShaking] = useState(false);
 
             const handleTextChange = (e) => {
                 const val = e.target.value;
@@ -1206,8 +1205,6 @@
                         onComplete(text);
                     } else {
                         setShowWarning(true);
-                        setIsShaking(true);
-                        setTimeout(() => setIsShaking(false), 800);
                     }
                 } else {
                     onComplete(text);
@@ -1232,7 +1229,7 @@
                             Esta es la parte más importante. Como más contexto<br />nos des, más personalizada la experiencia
                         </p>
                         
-                        <div className={`w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-8 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)] ${isShaking ? 'shake' : ''}`}>
+                        <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-8 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
                             <textarea
                                 rows={6}
                                 className="w-full bg-transparent resize-none outline-none text-xl md:text-2xl font-inter font-bold tracking-tight leading-[1.35] text-center text-black placeholder:text-gray-400 relative z-10"
