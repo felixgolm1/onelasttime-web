@@ -279,22 +279,17 @@
             { id: 'cartas_digitales_en_mi_casa_o_en_la_de_alguien', parent: 'cartas_digitales', label: 'En mi casa o en la suya', final: true },
             { id: 'cartas_digitales_otro', parent: 'cartas_digitales', type: 'input', placeholder: 'En otro lugar...', final: true },
             
-            { id: 'cartas_fisicas_en_un_restaurante', parent: 'cartas_fisicas', label: 'En un restaurante', nextTitle: 'Tu escoges...', final: false },
+            { id: 'cartas_fisicas_en_un_restaurante', parent: 'cartas_fisicas', label: 'En un restaurante', final: true },
             { id: 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien', parent: 'cartas_fisicas', label: 'En mi casa o en la suya', final: true },
-            { id: 'cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha', parent: 'cartas_fisicas_en_un_restaurante', label: 'Ya tengo una reserva hecha', final: true },
-            { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', parent: 'cartas_fisicas_en_un_restaurante', label: 'Aun no he reservado', nextTitle: 'Tu escoges...', final: false },
-            { id: 'cartas_fisicas_otro', parent: 'cartas_fisicas', type: 'input', placeholder: 'En otro lugar...', final: true },
-            { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_tengo_claro_el_restaurante_donde_quiero_reservar', parent: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', label: 'Tengo claro el restaurante', final: true },
-            { id: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_recomendadme_vuestras_3_lugares_favoritos', parent: 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado', label: 'Recomendadme 3 lugares favoritos', final: true }
+            { id: 'cartas_fisicas_otro', parent: 'cartas_fisicas', type: 'input', placeholder: 'En otro lugar...', final: true }
         ];
 
         const dbLogistics = [
             { id: 'ciudad', label: 'Ciudad o código postal', type: 'text', req: true, conditions: ['cartas_fisicas'] },
             { id: 'fecha', label: 'Día y hora de la comida', type: 'datetime-local', req: true, conditions: ['siempre'] },
-            { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha', 'cartas_fisicas_en_un_restaurante_aun_no_he_reservado_tengo_claro_el_restaurante_donde_quiero_reservar'] },
-            { id: 'reserva', label: 'A nombre de quién está', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante_ya_tengo_una_reserva_hecha'] },
-            { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] },
-            { id: 'comida', label: 'Marca las opciones de comida que quieres tener', subtitle: 'no selecciones ninguna si estas abiertx a todas', type: 'multi_pills', req: false, options: ['Carne','Pescado','Marisco','Veganx','Vegetarianx','Celíacx','Sin lactosa','Sin frutos secos','Sin cerdo'], conditions: ['cartas_fisicas_en_un_restaurante_aun_no_he_reservado_recomendadme_vuestras_3_lugares_favoritos'] }
+            { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
+            { id: 'reserva', label: 'A nombre de quién está', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
+            { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] }
         ];
 
         const dbAudience = [
