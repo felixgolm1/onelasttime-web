@@ -1202,6 +1202,17 @@
             const touchStartY = useRef(null);
             const lastScrollPos = useRef(0);
             const isDragging = useRef(false);
+            const warningTimeoutRef = useRef(null);
+            const shakeTimeoutRef = useRef(null);
+
+            const triggerLimitWarning = (cardId) => {
+                if (warningTimeoutRef.current) clearTimeout(warningTimeoutRef.current);
+                if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
+                setShakeCardId(cardId);
+                setLimitWarning(true);
+                warningTimeoutRef.current = setTimeout(() => setLimitWarning(false), 2000);
+                shakeTimeoutRef.current = setTimeout(() => setShakeCardId(null), 400);
+            };
 
             const DRAG_SENSITIVITY = window.innerWidth * 0.5;
             const MAX_SELECTIONS = 4;
@@ -1262,10 +1273,7 @@
                     if (selectedCards.length < MAX_SELECTIONS) {
                         setSelectedCards(prev => [...prev, cardId]);
                     } else {
-                        setShakeCardId(cardId);
-                        setLimitWarning(true);
-                        setTimeout(() => setLimitWarning(false), 2000);
-                        setTimeout(() => setShakeCardId(null), 400);
+                        triggerLimitWarning(cardId);
                     }
                 }
             };
@@ -1425,10 +1433,7 @@
                                                                             if (selectedCards.length < MAX_SELECTIONS) {
                                                                                 setSelectedCards(prev => [...prev, card.id]);
                                                                             } else {
-                                                                                setShakeCardId(card.id);
-                                                                                setLimitWarning(true);
-                                                                                setTimeout(() => setLimitWarning(false), 2000);
-                                                                                setTimeout(() => setShakeCardId(null), 400);
+                                                                                triggerLimitWarning(card.id);
                                                                             }
                                                                         }
                                                                     } else {
