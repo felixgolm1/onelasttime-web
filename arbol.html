@@ -253,6 +253,15 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        @keyframes redToWhite {
+            0% { color: #ff3333; text-shadow: 0 0 20px rgba(255,51,51,0.5); }
+            20% { color: #ff3333; text-shadow: 0 0 10px rgba(255,51,51,0.2); }
+            100% { color: #ffffff; text-shadow: none; }
+        }
+        .text-fade-red {
+            animation: redToWhite 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
     </style>
 </head>
 <body class="bg-black text-white" style="background-color: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); min-height: 100vh; overflow-x: hidden;">
@@ -970,7 +979,7 @@
                     <GlobalHeader progress={progress} onBack={onBack} animateIn={false} />
                     <div className="w-full max-w-4xl flex flex-col items-center mt-4 fade-in">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white leading-tight">{titleText}</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red">{titleText}</h2>
                         </div>
                         
                         <div className="w-full flex flex-wrap gap-6 md:gap-10 justify-center items-center mt-4">
