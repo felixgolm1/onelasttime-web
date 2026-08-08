@@ -1420,7 +1420,7 @@
                                     <div className="text-center text-4xl font-semibold tracking-tight text-[#CCFF00] mb-8 mt-4">{formatTime(timeMinutes)}</div>
                                     <RangeSlider value={timeMinutes} min={30} max={300} step={5} isAdultTheme={false} restrictedMin={30} onChange={e => setTimeMinutes(Number(e.target.value))} />
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Continuar</button>
+                                <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
                             </div>
                         )}
 
@@ -1458,7 +1458,7 @@
                                         </div>
                                     ))}
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Continuar</button>
+                                <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
                             </div>
                         )}
 
@@ -1482,7 +1482,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Continuar</button>
+                                <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
                             </div>
                         )}
 
@@ -1502,7 +1502,7 @@
                                         onChange={e => setExtraDetails(e.target.value)}
                                     />
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full floating" style={{animationDelay: '0.1s'}}>Finalizar</button>
+                                <button onClick={handleNextSubStep} className="btn-black w-full">Finalizar</button>
                             </div>
                         )}
                     </div>
