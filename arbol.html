@@ -1513,12 +1513,81 @@
                 </>
             );
         };
+        
+        const ParticipantsScreen = ({ onComplete, onBack, progress }) => {
+            const [participants, setParticipants] = useState([{ name: '', details: '' }, { name: '', details: '' }]);
+            const [isOut, setIsOut] = useState(false);
+
+            const handleParticipantChange = (index, field, value) => { 
+                const newParticipants = [...participants]; 
+                newParticipants[index] = { ...newParticipants[index], [field]: value }; 
+                setParticipants(newParticipants); 
+            };
+            
+            const addParticipant = () => setParticipants([...participants, { name: '', details: '' }]);
+            const removeParticipant = (index) => setParticipants(participants.filter((_, i) => i !== index));
+
+            const submit = () => {
+                setIsOut(true);
+                setTimeout(() => onComplete(participants), 400);
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
+                    <GlobalHeader progress={progress} onBack={onBack} />
+                    <div className={`w-full max-w-md transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
+                        <div className="w-full">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">¿Quiénes os sentáis a la mesa?</h2>
+                            <p className="text-sm font-medium text-gray-500 text-center mb-8">
+                                Escribe todo el contexto que quieras que tengamos en cuenta
+                            </p>
+                            <div className="w-full mb-8 floating">
+                                {participants.map((p, index) => (
+                                    <div key={index} className={`flex items-start gap-3 ${index > 0 ? 'mt-6 pt-5 border-t border-gray-200' : ''}`}>
+                                        <div className="flex flex-col flex-1">
+                                            <input 
+                                                type="text" 
+                                                placeholder="Nombre" 
+                                                value={p.name}
+                                                onChange={(e) => handleParticipantChange(index, 'name', e.target.value)} 
+                                                className="pill-input !mb-0 text-[15px]" 
+                                            />
+                                            <div className="flex items-center mt-3 pl-3 pr-1">
+                                                <ElegantIcon name="corner-down-right" className="text-black mr-2 w-5 h-5 shrink-0" />
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Info (ej: 31 años, le cuesta abrirse...)" 
+                                                    value={p.details || ''}
+                                                    onChange={(e) => handleParticipantChange(index, 'details', e.target.value)} 
+                                                    className="pill-input !mb-0 text-[13px] border-black bg-white focus:bg-white text-gray-700 flex-1"
+                                                    style={{ padding: '0.6rem 1.2rem' }} 
+                                                />
+                                            </div>
+                                        </div>
+                                        {participants.length > 2 && (
+                                            <button onClick={() => removeParticipant(index)} className="mt-2 w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center shrink-0 hover:bg-red-200 transition-colors">
+                                                <ElegantIcon name="x" className="w-4 h-4" />
+                                            </button>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                            <button onClick={addParticipant} className="btn-white w-full mb-4 !bg-[#1a1a1a] !text-[#CCFF00] border border-[#CCFF00]/30 shadow-none hover:!bg-[#222]">
+                                + Añadir persona
+                            </button>
+                            <button onClick={submit} className="btn-black w-full">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         const CustomizationN4 = ({ onComplete, onBack, globalData, progress }) => {
             const [subStep, setSubStep] = useState(1);
             const [isOut, setIsOut] = useState(false);
 
             const [timeMinutes, setTimeMinutes] = useState(90); 
-            const [participants, setParticipants] = useState([{ name: '', role: '', details: '' }, { name: '', role: '', details: '' }]);
+            
             const [age, setAge] = useState({ min: 18, max: 65 });
             const [extraDetails, setExtraDetails] = useState('');
 
@@ -1533,21 +1602,15 @@
 
             const formatTime = (tm) => { const h = Math.floor(tm / 60); const m = tm % 60; return h===0 ? `${m} min` : m===0 ? `${h} h` : `${h} h ${m} min`; };
             
-            const handleParticipantChange = (index, field, value) => { 
-                const newParticipants = [...participants]; 
-                newParticipants[index] = { ...newParticipants[index], [field]: value }; 
-                setParticipants(newParticipants); 
-            };
             
-            const addParticipant = () => setParticipants([...participants, { name: '', role: '', details: '' }]);
-            const removeParticipant = (index) => setParticipants(participants.filter((_, i) => i !== index));
+            
+            
 
             const handleNextSubStep = () => {
-                if (subStep === 5) {
-                    onComplete({ time: timeMinutes, participants, age, extraDetails });
+                if (subStep === 3) {
+                    onComplete({ time: timeMinutes, age, extraDetails });
                 } else {
                     let next = subStep + 1;
-                    if (next === 4) next = 5;
                     setIsOut(true);
                     setTimeout(() => { setSubStep(next); setIsOut(false); }, 400);
                 }
@@ -1558,7 +1621,6 @@
                     if (onBack) onBack();
                 } else { 
                     let prev = subStep - 1;
-                    if (prev === 4) prev = 3;
                     setIsOut(true); 
                     setTimeout(() => { setSubStep(prev); setIsOut(false); }, 400); 
                 }
@@ -1586,44 +1648,6 @@
 
                         {subStep === 2 && (
                             <div className="w-full">
-                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">¿Quiénes os sentáis a la mesa?</h2>
-                                <p className="text-sm font-medium text-gray-500 text-center mb-8">
-                                    Escribe todo el contexto que quieras que tengamos en cuenta
-                                </p>
-                                <div className="w-full mb-8 floating">
-                                    {participants.map((p, index) => (
-                                        <div key={index} className={`flex items-start gap-3 ${index > 0 ? 'mt-6 pt-5 border-t border-gray-200' : ''}`}>
-                                            <div className="flex flex-col flex-1">
-                                                <input 
-                                                    type="text" 
-                                                    placeholder="Nombre" 
-                                                    value={p.name}
-                                                    onChange={(e) => handleParticipantChange(index, 'name', e.target.value)} 
-                                                    className="pill-input !mb-0 text-[15px]" 
-                                                />
-                                                
-                                                <div className="flex items-center mt-3 pl-3 pr-1">
-                                                    <ElegantIcon name="corner-down-right" className="text-black mr-2 w-5 h-5 shrink-0" />
-                                                    <input 
-                                                        type="text" 
-                                                        placeholder="Info (ej: 31 años, le cuesta abrirse...)" 
-                                                        value={p.details}
-                                                        onChange={(e) => handleParticipantChange(index, 'details', e.target.value)} 
-                                                        className="pill-input !mb-0 text-[13px] border-black bg-white focus:bg-white text-gray-700 flex-1"
-                                                        style={{ padding: '0.6rem 1.2rem' }} 
-                                                    />
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    ))}
-                                </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
-                            </div>
-                        )}
-
-                        {subStep === 3 && (
-                            <div className="w-full">
                                 <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">Rango de edad en la mesa</h2>
                                 {isAdultTheme && (
                                     <div className="bg-red-50 text-red-600 text-[13px] px-5 py-3 rounded-2xl mb-8 text-center border border-red-100 font-medium shadow-sm floating">
@@ -1646,7 +1670,7 @@
                             </div>
                         )}
 
-                        {subStep === 5 && (
+                        {subStep === 3 && (
                             <div className="w-full">
                                 <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">¿Quieres añadir algo más?</h2>
                                 <p className="text-sm font-medium text-gray-500 text-center mb-8">
@@ -1697,7 +1721,7 @@
                 }).join(', ');
 
                 // Formatear participantes
-                const participantesText = (globalData.n4?.participants || []).map(p => 
+                const participantesText = (globalData.participants || []).map(p => 
                     `Nombre: ${p.name} | Rol: ${p.role} | Info: ${p.details}`
                 ).join('\n');
 
@@ -1936,6 +1960,7 @@
                 if (phase === 'intro') return 5;
                 if (phase === 'format') return 5 + (15 * treeProgress.format); 
                 if (phase === 'logistics') return 20;
+                if (phase === 'participants') return 22;
                 if (phase === 'delivery_error') return 25;
                 if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
                 if (phase === 'objective') return 45;
@@ -1986,7 +2011,7 @@
                     {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
-                                advanceTo('audience', {logistics: data});
+                                advanceTo('participants', {logistics: data});
                             } else {
                                 const isBcn = isBarcelonaCity(data.ciudad);
                                 const reqHours = isBcn ? 4 : 48;
@@ -1996,7 +2021,7 @@
                                 const hoursDiff = (eventDate - now) / (1000 * 60 * 60);
                                 
                                 if (hoursDiff >= reqHours) {
-                                    advanceTo('audience', {logistics: data});
+                                    advanceTo('participants', {logistics: data});
                                 } else {
                                     advanceTo('delivery_error', {logistics: data, isBcn, reqHours});
                                 }
@@ -2009,11 +2034,18 @@
                         isBcn={globalData.isBcn} 
                         reqHours={globalData.reqHours} 
                         progress={getProgress()}
-                        onDigital={() => advanceTo('audience', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
+                        onDigital={() => advanceTo('participants', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
                         onChangeDate={goBackPhase} 
                         onBack={goBackPhase}
                     />}
                     
+                    
+                    {phase === 'participants' && <ParticipantsScreen 
+                        progress={getProgress()}
+                        onComplete={data => advanceTo('audience', { participants: data })} 
+                        onBack={goBackPhase} 
+                    />}
+
                     {/* Árbol 2: AUDIENCIA */}
                     {phase === 'audience' && <TreeEngine 
                         treeKey="audience" treeStates={treeStates} setTreeStates={setTreeStates}
