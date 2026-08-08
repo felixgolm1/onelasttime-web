@@ -1187,7 +1187,7 @@
             );
         };
 
-        const TonesNoria = ({ onComplete, progress, onBack }) => {
+        const TonesNoria = ({ onComplete, progress, onBack, globalData }) => {
             const [scrollPos, setScrollPos] = useState(0);
             const maxScroll = dbTones.length - 1;
 
@@ -1195,6 +1195,7 @@
             const [shakeCardId, setShakeCardId] = useState(null);
             const [limitWarning, setLimitWarning] = useState(false);
             const [customToneText, setCustomToneText] = useState('');
+            const [isAutoSelecting, setIsAutoSelecting] = useState(false);
 
             const containerRef = useRef(null);
             const touchStartX = useRef(null);
@@ -1203,7 +1204,7 @@
             const isDragging = useRef(false);
 
             const DRAG_SENSITIVITY = window.innerWidth * 0.5;
-            const MAX_SELECTIONS = 5;
+            const MAX_SELECTIONS = 4;
 
             useEffect(() => {
                 window.scrollTo(0, 0);
@@ -1269,6 +1270,47 @@
                 }
             };
 
+            const handleAutoSelect = () => {
+                if (isAutoSelecting) return;
+                setIsAutoSelecting(true);
+                setTimeout(() => {
+                    setIsAutoSelecting(false);
+                    const contextText = (globalData?.objective || '').toLowerCase();
+                    const format = globalData?.formatId || '';
+                    let newSelections = [];
+                    
+                    if (contextText.match(/re[ií]r|diverti|gracia|desconectar/)) newSelections.push('t_absurdo', 't_chismoso');
+                    if (contextText.match(/hablar|arreglar|conectar|profund/)) newSelections.push('t_vulnerable', 't_sanador');
+                    if (contextText.match(/jugar|picar|reto/)) newSelections.push('t_competitivo');
+                    if (contextText.match(/salseo|cotilleo/)) newSelections.push('t_chismoso');
+                    
+                    if (newSelections.length === 0) {
+                        if (format === 'parejas') newSelections.push('t_vulnerable', 't_confesion');
+                        else if (format === 'citas') newSelections.push('t_rompehielo', 't_picante');
+                        else newSelections.push('t_rompehielo', 't_absurdo');
+                    }
+                    
+                    const hash = contextText.length + (format.length * 3);
+                    if (newSelections.length < 4) {
+                        const extras = ['t_agradecido', 't_empatico', 't_provocador', 't_prohibido'];
+                        const extraPick = extras[hash % extras.length];
+                        if (!newSelections.includes(extraPick)) newSelections.push(extraPick);
+                    }
+                    
+                    newSelections = newSelections.slice(0, 4);
+                    setSelectedCards(newSelections);
+                    
+                    if (newSelections.length > 0) {
+                        const firstId = newSelections[0];
+                        let groupIdx = 0;
+                        dbTones.forEach((g, i) => {
+                            if (g.subtones.some(st => st.id === firstId)) groupIdx = i;
+                        });
+                        setScrollPos(groupIdx);
+                    }
+                }, 800);
+            };
+
             const getGroupStyles = (index) => {
                 const offset = index - scrollPos;
                 const translateX = offset * 90; 
@@ -1292,13 +1334,30 @@
                             Máximo {MAX_SELECTIONS} selecciones
                         </div>
 
-                        <div className="w-full px-6 pt-28 pb-4 text-center z-20 pointer-events-none mt-4">
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
+                        <div className="w-full px-6 pt-24 pb-4 text-center z-20 pointer-events-auto mt-4">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3">
                                 ¿Qué tono quieres que tenga la cena?
                             </h2>
-                            <p className="text-sm font-medium text-gray-500">
-                                Selecciona hasta {MAX_SELECTIONS} tonos
+                            <p className="text-sm font-medium text-gray-500 max-w-sm mx-auto mb-6 leading-relaxed">
+                                Selecciona hasta {MAX_SELECTIONS} tonos manualmente o automáticamente en base al contexto anterior
                             </p>
+                            
+                            <button 
+                                onClick={handleAutoSelect}
+                                disabled={isAutoSelecting}
+                                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#CCFF00]/10 text-[#CCFF00] rounded-full font-semibold text-sm border border-[#CCFF00]/20 hover:bg-[#CCFF00]/20 transition-all duration-300 active:scale-95 z-50"
+                            >
+                                {isAutoSelecting ? (
+                                    <>
+                                        <div className="w-4 h-4 rounded-full border-2 border-[#CCFF00] border-t-transparent animate-spin"></div>
+                                        Interpretando...
+                                    </>
+                                ) : (
+                                    <>
+                                        ✨ Seleccionar automáticamente
+                                    </>
+                                )}
+                            </button>
                         </div>
 
                         <div 
@@ -1428,7 +1487,6 @@
                 </>
             );
         };
-
         const CustomizationN4 = ({ onComplete, onBack, globalData, progress }) => {
             const [subStep, setSubStep] = useState(1);
             const [isOut, setIsOut] = useState(false);
@@ -1942,7 +2000,7 @@
                     
                     {phase === 'objective' && <ObjectiveScreen progress={getProgress()} globalData={globalData} onComplete={txt => advanceTo('tones', {objective: txt})} onBack={goBackPhase} />}
 
-                    {phase === 'tones' && <TonesNoria onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
+                    {phase === 'tones' && <TonesNoria globalData={globalData} onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
                     
                     {phase === 'n4' && <CustomizationN4 globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
