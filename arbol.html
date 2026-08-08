@@ -789,6 +789,16 @@
             );
         };
 
+        const isBarcelonaCity = (str) => {
+            if (!str) return false;
+            const s = str.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const pcMatch = s.match(/\b080([0-3][0-9]|4[0-2])\b/);
+            if (pcMatch) return true;
+            const exactMatches = ['barcelona', 'bcn', 'barna'];
+            if (exactMatches.includes(s)) return true;
+            return false;
+        };
+
         const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack }) => {
             const [form, setForm] = useState(initialData || { ciudad: '', fecha: '', restaurante: '', reserva: '', direccion: '', comida: [] });
             const [errs, setErrs] = useState([]);
@@ -929,181 +939,32 @@
             );
         };
 
-        const Calculation = ({ data, formatId, onComplete, onBack, progress }) => {
-            const [estado, setEstado] = useState('calculando'); 
-            const [textoVisible, setTextoVisible] = useState(true);
-            const [textoActual, setTextoActual] = useState('calculando');
-            const [porcentaje, setPorcentaje] = useState(0);
-            const [dim, setDim] = useState({ w: 420, h: 237 });
-            const [mensajeFallo, setMensajeFallo] = useState('');
-            
-            const pathRef = useRef(null);
-            const cardRef = useRef(null);
-            const intervalRef = useRef(null);
-
-            const isDigital = formatId?.includes('digital');
-
-            const calculandoText = useMemo(() => {
-                if (isDigital) {
-                    return `Preparando tu edición digital...`;
-                }
-                if (data?.ciudad && data?.fecha) {
-                    const dateObj = new Date(data.fecha);
-                    if (!isNaN(dateObj)) {
-                        const dia = dateObj.getDate();
-                        const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-                        const mesStr = meses[dateObj.getMonth()];
-                        const horasStr = dateObj.getHours().toString().padStart(2, '0') + ':' + dateObj.getMinutes().toString().padStart(2, '0');
-                        return `Calculando si llegamos a ${data.ciudad} el ${dia} de ${mesStr} a las ${horasStr}...`;
-                    }
-                } else if (data?.ciudad) {
-                    return `Calculando si llegamos a ${data.ciudad} ahora mismo...`;
-                }
-                return `Calculando si llegamos a tu zona...`;
-            }, [data, isDigital]);
-
-            const startPos = useMemo(() => {
-                const origins = [
-                    { x: '-100vw', y: '-50vh' },  
-                    { x: '100vw', y: '50vh' },    
-                    { x: '-50vw', y: '100vh' },   
-                    { x: '50vw', y: '-100vh' }
-                ];
-                return origins[Math.floor(Math.random() * origins.length)];
-            }, []);
-
-            useEffect(() => {
-                const resizeObserver = new ResizeObserver(entries => {
-                    for (let entry of entries) {
-                        if (entry.contentRect.width > 0) setDim({ w: entry.contentRect.width, h: entry.contentRect.height });
-                    }
-                });
-                if (cardRef.current) resizeObserver.observe(cardRef.current);
-                return () => {
-                    resizeObserver.disconnect();
-                    if (intervalRef.current) clearInterval(intervalRef.current);
-                };
-            }, []);
-
-            useEffect(() => {
-                setTimeout(() => iniciarCalculo(), 800); 
-            }, []);
-
-            const iniciarCalculo = () => {
-                setEstado('calculando');
-                setTextoActual('calculando');
-                setTextoVisible(true);
-                setPorcentaje(0);
-                
-                let isFallo = false;
-                let msgFallo = '';
-
-                // Validación desactivada temporalmente: siempre es exitoso
-                
-
-                setMensajeFallo(msgFallo);
-                
-                if (intervalRef.current) clearInterval(intervalRef.current);
-                
-                if (pathRef.current) {
-                    pathRef.current.style.transition = 'none';
-                    const length = pathRef.current.getTotalLength();
-                    pathRef.current.style.strokeDasharray = length;
-                    pathRef.current.style.strokeDashoffset = length;
-                    pathRef.current.getBoundingClientRect(); 
-                    pathRef.current.style.transition = 'stroke-dashoffset 5.2s linear';
-                    pathRef.current.style.strokeDashoffset = '0';
-                }
-
-                let step = 0;
-                intervalRef.current = setInterval(() => {
-                    step += 1;
-                    setPorcentaje(step > 100 ? 100 : step);
-                    if (step >= 100) clearInterval(intervalRef.current);
-                }, 52); 
-
-                setTimeout(() => {
-                    setTextoVisible(false); 
-                    setTimeout(() => {
-                        if (isFallo) {
-                            setEstado('fallo_opciones');
-                        } else {
-                            setEstado('exito');
-                            setTextoActual('exito');
-                            setTextoVisible(true);
-                            setTimeout(() => onComplete(false), 1500);
-                        }
-                    }, 800); 
-                }, 5200); 
-            };
-
-            const getDynamicPath = () => {
-                const strokeWidth = 4;
-                const cssRadius = 14; 
-                const inset = strokeWidth / 2; 
-                const r = cssRadius - inset;
-                const w = dim.w || 420;
-                const h = dim.h || 237;
-                if (w <= r * 2 || h <= r * 2) return "";
-                return `M ${w/2} ${inset} H ${w - r - inset} A ${r} ${r} 0 0 1 ${w - inset} ${r + inset} V ${h - r - inset} A ${r} ${r} 0 0 1 ${w - r - inset} ${h - inset} H ${r + inset} A ${r} ${r} 0 0 1 ${inset} ${h - r - inset} V ${r + inset} A ${r} ${r} 0 0 1 ${r + inset} ${inset} Z`;
-            };
-
-            if (estado === 'fallo_opciones') {
-                return (
-                    <div className="flex flex-col items-center justify-center w-full min-h-screen relative fade-in">
-                        <GlobalHeader progress={progress} onBack={onBack} />
-                        <div className="scene flex-col text-center px-4 max-w-md mx-auto mt-4">
-                            <div className="w-16 h-16 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </div>
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3">Ajuste logístico necesario</h2>
-                            <p className="text-sm font-medium text-gray-500 mb-8 px-2">{mensajeFallo}</p>
-                            
-                            <div className="space-y-4 w-full px-2">
-                                <button onClick={onBack} className="pill-button w-full bg-white text-gray-700 border border-gray-200 hover:border-black hover:text-black shadow-sm">
-                                    1. Cambiar día y/o lugar
-                                </button>
-                                <button onClick={() => onComplete(true)} className="pill-button btn-black w-full text-white shadow-xl">
-                                    2. Usar edición Digital ahora 📲
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-
-            let isSuccessClass = estado === 'exito' ? 'is-success' : '';
+        const DeliveryErrorScreen = ({ isBcn, reqHours, onDigital, onChangeDate, progress, onBack }) => {
+            const titleText = isBcn 
+                ? `Para Barcelona ciudad, necesitamos ${reqHours} horas de antelación para poder hacerte llegar las cartas físicas`
+                : `Necesitamos ${reqHours} horas de antelación para poder hacerte llegar las cartas físicas`;
 
             return (
-                <div className="flex flex-col items-center justify-center w-full min-h-screen relative fade-in pt-8">
+                <div className="flex flex-col items-center justify-center w-full min-h-screen relative fade-in">
                     <GlobalHeader progress={progress} onBack={onBack} />
-                    <div className="scene">
-                        <div className="deal-wrapper deal-in-animation-calc" style={{ '--start-x': startPos.x, '--start-y': startPos.y }}>
-                            <div className={`card-container-calc`} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                                <div className={`physical-card-calc ${isSuccessClass}`} ref={cardRef}>
-                                    <svg className="border-svg" viewBox={`0 0 ${dim.w || 420} ${dim.h || 237}`}>
-                                        <path ref={pathRef} className="border-path" d={getDynamicPath()} />
-                                    </svg>
-                                    <div className={`text-content-calc ${textoVisible ? 'text-fade-in' : 'text-fade-out'}`}>
-                                        {textoActual === 'calculando' && (
-                                            <div className="flex flex-col items-center">
-                                                <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 text-center mb-3 px-4">
-                                                    {calculandoText}
-                                                </span>
-                                                <span className="text-xl font-medium tracking-widest text-black">
-                                                    {porcentaje}%
-                                                </span>
-                                            </div>
-                                        )}
-                                        {textoActual === 'exito' && (
-                                            <span className="text-[17px] tracking-wide leading-snug font-medium text-gray-800 text-center">
-                                                ¡Sí, llegamos!
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="scene flex-col text-center px-4 max-w-md mx-auto mt-4">
+                        <div className="w-16 h-16 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
+                        <h2 className="text-3xl md:text-3xl font-semibold tracking-tight text-white mb-8 px-2 leading-tight">{titleText}</h2>
+                        
+                        <div className="space-y-4 w-full px-2">
+                            <button onClick={onDigital} className="w-full px-6 py-4 rounded-full font-semibold uppercase tracking-widest text-sm transition-all duration-300 flex items-center justify-center btn-black text-white shadow-xl">
+                                Seguir con cartas digitales
+                            </button>
+                            <button onClick={onChangeDate} className="w-full px-6 py-4 rounded-full font-semibold uppercase tracking-widest text-sm transition-all duration-300 flex items-center justify-center bg-[#1a1a1a] text-white border border-transparent hover:border-gray-500 hover:bg-[#222] shadow-sm">
+                                Cambiar el día o la hora de la cena
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };                </div>
                     </div>
                 </div>
             );
@@ -1921,8 +1782,7 @@
                 if (phase === 'format') return 5 + (10 * treeProgress.format); 
                 if (phase === 'secret1') return 15; 
                 if (phase === 'logistics') return 20;
-                if (phase === 'calc') return 25;
-                if (phase === 'calc_fallback') return 25;
+                if (phase === 'delivery_error') return 25;
                 if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
                 if (phase === 'objective') return 45;
                 if (phase === 'occasion') return 40 + (15 * treeProgress.occasion); 
@@ -1979,20 +1839,29 @@
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('audience', {logistics: data});
                             } else {
-                                advanceTo('calc', {logistics: data});
+                                const isBcn = isBarcelonaCity(data.ciudad);
+                                const reqHours = isBcn ? 4 : 48;
+                                
+                                const eventDate = new Date(data.fecha);
+                                const now = new Date();
+                                const hoursDiff = (eventDate - now) / (1000 * 60 * 60);
+                                
+                                if (hoursDiff >= reqHours) {
+                                    advanceTo('audience', {logistics: data});
+                                } else {
+                                    advanceTo('delivery_error', {logistics: data, isBcn, reqHours});
+                                }
                             }
                         }} 
                         onBack={goBackPhase} />
                     }
                     
-                    {phase === 'calc' && <Calculation data={globalData.logistics} formatId={globalData.formatId} progress={getProgress()}
-                        onComplete={(forceDigital) => {
-                            if(forceDigital) {
-                                advanceTo('audience', { formatId: 'cartas_digitales_en_un_restaurante' }); 
-                            } else {
-                                advanceTo('audience');
-                            }
-                        }} 
+                    {phase === 'delivery_error' && <DeliveryErrorScreen 
+                        isBcn={globalData.isBcn} 
+                        reqHours={globalData.reqHours} 
+                        progress={getProgress()}
+                        onDigital={() => advanceTo('audience', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
+                        onChangeDate={goBackPhase} 
                         onBack={goBackPhase}
                     />}
                     
