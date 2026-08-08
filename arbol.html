@@ -1192,6 +1192,7 @@
             const maxScroll = dbTones.length - 1;
 
             const [selectedCards, setSelectedCards] = useState([]);
+            const [shakeCardId, setShakeCardId] = useState(null);
             const [limitWarning, setLimitWarning] = useState(false);
             const [customToneText, setCustomToneText] = useState('');
             const [isAutoSelecting, setIsAutoSelecting] = useState(false);
@@ -1261,9 +1262,11 @@
                     if (selectedCards.length < MAX_SELECTIONS) {
                         setSelectedCards(prev => [...prev, cardId]);
                     } else {
+                        setShakeCardId(cardId);
                         setLimitWarning(true);
                         setTimeout(() => setLimitWarning(false), 5000);
-                        }
+                        setTimeout(() => setShakeCardId(null), 400);
+                    }
                 }
             };
 
@@ -1383,6 +1386,7 @@
                                         <div className="relative w-full flex flex-col items-center">
                                             {group.subtones.map((card, cardIndex) => {
                                                 const isSelected = selectedCards.includes(card.id);
+                                                const isShaking = shakeCardId === card.id;
                                                 const marginTop = cardIndex > 0 ? '-1.25rem' : '0';
                                                 const rotZ = [0, -1.5, 1.5, -2][cardIndex % 4];
                                                 const baseZIndex = 15 - cardIndex;
@@ -1400,7 +1404,7 @@
                                                                     if (inputEl) inputEl.focus();
                                                                 }
                                                             }}
-                                                            className={`v27-card ${isCustomSelected ? 'is-selected' : ''}`}
+                                                            className={`v27-card ${isCustomSelected ? 'is-selected' : ''} ${isShaking ? 'shake' : ''}`}
                                                             style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
                                                         >
                                                             <input
@@ -1416,9 +1420,11 @@
                                                                             if (selectedCards.length < MAX_SELECTIONS) {
                                                                                 setSelectedCards(prev => [...prev, card.id]);
                                                                             } else {
+                                                                                setShakeCardId(card.id);
                                                                                 setLimitWarning(true);
                                                                                 setTimeout(() => setLimitWarning(false), 5000);
-                                                                                }
+                                                                                setTimeout(() => setShakeCardId(null), 400);
+                                                                            }
                                                                         }
                                                                     } else {
                                                                         if (selectedCards.includes(card.id)) {
@@ -1442,7 +1448,7 @@
                                                     <div 
                                                         key={card.id}
                                                         onClick={() => toggleSelection(card.id)}
-                                                        className={`v27-card ${isSelected ? 'is-selected' : ''}`}
+                                                        className={`v27-card ${isSelected ? 'is-selected' : ''} ${isShaking ? 'shake' : ''}`}
                                                         style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
                                                     >
                                                         <span className={`text-[16px] tracking-wide font-medium relative z-10 transition-colors duration-700 ${isSelected ? 'text-white' : 'text-gray-800'}`}>
