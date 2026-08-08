@@ -325,32 +325,33 @@
             { id: 'f_casados', parent: 'familia', label: 'Estamos casadxs', final: true }
         ];
 
-        const dbTones = [
+                const dbTones = [
             {
                 id: 'deep', title: 'Conexión Emocional', subtitle: 'Para conectar de verdad',
                 subtones: [
                     { id: 't_vulnerable', text: 'Vulnerable / Corazón Abierto' },
                     { id: 't_agradecido', text: 'Gratitud / Reconocimiento' },
                     { id: 't_sanador', text: 'Sanador / Reconciliación' },
-                    { id: 't_empatico', text: 'Empatía Pura' }
+                    { id: 't_nostalgico', text: 'Nostálgico / Recuerdos' },
+                    { id: 't_reflexivo', text: 'Reflexivo / Explorador' }
                 ]
             },
             {
                 id: 'fun', title: 'Divertidos y Sociales', subtitle: 'Salseo y anécdotas',
                 subtones: [
-                    { id: 't_rompehielo', text: 'Rompehielo / Superficial' },
-                    { id: 't_chismoso', text: 'Chismoso / Curiosidad' },
+                    { id: 't_rompehielo', text: 'Rompehielo / Relajado' },
+                    { id: 't_divertido', text: 'Humorístico / Divertido' },
                     { id: 't_absurdo', text: 'Absurdo / Surrealista' },
-                    { id: 't_competitivo', text: 'Picado / Reto' }
+                    { id: 't_rompedor', text: 'Sorprendente / Rompedor' }
                 ]
             },
             {
                 id: 'intimate', title: 'Íntimos y Atrevidos', subtitle: 'Sube la temperatura',
                 subtones: [
                     { id: 't_picante', text: 'Picante / Flirteo' },
-                    { id: 't_prohibido', text: 'Tabú / Sin Filtros' },
-                    { id: 't_confesion', text: 'Confesión / Verdad Desnuda' },
-                    { id: 't_provocador', text: 'Provocador / Incómodo' }
+                    { id: 't_prohibido', text: 'Tabú / Prohibido' },
+                    { id: 't_confesion', text: 'Confesión / Secretos' },
+                    { id: 't_directo', text: 'Directo / Sin Filtros' }
                 ]
             },
             {
@@ -1300,10 +1301,10 @@
                     const format = globalData?.formatId || '';
                     let newSelections = [];
                     
-                    if (contextText.match(/re[ií]r|diverti|gracia|desconectar/)) newSelections.push('t_absurdo', 't_chismoso');
+                                        if (contextText.match(/re[ií]r|diverti|gracia|desconectar/)) newSelections.push('t_absurdo', 't_divertido');
                     if (contextText.match(/hablar|arreglar|conectar|profund/)) newSelections.push('t_vulnerable', 't_sanador');
-                    if (contextText.match(/jugar|picar|reto/)) newSelections.push('t_competitivo');
-                    if (contextText.match(/salseo|cotilleo/)) newSelections.push('t_chismoso');
+                    if (contextText.match(/jugar|picar|reto/)) newSelections.push('t_rompedor');
+                    if (contextText.match(/salseo|cotilleo/)) newSelections.push('t_divertido');
                     
                     if (newSelections.length === 0) {
                         if (format === 'parejas') newSelections.push('t_vulnerable', 't_confesion');
@@ -1313,7 +1314,7 @@
                     
                     const hash = contextText.length + (format.length * 3);
                     if (newSelections.length < 4) {
-                        const extras = ['t_agradecido', 't_empatico', 't_provocador', 't_prohibido'];
+                        const extras = ['t_agradecido', 't_nostalgico', 't_directo', 't_prohibido', 't_reflexivo'];
                         const extraPick = extras[hash % extras.length];
                         if (!newSelections.includes(extraPick)) newSelections.push(extraPick);
                     }
