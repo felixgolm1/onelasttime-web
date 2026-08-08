@@ -1417,7 +1417,7 @@
                             <div>
                                 <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">¿Cuánto tiempo tenéis?</h2>
                                 <div className="w-full mb-10 floating">
-                                    <div className="text-center text-4xl font-light text-black mb-8 mt-4">{formatTime(timeMinutes)}</div>
+                                    <div className="text-center text-4xl font-semibold tracking-tight text-white mb-8 mt-4">{formatTime(timeMinutes)}</div>
                                     <RangeSlider value={timeMinutes} min={10} max={300} isAdultTheme={false} restrictedMin={10} onChange={e => setTimeMinutes(Number(e.target.value))} />
                                     <div className="flex justify-between text-xs text-gray-400 mt-3 font-medium tracking-wide">
                                         <span>Express</span>
