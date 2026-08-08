@@ -1560,13 +1560,18 @@
         };
 
         const CustomizationN4 = ({ onComplete, onBack, globalData, progress }) => {
-            const [subStep, setSubStep] = useState(1);
+            const [subStep, setSubStep] = useState(() => parseInt(sessionStorage.getItem('dev_n4_subStep')) || 1);
             const [isOut, setIsOut] = useState(false);
 
-            const [timeMinutes, setTimeMinutes] = useState(90); 
+            const [timeMinutes, setTimeMinutes] = useState(() => parseInt(sessionStorage.getItem('dev_n4_time')) || 90); 
             
-            const [age, setAge] = useState({ min: 18, max: 65 });
-            const [extraDetails, setExtraDetails] = useState('');
+            const [age, setAge] = useState(() => JSON.parse(sessionStorage.getItem('dev_n4_age')) || { min: 18, max: 65 });
+            const [extraDetails, setExtraDetails] = useState(() => sessionStorage.getItem('dev_n4_extra') || '');
+
+            useEffect(() => { sessionStorage.setItem('dev_n4_subStep', subStep); }, [subStep]);
+            useEffect(() => { sessionStorage.setItem('dev_n4_time', timeMinutes); }, [timeMinutes]);
+            useEffect(() => { sessionStorage.setItem('dev_n4_age', JSON.stringify(age)); }, [age]);
+            useEffect(() => { sessionStorage.setItem('dev_n4_extra', extraDetails); }, [extraDetails]);
 
             const isAdultTheme = useMemo(() => {
                 const str = [globalData.formatId, globalData.audienceId, ...(globalData.tones || [])].join(' ').toLowerCase();
@@ -1907,6 +1912,10 @@
                 sessionStorage.removeItem('dev_treeProgress');
                 sessionStorage.removeItem('dev_treeStates');
                 sessionStorage.removeItem('dev_globalData');
+                sessionStorage.removeItem('dev_n4_subStep');
+                sessionStorage.removeItem('dev_n4_time');
+                sessionStorage.removeItem('dev_n4_age');
+                sessionStorage.removeItem('dev_n4_extra');
                 sessionStorage.setItem('skipIntro', 'true');
                 sessionStorage.setItem('forceSkipApplied', 'true'); // Only do this once per navigation
             }
