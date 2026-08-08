@@ -1054,6 +1054,14 @@
             const [text, setText] = useState('');
             const [showWarning, setShowWarning] = useState(false);
             const [placeholderIndex, setPlaceholderIndex] = useState(0);
+            const [isAnimatingPlaceholder, setIsAnimatingPlaceholder] = useState(true);
+
+            useEffect(() => {
+                if (isAnimatingPlaceholder) {
+                    const timer = setTimeout(() => setIsAnimatingPlaceholder(false), 1500);
+                    return () => clearTimeout(timer);
+                }
+            }, [isAnimatingPlaceholder]);
 
             const handleTextChange = (e) => {
                 const val = e.target.value;
@@ -1093,7 +1101,7 @@
                 "Ej: Nos conocemos de la oficina pero es la primera vez que quedamos a solas. Quiero descubrir si hay conexión real más allá del trabajo, pero manteniendo un tono súper divertido. Él siempre va de 'chico duro' en la oficina pero sé que en el fondo es un trozo de pan, me gustaría que la cena le anime a mostrar su lado más tierno",
                 "Ej: Me encanta y quiero saber si encajamos más allá del físico",
                 "Ej: Quiero tener una primera cita súper original y dinámica",
-                "Ej: Ya hemos estado hablando semanas por WhatsApp y la química es brutal. Quiero aprovechar la cena para que esa chispa se traslade en persona y ver si salta la tensión romántica. Los dos somos muy sarcásticos y nos gusta meternos el uno con el otro, así que me encantaría que la experiencia fomente ese flirteo juguetón",
+                "Ej: Ya hemos estado hablando semanas por WhatsApp y la química es brutal. Quiero aprovechar la cena para que esa chispa se trasladase en persona y ver si salta la tensión romántica. Los dos somos muy sarcásticos y nos gusta meternos el uno con el otro, así que me encantaría que la experiencia fomente ese flirteo juguetón",
                 "Ej: Ambos somos muy frikis del cine y la música. Quiero que la experiencia nos guíe para debatir un poco y comprobar si tenemos una visión de la vida parecida",
                 "Ej: Soy una persona bastante tímida y me cuesta abrirme al principio. Quiero que las preguntas nos ayuden a ir perdiendo la vergüenza poco a poco y crear un ambiente de confianza. A ella se la ve súper extrovertida y segura de sí misma, así que me gustaría que la dinámica nos ponga al mismo nivel para no sentirme pequeñito a su lado",
                 "Ej: Es una cita a ciegas y solo quiero reírme y pasarlo genial",
@@ -1130,6 +1138,7 @@
 
             const handleInspire = () => {
                 setPlaceholderIndex((prev) => (prev + 1) % examples.length);
+                setIsAnimatingPlaceholder(true);
             };
 
             return (
@@ -1154,7 +1163,7 @@
                             <textarea
                                 key={placeholderIndex}
                                 rows={6}
-                                className="placeholder-fade w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
+                                className={`${isAnimatingPlaceholder ? 'placeholder-fade ' : ''}w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300`}
                                 placeholder={currentPlaceholder}
                                 value={text}
                                 onChange={handleTextChange}
