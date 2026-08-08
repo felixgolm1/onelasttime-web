@@ -1114,6 +1114,13 @@
                             ¡Esta es la clave de todo! Danos el objetivo y todo el contexto que quieras. A más detalle, más mágica será la experiencia.
                         </p>
                         
+                        <button 
+                            onClick={handleInspire}
+                            className="mb-6 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
+                        >
+                            {buttonText}
+                        </button>
+
                         <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-4 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
                             <textarea
                                 rows={6}
@@ -1123,13 +1130,6 @@
                                 onChange={handleTextChange}
                             />
                         </div>
-
-                        <button 
-                            onClick={handleInspire}
-                            className="mb-8 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
-                        >
-                            {buttonText}
-                        </button>
 
                         <div className="h-6 mb-2">
                             <p className={`text-red-500 text-sm font-semibold transition-opacity duration-300 ${showWarning ? 'opacity-100' : 'opacity-0'}`}>
