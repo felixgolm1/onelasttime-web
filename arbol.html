@@ -1809,8 +1809,13 @@
 
             const goBackPhase = () => {
                 if (phaseHistory.length > 0) {
-                    const newHistory = [...phaseHistory];
-                    const prev = newHistory.pop();
+                    let newHistory = [...phaseHistory];
+                    let prev = newHistory.pop();
+                    
+                    while (prev && prev.startsWith('secret') && newHistory.length > 0) {
+                        prev = newHistory.pop();
+                    }
+                    
                     setPhaseHistory(newHistory);
                     setPhase(prev);
                 }
