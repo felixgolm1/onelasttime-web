@@ -1195,6 +1195,7 @@
             const [shakeCardId, setShakeCardId] = useState(null);
             const [limitWarning, setLimitWarning] = useState(false);
             const [customToneText, setCustomToneText] = useState('');
+            const [shakeKey, setShakeKey] = useState(0);
             const [isAutoSelecting, setIsAutoSelecting] = useState(false);
 
             const containerRef = useRef(null);
@@ -1208,10 +1209,17 @@
             const triggerLimitWarning = (cardId) => {
                 if (warningTimeoutRef.current) clearTimeout(warningTimeoutRef.current);
                 if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
-                setShakeCardId(cardId);
-                setLimitWarning(true);
-                warningTimeoutRef.current = setTimeout(() => setLimitWarning(false), 2000);
-                shakeTimeoutRef.current = setTimeout(() => setShakeCardId(null), 400);
+                
+                setShakeCardId(null);
+                
+                setTimeout(() => {
+                    setShakeCardId(cardId);
+                    setLimitWarning(true);
+                    setShakeKey(prev => prev + 1);
+                    
+                    warningTimeoutRef.current = setTimeout(() => setLimitWarning(false), 2000);
+                    shakeTimeoutRef.current = setTimeout(() => setShakeCardId(null), 400);
+                }, 10);
             };
 
             const DRAG_SENSITIVITY = window.innerWidth * 0.5;
@@ -1340,7 +1348,7 @@
                         
                         {ReactDOM.createPortal(
                             <div className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] pointer-events-none transition-opacity duration-700 ${limitWarning ? 'opacity-100' : 'opacity-0'}`}>
-                                <div className={`text-red-500 font-bold text-xl md:text-2xl text-center transition-transform duration-700 ${limitWarning ? 'scale-100 shake' : 'scale-90'}`}>
+                                <div key={shakeKey} className={`text-red-500 font-bold text-xl md:text-2xl text-center transition-transform duration-700 ${limitWarning ? 'scale-100 shake' : 'scale-90'}`}>
                                     Puedes seleccionar {MAX_SELECTIONS} tonos como máximo
                                 </div>
                             </div>,
