@@ -342,13 +342,6 @@
             }
         ];
 
-        const tricksData = [
-            { id: 1, text: "¿Sabías que el simple hecho de tener el móvil encima de la mesa reduce drásticamente la probabilidad de generar una conversación profunda?" },
-            { id: 2, text: "Regla de los 3 segundos: si guardas silencio tras su respuesta, el 80% de las veces añadirá el detalle más importante." },
-            { id: 3, text: "Efecto Espejo: Repite sus últimas palabras con tono de pregunta si quieres que siga abriéndose." },
-            { id: 4, text: "En lugar de decir 'te entiendo', etiqueta la emoción diciendo 'Parece que eso te frustró bastante'. Aumentarás instantáneamente la conexión con la otra persona." }
-        ];
-
         // ==========================================
         // 2. UTILIDADES GLOBALES Y LOGO
         // ==========================================
@@ -974,41 +967,6 @@
             );
         };
 
-        const SecretReward = ({ secretIndex, onComplete, onBack, progress }) => {
-            const trick = tricksData[secretIndex] || tricksData[0];
-
-            return (
-                <div className="w-full min-h-screen flex flex-col items-center transition-colors duration-[2100ms] ease-in-out bg-transparent relative pt-28 pb-32">
-                    <GlobalHeader progress={progress} onBack={onBack} />
-
-                    <div className="scene justify-start min-h-0 max-w-xl mx-auto w-full mt-4 px-4 flex flex-col items-center">
-                        <div className="text-center mb-12 z-10 w-full fade-in" style={{ animationDelay: '0.1s' }}>
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
-                                Pssst, ayúdate con esto en la cena ;)
-                            </h2>
-                        </div>
-
-                        {trick && (
-                            <div className="w-full max-w-sm mx-auto mb-16 fade-in flex justify-center" style={{ animationDelay: '0.3s' }}>
-                                <div className="physical-card-secret card-active-secret shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
-                                    <div className="flex flex-col items-center justify-center h-full w-full">
-                                        <span className="text-[15px] font-poppins font-bold text-black uppercase tracking-widest mb-3 opacity-90">Secreto {trick.id}/{tricksData.length}</span>
-                                        <span className="text-[17px] font-poppins tracking-wide leading-snug font-medium text-black px-2">{trick.text}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="w-full max-w-[320px] fade-in" style={{ animationDelay: '0.5s' }}>
-                            <button onClick={onComplete} className="btn-white w-full">
-                                Continuar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
         const CurvedSlider = ({ value, max, onChange }) => {
             const sliderRef = useRef(null);
 
@@ -1391,8 +1349,10 @@
                 if (subStep === 5) {
                     onComplete({ time: timeMinutes, participants, age, extraDetails });
                 } else {
+                    let next = subStep + 1;
+                    if (next === 4) next = 5;
                     setIsOut(true);
-                    setTimeout(() => { setSubStep(s => s + 1); setIsOut(false); }, 400);
+                    setTimeout(() => { setSubStep(next); setIsOut(false); }, 400);
                 }
             };
 
@@ -1400,16 +1360,14 @@
                 if (subStep === 1) {
                     if (onBack) onBack();
                 } else { 
+                    let prev = subStep - 1;
+                    if (prev === 4) prev = 3;
                     setIsOut(true); 
-                    setTimeout(() => { setSubStep(s => s - 1); setIsOut(false); }, 400); 
+                    setTimeout(() => { setSubStep(prev); setIsOut(false); }, 400); 
                 }
             };
 
             const localProgress = progress + (subStep * 3);
-
-            if (subStep === 4) {
-                return <SecretReward secretIndex={3} progress={localProgress} onComplete={() => setSubStep(5)} onBack={() => setSubStep(3)} />;
-            }
 
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
@@ -1783,16 +1741,12 @@
 
             const getProgress = () => {
                 if (phase === 'intro') return 5;
-                if (phase === 'format') return 5 + (10 * treeProgress.format); 
-                if (phase === 'secret1') return 15; 
+                if (phase === 'format') return 5 + (15 * treeProgress.format); 
                 if (phase === 'logistics') return 20;
                 if (phase === 'delivery_error') return 25;
                 if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
                 if (phase === 'objective') return 45;
-                if (phase === 'occasion') return 40 + (15 * treeProgress.occasion); 
-                if (phase === 'secret2') return 60; 
                 if (phase === 'tones') return 75;
-                if (phase === 'secret3') return 80;
                 if (phase === 'n4') return 90;
                 if (phase === 'checkout') return 100;
                 return 0;
@@ -1811,10 +1765,6 @@
                 if (phaseHistory.length > 0) {
                     let newHistory = [...phaseHistory];
                     let prev = newHistory.pop();
-                    
-                    while (prev && prev.startsWith('secret') && newHistory.length > 0) {
-                        prev = newHistory.pop();
-                    }
                     
                     setPhaseHistory(newHistory);
                     setPhase(prev);
@@ -1835,13 +1785,10 @@
                         onComplete={(id, customValue) => {
                             const dataUpdate = { formatId: id };
                             if (customValue) dataUpdate.formatCustomPlace = customValue;
-                            advanceTo('secret1', dataUpdate);
+                            advanceTo('logistics', dataUpdate);
                         }} 
                         onBack={null} // Desactiva la navegación hacia la intro en la primera pregunta
                     />}
-                    
-                    {/* SECRETO 1: Antes de logística */}
-                    {phase === 'secret1' && <SecretReward secretIndex={0} progress={getProgress()} onComplete={() => advanceTo('logistics')} onBack={goBackPhase} />}
                     
                     {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
                         onComplete={data => {
@@ -1884,14 +1831,10 @@
                         onBack={goBackPhase} 
                     />}
                     
-                    {phase === 'objective' && <ObjectiveScreen progress={getProgress()} globalData={globalData} onComplete={txt => advanceTo('secret2', {objective: txt})} onBack={goBackPhase} />}
+                    {phase === 'objective' && <ObjectiveScreen progress={getProgress()} globalData={globalData} onComplete={txt => advanceTo('tones', {objective: txt})} onBack={goBackPhase} />}
 
-                    {phase === 'secret2' && <SecretReward secretIndex={1} progress={getProgress()} onComplete={() => advanceTo('tones')} onBack={goBackPhase} />}
+                    {phase === 'tones' && <TonesNoria onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
                     
-                    {phase === 'tones' && <TonesNoria onComplete={sel => advanceTo('secret3', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
-                    
-                    {phase === 'secret3' && <SecretReward secretIndex={2} progress={getProgress()} onComplete={() => advanceTo('n4')} onBack={goBackPhase} />}
-
                     {phase === 'n4' && <CustomizationN4 globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
                     {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
