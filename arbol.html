@@ -1264,7 +1264,7 @@
                     } else {
                         setShakeCardId(cardId);
                         setLimitWarning(true);
-                        setTimeout(() => setLimitWarning(false), 5000);
+                        setTimeout(() => setLimitWarning(false), 2000);
                         setTimeout(() => setShakeCardId(null), 400);
                     }
                 }
@@ -1331,8 +1331,10 @@
                         <GlobalHeader progress={progress} onBack={onBack} />
                         
                         {ReactDOM.createPortal(
-                            <div className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-red-500 font-bold text-xl md:text-2xl text-center transition-all duration-700 z-[9999] pointer-events-none ${limitWarning ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
-                                Puedes seleccionar {MAX_SELECTIONS} tonos como máximo
+                            <div className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] pointer-events-none transition-opacity duration-700 ${limitWarning ? 'opacity-100' : 'opacity-0'}`}>
+                                <div className={`text-red-500 font-bold text-xl md:text-2xl text-center transition-transform duration-700 ${limitWarning ? 'scale-100 shake' : 'scale-90'}`}>
+                                    Puedes seleccionar {MAX_SELECTIONS} tonos como máximo
+                                </div>
                             </div>,
                             document.body
                         )}
@@ -1425,7 +1427,7 @@
                                                                             } else {
                                                                                 setShakeCardId(card.id);
                                                                                 setLimitWarning(true);
-                                                                                setTimeout(() => setLimitWarning(false), 5000);
+                                                                                setTimeout(() => setLimitWarning(false), 2000);
                                                                                 setTimeout(() => setShakeCardId(null), 400);
                                                                             }
                                                                         }
