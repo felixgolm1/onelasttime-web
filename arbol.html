@@ -262,6 +262,14 @@
         .text-fade-red {
             animation: redToWhite 6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
+
+        @keyframes placeholderGreenToGray {
+            0% { color: #CCFF00; }
+            100% { color: #9ca3af; }
+        }
+        .placeholder-fade::placeholder {
+            animation: placeholderGreenToGray 3s ease-out forwards;
+        }
     </style>
 </head>
 <body class="bg-black text-white" style="background-color: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); min-height: 100vh; overflow-x: hidden;">
@@ -1123,8 +1131,9 @@
 
                         <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-4 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
                             <textarea
+                                key={placeholderIndex}
                                 rows={6}
-                                className="w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
+                                className="placeholder-fade w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
                                 placeholder={currentPlaceholder}
                                 value={text}
                                 onChange={handleTextChange}
