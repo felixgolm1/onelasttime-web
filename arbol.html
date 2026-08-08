@@ -199,7 +199,7 @@
         /* --- FASE: NORIA DE TONOS (V27) --- */
         .ferris-wheel-container { position: relative; width: 100%; height: 1100px; display: flex; justify-content: center; align-items: flex-start; perspective: 1200px; overflow: visible; padding-top: 2rem; cursor: grab; }
         .ferris-wheel-container:active { cursor: grabbing; }
-        .deck-group { position: absolute; width: 420px; max-width: 95vw; display: flex; flex-direction: column; align-items: center; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; }
+        .deck-group { position: absolute; left: 0; right: 0; margin: 0 auto; width: 420px; max-width: 95vw; display: flex; flex-direction: column; align-items: center; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; }
         
         .v27-card {
             background-color: #ffffff; border-radius: 14px; width: 100%; aspect-ratio: 3.5 / 1.98; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 2rem; cursor: pointer; position: relative; overflow: hidden; backface-visibility: hidden; 
@@ -1349,7 +1349,7 @@
 
             return (
                 <>
-                    <div className="w-full min-h-screen flex flex-col pb-48 fade-in relative">
+                    <div className="w-full min-h-screen flex flex-col pb-48 fade-in relative overflow-x-hidden">
                         <GlobalHeader progress={progress} onBack={onBack} />
                         
                         {ReactDOM.createPortal(
