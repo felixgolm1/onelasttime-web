@@ -1397,8 +1397,12 @@
                                                         <div 
                                                             key={card.id}
                                                             onClick={(e) => {
-                                                                const inputEl = e.currentTarget.querySelector('input');
-                                                                if (inputEl) inputEl.focus();
+                                                                if (customToneText.trim() !== '') {
+                                                                    toggleSelection(card.id);
+                                                                } else {
+                                                                    const inputEl = e.currentTarget.querySelector('input');
+                                                                    if (inputEl) inputEl.focus();
+                                                                }
                                                             }}
                                                             className={`v27-card ${isCustomSelected ? 'is-selected' : ''} ${isShaking ? 'shake-animation' : ''}`}
                                                             style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
