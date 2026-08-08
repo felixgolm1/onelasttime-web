@@ -1199,6 +1199,7 @@
             const [customToneText, setCustomToneText] = useState('');
             const [shakeKey, setShakeKey] = useState(0);
             const [isAutoSelecting, setIsAutoSelecting] = useState(false);
+            const [isAutoSelectDone, setIsAutoSelectDone] = useState(false);
 
             const containerRef = useRef(null);
             const touchStartX = useRef(null);
@@ -1277,6 +1278,7 @@
 
             const toggleSelection = (cardId) => {
                 if (isDragging.current) return;
+                if (isAutoSelectDone) setIsAutoSelectDone(false);
                 if (selectedCards.includes(cardId)) {
                     setSelectedCards(prev => prev.filter(id => id !== cardId));
                 } else {
@@ -1289,10 +1291,11 @@
             };
 
             const handleAutoSelect = () => {
-                if (isAutoSelecting) return;
+                if (isAutoSelecting || isAutoSelectDone) return;
                 setIsAutoSelecting(true);
                 setTimeout(() => {
                     setIsAutoSelecting(false);
+                    setIsAutoSelectDone(true);
                     const contextText = (globalData?.objective || '').toLowerCase();
                     const format = globalData?.formatId || '';
                     let newSelections = [];
@@ -1368,11 +1371,11 @@
                             <button 
                                 onClick={handleAutoSelect}
                                 disabled={isAutoSelecting}
-                                className={`relative overflow-hidden inline-flex items-center justify-center px-6 py-2.5 rounded-full font-semibold text-sm border transition-all duration-300 active:scale-95 z-50 ${isAutoSelecting ? 'border-[#CCFF00] text-black bg-[#CCFF00]/10' : 'bg-[#CCFF00]/10 text-[#CCFF00] border-[#CCFF00]/20 hover:bg-[#CCFF00]/20'}`}
+                                className={`relative overflow-hidden inline-flex items-center justify-center px-6 py-2.5 rounded-full font-semibold text-sm border transition-all duration-500 active:scale-95 z-50 ${isAutoSelecting ? 'border-[#CCFF00] text-black bg-[#CCFF00]/10' : isAutoSelectDone ? 'bg-black text-[#CCFF00] border-[#CCFF00]/30' : 'bg-[#CCFF00]/10 text-[#CCFF00] border-[#CCFF00]/20 hover:bg-[#CCFF00]/20'}`}
                             >
                                 {isAutoSelecting && <div className="absolute inset-0 bg-[#CCFF00] fill-progress"></div>}
-                                <span className="relative z-10 transition-colors duration-300">
-                                    Seleccionar automáticamente
+                                <span className="relative z-10 transition-colors duration-500">
+                                    {isAutoSelectDone ? 'Selección hecha' : 'Seleccionar automáticamente'}
                                 </span>
                             </button>
                         </div>
@@ -1430,6 +1433,7 @@
                                                                 placeholder={card.text}
                                                                 value={customToneText}
                                                                 onChange={(e) => {
+                                                                    if (isAutoSelectDone) setIsAutoSelectDone(false);
                                                                     const val = e.target.value;
                                                                     setCustomToneText(val);
                                                                     if (val.trim() !== '') {
