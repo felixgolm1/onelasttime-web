@@ -1193,6 +1193,7 @@
         const TonesNoria = ({ onComplete, progress, onBack, globalData }) => {
             const [scrollPos, setScrollPos] = useState(0);
             const maxScroll = dbTones.length - 1;
+            const hasContext = globalData?.objective?.trim().length > 0;
 
             const [selectedCards, setSelectedCards] = useState([]);
             const [shakeCardId, setShakeCardId] = useState(null);
@@ -1366,19 +1367,21 @@
                                 ¿Qué tono quieres que tenga la cena?
                             </h2>
                             <p className="text-base md:text-lg font-medium text-[#CCFF00] mb-5 leading-relaxed">
-                                Selecciona hasta {MAX_SELECTIONS} tonos manualmente o automáticamente en base al contexto anterior
+                                Selecciona hasta {MAX_SELECTIONS} tonos
                             </p>
                             
-                            <button 
+                            {hasContext && (
+                                <button 
                                 onClick={handleAutoSelect}
                                 disabled={isAutoSelecting}
                                 className={`relative overflow-hidden inline-flex items-center justify-center px-6 py-2.5 rounded-full font-semibold text-sm border transition-all duration-500 active:scale-95 z-50 ${isAutoSelecting ? 'border-[#CCFF00] text-black bg-[#CCFF00]/10' : isAutoSelectDone ? 'bg-black text-[#CCFF00] border-[#CCFF00]/30' : 'bg-[#CCFF00]/10 text-[#CCFF00] border-[#CCFF00]/20 hover:bg-[#CCFF00]/20'}`}
                             >
                                 {isAutoSelecting && <div className="absolute inset-0 bg-[#CCFF00] fill-progress"></div>}
                                 <span className="relative z-10 transition-colors duration-500">
-                                    {isAutoSelectDone ? 'Selección hecha' : 'Seleccionar automáticamente'}
+                                    {isAutoSelectDone ? 'Selección hecha' : 'Seleccionar en base al contexto anterior'}
                                 </span>
                             </button>
+                            )}
                         </div>
 
                         <div 
