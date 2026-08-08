@@ -971,8 +971,8 @@
 
         const DeliveryErrorScreen = ({ isBcn, reqHours, onDigital, onChangeDate, progress, onBack }) => {
             const titleText = isBcn 
-                ? `Danos un poco más de tiempo :'), necesitamos ${reqHours} horas de antelación para poder hacerte llegar las cartas físicas en Barcelona ciudad`
-                : `Danos un poco más de tiempo :'), necesitamos ${reqHours} horas de antelación para poder hacerte llegar las cartas físicas`;
+                ? `Danos un poco más de tiempo :'), para hacerte llegar las cartas físicas en la mesa en Barcelona ciudad, necesitamos ${reqHours} horas de antelación`
+                : `Danos un poco más de tiempo :'), para hacerte llegar las cartas físicas en la mesa, necesitamos ${reqHours} horas de antelación`;
 
             return (
                 <div className="scene flex-col justify-start pt-28 px-4 relative bg-transparent min-h-screen">
