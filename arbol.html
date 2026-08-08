@@ -1086,8 +1086,16 @@
             ];
 
             let examples = placeholdersPareja;
-            if (globalData?.audienceId === 'citas') examples = placeholdersCitas;
-            else if (globalData?.audienceId === 'amistad') examples = placeholdersAmistad;
+            let buttonText = "💡 Inspírate con ejemplos de otras parejas";
+
+            if (globalData?.audienceId === 'pareja') {
+                // "Primera cita" has id 'pareja'
+                examples = placeholdersCitas;
+                buttonText = "💡 Inspírate con ejemplos de otras citas";
+            } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
+                // "Nos estamos conociendo"
+                examples = placeholdersAmistad;
+            }
 
             const currentPlaceholder = examples[placeholderIndex];
 
@@ -1120,7 +1128,7 @@
                             onClick={handleInspire}
                             className="mb-8 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
                         >
-                            💡 Ver ejemplos de otras personas
+                            {buttonText}
                         </button>
 
                         <div className="h-6 mb-2">
