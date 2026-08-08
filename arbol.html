@@ -1045,6 +1045,7 @@
         const ObjectiveScreen = ({ onComplete, progress, onBack, globalData }) => {
             const [text, setText] = useState('');
             const [showWarning, setShowWarning] = useState(false);
+            const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
             const handleTextChange = (e) => {
                 const val = e.target.value;
@@ -1066,33 +1067,61 @@
                 }
             };
 
-            let placeholderTextFinal = "Ej: Celebrar nuestro aniversario, conocernos aun más, reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
-            if (globalData?.audienceId === 'pareja') {
-                placeholderTextFinal = "Ej: Romper el hielo, conseguir una segunda cita, descubrir si encajamos para algo más, hacerla una cita divertida...";
-            } else if (globalData?.audienceId === 'amistad') {
-                placeholderTextFinal = "Ej: Conocernos aun más, reconectar, mejorar nuestra comunicación, salir de la rutina, hacernos reir...";
-            }
+            const placeholdersPareja = [
+                "Ej: Llevamos unos meses muy secos por culpa de la rutina y quiero que hablemos para reconectar...",
+                "Ej: Queremos celebrar nuestro aniversario de una forma especial, recordando cómo nos conocimos...",
+                "Ej: Últimamente discutimos por tonterías y me gustaría usar esta cena para relajar tensiones..."
+            ];
+            
+            const placeholdersCitas = [
+                "Ej: Quiero romper el hielo y descubrir si realmente encajamos para algo más serio...",
+                "Ej: Es nuestra tercera cita y quiero que sea muy divertida para que se suelte...",
+                "Ej: Me gusta mucho y quiero crear un ambiente íntimo para poder conocerle mejor..."
+            ];
+            
+            const placeholdersAmistad = [
+                "Ej: Hace mucho que no nos vemos y quiero ponernos al día de todo sin filtros...",
+                "Ej: Quiero darle una sorpresa por su cumpleaños y que recordemos viejos tiempos...",
+                "Ej: Necesito desahogarme sobre un tema y quiero que sea una cena de confianza..."
+            ];
+
+            let examples = placeholdersPareja;
+            if (globalData?.audienceId === 'citas') examples = placeholdersCitas;
+            else if (globalData?.audienceId === 'amistad') examples = placeholdersAmistad;
+
+            const currentPlaceholder = examples[placeholderIndex];
+
+            const handleInspire = () => {
+                setPlaceholderIndex((prev) => (prev + 1) % examples.length);
+            };
 
             return (
                 <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
                     <GlobalHeader progress={progress} onBack={onBack} />
                     <div className="text-center max-w-xl w-full z-10 mt-12">
                         <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-4">
-                            ¿Cuál es el objetivo de la cena?
+                            ¿Qué queréis conseguir con esta cena?
                         </h2>
                         <p className="text-base md:text-lg font-medium text-[#CCFF00] mb-12 leading-relaxed">
-                            Esta es la parte más importante. Como más contexto<br />nos des, más personalizada la experiencia
+                            ¡Esta es la clave de todo! Danos el objetivo y todo el contexto que quieras. A más detalle, más mágica será la experiencia.
                         </p>
                         
-                        <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-8 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
+                        <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-4 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
                             <textarea
                                 rows={6}
-                                className="w-full bg-transparent resize-none outline-none text-xl md:text-2xl font-inter font-bold tracking-tight leading-[1.35] text-center text-black placeholder:text-gray-400 relative z-10"
-                                placeholder={placeholderTextFinal}
+                                className="w-full bg-transparent resize-none outline-none text-xl md:text-2xl font-inter font-bold tracking-tight leading-[1.35] text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
+                                placeholder={currentPlaceholder}
                                 value={text}
                                 onChange={handleTextChange}
                             />
                         </div>
+
+                        <button 
+                            onClick={handleInspire}
+                            className="mb-8 text-sm font-semibold text-gray-400 hover:text-white transition-colors flex items-center justify-center mx-auto"
+                        >
+                            💡 Ver ejemplos de otras personas
+                        </button>
 
                         <div className="h-6 mb-2">
                             <p className={`text-red-500 text-sm font-semibold transition-opacity duration-300 ${showWarning ? 'opacity-100' : 'opacity-0'}`}>
