@@ -1338,7 +1338,7 @@
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3">
                                 ¿Qué tono quieres que tenga la cena?
                             </h2>
-                            <p className="text-sm font-medium text-gray-500 max-w-sm mx-auto mb-6 leading-relaxed">
+                            <p className="text-base md:text-lg font-medium text-[#CCFF00] mb-5 leading-relaxed">
                                 Selecciona hasta {MAX_SELECTIONS} tonos manualmente o automáticamente en base al contexto anterior
                             </p>
                             
@@ -1392,27 +1392,26 @@
                                                 const baseZIndex = 15 - cardIndex;
 
                                                 if (card.id === 't_custom') {
+                                                    const isCustomSelected = isSelected && customToneText.trim() !== '';
                                                     return (
                                                         <div 
                                                             key={card.id}
-                                                            onClick={() => toggleSelection(card.id)}
-                                                            className={`v27-card ${isSelected ? 'is-selected' : ''} ${isShaking ? 'shake-animation' : ''}`}
+                                                            onClick={(e) => {
+                                                                const inputEl = e.currentTarget.querySelector('input');
+                                                                if (inputEl) inputEl.focus();
+                                                            }}
+                                                            className={`v27-card ${isCustomSelected ? 'is-selected' : ''} ${isShaking ? 'shake-animation' : ''}`}
                                                             style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
                                                         >
                                                             <input
                                                                 type="text"
-                                                                className={`w-full bg-transparent outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 ${isSelected ? 'text-white placeholder:text-white/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
+                                                                className={`w-full bg-transparent outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 ${isCustomSelected ? 'text-white placeholder:text-white/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
                                                                 placeholder={card.text}
                                                                 value={customToneText}
-                                                                onChange={(e) => setCustomToneText(e.target.value)}
-                                                                onClick={(e) => e.stopPropagation()}
-                                                                onFocus={(e) => {
-                                                                    isDragging.current = true; 
-                                                                }}
-                                                                onBlur={(e) => {
-                                                                    isDragging.current = false;
-                                                                    const val = e.target.value.trim();
-                                                                    if (val !== '') {
+                                                                onChange={(e) => {
+                                                                    const val = e.target.value;
+                                                                    setCustomToneText(val);
+                                                                    if (val.trim() !== '') {
                                                                         if (!selectedCards.includes(card.id)) {
                                                                             if (selectedCards.length < MAX_SELECTIONS) {
                                                                                 setSelectedCards(prev => [...prev, card.id]);
@@ -1428,6 +1427,13 @@
                                                                             setSelectedCards(prev => prev.filter(id => id !== card.id));
                                                                         }
                                                                     }
+                                                                }}
+                                                                onClick={(e) => e.stopPropagation()}
+                                                                onFocus={(e) => {
+                                                                    isDragging.current = true; 
+                                                                }}
+                                                                onBlur={(e) => {
+                                                                    isDragging.current = false;
                                                                 }}
                                                             />
                                                         </div>
