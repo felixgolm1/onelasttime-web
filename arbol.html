@@ -319,10 +319,10 @@
 
         const dbLogistics = [
             { id: 'fecha', label: 'Día y hora de la cena', type: 'datetime-local', req: true, conditions: ['siempre'] },
-            { id: 'direccion', label: 'Dirección de entrega completa', type: 'text', placeholder: '', req: true, conditions: ['cartas_fisicas'] },
+            { id: 'direccion', label: 'Dirección de entrega completa', type: 'text', placeholder: '', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro'] },
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
-            { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas'] }
+            { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro'] }
         ];
 
         const dbAudience = [
