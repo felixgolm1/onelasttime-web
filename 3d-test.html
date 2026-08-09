@@ -2706,14 +2706,7 @@ window.onerror = function(msg, url, line, col, err) {
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   
-  <!-- Modelo 3D: puesto completo de mesa (plato + cubiertos + servilleta) -->
-  <script src="assets/models/tablewareset_base64.js"></script>
-  <!-- Copa de vino (Zinfandel, alta calidad) -->
-  <script src="assets/models/sm_zinfandel_glass_base64.js"></script>
-  <!-- Mano animable / realista -->
-  <script src="assets/models/hand_base64.js"></script>
-  <!-- Tarjeta ID (.glb a Base64 bypass CORS) -->
-  <script src="assets/models/id_card_base64.js"></script>
+
 
   <script>
 
@@ -8276,7 +8269,7 @@ requestAnimationFrame(smoothScrollLoop);
 
   // Ã¢â€€Ã¢â€€ startLoading: parse GLTF en background; animación arranca al terminar Ã¢â€€Ã¢â€€
   function startLoading() {
-    gltfLoader.load(TABLESET_B64,
+    gltfLoader.load('assets/models/tablewareset.glb',
       (gltf) => {
         // GLTFLoader.parse() ha terminado → main thread libre de nuevo.
         if (animReady) {
@@ -8297,7 +8290,7 @@ requestAnimationFrame(smoothScrollLoop);
       },
       (err) => { console.error('Error cargando tablewareset:', err); }
     );
-    gltfLoader.load(WINEGLASS_B64,
+    gltfLoader.load('assets/models/sm_zinfandel_glass.glb',
       (gltf) => {
         placeWineGlass(gltf, -3.0, +2.4);
         placeWineGlass(gltf,  3.0, -2.4);
@@ -8530,13 +8523,11 @@ requestAnimationFrame(smoothScrollLoop);
         });
     }
     // Carga nuestro prisma/carta local (.glb proxy a B64)
-    if (typeof ID_CARD_B64 !== 'undefined') {
-      gltfLoader.load(ID_CARD_B64,
-        placeIdCard,
-        null,
-        (err) => { console.error('Error ID Card:', err); }
-      );
-    } else { console.warn('ID_CARD_B64 not found - skipping 3D card mesh'); }
+    gltfLoader.load('assets/models/id_card.glb',
+      placeIdCard,
+      null,
+      (err) => { console.error('Error ID Card:', err); }
+    );
   }
   
   // Ã¢â€€Ã¢â€€ INTRO CARD ANIMATION Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
