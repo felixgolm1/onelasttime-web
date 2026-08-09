@@ -1063,22 +1063,7 @@
             useEffect(() => {
                 if (isAnimatingPlaceholder) {
                     const timer = setTimeout(() => setIsAnimatingPlaceholder(false), 1500);
-                    
-            let singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
-
-Ej: Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente... [Especifica tanto como quieras]`;
-
-            if (globalData?.audienceId === 'pareja') {
-                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
-
-Ej: ${placeholdersCitas[0]}`;
-            } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
-                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
-
-Ej: ${placeholdersAmistad[0]}`;
-            }
-
-            return () => clearTimeout(timer);
+                    return () => clearTimeout(timer);
                 }
             }, [isAnimatingPlaceholder]);
 
@@ -1159,6 +1144,20 @@ Ej: ${placeholdersAmistad[0]}`;
                 setPlaceholderIndex((prev) => (prev + 1) % examples.length);
                 setIsAnimatingPlaceholder(true);
             };
+
+            let singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+
+Ej: Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente... [Especifica tanto como quieras]`;
+
+            if (globalData?.audienceId === 'pareja') {
+                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+
+Ej: ${placeholdersCitas[0]}`;
+            } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
+                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+
+Ej: ${placeholdersAmistad[0]}`;
+            }
 
             return (
                 <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6 pt-24 fade-in relative">
