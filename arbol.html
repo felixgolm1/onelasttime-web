@@ -1601,6 +1601,9 @@
             const [age, setAge] = useState(() => JSON.parse(sessionStorage.getItem('dev_n4_age')) || { min: 18, max: 65 });
             const [extraDetails, setExtraDetails] = useState(() => sessionStorage.getItem('dev_n4_extra') || '');
 
+            const [showModal, setShowModal] = useState(false);
+            const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
             useEffect(() => { sessionStorage.setItem('dev_n4_subStep', subStep); }, [subStep]);
             useEffect(() => { sessionStorage.setItem('dev_n4_time', timeMinutes); }, [timeMinutes]);
             useEffect(() => { sessionStorage.setItem('dev_n4_age', JSON.stringify(age)); }, [age]);
@@ -1613,13 +1616,7 @@
 
             useEffect(() => {
                 if (isAdultTheme && age.min < 18) setAge(p => ({ ...p, min: 18 }));
-            }, [isAdultTheme, age.min]);
-
-            const formatTime = (tm) => { const h = Math.floor(tm / 60); const m = tm % 60; return h===0 ? `${m} min` : m===0 ? `${h} h` : `${h} h ${m} min`; };
-            
-            
-            
-            
+            }, [isAdultTheme]);
 
             const handleNextSubStep = () => {
                 if (subStep === 3) {
@@ -1641,31 +1638,38 @@
                 }
             };
 
+            const formatTime = (mins) => {
+                if (mins < 60) return `${mins} mins`;
+                const h = Math.floor(mins / 60);
+                const m = mins % 60;
+                return m > 0 ? `${h}h ${m}m` : `${h}h`;
+            };
+
             const localProgress = progress + (subStep * 3);
 
-            
-            const extraDetailsPlaceholder = `Ej: Prohibido hablar de política o del trabajo, que suficiente tenemos ya de lunes a viernes.
+            const examplesDetalles = [
+                "Prohibido hablar de política o del trabajo, que suficiente tenemos ya de lunes a viernes.",
+                "Por favor, cero menciones a la hipoteca, a los tipos de interés o a cuándo tendremos hijos.",
+                "Queremos preguntas incómodas. No tenemos vergüenza de nada y venimos a jugar.",
+                "Yo soy de darle muchas vueltas a todo y ella es súper pragmática. Me encantaría que la experiencia nos obligue a cambiar los roles por una noche: que ella tenga que profundizar más y yo tenga que dar respuestas directas al grano.",
+                "Somos muy competitivos. Si la experiencia tiene sistema de puntos, la cena acabará en drama.",
+                "Ambos tenemos trabajos muy absorbentes y a veces nos cuesta desconectar al llegar a casa. Me encantaría que la experiencia no nos pregunte nada sobre nuestro día a día ni planes de futuro inmediatos, sino que nos haga divagar sobre escenarios imposibles o cosas muy abstractas para ayudarnos a salir de la rutina mental.",
+                "Salseo del bueno, por favor. Estamos preparados para todo (creo).",
+                "Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un monumento."
+            ];
 
-Ej: A él le cuesta mucho hablar de sus sentimientos si se siente presionado. Funciona mucho mejor si las preguntas empiezan con un tono más ligero y poco a poco van ganando profundidad para que se vaya abriendo sin darse cuenta.
+            const currentModalExample = examplesDetalles[placeholderIndex];
 
-Ej: Por favor, cero menciones a la hipoteca, a los tipos de interés o a cuándo tendremos hijos.
+            const handleInspire = () => {
+                setPlaceholderIndex((prev) => (prev + 1) % examplesDetalles.length);
+            };
 
-Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.
+            const singlePlaceholder = `Escribe aquí (opcional)...
 
-Ej: Queremos preguntas incómodas. No tenemos vergüenza de nada y venimos a jugar.
-
-Ej: Yo soy de darle muchas vueltas a todo y ella es súper pragmática. Me encantaría que la experiencia nos obligue a cambiar los roles por una noche: que ella tenga que profundizar más y yo tenga que dar respuestas directas al grano.
-
-Ej: Somos muy competitivos. Si la experiencia tiene sistema de puntos, la cena acabará en drama.
-
-Ej: Ambos tenemos trabajos muy absorbentes y a veces nos cuesta desconectar al llegar a casa. Me encantaría que la experiencia no nos pregunte nada sobre nuestro día a día ni planes de futuro inmediatos, sino que nos haga divagar sobre escenarios imposibles o cosas muy abstractas para ayudarnos a salir de la rutina mental.
-
-Ej: Salseo del bueno, por favor. Estamos preparados para todo (creo).
-
-Ej: Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un monumento.`;
+Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.`;
 
             return (
-                        <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
+                <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
                     
                     <GlobalHeader progress={localProgress} onBack={handlePrevSubStep} />
 
@@ -1710,12 +1714,20 @@ Ej: Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un m
                             <div className="w-full">
                                 <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">Ya estamos. ¿Crees que hay algo más que debamos tener en cuenta para personalizar tu experiencia?</h2>
                                 
+                                <button 
+                                    onClick={() => setShowModal(true)}
+                                    className="mb-6 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                    Inspírate con ejemplos de otras parejas
+                                </button>
                                 
                                 <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-6 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
                                     <textarea
+                                        autoFocus
                                         rows={6}
                                         className="w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
-                                        placeholder={extraDetailsPlaceholder}
+                                        placeholder={singlePlaceholder}
                                         value={extraDetails}
                                         onChange={e => setExtraDetails(e.target.value)}
                                     />
@@ -1724,6 +1736,37 @@ Ej: Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un m
                             </div>
                         )}
                     </div>
+                    {showModal && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm fade-in" onClick={() => setShowModal(false)}>
+                            <div className="relative w-full max-w-md flex flex-col items-center bg-white rounded-3xl p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+                                <button 
+                                    onClick={() => setShowModal(false)} 
+                                    className="absolute top-4 right-4 text-gray-400 hover:text-black p-2 transition-colors"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                </button>
+                                
+                                <h3 className="text-xl md:text-2xl font-semibold text-black mb-6 text-center pr-8 pl-8">
+                                    Ejemplos de otras parejas
+                                </h3>
+                                
+                                <div className="w-full mb-8 h-[180px] overflow-y-auto pr-2 custom-scrollbar">
+                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter">
+                                        {currentModalExample}
+                                    </p>
+                                </div>
+                                
+                                <div className="w-full relative h-[42px]">
+                                    <button 
+                                        onClick={handleInspire}
+                                        className="btn-black w-full uppercase text-sm tracking-wider"
+                                    >
+                                        Siguiente ejemplo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         };
