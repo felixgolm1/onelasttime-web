@@ -317,11 +317,10 @@
         ];
 
         const dbLogistics = [
-            { id: 'ciudad', label: 'Ciudad o código postal', type: 'text', req: true, conditions: ['cartas_fisicas'] },
+            { id: 'direccion', label: 'Dirección de entrega completa (con C.P)', type: 'text', placeholder: 'Calle, ciudad y código postal', req: true, conditions: ['cartas_fisicas'] },
             { id: 'fecha', label: 'Día y hora de la cena', type: 'datetime-local', req: true, conditions: ['siempre'] },
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
-            { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] },
             { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas'] }
         ];
 
@@ -858,7 +857,7 @@
         };
 
         const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack }) => {
-            const [form, setForm] = useState(initialData || { ciudad: '', fecha: '', restaurante: '', reserva: '', direccion: '', comida: [] });
+            const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', comida: [] });
             const [errs, setErrs] = useState([]);
             const [shakeFields, setShakeFields] = useState([]);
             const [showGlobalError, setShowGlobalError] = useState(false);
@@ -2224,7 +2223,7 @@
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
                             } else {
-                                const isBcn = isBarcelonaCity(data.ciudad);
+                                const isBcn = isBarcelonaCity(data.direccion);
                                 const reqHours = isBcn ? 4 : 48;
                                 
                                 const eventDate = new Date(data.fecha);
