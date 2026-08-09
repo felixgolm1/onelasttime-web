@@ -2738,71 +2738,9 @@ window.onerror = function(msg, url, line, col, err) {
     tryReveal();
   }
 
-  // Helper para el Matrix en la carta 3D
-  function playMatrixOn3DCard() {
-    if (typeof makeCardFrontTex !== 'function' || typeof applyDesign !== 'function') return;
-    const final1 = "CONEXIONES SIGNIFICATIVAS";
-    const final2 = "PARA PERSONAS QUE IMPORTAN";
-    const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
-    let iteration = 0;
-    
-    function drawMatrixFrame() {
-      let t1 = '', t2 = '';
-      
-      // Line 1
-      for (let i = 0; i < final1.length; i++) {
-        if (final1[i] === ' ') {
-          t1 += ' ';
-        } else if (i < Math.floor(iteration)) {
-          t1 += final1[i];
-        } else if (i < Math.floor(iteration) + 6) {
-          t1 += glyphs[Math.floor(Math.random() * glyphs.length)];
-        } else {
-          t1 += ' ';
-        }
-      }
-      
-      // Line 2
-      for (let i = 0; i < final2.length; i++) {
-        let j = i + Math.floor(final1.length * 0.4);
-        if (final2[i] === ' ') {
-          t2 += ' ';
-        } else if (j < Math.floor(iteration)) {
-          t2 += final2[i];
-        } else if (j < Math.floor(iteration) + 6) {
-          t2 += glyphs[Math.floor(Math.random() * glyphs.length)];
-        } else {
-          t2 += ' ';
-        }
-      }
-      
-      if (typeof window._applyDesignWithMatrix === 'function') {
-        window._applyDesignWithMatrix(t1, t2);
-      }
-    }
-    
-    // Forzamos el primer frame INMEDIATAMENTE (todo borrado) para evitar 
-    // que se vea la carta con el texto normal durante 30ms.
-    drawMatrixFrame();
-
-    const timer = setInterval(() => {
-      iteration += 1.2;
-      drawMatrixFrame();
-      
-      if (iteration >= final1.length + final2.length) {
-        clearInterval(timer);
-        if (typeof window._applyDesignWithMatrix === 'function') {
-          window._applyDesignWithMatrix(final1, final2);
-        }
-      }
-    }, 30);
-  }
 
   function tryReveal() {
     if (!animReady || !gltfReady) return;
-    
-    // Disparar matrix en la carta 3D
-    playMatrixOn3DCard();
       
     requestAnimationFrame(() => {
       const loaderEl   = document.getElementById('loader');
