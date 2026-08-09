@@ -2756,6 +2756,7 @@ window.onerror = function(msg, url, line, col, err) {
       if (introLine) introLine.style.display = 'none';
       if (svgWrap) svgWrap.style.display = 'none';
       if (realCard) realCard.style.opacity = '0'; 
+      if (cardCanvasEl) cardCanvasEl.style.opacity = '1';
       // Mantenemos realCard en el DOM porque GSAP scrollTl lo lee para visibility swaps
 
       // Estado auxiliar para escalar la carta inicial
@@ -8125,18 +8126,8 @@ requestAnimationFrame(smoothScrollLoop);
       document.body.appendChild(_svgWrap);
     }
 
-    // 2) Ocultar el contenido visual de la CSS card (la 3D la reemplaza desde ya)
-    const _realCardEl = document.getElementById('intro-real-card');
-    if (_realCardEl) _realCardEl.style.opacity = '0';
-
-    // 3) Mostrar 3D card con fade-in suave
-    const _ccEl = document.getElementById('card-canvas');
-    if (_ccEl) {
-      _ccEl.style.transition = 'opacity 0.8s cubic-bezier(0.4,0,0.2,1)';
-    }
-    requestAnimationFrame(() => {
-      if (_ccEl) _ccEl.style.opacity = '1';   // carta 3D: fade-in 0.8s
-    });
+    // 2) (Ocultar DOM card y mostrar 3D card se hace ahora en tryReveal() para respetar los tiempos)
+    
     pivot.visible = true;  // override del pivot.visible = false previo
   }
 
@@ -8527,9 +8518,9 @@ requestAnimationFrame(smoothScrollLoop);
               }
             }
             
-            // Line 2 (con un desfase visual para que la ola baje)
+            // Line 2 (con un desfase visual para que la ola baje secuencialmente)
             for (let i = 0; i < finalStr2.length; i++) {
-              let j = i + Math.floor(finalStr1.length * 0.4); 
+              let j = i + finalStr1.length; 
               if (finalStr2[i] === ' ') {
                 html2 += ' ';
               } else if (j < Math.floor(iteration)) {
