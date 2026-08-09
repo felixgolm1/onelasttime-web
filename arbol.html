@@ -1188,8 +1188,8 @@
                         </button>
                     </div>
                     {showModal && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm fade-in">
-                            <div className="relative w-full max-w-md flex flex-col items-center bg-white rounded-3xl p-8 shadow-2xl">
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm fade-in" onClick={() => setShowModal(false)}>
+                            <div className="relative w-full max-w-md flex flex-col items-center bg-white rounded-3xl p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
                                 <button 
                                     onClick={() => setShowModal(false)} 
                                     className="absolute top-4 right-4 text-gray-400 hover:text-black p-2 transition-colors"
