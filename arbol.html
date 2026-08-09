@@ -1688,20 +1688,20 @@
                         {subStep === 3 && (
                             <div className="w-full">
                                 <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">¿Quieres añadir algo más?</h2>
-                                <p className="text-sm font-medium text-gray-500 text-center mb-8">
+                                <p className="text-base md:text-lg font-medium text-[#CCFF00] mb-5 leading-relaxed text-center">
                                     Última oportunidad para darnos información de contexto antes que diseñemos tus cartas
                                 </p>
                                 
-                                <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-12 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)] floating">
+                                <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-6 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
                                     <textarea
                                         rows={6}
-                                        className="w-full bg-transparent resize-none outline-none text-xl md:text-2xl font-inter font-bold tracking-tight leading-[1.35] text-center text-black placeholder:text-gray-400 relative z-10"
+                                        className="w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
                                         placeholder="Escribe aquí (opcional)..."
                                         value={extraDetails}
                                         onChange={e => setExtraDetails(e.target.value)}
                                     />
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full">Finalizar</button>
+                                <button onClick={handleNextSubStep} className="btn-black w-full md:max-w-[320px] mx-auto block">Finalizar</button>
                             </div>
                         )}
                     </div>
