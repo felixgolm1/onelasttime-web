@@ -56,6 +56,16 @@
         .pill-input:focus { box-shadow: 0 0 0 2px #000, 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.1); z-index: 10; transform: scale(1.01); }
         .pill-input:hover { transform: translateY(-8px); box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.15), 0 24px 48px rgba(0,0,0,0.1); z-index: 20; }
         .pill-input::placeholder { color: #d1d5db; }
+        .pill-textarea { 
+            width: 100%; padding: 1.05rem 1.5rem; background: #fff; color: #000; border: 1.5px solid #000; 
+            border-radius: 24px; text-align: left; font-size: 15px; outline: none; transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 10px rgba(0,0,0,0.06), 0 12px 24px rgba(0,0,0,0.05); 
+            position: relative; resize: none; overflow-y: hidden; line-height: 1.5;
+        }
+        .pill-textarea:focus { box-shadow: 0 0 0 2px #000, 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.1); z-index: 10; transform: scale(1.01); }
+        .pill-textarea:hover { transform: translateY(-8px); box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.15), 0 24px 48px rgba(0,0,0,0.1); z-index: 20; }
+        .pill-textarea::placeholder { color: #d1d5db; }
+
         input[type="datetime-local"].is-empty { color: #9ca3af; }
         input[type="datetime-local"].pill-input { appearance: none; -webkit-appearance: none; display: block; font-family: 'Poppins', sans-serif; }
 
@@ -311,7 +321,8 @@
             { id: 'fecha', label: 'Día y hora de la cena', type: 'datetime-local', req: true, conditions: ['siempre'] },
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
-            { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] }
+            { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] },
+            { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: 'Opcional (Ej. llamar al llegar)', req: false, conditions: ['cartas_fisicas'] }
         ];
 
         const dbAudience = [
@@ -886,6 +897,26 @@
                                     <div key={f.id} className={`w-full mb-4 ${!isMulti ? 'floating' : ''}`} style={!isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>
                                         <label className={`label-style ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>{f.label}</label>
                                         {f.subtitle && <p className={`text-[10px] text-gray-500 font-medium text-center mb-3 -mt-1 ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15 + 0.05}s`} : {}}>{f.subtitle}</p>}
+                                        {f.type === 'textarea' && (
+                                            <textarea 
+                                                placeholder={f.placeholder || 'Escribe aquí (opcional)'}
+                                                className={`pill-textarea ${errs.includes(f.id) ? 'input-error' : ''} ${shakeFields.includes(f.id) ? 'shake' : ''}`}
+                                                rows={1}
+                                                value={form[f.id] || ''}
+                                                onChange={e => {
+                                                    setForm({...form, [f.id]: e.target.value}); 
+                                                    setErrs(errs.filter(id => id !== f.id));
+                                                    e.target.style.height = 'auto';
+                                                    const newHeight = Math.min(e.target.scrollHeight, 124);
+                                                    e.target.style.height = newHeight + 'px';
+                                                    if (e.target.scrollHeight > 124) {
+                                                        e.target.style.overflowY = 'auto';
+                                                    } else {
+                                                        e.target.style.overflowY = 'hidden';
+                                                    }
+                                                }}
+                                            />
+                                        )}
                                         {f.type === 'text' && <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'datetime-local' && <input type="datetime-local" onClick={e => { try { e.target.showPicker(); } catch(err){} }} onFocus={e => { try { e.target.showPicker(); } catch(err){} }} className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'multi_pills' && (
