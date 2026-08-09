@@ -1063,7 +1063,22 @@
             useEffect(() => {
                 if (isAnimatingPlaceholder) {
                     const timer = setTimeout(() => setIsAnimatingPlaceholder(false), 1500);
-                    return () => clearTimeout(timer);
+                    
+            let singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+
+Ej: Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente... [Especifica tanto como quieras]`;
+
+            if (globalData?.audienceId === 'pareja') {
+                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+
+Ej: ${placeholdersCitas[0]}`;
+            } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
+                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+
+Ej: ${placeholdersAmistad[0]}`;
+            }
+
+            return () => clearTimeout(timer);
                 }
             }, [isAnimatingPlaceholder]);
 
@@ -1088,42 +1103,42 @@
             };
 
             const placeholdersPareja = [
-                "Llevamos unos meses con mucho estrés por el trabajo y siento que nuestra comunicación es muy superficial últimamente. Me gustaría usar esta cena para hablar sin filtros, reconectar y volver a sentirnos equipo. Como contexto: Él es una persona que se encierra mucho en sí mismo cuando está estresado y le cuesta horrores verbalizar lo que siente, mientras que yo hablo por los codos y a veces le abrumo. Me gustaría que la experiencia le ayudara a abrirse a su ritmo, sin sentirse interrogado",
-                "Queremos celebrar nuestro aniversario y recordar viejos tiempos",
-                "Aunque llevamos tiempo juntos, siento que siempre hablamos de lo mismo. Quiero que esta experiencia nos ponga a prueba con preguntas profundas que nunca nos haríamos normalmente para sorprendernos",
-                "Entre los niños y la casa hemos caído en una rutina muy aburrida. Mi objetivo es que hoy volvamos a ser novios, nos riamos de anécdotas locas y nos olvidemos de las responsabilidades por unas horas. Yo soy muy impulsiva, pero él es súper cuadriculado y planificador, le cuesta salir del guion. Me encantaría que la experiencia le 'obligue' a soltarse la melena y hacer propuestas más locas e inesperadas",
-                "Buscamos salir de la monotonía y pasar una noche súper divertida",
-                "Estamos a punto de irnos a vivir juntos y me da un poco de vértigo. Quiero que la cena sirva para alinear expectativas, hablar de nuestros miedos y establecer cómo queremos que sea nuestra convivencia",
-                "Tenemos que organizar nuestras vacaciones y nos vendría bien algo de inspiración",
-                "Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente",
-                "Hemos pasado unas semanas tensas por algunos malentendidos tontos. Quiero que esta cena sea un punto de inflexión para pasar página, relajarnos y volver a mirarnos con la complicidad de siempre",
-                "Últimamente casi no tenemos momentos de intimidad real y sin pantallas. Quiero crear un ambiente muy cálido que nos invite a abrirnos, hablarnos desde el corazón y encender de nuevo la chispa. A él últimamente le cuesta tomar la iniciativa por algunas inseguridades físicas que ha desarrollado este año. Mi objetivo principal es que la experiencia le haga sentirse inmensamente deseado, atractivo y empoderado"
+                "Llevamos unos meses con mucho estrés por el trabajo y siento que nuestra comunicación es muy superficial últimamente. Me gustaría usar esta cena para hablar sin filtros, reconectar y volver a sentirnos equipo. Como contexto: Él es una persona que se encierra mucho en sí mismo cuando está estresado y le cuesta horrores verbalizar lo que siente, mientras que yo hablo por los codos y a veces le abrumo. Me gustaría que la experiencia le ayudara a abrirse a su ritmo, sin sentirse interrogado... [Especifica tanto como quieras]",
+                "Queremos celebrar nuestro aniversario y recordar viejos tiempos... [Especifica tanto como quieras]",
+                "Aunque llevamos tiempo juntos, siento que siempre hablamos de lo mismo. Quiero que esta experiencia nos ponga a prueba con preguntas profundas que nunca nos haríamos normalmente para sorprendernos... [Especifica tanto como quieras]",
+                "Entre los niños y la casa hemos caído en una rutina muy aburrida. Mi objetivo es que hoy volvamos a ser novios, nos riamos de anécdotas locas y nos olvidemos de las responsabilidades por unas horas. Yo soy muy impulsiva, pero él es súper cuadriculado y planificador, le cuesta salir del guion. Me encantaría que la experiencia le 'obligue' a soltarse la melena y hacer propuestas más locas e inesperadas... [Especifica tanto como quieras]",
+                "Buscamos salir de la monotonía y pasar una noche súper divertida... [Especifica tanto como quieras]",
+                "Estamos a punto de irnos a vivir juntos y me da un poco de vértigo. Quiero que la cena sirva para alinear expectativas, hablar de nuestros miedos y establecer cómo queremos que sea nuestra convivencia... [Especifica tanto como quieras]",
+                "Tenemos que organizar nuestras vacaciones y nos vendría bien algo de inspiración... [Especifica tanto como quieras]",
+                "Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente... [Especifica tanto como quieras]",
+                "Hemos pasado unas semanas tensas por algunos malentendidos tontos. Quiero que esta cena sea un punto de inflexión para pasar página, relajarnos y volver a mirarnos con la complicidad de siempre... [Especifica tanto como quieras]",
+                "Últimamente casi no tenemos momentos de intimidad real y sin pantallas. Quiero crear un ambiente muy cálido que nos invite a abrirnos, hablarnos desde el corazón y encender de nuevo la chispa. A él últimamente le cuesta tomar la iniciativa por algunas inseguridades físicas que ha desarrollado este año. Mi objetivo principal es que la experiencia le haga sentirse inmensamente deseado, atractivo y empoderado... [Especifica tanto como quieras]"
             ];
             
             const placeholdersCitas = [
-                "Es nuestra primera cita después de hacer match en Tinder. Quiero romper el hielo rápido, reírme mucho y evitar silencios incómodos",
-                "Nos conocemos de la oficina pero es la primera vez que quedamos a solas. Quiero descubrir si hay conexión real más allá del trabajo, pero manteniendo un tono súper divertido. Él siempre va de 'chico duro' en la oficina pero sé que en el fondo es un trozo de pan, me gustaría que la cena le anime a mostrar su lado más tierno",
-                "Me encanta y quiero saber si encajamos más allá del físico",
-                "Quiero tener una primera cita súper original y dinámica",
-                "Ya hemos estado hablando semanas por WhatsApp y la química es brutal. Quiero aprovechar la cena para que esa chispa se trasladase en persona y ver si salta la tensión romántica. Los dos somos muy sarcásticos y nos gusta meternos el uno con el otro, así que me encantaría que la experiencia fomente ese flirteo juguetón",
-                "Ambos somos muy frikis del cine y la música. Quiero que la experiencia nos guíe para debatir un poco y comprobar si tenemos una visión de la vida parecida",
-                "Soy una persona bastante tímida y me cuesta abrirme al principio. Quiero que las preguntas nos ayuden a ir perdiendo la vergüenza poco a poco y crear un ambiente de confianza. A ella se la ve súper extrovertida y segura de sí misma, así que me gustaría que la dinámica nos ponga al mismo nivel para no sentirme pequeñito a su lado",
-                "Es una cita a ciegas y solo quiero reírme y pasarlo genial",
-                "Siento que tengo mucha facilidad para entrar en la 'friendzone'. Quiero que esta cita tenga un toque más picante y seductor para que quede claro desde el principio que busco algo más. Ella es muy dulce e inocente a veces, así que quiero ir subiendo la temperatura de la conversación de forma muy elegante y progresiva",
-                "Busco algo serio y quiero ir al grano, pero sin parecer un interrogatorio. Me gustaría charlar de nuestros valores de forma natural"
+                "Es nuestra primera cita después de hacer match en Tinder. Quiero romper el hielo rápido, reírme mucho y evitar silencios incómodos... [Especifica tanto como quieras]",
+                "Nos conocemos de la oficina pero es la primera vez que quedamos a solas. Quiero descubrir si hay conexión real más allá del trabajo, pero manteniendo un tono súper divertido. Él siempre va de 'chico duro' en la oficina pero sé que en el fondo es un trozo de pan, me gustaría que la cena le anime a mostrar su lado más tierno... [Especifica tanto como quieras]",
+                "Me encanta y quiero saber si encajamos más allá del físico... [Especifica tanto como quieras]",
+                "Quiero tener una primera cita súper original y dinámica... [Especifica tanto como quieras]",
+                "Ya hemos estado hablando semanas por WhatsApp y la química es brutal. Quiero aprovechar la cena para que esa chispa se trasladase en persona y ver si salta la tensión romántica. Los dos somos muy sarcásticos y nos gusta meternos el uno con el otro, así que me encantaría que la experiencia fomente ese flirteo juguetón... [Especifica tanto como quieras]",
+                "Ambos somos muy frikis del cine y la música. Quiero que la experiencia nos guíe para debatir un poco y comprobar si tenemos una visión de la vida parecida... [Especifica tanto como quieras]",
+                "Soy una persona bastante tímida y me cuesta abrirme al principio. Quiero que las preguntas nos ayuden a ir perdiendo la vergüenza poco a poco y crear un ambiente de confianza. A ella se la ve súper extrovertida y segura de sí misma, así que me gustaría que la dinámica nos ponga al mismo nivel para no sentirme pequeñito a su lado... [Especifica tanto como quieras]",
+                "Es una cita a ciegas y solo quiero reírme y pasarlo genial... [Especifica tanto como quieras]",
+                "Siento que tengo mucha facilidad para entrar en la 'friendzone'. Quiero que esta cita tenga un toque más picante y seductor para que quede claro desde el principio que busco algo más. Ella es muy dulce e inocente a veces, así que quiero ir subiendo la temperatura de la conversación de forma muy elegante y progresiva... [Especifica tanto como quieras]",
+                "Busco algo serio y quiero ir al grano, pero sin parecer un interrogatorio. Me gustaría charlar de nuestros valores de forma natural... [Especifica tanto como quieras]"
             ];
             
             const placeholdersAmistad = [
-                "Llevamos un par de meses quedando esporádicamente. Quiero que esta cena sirva para ponernos un poco profundos y saber qué estamos buscando realmente. Siento que yo he estado muy distante por estrés y ella se ha enfriado, quiero demostrarle hoy que sigo súper interesado y volver a seducirla",
-                "Tenemos mucha química y quiero ver adónde nos lleva esto",
-                "Nos llevamos increíble y nos reímos un montón juntos. El objetivo es simplemente pasar una noche divertidísima y afianzar esta complicidad",
-                "Nos vemos bastante a menudo pero siempre en grupo. Esta es de nuestras primeras cenas a solas y quiero descubrir cómo somos cuando no hay nadie más alrededor. Él siempre es el payaso del grupo que hace reír a todos, pero sospecho que usa el humor como escudo. Quiero que hoy se sienta cómodo para ponerse un poco más vulnerable y auténtico",
-                "Quiero confesarle lo mucho que me gusta y lo especial que me hace sentir",
-                "Empezó como un lío sin compromiso, pero últimamente siento que me está gustando más de la cuenta. Quiero usar la experiencia para tantear un poco el terreno",
-                "Nos conocimos de casualidad y fue un flechazo absoluto. Quiero aprovechar la cena para confesarle lo mucho que me gusta cómo es y hacerle sentir la persona más especial de la sala. Como él es muy inseguro con su físico y siempre hace bromas autodespreciativas, quiero que la experiencia le bombardee sutilmente con refuerzo positivo sobre lo atractivo que me resulta",
-                "Busco tener una charla muy profunda sin distracciones",
-                "Nos estamos conociendo poco a poco porque venimos de relaciones pasadas difíciles. El objetivo de la cena es ir despacio y generar muchísima confianza",
-                "Hacemos planes súper chulos pero casi nunca paramos a hablar tranquilamente. Quiero usar la cena para tener una conversación de calidad, sin móviles ni distracciones, solo nosotros dos. Él tiene tendencia a interrumpir y querer llevar la razón siempre en los debates, me gustaría que la dinámica le obligue a escuchar más activamente y empatizar"
+                "Llevamos un par de meses quedando esporádicamente. Quiero que esta cena sirva para ponernos un poco profundos y saber qué estamos buscando realmente. Siento que yo he estado muy distante por estrés y ella se ha enfriado, quiero demostrarle hoy que sigo súper interesado y volver a seducirla... [Especifica tanto como quieras]",
+                "Tenemos mucha química y quiero ver adónde nos lleva esto... [Especifica tanto como quieras]",
+                "Nos llevamos increíble y nos reímos un montón juntos. El objetivo es simplemente pasar una noche divertidísima y afianzar esta complicidad... [Especifica tanto como quieras]",
+                "Nos vemos bastante a menudo pero siempre en grupo. Esta es de nuestras primeras cenas a solas y quiero descubrir cómo somos cuando no hay nadie más alrededor. Él siempre es el payaso del grupo que hace reír a todos, pero sospecho que usa el humor como escudo. Quiero que hoy se sienta cómodo para ponerse un poco más vulnerable y auténtico... [Especifica tanto como quieras]",
+                "Quiero confesarle lo mucho que me gusta y lo especial que me hace sentir... [Especifica tanto como quieras]",
+                "Empezó como un lío sin compromiso, pero últimamente siento que me está gustando más de la cuenta. Quiero usar la experiencia para tantear un poco el terreno... [Especifica tanto como quieras]",
+                "Nos conocimos de casualidad y fue un flechazo absoluto. Quiero aprovechar la cena para confesarle lo mucho que me gusta cómo es y hacerle sentir la persona más especial de la sala. Como él es muy inseguro con su físico y siempre hace bromas autodespreciativas, quiero que la experiencia le bombardee sutilmente con refuerzo positivo sobre lo atractivo que me resulta... [Especifica tanto como quieras]",
+                "Busco tener una charla muy profunda sin distracciones... [Especifica tanto como quieras]",
+                "Nos estamos conociendo poco a poco porque venimos de relaciones pasadas difíciles. El objetivo de la cena es ir despacio y generar muchísima confianza... [Especifica tanto como quieras]",
+                "Hacemos planes súper chulos pero casi nunca paramos a hablar tranquilamente. Quiero usar la cena para tener una conversación de calidad, sin móviles ni distracciones, solo nosotros dos. Él tiene tendencia a interrumpir y querer llevar la razón siempre en los debates, me gustaría que la dinámica le obligue a escuchar más activamente y empatizar... [Especifica tanto como quieras]"
             ];
 
             let examples = placeholdersPareja;
@@ -1169,7 +1184,7 @@
                                 key={placeholderIndex}
                                 rows={6}
                                 className={`${isAnimatingPlaceholder ? 'placeholder-fade ' : ''}w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300`}
-                                placeholder={"Ej: " + currentPlaceholder}
+                                placeholder={singlePlaceholder}
                                 value={text}
                                 onChange={handleTextChange}
                             />
@@ -1649,14 +1664,14 @@
             const localProgress = progress + (subStep * 3);
 
             const examplesDetalles = [
-                "Prohibido hablar de política o del trabajo, que suficiente tenemos ya de lunes a viernes.",
-                "Por favor, cero menciones a la hipoteca, a los tipos de interés o a cuándo tendremos hijos.",
-                "Queremos preguntas incómodas. No tenemos vergüenza de nada y venimos a jugar.",
-                "Yo soy de darle muchas vueltas a todo y ella es súper pragmática. Me encantaría que la experiencia nos obligue a cambiar los roles por una noche: que ella tenga que profundizar más y yo tenga que dar respuestas directas al grano.",
-                "Somos muy competitivos. Si la experiencia tiene sistema de puntos, la cena acabará en drama.",
-                "Ambos tenemos trabajos muy absorbentes y a veces nos cuesta desconectar al llegar a casa. Me encantaría que la experiencia no nos pregunte nada sobre nuestro día a día ni planes de futuro inmediatos, sino que nos haga divagar sobre escenarios imposibles o cosas muy abstractas para ayudarnos a salir de la rutina mental.",
-                "Salseo del bueno, por favor. Estamos preparados para todo (creo).",
-                "Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un monumento."
+                "Prohibido hablar de política o del trabajo, que suficiente tenemos ya de lunes a viernes.... [Especifica tanto como quieras]",
+                "Por favor, cero menciones a la hipoteca, a los tipos de interés o a cuándo tendremos hijos.... [Especifica tanto como quieras]",
+                "Queremos preguntas incómodas. No tenemos vergüenza de nada y venimos a jugar.... [Especifica tanto como quieras]",
+                "Yo soy de darle muchas vueltas a todo y ella es súper pragmática. Me encantaría que la experiencia nos obligue a cambiar los roles por una noche: que ella tenga que profundizar más y yo tenga que dar respuestas directas al grano.... [Especifica tanto como quieras]",
+                "Somos muy competitivos. Si la experiencia tiene sistema de puntos, la cena acabará en drama.... [Especifica tanto como quieras]",
+                "Ambos tenemos trabajos muy absorbentes y a veces nos cuesta desconectar al llegar a casa. Me encantaría que la experiencia no nos pregunte nada sobre nuestro día a día ni planes de futuro inmediatos, sino que nos haga divagar sobre escenarios imposibles o cosas muy abstractas para ayudarnos a salir de la rutina mental.... [Especifica tanto como quieras]",
+                "Salseo del bueno, por favor. Estamos preparados para todo (creo).... [Especifica tanto como quieras]",
+                "Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un monumento.... [Especifica tanto como quieras]"
             ];
 
             const currentModalExample = examplesDetalles[placeholderIndex];
@@ -1665,9 +1680,9 @@
                 setPlaceholderIndex((prev) => (prev + 1) % examplesDetalles.length);
             };
 
-            const singlePlaceholder = `Escribe aquí (opcional)...
+            const singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
 
-Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.`;
+Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.... [Especifica tanto como quieras]`;
 
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
