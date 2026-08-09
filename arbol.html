@@ -1728,11 +1728,11 @@
                                     <div className="flex flex-col gap-8 mt-4">
                                         <div className="w-full">
                                             <span className="text-center text-xs font-semibold uppercase tracking-widest text-white block mb-3">Mínima: {age.min === 101 ? '100+' : age.min}</span>
-                                            <RangeSlider value={age.min} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { const val = parseInt(e.target.value); setAge({ min: val, max: val > age.max ? val : age.max }) }} />
+                                            <RangeSlider value={age.min} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { let val = parseInt(e.target.value); if (isAdultTheme && val < 18) val = 18; setAge({ min: val, max: val > age.max ? val : age.max }) }} />
                                         </div>
                                         <div className="w-full">
                                             <span className="text-center text-xs font-semibold uppercase tracking-widest text-white block mb-3">Máxima: {age.max === 101 ? '100+' : age.max}</span>
-                                            <RangeSlider value={age.max} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { const val = parseInt(e.target.value); setAge({ min: val < age.min ? val : age.min, max: val }) }} />
+                                            <RangeSlider value={age.max} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { let val = parseInt(e.target.value); if (isAdultTheme && val < 18) val = 18; setAge({ min: val < age.min ? val : age.min, max: val }) }} />
                                         </div>
                                     </div>
                                 </div>
