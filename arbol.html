@@ -921,7 +921,7 @@
                 <div className="min-h-screen flex flex-col items-center pt-28 p-6 relative">
                     <GlobalHeader progress={progress} onBack={onBack} />
                     <div className="w-full flex flex-col items-center px-6 fade-in mt-4">
-                        <div className="w-full max-w-2xl mx-auto text-center mb-10 px-4 md:px-8">
+                        <div className="w-full max-w-3xl mx-auto text-center mb-10 px-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">{contextId?.includes('cartas_digitales') ? 'Día y hora de la cena' : (contextId === 'cartas_fisicas_en_un_restaurante' ? 'Info de la cena y el restaurante' : 'Info sobre la cena y la entrega de las cartas')}</h2>
                             
                         </div>
@@ -1228,7 +1228,7 @@
                 <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6 pt-24 fade-in relative">
                     <GlobalHeader progress={progress} onBack={onBack} />
                     <div className="w-full flex flex-col items-center fade-in mt-8 z-10">
-                        <div className="w-full max-w-2xl mx-auto text-center mb-8 px-4 md:px-8">
+                        <div className="w-full max-w-3xl mx-auto text-center mb-8 px-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
                                 ¿Qué queréis conseguir con esta cena? A más contexto, más personalización
                             </h2>
@@ -1674,7 +1674,7 @@
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
                     <GlobalHeader progress={progress} onBack={onBack} />
                     <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
-                        <div className="w-full max-w-2xl mx-auto text-center mb-10 px-4 md:px-8">
+                        <div className="w-full max-w-3xl mx-auto text-center mb-10 px-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Quiénes os sentáis a la mesa?</h2>
                         </div>
                         <div className="w-full max-w-[22rem] mb-10 floating">
@@ -1823,7 +1823,7 @@
                         
                         {subStep === 2 && (
                             <div className="w-full flex flex-col items-center">
-                                <div className="w-full max-w-2xl mx-auto text-center mb-8 px-4 md:px-8">
+                                <div className="w-full max-w-3xl mx-auto text-center mb-8 px-4">
                                     <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Cuánto tiempo tenéis?</h2>
                                 </div>
                                 <div className="w-full max-w-[22rem] mb-10 floating">
@@ -1838,7 +1838,7 @@
 
                         {subStep === 1 && (
                             <div className="w-full flex flex-col items-center">
-                                <div className="w-full max-w-2xl mx-auto text-center mb-8 px-4 md:px-8">
+                                <div className="w-full max-w-3xl mx-auto text-center mb-8 px-4">
                                     <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Cuál es vuestro rango de edad?</h2>
                                 </div>
                                 <div className="w-full max-w-[22rem]">
@@ -1866,7 +1866,7 @@
 
                         {subStep === 3 && (
                             <div className="w-full flex flex-col items-center">
-                                <div className="w-full max-w-2xl mx-auto text-center mb-8 px-4 md:px-8">
+                                <div className="w-full max-w-3xl mx-auto text-center mb-8 px-4">
                                     <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¡Todo listo!<br />¿Crees que hay algo más que debamos tener en cuenta para hacer de esta la mejor cena que hayáis tenido?</h2>
                                 </div>
                                 
