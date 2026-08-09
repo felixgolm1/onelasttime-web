@@ -1145,16 +1145,16 @@
                 setIsAnimatingPlaceholder(true);
             };
 
-            let singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+            let singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
 
 Ej: Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente... [Especifica tanto como quieras]`;
 
             if (globalData?.audienceId === 'pareja') {
-                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
 
 Ej: ${placeholdersCitas[0]}`;
             } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
-                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
 
 Ej: ${placeholdersAmistad[0]}`;
             }
@@ -1179,7 +1179,7 @@ Ej: ${placeholdersAmistad[0]}`;
                             <textarea
                                 key={placeholderIndex}
                                 rows={6}
-                                className={`${isAnimatingPlaceholder ? 'placeholder-fade ' : ''}w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300`}
+                                className={`${isAnimatingPlaceholder ? 'placeholder-fade ' : ''}w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 placeholder:italic relative z-10 transition-opacity duration-300`}
                                 placeholder={singlePlaceholder}
                                 value={text}
                                 onChange={handleTextChange}
@@ -1216,7 +1216,7 @@ Ej: ${placeholdersAmistad[0]}`;
                                 </h3>
                                 
                                 <div className="w-full mb-8 h-[180px] overflow-y-auto pr-2 custom-scrollbar">
-                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter">
+                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic">
                                         {currentPlaceholder}
                                     </p>
                                 </div>
@@ -1676,7 +1676,7 @@ Ej: ${placeholdersAmistad[0]}`;
                 setPlaceholderIndex((prev) => (prev + 1) % examplesDetalles.length);
             };
 
-            const singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)...
+            const singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
 
 Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.... [Especifica tanto como quieras]`;
 
@@ -1738,7 +1738,7 @@ Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del 
                                     <textarea
                                         autoFocus
                                         rows={6}
-                                        className="w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
+                                        className="w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 placeholder:italic relative z-10 transition-opacity duration-300"
                                         placeholder={singlePlaceholder}
                                         value={extraDetails}
                                         onChange={e => setExtraDetails(e.target.value)}
@@ -1763,7 +1763,7 @@ Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del 
                                 </h3>
                                 
                                 <div className="w-full mb-8 h-[180px] overflow-y-auto pr-2 custom-scrollbar">
-                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter">
+                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic">
                                         {currentModalExample}
                                     </p>
                                 </div>
