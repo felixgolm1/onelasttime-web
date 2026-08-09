@@ -322,7 +322,7 @@
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'direccion', label: 'Dirección de entrega', type: 'text', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien'] },
-            { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: 'Opcional (Ej. llamar al llegar)', req: false, conditions: ['cartas_fisicas'] }
+            { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas'] }
         ];
 
         const dbAudience = [
@@ -902,7 +902,7 @@
                                         {f.subtitle && <p className={`text-[10px] text-gray-500 font-medium text-center mb-3 -mt-1 ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15 + 0.05}s`} : {}}>{f.subtitle}</p>}
                                         {f.type === 'textarea' && (
                                             <textarea 
-                                                placeholder={f.placeholder || 'Escribe aquí (opcional)'}
+                                                placeholder={f.placeholder || ''}
                                                 className={`pill-textarea ${errs.includes(f.id) ? 'input-error' : ''} ${shakeFields.includes(f.id) ? 'shake' : ''}`}
                                                 rows={1}
                                                 value={form[f.id] || ''}
