@@ -909,12 +909,12 @@
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-6 relative">
                     <GlobalHeader progress={progress} onBack={onBack} />
-                    <div className="w-full max-w-[22rem] fade-in mt-4">
-                        <div className="mb-10 text-center">
+                    <div className="w-full flex flex-col items-center px-6 fade-in mt-4">
+                        <div className="w-full text-center mb-10">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">Info sobre la cena y la entrega de las cartas</h2>
                             
                         </div>
-                        <div className="flex flex-col items-center px-1">
+                        <div className="w-full max-w-[22rem] flex flex-col items-center px-1">
                             {fields.map((f, i) => {
                                 const isMulti = f.type === 'multi_pills';
                                 const inputClasses = `pill-input ${errs.includes(f.id) ? 'input-error' : ''} ${shakeFields.includes(f.id) ? 'shake' : ''}`;
@@ -1216,10 +1216,13 @@
             return (
                 <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6 pt-24 fade-in relative">
                     <GlobalHeader progress={progress} onBack={onBack} />
-                    <div className="text-center max-w-xl w-full z-10 mt-8">
-                        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-8">
-                            ¿Qué queréis conseguir con esta cena? A más contexto, más personalización
-                        </h2>
+                    <div className="w-full flex flex-col items-center fade-in mt-8 z-10">
+                        <div className="text-center w-full mb-8">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
+                                ¿Qué queréis conseguir con esta cena? A más contexto, más personalización
+                            </h2>
+                        </div>
+                        <div className="w-full max-w-xl flex flex-col items-center">
                         
                         <button 
                             onClick={() => setShowModal(true)}
@@ -1262,6 +1265,7 @@
                         >
                             {showWarning ? "Vuelve a pinchar para confirmar" : "Continuar"}
                         </button>
+                        </div>
                     </div>
                     {showModal && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm fade-in" onClick={() => setShowModal(false)}>
@@ -1657,10 +1661,11 @@
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
                     <GlobalHeader progress={progress} onBack={onBack} />
-                    <div className={`w-full max-w-[22rem] transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
-                        <div className="w-full">
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-10">¿Quiénes os sentáis a la mesa?</h2>
-                            <div className="w-full mb-10 floating">
+                    <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
+                        <div className="w-full text-center mb-10">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Quiénes os sentáis a la mesa?</h2>
+                        </div>
+                        <div className="w-full max-w-[22rem] mb-10 floating">
                                 {participants.map((p, index) => (
                                     <div key={index} className="w-full mb-4">
                                         <label className="label-style">{index === 0 ? 'Tu nombre' : 'Su nombre'}</label>
@@ -1801,75 +1806,87 @@
                     
                     <GlobalHeader progress={localProgress} onBack={handlePrevSubStep} />
 
-                    <div className={`w-full ${subStep === 3 ? 'max-w-xl' : 'max-w-[22rem]'} transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
+                    <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
                         
                         {subStep === 2 && (
-                            <div>
-                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">¿Cuánto tiempo tenéis?</h2>
-                                <div className="w-full mb-10 floating">
+                            <div className="w-full flex flex-col items-center">
+                                <div className="w-full text-center mb-8">
+                                    <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Cuánto tiempo tenéis?</h2>
+                                </div>
+                                <div className="w-full max-w-[22rem] mb-10 floating">
                                     <div className="text-center text-4xl font-semibold tracking-tight text-[#CCFF00] mb-8 mt-4">{formatTime(timeMinutes)}</div>
                                     <RangeSlider value={timeMinutes} min={30} max={300} step={5} isAdultTheme={false} restrictedMin={30} onChange={e => setTimeMinutes(Number(e.target.value))} />
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
+                                <div className="w-full max-w-[22rem]">
+                                    <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
+                                </div>
                             </div>
                         )}
 
                         {subStep === 1 && (
-                            <div className="w-full">
-                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">¿Cuál es vuestro rango de edad?</h2>
-                                {isAdultTheme && (
-                                    <div className="text-red-500 text-sm mb-8 text-center font-medium floating">
-                                        Por la temática elegida, la edad mínima requerida es de 18 años.
-                                    </div>
-                                )}
-                                <div className="w-full mb-10 floating">
-                                    <div className="flex flex-col gap-8 mt-4">
-                                        <div className="w-full">
-                                            <span className="text-center text-xs font-semibold uppercase tracking-widest text-white block mb-3">Mínima: {age.min === 101 ? '100+' : age.min}</span>
-                                            <RangeSlider value={age.min} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { let val = parseInt(e.target.value); if (isAdultTheme && val < 18) val = 18; setAge({ min: val, max: val > age.max ? val : age.max }) }} />
-                                        </div>
-                                        <div className="w-full">
-                                            <span className="text-center text-xs font-semibold uppercase tracking-widest text-white block mb-3">Máxima: {age.max === 101 ? '100+' : age.max}</span>
-                                            <RangeSlider value={age.max} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { let val = parseInt(e.target.value); if (isAdultTheme && val < 18) val = 18; setAge({ min: val < age.min ? val : age.min, max: val }) }} />
-                                        </div>
-                                    </div>
+                            <div className="w-full flex flex-col items-center">
+                                <div className="w-full text-center mb-8">
+                                    <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Cuál es vuestro rango de edad?</h2>
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
+                                <div className="w-full max-w-[22rem]">
+                                    {isAdultTheme && (
+                                        <div className="text-red-500 text-sm mb-8 text-center font-medium floating">
+                                            Por la temática elegida, la edad mínima requerida es de 18 años.
+                                        </div>
+                                    )}
+                                    <div className="w-full mb-10 floating">
+                                        <div className="flex flex-col gap-8 mt-4">
+                                            <div className="w-full">
+                                                <span className="text-center text-xs font-semibold uppercase tracking-widest text-white block mb-3">Mínima: {age.min === 101 ? '100+' : age.min}</span>
+                                                <RangeSlider value={age.min} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { let val = parseInt(e.target.value); if (isAdultTheme && val < 18) val = 18; setAge({ min: val, max: val > age.max ? val : age.max }) }} />
+                                            </div>
+                                            <div className="w-full">
+                                                <span className="text-center text-xs font-semibold uppercase tracking-widest text-white block mb-3">Máxima: {age.max === 101 ? '100+' : age.max}</span>
+                                                <RangeSlider value={age.max} min={14} max={101} isAdultTheme={isAdultTheme} restrictedMin={18} onChange={e => { let val = parseInt(e.target.value); if (isAdultTheme && val < 18) val = 18; setAge({ min: val < age.min ? val : age.min, max: val }) }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button onClick={handleNextSubStep} className="btn-black w-full">Continuar</button>
+                                </div>
                             </div>
                         )}
 
                         {subStep === 3 && (
-                            <div className="w-full">
-                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-8">¡Todo listo!<br />¿Crees que hay algo más que debamos tener en cuenta para hacer de esta la mejor cena que hayáis tenido?</h2>
-                                
-                                <button 
-                                    onClick={() => setShowModal(true)}
-                                    className="mb-6 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
-                                >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                                    {ctaText}
-                                </button>
-                                
-                                <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-6 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
-                                    {extraDetails === '' && (
-                                        <div className="absolute inset-0 p-6 pointer-events-none flex flex-col items-center justify-start text-center overflow-hidden text-gray-400">
-                                            <p className="text-base md:text-lg font-medium leading-relaxed font-inter not-italic">
-                                                Escribe aquí (opcional)
-                                            </p>
-                                            <p className="text-base md:text-lg font-medium leading-relaxed font-inter italic mt-4">
-                                                {formatExampleText(singlePlaceholder)}
-                                            </p>
-                                        </div>
-                                    )}
-                                    <textarea
-                                        autoFocus
-                                        rows={6}
-                                        className="w-full h-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black relative z-10"
-                                        value={extraDetails}
-                                        onChange={e => setExtraDetails(e.target.value)}
-                                    />
+                            <div className="w-full flex flex-col items-center">
+                                <div className="w-full text-center mb-8">
+                                    <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¡Todo listo!<br />¿Crees que hay algo más que debamos tener en cuenta para hacer de esta la mejor cena que hayáis tenido?</h2>
                                 </div>
-                                <button onClick={handleNextSubStep} className="btn-black w-full md:max-w-[320px] mx-auto block">Finalizar</button>
+                                
+                                <div className="w-full max-w-xl flex flex-col items-center">
+                                    <button 
+                                        onClick={() => setShowModal(true)}
+                                        className="mb-6 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
+                                    >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                        {ctaText}
+                                    </button>
+                                    
+                                    <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-6 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
+                                        {extraDetails === '' && (
+                                            <div className="absolute inset-0 p-6 pointer-events-none flex flex-col items-center justify-start text-center overflow-hidden text-gray-400">
+                                                <p className="text-base md:text-lg font-medium leading-relaxed font-inter not-italic">
+                                                    Escribe aquí (opcional)
+                                                </p>
+                                                <p className="text-base md:text-lg font-medium leading-relaxed font-inter italic mt-4">
+                                                    {formatExampleText(singlePlaceholder)}
+                                                </p>
+                                            </div>
+                                        )}
+                                        <textarea
+                                            autoFocus
+                                            rows={6}
+                                            className="w-full h-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black relative z-10"
+                                            value={extraDetails}
+                                            onChange={e => setExtraDetails(e.target.value)}
+                                        />
+                                    </div>
+                                    <button onClick={handleNextSubStep} className="btn-black w-full md:max-w-[320px] mx-auto block">Finalizar</button>
+                                </div>
                             </div>
                         )}
                     </div>
