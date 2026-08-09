@@ -8614,16 +8614,23 @@ requestAnimationFrame(smoothScrollLoop);
               introMatrix1.innerHTML = finalStr1;
               introMatrix2.innerHTML = finalStr2;
               console.log("Matrix effect finished.");
+              
+              // 3. Transicion a escena 3D tras terminar el matrix (+ breve pausa)
+              setTimeout(() => {
+                animReady = true;
+                if (pendingGltf) buildScene(pendingGltf);
+              }, 600); // 600ms extra para leer la frase antes del giro 3D
             }
           }, 20); 
         }, 300); 
+      } else {
+        // Fallback si no hay texto matrix
+        setTimeout(() => {
+          animReady = true;
+          if (pendingGltf) buildScene(pendingGltf);
+        }, 1800);
       }
 
-      // 3. Transición a escena 3D a los 1.8s
-      setTimeout(() => {
-        animReady = true;
-        if (pendingGltf) buildScene(pendingGltf);
-      }, 1800);
     };
   })();
 
