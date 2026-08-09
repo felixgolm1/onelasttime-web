@@ -1057,7 +1057,7 @@
         };
 
         const ObjectiveScreen = ({ onComplete, progress, onBack, globalData }) => {
-            const [text, setText] = useState('');
+            const [text, setText] = useState(globalData?.objective || '');
             const [showWarning, setShowWarning] = useState(false);
             const [placeholderIndex, setPlaceholderIndex] = useState(0);
             const [isAnimatingPlaceholder, setIsAnimatingPlaceholder] = useState(false);
@@ -1247,10 +1247,23 @@
             const maxScroll = dbTones.length - 1;
             const hasContext = globalData?.objective?.trim().length > 0;
 
-            const [selectedCards, setSelectedCards] = useState([]);
+            const initialSelected = [];
+            let initialCustom = '';
+            if (globalData?.tones) {
+                globalData.tones.forEach(t => {
+                    if (t.startsWith('t_')) {
+                        initialSelected.push(t);
+                    } else {
+                        initialSelected.push('t_custom');
+                        initialCustom = t;
+                    }
+                });
+            }
+
+            const [selectedCards, setSelectedCards] = useState(initialSelected);
             const [shakeCardId, setShakeCardId] = useState(null);
             const [limitWarning, setLimitWarning] = useState(false);
-            const [customToneText, setCustomToneText] = useState('');
+            const [customToneText, setCustomToneText] = useState(initialCustom);
             const [shakeKey, setShakeKey] = useState(0);
             const [isAutoSelecting, setIsAutoSelecting] = useState(false);
             const [isAutoSelectDone, setIsAutoSelectDone] = useState(false);
@@ -1569,8 +1582,8 @@
             );
         };
         
-        const ParticipantsScreen = ({ onComplete, onBack, progress }) => {
-            const [participants, setParticipants] = useState([{ name: '', details: '' }, { name: '', details: '' }]);
+        const ParticipantsScreen = ({ onComplete, onBack, progress, globalData }) => {
+            const [participants, setParticipants] = useState(globalData?.participants || [{ name: '', details: '' }, { name: '', details: '' }]);
             const [isOut, setIsOut] = useState(false);
 
             const handleParticipantChange = (index, field, value) => { 
@@ -2164,6 +2177,7 @@
                     
                     {phase === 'participants' && <ParticipantsScreen 
                         progress={getProgress()}
+                        globalData={globalData}
                         onComplete={data => advanceTo('audience', { participants: data })} 
                         onBack={goBackPhase} 
                     />}
