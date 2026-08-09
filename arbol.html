@@ -514,6 +514,19 @@
             const [customInput, setCustomInput] = useState('');
             const [isFocused, setIsFocused] = useState(false);
             const textareaRef = useRef(null);
+            
+            useEffect(() => {
+                const handleGlobalKeyDown = (e) => {
+                    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+                    if (e.ctrlKey || e.altKey || e.metaKey || e.key.length > 1) return;
+                    
+                    if (textareaRef.current) {
+                        textareaRef.current.focus();
+                    }
+                };
+                window.addEventListener('keydown', handleGlobalKeyDown);
+                return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+            }, []);
 
             const handleInput = (e) => {
                 setCustomInput(e.target.value);
