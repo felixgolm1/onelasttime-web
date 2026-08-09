@@ -331,7 +331,8 @@
         const dbLogistics = [
             { id: 'fecha', label: 'Día y hora de la cena', type: 'datetime-local', req: true, conditions: ['siempre'] },
             { id: 'direccion', label: 'Dirección de entrega completa', type: 'text', placeholder: '', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro'] },
-            { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
+            { id: 'punto_recogida', label: 'Buscar punto de recogida cercano', type: 'text', placeholder: 'Código postal o ciudad...', req: true, conditions: ['delivery_punto'] },
+              { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro'] }
         ];
@@ -880,7 +881,8 @@
         };
 
         const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack }) => {
-            const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', comida: [] });
+            const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', punto_recogida: '', comida: [] });
+            const [deliveryMode, setDeliveryMode] = useState('direccion');
             const [errs, setErrs] = useState([]);
             const [shakeFields, setShakeFields] = useState([]);
             const [globalErrorMsg, setGlobalErrorMsg] = useState('');
@@ -892,7 +894,16 @@
                 return () => window.removeEventListener('resize', handleResize);
             }, []);
 
-            const fields = useMemo(() => dbLogistics.filter(f => f.conditions.includes('siempre') || f.conditions.some(c => contextId?.includes(c))), [contextId]);
+            const fields = useMemo(() => {
+                let f = dbLogistics.filter(f => f.conditions.includes('siempre') || f.conditions.some(c => contextId?.includes(c)));
+                if (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro') {
+                    if (deliveryMode === 'punto') {
+                        f = f.filter(x => x.id !== 'direccion' && x.id !== 'notas_entrega');
+                        f.push(dbLogistics.find(x => x.id === 'punto_recogida'));
+                    }
+                }
+                return f;
+            }, [contextId, deliveryMode]);
 
             const submit = () => {
                 let newErrs = fields.filter(f => f.req && (!form[f.id] || form[f.id].trim() === '')).map(f => f.id);
@@ -933,6 +944,7 @@
                                 const isMulti = f.type === 'multi_pills';
                                 const inputClasses = `pill-input ${errs.includes(f.id) ? 'input-error' : ''} ${shakeFields.includes(f.id) ? 'shake' : ''}`;
                                 return (
+                                    <React.Fragment key={f.id}>
                                     <div key={f.id} className={`w-full mb-4 ${!isMulti ? 'floating' : ''}`} style={!isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>
                                         <label className={`label-style ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>{f.label}</label>
                                         {f.subtitle && <p className={`text-[10px] text-gray-500 font-medium text-center mb-3 -mt-1 ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15 + 0.05}s`} : {}}>{f.subtitle}</p>}
@@ -1039,6 +1051,28 @@
                                             })()
                                         )}
                                     </div>
+                                        {f.id === 'fecha' && (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro') && (
+                                            <div className="flex items-center justify-between w-full mb-6 gap-1 bg-[#222] rounded-full p-1.5 border border-[#333] mt-2">
+                                                <button 
+                                                    onClick={() => setDeliveryMode('direccion')}
+                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-gray-400 hover:text-white bg-transparent'}`}
+                                                >
+                                                    Entregar en la siguiente dirección
+                                                </button>
+                                                <button 
+                                                    onClick={() => setDeliveryMode('punto')}
+                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-gray-400 hover:text-white bg-transparent'}`}
+                                                >
+                                                    Entregar en punto de recogida
+                                                </button>
+                                            </div>
+                                        )}
+                                        {f.id === 'punto_recogida' && (
+                                            <p className="text-[#CCFF00] text-xs font-semibold text-center mt-2 mb-4 px-2 tracking-wide leading-relaxed">
+                                                Te contactaremos con los puntos de recogida más cercanos para que nos digas el que te va mejor
+                                            </p>
+                                        )}
+                                    </React.Fragment>
                                 );
                             })}
                             <div className="w-full mt-2 floating" style={{animationDelay: `${fields.length * 0.15}s`}}>
@@ -1619,6 +1653,28 @@
                                             })}
                                         </div>
                                     </div>
+                                        {f.id === 'fecha' && (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro') && (
+                                            <div className="flex items-center justify-between w-full mb-6 gap-1 bg-[#222] rounded-full p-1.5 border border-[#333] mt-2">
+                                                <button 
+                                                    onClick={() => setDeliveryMode('direccion')}
+                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-gray-400 hover:text-white bg-transparent'}`}
+                                                >
+                                                    Entregar en la siguiente dirección
+                                                </button>
+                                                <button 
+                                                    onClick={() => setDeliveryMode('punto')}
+                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-gray-400 hover:text-white bg-transparent'}`}
+                                                >
+                                                    Entregar en punto de recogida
+                                                </button>
+                                            </div>
+                                        )}
+                                        {f.id === 'punto_recogida' && (
+                                            <p className="text-[#CCFF00] text-xs font-semibold text-center mt-2 mb-4 px-2 tracking-wide leading-relaxed">
+                                                Te contactaremos con los puntos de recogida más cercanos para que nos digas el que te va mejor
+                                            </p>
+                                        )}
+                                    </React.Fragment>
                                 );
                             })}
                         </div>
