@@ -1139,6 +1139,7 @@
             } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
                 // "Nos estamos conociendo"
                 examples = placeholdersAmistad;
+                buttonText = "Inspírate con ejemplos de otras personas";
             }
 
             const currentPlaceholder = examples[placeholderIndex];
@@ -1679,7 +1680,7 @@
 
             const localProgress = progress + (subStep * 3);
 
-            const examplesDetalles = [
+            const examplesDetallesPareja = [
                 "Prohibido hablar de política o del trabajo, que suficiente tenemos ya de lunes a viernes.... [Especifica tanto como quieras]",
                 "Por favor, cero menciones a la hipoteca, a los tipos de interés o a cuándo tendremos hijos.... [Especifica tanto como quieras]",
                 "Queremos preguntas incómodas. No tenemos vergüenza de nada y venimos a jugar.... [Especifica tanto como quieras]",
@@ -1689,14 +1690,55 @@
                 "Salseo del bueno, por favor. Estamos preparados para todo (creo).... [Especifica tanto como quieras]",
                 "Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un monumento.... [Especifica tanto como quieras]"
             ];
+            
+            const examplesDetallesPrimeraCita = [
+                "Por favor, cero preguntas sobre relaciones pasadas o ex parejas, quiero que la noche se centre solo en nosotros y en pasarlo bien.... [Especifica tanto como quieras]",
+                "Es nuestra primera vez viéndonos en persona después de meses hablando por Tinder. Me gustaría que las cartas nos ayuden a romper el hielo rápido y quitarnos los nervios de golpe.... [Especifica tanto como quieras]",
+                "Soy una persona muy tímida y me cuesta arrancar a hablar. Necesito que las primeras preguntas sean ligeras y divertidas antes de entrar en temas más profundos.... [Especifica tanto como quieras]",
+                "Nada de preguntas sobre el trabajo o a qué nos dedicamos, ¡quiero evitar por todos los medios que esto parezca una entrevista de RRHH!... [Especifica tanto como quieras]",
+                "Ambos somos unos frikis de la música y el cine. Me encantaría que la experiencia usara metáforas de películas o nos hiciera preguntas sobre nuestros gustos artísticos.... [Especifica tanto como quieras]",
+                "Si hay algún reto absurdo o pregunta muy surrealista que nos saque de nuestra zona de confort, mejor que mejor.... [Especifica tanto como quieras]",
+                "Quiero averiguar si realmente tenemos química o si es solo atracción física, así que busco preguntas que nos hagan ver cómo pensamos en temas clave de la vida.... [Especifica tanto como quieras]",
+                "Los dos somos muy sarcásticos y nos gusta el humor negro. No os cortéis en poner un tono un poco más gamberro y directo.... [Especifica tanto como quieras]",
+                "Me gustaría que al final de la cena la experiencia nos dé pie a decidir si queremos una segunda cita de forma natural, sin que sea un momento incómodo.... [Especifica tanto como quieras]",
+                "Quiero que sea una velada muy elegante y sutil, casi de película. Que las preguntas nos inviten a flirtear muy poco a poco desde el primer momento.... [Especifica tanto como quieras]"
+            ];
+            
+            const examplesDetallesConociendo = [
+                "Llevamos viéndonos unas semanas pero aún no hemos hablado de 'qué somos'. Me gustaría que alguna de las cartas nos empuje a tener esa conversación de forma relajada y sin presión.... [Especifica tanto como quieras]",
+                "Ambos venimos de relaciones largas y vamos con pies de plomo. Necesito que el tono sea empático y nos ayude a hablar de nuestros miedos sin que suene a drama.... [Especifica tanto como quieras]",
+                "Nos encanta debatir y picarnos el uno al otro. Añadid preguntas que nos hagan posicionarnos en temas absurdos o polémicos para ver quién tiene más ingenio.... [Especifica tanto como quieras]",
+                "Siento que siempre que nos vemos solo hablamos de fiesta y planes superficiales. Quiero aprovechar esta cena para descubrir su lado más humano y qué le mueve en la vida.... [Especifica tanto como quieras]",
+                "Me encantaría que la experiencia incluya pequeños retos físicos o pruebas de contacto visual para ver cómo reaccionamos y subir un poco la temperatura.... [Especifica tanto como quieras]",
+                "Tenemos un sentido del humor muy parecido, pero me gustaría ver cómo reacciona ante dilemas morales extremos. ¡A ver qué 'red flags' descubro!... [Especifica tanto como quieras]",
+                "Evitad cualquier tema relacionado con política o religión, ya tuvimos un pequeño roce con eso y prefiero que hoy todo sea paz y amor.... [Especifica tanto como quieras]",
+                "Quiero saber si realmente somos compatibles para algo serio o si deberíamos dejarlo en algo casual. Preguntas sobre estilo de vida y rutinas diarias me vendrían genial.... [Especifica tanto como quieras]",
+                "Es una persona muy misteriosa y le cuesta mucho hablar de su infancia. Me gustaría que el juego le invite a compartir anécdotas de su pasado de forma súper divertida.... [Especifica tanto como quieras]",
+                "Quiero que la noche acabe por todo lo alto. Si las últimas preguntas pueden ser un poco más picantes y atrevidas para preparar el terreno post-cena, me haríais un gran favor.... [Especifica tanto como quieras]"
+            ];
+
+            let examplesDetalles = examplesDetallesPareja;
+            let ctaText = "Inspírate con ejemplos de otras parejas";
+            let modalTitleText = "Ejemplos de otras parejas";
+            let singlePlaceholder = `Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.... [Especifica tanto como quieras]`;
+
+            if (globalData?.audienceId === 'pareja') {
+                examplesDetalles = examplesDetallesPrimeraCita;
+                ctaText = "Inspírate con ejemplos de otras citas";
+                modalTitleText = "Ejemplos de otras citas";
+                singlePlaceholder = `Ej: Si hay algún reto absurdo o pregunta muy surrealista que nos saque de nuestra zona de confort, mejor que mejor.... [Especifica tanto como quieras]`;
+            } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
+                examplesDetalles = examplesDetallesConociendo;
+                ctaText = "Inspírate con ejemplos de otras personas";
+                modalTitleText = "Ejemplos de otras personas";
+                singlePlaceholder = `Ej: Evitad cualquier tema relacionado con política o religión, ya tuvimos un pequeño roce con eso y prefiero que hoy todo sea paz y amor.... [Especifica tanto como quieras]`;
+            }
 
             const currentModalExample = examplesDetalles[placeholderIndex];
 
             const handleInspire = () => {
                 setPlaceholderIndex((prev) => (prev + 1) % examplesDetalles.length);
             };
-
-            const singlePlaceholder = `Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.... [Especifica tanto como quieras]`;
 
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
@@ -1749,7 +1791,7 @@
                                     className="mb-6 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                                    Inspírate con ejemplos de otras parejas
+                                    {ctaText}
                                 </button>
                                 
                                 <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-6 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
@@ -1786,7 +1828,7 @@
                                 </button>
                                 
                                 <h3 className="text-xl md:text-2xl font-semibold text-black mb-6 text-center pr-8 pl-8">
-                                    Ejemplos de otras parejas
+                                    {modalTitleText}
                                 </h3>
                                 
                                 <div className="w-full mb-8 h-[180px] overflow-y-auto pr-2 custom-scrollbar">
