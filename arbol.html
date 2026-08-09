@@ -1127,12 +1127,12 @@
             ];
 
             let examples = placeholdersPareja;
-            let buttonText = "💡 Inspírate con ejemplos de otras parejas";
+            let buttonText = "Inspírate con ejemplos de otras parejas";
 
             if (globalData?.audienceId === 'pareja') {
                 // "Primera cita" has id 'pareja'
                 examples = placeholdersCitas;
-                buttonText = "💡 Inspírate con ejemplos de otras citas";
+                buttonText = "Inspírate con ejemplos de otras citas";
             } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
                 // "Nos estamos conociendo"
                 examples = placeholdersAmistad;
@@ -1160,6 +1160,7 @@
                             onClick={() => setShowModal(true)}
                             className="mb-6 text-[13px] font-bold text-black bg-[#CCFF00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 mx-auto shadow-sm"
                         >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                             {buttonText}
                         </button>
 
