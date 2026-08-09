@@ -1643,6 +1643,27 @@
 
             const localProgress = progress + (subStep * 3);
 
+            
+            const extraDetailsPlaceholder = `Prohibido hablar de política o del trabajo, que suficiente tenemos ya de lunes a viernes.
+
+A él le cuesta mucho hablar de sus sentimientos si se siente presionado. Funciona mucho mejor si las preguntas empiezan con un tono más ligero y poco a poco van ganando profundidad para que se vaya abriendo sin darse cuenta.
+
+Por favor, cero menciones a la hipoteca, a los tipos de interés o a cuándo tendremos hijos.
+
+Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.
+
+Queremos preguntas incómodas. No tenemos vergüenza de nada y venimos a jugar.
+
+Yo soy de darle muchas vueltas a todo y ella es súper pragmática. Me encantaría que la experiencia nos obligue a cambiar los roles por una noche: que ella tenga que profundizar más y yo tenga que dar respuestas directas al grano.
+
+Somos muy competitivos. Si la experiencia tiene sistema de puntos, la cena acabará en drama.
+
+Ambos tenemos trabajos muy absorbentes y a veces nos cuesta desconectar al llegar a casa. Me encantaría que la experiencia no nos pregunte nada sobre nuestro día a día ni planes de futuro inmediatos, sino que nos haga divagar sobre escenarios imposibles o cosas muy abstractas para ayudarnos a salir de la rutina mental.
+
+Salseo del bueno, por favor. Estamos preparados para todo (creo).
+
+Si estas cartas consiguen que deje el móvil más de 5 minutos, os hago un monumento.`;
+
             return (
                         <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
                     
@@ -1694,7 +1715,7 @@
                                     <textarea
                                         rows={6}
                                         className="w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 relative z-10 transition-opacity duration-300"
-                                        placeholder="Escribe aquí (opcional)..."
+                                        placeholder={extraDetailsPlaceholder}
                                         value={extraDetails}
                                         onChange={e => setExtraDetails(e.target.value)}
                                     />
