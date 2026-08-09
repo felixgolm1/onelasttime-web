@@ -317,7 +317,7 @@
         ];
 
         const dbLogistics = [
-            { id: 'direccion', label: 'Dirección de entrega completa', type: 'text', placeholder: 'Calle, número, ciudad y código postal', req: true, conditions: ['cartas_fisicas'] },
+            { id: 'direccion', label: 'Dirección de entrega completa', type: 'text', placeholder: '', req: true, conditions: ['cartas_fisicas'] },
             { id: 'fecha', label: 'Día y hora de la cena', type: 'datetime-local', req: true, conditions: ['siempre'] },
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
