@@ -872,7 +872,7 @@
             const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', comida: [] });
             const [errs, setErrs] = useState([]);
             const [shakeFields, setShakeFields] = useState([]);
-            const [showGlobalError, setShowGlobalError] = useState(false);
+            const [globalErrorMsg, setGlobalErrorMsg] = useState('');
             const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
 
             useEffect(() => {
@@ -884,10 +884,21 @@
             const fields = useMemo(() => dbLogistics.filter(f => f.conditions.includes('siempre') || f.conditions.some(c => contextId?.includes(c))), [contextId]);
 
             const submit = () => {
-                const newErrs = fields.filter(f => f.req && (!form[f.id] || form[f.id].trim() === '')).map(f => f.id);
+                let newErrs = fields.filter(f => f.req && (!form[f.id] || form[f.id].trim() === '')).map(f => f.id);
+                let errorMsg = '';
+                
                 if (newErrs.length > 0) {
-                    setErrs(newErrs); setShakeFields(newErrs); setShowGlobalError(true);
-                    setTimeout(() => setShakeFields([]), 400); setTimeout(() => setShowGlobalError(false), 4000);
+                    errorMsg = 'Falta rellenar los campos en rojo';
+                } else if (form.fecha) {
+                    if (new Date(form.fecha) < new Date()) {
+                        newErrs.push('fecha');
+                        errorMsg = 'La fecha no puede ser del pasado';
+                    }
+                }
+
+                if (newErrs.length > 0) {
+                    setErrs(newErrs); setShakeFields(newErrs); setGlobalErrorMsg(errorMsg);
+                    setTimeout(() => setShakeFields([]), 400); setTimeout(() => setGlobalErrorMsg(''), 4000);
                 } else {
                     onComplete(form);
                 }
@@ -932,7 +943,7 @@
                                             />
                                         )}
                                         {f.type === 'text' && <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
-                                        {f.type === 'datetime-local' && <input type="datetime-local" onClick={e => { try { e.target.showPicker(); } catch(err){} }} onFocus={e => { try { e.target.showPicker(); } catch(err){} }} className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'datetime-local' && <input type="datetime-local" min={new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)} onClick={e => { try { e.target.showPicker(); } catch(err){} }} onFocus={e => { try { e.target.showPicker(); } catch(err){} }} className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'multi_pills' && (
                                             (() => {
                                                 const bubbleSize = 95;
@@ -1017,8 +1028,8 @@
                                 );
                             })}
                             <div className="w-full mt-2 floating" style={{animationDelay: `${fields.length * 0.15}s`}}>
-                                <div className={`transition-all duration-300 overflow-hidden ${showGlobalError ? 'max-h-10 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
-                                    <p className="text-red-500 text-[11px] font-semibold text-center uppercase tracking-wider">Falta rellenar los campos en rojo</p>
+                                <div className={`transition-all duration-300 overflow-hidden ${globalErrorMsg ? 'max-h-10 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
+                                    <p className="text-red-500 text-[11px] font-semibold text-center uppercase tracking-wider">{globalErrorMsg}</p>
                                 </div>
                                 <button className="btn-black" onClick={submit}>Continuar</button>
                             </div>
