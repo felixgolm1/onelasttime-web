@@ -1648,7 +1648,7 @@
                     
                     <GlobalHeader progress={localProgress} onBack={handlePrevSubStep} />
 
-                    <div className={`w-full max-w-[22rem] transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
+                    <div className={`w-full ${subStep === 3 ? 'max-w-xl' : 'max-w-[22rem]'} transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
                         
                         {subStep === 1 && (
                             <div>
@@ -1687,7 +1687,7 @@
 
                         {subStep === 3 && (
                             <div className="w-full">
-                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">¿Quieres añadir algo más?</h2>
+                                <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white text-center mb-2">Ya estamos. ¿Quieres añadir cualquier cosa más para personalizar tu experiencia?</h2>
                                 <p className="text-base md:text-lg font-medium text-[#CCFF00] mb-5 leading-relaxed text-center">
                                     Última oportunidad para darnos información de contexto antes que diseñemos tus cartas
                                 </p>
