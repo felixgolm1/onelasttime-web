@@ -272,6 +272,9 @@
         .placeholder-fade::placeholder {
             animation: placeholderGreenToGray 1.5s ease-out forwards;
         }
+        .placeholder-fade-text {
+            animation: placeholderGreenToGray 1.5s ease-out forwards;
+        }
     </style>
 </head>
 <body class="bg-black text-white" style="background-color: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); min-height: 100vh; overflow-x: hidden;">
@@ -1145,18 +1148,12 @@
                 setIsAnimatingPlaceholder(true);
             };
 
-            let singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
-
-Ej: Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente... [Especifica tanto como quieras]`;
+            let singlePlaceholder = `Ej: Acaba de empezar un proyecto nuevo y sé que está lleno de nervios. Mi objetivo hoy es darle toda la confianza del mundo, celebrar su valentía y que sienta que le apoyo incondicionalmente... [Especifica tanto como quieras]`;
 
             if (globalData?.audienceId === 'pareja') {
-                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
-
-Ej: ${placeholdersCitas[0]}`;
+                singlePlaceholder = `Ej: ${placeholdersCitas[0]}`;
             } else if (globalData?.audienceId === 'amistad' || globalData?.audienceId?.startsWith('a_')) {
-                singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
-
-Ej: ${placeholdersAmistad[0]}`;
+                singlePlaceholder = `Ej: ${placeholdersAmistad[0]}`;
             }
 
             return (
@@ -1176,11 +1173,20 @@ Ej: ${placeholdersAmistad[0]}`;
                         </button>
 
                         <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-1 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
+                            {text === '' && (
+                                <div className={`absolute inset-0 p-6 pointer-events-none flex flex-col items-center justify-start text-center overflow-hidden ${isAnimatingPlaceholder ? 'placeholder-fade-text ' : 'text-gray-400'}`}>
+                                    <p className="text-base md:text-lg font-medium leading-relaxed font-inter not-italic">
+                                        Escribe aqui (opcional, pero altamente recomendado)
+                                    </p>
+                                    <p className="text-base md:text-lg font-medium leading-relaxed font-inter italic mt-4">
+                                        {singlePlaceholder}
+                                    </p>
+                                </div>
+                            )}
                             <textarea
                                 key={placeholderIndex}
                                 rows={6}
-                                className={`${isAnimatingPlaceholder ? 'placeholder-fade ' : ''}w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 placeholder:italic relative z-10 transition-opacity duration-300`}
-                                placeholder={singlePlaceholder}
+                                className="w-full h-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black relative z-10"
                                 value={text}
                                 onChange={handleTextChange}
                             />
@@ -1676,9 +1682,7 @@ Ej: ${placeholdersAmistad[0]}`;
                 setPlaceholderIndex((prev) => (prev + 1) % examplesDetalles.length);
             };
 
-            const singlePlaceholder = `Escribe aqui (opcional, pero altamente recomendado)
-
-Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.... [Especifica tanto como quieras]`;
+            const singlePlaceholder = `Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del otro. Me gustaría que haya algunas cartas que nos ayuden a establecer reglas de convivencia con humor, para hablarlas sin que suene a reproche.... [Especifica tanto como quieras]`;
 
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
@@ -1735,11 +1739,20 @@ Ej: Hace poco que vivimos juntos y aún nos estamos adaptando a las manías del 
                                 </button>
                                 
                                 <div className="w-full max-w-md mx-auto aspect-[3.5/1.98] bg-white rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.08),0_15px_25px_-5px_rgba(0,0,0,0.1),inset_0_0_0_1.5px_rgba(255,255,255,1)] p-6 mb-6 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.1),0_20px_30px_-5px_rgba(0,0,0,0.15)]">
+                                    {extraDetails === '' && (
+                                        <div className="absolute inset-0 p-6 pointer-events-none flex flex-col items-center justify-start text-center overflow-hidden text-gray-400">
+                                            <p className="text-base md:text-lg font-medium leading-relaxed font-inter not-italic">
+                                                Escribe aqui (opcional, pero altamente recomendado)
+                                            </p>
+                                            <p className="text-base md:text-lg font-medium leading-relaxed font-inter italic mt-4">
+                                                {singlePlaceholder}
+                                            </p>
+                                        </div>
+                                    )}
                                     <textarea
                                         autoFocus
                                         rows={6}
-                                        className="w-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black placeholder:text-gray-400 placeholder:italic relative z-10 transition-opacity duration-300"
-                                        placeholder={singlePlaceholder}
+                                        className="w-full h-full bg-transparent resize-none outline-none text-base md:text-lg font-medium leading-relaxed text-center text-black relative z-10"
                                         value={extraDetails}
                                         onChange={e => setExtraDetails(e.target.value)}
                                     />
