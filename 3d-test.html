@@ -8276,13 +8276,8 @@ requestAnimationFrame(smoothScrollLoop);
           // savedProg > 0: la escena se construye inmediatamente
           buildScene(gltf);
         } else {
-          // Primera carga: guardar GLTF y arrancar la animación de intro AHORA
-          // (el thread está libre → stroke-dashoffset puede animarse sin saltos)
+          // Primera carga: guardar GLTF para construir la escena luego
           pendingGltf = gltf;
-          if (typeof window._runIntroAnim === 'function') {
-            window._runIntroAnim();
-            window._runIntroAnim = null; // evitar doble ejecución
-          }
         }
       },
       (xhr) => {
@@ -8634,6 +8629,10 @@ requestAnimationFrame(smoothScrollLoop);
 
   // Start loading immediately (parse in background during animation)
   startLoading();
+  if (typeof window._runIntroAnim === 'function' && !animReady) {
+    window._runIntroAnim();
+    window._runIntroAnim = null;
+  }
 
   // Ã¢â€€Ã¢â€€ NAV HOVER Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   const navOverlay = document.getElementById('nav-overlay');
