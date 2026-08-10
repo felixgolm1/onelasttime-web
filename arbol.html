@@ -2317,7 +2317,7 @@
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
                             } else {
-                                const isBcn = isBarcelonaCity(data.direccion);
+                                const isBcn = isBarcelonaCity(data.direccion || data.punto_recogida || data.ciudad_restaurante);
                                 const reqHours = isBcn ? 4 : 48;
                                 
                                 const eventDate = new Date(data.fecha);
