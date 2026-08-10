@@ -885,7 +885,7 @@
 
         const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack }) => {
             const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', punto_recogida: '', comida: [] });
-            const [deliveryMode, setDeliveryMode] = useState('direccion');
+            const [deliveryMode, setDeliveryMode] = useState(contextId === 'cartas_fisicas_reserva_no_hecha' ? 'restaurante' : 'direccion');
             const [errs, setErrs] = useState([]);
             const [shakeFields, setShakeFields] = useState([]);
             const [globalErrorMsg, setGlobalErrorMsg] = useState('');
@@ -1070,6 +1070,14 @@
                                             <div className="w-full mb-4">
                                                 <label className="label-style">¿Dónde quieres que las entreguemos?</label>
                                                 <div className="flex items-center justify-between w-full gap-1 bg-white rounded-full p-1.5 border border-gray-200 shadow-sm">
+                                                    {contextId === 'cartas_fisicas_reserva_no_hecha' && (
+                                                        <button 
+                                                            onClick={() => setDeliveryMode('restaurante')}
+                                                            className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'restaurante' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
+                                                        >
+                                                            En el <br/>restaurante
+                                                        </button>
+                                                    )}
                                                     <button 
                                                         onClick={() => setDeliveryMode('direccion')}
                                                         className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
@@ -1082,14 +1090,6 @@
                                                     >
                                                         En un punto de <br/>recogida
                                                     </button>
-                                                    {contextId === 'cartas_fisicas_reserva_no_hecha' && (
-                                                        <button 
-                                                            onClick={() => setDeliveryMode('restaurante')}
-                                                            className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'restaurante' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
-                                                        >
-                                                            En el <br/>restaurante
-                                                        </button>
-                                                    )}
                                                 </div>
                                                 {contextId === 'cartas_fisicas_reserva_no_hecha' && (
                                                     <p className="text-[#CCFF00] font-medium text-xs md:text-sm text-center mt-3 tracking-wide px-2 leading-relaxed">
