@@ -5331,7 +5331,8 @@ window.addEventListener('error', function(e) {
         let width, height;
         let particles = [];
         let mouse = { x: -1000, y: -1000 };
-        let explosionActive = false;
+        let explosionIntensity = 0;
+        let isRedirecting = false;
 
         function resizeCanvas() {
             width = window.innerWidth;
@@ -5389,10 +5390,10 @@ window.addEventListener('error', function(e) {
                 this.x += this.vx;
                 this.y += this.vy;
 
-                if (explosionActive) {
-                    this.vy -= (Math.random() * 0.05 + 0.02); // accelerate upwards
-                    this.x += Math.sin(this.life * 1.5) * 0.5; // wider sway
-                    this.alpha = Math.min(1, this.alpha * 1.5); // brighter
+                if (explosionIntensity > 0) {
+                    this.vy -= (Math.random() * 0.05 + 0.02) * explosionIntensity; // accelerate upwards
+                    this.x += Math.sin(this.life * 1.5) * 0.5 * explosionIntensity; // wider sway
+                    this.alpha = Math.min(1, this.alpha * (1 + 0.5 * explosionIntensity)); // brighter
                 }
 
                 
@@ -5429,6 +5430,11 @@ window.addEventListener('error', function(e) {
         
         function animate() {
             requestAnimationFrame(animate);
+
+            if (explosionIntensity > 0) {
+                explosionIntensity -= 0.015;
+                if (explosionIntensity < 0) explosionIntensity = 0;
+            }
             
             let scrollOpacity = fakeBgFade ? (parseFloat(window.getComputedStyle(fakeBgFade).opacity) || 0) : 0;
             let targetCtaOpacity = window._ctaHoverActive ? 1.0 : 0.0;
@@ -5443,7 +5449,7 @@ window.addEventListener('error', function(e) {
             embersCanvas.style.transition = 'none';
             embersCanvas.style.setProperty('opacity', finalOpacity, 'important');
     
-            embersCanvas.style.setProperty('z-index', '9999999', 'important'); // PUSH TO ABSOLUTE FRONT
+            embersCanvas.style.setProperty('z-index', '99999999', 'important'); // PUSH TO ABSOLUTE FRONT (Above premium-bg)
             
             // ALWAYS update particles so they are distributed naturally even when invisible
             embersCtx.clearRect(0, 0, width, height);
@@ -5478,8 +5484,9 @@ window.addEventListener('error', function(e) {
             if (cta) {
                 e.preventDefault();
                 e.stopPropagation();
-                if (explosionActive) return;
-                explosionActive = true;
+                if (isRedirecting) return;
+                isRedirecting = true;
+                explosionIntensity = 1.0;
                 window._ctaHoverActive = true; // force opacity to 1
                 
                 // Show overlays
