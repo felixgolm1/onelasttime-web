@@ -1052,16 +1052,16 @@
                                         )}
                                     </div>
                                         {f.id === 'fecha' && (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro') && (
-                                            <div className="flex items-center justify-between w-full mb-6 gap-1 bg-[#222] rounded-full p-1.5 border border-[#333] mt-2">
+                                            <div className="flex items-center justify-between w-full mb-6 gap-1 bg-white rounded-full p-1.5 border border-gray-200 mt-2 shadow-sm">
                                                 <button 
                                                     onClick={() => setDeliveryMode('direccion')}
-                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-gray-400 hover:text-white bg-transparent'}`}
+                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-gray-500 hover:text-black bg-transparent'}`}
                                                 >
                                                     Entregar en la siguiente dirección
                                                 </button>
                                                 <button 
                                                     onClick={() => setDeliveryMode('punto')}
-                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-gray-400 hover:text-white bg-transparent'}`}
+                                                    className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-black text-white shadow-md' : 'text-gray-500 hover:text-black bg-transparent'}`}
                                                 >
                                                     Entregar en punto de recogida
                                                 </button>
