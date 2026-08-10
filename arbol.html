@@ -810,7 +810,7 @@
             const canGoBack = history.length > 0 || onBack;
 
             return (
-                <div className="scene flex-col justify-start pt-28 px-4 relative bg-transparent min-h-screen">
+                <div className="scene flex-col justify-start pt-28 px-4 pb-16 relative bg-transparent min-h-screen">
                     <GlobalHeader progress={progress} onBack={canGoBack ? handleBack : null} animateIn={treeKey === 'format' && history.length === 0} />
                     <div key={currentParent} className={`w-full max-w-4xl flex flex-col items-center transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'opacity-100'}`}>
                         <div className={`text-center mb-12 ${treeKey === 'format' && history.length === 0 ? 'fade-in' : ''}`}>
