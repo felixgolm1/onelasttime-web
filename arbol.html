@@ -330,7 +330,7 @@
 
         const dbLogistics = [
             { id: 'fecha', label: 'Día y hora de la cena', type: 'datetime-local', req: true, conditions: ['siempre'] },
-            { id: 'ciudad_restaurante', label: 'Ciudad del restaurante', type: 'text', placeholder: 'Nombre o código postal...', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
+            { id: 'ciudad_restaurante', label: 'Ciudad del restaurante', type: 'text', placeholder: 'Nombre o código postal', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
             { id: 'direccion', label: 'Dirección de entrega completa', type: 'text', placeholder: '', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro'] },
             { id: 'punto_recogida', label: 'Dirección completa para buscar puntos de recogida cerca', type: 'text', placeholder: '', req: true, conditions: ['delivery_punto'] },
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_en_un_restaurante'] },
