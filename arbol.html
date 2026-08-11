@@ -1007,6 +1007,11 @@
                         f.push(dbLogistics.find(x => x.id === 'restaurante'));
                     }
                 }
+                if (contextId === 'cartas_fisicas_reserva_hecha') {
+                    const fechaField = f.find(x => x.id === 'fecha');
+                    f = f.filter(x => x.id !== 'fecha');
+                    if (fechaField) f.push(fechaField);
+                }
                 return f;
             }, [contextId, deliveryMode]);
 
