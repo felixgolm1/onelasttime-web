@@ -981,7 +981,7 @@
             return false;
         };
 
-        const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack }) => {
+        const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack, onSwitchToDigital }) => {
             const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', punto_recogida: '', comida: [] });
             const [deliveryMode, setDeliveryMode] = useState(contextId === 'cartas_fisicas_reserva_no_hecha' ? 'restaurante' : 'direccion');
             const [errs, setErrs] = useState([]);
@@ -1040,9 +1040,11 @@
                         <div className="w-full max-w-3xl mx-auto text-center mb-10 px-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">{contextId?.includes('cartas_digitales') ? 'Día y hora de la cena' : (contextId === 'cartas_fisicas_reserva_hecha' ? 'Info de la cena y el restaurante' : 'Info sobre la cena y la entrega de las cartas')}</h2>
                               {contextId === 'cartas_fisicas_reserva_hecha' && (
-                                  <div className="flex flex-col gap-1 mt-2">
+                                  <div className="flex flex-col gap-1 mt-2 items-center">
                                       <p className="text-[#CCFF00] font-medium text-lg md:text-xl tracking-wide">Las cartas estarán en tu mesa antes de que llegues</p>
-                                      <p className="text-gray-300 text-xs md:text-sm max-w-lg mx-auto">Solo necesitamos que reserves con 4h de antelación en Barcelona o 48h en el resto de España.</p>
+                                      <p className="text-gray-300 text-xs md:text-sm max-w-lg text-center leading-relaxed">
+                                        Solo necesitamos 4h de antelación en Barcelona o 48h en el resto de España. O solo 10 minutos para la versión digital pinchando aquí <button type="button" onClick={onSwitchToDigital} className="inline-block bg-[#CCFF00] text-black font-bold px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider ml-1 hover:bg-white hover:scale-105 transition-transform cursor-pointer">Cartas digitales</button>
+                                      </p>
                                   </div>
                               )}
                             
@@ -2434,6 +2436,7 @@
                     />}
                     
                     {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
+                        onSwitchToDigital={() => setGlobalData(prev => ({ ...prev, formatId: 'cartas_digitales' }))}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
