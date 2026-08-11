@@ -1008,9 +1008,15 @@
                     }
                 }
                 if (contextId === 'cartas_fisicas_reserva_hecha') {
-                    const fechaField = f.find(x => x.id === 'fecha');
-                    f = f.filter(x => x.id !== 'fecha');
-                    if (fechaField) f.push(fechaField);
+                    const order = ['ciudad_restaurante', 'restaurante', 'fecha', 'reserva'];
+                    f.sort((a, b) => {
+                        const indexA = order.indexOf(a.id);
+                        const indexB = order.indexOf(b.id);
+                        if (indexA === -1 && indexB === -1) return 0;
+                        if (indexA === -1) return 1;
+                        if (indexB === -1) return -1;
+                        return indexA - indexB;
+                    });
                 }
                 return f;
             }, [contextId, deliveryMode]);
