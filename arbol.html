@@ -1530,7 +1530,7 @@
         const TonesNoria = ({ onComplete, progress, onBack, globalData }) => {
             const [scrollPos, setScrollPos] = useState(0);
             const maxScroll = dbTones.length - 1;
-            const hasContext = globalData?.objective?.trim().length > 0;
+            const hasContext = (globalData?.objective?.trim()?.length || 0) > 0;
 
             const initialSelected = [];
             let initialCustom = '';
