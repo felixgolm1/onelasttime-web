@@ -1235,25 +1235,13 @@
                                 </button>
                                 <h3 className="text-xl md:text-2xl font-semibold text-black mb-4 text-center mt-2">Tiempos de entrega</h3>
                                 <div className="w-full text-sm md:text-base font-medium leading-relaxed text-gray-600 font-inter text-center mb-6 space-y-4">
-                                    <p>Para asegurar que las cartas estén en la mesa antes de que lleguéis, necesitamos los siguientes márgenes:</p>
-                                    <ul className="text-left bg-gray-50 p-4 rounded-xl space-y-3 border border-gray-100 shadow-sm text-sm">
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-xl">📍</span> 
-                                            <div>
-                                                <strong className="text-black block">Barcelona Ciudad</strong>
-                                                <span className="text-gray-500">Mínimo 4 horas de antelación.</span>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-xl">📦</span> 
-                                            <div>
-                                                <strong className="text-black block">Resto de España</strong>
-                                                <span className="text-gray-500">Mínimo 48 horas de antelación.</span>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <p>Para asegurar que las cartas estén en la mesa antes que tú, necesitamos un margen de 4h en Barcelona ciudad y 48h en el resto de España.</p>
+                                    <p>¿Tu cena es antes? No te preocupes, en 10 minutos puedes tener la versión digital de las cartas en tu móvil. Solo tienes que seguir personalizando la versión digital de las cartas pinchando en el siguiente botón.</p>
                                 </div>
-                                <button type="button" onClick={() => setShowModal(false)} className="btn-black w-full uppercase text-sm tracking-wider">Entendido</button>
+                                <button type="button" onClick={() => {
+                                    setShowModal(false);
+                                    if (onSwitchToDigital) onSwitchToDigital();
+                                }} className="w-full text-black bg-[#CCFF00] hover:bg-[#d4ff33] py-3.5 px-6 rounded-full font-bold transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center shadow-md uppercase tracking-wider text-sm mt-2">Seguir con las cartas digitales</button>
                             </div>
                         </div>
                     )}
@@ -2483,7 +2471,7 @@
                     />}
                     
                     {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
-                        onSwitchToDigital={() => setGlobalData(prev => ({ ...prev, formatId: 'cartas_digitales' }))}
+                        onSwitchToDigital={() => advanceTo('participants', { formatId: 'cartas_digitales' })}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
