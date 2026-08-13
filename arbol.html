@@ -33,6 +33,11 @@
         .fade-out { animation: fadeOut 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         .fade-in-opacity { animation: fadeInOpacity 1.2s ease-out both; }
 
+        /* --- SCROLLBAR --- */
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; margin: 16px 0; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.15); border-radius: 10px; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(25px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
         @keyframes fadeOut { from { opacity: 1; transform: translateY(0); filter: blur(0); } to { opacity: 0; transform: translateY(-20px); filter: blur(6px); } }
         @keyframes fadeInOpacity { from { opacity: 0; } to { opacity: 1; } }
@@ -1244,7 +1249,7 @@
                     </div>
                     {showModal && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-24 sm:p-6 sm:pt-28 bg-black/70 backdrop-blur-sm fade-in" onClick={() => setShowModal(false)}>
-                            <div className="relative w-full max-w-md flex flex-col items-center bg-white rounded-3xl p-4 md:p-5 shadow-2xl max-h-[70vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+                            <div className="relative w-full max-w-md flex flex-col items-center bg-white rounded-3xl p-4 md:p-5 shadow-2xl max-h-[70vh] overflow-y-auto custom-scrollbar" onClick={(e) => e.stopPropagation()}>
                                 <button type="button" onClick={() => setShowModal(false)} className="absolute top-4 right-4 text-gray-400 hover:text-black p-2 transition-colors">
                                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
