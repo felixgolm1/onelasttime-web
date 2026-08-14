@@ -1224,7 +1224,7 @@
                                                     </p>
                                                 )}
                                                 {(contextId === 'cartas_fisicas_reserva_no_hecha' || contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro') && (
-                                                    <div className="flex flex-col gap-3 mt-4 items-center">
+                                                    <div className={`flex flex-col gap-3 items-center ${contextId === 'cartas_fisicas_reserva_no_hecha' ? 'mt-1' : 'mt-4'}`}>
                                                         <button 
                                                             type="button"
                                                             onClick={() => {
