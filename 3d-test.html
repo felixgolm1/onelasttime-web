@@ -2828,7 +2828,25 @@ window.onerror = function(msg, url, line, col, err) {
           }
           
           const canvas = document.querySelector('canvas:not(#card-canvas)');
-          if (canvas) canvas.style.opacity = '1';
+          if (canvas) {
+            canvas.style.transition = 'none';
+            canvas.style.opacity = '1';
+            let maskObj = { p: -50 };
+            gsap.to(maskObj, {
+              p: 150,
+              duration: 2.0,
+              ease: "power2.inOut",
+              onUpdate: function() {
+                let maskStr = `linear-gradient(45deg, black ${maskObj.p}%, transparent ${maskObj.p + 50}%)`;
+                canvas.style.webkitMaskImage = maskStr;
+                canvas.style.maskImage = maskStr;
+              },
+              onComplete: function() {
+                canvas.style.webkitMaskImage = '';
+                canvas.style.maskImage = '';
+              }
+            });
+          }
 
           // Reveal UI periférico
           gsap.to(['#nav-logo', '#nav-menu', '#cta-top-container', '#cta-bottom-container', '.scroll-indicator', '#headline', '#subheadline'], {
