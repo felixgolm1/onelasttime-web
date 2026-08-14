@@ -2846,6 +2846,16 @@ window.onerror = function(msg, url, line, col, err) {
                 canvas.style.maskImage = '';
               }
             });
+            // Hacemos aparecer la pila de cartas (mainDeck) al 50% del barrido (0.6s)
+            const mainDeck = document.getElementById('mainDeck');
+            if (mainDeck) {
+              mainDeck.style.display = 'block';
+              mainDeck.style.zIndex = '10004';
+              gsap.fromTo(mainDeck, 
+                { autoAlpha: 0, scale: 0.8, y: 30 }, 
+                { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, delay: 0.6, ease: "back.out(1.5)" }
+              );
+            }
           }
 
           // Reveal UI periférico
