@@ -1205,16 +1205,16 @@
                                                         </button>
                                                     )}
                                                     <button 
-                                                        onClick={() => setDeliveryMode('direccion')}
-                                                        className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
-                                                    >
-                                                        En otra <br/>dirección
-                                                    </button>
-                                                    <button 
                                                         onClick={() => setDeliveryMode('punto')}
                                                         className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
                                                     >
                                                         En un punto de <br/>recogida
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => setDeliveryMode('direccion')}
+                                                        className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
+                                                    >
+                                                        En otra <br/>dirección
                                                     </button>
                                                 </div>
                                                 {contextId === 'cartas_fisicas_reserva_no_hecha' && (
