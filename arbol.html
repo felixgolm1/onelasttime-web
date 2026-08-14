@@ -1044,7 +1044,7 @@
                 let errorMsg = '';
                 
                 if (newErrs.length > 0) {
-                    errorMsg = 'Falta rellenar los campos en rojo';
+                    errorMsg = contextId?.includes('cartas_digitales') ? 'Necesitamos que nos digas un día y una hora' : 'Falta rellenar los campos en rojo';
                 } else if (form.fecha) {
                     if (new Date(form.fecha) < new Date()) {
                         newErrs.push('fecha');
