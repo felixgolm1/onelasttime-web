@@ -997,6 +997,11 @@
             const [deliveryMode, setDeliveryMode] = useState(contextId === 'cartas_fisicas_reserva_no_hecha' ? 'restaurante' : 'direccion');
             const [errs, setErrs] = useState([]);
             const [showModal, setShowModal] = useState(false);
+            useEffect(() => {
+                const handleEscape = (e) => { if (e.key === 'Escape' && showModal) setShowModal(false); };
+                document.addEventListener('keydown', handleEscape);
+                return () => document.removeEventListener('keydown', handleEscape);
+            }, [showModal]);
             const [modalDeliveryMode, setModalDeliveryMode] = useState('restaurante');
             const [shakeFields, setShakeFields] = useState([]);
             const [globalErrorMsg, setGlobalErrorMsg] = useState('');
@@ -1419,6 +1424,11 @@
             const [placeholderIndex, setPlaceholderIndex] = useState(0);
             const [isAnimatingPlaceholder, setIsAnimatingPlaceholder] = useState(false);
             const [showModal, setShowModal] = useState(false);
+            useEffect(() => {
+                const handleEscape = (e) => { if (e.key === 'Escape' && showModal) setShowModal(false); };
+                document.addEventListener('keydown', handleEscape);
+                return () => document.removeEventListener('keydown', handleEscape);
+            }, [showModal]);
 
             useEffect(() => {
                 if (isAnimatingPlaceholder) {
@@ -1999,6 +2009,11 @@
             const [extraDetails, setExtraDetails] = useState(() => sessionStorage.getItem('dev_n4_extra') || '');
 
             const [showModal, setShowModal] = useState(false);
+            useEffect(() => {
+                const handleEscape = (e) => { if (e.key === 'Escape' && showModal) setShowModal(false); };
+                document.addEventListener('keydown', handleEscape);
+                return () => document.removeEventListener('keydown', handleEscape);
+            }, [showModal]);
             const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
             useEffect(() => { sessionStorage.setItem('dev_n4_subStep', subStep); }, [subStep]);
