@@ -1208,7 +1208,7 @@
                                                         onClick={() => setDeliveryMode('direccion')}
                                                         className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
                                                     >
-                                                        En la siguiente <br/>dirección
+                                                        En otra <br/>dirección
                                                     </button>
                                                     <button 
                                                         onClick={() => setDeliveryMode('punto')}
@@ -1260,7 +1260,7 @@
                                         <div className="flex bg-black rounded-full p-1 mb-4 w-full max-w-[340px] mx-auto border border-black shadow-inner">
                                             <button type="button" onClick={() => setModalDeliveryMode('restaurante')} className={`flex-1 py-2 px-1 text-[9px] md:text-[10px] leading-tight font-bold tracking-wider rounded-full transition-all uppercase ${modalDeliveryMode === 'restaurante' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-white'}`}>EN EL RESTAURANTE</button>
                                             <button type="button" onClick={() => setModalDeliveryMode('punto_recogida')} className={`flex-1 py-2 px-1 text-[9px] md:text-[10px] leading-tight font-bold tracking-wider rounded-full transition-all uppercase ${modalDeliveryMode === 'punto_recogida' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-white'}`}>EN UN PUNTO DE RECOGIDA</button>
-                                            <button type="button" onClick={() => setModalDeliveryMode('otra_direccion')} className={`flex-1 py-2 px-1 text-[9px] md:text-[10px] leading-tight font-bold tracking-wider rounded-full transition-all uppercase ${modalDeliveryMode === 'otra_direccion' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-white'}`}>OTRA DIRECCIÓN</button>
+                                            <button type="button" onClick={() => setModalDeliveryMode('otra_direccion')} className={`flex-1 py-2 px-1 text-[9px] md:text-[10px] leading-tight font-bold tracking-wider rounded-full transition-all uppercase ${modalDeliveryMode === 'otra_direccion' ? 'bg-[#CCFF00] text-black shadow-md' : 'text-white'}`}>EN OTRA DIRECCIÓN</button>
                                         </div>
                                         <div className="w-full text-xs md:text-sm font-medium leading-relaxed text-gray-600 font-inter text-center mb-5 space-y-4">
                                             {modalDeliveryMode === 'restaurante' && (
