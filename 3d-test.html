@@ -2834,7 +2834,7 @@ window.onerror = function(msg, url, line, col, err) {
             let maskObj = { p: -50 };
             gsap.to(maskObj, {
               p: 150,
-              duration: 2.0,
+              duration: 1.2,
               ease: "power2.inOut",
               onUpdate: function() {
                 let maskStr = `linear-gradient(45deg, black ${maskObj.p}%, transparent ${maskObj.p + 50}%)`;
