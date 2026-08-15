@@ -2043,7 +2043,7 @@
             const [phone, setPhone] = useState(globalData?.contact?.phone || '');
             const [email, setEmail] = useState(globalData?.contact?.email || '');
             const [notes, setNotes] = useState(globalData?.contact?.notes || '');
-            const [showError, setShowError] = useState(false);
+            const [errs, setErrs] = useState([]);
             const [shakeFields, setShakeFields] = useState([]);
             const [isOut, setIsOut] = useState(false);
             const errorTimeoutRef = useRef(null);
@@ -2087,10 +2087,10 @@
                     if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
                     
                     setShakeFields(errors);
-                    setShowError(true);
+                    setErrs(errors);
                     
                     shakeTimeoutRef.current = setTimeout(() => setShakeFields([]), 500);
-                    errorTimeoutRef.current = setTimeout(() => setShowError(false), 4000);
+                    errorTimeoutRef.current = setTimeout(() => setErrs([]), 4000);
                     return;
                 }
                 
@@ -2113,8 +2113,11 @@
                                     type="tel" 
                                     placeholder="+34 600 123 456" 
                                     value={phone}
-                                    onChange={(e) => setPhone(e.target.value)} 
-                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('phone') ? 'shake border-red-500' : ''}`} 
+                                    onChange={(e) => {
+                                        setPhone(e.target.value);
+                                        if (errs.includes('phone')) setErrs(errs.filter(id => id !== 'phone'));
+                                    }} 
+                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('phone') ? 'shake' : ''} ${errs.includes('phone') ? 'input-error' : ''}`} 
                                 />
                             </div>
                             
@@ -2124,8 +2127,11 @@
                                     type="email" 
                                     placeholder="quien.paga.la.cena@correo.com" 
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)} 
-                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('email') ? 'shake border-red-500' : ''}`} 
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        if (errs.includes('email')) setErrs(errs.filter(id => id !== 'email'));
+                                    }} 
+                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('email') ? 'shake' : ''} ${errs.includes('email') ? 'input-error' : ''}`} 
                                 />
                             </div>
                             
@@ -2143,7 +2149,7 @@
                         </div>
                         
                         <div className="w-full max-w-[22rem] mt-10 relative text-center">
-                            <div className={`absolute -top-8 left-0 w-full text-red-500 font-semibold text-base md:text-lg transition-opacity duration-500 ${showError ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                            <div className={`absolute -top-8 left-0 w-full text-red-500 font-semibold text-base md:text-lg transition-opacity duration-500 ${errs.length > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                                 Necesitamos un número o email tuyo válido
                             </div>
                             <button onClick={submit} className="btn-black w-full">Continuar</button>
