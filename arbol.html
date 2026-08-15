@@ -1092,44 +1092,48 @@
                 }
 
                 if (searchType === 'post_office' && inputValue.trim().length === 5) {
-                    const geocoder = new window.google.maps.Geocoder();
-                    geocoder.geocode({ address: inputValue.trim() + ', España' }, (results, status) => {
-                        if (status === 'OK' && results[0]) {
-                            const location = results[0].geometry.location;
+                    service.getPlacePredictions({ input: inputValue.trim(), types: ['postal_code'], componentRestrictions: { country: 'es' } }, (cpPreds, cpStatus) => {
+                        if (cpStatus === window.google.maps.places.PlacesServiceStatus.OK && cpPreds && cpPreds[0]) {
                             const dummyElement = document.createElement('div');
                             const placesService = new window.google.maps.places.PlacesService(dummyElement);
                             
-                            placesService.nearbySearch({
-                                location: location,
-                                radius: 5000,
-                                keyword: 'Oficina de Correos'
-                            }, (places, placesStatus) => {
-                                if (placesStatus === window.google.maps.places.PlacesServiceStatus.OK && places) {
-                                    const filteredPlaces = places.filter(p => {
-                                        const desc = (p.name + " " + (p.vicinity || '')).toLowerCase();
-                                        return !desc.includes('no atc') && 
-                                               !desc.includes('no público') && 
-                                               !desc.includes('no publico') && 
-                                               !desc.includes('restringido') && 
-                                               !desc.includes('buzón') && 
-                                               !desc.includes('buzon');
-                                    });
+                            placesService.getDetails({ placeId: cpPreds[0].place_id, fields: ['geometry'] }, (placeDetails, detailStatus) => {
+                                if (detailStatus === window.google.maps.places.PlacesServiceStatus.OK && placeDetails.geometry) {
+                                    placesService.nearbySearch({
+                                        location: placeDetails.geometry.location,
+                                        radius: 5000,
+                                        keyword: 'Oficina de Correos'
+                                    }, (places, placesStatus) => {
+                                        if (placesStatus === window.google.maps.places.PlacesServiceStatus.OK && places) {
+                                            const filteredPlaces = places.filter(p => {
+                                                const desc = (p.name + " " + (p.vicinity || '')).toLowerCase();
+                                                return !desc.includes('no atc') && 
+                                                       !desc.includes('no público') && 
+                                                       !desc.includes('no publico') && 
+                                                       !desc.includes('restringido') && 
+                                                       !desc.includes('buzón') && 
+                                                       !desc.includes('buzon');
+                                            });
 
-                                    const mappedPreds = filteredPlaces.slice(0, 10).map(p => ({
-                                        place_id: p.place_id,
-                                        description: `${p.name}, ${p.vicinity}`,
-                                        structured_formatting: {
-                                            main_text: p.name,
-                                            secondary_text: p.vicinity
+                                            const mappedPreds = filteredPlaces.slice(0, 10).map(p => ({
+                                                place_id: p.place_id,
+                                                description: `${p.name}, ${p.vicinity}`,
+                                                structured_formatting: {
+                                                    main_text: p.name,
+                                                    secondary_text: p.vicinity
+                                                }
+                                            }));
+                                            
+                                            if (mappedPreds.length > 0) {
+                                                setPredictions(mappedPreds);
+                                                setShowDropdown(true);
+                                            } else {
+                                                setPredictions([]);
+                                            }
+                                        } else {
+                                            setPredictions([]);
                                         }
-                                    }));
-                                    
-                                    if (mappedPreds.length > 0) {
-                                        setPredictions(mappedPreds);
-                                        setShowDropdown(true);
-                                    } else {
-                                        setPredictions([]);
-                                    }
+                                    });
                                 } else {
                                     setPredictions([]);
                                 }
