@@ -2577,7 +2577,7 @@
                         onBack={null} // Desactiva la navegación hacia la intro en la primera pregunta
                     />}
                     
-                    {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
+                    {phase === 'logistics' && <LogisticsForm key={globalData.formatId} contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
                         onSwitchToDigital={() => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales') })}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
