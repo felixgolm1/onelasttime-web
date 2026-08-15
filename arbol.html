@@ -1101,8 +1101,8 @@
                             
                             placesService.nearbySearch({
                                 location: location,
-                                rankBy: window.google.maps.places.RankBy.DISTANCE,
-                                keyword: 'Correos'
+                                radius: 5000,
+                                keyword: 'Oficina de Correos'
                             }, (places, placesStatus) => {
                                 if (placesStatus === window.google.maps.places.PlacesServiceStatus.OK && places) {
                                     const filteredPlaces = places.filter(p => {
