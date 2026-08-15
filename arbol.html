@@ -1090,7 +1090,11 @@
                                   <p className="text-[#CCFF00] font-medium text-lg md:text-xl tracking-wide mt-4">Las cartas estarán en tu mesa antes de que llegues</p>
                               )}
                               {contextId?.includes('cartas_digitales') && (
-                                  <p className="text-[#CCFF00] font-medium text-base md:text-lg tracking-wide mt-4 leading-snug max-w-2xl mx-auto">Listas en 10 min. Las recibiréis al móvil a la hora de la cena. O antes con un solo clic en caso de que se adelante.</p>
+                                  <p className="text-[#CCFF00] font-medium text-base md:text-lg tracking-wide mt-4 leading-snug max-w-2xl mx-auto">
+                                      Listas en 10 min.<br/>
+                                      Las recibiréis al móvil a la hora de la cena.<br/>
+                                      O antes con un solo clic en caso de que se adelante.
+                                  </p>
                               )}
                               {!contextId?.includes('cartas_digitales') && contextId !== 'cartas_fisicas_reserva_no_hecha' && contextId !== 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' && contextId !== 'cartas_fisicas_casa' && contextId !== 'cartas_fisicas_otro' && (
                                   <div className="flex flex-col gap-3 mt-4 items-center">
