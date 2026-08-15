@@ -1045,11 +1045,7 @@
                 if (!value) setIsSelected(false);
             }, [value]);
 
-            useEffect(() => {
-                if (!showDropdown && value && !isSelected && searchType !== 'restaurant') {
-                    onChange('');
-                }
-            }, [showDropdown, value, isSelected, searchType]);
+
 
             const getAutocompleteService = () => {
                 if (autocompleteService.current) return autocompleteService.current;
