@@ -1148,11 +1148,21 @@
             };
 
             if (isSelected && value) {
+                const isRestaurant = searchType === 'restaurant';
+                const hasComma = value.includes(',');
+                const mainTxt = isRestaurant && hasComma ? value.substring(0, value.indexOf(',')) : value;
+                const secTxt = isRestaurant && hasComma ? value.substring(value.indexOf(',') + 1).trim() : '';
+
                 return (
                     <div className="relative w-full">
-                        <div onClick={handleClear} className="flex items-center justify-between bg-[rgba(204,255,0,0.1)] border border-[#ccff00] text-[#ccff00] rounded-full px-6 py-4 w-full cursor-pointer transition-all hover:bg-[rgba(204,255,0,0.2)]">
-                            <span className="font-semibold text-[14px] truncate">{value}</span>
-                            <button className="ml-2 flex-shrink-0 hover:scale-110 transition-transform">
+                        <div onClick={handleClear} className={`flex items-center justify-between bg-[rgba(204,255,0,0.1)] border border-[#ccff00] text-[#ccff00] rounded-full px-6 ${secTxt ? 'py-3' : 'py-4'} w-full cursor-pointer transition-all hover:bg-[rgba(204,255,0,0.2)]`}>
+                            <div className="flex flex-col w-full overflow-hidden mr-3">
+                                <span className="font-semibold text-[14px] truncate">{mainTxt}</span>
+                                {secTxt && (
+                                    <span className="text-[11px] opacity-75 truncate mt-0.5">{secTxt}</span>
+                                )}
+                            </div>
+                            <button className="flex-shrink-0 hover:scale-110 transition-transform">
                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
                         </div>
