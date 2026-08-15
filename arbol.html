@@ -1063,10 +1063,11 @@
 
             useEffect(() => {
                 // Si el dropdown se cierra, tenemos texto, pero no se ha seleccionado una píldora válida: borramos el texto.
-                if (!showDropdown && value && !isSelected) {
+                // EXCEPCIÓN: Permitimos texto libre en el nombre del restaurante por si no está en Maps.
+                if (!showDropdown && value && !isSelected && searchType !== 'restaurant') {
                     onChange('');
                 }
-            }, [showDropdown, value, isSelected]);
+            }, [showDropdown, value, isSelected, searchType]);
 
             const getAutocompleteService = () => {
                 if (autocompleteService.current) return autocompleteService.current;
