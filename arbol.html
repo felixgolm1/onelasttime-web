@@ -89,6 +89,16 @@
         input[type="datetime-local"]::-webkit-calendar-picker-indicator,
         input[type="date"]::-webkit-calendar-picker-indicator,
         input[type="time"]::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
+        
+        input[type="date"]::-webkit-datetime-edit-day-field:focus,
+        input[type="date"]::-webkit-datetime-edit-month-field:focus,
+        input[type="date"]::-webkit-datetime-edit-year-field:focus,
+        input[type="time"]::-webkit-datetime-edit-hour-field:focus,
+        input[type="time"]::-webkit-datetime-edit-minute-field:focus {
+            background-color: transparent;
+            color: inherit;
+            outline: none;
+        }
 
         /* Estilo rectangular tipo carta para el Textarea Final */
         .card-input {
