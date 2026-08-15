@@ -569,6 +569,8 @@
                     <div className="h-full transition-all duration-900 ease-out" style={{ width: `${progress}%`, backgroundColor: "#CCFF00", boxShadow: "0 0 12px rgba(204, 255, 0, 0.6)" }} />
                 </div>
             </div>
+            {/* INVISIBLE SPACER TO PUSH CONTENT DOWN */}
+            <div className="w-full transition-all duration-500 ease-in-out flex-shrink-0 pointer-events-none" style={{ height: subtitle ? '22px' : '0px' }} />
             </>
             );
         };
