@@ -1688,7 +1688,7 @@
                             })}
                             <div className="w-full mt-2 floating relative" style={{animationDelay: `${fields.length * 0.15}s`, zIndex: 1}}>
                                 <div className={`transition-all duration-300 overflow-hidden ${showGlobalError ? 'max-h-10 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
-                                    <p className="text-red-500 text-[11px] font-semibold text-center uppercase tracking-wider">{globalErrorMsg}</p>
+                                    <p className="text-red-500 text-base md:text-lg font-semibold text-center uppercase tracking-wider">{globalErrorMsg}</p>
                                 </div>
                                 <button className="btn-black" onClick={submit}>Continuar</button>
                             </div>
