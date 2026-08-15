@@ -1601,7 +1601,7 @@
                                     </p>
                                     <button type="button" onClick={() => {
                                         setShowModal(false);
-                                        if (onSwitchToDigital) onSwitchToDigital();
+                                        if (onSwitchToDigital) onSwitchToDigital(form);
                                     }} className="btn-green w-full uppercase text-sm tracking-wider shadow-md hover:scale-105 transition-all">Cambiar a cartas digitales</button>
                                 </div>
 
@@ -2992,8 +2992,9 @@
             };
 
             const goBackPhase = (partialData) => {
+                let latestData = { ...globalData };
                 if (partialData && typeof partialData === 'object' && !partialData.nativeEvent) {
-                    setGlobalData(prev => ({ ...prev, ...partialData }));
+                    latestData = { ...latestData, ...partialData };
                 }
                 
                 if (phaseHistory.length > 0) {
@@ -3004,11 +3005,18 @@
                     
                     if (typeof prev === 'object' && prev !== null) {
                         setPhase(prev.phase);
+                        // Restore routing IDs from history so back button correctly reverts format changes
+                        if (prev.globalData) {
+                            latestData.formatId = prev.globalData.formatId;
+                            latestData.audienceId = prev.globalData.audienceId;
+                        }
                     } else {
                         // Retrocompatibilidad con strings
                         setPhase(prev);
                     }
                 }
+                
+                setGlobalData(latestData);
             };
 
             return (
@@ -3041,7 +3049,7 @@
                     />}
                     
                     {phase === 'logistics' && <LogisticsForm backRef={globalBackRef} key={globalData.formatId} contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
-                        onSwitchToDigital={() => setGlobalData(prev => ({ ...prev, formatId: prev.formatId.replace('fisicas', 'digitales') }))}
+                        onSwitchToDigital={(currentForm) => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales'), logistics: currentForm })}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
@@ -3067,11 +3075,7 @@
                         isBcn={globalData.isBcn} 
                         reqHours={globalData.reqHours} 
                         progress={getProgress()}
-                        onDigital={() => {
-                            setGlobalData(prev => ({ ...prev, formatId: prev.formatId.replace('fisicas', 'digitales') }));
-                            setPhase('logistics');
-                            setPhaseHistory(prev => prev.slice(0, -1));
-                        }} 
+                        onDigital={() => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
                         onChangeDate={goBackPhase} 
                         onBack={goBackPhase}
                     />}
