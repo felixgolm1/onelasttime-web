@@ -1187,16 +1187,16 @@
                         className={className} 
                         onFocus={() => { if(predictions.length > 0) setShowDropdown(true); }}
                         onBlur={() => {
+                            setShowDropdown(false);
                             setTimeout(() => {
-                                setShowDropdown(false);
                                 if (!isSelectedRef.current && searchType !== 'restaurant') {
                                     onChange('');
+                                    setPredictions([]);
                                 }
                             }, 200);
                         }}
                     />
-                    {showDropdown && predictions.length > 0 && (
-                        <ul className="absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden border border-gray-100 max-h-60 overflow-y-auto custom-scrollbar">
+                    <ul className={`absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden overflow-y-auto custom-scrollbar transition-all duration-200 ease-out origin-top ${showDropdown && predictions.length > 0 ? 'opacity-100 max-h-60 scale-y-100 border border-gray-100 pointer-events-auto' : 'opacity-0 max-h-0 scale-y-95 border-none pointer-events-none'}`}>
                             {predictions.map((p, i) => {
                                 const mainText = p.structured_formatting?.main_text || p.description.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim();
                                 const secText = p.structured_formatting?.secondary_text ? p.structured_formatting.secondary_text.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim() : '';
@@ -1231,7 +1231,6 @@
                                 );
                             })}
                         </ul>
-                    )}
                 </div>
             );
         };
