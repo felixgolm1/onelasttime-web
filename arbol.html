@@ -1616,6 +1616,13 @@
         };
 
         const DeliveryErrorScreen = ({ isBcn, reqHours, onDigital, onChangeDate, progress, onBack }) => {
+            useEffect(() => {
+                document.body.style.overflow = 'hidden';
+                return () => {
+                    document.body.style.overflow = 'auto';
+                };
+            }, []);
+
             const titleText = isBcn 
                 ? `Danos un poco más de tiempo :'), para hacerte llegar las cartas físicas en la mesa en Barcelona ciudad, necesitamos ${reqHours} horas de antelación`
                 : `Danos un poco más de tiempo :'), para hacerte llegar las cartas físicas en la mesa, necesitamos ${reqHours} horas de antelación`;
