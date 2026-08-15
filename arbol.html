@@ -447,14 +447,8 @@
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_reserva_hecha', 'delivery_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_reserva_hecha'] },
             { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro', 'cartas_fisicas_reserva_no_hecha'] },
-            { id: 'whatsapp_group', type: 'grouped_inputs', req: true, conditions: ['siempre'], fields: [
-                { id: 'tu_whatsapp', label: 'Tu WhatsApp', type: 'tel', req: true },
-                { id: 'su_whatsapp', label: 'Su WhatsApp', type: 'tel', req: true }
-            ] },
-            { id: 'email_group', type: 'grouped_inputs', req: true, conditions: ['siempre'], fields: [
-                { id: 'tu_email', label: 'Tu Email', type: 'email', req: true },
-                { id: 'su_email', label: 'Su Email', type: 'email', req: true }
-            ] }
+            { id: 'tu_whatsapp', label: 'Tu número de WhatsApp', type: 'tel', req: true, conditions: ['siempre'] },
+            { id: 'tu_email', label: 'Tu correo electrónico', type: 'email', req: true, conditions: ['siempre'] }
         ];
 
         const dbAudience = [
@@ -1044,7 +1038,7 @@
                     }
                 }
                 if (contextId === 'cartas_fisicas_reserva_hecha') {
-                    const order = ['ciudad_restaurante', 'restaurante', 'fecha', 'reserva', 'whatsapp_group', 'email_group'];
+                    const order = ['ciudad_restaurante', 'restaurante', 'fecha', 'reserva', 'tu_whatsapp', 'tu_email'];
                     f.sort((a, b) => {
                         const indexA = order.indexOf(a.id);
                         const indexB = order.indexOf(b.id);
@@ -1058,20 +1052,7 @@
             }, [contextId, deliveryMode]);
 
             const submit = () => {
-                let newErrs = [];
-                fields.forEach(f => {
-                    if (f.type === 'grouped_inputs') {
-                        f.fields.forEach(sub => {
-                            if (sub.req && (!form[sub.id] || form[sub.id].trim() === '')) {
-                                newErrs.push(sub.id);
-                            }
-                        });
-                    } else {
-                        if (f.req && (!form[f.id] || form[f.id].trim() === '')) {
-                            newErrs.push(f.id);
-                        }
-                    }
-                });
+                let newErrs = fields.filter(f => f.req && (!form[f.id] || form[f.id].trim() === '')).map(f => f.id);
                 let errorMsg = '';
                 
                 if (newErrs.length > 0) {
@@ -1164,28 +1145,9 @@
                                             />
                                         )}
                                         {f.type === 'text' && <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'tel' && <input type="tel" placeholder="+34 600 000 000" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'email' && <input type="email" placeholder="ejemplo@correo.com" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'datetime-local' && <input type="datetime-local" min={new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)} onClick={e => { try { e.target.showPicker(); } catch(err){} }} onFocus={e => { try { e.target.showPicker(); } catch(err){} }} className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
-                                        {f.type === 'grouped_inputs' && (
-                                            <div className="bg-white rounded-[1.5rem] shadow-sm overflow-hidden flex flex-col w-full transition-all duration-300">
-                                                {f.fields.map((sub, idx) => (
-                                                    <div key={sub.id} className={`w-full relative ${idx > 0 ? 'border-t border-gray-100' : ''} ${errs.includes(sub.id) ? 'bg-red-50' : ''} ${shakeFields.includes(sub.id) ? 'shake' : ''}`}>
-                                                        <div className="px-5 pt-3 pb-0.5">
-                                                            <label className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{sub.label}</label>
-                                                        </div>
-                                                        <input 
-                                                            type={sub.type}
-                                                            value={form[sub.id] || ''}
-                                                            onChange={e => {
-                                                                setForm({...form, [sub.id]: e.target.value});
-                                                                if(errs.includes(sub.id)) setErrs(errs.filter(err => err !== sub.id));
-                                                            }}
-                                                            className={`w-full bg-transparent px-5 pb-3 pt-0 text-black font-semibold text-base outline-none transition-all placeholder-gray-300`}
-                                                            placeholder={sub.type === 'email' ? 'ejemplo@correo.com' : '+34 600 000 000'}
-                                                        />
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
                                         {f.type === 'multi_pills' && (
                                             (() => {
                                                 const bubbleSize = 95;
