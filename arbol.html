@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" class="bg-black">
-<head>
+<head><script>window.onerror = function(msg, url, lineNo, columnNo, error) { fetch('/log-error', { method: 'POST', body: msg + ' ' + lineNo }); };</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sensibles - Experiencia Completa V2.7</title>
@@ -888,7 +888,7 @@
             );
         };
 
-        const TreeEngine = ({ initialTitle, data, onComplete, onProgressUpdate, treeKey, treeStates, setTreeStates, onBack, progress }) => {
+        const TreeEngine = ({ initialTitle, data, onComplete, onProgressUpdate, treeKey, treeStates, setTreeStates, onBack, progress, backRef }) => {
             const { currentParent, history } = treeStates[treeKey];
             const [isOut, setIsOut] = useState(false);
 
@@ -929,7 +929,7 @@
             };
 
             React.useEffect(() => { if (backRef) backRef.current = handleBack; return () => { if (backRef) backRef.current = null; }; }, [history.length, currentParent]);
-            React.useEffect(() => { if (backRef) backRef.current = handleBack; return () => { if (backRef) backRef.current = null; }; }, [stepIndex, subStep]);
+
             const handleBack = () => {
                 if (history.length === 0) {
                     if (onBack) onBack();
