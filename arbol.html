@@ -1035,6 +1035,7 @@
             const [modalDeliveryMode, setModalDeliveryMode] = useState('restaurante');
             const [shakeFields, setShakeFields] = useState([]);
             const [globalErrorMsg, setGlobalErrorMsg] = useState('');
+            const [showGlobalError, setShowGlobalError] = useState(false);
             const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
 
             useEffect(() => {
@@ -1086,12 +1087,13 @@
                     setErrs(newErrs); 
                     setShakeFields(newErrs); 
                     setGlobalErrorMsg(errorMsg);
+                    setShowGlobalError(true);
                     
                     if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
                     if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
                     
                     shakeTimeoutRef.current = setTimeout(() => setShakeFields([]), 400); 
-                    errorTimeoutRef.current = setTimeout(() => setGlobalErrorMsg(''), 4000);
+                    errorTimeoutRef.current = setTimeout(() => setShowGlobalError(false), 4000);
                 } else {
                     onComplete(form);
                 }
@@ -1289,7 +1291,7 @@
                                 );
                             })}
                             <div className="w-full mt-2 floating" style={{animationDelay: `${fields.length * 0.15}s`}}>
-                                <div className={`transition-all duration-300 overflow-hidden ${globalErrorMsg ? 'max-h-10 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
+                                <div className={`transition-all duration-300 overflow-hidden ${showGlobalError ? 'max-h-10 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
                                     <p className="text-red-500 text-[11px] font-semibold text-center uppercase tracking-wider">{globalErrorMsg}</p>
                                 </div>
                                 <button className="btn-black" onClick={submit}>Continuar</button>
