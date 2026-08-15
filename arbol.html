@@ -1130,7 +1130,7 @@
                     shakeTimeoutRef.current = setTimeout(() => setShakeFields([]), 400); 
                     errorTimeoutRef.current = setTimeout(() => setShowGlobalError(false), 4000);
                 } else {
-                    onComplete(form);
+                    onComplete({ ...form, deliveryMode });
                 }
             };
 
@@ -2060,8 +2060,9 @@
                     if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
                 };
             }, []);
-            
-            const isOtherAddress = globalData?.formatId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || globalData?.formatId === 'cartas_fisicas_otro';
+            const isOtherAddress = globalData?.formatId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || 
+                                   globalData?.formatId === 'cartas_fisicas_otro' || 
+                                   (globalData?.formatId === 'cartas_fisicas_reserva_no_hecha' && globalData?.logistics?.deliveryMode === 'direccion');
             
             const submit = () => {
                 const pData = phone.trim();
