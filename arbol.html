@@ -447,8 +447,8 @@
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_reserva_hecha', 'delivery_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_reserva_hecha'] },
             { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro', 'cartas_fisicas_reserva_no_hecha'] },
-            { id: 'tu_whatsapp', label: 'Tu WhatsApp para la entrega', type: 'tel', req: true, conditions: ['siempre'] },
-            { id: 'tu_email', label: 'Tu email para la entrega', type: 'email', req: true, conditions: ['siempre'] }
+            { id: 'tu_whatsapp', label: 'Tu WhatsApp para la entrega', type: 'tel', req: true, conditions: ['cartas_digitales'] },
+            { id: 'tu_email', label: 'Tu email para la entrega', type: 'email', req: true, conditions: ['cartas_digitales'] }
         ];
 
         const dbAudience = [
@@ -853,7 +853,10 @@
             const { currentParent, history } = treeStates[treeKey];
             const [isOut, setIsOut] = useState(false);
 
-            const visibleOptions = useMemo(() => data.filter(opt => opt.parent === currentParent || opt.parent_id === currentParent || (!opt.parent && !opt.parent_id && !currentParent)), [currentParent, data]);
+            const visibleOptions = useMemo(() => {
+                const p = currentParent || null;
+                return data.filter(opt => p === null ? (!opt.parent && !opt.parent_id) : (opt.parent === p || opt.parent_id === p));
+            }, [currentParent, data]);
 
             const title = useMemo(() => {
                 if (!currentParent) return initialTitle;
