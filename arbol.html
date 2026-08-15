@@ -2597,13 +2597,13 @@
             
                         const globalBackRef = React.useRef(null);
             const calculateGlobalSubtitle = () => {
-                if (phase === 'format') {
-                    if (!treeStates.format.currentParent && treeStates.format.history.length === 0) return '';
-                    const rootSelection = treeStates.format.history[0] || treeStates.format.currentParent;
-                    if (rootSelection?.includes('cartas_digitales')) return 'Versión digital';
-                    else if (rootSelection?.includes('cartas_fisicas')) return 'Versión física';
+                if (phase === 'format' && !treeStates.format.currentParent && treeStates.format.history.length === 0) return '';
+                
+                if (window.__globalFormatId) {
+                    if (window.__globalFormatId.includes('cartas_digitales')) return 'Versión digital';
+                    else if (window.__globalFormatId.includes('cartas_fisicas')) return 'Versión física';
                 }
-                return undefined;
+                return '';
             };
             const [treeStates, setTreeStates] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeStates')) || {
                 format: { currentParent: null, history: [] },
