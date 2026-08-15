@@ -581,7 +581,7 @@
                 </div>
             </div>
             {/* INVISIBLE SPACER TO PUSH CONTENT DOWN */}
-            <div className="w-full transition-all duration-500 ease-in-out flex-shrink-0 pointer-events-none" style={{ height: subtitle ? '22px' : '0px' }} />
+            
             </>
             );
         };
@@ -979,7 +979,7 @@
             }
 
             return (
-                <div className="scene flex-col justify-start pt-28 px-4 pb-16 relative bg-transparent min-h-screen">
+                <div className="scene flex-1 flex-col justify-start pt-28 px-4 pb-16 relative bg-transparent">
                     
                     <div key={currentParent} className={`w-full max-w-4xl flex flex-col items-center transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'opacity-100'}`}>
                         <div className={`text-center mb-12 ${treeKey === 'format' && history.length === 0 ? 'fade-in' : ''}`}>
@@ -1138,7 +1138,7 @@
             const bubbleConfig = [{ size: 86, mt: 0, ml: 0 }, { size: 96, mt: 10, ml: -15 }, { size: 92, mt: -10, ml: -10 }, { size: 86, mt: 15, ml: -12 }, { size: 110, mt: -15, ml: -10 }, { size: 92, mt: 5, ml: -15 }, { size: 102, mt: -5, ml: -10 }, { size: 116, mt: 10, ml: -15 }, { size: 96, mt: -15, ml: -10 }];
 
             return (
-                <div className="min-h-screen flex flex-col items-center pt-28 p-6 relative">
+                <div className="flex-1 flex flex-col items-center pt-28 p-6 relative">
                     
                     <div className="w-full flex flex-col items-center px-6 fade-in mt-4">
                         <div className="w-full max-w-3xl mx-auto text-center mb-10 px-4">
@@ -1436,7 +1436,7 @@
                 : `Danos un poco más de tiempo :'), para hacerte llegar las cartas físicas en la mesa, necesitamos ${reqHours} horas de antelación`;
 
             return (
-                <div className="scene flex-col justify-start pt-28 px-4 relative bg-transparent min-h-screen">
+                <div className="scene flex-1 flex-col justify-start pt-28 px-4 relative bg-transparent">
                     
                     <div className="w-full max-w-4xl flex flex-col items-center mt-4 fade-in">
                         <div className="text-center mb-12">
@@ -1610,7 +1610,7 @@
             }
 
             return (
-                <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6 pt-24 fade-in relative">
+                <div className="flex-1 flex flex-col items-center justify-center p-6 pt-24 fade-in relative">
                     
                     <div className="w-full flex flex-col items-center fade-in mt-8 z-10">
                         <div className="w-full max-w-3xl mx-auto text-center mb-8 px-4">
@@ -2056,7 +2056,7 @@
             };
 
             return (
-                <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
+                <div className="flex-1 flex flex-col items-center pt-28 p-4 relative fade-in">
                     
                     <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
                         <div className="w-full max-w-3xl mx-auto text-center mb-10 px-4">
@@ -2206,7 +2206,7 @@
             };
 
             return (
-                <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
+                <div className="flex-1 flex flex-col items-center pt-28 p-4 relative fade-in">
                     
                     
 
@@ -2405,7 +2405,7 @@
 
             if (paymentSuccess) {
                 return (
-                    <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
+                    <div className="flex-1 flex items-center justify-center p-6 fade-in relative">
                         
                         <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
@@ -2424,7 +2424,7 @@
 
             if (outOfStock) {
                 return (
-                    <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
+                    <div className="flex-1 flex items-center justify-center p-6 fade-in relative">
                         
                         <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-8">
@@ -2458,7 +2458,7 @@
             }
 
             return (
-                <div className="min-h-screen py-12 px-6 flex flex-col items-center relative fade-in">
+                <div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">
                     
                     
                     <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
@@ -2662,7 +2662,8 @@
             };
 
             return (
-                <div className="w-full relative min-h-screen">
+                <div className="w-full relative min-h-[100dvh] flex flex-col bg-black">
+                    <div className="flex-1 w-full flex flex-col relative transition-all duration-500 ease-in-out" style={{ paddingTop: calculateGlobalSubtitle() ? '22px' : '0px' }}>
                     
                     {phase !== 'intro' && (
                         <GlobalHeader 
