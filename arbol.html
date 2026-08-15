@@ -1057,6 +1057,15 @@
             const shakeTimeoutRef = useRef(null);
             
             useEffect(() => {
+                if (backRef) {
+                    backRef.current = () => {
+                        onBack({ logistics: { ...form, deliveryMode } });
+                    };
+                }
+                return () => { if (backRef) backRef.current = null; };
+            }, [onBack, backRef, form, deliveryMode]);
+
+            useEffect(() => {
                 return () => {
                     if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
                     if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
@@ -1502,12 +1511,22 @@
             );
         };
 
-        const ObjectiveScreen = ({ onComplete, progress, onBack, globalData }) => {
+        const ObjectiveScreen = ({ onComplete, progress, onBack, globalData, backRef }) => {
             const [text, setText] = useState(globalData?.objective || '');
             const [showWarning, setShowWarning] = useState(false);
             const [placeholderIndex, setPlaceholderIndex] = useState(0);
             const [isAnimatingPlaceholder, setIsAnimatingPlaceholder] = useState(false);
             const [showModal, setShowModal] = useState(false);
+            
+            useEffect(() => {
+                if (backRef) {
+                    backRef.current = () => {
+                        onBack({ objective: text });
+                    };
+                }
+                return () => { if (backRef) backRef.current = null; };
+            }, [onBack, backRef, text]);
+            
             useEffect(() => {
                 const handleEscape = (e) => { if (e.key === 'Escape' && showModal) setShowModal(false); };
                 document.addEventListener('keydown', handleEscape);
@@ -1699,7 +1718,7 @@
             );
         };
 
-        const TonesNoria = ({ onComplete, progress, onBack, globalData }) => {
+        const TonesNoria = ({ onComplete, progress, onBack, globalData, backRef }) => {
             const [scrollPos, setScrollPos] = useState(0);
             const maxScroll = dbTones.length - 1;
             const hasContext = (globalData?.objective?.trim()?.length || 0) > 0;
@@ -1724,6 +1743,16 @@
             const [shakeKey, setShakeKey] = useState(0);
             const [isAutoSelecting, setIsAutoSelecting] = useState(false);
             const [isAutoSelectDone, setIsAutoSelectDone] = useState(false);
+
+            useEffect(() => {
+                if (backRef) {
+                    backRef.current = () => {
+                        const tonesToSave = selectedCards.map(t => t === 't_custom' ? customToneText : t);
+                        onBack({ tones: tonesToSave });
+                    };
+                }
+                return () => { if (backRef) backRef.current = null; };
+            }, [onBack, backRef, selectedCards, customToneText]);
 
             const containerRef = useRef(null);
             const touchStartX = useRef(null);
@@ -2050,9 +2079,13 @@
             const shakeTimeoutRef = useRef(null);
             
             useEffect(() => {
-                if (backRef) backRef.current = onBack;
+                if (backRef) {
+                    backRef.current = () => {
+                        onBack({ contact: { phone, email, notes } });
+                    };
+                }
                 return () => { if (backRef) backRef.current = null; };
-            }, [onBack, backRef]);
+            }, [onBack, backRef, phone, email, notes]);
 
             useEffect(() => {
                 return () => {
@@ -2160,9 +2193,18 @@
             );
         };
 
-        const ParticipantsScreen = ({ onComplete, onBack, progress, globalData }) => {
+        const ParticipantsScreen = ({ onComplete, onBack, progress, globalData, backRef }) => {
             const [participants, setParticipants] = useState(globalData?.participants || [{ name: '', details: '' }, { name: '', details: '' }]);
             const [isOut, setIsOut] = useState(false);
+
+            useEffect(() => {
+                if (backRef) {
+                    backRef.current = () => {
+                        onBack({ participants });
+                    };
+                }
+                return () => { if (backRef) backRef.current = null; };
+            }, [onBack, backRef, participants]);
 
             const handleParticipantChange = (index, field, value) => { 
                 const newParticipants = [...participants]; 
@@ -2765,7 +2807,11 @@
                 setPhase(newPhase);
             };
 
-            const goBackPhase = () => {
+            const goBackPhase = (partialData) => {
+                if (partialData && typeof partialData === 'object' && !partialData.nativeEvent) {
+                    setGlobalData(prev => ({ ...prev, ...partialData }));
+                }
+                
                 if (phaseHistory.length > 0) {
                     let newHistory = [...phaseHistory];
                     let prev = newHistory.pop();
@@ -2774,7 +2820,6 @@
                     
                     if (typeof prev === 'object' && prev !== null) {
                         setPhase(prev.phase);
-                        setGlobalData(prev.globalData);
                     } else {
                         // Retrocompatibilidad con strings
                         setPhase(prev);
@@ -2856,9 +2901,10 @@
                         progress={getProgress()}
                         globalData={globalData}
                         onComplete={data => advanceTo('audience', { participants: data })} 
-                        onBack={goBackPhase} 
+                        onBack={goBackPhase}
+                        backRef={globalBackRef}
                     />}
-
+                    
                     {/* Árbol 2: AUDIENCIA */}
                     {phase === 'audience' && <TreeEngine 
                         treeKey="audience" treeStates={treeStates} setTreeStates={setTreeStates} backRef={globalBackRef}
@@ -2869,9 +2915,9 @@
                         onBack={goBackPhase} 
                     />}
                     
-                    {phase === 'objective' && <ObjectiveScreen progress={getProgress()} globalData={globalData} onComplete={txt => advanceTo('tones', {objective: txt})} onBack={goBackPhase} />}
+                    {phase === 'objective' && <ObjectiveScreen progress={getProgress()} globalData={globalData} onComplete={txt => advanceTo('tones', {objective: txt})} onBack={goBackPhase} backRef={globalBackRef} />}
 
-                    {phase === 'tones' && <TonesNoria globalData={globalData} onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
+                    {phase === 'tones' && <TonesNoria globalData={globalData} onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} backRef={globalBackRef} />}
                     
                     {phase === 'n4' && <CustomizationN4 backRef={globalBackRef} globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
