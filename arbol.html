@@ -1103,8 +1103,23 @@
 
                 service.getPlacePredictions(request, (preds, status) => {
                     if (status === window.google.maps.places.PlacesServiceStatus.OK && preds) {
-                        setPredictions(preds);
-                        setShowDropdown(true);
+                        let finalPreds = preds;
+                        if (searchType === 'city') {
+                            // Google (regions) devuelve también Comunidades Autónomas y Provincias. 
+                            // Filtramos para quedarnos solo con ciudades (locality) y códigos postales.
+                            finalPreds = preds.filter(p => 
+                                p.types.includes('locality') || 
+                                p.types.includes('sublocality') || 
+                                p.types.includes('postal_code')
+                            );
+                        }
+                        
+                        if (finalPreds.length > 0) {
+                            setPredictions(finalPreds);
+                            setShowDropdown(true);
+                        } else {
+                            setPredictions([]);
+                        }
                     } else {
                         console.error("Google Maps API Error Status:", status);
                         setPredictions([]);
