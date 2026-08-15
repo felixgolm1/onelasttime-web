@@ -446,7 +446,6 @@
             { id: 'punto_recogida', label: 'Pon una dirección y te contactaremos con los puntos de recogida más cercanos para que escojas uno', type: 'text', placeholder: '', req: true, conditions: ['delivery_punto'] },
             { id: 'restaurante', label: 'Nombre del restaurante', type: 'text', req: true, conditions: ['cartas_fisicas_reserva_hecha', 'delivery_restaurante'] },
             { id: 'reserva', label: 'Nombre de la reserva', type: 'text', req: true, conditions: ['cartas_fisicas_reserva_hecha'] },
-            { id: 'notas_entrega', label: '¿Quieres que tengamos algo en cuenta para la entrega?', type: 'textarea', placeholder: '', req: false, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro', 'cartas_fisicas_reserva_no_hecha'] },
             { id: 'tu_whatsapp', label: 'Tu WhatsApp para la entrega', type: 'tel', req: true, conditions: ['cartas_digitales'] },
             { id: 'tu_email', label: 'Tu email para la entrega', type: 'email', req: true, conditions: ['cartas_digitales'] }
         ];
@@ -2040,6 +2039,110 @@
             );
         };
         
+        const ContactInfoScreen = ({ onComplete, onBack, progress, globalData, backRef }) => {
+            const [phone, setPhone] = useState(globalData?.contact?.phone || '');
+            const [email, setEmail] = useState(globalData?.contact?.email || '');
+            const [notes, setNotes] = useState(globalData?.contact?.notes || '');
+            const [errorMsg, setErrorMsg] = useState('');
+            const [shakeFields, setShakeFields] = useState([]);
+            const [isOut, setIsOut] = useState(false);
+            
+            useEffect(() => {
+                if (backRef) backRef.current = onBack;
+                return () => { if (backRef) backRef.current = null; };
+            }, [onBack, backRef]);
+            
+            const isOtherAddress = globalData?.formatId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || globalData?.formatId === 'cartas_fisicas_otro';
+            
+            const submit = () => {
+                const pData = phone.trim();
+                const eData = email.trim();
+                const pValid = pData.length >= 9;
+                const eValid = eData.includes('@') && eData.includes('.');
+                
+                let errors = [];
+                
+                if (!pData && !eData) {
+                    errors = ['phone', 'email'];
+                } else if (pData && !eData) {
+                    if (!pValid) errors = ['phone'];
+                } else if (!pData && eData) {
+                    if (!eValid) errors = ['email'];
+                } else {
+                    if (!pValid) errors.push('phone');
+                    if (!eValid) errors.push('email');
+                }
+                
+                if (errors.length > 0) {
+                    setShakeFields(errors);
+                    setErrorMsg('Necesitamos un número o email tuyo válido');
+                    setTimeout(() => setShakeFields([]), 500);
+                    setTimeout(() => setErrorMsg(''), 4000);
+                    return;
+                }
+                
+                setIsOut(true);
+                setTimeout(() => onComplete({ phone, email, notes }), 400);
+            };
+
+            return (
+                <div className="flex-1 flex flex-col items-center pt-28 px-4 pb-4 relative fade-in">
+                    <div className={`w-full max-w-lg flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
+                        <div className="w-full text-center mb-10">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3">Info de contacto para la entrega</h2>
+                            <p className="text-white/70 text-sm md:text-base">Te mandaremos información del envío por WhatsApp y/o email</p>
+                        </div>
+                        
+                        <div className="w-full max-w-[22rem] flex flex-col gap-4 floating">
+                            <div className="w-full">
+                                <label className="label-style">Tu número</label>
+                                <input 
+                                    type="tel" 
+                                    placeholder="+34 600 123 456" 
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)} 
+                                    className={`pill-input !mb-0 text-[15px] ${shakeFields.includes('phone') ? 'error-shake' : ''}`} 
+                                    style={shakeFields.includes('phone') ? { borderColor: '#ef4444' } : {}}
+                                />
+                            </div>
+                            
+                            <div className="w-full">
+                                <label className="label-style">Tu email</label>
+                                <input 
+                                    type="email" 
+                                    placeholder="quien.paga.la.cena@correo.com" 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    className={`pill-input !mb-0 text-[15px] ${shakeFields.includes('email') ? 'error-shake' : ''}`} 
+                                    style={shakeFields.includes('email') ? { borderColor: '#ef4444' } : {}}
+                                />
+                            </div>
+                            
+                            {isOtherAddress && (
+                                <div className="w-full">
+                                    <label className="label-style">¿Quieres que tengamos algo en cuenta para la entrega?</label>
+                                    <textarea 
+                                        placeholder="" 
+                                        value={notes}
+                                        onChange={(e) => setNotes(e.target.value)} 
+                                        className="pill-input !mb-0 text-[15px] min-h-[80px] resize-none pt-4" 
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        
+                        {errorMsg && (
+                            <div className="text-red-500 text-sm mt-4 fade-in font-medium">{errorMsg}</div>
+                        )}
+                        
+                        <div className="w-full max-w-[22rem] mt-10">
+                            <button onClick={submit} className="btn-black w-full">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         const ParticipantsScreen = ({ onComplete, onBack, progress, globalData }) => {
             const [participants, setParticipants] = useState(globalData?.participants || [{ name: '', details: '' }, { name: '', details: '' }]);
             const [isOut, setIsOut] = useState(false);
@@ -2625,6 +2728,7 @@
                 if (phase === 'intro') return 5;
                 if (phase === 'format') return 5 + (15 * treeProgress.format); 
                 if (phase === 'logistics') return 20;
+                if (phase === 'contact_info') return 21;
                 if (phase === 'participants') return 22;
                 if (phase === 'delivery_error') return 25;
                 if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
@@ -2704,7 +2808,7 @@
                                 const hoursDiff = (eventDate - now) / (1000 * 60 * 60);
                                 
                                 if (hoursDiff >= reqHours) {
-                                    advanceTo('participants', {logistics: data});
+                                    advanceTo('contact_info', {logistics: data});
                                 } else {
                                     advanceTo('delivery_error', {logistics: data, isBcn, reqHours});
                                 }
@@ -2722,6 +2826,14 @@
                         onBack={goBackPhase}
                     />}
                     
+                    
+                    {phase === 'contact_info' && <ContactInfoScreen 
+                        progress={getProgress()}
+                        globalData={globalData}
+                        backRef={globalBackRef}
+                        onComplete={data => advanceTo('participants', { contact: data })} 
+                        onBack={goBackPhase} 
+                    />}
                     
                     {phase === 'participants' && <ParticipantsScreen 
                         progress={getProgress()}
