@@ -1052,6 +1052,7 @@
             const isSelectedRef = useRef(isSelected);
             const autocompleteService = useRef(null);
             const inputRef = useRef(null);
+            const clearDropdownTimeoutRef = useRef(null);
             
             useEffect(() => {
                 if (!value) setIsSelected(false);
@@ -1074,8 +1075,15 @@
 
             const fetchPredictions = (inputValue) => {
                 if (!inputValue) {
-                    setPredictions([]);
+                    setShowDropdown(false);
+                    clearDropdownTimeoutRef.current = setTimeout(() => {
+                        setPredictions([]);
+                    }, 500);
                     return;
+                }
+
+                if (clearDropdownTimeoutRef.current) {
+                    clearTimeout(clearDropdownTimeoutRef.current);
                 }
                 
                 const service = getAutocompleteService();
@@ -1138,7 +1146,10 @@
             const handleClear = () => {
                 onChange('');
                 setIsSelected(false);
-                setPredictions([]);
+                setShowDropdown(false);
+                clearDropdownTimeoutRef.current = setTimeout(() => {
+                    setPredictions([]);
+                }, 500);
                 if (onError) onError();
             };
 
