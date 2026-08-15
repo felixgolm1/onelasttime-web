@@ -1044,7 +1044,6 @@
             
             useEffect(() => {
                 if (!value) setIsSelected(false);
-                isSelectedRef.current = !!value;
             }, [value]);
 
             useEffect(() => {
@@ -1111,6 +1110,7 @@
 
             const handleChange = (e) => {
                 onChange(e.target.value);
+                setIsSelected(false);
                 fetchPredictions(e.target.value);
                 if (onError) onError();
             };
