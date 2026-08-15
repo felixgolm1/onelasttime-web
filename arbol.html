@@ -1623,16 +1623,14 @@
                 };
             }, []);
 
-            const titleText = isBcn 
-                ? `Danos un poco más de tiempo :'), para hacerte llegar las cartas físicas en la mesa en Barcelona ciudad, necesitamos ${reqHours} horas de antelación`
-                : `Danos un poco más de tiempo :'), para hacerte llegar las cartas físicas en la mesa, necesitamos ${reqHours} horas de antelación`;
+            const titleText = `Necesitamos ${reqHours}h de antelación para asegurar que las cartas físicas están en la mesa antes que tú`;
 
             return (
                 <div className="flex-1 flex flex-col items-center pt-28 px-4 relative bg-transparent pb-10 overflow-hidden">
                     
                     <div className="w-full max-w-4xl flex flex-col items-center mt-4 fade-in">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red">{titleText}</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red max-w-3xl mx-auto">{titleText}</h2>
                         </div>
                         
                         <div className="w-full flex flex-wrap gap-6 md:gap-10 justify-center items-center mt-4">
