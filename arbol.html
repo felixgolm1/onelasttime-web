@@ -2118,7 +2118,7 @@
                                         setPhone(e.target.value);
                                         if (errs.includes('phone')) setErrs(errs.filter(id => id !== 'phone'));
                                     }} 
-                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('phone') ? 'shake' : ''} ${errs.includes('phone') ? 'input-error' : ''}`} 
+                                    className={`pill-input !mb-0 text-[15px] ${shakeFields.includes('phone') ? 'shake' : ''} ${errs.includes('phone') ? 'input-error' : ''}`} 
                                 />
                             </div>
                             
@@ -2132,7 +2132,7 @@
                                         setEmail(e.target.value);
                                         if (errs.includes('email')) setErrs(errs.filter(id => id !== 'email'));
                                     }} 
-                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('email') ? 'shake' : ''} ${errs.includes('email') ? 'input-error' : ''}`} 
+                                    className={`pill-input !mb-0 text-[15px] ${shakeFields.includes('email') ? 'shake' : ''} ${errs.includes('email') ? 'input-error' : ''}`} 
                                 />
                             </div>
                             
