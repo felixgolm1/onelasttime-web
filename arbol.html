@@ -1212,8 +1212,14 @@
             );
         };
 
-        const LogisticsForm = ({ contextId, initialData, onComplete, onBack, onSwitchToDigital, backRef }) => {
-            const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', punto_recogida: '', comida: [] });
+        const LogisticsForm = ({ contextId, initialData, onComplete, onBack, onSwitchToDigital, backRef, globalContactData }) => {
+            const [form, setForm] = useState(() => {
+                const base = initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', punto_recogida: '', comida: [] };
+                // Fallback a los datos de contacto si el usuario los rellenó en la pantalla ContactInfo y luego retrocedió
+                if (!base.tu_whatsapp && globalContactData?.phone) base.tu_whatsapp = globalContactData.phone;
+                if (!base.tu_email && globalContactData?.email) base.tu_email = globalContactData.email;
+                return base;
+            });
             const [deliveryMode, setDeliveryMode] = useState(contextId === 'cartas_fisicas_reserva_no_hecha' ? 'restaurante' : 'direccion');
             const [errs, setErrs] = useState([]);
             const [showModal, setShowModal] = useState(false);
@@ -3048,7 +3054,7 @@
                         onBack={null} // Desactiva la navegación hacia la intro en la primera pregunta
                     />}
                     
-                    {phase === 'logistics' && <LogisticsForm backRef={globalBackRef} key={globalData.formatId} contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
+                    {phase === 'logistics' && <LogisticsForm backRef={globalBackRef} key={globalData.formatId} contextId={globalData.formatId} initialData={globalData.logistics} globalContactData={globalData.contact} progress={getProgress()}
                         onSwitchToDigital={(currentForm) => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales'), logistics: currentForm })}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
