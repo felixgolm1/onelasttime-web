@@ -1093,7 +1093,7 @@
 
                 let request = {
                     input: searchType === 'post_office' 
-                        ? (inputValue.trim().length === 5 ? inputValue.trim() + ' Correos' : 'Correos ' + inputValue.trim())
+                        ? 'Correos ' + inputValue.trim()
                         : inputValue,
                     componentRestrictions: { country: 'es' }
                 };
