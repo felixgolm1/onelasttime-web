@@ -1041,8 +1041,6 @@
             }, [value]);
 
             useEffect(() => {
-                // Si el dropdown se cierra, tenemos texto, pero no se ha seleccionado una píldora válida: borramos el texto.
-                // EXCEPCIÓN: Permitimos texto libre en el nombre del restaurante por si no está en Maps.
                 if (!showDropdown && value && !isSelected && searchType !== 'restaurant') {
                     onChange('');
                 }
@@ -1065,7 +1063,7 @@
                 
                 const service = getAutocompleteService();
                 if (!service) {
-                    return; // API no cargada o KEY invalida
+                    return;
                 }
 
                 let request = {
@@ -1085,8 +1083,6 @@
                     if (status === window.google.maps.places.PlacesServiceStatus.OK && preds) {
                         let finalPreds = preds;
                         if (searchType === 'city') {
-                            // Google (regions) devuelve también Comunidades Autónomas y Provincias. 
-                            // Filtramos para quedarnos solo con ciudades (locality) y códigos postales.
                             finalPreds = preds.filter(p => 
                                 p.types.includes('locality') || 
                                 p.types.includes('postal_code')
@@ -1135,6 +1131,9 @@
                 const handleEdit = (e) => {
                     e.stopPropagation();
                     setIsSelected(false);
+                    setTimeout(() => {
+                        if (inputRef.current) inputRef.current.focus();
+                    }, 50);
                 };
 
                 const handleClearBtn = (e) => {
@@ -1162,6 +1161,7 @@
             return (
                 <div className="relative w-full">
                     <input 
+                        ref={inputRef}
                         type="text" 
                         value={value} 
                         onChange={handleChange} 
