@@ -1407,7 +1407,7 @@
                                                             min={minDate} 
                                                             onClick={e => { try { e.target.showPicker(); } catch(err){} }} 
                                                             onFocus={e => { try { e.target.showPicker(); } catch(err){} }} 
-                                                            className={`${inputClasses} ${!datePart ? 'is-empty' : ''} !pl-10 !pr-4 !text-left`} 
+                                                            className={`${inputClasses} ${!datePart ? 'is-empty' : ''} !pl-10`} 
                                                             value={datePart} 
                                                             onChange={e => {
                                                                 const newDate = e.target.value;
@@ -1424,7 +1424,7 @@
                                                             type="time" 
                                                             onClick={e => { try { e.target.showPicker(); } catch(err){} }} 
                                                             onFocus={e => { try { e.target.showPicker(); } catch(err){} }} 
-                                                            className={`${inputClasses} ${!timePart ? 'is-empty' : ''} !pl-10 !pr-4 !text-left`} 
+                                                            className={`${inputClasses} ${!timePart ? 'is-empty' : ''} !pl-10`} 
                                                             value={timePart} 
                                                             onChange={e => {
                                                                 const newTime = e.target.value;
