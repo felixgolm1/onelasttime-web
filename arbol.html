@@ -2578,7 +2578,7 @@
                     />}
                     
                     {phase === 'logistics' && <LogisticsForm contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
-                        onSwitchToDigital={() => advanceTo('participants', { formatId: 'cartas_digitales' })}
+                        onSwitchToDigital={() => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales') })}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
@@ -2604,7 +2604,7 @@
                         isBcn={globalData.isBcn} 
                         reqHours={globalData.reqHours} 
                         progress={getProgress()}
-                        onDigital={() => advanceTo('participants', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
+                        onDigital={() => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
                         onChangeDate={goBackPhase} 
                         onBack={goBackPhase}
                     />}
