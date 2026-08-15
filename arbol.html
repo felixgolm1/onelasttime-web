@@ -2183,9 +2183,11 @@
                             )}
                         </div>
                         
-                        <div className="w-full max-w-[22rem] mt-6 relative text-center">
-                            <div className={`absolute -top-8 left-0 w-full text-red-500 font-semibold text-base md:text-lg transition-opacity duration-500 ${errs.length > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                                Necesitamos un número o email tuyo válido
+                        <div className="w-full max-w-[22rem] mt-6 text-center">
+                            <div className={`transition-all duration-300 overflow-hidden ${errs.length > 0 ? 'max-h-14 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
+                                <p className={`text-red-500 font-semibold text-base md:text-lg ${shakeFields.length > 0 ? 'shake' : ''}`}>
+                                    Necesitamos un número o email tuyo válido
+                                </p>
                             </div>
                             <button onClick={submit} className="btn-black w-full">Continuar</button>
                         </div>
