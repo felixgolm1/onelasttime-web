@@ -1055,11 +1055,14 @@
             const [showDropdown, setShowDropdown] = useState(false);
             const autocompleteService = useRef(null);
             
-            useEffect(() => {
+            const getAutocompleteService = () => {
+                if (autocompleteService.current) return autocompleteService.current;
                 if (window.google && window.google.maps && window.google.maps.places) {
                     autocompleteService.current = new window.google.maps.places.AutocompleteService();
+                    return autocompleteService.current;
                 }
-            }, []);
+                return null;
+            };
 
             const fetchPredictions = (inputValue) => {
                 if (!inputValue) {
@@ -1067,7 +1070,8 @@
                     return;
                 }
                 
-                if (!autocompleteService.current) {
+                const service = getAutocompleteService();
+                if (!service) {
                     return; // API no cargada o KEY invalida
                 }
 
@@ -1084,7 +1088,7 @@
                     request.types = ['geocode', 'establishment'];
                 }
 
-                autocompleteService.current.getPlacePredictions(request, (preds, status) => {
+                service.getPlacePredictions(request, (preds, status) => {
                     if (status === window.google.maps.places.PlacesServiceStatus.OK && preds) {
                         setPredictions(preds);
                         setShowDropdown(true);
