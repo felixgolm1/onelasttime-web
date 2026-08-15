@@ -112,7 +112,8 @@
 
         @keyframes floatIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
         .floating { animation: floatIdle 5s ease-in-out infinite; will-change: transform; }
-        .floating:hover, .floating:focus-within { animation-play-state: paused; }
+        .floating:hover { animation-play-state: paused; }
+        .floating:focus-within { animation-play-state: paused; z-index: 50; position: relative; }
 
         /* --- FASE: INTRO CINEMATOGRÁFICA --- */
         .scene { width: 100vw; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; perspective: 1200px; }
@@ -1093,6 +1094,7 @@
                         setPredictions(preds);
                         setShowDropdown(true);
                     } else {
+                        console.error("Google Maps API Error Status:", status);
                         setPredictions([]);
                     }
                 });
