@@ -1035,6 +1035,7 @@
             const [showDropdown, setShowDropdown] = useState(false);
             const [isSelected, setIsSelected] = useState(!!value);
             const autocompleteService = useRef(null);
+            const inputRef = useRef(null);
             
             useEffect(() => {
                 if (!value) setIsSelected(false);
