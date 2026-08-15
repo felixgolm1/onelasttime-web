@@ -1054,8 +1054,13 @@
         const PlacesAutocompleteInput = ({ value, onChange, placeholder, className, searchType, onError }) => {
             const [predictions, setPredictions] = useState([]);
             const [showDropdown, setShowDropdown] = useState(false);
+            const [isSelected, setIsSelected] = useState(!!value);
             const autocompleteService = useRef(null);
             
+            useEffect(() => {
+                if (!value) setIsSelected(false);
+            }, [value]);
+
             const getAutocompleteService = () => {
                 if (autocompleteService.current) return autocompleteService.current;
                 if (window.google && window.google.maps && window.google.maps.places) {
@@ -1110,7 +1115,28 @@
                 const cleanText = pred.description.replace(/, España/g, '').replace(/, Spain/g, '');
                 onChange(cleanText);
                 setShowDropdown(false);
+                setIsSelected(true);
             };
+
+            const handleClear = () => {
+                onChange('');
+                setIsSelected(false);
+                setPredictions([]);
+                if (onError) onError();
+            };
+
+            if (isSelected && value) {
+                return (
+                    <div className="relative w-full">
+                        <div onClick={handleClear} className="flex items-center justify-between bg-[rgba(204,255,0,0.1)] border border-[#ccff00] text-[#ccff00] rounded-full px-6 py-4 w-full cursor-pointer transition-all hover:bg-[rgba(204,255,0,0.2)]">
+                            <span className="font-semibold text-[14px] truncate">{value}</span>
+                            <button className="ml-2 flex-shrink-0 hover:scale-110 transition-transform">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
 
             return (
                 <div className="relative w-full">
