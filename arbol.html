@@ -68,7 +68,7 @@
 
 
         .pill-input { width: 100%; padding: 1.05rem 1.5rem; background: #fff; color: #000; border: 1.5px solid transparent; border-radius: 9999px; text-align: center; font-size: 15px; outline: none; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 10px rgba(0,0,0,0.06), 0 12px 24px rgba(0,0,0,0.05); position: relative; }
-        .pill-input:focus { box-shadow: 0 0 0 2px #000, 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.1); z-index: 10; transform: scale(1.01); }
+        .pill-input:focus, .pill-input:focus-within { box-shadow: 0 0 0 2px #000, 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.1); z-index: 10; transform: scale(1.01); }
         .pill-input:hover { transform: translateY(-8px); box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.15), 0 24px 48px rgba(0,0,0,0.1); z-index: 20; }
         .pill-input::placeholder { color: #9ca3af; }
         .inline-icon-wrapper { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -1404,38 +1404,52 @@
                                             return (
                                                 <div className="flex gap-2 w-full">
                                                     <div className="relative w-[55%] flex items-center">
-                                                        <input 
-                                                            type="date" 
-                                                            min={minDate} 
-                                                            onClick={e => { try { e.target.showPicker(); } catch(err){} }} 
-                                                            onFocus={e => { try { e.target.showPicker(); } catch(err){} }} 
-                                                            className={`${inputClasses} ${!datePart ? 'is-empty' : ''} !pl-10`} 
-                                                            value={datePart} 
-                                                            onChange={e => {
-                                                                const newDate = e.target.value;
-                                                                setForm({...form, [f.id]: `${newDate}T${timePart || '21:00'}`}); 
-                                                                setErrs(errs.filter(id => id !== f.id));
-                                                            }} 
-                                                        />
-                                                        <div className="absolute left-4 flex items-center pointer-events-none text-black z-[30] inline-icon-wrapper">
-                                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                                        <div 
+                                                            className={`${inputClasses} flex items-center justify-center gap-1.5 cursor-pointer !px-1`}
+                                                            onClick={(e) => {
+                                                                const el = e.currentTarget.querySelector('input');
+                                                                if (el) { try { el.showPicker(); } catch(err){} }
+                                                            }}
+                                                        >
+                                                            <div className="pointer-events-none text-black">
+                                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                                            </div>
+                                                            <input 
+                                                                type="date" 
+                                                                min={minDate} 
+                                                                className={`bg-transparent outline-none border-none p-0 m-0 text-center ${!datePart ? 'is-empty' : ''}`}
+                                                                style={{ width: '105px' }}
+                                                                value={datePart} 
+                                                                onChange={e => {
+                                                                    const newDate = e.target.value;
+                                                                    setForm({...form, [f.id]: `${newDate}T${timePart || '21:00'}`}); 
+                                                                    setErrs(errs.filter(id => id !== f.id));
+                                                                }} 
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div className="relative w-[45%] flex items-center">
-                                                        <input 
-                                                            type="time" 
-                                                            onClick={e => { try { e.target.showPicker(); } catch(err){} }} 
-                                                            onFocus={e => { try { e.target.showPicker(); } catch(err){} }} 
-                                                            className={`${inputClasses} ${!timePart ? 'is-empty' : ''} !pl-10`} 
-                                                            value={timePart} 
-                                                            onChange={e => {
-                                                                const newTime = e.target.value;
-                                                                setForm({...form, [f.id]: `${datePart || minDate}T${newTime}`}); 
-                                                                setErrs(errs.filter(id => id !== f.id));
-                                                            }} 
-                                                        />
-                                                        <div className="absolute left-4 flex items-center pointer-events-none text-black z-[30] inline-icon-wrapper">
-                                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                                        <div 
+                                                            className={`${inputClasses} flex items-center justify-center gap-1.5 cursor-pointer !px-1`}
+                                                            onClick={(e) => {
+                                                                const el = e.currentTarget.querySelector('input');
+                                                                if (el) { try { el.showPicker(); } catch(err){} }
+                                                            }}
+                                                        >
+                                                            <div className="pointer-events-none text-black">
+                                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                                            </div>
+                                                            <input 
+                                                                type="time" 
+                                                                className={`bg-transparent outline-none border-none p-0 m-0 text-center ${!timePart ? 'is-empty' : ''}`}
+                                                                style={{ width: '60px' }}
+                                                                value={timePart} 
+                                                                onChange={e => {
+                                                                    const newTime = e.target.value;
+                                                                    setForm({...form, [f.id]: `${datePart || minDate}T${newTime}`}); 
+                                                                    setErrs(errs.filter(id => id !== f.id));
+                                                                }} 
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
