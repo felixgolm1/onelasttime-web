@@ -1368,7 +1368,7 @@
                                 const inputClasses = `pill-input ${errs.includes(f.id) ? 'input-error' : ''} ${shakeFields.includes(f.id) ? 'shake' : ''}`;
                                 return (
                                     <React.Fragment key={f.id}>
-                                    <div key={f.id} className={`w-full mb-4 ${!isMulti ? 'floating' : ''}`} style={!isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>
+                                    <div key={f.id} className={`w-full mb-4 relative ${!isMulti ? 'floating' : ''}`} style={{ zIndex: 100 - i, ...(!isMulti ? {animationDelay: `${i * 0.15}s`} : {}) }}>
                                         <label className={`label-style ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>{f.label}</label>
                                         {f.subtitle && <p className={`text-[10px] text-gray-500 font-medium text-center mb-3 -mt-1 ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15 + 0.05}s`} : {}}>{f.subtitle}</p>}
                                         {f.type === 'textarea' && (
@@ -1547,7 +1547,7 @@
                                         )}
                                     </div>
                                         {f.id === 'fecha' && (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_reserva_no_hecha') && (
-                                            <div className="w-full mb-4">
+                                            <div className="w-full mb-4 relative" style={{ zIndex: 100 - i - 1 }}>
                                                 <label className="label-style">¿Dónde quieres que las entreguemos?</label>
                                                 <div className="flex items-center justify-between w-full gap-1 bg-white rounded-full p-1.5 border border-gray-200 shadow-sm">
                                                     <button 
@@ -1597,7 +1597,7 @@
                                     </React.Fragment>
                                 );
                             })}
-                            <div className="w-full mt-2 floating" style={{animationDelay: `${fields.length * 0.15}s`}}>
+                            <div className="w-full mt-2 floating relative" style={{animationDelay: `${fields.length * 0.15}s`, zIndex: 1}}>
                                 <div className={`transition-all duration-300 overflow-hidden ${showGlobalError ? 'max-h-10 opacity-100 mb-3' : 'max-h-0 opacity-0 mb-0'}`}>
                                     <p className="text-red-500 text-[11px] font-semibold text-center uppercase tracking-wider">{globalErrorMsg}</p>
                                 </div>
