@@ -928,6 +928,8 @@
                 }, 400); 
             };
 
+            React.useEffect(() => { if (backRef) backRef.current = handleBack; return () => { if (backRef) backRef.current = null; }; }, [history.length, currentParent]);
+            React.useEffect(() => { if (backRef) backRef.current = handleBack; return () => { if (backRef) backRef.current = null; }; }, [stepIndex, subStep]);
             const handleBack = () => {
                 if (history.length === 0) {
                     if (onBack) onBack();
@@ -978,7 +980,7 @@
 
             return (
                 <div className="scene flex-col justify-start pt-28 px-4 pb-16 relative bg-transparent min-h-screen">
-                    <GlobalHeader progress={progress} onBack={canGoBack ? handleBack : null} animateIn={treeKey === 'format' && history.length === 0} overrideSubtitle={provisionalSubtitle} />
+                    
                     <div key={currentParent} className={`w-full max-w-4xl flex flex-col items-center transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'opacity-100'}`}>
                         <div className={`text-center mb-12 ${treeKey === 'format' && history.length === 0 ? 'fade-in' : ''}`}>
 
@@ -1047,7 +1049,7 @@
             return false;
         };
 
-        const LogisticsForm = ({ contextId, initialData, onComplete, progress, onBack, onSwitchToDigital }) => {
+        const LogisticsForm = ({ contextId, initialData, onComplete, onBack, onSwitchToDigital, backRef }) => {
             const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', punto_recogida: '', comida: [] });
             const [deliveryMode, setDeliveryMode] = useState(contextId === 'cartas_fisicas_reserva_no_hecha' ? 'restaurante' : 'direccion');
             const [errs, setErrs] = useState([]);
@@ -1137,7 +1139,7 @@
 
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-6 relative">
-                    <GlobalHeader progress={progress} onBack={onBack} />
+                    
                     <div className="w-full flex flex-col items-center px-6 fade-in mt-4">
                         <div className="w-full max-w-3xl mx-auto text-center mb-10 px-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">Info de la cena y la entrega</h2>
@@ -1435,7 +1437,7 @@
 
             return (
                 <div className="scene flex-col justify-start pt-28 px-4 relative bg-transparent min-h-screen">
-                    <GlobalHeader progress={progress} onBack={onBack} animateIn={false} />
+                    
                     <div className="w-full max-w-4xl flex flex-col items-center mt-4 fade-in">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red">{titleText}</h2>
@@ -1609,7 +1611,7 @@
 
             return (
                 <div className="min-h-[100dvh] flex flex-col items-center justify-center p-6 pt-24 fade-in relative">
-                    <GlobalHeader progress={progress} onBack={onBack} />
+                    
                     <div className="w-full flex flex-col items-center fade-in mt-8 z-10">
                         <div className="w-full max-w-3xl mx-auto text-center mb-8 px-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
@@ -1872,7 +1874,7 @@
             return (
                 <>
                     <div className="w-full min-h-screen flex flex-col pb-[350px] fade-in relative overflow-x-hidden">
-                        <GlobalHeader progress={progress} onBack={onBack} />
+                        
                         
                         {ReactDOM.createPortal(
                             <div className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] pointer-events-none transition-opacity duration-700 ${limitWarning ? 'opacity-100' : 'opacity-0'}`}>
@@ -2055,7 +2057,7 @@
 
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
-                    <GlobalHeader progress={progress} onBack={onBack} />
+                    
                     <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
                         <div className="w-full max-w-3xl mx-auto text-center mb-10 px-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Quiénes os sentáis a la mesa?</h2>
@@ -2082,7 +2084,7 @@
             );
         };
 
-        const CustomizationN4 = ({ onComplete, onBack, globalData, progress }) => {
+        const CustomizationN4 = ({ onComplete, onBack, globalData, backRef }) => {
             const [subStep, setSubStep] = useState(() => parseInt(sessionStorage.getItem('dev_n4_subStep')) || 1);
             const [isOut, setIsOut] = useState(false);
 
@@ -2123,6 +2125,7 @@
                 }
             };
 
+            React.useEffect(() => { if (backRef) backRef.current = handlePrevSubStep; return () => { if (backRef) backRef.current = null; }; }, [subStep]);
             const handlePrevSubStep = () => {
                 if (subStep === 1) {
                     if (onBack) onBack();
@@ -2205,7 +2208,7 @@
             return (
                 <div className="min-h-screen flex flex-col items-center pt-28 p-4 relative fade-in">
                     
-                    <GlobalHeader progress={localProgress} onBack={handlePrevSubStep} />
+                    
 
                     <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
                         
@@ -2403,7 +2406,7 @@
             if (paymentSuccess) {
                 return (
                     <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
-                        <GlobalHeader progress={progress} />
+                        
                         <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
@@ -2422,7 +2425,7 @@
             if (outOfStock) {
                 return (
                     <div className="min-h-screen flex items-center justify-center p-6 fade-in relative">
-                        <GlobalHeader progress={progress} onBack={onBack} />
+                        
                         <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
@@ -2456,7 +2459,7 @@
 
             return (
                 <div className="min-h-screen py-12 px-6 flex flex-col items-center relative fade-in">
-                    <GlobalHeader progress={progress} onBack={onBack} />
+                    
                     
                     <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
                         
@@ -2592,6 +2595,16 @@
             const [phaseHistory, setPhaseHistory] = useState(() => JSON.parse(sessionStorage.getItem('dev_phaseHistory')) || []);
             const [treeProgress, setTreeProgress] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeProgress')) || { format: 0, audience: 0 });
             
+                        const globalBackRef = React.useRef(null);
+            const calculateGlobalSubtitle = () => {
+                if (phase === 'format') {
+                    if (!treeStates.format.currentParent && treeStates.format.history.length === 0) return '';
+                    const rootSelection = treeStates.format.history[0] || treeStates.format.currentParent;
+                    if (rootSelection?.includes('cartas_digitales')) return 'Versión digital';
+                    else if (rootSelection?.includes('cartas_fisicas')) return 'Versión física';
+                }
+                return undefined;
+            };
             const [treeStates, setTreeStates] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeStates')) || {
                 format: { currentParent: null, history: [] },
                 audience: { currentParent: null, history: [] }
@@ -2651,11 +2664,20 @@
             return (
                 <div className="w-full relative min-h-screen">
                     
+                    {phase !== 'intro' && (
+                        <GlobalHeader 
+                            progress={getProgress()} 
+                            onBack={() => { if (globalBackRef.current) globalBackRef.current(); else goBackPhase(); }} 
+                            animateIn={phase === 'format' && treeStates.format.history.length === 0} 
+                            overrideSubtitle={calculateGlobalSubtitle()} 
+                        />
+                    )}
+
                     {phase === 'intro' && <IntroCinematic onComplete={() => advanceTo('format')} />}
                     
                     {/* Árbol 1: FORMATO */}
                     {phase === 'format' && <TreeEngine 
-                        treeKey="format" treeStates={treeStates} setTreeStates={setTreeStates}
+                        treeKey="format" treeStates={treeStates} setTreeStates={setTreeStates} backRef={globalBackRef}
                         initialTitle="¿Qué formato prefieres?" data={dbFormat} 
                         onProgressUpdate={(pct) => setTreeProgress(p => ({...p, format: pct}))}
                         progress={getProgress()}
@@ -2667,7 +2689,7 @@
                         onBack={null} // Desactiva la navegación hacia la intro en la primera pregunta
                     />}
                     
-                    {phase === 'logistics' && <LogisticsForm key={globalData.formatId} contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
+                    {phase === 'logistics' && <LogisticsForm backRef={globalBackRef} key={globalData.formatId} contextId={globalData.formatId} initialData={globalData.logistics} progress={getProgress()}
                         onSwitchToDigital={() => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales') })}
                         onComplete={data => {
                             if (globalData.formatId?.includes('digital')) {
@@ -2709,7 +2731,7 @@
 
                     {/* Árbol 2: AUDIENCIA */}
                     {phase === 'audience' && <TreeEngine 
-                        treeKey="audience" treeStates={treeStates} setTreeStates={setTreeStates}
+                        treeKey="audience" treeStates={treeStates} setTreeStates={setTreeStates} backRef={globalBackRef}
                         initialTitle="¿Con quién es la cena?" data={dbAudience} 
                         onProgressUpdate={(pct) => setTreeProgress(p => ({...p, audience: pct}))}
                         progress={getProgress()}
@@ -2721,7 +2743,7 @@
 
                     {phase === 'tones' && <TonesNoria globalData={globalData} onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} />}
                     
-                    {phase === 'n4' && <CustomizationN4 globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
+                    {phase === 'n4' && <CustomizationN4 backRef={globalBackRef} globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
                     {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
                 </div>
