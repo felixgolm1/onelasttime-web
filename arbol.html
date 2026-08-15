@@ -1145,8 +1145,8 @@
                                             />
                                         )}
                                         {f.type === 'text' && <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
-                                        {f.type === 'tel' && <input type="tel" placeholder="+34 600 000 000" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
-                                        {f.type === 'email' && <input type="email" placeholder="ejemplo@correo.com" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'tel' && <input type="tel" placeholder="+34 600 123 456" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'email' && <input type="email" placeholder="quien.paga.la.cena@gmail.com" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'datetime-local' && <input type="datetime-local" min={new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)} onClick={e => { try { e.target.showPicker(); } catch(err){} }} onFocus={e => { try { e.target.showPicker(); } catch(err){} }} className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'multi_pills' && (
                                             (() => {
