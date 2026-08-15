@@ -83,7 +83,9 @@
 
         input[type="datetime-local"].is-empty { color: #9ca3af; }
         input[type="datetime-local"].pill-input { appearance: none; -webkit-appearance: none; display: block; font-family: 'Poppins', sans-serif; }
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
 
         /* Estilo rectangular tipo carta para el Textarea Final */
         .card-input {
