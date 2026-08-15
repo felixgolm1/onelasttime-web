@@ -1018,6 +1018,15 @@
             const [deliveryMode, setDeliveryMode] = useState(contextId === 'cartas_fisicas_reserva_no_hecha' ? 'restaurante' : 'direccion');
             const [errs, setErrs] = useState([]);
             const [showModal, setShowModal] = useState(false);
+            const errorTimeoutRef = useRef(null);
+            const shakeTimeoutRef = useRef(null);
+            
+            useEffect(() => {
+                return () => {
+                    if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
+                    if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
+                };
+            }, []);
             useEffect(() => {
                 const handleEscape = (e) => { if (e.key === 'Escape' && showModal) setShowModal(false); };
                 document.addEventListener('keydown', handleEscape);
@@ -1074,8 +1083,15 @@
                 }
 
                 if (newErrs.length > 0) {
-                    setErrs(newErrs); setShakeFields(newErrs); setGlobalErrorMsg(errorMsg);
-                    setTimeout(() => setShakeFields([]), 400); setTimeout(() => setGlobalErrorMsg(''), 4000);
+                    setErrs(newErrs); 
+                    setShakeFields(newErrs); 
+                    setGlobalErrorMsg(errorMsg);
+                    
+                    if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
+                    if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
+                    
+                    shakeTimeoutRef.current = setTimeout(() => setShakeFields([]), 400); 
+                    errorTimeoutRef.current = setTimeout(() => setGlobalErrorMsg(''), 4000);
                 } else {
                     onComplete(form);
                 }
