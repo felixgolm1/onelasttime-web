@@ -1116,6 +1116,16 @@
                                 p.types.includes('locality') || 
                                 p.types.includes('postal_code')
                             );
+                        } else if (searchType === 'post_office') {
+                            finalPreds = preds.filter(p => {
+                                const desc = p.description.toLowerCase();
+                                return !desc.includes('no atc') && 
+                                       !desc.includes('no público') && 
+                                       !desc.includes('no publico') && 
+                                       !desc.includes('restringido') && 
+                                       !desc.includes('buzón') && 
+                                       !desc.includes('buzon');
+                            });
                         }
                         
                         if (finalPreds.length > 0) {
