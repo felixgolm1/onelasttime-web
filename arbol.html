@@ -1092,7 +1092,7 @@
                 }
 
                 let request = {
-                    input: searchType === 'post_office' ? inputValue + ' Correos' : inputValue,
+                    input: searchType === 'post_office' ? 'Correos ' + inputValue : inputValue,
                     componentRestrictions: { country: 'es' }
                 };
 
