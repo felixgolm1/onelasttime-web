@@ -1038,12 +1038,18 @@
             const [predictions, setPredictions] = useState([]);
             const [showDropdown, setShowDropdown] = useState(false);
             const [isSelected, setIsSelected] = useState(!!value);
+            const isSelectedRef = useRef(isSelected);
             const autocompleteService = useRef(null);
             const inputRef = useRef(null);
             
             useEffect(() => {
                 if (!value) setIsSelected(false);
+                isSelectedRef.current = !!value;
             }, [value]);
+
+            useEffect(() => {
+                isSelectedRef.current = isSelected;
+            }, [isSelected]);
 
 
 
@@ -1169,7 +1175,14 @@
                         placeholder={placeholder} 
                         className={className} 
                         onFocus={() => { if(predictions.length > 0) setShowDropdown(true); }}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                        onBlur={() => {
+                            setTimeout(() => {
+                                setShowDropdown(false);
+                                if (!isSelectedRef.current && searchType !== 'restaurant') {
+                                    onChange('');
+                                }
+                            }, 200);
+                        }}
                     />
                     {showDropdown && predictions.length > 0 && (
                         <ul className="absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden border border-gray-100 max-h-60 overflow-y-auto custom-scrollbar">
