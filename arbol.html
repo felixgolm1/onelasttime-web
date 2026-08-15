@@ -1061,6 +1061,13 @@
                 if (!value) setIsSelected(false);
             }, [value]);
 
+            useEffect(() => {
+                // Si el dropdown se cierra, tenemos texto, pero no se ha seleccionado una píldora válida: borramos el texto.
+                if (!showDropdown && value && !isSelected) {
+                    onChange('');
+                }
+            }, [showDropdown, value, isSelected]);
+
             const getAutocompleteService = () => {
                 if (autocompleteService.current) return autocompleteService.current;
                 if (window.google && window.google.maps && window.google.maps.places) {
