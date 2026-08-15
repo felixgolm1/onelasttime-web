@@ -1084,7 +1084,7 @@
                 }
 
                 let request = {
-                    input: inputValue,
+                    input: searchType === 'post_office' ? inputValue + ' Correos' : inputValue,
                     componentRestrictions: { country: 'es' }
                 };
 
@@ -1092,6 +1092,8 @@
                     request.types = ['(regions)'];
                 } else if (searchType === 'restaurant') {
                     request.types = ['restaurant'];
+                } else if (searchType === 'post_office') {
+                    request.types = ['establishment'];
                 } else {
                     request.types = ['geocode', 'establishment'];
                 }
@@ -1141,10 +1143,10 @@
             };
 
             if (isSelected && value) {
-                const isRestaurant = searchType === 'restaurant';
+                const isTwoLine = searchType === 'restaurant' || searchType === 'post_office';
                 const hasComma = value.includes(',');
-                const mainTxt = isRestaurant && hasComma ? value.substring(0, value.indexOf(',')) : value;
-                const secTxt = isRestaurant && hasComma ? value.substring(value.indexOf(',') + 1).trim() : '';
+                const mainTxt = isTwoLine && hasComma ? value.substring(0, value.indexOf(',')) : value;
+                const secTxt = isTwoLine && hasComma ? value.substring(value.indexOf(',') + 1).trim() : '';
 
                 const handleEdit = (e) => {
                     e.stopPropagation();
@@ -1207,7 +1209,7 @@
                                     className={`px-4 py-3 text-sm text-gray-800 hover:bg-gray-50 cursor-pointer flex items-center gap-3 transition-colors ${i !== predictions.length - 1 ? 'border-b border-gray-100' : ''}`}
                                 >
                                     <div className="flex-shrink-0 text-gray-400">
-                                        {searchType === 'restaurant' ? (
+                                        {searchType === 'restaurant' || searchType === 'post_office' ? (
                                             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
                                                 <path d="M7 2v20" />
@@ -1217,7 +1219,7 @@
                                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                         )}
                                     </div>
-                                    {searchType === 'restaurant' ? (
+                                    {searchType === 'restaurant' || searchType === 'post_office' ? (
                                         <div className="flex flex-col w-full">
                                             <span className="font-semibold text-gray-900">{mainText}</span>
                                             {secText && (
@@ -1286,7 +1288,8 @@
                 if (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_reserva_no_hecha') {
                     if (deliveryMode === 'punto') {
                         f = f.filter(x => x.id !== 'direccion' && x.id !== 'notas_entrega');
-                        f.push(dbLogistics.find(x => x.id === 'punto_recogida'));
+                        const puntoField = { ...dbLogistics.find(x => x.id === 'punto_recogida'), label: 'CÓDIGO POSTAL (CORREOS)', placeholder: 'Ej. 28012' };
+                        f.push(puntoField);
                     } else if (deliveryMode === 'restaurante') {
                         f = f.filter(x => x.id !== 'direccion' && x.id !== 'notas_entrega');
                         f.push(dbLogistics.find(x => x.id === 'ciudad_restaurante'));
@@ -1407,7 +1410,7 @@
                                                     onChange={(val) => setForm({...form, [f.id]: val})}
                                                     placeholder={f.placeholder}
                                                     className={inputClasses}
-                                                    searchType={f.id === 'ciudad_restaurante' ? 'city' : f.id === 'restaurante' ? 'restaurant' : 'address'}
+                                                    searchType={f.id === 'ciudad_restaurante' ? 'city' : f.id === 'restaurante' ? 'restaurant' : f.id === 'punto_recogida' ? 'post_office' : 'address'}
                                                     onError={() => setErrs(errs.filter(id => id !== f.id))}
                                                 />
                                             ) : (
