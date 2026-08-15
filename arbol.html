@@ -577,7 +577,7 @@
                     </div>
                 </div>
                 <div className="w-64 h-2 rounded-full overflow-hidden shadow-inner relative" style={{ backgroundColor: "rgba(255, 255, 255, 0.25)" }}>
-                    <div className="h-full transition-all duration-900 ease-out" style={{ width: `${progress}%`, backgroundColor: "#CCFF00", boxShadow: "0 0 12px rgba(204, 255, 0, 0.6)" }} />
+                    <div className="h-full" style={{ width: `${progress}%`, backgroundColor: "#CCFF00", boxShadow: "0 0 12px rgba(204, 255, 0, 0.6)", transition: 'width 1500ms cubic-bezier(0.22, 1, 0.36, 1)' }} />
                 </div>
             </div>
             {/* INVISIBLE SPACER TO PUSH CONTENT DOWN */}
