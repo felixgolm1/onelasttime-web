@@ -313,6 +313,7 @@
             border-radius: 20px;
         }
 </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY_AQUI&libraries=places" async defer></script>
 </head>
 <body class="bg-black text-white" style="background-color: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); min-height: 100vh; overflow-x: hidden;">
     
@@ -1049,6 +1050,92 @@
             return false;
         };
 
+        const PlacesAutocompleteInput = ({ value, onChange, placeholder, className, searchType, onError }) => {
+            const [predictions, setPredictions] = useState([]);
+            const [showDropdown, setShowDropdown] = useState(false);
+            const autocompleteService = useRef(null);
+            
+            useEffect(() => {
+                if (window.google && window.google.maps && window.google.maps.places) {
+                    autocompleteService.current = new window.google.maps.places.AutocompleteService();
+                }
+            }, []);
+
+            const fetchPredictions = (inputValue) => {
+                if (!inputValue) {
+                    setPredictions([]);
+                    return;
+                }
+                
+                if (!autocompleteService.current) {
+                    return; // API no cargada o KEY invalida
+                }
+
+                let request = {
+                    input: inputValue,
+                    componentRestrictions: { country: 'es' }
+                };
+
+                if (searchType === 'city') {
+                    request.types = ['(cities)'];
+                } else if (searchType === 'restaurant') {
+                    request.types = ['establishment'];
+                } else {
+                    request.types = ['geocode', 'establishment'];
+                }
+
+                autocompleteService.current.getPlacePredictions(request, (preds, status) => {
+                    if (status === window.google.maps.places.PlacesServiceStatus.OK && preds) {
+                        setPredictions(preds);
+                        setShowDropdown(true);
+                    } else {
+                        setPredictions([]);
+                    }
+                });
+            };
+
+            const handleChange = (e) => {
+                onChange(e.target.value);
+                fetchPredictions(e.target.value);
+                if (onError) onError();
+            };
+
+            const handleSelect = (pred) => {
+                onChange(pred.description);
+                setShowDropdown(false);
+            };
+
+            return (
+                <div className="relative w-full">
+                    <input 
+                        type="text" 
+                        value={value} 
+                        onChange={handleChange} 
+                        placeholder={placeholder} 
+                        className={className} 
+                        onFocus={() => { if(predictions.length > 0) setShowDropdown(true); }}
+                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                    />
+                    {showDropdown && predictions.length > 0 && (
+                        <ul className="absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden border border-gray-100 max-h-60 overflow-y-auto custom-scrollbar">
+                            {predictions.map((p, i) => (
+                                <li 
+                                    key={p.place_id} 
+                                    onClick={() => handleSelect(p)}
+                                    className={`px-4 py-3 text-sm text-gray-800 hover:bg-gray-50 cursor-pointer flex items-center gap-3 transition-colors ${i !== predictions.length - 1 ? 'border-b border-gray-100' : ''}`}
+                                >
+                                    <div className="flex-shrink-0 text-gray-400">
+                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                    </div>
+                                    <span className="font-medium truncate">{p.description}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            );
+        };
+
         const LogisticsForm = ({ contextId, initialData, onComplete, onBack, onSwitchToDigital, backRef }) => {
             const [form, setForm] = useState(initialData || { direccion: '', fecha: '', restaurante: '', reserva: '', notas_entrega: '', punto_recogida: '', comida: [] });
             const [deliveryMode, setDeliveryMode] = useState(contextId === 'cartas_fisicas_reserva_no_hecha' ? 'restaurante' : 'direccion');
@@ -1208,7 +1295,20 @@
                                                 }}
                                             />
                                         )}
-                                        {f.type === 'text' && <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'text' && (
+                                            ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida'].includes(f.id) ? (
+                                                <PlacesAutocompleteInput
+                                                    value={form[f.id] || ''}
+                                                    onChange={(val) => setForm({...form, [f.id]: val})}
+                                                    placeholder={f.placeholder}
+                                                    className={inputClasses}
+                                                    searchType={f.id === 'ciudad_restaurante' ? 'city' : f.id === 'restaurante' ? 'restaurant' : 'address'}
+                                                    onError={() => setErrs(errs.filter(id => id !== f.id))}
+                                                />
+                                            ) : (
+                                                <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />
+                                            )
+                                        )}
                                         {f.type === 'tel' && <input type="tel" placeholder="+34 600 123 456" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'email' && <input type="email" placeholder="quien.paga.la.cena@correo.com" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'datetime-local' && <input type="datetime-local" min={new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)} onClick={e => { try { e.target.showPicker(); } catch(err){} }} onFocus={e => { try { e.target.showPicker(); } catch(err){} }} className={`${inputClasses} ${!form[f.id] ? 'is-empty' : ''}`} value={form[f.id]} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
