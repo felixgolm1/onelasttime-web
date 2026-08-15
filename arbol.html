@@ -22,19 +22,13 @@
         body {
             margin: 0; font-family: 'Poppins', sans-serif;
             background-color: #000; color: #fff;
+            background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
+            background-attachment: fixed;
             min-height: 100vh;
             -webkit-tap-highlight-color: transparent;
             touch-action: pan-y; overscroll-behavior-x: none;
         }
         #root { overflow-x: hidden; min-height: 100vh; }
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
 
         /* --- UTILIDADES GLOBALES --- */
         .fade-in { animation: fadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
