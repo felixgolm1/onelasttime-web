@@ -2043,14 +2043,23 @@
             const [phone, setPhone] = useState(globalData?.contact?.phone || '');
             const [email, setEmail] = useState(globalData?.contact?.email || '');
             const [notes, setNotes] = useState(globalData?.contact?.notes || '');
-            const [errorMsg, setErrorMsg] = useState('');
+            const [showError, setShowError] = useState(false);
             const [shakeFields, setShakeFields] = useState([]);
             const [isOut, setIsOut] = useState(false);
+            const errorTimeoutRef = useRef(null);
+            const shakeTimeoutRef = useRef(null);
             
             useEffect(() => {
                 if (backRef) backRef.current = onBack;
                 return () => { if (backRef) backRef.current = null; };
             }, [onBack, backRef]);
+
+            useEffect(() => {
+                return () => {
+                    if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
+                    if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
+                };
+            }, []);
             
             const isOtherAddress = globalData?.formatId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || globalData?.formatId === 'cartas_fisicas_otro';
             
@@ -2074,10 +2083,14 @@
                 }
                 
                 if (errors.length > 0) {
+                    if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current);
+                    if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
+                    
                     setShakeFields(errors);
-                    setErrorMsg('Necesitamos un número o email tuyo válido');
-                    setTimeout(() => setShakeFields([]), 500);
-                    setTimeout(() => setErrorMsg(''), 4000);
+                    setShowError(true);
+                    
+                    shakeTimeoutRef.current = setTimeout(() => setShakeFields([]), 500);
+                    errorTimeoutRef.current = setTimeout(() => setShowError(false), 4000);
                     return;
                 }
                 
@@ -2101,8 +2114,7 @@
                                     placeholder="+34 600 123 456" 
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)} 
-                                    className={`pill-input !mb-0 text-[15px] ${shakeFields.includes('phone') ? 'error-shake' : ''}`} 
-                                    style={shakeFields.includes('phone') ? { borderColor: '#ef4444' } : {}}
+                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('phone') ? 'shake border-red-500' : ''}`} 
                                 />
                             </div>
                             
@@ -2113,8 +2125,7 @@
                                     placeholder="quien.paga.la.cena@correo.com" 
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)} 
-                                    className={`pill-input !mb-0 text-[15px] ${shakeFields.includes('email') ? 'error-shake' : ''}`} 
-                                    style={shakeFields.includes('email') ? { borderColor: '#ef4444' } : {}}
+                                    className={`pill-input !mb-0 text-[15px] transition-colors duration-300 ${shakeFields.includes('email') ? 'shake border-red-500' : ''}`} 
                                 />
                             </div>
                             
@@ -2131,11 +2142,10 @@
                             )}
                         </div>
                         
-                        {errorMsg && (
-                            <div className="text-red-500 text-sm mt-4 fade-in font-medium">{errorMsg}</div>
-                        )}
-                        
-                        <div className="w-full max-w-[22rem] mt-10">
+                        <div className="w-full max-w-[22rem] mt-10 relative text-center">
+                            <div className={`absolute -top-8 left-0 w-full text-red-500 font-semibold text-base md:text-lg transition-opacity duration-500 ${showError ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                                Necesitamos un número o email tuyo válido
+                            </div>
                             <button onClick={submit} className="btn-black w-full">Continuar</button>
                         </div>
                     </div>
