@@ -1206,10 +1206,35 @@
             };
 
             const handleSelect = (pred) => {
-                const cleanText = pred.description.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim().replace(/^(\d{5})\s+(.*)/, '$1 | $2');
-                onChange(cleanText);
                 setShowDropdown(false);
                 setIsSelected(true);
+                
+                const fallbackText = pred.description.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim().replace(/^(\d{5})\s+(.*)/, '$1 | $2');
+                
+                if (searchType === 'address') {
+                    const dummyElement = document.createElement('div');
+                    const placesService = new window.google.maps.places.PlacesService(dummyElement);
+                    placesService.getDetails({ placeId: pred.place_id, fields: ['address_components'] }, (place, status) => {
+                        if (status === window.google.maps.places.PlacesServiceStatus.OK && place.address_components) {
+                            let route = '', street_number = '', postal_code = '', locality = '';
+                            place.address_components.forEach(c => {
+                                if (c.types.includes('route')) route = c.long_name;
+                                if (c.types.includes('street_number')) street_number = c.long_name;
+                                if (c.types.includes('postal_code')) postal_code = c.long_name;
+                                if (c.types.includes('locality')) locality = c.long_name;
+                            });
+                            
+                            const streetPart = route + (street_number ? ' ' + street_number : '');
+                            const formatted = [streetPart, postal_code, locality].filter(Boolean).join(', ');
+                            
+                            onChange(formatted || fallbackText);
+                        } else {
+                            onChange(fallbackText);
+                        }
+                    });
+                } else {
+                    onChange(fallbackText);
+                }
             };
 
             const handleClear = () => {
