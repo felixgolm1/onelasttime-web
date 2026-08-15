@@ -549,8 +549,19 @@
                     )}
                     <div className="flex flex-col items-center">
                         <Logo />
-                        <div className="h-4 mt-1.5 relative w-full flex justify-center items-center">
-                            {subtitle && <span key={subtitle} className="text-white/60 text-[10px] tracking-[0.15em] uppercase font-medium absolute whitespace-nowrap" style={{ animation: 'fadeIn 0.5s ease-out forwards' }}>{subtitle}</span>}
+                        <div 
+                            className="relative w-full flex justify-center items-center transition-all duration-500 ease-in-out"
+                            style={{ 
+                                height: subtitle ? '16px' : '0px', 
+                                marginTop: subtitle ? '6px' : '0px',
+                                opacity: subtitle ? 1 : 0 
+                            }}
+                        >
+                            {subtitle && (
+                                <span key={subtitle} className="text-white/60 text-[10px] tracking-[0.15em] uppercase font-medium absolute whitespace-nowrap" style={{ animation: 'fadeIn 0.5s ease-out forwards' }}>
+                                    {subtitle}
+                                </span>
+                            )}
                         </div>
                     </div>
                 </div>
