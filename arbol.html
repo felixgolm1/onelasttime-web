@@ -2747,6 +2747,7 @@
                     {phase === 'n4' && <CustomizationN4 backRef={globalBackRef} globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
                     {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
+                    </div>
                 </div>
             );
         };
