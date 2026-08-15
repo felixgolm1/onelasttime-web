@@ -1044,9 +1044,10 @@
             const sWords = s.split(/\s+/);
             
             for (const word of sWords) {
+                if (word === 'barcena') continue; // Evitar el falso positivo de Bárcena
                 if (exactMatches.includes(word)) return true;
-                // Usamos distancia 2 para pillar "barcelon", "varcelona", "bacelona" pero NO "badalona" (distancia 3)
-                if (word.length >= 7 && levenshteinDistance(word, "barcelona") <= 2) return true;
+                // Usamos distancia 1 para pillar "barcelon", "varcelona", "bacelona" de forma segura sin falsos positivos
+                if (word.length >= 7 && levenshteinDistance(word, "barcelona") <= 1) return true;
             }
             return false;
         };
