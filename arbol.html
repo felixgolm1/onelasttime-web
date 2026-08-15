@@ -2541,10 +2541,10 @@
 
             const advanceTo = (newPhase, dataUpdate = {}) => {
                 sessionStorage.setItem('skipIntro', 'true');
+                setPhaseHistory(prev => [...prev, { phase, globalData }]);
                 if (dataUpdate) {
                     setGlobalData(prev => ({ ...prev, ...dataUpdate }));
                 }
-                setPhaseHistory(prev => [...prev, phase]);
                 setPhase(newPhase);
             };
 
@@ -2554,7 +2554,14 @@
                     let prev = newHistory.pop();
                     
                     setPhaseHistory(newHistory);
-                    setPhase(prev);
+                    
+                    if (typeof prev === 'object' && prev !== null) {
+                        setPhase(prev.phase);
+                        setGlobalData(prev.globalData);
+                    } else {
+                        // Retrocompatibilidad con strings
+                        setPhase(prev);
+                    }
                 }
             };
 
