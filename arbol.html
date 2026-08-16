@@ -565,7 +565,7 @@
             }
         `;
 
-        const GlobalHeader = ({ progress, onBack, greenMode, animateIn, overrideSubtitle }) => {
+        const GlobalHeader = ({ progress, onBack, greenMode, animateIn, overrideSubtitle, isCheckout, isDigital }) => {
             let subtitle = '';
             if (overrideSubtitle !== undefined) {
                 subtitle = overrideSubtitle;
@@ -603,8 +603,31 @@
                         </div>
                     </div>
                 </div>
-                <div className="w-64 h-2 rounded-full overflow-hidden shadow-inner relative" style={{ backgroundColor: "rgba(255, 255, 255, 0.25)" }}>
-                    <div className="h-full" style={{ width: `${progress}%`, backgroundColor: "#CCFF00", boxShadow: "0 0 12px rgba(204, 255, 0, 0.6)", transition: 'width 1500ms cubic-bezier(0.22, 1, 0.36, 1)' }} />
+                <div className="relative mt-2 w-full max-w-lg flex justify-center h-8 items-center">
+                    {!isCheckout ? (
+                        <div className="w-64 h-2 rounded-full overflow-hidden shadow-inner relative transition-opacity duration-500 opacity-100" style={{ backgroundColor: "rgba(255, 255, 255, 0.25)" }}>
+                            <div className="h-full" style={{ width: `${progress}%`, backgroundColor: "#CCFF00", boxShadow: "0 0 12px rgba(204, 255, 0, 0.6)", transition: 'width 1500ms cubic-bezier(0.22, 1, 0.36, 1)' }} />
+                        </div>
+                    ) : (
+                        <div className="w-full flex items-center justify-between text-[10px] sm:text-xs font-medium fade-in absolute" style={{ maxWidth: '350px' }}>
+                            <div className="flex flex-col items-center text-[#CCFF00]">
+                                <svg className="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Personalización</span>
+                            </div>
+                            <div className="flex-1 h-px bg-white/20 mx-2 -translate-y-2"></div>
+                            <div className="flex flex-col items-center text-[#CCFF00]">
+                                <svg className="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>{isDigital ? 'Reserva' : 'Envío'}</span>
+                            </div>
+                            <div className="flex-1 h-px bg-white/20 mx-2 -translate-y-2"></div>
+                            <div className="flex flex-col items-center text-white">
+                                <div className="w-4 h-4 mb-1 rounded-full border border-[#CCFF00] flex items-center justify-center shadow-[0_0_8px_rgba(204,255,0,0.5)]">
+                                    <div className="w-1.5 h-1.5 bg-[#CCFF00] rounded-full animate-pulse"></div>
+                                </div>
+                                <span className="text-[#CCFF00]">Pago seguro</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
             {/* INVISIBLE SPACER TO PUSH CONTENT DOWN */}
@@ -3246,44 +3269,9 @@
 
             return (
                 <div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">
-                    <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
-                        <div className="space-y-8">
-                            <div>
-                                <h1 className="text-3xl font-semibold tracking-tight mb-4">Tus cartas personalizadas</h1>
-                                <p className="text-gray-500">Hemos diseñado esta experiencia exclusivamente para tu cena basada en tus respuestas.</p>
-                            </div>
-
-                            <div className="summary-card text-black space-y-4">
-                                <div className="flex justify-between items-center pb-4 border-b border-gray-200">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center p-2.5">
-                                            <img src="assets/img/logo one last time.png" alt="One Last Time" className="w-full h-full object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold text-sm">Sensibles: {formatName}</p>
-                                            <p className="text-xs text-gray-400 italic">Personalizado para: {audLabel}</p>
-                                        </div>
-                                    </div>
-                                    <p className="font-bold text-gray-900">{price}</p>
-                                </div>
-                                
-                                <div className="space-y-2">
-                                    <div className="flex justify-between text-sm text-gray-500">
-                                        <span>{isDigital ? 'Envío Inmediato (Email/Web)' : `Envío a ${globalData.logistics?.ciudad || 'tu zona'}`}</span>
-                                        <span className="text-green-600 font-medium">Gratis</span>
-                                    </div>
-                                    <div className="flex justify-between items-center text-2xl font-black pt-4 border-t border-gray-200 text-black">
-                                        <span>Total</span>
-                                        <span className="bg-[#ccff00] px-3 py-1 rounded-lg shadow-sm">{price}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-4 text-xs text-gray-400 font-medium uppercase tracking-wider">
-                                <div className="flex items-center gap-1">🔒 100% Seguro</div>
-                            </div>
-                        </div>
-
+                    <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-16">
+                        
+                        {/* COLUMNA IZQUIERDA: PAGO */}
                         <div className="bg-[#111] rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-[#222] flex flex-col justify-between">
                             <div>
                                 <h3 className="text-lg font-semibold mb-6 text-white">Información de Pago</h3>
@@ -3327,6 +3315,44 @@
                                         Cifrado SSL de 256 bits. Al confirmar aceptas los <a href="#" className="underline hover:text-gray-300">Términos</a> y la <a href="#" className="underline hover:text-gray-300">Política de Privacidad</a>.
                                     </p>
                                 </div>
+                            </div>
+                        </div>
+
+                        {/* COLUMNA DERECHA: RESUMEN (Sticky en Desktop) */}
+                        <div className="space-y-8 bg-[#0a0a0a] rounded-3xl p-6 md:p-8 border border-[#1a1a1a] h-fit md:sticky md:top-32">
+                            <div>
+                                <h1 className="text-3xl font-semibold tracking-tight mb-4">Tus cartas personalizadas</h1>
+                                <p className="text-gray-500 text-sm">Hemos diseñado esta experiencia exclusivamente para tu cena basada en tus respuestas.</p>
+                            </div>
+
+                            <div className="summary-card text-black space-y-4">
+                                <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center p-2.5">
+                                            <img src="assets/img/logo one last time.png" alt="One Last Time" className="w-full h-full object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-sm">Sensibles: {formatName}</p>
+                                            <p className="text-xs text-gray-400 italic">Personalizado para: {audLabel}</p>
+                                        </div>
+                                    </div>
+                                    <p className="font-bold text-gray-900">{price}</p>
+                                </div>
+                                
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-sm text-gray-500">
+                                        <span>{isDigital ? 'Envío Inmediato (Email/Web)' : `Envío a ${globalData.logistics?.ciudad || 'tu zona'}`}</span>
+                                        <span className="text-green-600 font-medium">Gratis</span>
+                                    </div>
+                                    <div className="flex justify-between items-center text-2xl font-black pt-4 border-t border-gray-200 text-black">
+                                        <span>Total</span>
+                                        <span className="bg-[#ccff00] px-3 py-1 rounded-lg shadow-sm">{price}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-4 text-xs text-gray-400 font-medium uppercase tracking-wider">
+                                <div className="flex items-center gap-1">🔒 100% Seguro</div>
                             </div>
                         </div>
                     </div>
@@ -3476,6 +3502,8 @@
                             onBack={() => { if (globalBackRef.current) globalBackRef.current(); else goBackPhase(); }} 
                             animateIn={phase === 'format' && treeStates.format.history.length === 0} 
                             overrideSubtitle={calculateGlobalSubtitle()} 
+                            isCheckout={phase === 'checkout'}
+                            isDigital={window.__globalFormatId?.includes('digital')}
                         />
                     )}
 
