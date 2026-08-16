@@ -6,6 +6,7 @@
     <title>Sensibles - Experiencia Completa V2.7</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -3013,84 +3014,150 @@
             );
         };
 
-        const Checkout = ({ globalData, progress, onBack }) => {
+                const Checkout = ({ globalData, progress, onBack }) => {
             const [loading, setLoading] = useState(false);
             const [outOfStock, setOutOfStock] = useState(false);
             const [paymentSuccess, setPaymentSuccess] = useState(false);
             const [emailLeft, setEmailLeft] = useState(false);
+            
+            const [clientSecret, setClientSecret] = useState('');
+            const [stripeError, setStripeError] = useState('');
+            const stripeElementsRef = useRef(null);
+            const [isStripeReady, setIsStripeReady] = useState(false);
 
             const isDigital = globalData.formatId?.includes('digital');
-            const price = isDigital ? '5,00€' : '10,00€';
+            const price = isDigital ? '5,00€' : '35,00€';
             const formatName = isDigital ? 'Edición Digital' : 'Edición Física';
 
             const audNode = dbAudience.find(a => a.id === globalData.audienceId);
             const audLabel = audNode ? (audNode.label || audNode.nombre_visible) : 'Mesa Sensibles';
 
-            const handlePayment = () => {
-                setLoading(true);
-
-                // --- 1. PREPARAR LOS DATOS RECOPILADOS ---
-                // Mapear los IDs de los tonos a sus textos reales
-                let selectedTones = (globalData.tones || []).map(tId => {
-                    for (const cat of dbTones) {
-                        const t = cat.subtones.find(s => s.id === tId);
-                        if (t) return t.text;
-                    }
-                    return tId;
-                }).join(', ');
-
-                // Formatear participantes
-                const participantesText = (globalData.participants || []).map(p => 
-                    `Nombre: ${p.name}`
-                ).join('\n');
-
-                const payload = {
-                    Edicion: isDigital ? 'Digital' : 'Física',
-                    Tipo_Relacion: audLabel,
-                    Tonos_Elegidos: selectedTones,
-                    Ciudad: globalData.logistics?.ciudad || 'N/A',
-                    Fecha_Cena: globalData.logistics?.fecha || 'N/A',
-                    Participantes: participantesText || 'Ninguno',
-                    Objetivo_Cena: globalData.objective || 'N/A',
-                    Notas_Extra: globalData.n4?.extraDetails || 'Ninguna',
-                    _subject: "🔥 ¡Nuevo mazo personalizado creado en Sensibles!"
-                };
-
-                // --- 2. ENVIAR DATOS A TU CORREO (vía FormSubmit) ---
-                // Reemplaza esto con tu correo real para que te lleguen las pruebas
-                const CORREO_DESTINO = "felixgolm@gmail.com"; 
-
-                // Garantía antibloqueo: pase lo que pase, en 3.2s avanzamos
-                const fallbackTimer = setTimeout(() => {
-                    setLoading(false);
-                    setPaymentSuccess(true);
-                }, 3200);
-
-                fetch(`https://script.google.com/macros/s/AKfycbzoQs8TtvApq_3EG1IWNv6oboIzdELMdvQsXk8Xuv8h9IRzg0nG1fBKT64IcEUkP8M/exec`, {
-                    method: "POST",
-                    headers: { 
-                        'Content-Type': 'text/plain;charset=utf-8'
-                    },
-                    body: JSON.stringify(payload)
+            useEffect(() => {
+                fetch('http://localhost:8002/create-payment-intent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ deliveryMode: isDigital ? 'digital' : 'fisico' })
                 })
-                .then(response => response.json())
+                .then(r => r.json())
                 .then(data => {
-                    clearTimeout(fallbackTimer);
-                    setLoading(false);
-                    setPaymentSuccess(true);
+                    if(data.clientSecret) {
+                        setClientSecret(data.clientSecret);
+                    } else if (data.error) {
+                        setStripeError('Error al conectar con la pasarela.');
+                    }
                 })
-                .catch(error => {
-                    clearTimeout(fallbackTimer);
-                    console.error("Error enviando datos:", error);
-                    setLoading(false);
-                    setPaymentSuccess(true);
+                .catch(err => {
+                    console.error("Error creating intent:", err);
+                    setStripeError('Error de red al inicializar pago.');
                 });
+            }, [isDigital]);
+
+            useEffect(() => {
+                if (clientSecret && window.Stripe && !stripeElementsRef.current) {
+                    const stripe = window.Stripe('pk_test_51U4dAmCV2A1IisxkBGbtiiurJ622x2EKPGkTuwhvDB3w65h4WO2PXafJpZA2Dtq7GY5ycOTZGQPlxe80nl308oD000rKsSQeOZ');
+                    const elements = stripe.elements({ 
+                        clientSecret, 
+                        appearance: { 
+                            theme: 'night', 
+                            variables: { 
+                                colorPrimary: '#ccff00', 
+                                colorBackground: '#1a1a1a',
+                                colorText: '#ffffff',
+                                colorDanger: '#ff4444',
+                                fontFamily: 'ui-sans-serif, system-ui, sans-serif'
+                            } 
+                        } 
+                    });
+                    const paymentElement = elements.create('payment');
+                    paymentElement.mount('#payment-element');
+                    paymentElement.on('ready', () => setIsStripeReady(true));
+                    stripeElementsRef.current = { stripe, elements };
+                }
+            }, [clientSecret]);
+
+            const handlePayment = async (e) => {
+                if (e) e.preventDefault();
+                setLoading(true);
+                setStripeError('');
+
+                if (!stripeElementsRef.current) {
+                    setStripeError("Stripe no está inicializado");
+                    setLoading(false);
+                    return;
+                }
+
+                const { stripe, elements } = stripeElementsRef.current;
+                
+                const { error, paymentIntent } = await stripe.confirmPayment({
+                    elements,
+                    confirmParams: {
+                        return_url: window.location.href,
+                    },
+                    redirect: 'if_required'
+                });
+
+                if (error) {
+                    setStripeError(error.message);
+                    setLoading(false);
+                    return;
+                }
+                
+                if (paymentIntent && paymentIntent.status === 'succeeded') {
+                    let selectedTones = (globalData.tones || []).map(tId => {
+                        for (const cat of dbTones) {
+                            const t = cat.subtones.find(s => s.id === tId);
+                            if (t) return t.text;
+                        }
+                        return tId;
+                    }).join(', ');
+
+                    const participantesText = (globalData.participants || []).map(p => 
+                        `Nombre: ${p.name}`
+                    ).join('
+');
+
+                    const payload = {
+                        Edicion: isDigital ? 'Digital' : 'Física',
+                        Tipo_Relacion: audLabel,
+                        Tonos_Elegidos: selectedTones,
+                        Ciudad: globalData.logistics?.ciudad || 'N/A',
+                        Fecha_Cena: globalData.logistics?.fecha || 'N/A',
+                        Participantes: participantesText || 'Ninguno',
+                        Objetivo_Cena: globalData.objective || 'N/A',
+                        Notas_Extra: globalData.n4?.extraDetails || 'Ninguna',
+                        _subject: "🔥 ¡Nuevo mazo personalizado pagado en Sensibles!"
+                    };
+
+                    const fallbackTimer = setTimeout(() => {
+                        setLoading(false);
+                        setPaymentSuccess(true);
+                    }, 3200);
+
+                    fetch(`https://script.google.com/macros/s/AKfycbzoQs8TtvApq_3EG1IWNv6oboIzdELMdvQsXk8Xuv8h9IRzg0nG1fBKT64IcEUkP8M/exec`, {
+                        method: "POST",
+                        headers: { 
+                            'Content-Type': 'text/plain;charset=utf-8'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        clearTimeout(fallbackTimer);
+                        setLoading(false);
+                        setPaymentSuccess(true);
+                    })
+                    .catch(err => {
+                        clearTimeout(fallbackTimer);
+                        console.error("Error enviando datos:", err);
+                        setLoading(false);
+                        setPaymentSuccess(true);
+                    });
+                }
             };
 
             if (paymentSuccess) {
                 return (
                     <div className="flex-1 flex items-center justify-center p-6 fade-in relative">
-                        
                         <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
@@ -3109,7 +3176,6 @@
             if (outOfStock) {
                 return (
                     <div className="flex-1 flex items-center justify-center p-6 fade-in relative">
-                        
                         <div className="text-center max-w-md bg-[#111] p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#222] mt-12">
                             <div className="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
@@ -3143,10 +3209,7 @@
 
             return (
                 <div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">
-                    
-                    
                     <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
-                        
                         <div className="space-y-8">
                             <div>
                                 <h1 className="text-3xl font-semibold tracking-tight mb-4">Tus cartas personalizadas</h1>
@@ -3164,21 +3227,17 @@
                                             <p className="text-xs text-gray-400 italic">Personalizado para: {audLabel}</p>
                                         </div>
                                     </div>
-                                    <p className="font-bold line-through text-gray-400">10,00€</p>
+                                    <p className="font-bold text-gray-900">{price}</p>
                                 </div>
                                 
                                 <div className="space-y-2">
-                                    <div className="flex justify-between text-sm text-gray-500">
-                                        <span>Descuento (Fase Beta)</span>
-                                        <span className="text-green-600 font-medium">-10,00€</span>
-                                    </div>
                                     <div className="flex justify-between text-sm text-gray-500">
                                         <span>{isDigital ? 'Envío Inmediato (Email/Web)' : `Envío a ${globalData.logistics?.ciudad || 'tu zona'}`}</span>
                                         <span className="text-green-600 font-medium">Gratis</span>
                                     </div>
                                     <div className="flex justify-between text-lg font-bold pt-2 border-t border-gray-200">
                                         <span>Total</span>
-                                        <span>0,00€</span>
+                                        <span>{price}</span>
                                     </div>
                                 </div>
                             </div>
@@ -3192,37 +3251,39 @@
                             <div>
                                 <h3 className="text-lg font-semibold mb-6">Información de Pago</h3>
                                 
-                                <div className="bg-green-50 border border-green-100 rounded-xl p-6 text-center mb-6">
-                                    <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </div>
-                                    <h4 className="font-bold text-green-800 mb-2">¡Es 100% Gratis!</h4>
-                                    <p className="text-sm text-green-700 leading-relaxed">
-                                        Como estamos en fase de pruebas, esta experiencia corre por nuestra cuenta. No necesitas introducir ninguna tarjeta ni método de pago.
-                                    </p>
+                                <div id="payment-element" className="min-h-[150px] mb-4">
+                                    {!clientSecret && !stripeError && (
+                                        <div className="flex flex-col items-center justify-center py-10 text-gray-500">
+                                            <div className="spinner mb-4 border-gray-500"></div>
+                                            <span className="text-sm">Conectando con pasarela segura...</span>
+                                        </div>
+                                    )}
                                 </div>
+                                
+                                {stripeError && (
+                                    <div className="text-red-500 text-sm mb-4 text-center p-3 bg-red-500/10 rounded-lg">{stripeError}</div>
+                                )}
                             </div>
 
                             <div className="pt-4 mt-auto">
                                 <button 
                                     onClick={handlePayment}
-                                    disabled={loading}
-                                    className="btn-pay shadow-lg"
+                                    disabled={loading || !isStripeReady}
+                                    className={`btn-pay shadow-lg ${!isStripeReady ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     {loading ? (
                                         <div className="spinner"></div>
                                     ) : (
-                                        <>Confirmar pedido y pagar 0,00€</>
+                                        <>Confirmar y pagar {price}</>
                                     )}
                                 </button>
-                                <p className="text-[10px] text-gray-400 text-center px-4 leading-relaxed mt-4">
-                                    Al confirmar, aceptas nuestros términos de servicio y política de privacidad. No se realizará ningún cargo a tu nombre.
+                                <p className="text-[10px] text-gray-500 text-center px-4 leading-relaxed mt-4">
+                                    Pagos procesados de forma segura por Stripe.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Logos de confianza al pie */}
                     <div className="mt-12 flex gap-8 grayscale opacity-30">
                          <div className="font-bold text-sm tracking-tighter">VISA</div>
                          <div className="font-bold text-sm tracking-tighter">Mastercard</div>
