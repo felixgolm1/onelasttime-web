@@ -1393,7 +1393,7 @@
                 if (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_reserva_no_hecha') {
                     if (deliveryMode === 'punto') {
                         f = f.filter(x => x.id !== 'direccion' && x.id !== 'info_adicional_direccion' && x.id !== 'notas_entrega');
-                        const puntoField = { ...dbLogistics.find(x => x.id === 'punto_recogida'), label: 'INTRODUCE TU CÓDIGO POSTAL PARA SELECCIONAR UN PUNTO DE RECOGIDA', placeholder: '08009' };
+                        const puntoField = { ...dbLogistics.find(x => x.id === 'punto_recogida'), label: 'INTRODUCE TU CÓDIGO POSTAL PARA SELECCIONAR UN PUNTO DE RECOGIDA', placeholder: 'Ej. 08009' };
                         f.push(puntoField);
                     } else if (deliveryMode === 'restaurante') {
                         f = f.filter(x => x.id !== 'direccion' && x.id !== 'info_adicional_direccion' && x.id !== 'notas_entrega');
