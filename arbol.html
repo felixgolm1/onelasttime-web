@@ -3098,7 +3098,14 @@
                             } 
                         } 
                     });
-                    const paymentElement = elements.create('payment');
+                    const paymentElement = elements.create('payment', {
+                        layout: {
+                            type: 'accordion',
+                            defaultCollapsed: false,
+                            radios: true,
+                            spacedAccordionItems: false
+                        }
+                    });
                     paymentElement.mount('#payment-element');
                     paymentElement.on('ready', () => setIsStripeReady(true));
                     stripeElementsRef.current = { stripe, elements };
