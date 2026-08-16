@@ -1065,16 +1065,16 @@
 
             useEffect(() => {
                 const handleClickOutside = (event) => {
-                    // Check if click is inside an InfoWindow button
-                    if (event.target.closest('.gm-style-iw')) {
+                    if (containerRef.current && event.composedPath().includes(containerRef.current)) {
                         return;
                     }
-                    if (containerRef.current && !containerRef.current.contains(event.target)) {
-                        setShowDropdown(false);
-                        if (!isSelectedRef.current && searchType !== 'restaurant') {
-                            onChange('');
-                            setPredictions([]);
-                        }
+                    if (event.target && event.target.closest && (event.target.closest('.gm-style') || event.target.closest('.pac-container'))) {
+                        return;
+                    }
+                    setShowDropdown(false);
+                    if (!isSelectedRef.current && searchType !== 'restaurant') {
+                        onChange('');
+                        setPredictions([]);
                     }
                 };
                 document.addEventListener('mousedown', handleClickOutside);
