@@ -1057,10 +1057,29 @@
             const mapContainerRef = useRef(null);
             const mapInstanceRef = useRef(null);
             const markersRef = useRef([]);
+            const containerRef = useRef(null);
             
             useEffect(() => {
                 if (!value) setIsSelected(false);
             }, [value]);
+
+            useEffect(() => {
+                const handleClickOutside = (event) => {
+                    // Check if click is inside an InfoWindow button
+                    if (event.target.closest('.gm-style-iw')) {
+                        return;
+                    }
+                    if (containerRef.current && !containerRef.current.contains(event.target)) {
+                        setShowDropdown(false);
+                        if (!isSelectedRef.current && searchType !== 'restaurant') {
+                            onChange('');
+                            setPredictions([]);
+                        }
+                    }
+                };
+                document.addEventListener('mousedown', handleClickOutside);
+                return () => document.removeEventListener('mousedown', handleClickOutside);
+            }, [searchType, onChange]);
 
             useEffect(() => {
                 isSelectedRef.current = isSelected;
@@ -1365,7 +1384,7 @@
             }
 
             return (
-                <div className="relative w-full">
+                <div ref={containerRef} className="relative w-full">
                     <input 
                         ref={inputRef}
                         type="text" 
@@ -1374,15 +1393,6 @@
                         placeholder={placeholder} 
                         className={className} 
                         onFocus={() => { if(predictions.length > 0) setShowDropdown(true); }}
-                        onBlur={() => {
-                            setShowDropdown(false);
-                            setTimeout(() => {
-                                if (!isSelectedRef.current && searchType !== 'restaurant') {
-                                    onChange('');
-                                    setPredictions([]);
-                                }
-                            }, 500);
-                        }}
                     />
                     {searchType === 'post_office' ? (
                         <div className={`absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden transition-all duration-500 ease-in-out origin-top ${showDropdown && predictions.length > 0 ? 'opacity-100 max-h-[350px] scale-y-100 border border-gray-100 pointer-events-auto' : 'opacity-0 max-h-0 scale-y-95 border-none pointer-events-none'}`}>
