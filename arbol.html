@@ -3081,6 +3081,85 @@
                 }
             }, [clientSecret]);
 
+            const processSuccessfulPayment = () => {
+                let selectedTones = (globalData.tones || []).map(tId => {
+                    for (const cat of dbTones) {
+                        const t = cat.subtones.find(s => s.id === tId);
+                        if (t) return t.text;
+                    }
+                    return tId;
+                }).join(', ');
+
+                const participantesText = (globalData.participants || []).map(p => 
+                    `Nombre: ${p.name}`
+                ).join('\n');
+
+                const payload = {
+                    Edicion: isDigital ? 'Digital' : 'Física',
+                    Tipo_Relacion: audLabel,
+                    Tonos_Elegidos: selectedTones,
+                    Ciudad: globalData.logistics?.ciudad || 'N/A',
+                    Fecha_Cena: globalData.logistics?.fecha || 'N/A',
+                    Participantes: participantesText || 'Ninguno',
+                    Objetivo_Cena: globalData.objective || 'N/A',
+                    Notas_Extra: globalData.n4?.extraDetails || 'Ninguna',
+                    _subject: "✨ ¡Nuevo mazo personalizado pagado en Sensibles!"
+                };
+
+                const fallbackTimer = setTimeout(() => {
+                    setLoading(false);
+                    setPaymentSuccess(true);
+                }, 3200);
+
+                fetch(`https://script.google.com/macros/s/AKfycbzoQs8TtvApq_3EG1IWNv6oboIzdELMdvQsXk8Xuv8h9IRzg0nG1fBKT64IcEUkP8M/exec`, {
+                    method: "POST",
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    clearTimeout(fallbackTimer);
+                    setLoading(false);
+                    setPaymentSuccess(true);
+                    sessionStorage.clear();
+                })
+                .catch(err => {
+                    clearTimeout(fallbackTimer);
+                    console.error("Error enviando datos:", err);
+                    setLoading(false);
+                    setPaymentSuccess(true);
+                    sessionStorage.clear();
+                });
+            };
+
+            useEffect(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirectStatus = urlParams.get('redirect_status');
+                const clientSecretParam = urlParams.get('payment_intent_client_secret');
+
+                if (redirectStatus === 'succeeded' && clientSecretParam) {
+                    setLoading(true);
+                    const checkStripe = () => {
+                        if (window.Stripe) {
+                            const stripe = window.Stripe('pk_test_51U4dAmCV2A1IisxkBGbtiiurJ622x2EKPGkTuwhvDB3w65h4WO2PXafJpZA2Dtq7GY5ycOTZGQPlxe80nl308oD000rKsSQeOZ');
+                            stripe.retrievePaymentIntent(clientSecretParam).then(({ paymentIntent }) => {
+                                if (paymentIntent && paymentIntent.status === 'succeeded') {
+                                    processSuccessfulPayment();
+                                } else {
+                                    setStripeError('No se pudo verificar el pago tras la redirección.');
+                                    setLoading(false);
+                                }
+                            });
+                        } else {
+                            setTimeout(checkStripe, 500);
+                        }
+                    };
+                    checkStripe();
+                } else if (redirectStatus === 'failed') {
+                    setStripeError('El pago falló. Por favor, intenta de nuevo.');
+                }
+            }, []);
+
             const handlePayment = async (e) => {
                 if (e) e.preventDefault();
                 setLoading(true);
@@ -3109,54 +3188,7 @@
                 }
                 
                 if (paymentIntent && paymentIntent.status === 'succeeded') {
-                    let selectedTones = (globalData.tones || []).map(tId => {
-                        for (const cat of dbTones) {
-                            const t = cat.subtones.find(s => s.id === tId);
-                            if (t) return t.text;
-                        }
-                        return tId;
-                    }).join(', ');
-
-                    const participantesText = (globalData.participants || []).map(p => 
-                        `Nombre: ${p.name}`
-                    ).join('\\n');
-
-                    const payload = {
-                        Edicion: isDigital ? 'Digital' : 'Física',
-                        Tipo_Relacion: audLabel,
-                        Tonos_Elegidos: selectedTones,
-                        Ciudad: globalData.logistics?.ciudad || 'N/A',
-                        Fecha_Cena: globalData.logistics?.fecha || 'N/A',
-                        Participantes: participantesText || 'Ninguno',
-                        Objetivo_Cena: globalData.objective || 'N/A',
-                        Notas_Extra: globalData.n4?.extraDetails || 'Ninguna',
-                        _subject: "🔥 ¡Nuevo mazo personalizado pagado en Sensibles!"
-                    };
-
-                    const fallbackTimer = setTimeout(() => {
-                        setLoading(false);
-                        setPaymentSuccess(true);
-                    }, 3200);
-
-                    fetch(`https://script.google.com/macros/s/AKfycbzoQs8TtvApq_3EG1IWNv6oboIzdELMdvQsXk8Xuv8h9IRzg0nG1fBKT64IcEUkP8M/exec`, {
-                        method: "POST",
-                        headers: { 
-                            'Content-Type': 'text/plain;charset=utf-8'
-                        },
-                        body: JSON.stringify(payload)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        clearTimeout(fallbackTimer);
-                        setLoading(false);
-                        setPaymentSuccess(true);
-                    })
-                    .catch(err => {
-                        clearTimeout(fallbackTimer);
-                        console.error("Error enviando datos:", err);
-                        setLoading(false);
-                        setPaymentSuccess(true);
-                    });
+                    processSuccessfulPayment();
                 }
             };
 
@@ -3330,10 +3362,10 @@
 
         const App =  () => {
             const urlParams = new URLSearchParams(window.location.search);
+            const redirectStatus = urlParams.get('redirect_status');
             const forceSkip = urlParams.get('skipIntro') === 'true';
             
-            
-            if (forceSkip && !sessionStorage.getItem('forceSkipApplied')) {
+            if (forceSkip && !redirectStatus && !sessionStorage.getItem('forceSkipApplied')) {
                 // Clear session storage if coming fresh from landing page
                 sessionStorage.removeItem('dev_phase');
                 sessionStorage.removeItem('dev_phaseHistory');
@@ -3349,6 +3381,7 @@
             }
             
             const [phase, setPhase] = useState(() => {
+                if (redirectStatus) return 'checkout';
                 if (forceSkip) return 'format';
                 return sessionStorage.getItem('dev_phase') || 'format';
             });
