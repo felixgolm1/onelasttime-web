@@ -1,7 +1,7 @@
 import os
 import json
 import stripe
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import SimpleHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
-class StripeServer(BaseHTTPRequestHandler):
+class StripeServer(SimpleHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
