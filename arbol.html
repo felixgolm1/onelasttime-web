@@ -610,20 +610,20 @@
                         </div>
                     ) : (
                         <div className="w-full flex items-center justify-center fade-in absolute" style={{ maxWidth: '400px' }}>
-                            <div className="bg-[#111] border border-[#333] rounded-full p-1 flex items-center shadow-lg">
-                                {/* PASO 1: Completado (Opaco y con check) */}
-                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white/50">
-                                    <div className="w-3.5 h-3.5 rounded-full bg-white/20 text-white flex items-center justify-center text-[9px] font-bold">1</div>
-                                    <span className="text-[10px] flex items-center gap-1">
-                                        Ultra-personalización
-                                        <svg className="w-3 h-3 text-[#CCFF00]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                            <div className="bg-white rounded-full p-1.5 flex items-center shadow-sm w-full mx-6 max-w-xs border border-gray-200">
+                                {/* PASO 1: Inactivo (Gris sobre blanco) */}
+                                <div className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-full text-gray-400 bg-transparent">
+                                    <div className="w-3.5 h-3.5 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-[9px] font-bold">1</div>
+                                    <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider flex items-center gap-1">
+                                        Personalización
+                                        <svg className="w-2.5 h-2.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
                                     </span>
                                 </div>
                                 
-                                {/* PASO 2: Activo (Toggle iluminado) */}
-                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#CCFF00] text-black shadow-sm transform scale-105 transition-transform">
-                                    <div className="w-3.5 h-3.5 rounded-full bg-black text-[#CCFF00] flex items-center justify-center text-[9px] font-bold">2</div>
-                                    <span className="text-[10px] font-bold">Pago seguro</span>
+                                {/* PASO 2: Activo (Negro con detalles neón) */}
+                                <div className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-full bg-black text-[#CCFF00] shadow-md">
+                                    <div className="w-3.5 h-3.5 rounded-full bg-[#CCFF00] text-black flex items-center justify-center text-[9px] font-bold">2</div>
+                                    <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider">Pago seguro</span>
                                 </div>
                             </div>
                         </div>
