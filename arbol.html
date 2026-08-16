@@ -1232,7 +1232,9 @@
                 if (searchType !== 'post_office') {
                     fetchPredictions(val);
                 } else {
-                    if (val.length < 5) {
+                    if (val.trim().length === 5) {
+                        fetchPredictions(val);
+                    } else if (val.trim().length < 5) {
                         setShowDropdown(false);
                         setPredictions([]);
                     }
