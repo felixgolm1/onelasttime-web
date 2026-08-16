@@ -1279,7 +1279,7 @@
                 
                 if (!mapContainerRef.current) return;
 
-                if (!mapInstanceRef.current) {
+                if (!mapInstanceRef.current || mapInstanceRef.current.getDiv() !== mapContainerRef.current) {
                     mapInstanceRef.current = new window.google.maps.Map(mapContainerRef.current, {
                         center: predictions[0].geometry?.location || { lat: 40.4168, lng: -3.7038 },
                         zoom: 13,
@@ -1287,6 +1287,7 @@
                         zoomControl: true,
                         gestureHandling: 'cooperative'
                     });
+                    markersRef.current = [];
                 }
 
                 markersRef.current.forEach(m => m.setMap(null));
