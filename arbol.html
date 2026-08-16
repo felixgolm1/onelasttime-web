@@ -3094,7 +3094,9 @@
                                 colorBackground: '#ffffff',
                                 colorText: '#000000',
                                 colorDanger: '#ff4444',
-                                fontFamily: 'ui-sans-serif, system-ui, sans-serif'
+                                fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+                                borderRadius: '9999px',
+                                spacingGridRow: '14px'
                             } 
                         } 
                     });
@@ -3103,7 +3105,7 @@
                             type: 'accordion',
                             defaultCollapsed: true,
                             radios: true,
-                            spacedAccordionItems: false
+                            spacedAccordionItems: true
                         }
                     });
                     paymentElement.mount('#payment-element');
