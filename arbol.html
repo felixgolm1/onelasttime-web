@@ -3088,11 +3088,11 @@
                     const elements = stripe.elements({ 
                         clientSecret, 
                         appearance: { 
-                            theme: 'night', 
+                            theme: 'stripe', 
                             variables: { 
-                                colorPrimary: '#ccff00', 
-                                colorBackground: '#1a1a1a',
-                                colorText: '#ffffff',
+                                colorPrimary: '#000000', 
+                                colorBackground: '#ffffff',
+                                colorText: '#000000',
                                 colorDanger: '#ff4444',
                                 fontFamily: 'ui-sans-serif, system-ui, sans-serif'
                             } 
@@ -3280,9 +3280,9 @@
                     <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-28">
                         
                         {/* COLUMNA IZQUIERDA: PAGO */}
-                        <div className="bg-[#111] rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-[#222] flex flex-col justify-between">
+                        <div className="bg-white rounded-[2rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-200 flex flex-col justify-between">
                             <div>
-                                <h3 className="text-lg font-semibold mb-6 text-white">Información de Pago</h3>
+                                <h3 className="text-lg font-semibold mb-6 text-black">Información de Pago</h3>
                                 
                                 <div id="payment-element" className="min-h-[150px] mb-4">
                                     {!clientSecret && !stripeError && (
@@ -3327,17 +3327,17 @@
                         </div>
 
                         {/* COLUMNA DERECHA: RESUMEN (Sticky en Desktop) */}
-                        <div className="space-y-8 bg-[#0a0a0a] rounded-3xl p-6 md:p-8 border border-[#1a1a1a] h-fit md:sticky md:top-32">
+                        <div className="space-y-8 bg-white rounded-3xl p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky md:top-32">
                             <div>
-                                <h1 className="text-3xl font-semibold tracking-tight mb-4">Tus cartas personalizadas</h1>
+                                <h1 className="text-3xl font-semibold tracking-tight mb-4 text-black">Tus cartas personalizadas</h1>
                                 <p className="text-gray-500 text-sm">Hemos diseñado esta experiencia exclusivamente para tu cena basada en tus respuestas.</p>
                             </div>
 
                             <div className="summary-card text-black space-y-4">
                                 <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center p-2.5">
-                                            <img src="assets/img/logo one last time.png" alt="One Last Time" className="w-full h-full object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+                                        <div className="w-12 h-12 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center p-2.5">
+                                            <img src="assets/img/logo one last time.png" alt="One Last Time" className="w-full h-full object-contain" />
                                         </div>
                                         <div>
                                             <p className="font-semibold text-sm">Sensibles: {formatName}</p>
