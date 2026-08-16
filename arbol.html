@@ -3381,23 +3381,34 @@
                     </div>
 
                     <div className="mt-12 mb-8 flex flex-wrap justify-center items-center gap-10">
+                        {/* 1. Visa */}
                         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/visa.svg" alt="Visa" className="h-10 transform scale-[1.4]" style={{ filter: 'invert(1)' }} />
+                        
+                        {/* 2. Mastercard */}
                         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-10" />
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/applepay.svg" alt="Apple Pay" className="h-10 transform scale-[1.3]" style={{ filter: 'invert(1)' }} />
+                        
+                        {/* 3. Google Pay */}
                         <div className="flex items-center gap-1.5 cursor-pointer">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" className="h-5 object-contain" />
                             <span className="font-medium text-xl text-white tracking-tight" style={{ fontFamily: 'system-ui, sans-serif' }}>Pay</span>
                         </div>
-                        <div className="flex items-center gap-1 cursor-pointer">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" alt="Amazon" className="h-6 object-contain" style={{ filter: 'invert(1) hue-rotate(180deg)' }} />
-                            <span className="font-medium text-xl text-white tracking-tight" style={{ fontFamily: 'system-ui, sans-serif' }}>Pay</span>
-                        </div>
+
+                        {/* 4. Apple Pay */}
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/applepay.svg" alt="Apple Pay" className="h-10 transform scale-[1.3]" style={{ filter: 'invert(1)' }} />
+                        
+                        {/* 5. Bizum */}
+                        <img src="assets/img/Bizum.png" alt="Bizum" className="h-12 object-contain" />
+
+                        {/* 6. Revolut Pay */}
                         <div className="bg-[#111111] rounded-md px-3 h-10 flex items-center justify-center">
                             <img src="assets/img/revolut.png" alt="Revolut Pay" className="h-5 object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
                         </div>
+
+                        {/* 7. Klarna */}
                         <img src="assets/img/klarna.png" alt="Klarna" className="h-16 object-contain" />
+                        
+                        {/* 8. PayPal */}
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-6" />
-                        <img src="assets/img/Bizum.png" alt="Bizum" className="h-12 object-contain" />
                     </div>
                 </div>
             );
