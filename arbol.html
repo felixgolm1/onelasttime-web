@@ -1224,9 +1224,17 @@
             };
 
             const handleChange = (e) => {
-                onChange(e.target.value);
+                const val = e.target.value;
+                onChange(val);
                 setIsSelected(false);
-                fetchPredictions(e.target.value);
+                if (searchType !== 'post_office') {
+                    fetchPredictions(val);
+                } else {
+                    if (val.length < 5) {
+                        setShowDropdown(false);
+                        setPredictions([]);
+                    }
+                }
                 if (onError) onError();
             };
 
@@ -1392,9 +1400,25 @@
                         value={value} 
                         onChange={handleChange} 
                         placeholder={placeholder} 
-                        className={className} 
+                        className={`${className} ${searchType === 'post_office' && !isSelected && value.length > 0 ? 'pr-14' : ''}`} 
                         onFocus={() => { if(predictions.length > 0) setShowDropdown(true); }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && searchType === 'post_office' && value.trim().length === 5) {
+                                e.preventDefault();
+                                fetchPredictions(value);
+                            }
+                        }}
                     />
+                    {searchType === 'post_office' && value.length > 0 && !isSelected && (
+                        <button
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); if (value.trim().length === 5) fetchPredictions(value); }}
+                            disabled={value.trim().length !== 5}
+                            className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 flex items-center justify-center ${value.trim().length === 5 ? 'bg-black text-white cursor-pointer hover:scale-105 shadow-md' : 'bg-gray-100 text-gray-400 cursor-default opacity-60'}`}
+                            style={{ width: '34px', height: '34px' }}
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </button>
+                    )}
                     {searchType === 'post_office' ? (
                         <div className={`absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden transition-all duration-500 ease-in-out origin-top ${showDropdown && predictions.length > 0 ? 'opacity-100 max-h-[350px] scale-y-100 border border-gray-100 pointer-events-auto' : 'opacity-0 max-h-0 scale-y-95 border-none pointer-events-none'}`}>
                             <div ref={mapContainerRef} className="w-full h-[250px] bg-gray-100" />
