@@ -1233,6 +1233,7 @@
                     fetchPredictions(val);
                 } else {
                     if (val.trim().length === 5) {
+                        setPredictions([]);
                         fetchPredictions(val);
                     } else if (val.trim().length < 5) {
                         setShowDropdown(false);
@@ -1416,7 +1417,7 @@
                     {searchType === 'post_office' && !isSelected && (
                         <button
                             onClick={(e) => { e.preventDefault(); e.stopPropagation(); if (value && value.trim().length === 5) fetchPredictions(value); }}
-                            className={`absolute z-30 search-btn right-2 top-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full transition-all duration-300 flex items-center justify-center gap-1.5 ${value && value.trim().length === 5 ? 'bg-black text-white hover:scale-105 shadow-md' : 'bg-gray-200 text-gray-500'} cursor-pointer`}
+                            className={`absolute z-30 search-btn right-2 top-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full transition-all duration-300 flex items-center justify-center gap-1.5 ${value && value.trim().length === 5 && predictions.length > 0 ? 'bg-black text-white hover:scale-105 shadow-md' : 'bg-gray-200 text-gray-500'} cursor-pointer`}
                             style={{ height: '34px' }}
                         >
                             <span className="text-[11px] font-bold uppercase tracking-wider">Buscar</span>
