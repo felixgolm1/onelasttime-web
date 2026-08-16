@@ -1327,16 +1327,34 @@
                         }
                     });
 
-                    const infoWindow = new window.google.maps.InfoWindow({
-                        content: `<div style="padding: 2px; color: black; font-family: sans-serif; max-width: 180px;">
-                                    <div style="font-weight: bold; font-size: 13px; margin-bottom: 2px;">${p.name}</div>
-                                    <div style="font-size: 11px; margin-bottom: 8px; color: #555;">${p.vicinity}</div>
-                                    <button style="width: 100%; background: black; color: #ccff00; border: none; padding: 6px 8px; border-radius: 9999px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px;" onclick="window.selectPostOffice('${p.place_id}')">Seleccionar aquí</button>
-                                  </div>`
-                    });
+                    const infoWindow = new window.google.maps.InfoWindow();
                     
                     marker.addListener('click', () => {
+                        let contentHtml = `<div style="padding: 2px; color: black; font-family: sans-serif; max-width: 220px;">
+                                    <div style="font-weight: bold; font-size: 13px; margin-bottom: 2px;">${p.name}</div>
+                                    <div style="font-size: 11px; margin-bottom: 6px; color: #555;">${p.vicinity}</div>
+                                    <div id="hours-${p.place_id}" style="font-size: 9.5px; color: #666; margin-bottom: 8px; line-height: 1.3;"><i>Cargando horarios...</i></div>
+                                    <button style="width: 100%; background: black; color: #ccff00; border: none; padding: 6px 8px; border-radius: 9999px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px;" onclick="window.selectPostOffice('${p.place_id}')">Seleccionar aquí</button>
+                                  </div>`;
+                        infoWindow.setContent(contentHtml);
                         infoWindow.open(mapInstanceRef.current, marker);
+
+                        const service = new window.google.maps.places.PlacesService(mapInstanceRef.current);
+                        service.getDetails({ placeId: p.place_id, fields: ['opening_hours'] }, (place, status) => {
+                            const hoursDiv = document.getElementById(`hours-${p.place_id}`);
+                            if (!hoursDiv) return;
+                            
+                            if (status === window.google.maps.places.PlacesServiceStatus.OK && place.opening_hours && place.opening_hours.weekday_text) {
+                                let hoursHtml = place.opening_hours.weekday_text.map(day => {
+                                    // Separar el día y la hora para poner el día en negrita si queremos, o dejarlo normal
+                                    let parts = day.split(': ');
+                                    return `<div><b>${parts[0]}:</b> ${parts.slice(1).join(': ')}</div>`;
+                                }).join('');
+                                hoursDiv.innerHTML = `<div style="margin-top: 6px; margin-bottom: 8px; border-top: 1px solid #eee; padding-top: 6px;">${hoursHtml}</div>`;
+                            } else {
+                                hoursDiv.innerHTML = `<div style="margin-top: 4px; margin-bottom: 6px; font-style: italic;">Horarios no disponibles</div>`;
+                            }
+                        });
                     });
 
                     markersRef.current.push(marker);
