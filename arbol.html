@@ -11,6 +11,11 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
+    <!-- Stripe JS -->
+    <script>
+        // Eliminado el alert global
+    </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -338,7 +343,8 @@
     
     <script>
         if (!window.location.search.includes('skipIntro=true')) {
-            document.getElementById('raw-black-overlay').style.display = 'none';
+            const overlay = document.getElementById('raw-black-overlay');
+            if (overlay) overlay.style.display = 'none';
         }
     </script>
 
@@ -3033,7 +3039,7 @@
             const audLabel = audNode ? (audNode.label || audNode.nombre_visible) : 'Mesa Sensibles';
 
             useEffect(() => {
-                fetch('http://localhost:8002/create-payment-intent', {
+                fetch('/create-payment-intent', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ deliveryMode: isDigital ? 'digital' : 'fisico' })
@@ -3113,8 +3119,7 @@
 
                     const participantesText = (globalData.participants || []).map(p => 
                         `Nombre: ${p.name}`
-                    ).join('
-');
+                    ).join('\\n');
 
                     const payload = {
                         Edicion: isDigital ? 'Digital' : 'Física',

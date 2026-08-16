@@ -56,7 +56,7 @@ class StripeServer(BaseHTTPRequestHandler):
             self.end_headers()
 
 if __name__ == '__main__':
-    port = 8002
+    port = 8003
     print(f"Starting Stripe API server on port {port}...")
     httpd = HTTPServer(('localhost', port), StripeServer)
     httpd.serve_forever()
