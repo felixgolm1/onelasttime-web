@@ -3098,7 +3098,8 @@
             const participantesTextList = (globalData.participants || []).map(p => p.name).join(', ');
 
             useEffect(() => {
-                fetch('/create-payment-intent', {
+                const apiUrl = window.location.hostname === 'localhost' ? 'http://localhost:8003/create-payment-intent' : '/create-payment-intent';
+                fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ deliveryMode: isDigital ? 'digital' : 'fisico' })
