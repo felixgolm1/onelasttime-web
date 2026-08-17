@@ -3063,6 +3063,40 @@
             const audNode = dbAudience.find(a => a.id === globalData.audienceId);
             const audLabel = audNode ? (audNode.label || audNode.nombre_visible) : 'Mesa Sensibles';
 
+            const getLugarUso = () => {
+                if (globalData.formatId?.includes('restaurante')) return globalData.logistics?.restaurante || 'Restaurante';
+                if (globalData.formatId?.includes('mi_casa')) return 'En casa';
+                if (globalData.formatId?.includes('otro')) return globalData.formatCustomPlace || 'Otro';
+                return 'No especificado';
+            };
+
+            const getLugarEntrega = () => {
+                if (isDigital) return 'Entrega digital (Email/Web)';
+                if (globalData.logistics?.punto_recogida) return `Punto de recogida: ${globalData.logistics.punto_recogida}`;
+                if (globalData.logistics?.direccion) return `${globalData.logistics.direccion} ${globalData.logistics.info_adicional_direccion ? '(' + globalData.logistics.info_adicional_direccion + ')' : ''}`;
+                if (globalData.logistics?.restaurante) return `En el restaurante: ${globalData.logistics.restaurante} ${globalData.logistics.ciudad_restaurante ? '(' + globalData.logistics.ciudad_restaurante + ')' : ''}`;
+                return 'No especificado';
+            };
+
+            const getRelacionCompleta = () => {
+                if (!audNode) return audLabel;
+                if (audNode.parent) {
+                    const p = dbAudience.find(a => a.id === audNode.parent);
+                    if (p) return `${p.label} - ${audLabel}`;
+                }
+                return audLabel;
+            };
+
+            const selectedTonesStr = (globalData.tones || []).map(tId => {
+                for (const cat of dbTones) {
+                    const t = cat.subtones.find(s => s.id === tId);
+                    if (t) return t.text;
+                }
+                return tId;
+            }).join(', ');
+            
+            const participantesTextList = (globalData.participants || []).map(p => p.name).join(', ');
+
             useEffect(() => {
                 fetch('/create-payment-intent', {
                     method: 'POST',
@@ -3133,25 +3167,13 @@
             }, [clientSecret]);
 
             const processSuccessfulPayment = () => {
-                let selectedTones = (globalData.tones || []).map(tId => {
-                    for (const cat of dbTones) {
-                        const t = cat.subtones.find(s => s.id === tId);
-                        if (t) return t.text;
-                    }
-                    return tId;
-                }).join(', ');
-
-                const participantesText = (globalData.participants || []).map(p => 
-                    `Nombre: ${p.name}`
-                ).join('\n');
-
                 const payload = {
                     Edicion: isDigital ? 'Digital' : 'Física',
                     Tipo_Relacion: audLabel,
-                    Tonos_Elegidos: selectedTones,
+                    Tonos_Elegidos: selectedTonesStr,
                     Ciudad: globalData.logistics?.ciudad || 'N/A',
                     Fecha_Cena: globalData.logistics?.fecha || 'N/A',
-                    Participantes: participantesText || 'Ninguno',
+                    Participantes: participantesTextList || 'Ninguno',
                     Objetivo_Cena: globalData.objective || 'N/A',
                     Notas_Extra: globalData.n4?.extraDetails || 'Ninguna',
                     _subject: "✨ ¡Nuevo mazo personalizado pagado en Sensibles!"
@@ -3368,11 +3390,44 @@
                                         <span className="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
                                     </summary>
                                     <div className="p-4 pt-2 text-xs text-gray-500 space-y-3 border-t border-gray-100">
-                                        <ul className="space-y-1.5 list-disc list-inside">
-                                            <li><strong>Objetivo:</strong> {audLabel}</li>
-                                            <li><strong>Tono:</strong> Íntimo y profundo</li>
-                                            <li><strong>Nivel de picante:</strong> Adaptado a vuestras respuestas</li>
+                                        <ul className="space-y-1.5 list-disc list-inside mb-4">
+                                            <li><strong>Formato:</strong> {formatName}</li>
+                                            {globalData.logistics?.fecha && <li><strong>Día y hora de la cena:</strong> {globalData.logistics.fecha.replace('T', ' a las ')}</li>}
+                                            <li><strong>Lugar:</strong> {getLugarUso()}</li>
+                                            <li><strong>Entrega:</strong> {getLugarEntrega()}</li>
+                                            {globalData.contact?.notes && <li><strong>A tener en cuenta:</strong> {globalData.contact.notes}</li>}
+                                            <li><strong>Contacto:</strong> {[globalData.contact?.phone, globalData.contact?.email].filter(Boolean).join(' / ')}</li>
+                                            {participantesTextList && <li><strong>Participantes:</strong> {participantesTextList}</li>}
+                                            <li><strong>Cena con:</strong> {getRelacionCompleta()}</li>
+                                            <li><strong>Tonos elegidos:</strong> {selectedTonesStr}</li>
+                                            {globalData.n4?.age && <li><strong>Rango de edad:</strong> {globalData.n4.age.min === globalData.n4.age.max ? globalData.n4.age.min : `${globalData.n4.age.min} - ${globalData.n4.age.max} años`}</li>}
+                                            {globalData.n4?.time && <li><strong>Tiempo estimado:</strong> {globalData.n4.time} min</li>}
                                         </ul>
+                                        
+                                        {globalData.objective && (
+                                            <details className="group/obj border border-gray-100 rounded-lg overflow-hidden bg-white mb-2">
+                                                <summary className="font-semibold text-gray-600 cursor-pointer p-2 list-none [&::-webkit-details-marker]:hidden flex justify-between items-center hover:bg-gray-50">
+                                                    <span>Objetivo escrito</span>
+                                                    <span className="text-gray-400 group-open/obj:rotate-180 transition-transform text-[10px]">▼</span>
+                                                </summary>
+                                                <div className="p-3 pt-0 text-gray-500 italic border-t border-gray-100 bg-gray-50">
+                                                    "{globalData.objective}"
+                                                </div>
+                                            </details>
+                                        )}
+
+                                        {globalData.n4?.extraDetails && (
+                                            <details className="group/ext border border-gray-100 rounded-lg overflow-hidden bg-white mb-2">
+                                                <summary className="font-semibold text-gray-600 cursor-pointer p-2 list-none [&::-webkit-details-marker]:hidden flex justify-between items-center hover:bg-gray-50">
+                                                    <span>Info adicional escrita</span>
+                                                    <span className="text-gray-400 group-open/ext:rotate-180 transition-transform text-[10px]">▼</span>
+                                                </summary>
+                                                <div className="p-3 pt-0 text-gray-500 italic border-t border-gray-100 bg-gray-50">
+                                                    "{globalData.n4.extraDetails}"
+                                                </div>
+                                            </details>
+                                        )}
+
                                         <div className="bg-[#CCFF00]/10 text-gray-700 p-3 rounded-lg flex gap-2 items-start mt-3">
                                             <span className="text-sm">✨</span>
                                             <p className="leading-relaxed"><strong>Textos e historias:</strong> Hemos guardado tus respuestas. No te preocupes por la redacción o la ortografía: nuestra IA se encarga de pulir y dar coherencia a todos los textos para que la experiencia quede impecable.</p>
