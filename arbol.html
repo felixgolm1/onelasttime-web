@@ -961,8 +961,7 @@
                 onProgressUpdate(localPct);
             }, [currentParent, history.length]);
 
-            const handleClick = (node) => {
-                setIsOut(true);
+            const handleClick = (node) => { window.__headerAnimated = true; setIsOut(true);
                 setTimeout(() => {
                     if (node.final === true || node.es_final === 'TRUE' || node.final === 'TRUE') {
                         onComplete(node.id, node.customValue);
@@ -3637,7 +3636,7 @@
                         <GlobalHeader 
                             progress={getProgress()} 
                             onBack={() => { if (globalBackRef.current) globalBackRef.current(); else goBackPhase(); }} 
-                            animateIn={phase === 'format' && treeStates.format.history.length === 0} 
+                            animateIn={phase === 'format' && treeStates.format.history.length === 0 && !window.__headerAnimated} 
                             overrideSubtitle={calculateGlobalSubtitle()} 
                             isCheckout={phase === 'checkout'}
                             isDigital={window.__globalFormatId?.includes('digital')}
@@ -3766,6 +3765,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
