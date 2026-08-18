@@ -906,7 +906,7 @@
                             <button onClick={() => setIsLivingTogether(!isLivingTogether)}
                                 className={`relative w-48 h-12 rounded-full border-2 transition-all duration-300 overflow-hidden flex items-center focus:outline-none ${isLivingTogether ? 'bg-[#CCFF00] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-white border-white shadow-[0_0_15px_rgba(255,255,255,0.1)]'}`}
                             >
-                                <div className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${isLivingTogether ? 'bg-white translate-x-[148px]' : 'bg-black translate-x-1'}`}></div>
+                                <div className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${isLivingTogether ? 'bg-white translate-x-[148px]' : 'bg-black translate-x-1'}`}></div>
                                 <div className={`absolute inset-0 flex flex-col items-center justify-center text-[13px] font-bold font-poppins uppercase tracking-wider leading-tight transition-colors duration-300 z-10 ${isLivingTogether ? 'text-black' : 'text-black'}`}>
                                     <span>Vivimos</span>
                                     <span>Juntos</span>
@@ -916,7 +916,7 @@
                             <button onClick={() => setStatus(status === 'prometidos' ? null : 'prometidos')}
                                 className={`relative w-48 h-12 rounded-full border-2 transition-all duration-300 overflow-hidden flex items-center focus:outline-none ${status === 'prometidos' ? 'bg-[#CCFF00] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-white border-white shadow-[0_0_15px_rgba(255,255,255,0.1)]'}`}
                             >
-                                <div className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${status === 'prometidos' ? 'bg-white translate-x-[148px]' : 'bg-black translate-x-1'}`}></div>
+                                <div className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${status === 'prometidos' ? 'bg-white translate-x-[148px]' : 'bg-black translate-x-1'}`}></div>
                                 <div className={`absolute inset-0 flex items-center justify-center text-[13px] font-bold font-poppins uppercase tracking-wider transition-colors duration-300 z-10 ${status === 'prometidos' ? 'text-black' : 'text-black'}`}>
                                     Prometidxs
                                 </div>
@@ -925,7 +925,7 @@
                             <button onClick={() => setStatus(status === 'casados' ? null : 'casados')}
                                 className={`relative w-48 h-12 rounded-full border-2 transition-all duration-300 overflow-hidden flex items-center focus:outline-none ${status === 'casados' ? 'bg-[#CCFF00] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.2)]' : 'bg-white border-white shadow-[0_0_15px_rgba(255,255,255,0.1)]'}`}
                             >
-                                <div className={`absolute top-1/2 -translate-y-1/2 w-9 h-9 rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${status === 'casados' ? 'bg-white translate-x-[148px]' : 'bg-black translate-x-1'}`}></div>
+                                <div className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full shadow-md transition-all duration-400 cubic-bezier(0.34, 1.56, 0.64, 1) z-0 ${status === 'casados' ? 'bg-white translate-x-[148px]' : 'bg-black translate-x-1'}`}></div>
                                 <div className={`absolute inset-0 flex items-center justify-center text-[13px] font-bold font-poppins uppercase tracking-wider transition-colors duration-300 z-10 ${status === 'casados' ? 'text-black' : 'text-black'}`}>
                                     Casadxs
                                 </div>
@@ -2012,8 +2012,8 @@
                                 
                                                                                                 <div className="w-full bg-[#CCFF00] rounded-[1.25rem] p-4 md:p-5 flex flex-col gap-3 md:gap-4 mb-3 shadow-md">
                                     <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 mb-1">
-                                        <div className="flex items-center justify-center w-9 h-9 rounded-full bg-black text-[#CCFF00] flex-shrink-0 shadow-sm">
-                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        <div className="flex items-center justify-center w-5 h-5 rounded-full bg-black text-[#CCFF00] flex-shrink-0 shadow-sm">
+                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                         </div>
                                         <div className="flex flex-col text-center md:text-left">
                                             <span className="font-black text-black text-base md:text-lg uppercase tracking-tight">¿Tu cena es antes?</span>
@@ -3805,6 +3805,7 @@
     </script>
 </body>
 </html>
+
 
 
 
