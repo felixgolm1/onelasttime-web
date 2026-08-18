@@ -3547,14 +3547,20 @@
             
                         const globalBackRef = React.useRef(null);
             const calculateGlobalSubtitle = () => {
-                if (phase === 'format' && !treeStates.format.currentParent && treeStates.format.history.length === 0) return '';
-                
-                if (window.__globalFormatId) {
-                    if (window.__globalFormatId.includes('cartas_digitales')) return 'Versión digital';
-                    else if (window.__globalFormatId.includes('cartas_fisicas')) return 'Versión física';
-                }
-                return '';
-            };
+    if (phase === 'format' && !treeStates.format.currentParent && treeStates.format.history.length === 0) return '';
+    if (phase === 'format') {
+        const firstChoice = treeStates.format.history.length > 0 ? treeStates.format.history[0] : treeStates.format.currentParent;
+        if (firstChoice) {
+            if (firstChoice.includes('digital')) return 'Versión digital';
+            if (firstChoice.includes('fisica')) return 'Versión física';
+        }
+    }
+    if (window.__globalFormatId) {
+        if (window.__globalFormatId.includes('cartas_digitales')) return 'Versión digital';
+        else if (window.__globalFormatId.includes('cartas_fisicas')) return 'Versión física';
+    }
+    return '';
+};
             const [treeStates, setTreeStates] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeStates')) || {
                 format: { currentParent: null, history: [] },
                 audience: { currentParent: null, history: [] }
@@ -3760,6 +3766,7 @@
     </script>
 </body>
 </html>
+
 
 
 
