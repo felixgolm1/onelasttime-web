@@ -1750,7 +1750,7 @@
                                                     searchType={f.id === 'ciudad_restaurante' ? 'city' : f.id === 'restaurante' ? 'restaurant' : f.id === 'punto_recogida' ? 'post_office' : 'address'}
                                                     onError={() => setErrs(errs.filter(id => id !== f.id))}
                                                 />
-                                                {(f.id === 'direccion' || f.id === 'punto_recogida') && form[f.id] && getDeliveryHelperText(form[f.id]) && (
+                                                {(f.id === 'direccion' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[f.id] && getDeliveryHelperText(form[f.id]) && (
                                                     <p className="text-[12px] text-gray-400 font-medium mt-2 px-1 leading-tight text-left">{getDeliveryHelperText(form[f.id])}</p>
                                                 )}
                                             </>
@@ -3769,6 +3769,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
