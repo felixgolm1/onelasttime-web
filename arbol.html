@@ -1949,7 +1949,7 @@
                     {showModal && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-24 sm:p-6 sm:pt-28 bg-black/70 backdrop-blur-sm fade-in" onClick={() => setShowModal(false)}>
                             <div className="relative w-full max-w-md flex flex-col items-center bg-white rounded-3xl p-4 md:p-5 shadow-2xl max-h-[70vh] overflow-y-auto custom-scrollbar" onClick={(e) => e.stopPropagation()}>
-                                <button type="button" onClick={() => setShowModal(false)} className="absolute top-5 right-5 text-black hover:text-gray-600 p-1.5 transition-colors z-10 bg-white rounded-full">
+                                <button type="button" onClick={() => setShowModal(false)} className="absolute top-3 right-3 text-black hover:text-gray-600 p-1.5 transition-colors z-10 bg-white rounded-full">
                                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
                                 {contextId === 'cartas_fisicas_reserva_no_hecha' || contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' ? (
@@ -3802,6 +3802,7 @@
     </script>
 </body>
 </html>
+
 
 
 
