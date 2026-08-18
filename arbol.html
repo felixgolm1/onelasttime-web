@@ -1566,12 +1566,7 @@
             const fields = useMemo(() => {
                 let f = dbLogistics.filter(f => f.conditions.includes('siempre') || f.conditions.some(c => contextId?.includes(c))).map(x => ({...x}));
                 
-                if (contextId === 'cartas_fisicas_otro') {
-                    const fechaField = f.find(x => x.id === 'fecha');
-                    if (fechaField) { 
-                        fechaField.label = '¿HASTA QUÉ DÍA Y HORA TE LAS PODEMOS ENTREGAR?';
-                                            }
-                }
+                if (contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_reserva_no_hecha') { const fechaField = f.find(x => x.id === 'fecha'); if (fechaField) { fechaField.label = '¿HASTA QUÉ DÍA Y HORA TE LAS PODEMOS ENTREGAR?'; } }
 
                 if (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_reserva_no_hecha') {
                     if (deliveryMode === 'punto') {
@@ -1670,45 +1665,63 @@
                             
                         </div>
                         <div className="w-full max-w-[22rem] flex flex-col items-center px-1">
+                                                        {(contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_reserva_no_hecha' || contextId === 'cartas_fisicas_otro') && (
+                                <div className="w-full mb-4 relative z-[105]">
+                                    <label className="label-style">¿Dónde quieres que las entreguemos?</label>
+                                    <div className="flex items-center justify-between w-full gap-1 bg-white rounded-full p-1.5 border border-gray-200 shadow-sm mb-3">
+                                        <button 
+                                            type="button"
+                                            onClick={() => setDeliveryMode('direccion')}
+                                            className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
+                                        >
+                                            En mi casa, <br/>oficina u otro
+                                        </button>
+                                        <button 
+                                            type="button"
+                                            onClick={() => setDeliveryMode('punto')}
+                                            className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
+                                        >
+                                            En un punto de <br/>recogida
+                                        </button>
+                                        {contextId === 'cartas_fisicas_reserva_no_hecha' && (
+                                            <button 
+                                                type="button"
+                                                onClick={() => setDeliveryMode('restaurante')}
+                                                className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'restaurante' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
+                                            >
+                                                En el <br/>restaurante
+                                            </button>
+                                        )}
+                                    </div>
+                            
+                                    {contextId === 'cartas_fisicas_reserva_no_hecha' && (
+                                        <p className="text-[#CCFF00] font-medium text-xs md:text-sm text-center mb-3 -mt-1 tracking-wide px-2 leading-relaxed">
+                                            {(deliveryMode === 'direccion' || deliveryMode === 'punto') && "Ideal si aún no sabes dónde irás"}
+                                            {deliveryMode === 'restaurante' && "Ideal si ya sabes dónde irás. Te las encontrarás en la mesa al llegar"}
+                                        </p>
+                                    )}
+                            
+                                    <div className="flex flex-col gap-3 items-center w-full mb-3 mt-4">
+                                        <button 
+                                            type="button"
+                                            onClick={() => {
+                                                setModalDeliveryMode(deliveryMode === 'punto' ? 'punto_recogida' : (deliveryMode === 'direccion' ? 'otra_direccion' : 'restaurante'));
+                                                setShowModal(true);
+                                            }}
+                                            className="relative overflow-hidden inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-xs md:text-sm border transition-all duration-300 active:scale-95 bg-[#CCFF00]/10 text-[#CCFF00] border-[#CCFF00]/20 hover:bg-[#CCFF00]/20 gap-1.5"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            Tiempos de entrega
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                             {fields.map((f, i) => {
                                 const isMulti = f.type === 'multi_pills';
                                 const inputClasses = `pill-input ${errs.includes(f.id) ? 'input-error' : ''} ${shakeFields.includes(f.id) ? 'shake' : ''}`;
                                 return (
                                     <React.Fragment key={f.id}>
-                                    {i === 0 && contextId === 'cartas_fisicas_otro' && (
-                                        <>
-                                            <div className="flex flex-col gap-3 items-center mb-6 w-full">
-                                                <button 
-                                                    type="button"
-                                                    onClick={() => {
-                                                        setModalDeliveryMode(deliveryMode === 'punto' ? 'punto_recogida' : (deliveryMode === 'direccion' ? 'otra_direccion' : 'restaurante'));
-                                                        setShowModal(true);
-                                                    }}
-                                                    className="relative overflow-hidden inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-xs md:text-sm border transition-all duration-300 active:scale-95 bg-[#CCFF00]/10 text-[#CCFF00] border-[#CCFF00]/20 hover:bg-[#CCFF00]/20 gap-1.5"
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                    Tiempos de entrega
-                                                </button>
-                                            </div>
-                                            <div className="w-full mb-4 relative" style={{ zIndex: 100 - i + 1 }}>
-                                                <label className="label-style">¿Dónde quieres que las entreguemos?</label>
-                                                <div className="flex items-center justify-between w-full gap-1 bg-white rounded-full p-1.5 border border-gray-200 shadow-sm">
-                                                    <button 
-                                                        onClick={() => setDeliveryMode('direccion')}
-                                                        className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
-                                                    >
-                                                        En mi casa, <br/>oficina u otro
-                                                    </button>
-                                                    <button 
-                                                        onClick={() => setDeliveryMode('punto')}
-                                                        className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
-                                                    >
-                                                        En un punto de <br/>recogida
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </>
-                                    )}
+                                    
                                     <div key={f.id} className={`w-full mb-4 relative ${!isMulti ? 'floating' : ''}`} style={{ zIndex: 100 - i, ...(!isMulti ? {animationDelay: `${i * 0.15}s`} : {}) }}>
                                         <label className={`label-style ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15}s`} : {}}>{f.label}</label>
                                         {f.subtitle && <p className={`text-[10px] text-gray-500 font-medium text-center mb-3 -mt-1 ${isMulti ? 'floating' : ''}`} style={isMulti ? {animationDelay: `${i * 0.15 + 0.05}s`} : {}}>{f.subtitle}</p>}
@@ -1887,54 +1900,7 @@
                                             })()
                                         )}
                                     </div>
-                                        {f.id === 'fecha' && (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_reserva_no_hecha') && (
-                                            <div className="w-full mb-4 relative" style={{ zIndex: 100 - i - 1 }}>
-                                                <label className="label-style">¿Dónde quieres que las entreguemos?</label>
-                                                <div className="flex items-center justify-between w-full gap-1 bg-white rounded-full p-1.5 border border-gray-200 shadow-sm">
-                                                    <button 
-                                                        onClick={() => setDeliveryMode('direccion')}
-                                                        className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'direccion' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
-                                                    >
-                                                        En mi casa, <br/>oficina u otro
-                                                    </button>
-                                                    <button 
-                                                        onClick={() => setDeliveryMode('punto')}
-                                                        className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'punto' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
-                                                    >
-                                                        En un punto de <br/>recogida
-                                                    </button>
-                                                    {contextId === 'cartas_fisicas_reserva_no_hecha' && (
-                                                        <button 
-                                                            onClick={() => setDeliveryMode('restaurante')}
-                                                            className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold uppercase tracking-wider rounded-full transition-all duration-300 ${deliveryMode === 'restaurante' ? 'bg-black text-white shadow-md' : 'text-black bg-transparent'}`}
-                                                        >
-                                                            En el <br/>restaurante
-                                                        </button>
-                                                    )}
-                                                </div>
-                                                {contextId === 'cartas_fisicas_reserva_no_hecha' && (
-                                                    <p className="text-[#CCFF00] font-medium text-xs md:text-sm text-center mt-3 tracking-wide px-2 leading-relaxed">
-                                                        {(deliveryMode === 'direccion' || deliveryMode === 'punto') && "Ideal si aún no sabes dónde irás"}
-                                                        {deliveryMode === 'restaurante' && "Ideal si ya sabes dónde irás. Te las encontrarás en la mesa al llegar"}
-                                                    </p>
-                                                )}
-                                                {(contextId === 'cartas_fisicas_reserva_no_hecha' || contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro') && (
-                                                    <div className={`flex flex-col gap-3 items-center ${contextId === 'cartas_fisicas_reserva_no_hecha' ? 'mt-1' : 'mt-4'}`}>
-                                                        <button 
-                                                            type="button"
-                                                            onClick={() => {
-                                                                setModalDeliveryMode(deliveryMode === 'punto' ? 'punto_recogida' : (deliveryMode === 'direccion' ? 'otra_direccion' : 'restaurante'));
-                                                                setShowModal(true);
-                                                            }}
-                                                            className="relative overflow-hidden inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-xs md:text-sm border transition-all duration-300 active:scale-95 bg-[#CCFF00]/10 text-[#CCFF00] border-[#CCFF00]/20 hover:bg-[#CCFF00]/20 gap-1.5"
-                                                        >
-                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                            Tiempos de entrega
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
+                                        
                                     </React.Fragment>
                                 );
                             })}
@@ -3800,6 +3766,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
