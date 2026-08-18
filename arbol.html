@@ -3549,7 +3549,7 @@
             const calculateGlobalSubtitle = () => {
     if (phase === 'format' && !treeStates.format.currentParent && treeStates.format.history.length === 0) return '';
     if (phase === 'format') {
-        const firstChoice = treeStates.format.history.length > 0 ? treeStates.format.history[0] : treeStates.format.currentParent;
+        const firstChoice = treeStates.format.history.find(h => h !== null) || treeStates.format.currentParent;
         if (firstChoice) {
             if (firstChoice.includes('digital')) return 'Versión digital';
             if (firstChoice.includes('fisica')) return 'Versión física';
@@ -3766,6 +3766,7 @@
     </script>
 </body>
 </html>
+
 
 
 
