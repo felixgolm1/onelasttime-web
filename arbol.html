@@ -1077,7 +1077,7 @@
             return false;
         };
 
-        const PlacesAutocompleteInput = ({ value, onChange, placeholder, className, searchType, onError }) => {
+        const PlacesAutocompleteInput = ({ value, onChange, placeholder, className, searchType, onError, onPlaceSelect }) => {
             const [predictions, setPredictions] = useState([]);
             const [showDropdown, setShowDropdown] = useState(false);
             const [isSelected, setIsSelected] = useState(!!value);
@@ -1289,14 +1289,18 @@
                                 if (c.types.includes('street_number')) street_number = c.long_name;
                                 if (c.types.includes('postal_code')) postal_code = c.long_name;
                                 if (c.types.includes('locality')) locality = c.long_name;
+                                if (c.types.includes('administrative_area_level_1')) window.__tempAdmin1 = c.long_name;
+                                if (c.types.includes('administrative_area_level_2')) window.__tempAdmin2 = c.long_name;
                             });
                             
                             const streetPart = route + (street_number ? ' ' + street_number : '');
                             const formatted = [streetPart, postal_code, locality].filter(Boolean).join(', ');
                             
                             onChange(formatted || fallbackText);
+                            if (onPlaceSelect) onPlaceSelect({ locality, admin1: window.__tempAdmin1, admin2: window.__tempAdmin2, postal_code });
                         } else {
                             onChange(fallbackText);
+                            if (onPlaceSelect) onPlaceSelect(null);
                         }
                     });
                 } else {
@@ -1738,8 +1742,7 @@
                                             />
                                         )}
                                         {f.type === 'text' && (
-                                            ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida'].includes(f.id) ? (
-                                                <PlacesAutocompleteInput
+                                            ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida'].includes(f.id) ? ( <> <PlacesAutocompleteInput
                                                     value={form[f.id] || ''}
                                                     onChange={(val) => setForm({...form, [f.id]: val})}
                                                     placeholder={f.placeholder}
@@ -1747,6 +1750,10 @@
                                                     searchType={f.id === 'ciudad_restaurante' ? 'city' : f.id === 'restaurante' ? 'restaurant' : f.id === 'punto_recogida' ? 'post_office' : 'address'}
                                                     onError={() => setErrs(errs.filter(id => id !== f.id))}
                                                 />
+                                                {(f.id === 'direccion' || f.id === 'punto_recogida') && form[f.id] && getDeliveryHelperText(form[f.id]) && (
+                                                    <p className="text-[12px] text-gray-400 font-medium mt-2 px-1 leading-tight text-left">{getDeliveryHelperText(form[f.id])}</p>
+                                                )}
+                                            </>
                                             ) : (
                                                 <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />
                                             )
@@ -3762,6 +3769,11 @@
     </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
