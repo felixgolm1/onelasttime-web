@@ -2010,20 +2010,20 @@
                                     </>
                                 )}
                                 
-                                <div className="w-full bg-[#CCFF00]/20 rounded-[1.25rem] p-4 md:p-5 flex flex-col gap-4 mb-3 border border-[#CCFF00]/40 shadow-inner">
-                                    <p className="text-xs md:text-sm font-medium leading-relaxed text-gray-700 font-inter text-center">
+                                                                <div className="w-full bg-[#CCFF00] rounded-[1.25rem] p-4 md:p-5 flex flex-col gap-4 mb-3 shadow-md">
+                                    <p className="text-xs md:text-sm font-medium leading-relaxed text-black font-inter text-center">
                                         <span className="font-bold text-black text-sm md:text-base flex items-center justify-center mb-1.5">
                                             <span className="flex items-center justify-center w-5 h-5 rounded-full bg-black text-[#CCFF00] mr-2 flex-shrink-0">
                                                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                             </span>
-                                            ¿Tu cena es antes?
+                                            ¿Tu cena es antes? Obtén las digitales en 30min
                                         </span>
-                                        Tenemos la solución. Pinchando en el siguiente botón <span className="font-bold bg-[#CCFF00] text-black">puedes cambiar a la versión digital</span> de las cartas <span className="font-bold bg-[#CCFF00] text-black">y tenerlas en tu móvil en solo 10 minutos</span> en cualquier rincón del mundo.
+                                        Tenemos la solución. Pinchando en el siguiente botón <span className="font-bold">puedes cambiar a la versión digital</span> de las cartas <span className="font-bold">y tenerlas en tu móvil en solo 10 minutos</span> en cualquier rincón del mundo.
                                     </p>
                                     <button type="button" onClick={() => {
                                         setShowModal(false);
                                         if (onSwitchToDigital) onSwitchToDigital(form);
-                                    }} className="btn-green w-full uppercase text-sm tracking-wider shadow-md hover:scale-105 transition-all">Cambiar a cartas digitales</button>
+                                    }} className="bg-black text-[#CCFF00] w-full py-3.5 px-4 rounded-full uppercase text-xs md:text-sm font-bold tracking-wider shadow-md hover:scale-105 transition-all">Cambiar a cartas digitales</button>
                                 </div>
 
                                 <div className="w-full flex flex-col gap-3">
@@ -3802,6 +3802,7 @@
     </script>
 </body>
 </html>
+
 
 
 
