@@ -1954,7 +1954,7 @@
                                 </button>
                                 {contextId === 'cartas_fisicas_reserva_no_hecha' || contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' ? (
                                     <>
-                                        <h3 className="text-lg md:text-xl font-semibold text-black mb-3 text-center mt-2 px-6">Tiempos de entrega</h3>
+                                        <h3 className="text-lg md:text-xl font-semibold text-black mb-3 text-center mt-2 px-6">Tiempos de entrega versión física</h3>
                                         <div className="flex bg-black rounded-full p-1 mb-4 w-full max-w-[22rem] mx-auto border border-black shadow-inner">
                                             <button type="button" onClick={() => setModalDeliveryMode('otra_direccion')} className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold tracking-wider rounded-full transition-all uppercase ${modalDeliveryMode === 'otra_direccion' ? 'bg-white text-black shadow-md' : 'text-white'}`}>En mi casa, <br/>oficina u otro</button>
                                             <button type="button" onClick={() => setModalDeliveryMode('punto_recogida')} className={`flex-1 py-3 px-1 text-[9px] md:text-[10px] leading-tight font-bold tracking-wider rounded-full transition-all uppercase ${modalDeliveryMode === 'punto_recogida' ? 'bg-white text-black shadow-md' : 'text-white'}`}>En un punto de <br/>recogida</button>
@@ -2003,7 +2003,7 @@
                                     </>
                                 ) : (
                                     <>
-                                        <h3 className="text-xl md:text-2xl font-semibold text-black mb-4 text-center mt-2">Tiempos de entrega</h3>
+                                        <h3 className="text-xl md:text-2xl font-semibold text-black mb-4 text-center mt-2">Tiempos de entrega versión física</h3>
                                         <div className="w-full text-sm md:text-base font-medium leading-relaxed text-gray-600 font-inter text-center mb-4 space-y-4">
                                             <p><div className="text-left space-y-3 mt-4 text-xs md:text-sm"><p className="flex items-start"><svg className="w-[18px] h-[18px] shrink-0 mt-[1px] mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.5C12 21.5 20 14.5 20 9C20 4.5 16.5 1 12 1C7.5 1 4 4.5 4 9C4 14.5 12 21.5 12 21.5Z" fill="black"/><circle cx="12" cy="9" r="3.5" fill="#CCFF00"/></svg><span><span className="font-bold text-black">Barcelona ciudad:</span> entrega gratis inmediata desde 4h hasta 48h incluyendo festivos, dependiendo de la hora de tu cena. Los pedidos a partir de las 19:00h salen al día siguiente</span></p><p className="flex items-start"><svg className="w-[18px] h-[18px] shrink-0 mt-[1px] mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.5C12 21.5 20 14.5 20 9C20 4.5 16.5 1 12 1C7.5 1 4 4.5 4 9C4 14.5 12 21.5 12 21.5Z" fill="black"/><circle cx="12" cy="9" r="3.5" fill="#CCFF00"/></svg><span><span className="font-bold text-black">España Peninsular:</span> entrega gratis en 24-48h laborables (los pedidos a partir de las 12:00h salen al día siguiente)</span></p><p className="flex items-start"><svg className="w-[18px] h-[18px] shrink-0 mt-[1px] mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.5C12 21.5 20 14.5 20 9C20 4.5 16.5 1 12 1C7.5 1 4 4.5 4 9C4 14.5 12 21.5 12 21.5Z" fill="black"/><circle cx="12" cy="9" r="3.5" fill="#CCFF00"/></svg><span><span className="font-bold text-black">Baleares, Canarias, Ceuta y Melilla:</span> entrega en 3-5 días laborables. Baleares, Ceuta y Melilla +3€ y Canarias +6€ (los pedidos a partir de las 12:00h salen al día siguiente)</span></p></div></p>
                                         </div>
@@ -3802,6 +3802,7 @@
     </script>
 </body>
 </html>
+
 
 
 
