@@ -961,7 +961,7 @@
                 onProgressUpdate(localPct);
             }, [currentParent, history.length]);
 
-            const handleClick = (node) => { window.__headerAnimated = true; setIsOut(true);
+            const handleClick = (node) => { window.scrollTo(0, 0); window.__headerAnimated = true; setIsOut(true);
                 setTimeout(() => {
                     if (node.final === true || node.es_final === 'TRUE' || node.final === 'TRUE') {
                         onComplete(node.id, node.customValue);
@@ -980,8 +980,7 @@
 
             React.useEffect(() => { if (backRef) backRef.current = handleBack; return () => { if (backRef) backRef.current = null; }; }, [history.length, currentParent]);
 
-            const handleBack = () => {
-                if (history.length === 0) {
+            const handleBack = () => { window.scrollTo(0, 0); if (history.length === 0) {
                     if (onBack) onBack();
                     return; 
                 }
@@ -3591,8 +3590,7 @@
                 return 0;
             };
 
-            const advanceTo = (newPhase, dataUpdate = {}) => {
-                sessionStorage.setItem('skipIntro', 'true');
+            const advanceTo = (newPhase, dataUpdate = {}) => { window.scrollTo(0, 0); sessionStorage.setItem('skipIntro', 'true');
                 setPhaseHistory(prev => [...prev, { phase, globalData }]);
                 if (dataUpdate) {
                     setGlobalData(prev => ({ ...prev, ...dataUpdate }));
@@ -3600,8 +3598,7 @@
                 setPhase(newPhase);
             };
 
-            const goBackPhase = (partialData) => {
-                let latestData = { ...globalData };
+            const goBackPhase = (partialData) => { window.scrollTo(0, 0); let latestData = { ...globalData };
                 if (partialData && typeof partialData === 'object' && !partialData.nativeEvent) {
                     latestData = { ...latestData, ...partialData };
                 }
@@ -3765,6 +3762,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
