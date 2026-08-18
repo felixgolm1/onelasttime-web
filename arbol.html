@@ -1629,7 +1629,7 @@
                 <div className="flex-1 flex flex-col items-center pt-28 px-6 pb-6 relative">
                     
                     <div className="w-full flex flex-col items-center px-6 fade-in mt-4">
-                        <div className={`w-full max-w-3xl mx-auto text-center px-4 ${contextId === 'cartas_fisicas_otro' ? 'mb-4' : 'mb-10'}`}>
+                        <div className="w-full max-w-3xl mx-auto text-center px-4 mb-5">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">Info de la cena y la entrega</h2>
                               {contextId === 'cartas_fisicas_reserva_hecha' && (
                                   <p className="text-[#CCFF00] font-medium text-lg md:text-xl tracking-wide mt-4">Las cartas estarán en tu mesa antes de que llegues</p>
@@ -2696,7 +2696,7 @@
             return (
                 <div className="flex-1 flex flex-col items-center pt-28 px-4 pb-4 relative fade-in">
                     <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
-                        <div className={`w-full max-w-3xl mx-auto text-center px-4 ${contextId === 'cartas_fisicas_otro' ? 'mb-4' : 'mb-10'}`}>
+                        <div className="w-full max-w-3xl mx-auto text-center px-4 mb-5">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">Info de contacto para la entrega</h2>
                             <p className="text-[#CCFF00] font-medium text-base md:text-lg tracking-wide mt-4 leading-snug max-w-2xl mx-auto">Te mantendremos informado<br/>de la entrega por WhatsApp y/o email</p>
                         </div>
@@ -2784,7 +2784,7 @@
                 <div className="flex-1 flex flex-col items-center pt-28 px-4 pb-4 relative fade-in">
                     
                     <div className={`w-full flex flex-col items-center px-6 transition-opacity duration-400 mt-4 ${isOut ? 'opacity-0' : 'fade-in'}`}>
-                        <div className={`w-full max-w-3xl mx-auto text-center px-4 ${contextId === 'cartas_fisicas_otro' ? 'mb-4' : 'mb-10'}`}>
+                        <div className="w-full max-w-3xl mx-auto text-center px-4 mb-5">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">¿Quiénes os sentáis a la mesa?</h2>
                         </div>
                         <div className="w-full max-w-[22rem] mb-2 floating">
@@ -3760,6 +3760,7 @@
     </script>
 </body>
 </html>
+
 
 
 
