@@ -1530,6 +1530,38 @@
             const [deliveryMode, setDeliveryMode] = useState('direccion');
             const [errs, setErrs] = useState([]);
             const [showModal, setShowModal] = useState(false);
+
+            const getDeliveryHelperText = (text) => {
+                if (!text) return null;
+                const txt = text.toLowerCase();
+                const zipMatch = text.match(/\b(0[1-9]|[1-4]\d|5[0-2])\d{3}\b/);
+                
+                let isBalears = txt.includes('balear') || txt.includes('mallorca') || txt.includes('menorca') || txt.includes('ibiza') || txt.includes('eivissa') || txt.includes('formentera') || txt.includes('ceuta') || txt.includes('melilla');
+                let isCanarias = txt.includes('canarias') || txt.includes('tenerife') || txt.includes('palmas') || txt.includes('lanzarote') || txt.includes('fuerteventura') || txt.includes('gomera') || txt.includes('hierro');
+                let isBcn = txt.includes('barcelona') && !txt.includes('provincia');
+
+                if (zipMatch) {
+                    const zip = zipMatch[0];
+                    const prefix = zip.substring(0, 2);
+                    if (prefix === '07' || prefix === '51' || prefix === '52') { isBalears = true; isBcn = false; isCanarias = false; }
+                    if (prefix === '35' || prefix === '38') { isCanarias = true; isBcn = false; isBalears = false; }
+                    if (prefix === '08') {
+                        const num = parseInt(zip, 10);
+                        if (num >= 8001 && num <= 8042) { isBcn = true; isBalears = false; isCanarias = false; }
+                        else { isBcn = false; }
+                    }
+                }
+
+                if (isBalears) {
+                    return "Entrega en 3-5 días laborables con +3€ de suplemento de envío. Los pedidos hechos a partir de las 12:00h salen al día siguiente.";
+                } else if (isCanarias) {
+                    return "Entrega en 3-5 días laborables con +6€ de suplemento de envío. Los pedidos hechos a partir de las 12:00h salen al día siguiente.";
+                } else if (isBcn) {
+                    return "Entrega gratis inmediata de 4h o 48h incluidos festivos. La rapidez va en función de la hora de tu cena. Los pedidos hechos a partir de las 19.00 se preparan a las 8.00 del día siguiente";
+                }
+                
+                return "Entrega gratis en 24-48h laborables. Los pedidos hechos a partir de las 12.00h salen al día siguiente";
+            };
             const errorTimeoutRef = useRef(null);
             const shakeTimeoutRef = useRef(null);
             
@@ -3769,6 +3801,7 @@
     </script>
 </body>
 </html>
+
 
 
 
