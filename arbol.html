@@ -3635,7 +3635,7 @@
                     {phase !== 'intro' && (
                         <GlobalHeader 
                             progress={getProgress()} 
-                            onBack={() => { if (globalBackRef.current) globalBackRef.current(); else goBackPhase(); }} 
+                            onBack={(phase === 'format' && treeStates.format.history.length === 0) ? null : () => { if (globalBackRef.current) globalBackRef.current(); else goBackPhase(); }} 
                             animateIn={phase === 'format' && treeStates.format.history.length === 0 && !window.__headerAnimated} 
                             overrideSubtitle={calculateGlobalSubtitle()} 
                             isCheckout={phase === 'checkout'}
@@ -3765,6 +3765,7 @@
     </script>
 </body>
 </html>
+
 
 
 
