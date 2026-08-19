@@ -1533,8 +1533,10 @@
                                     </div>
                                     <div className="flex flex-col w-full">
                                         <span className="font-semibold text-gray-900">{mainText}</span>
-                                        {secText && (
+                                        {secText ? (
                                             <span className="text-xs text-gray-500 leading-tight mt-0.5">{secText}</span>
+                                        ) : (
+                                            <span className="text-xs text-red-500 leading-tight mt-0.5">RAW: {p.description}</span>
                                         )}
                                     </div>
                                 </li>
@@ -3891,6 +3893,7 @@
     </script>
 </body>
 </html>
+
 
 
 
