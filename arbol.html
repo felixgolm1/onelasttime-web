@@ -1214,7 +1214,7 @@
                 };
 
                 if (searchType === 'city') {
-                    request.types = ['(cities)'];
+                    request.types = /^\d/.test(inputValue) ? ['(regions)'] : ['(cities)'];
                 } else if (searchType === 'restaurant') {
                     request.types = ['restaurant'];
                 } else if (searchType === 'post_office') {
@@ -3891,6 +3891,7 @@
     </script>
 </body>
 </html>
+
 
 
 
