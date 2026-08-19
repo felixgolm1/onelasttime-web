@@ -1278,34 +1278,34 @@
                 
                 const fallbackText = pred.description.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim().replace(/^(\d{5})\s+(.*)/, '$1 | $2');
                 
-                if (searchType === 'address') {
-                    const dummyElement = document.createElement('div');
+                const dummyElement = document.createElement('div');
                     const placesService = new window.google.maps.places.PlacesService(dummyElement);
                     placesService.getDetails({ placeId: pred.place_id, fields: ['address_components'] }, (place, status) => {
                         if (status === window.google.maps.places.PlacesServiceStatus.OK && place.address_components) {
-                            let route = '', street_number = '', postal_code = '', locality = '';
+                            let route = '', street_number = '', postal_code = '', locality = '', admin1 = '', admin2 = '';
                             place.address_components.forEach(c => {
                                 if (c.types.includes('route')) route = c.long_name;
                                 if (c.types.includes('street_number')) street_number = c.long_name;
                                 if (c.types.includes('postal_code')) postal_code = c.long_name;
                                 if (c.types.includes('locality')) locality = c.long_name;
-                                if (c.types.includes('administrative_area_level_1')) window.__tempAdmin1 = c.long_name;
-                                if (c.types.includes('administrative_area_level_2')) window.__tempAdmin2 = c.long_name;
+                                if (c.types.includes('administrative_area_level_1')) admin1 = c.long_name;
+                                if (c.types.includes('administrative_area_level_2')) admin2 = c.long_name;
                             });
                             
-                            const streetPart = route + (street_number ? ' ' + street_number : '');
-                            const formatted = [streetPart, postal_code, locality].filter(Boolean).join(', ');
+                            if (searchType === 'address') {
+                                const streetPart = route + (street_number ? ' ' + street_number : '');
+                                const formatted = [streetPart, postal_code, locality].filter(Boolean).join(', ');
+                                onChange(formatted || fallbackText);
+                            } else {
+                                onChange(fallbackText);
+                            }
                             
-                            onChange(formatted || fallbackText);
-                            if (onPlaceSelect) onPlaceSelect({ locality, admin1: window.__tempAdmin1, admin2: window.__tempAdmin2, postal_code });
+                            if (onPlaceSelect) onPlaceSelect({ locality, admin1, admin2, postal_code });
                         } else {
                             onChange(fallbackText);
                             if (onPlaceSelect) onPlaceSelect(null);
                         }
                     });
-                } else {
-                    onChange(fallbackText);
-                }
             };
 
             useEffect(() => {
@@ -1531,24 +1531,48 @@
             const [errs, setErrs] = useState([]);
             const [showModal, setShowModal] = useState(false);
 
-            const getDeliveryHelperText = (text) => {
+            const getDeliveryHelperText = (text, details) => {
                 if (!text) return null;
-                const txt = text.toLowerCase();
-                const zipMatch = text.match(/\b(0[1-9]|[1-4]\d|5[0-2])\d{3}\b/);
                 
-                let isBalears = txt.includes('balear') || txt.includes('mallorca') || txt.includes('menorca') || txt.includes('ibiza') || txt.includes('eivissa') || txt.includes('formentera') || txt.includes('ceuta') || txt.includes('melilla');
-                let isCanarias = txt.includes('canarias') || txt.includes('tenerife') || txt.includes('palmas') || txt.includes('lanzarote') || txt.includes('fuerteventura') || txt.includes('gomera') || txt.includes('hierro');
-                let isBcn = txt.includes('barcelona') && !txt.includes('provincia');
+                let isBalears = false;
+                let isCanarias = false;
+                let isBcn = false;
 
-                if (zipMatch) {
-                    const zip = zipMatch[0];
-                    const prefix = zip.substring(0, 2);
-                    if (prefix === '07' || prefix === '51' || prefix === '52') { isBalears = true; isBcn = false; isCanarias = false; }
-                    if (prefix === '35' || prefix === '38') { isCanarias = true; isBcn = false; isBalears = false; }
-                    if (prefix === '08') {
-                        const num = parseInt(zip, 10);
-                        if (num >= 8001 && num <= 8042) { isBcn = true; isBalears = false; isCanarias = false; }
-                        else { isBcn = false; }
+                if (details) {
+                    const admin1 = (details.admin1 || '').toLowerCase();
+                    const admin2 = (details.admin2 || '').toLowerCase();
+                    const zip = details.postal_code || '';
+                    
+                    if (admin1.includes('canarias') || admin2.includes('palmas') || admin2.includes('tenerife')) {
+                        isCanarias = true;
+                    } else if (admin1.includes('balears') || admin1.includes('baleares') || admin1.includes('ceuta') || admin1.includes('melilla')) {
+                        isBalears = true;
+                    } else if (admin2.includes('barcelona') || admin1.includes('catalunya')) {
+                        if (zip && zip.startsWith('08')) {
+                            const num = parseInt(zip, 10);
+                            if (num >= 8001 && num <= 8042) isBcn = true;
+                        } else if (details.locality && details.locality.toLowerCase() === 'barcelona') {
+                            isBcn = true;
+                        }
+                    }
+                } else {
+                    const txt = text.toLowerCase();
+                    const zipMatch = text.match(/\b(0[1-9]|[1-4]\d|5[0-2])\d{3}\b/);
+                    
+                    isBalears = txt.includes('balear') || txt.includes('mallorca') || txt.includes('menorca') || txt.includes('ibiza') || txt.includes('eivissa') || txt.includes('formentera') || txt.includes('ceuta') || txt.includes('melilla');
+                    isCanarias = txt.includes('canarias') || txt.includes('tenerife') || txt.includes('palmas') || txt.includes('lanzarote') || txt.includes('fuerteventura') || txt.includes('gomera') || txt.includes('hierro');
+                    isBcn = txt.includes('barcelona') && !txt.includes('provincia');
+
+                    if (zipMatch) {
+                        const zip = zipMatch[0];
+                        const prefix = zip.substring(0, 2);
+                        if (prefix === '07' || prefix === '51' || prefix === '52') { isBalears = true; isBcn = false; isCanarias = false; }
+                        if (prefix === '35' || prefix === '38') { isCanarias = true; isBcn = false; isBalears = false; }
+                        if (prefix === '08') {
+                            const num = parseInt(zip, 10);
+                            if (num >= 8001 && num <= 8042) { isBcn = true; isBalears = false; isCanarias = false; }
+                            else { isBcn = false; }
+                        }
                     }
                 }
 
@@ -1777,13 +1801,14 @@
                                             ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida'].includes(f.id) ? ( <> <PlacesAutocompleteInput
                                                     value={form[f.id] || ''}
                                                     onChange={(val) => setForm({...form, [f.id]: val})}
+                                                    onPlaceSelect={(details) => setForm({...form, [`${f.id}_details`]: details})}
                                                     placeholder={f.placeholder}
                                                     className={inputClasses}
                                                     searchType={f.id === 'ciudad_restaurante' ? 'city' : f.id === 'restaurante' ? 'restaurant' : f.id === 'punto_recogida' ? 'post_office' : 'address'}
                                                     onError={() => setErrs(errs.filter(id => id !== f.id))}
                                                 />
-                                                {(f.id === 'direccion' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[f.id] && getDeliveryHelperText(form[f.id]) && (
-                                                    <p className="text-[12px] text-gray-400 font-medium mt-2 px-1 leading-tight text-left">{getDeliveryHelperText(form[f.id])}</p>
+                                                {(f.id === 'direccion' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[f.id] && getDeliveryHelperText(form[f.id], form[`${f.id}_details`]) && (
+                                                    <p className="text-[12px] text-gray-400 font-medium mt-2 px-1 leading-tight text-left">{getDeliveryHelperText(form[f.id], form[`${f.id}_details`])}</p>
                                                 )}
                                             </>
                                             ) : (
@@ -3801,6 +3826,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
