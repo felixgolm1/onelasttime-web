@@ -1082,6 +1082,7 @@
             const [showDropdown, setShowDropdown] = useState(false);
             const [isSelected, setIsSelected] = useState(!!value);
             const [highlightedIndex, setHighlightedIndex] = useState(-1);
+            const [notFound, setNotFound] = useState(false);
             const isSelectedRef = useRef(isSelected);
             const autocompleteService = useRef(null);
             const inputRef = useRef(null);
@@ -1187,17 +1188,21 @@
                                                 setShowDropdown(true);
                                             } else {
                                                 setPredictions([]);
+                                                setNotFound(true);
                                             }
                                         } else {
                                             setPredictions([]);
+                                            setNotFound(true);
                                         }
                                     });
                                 } else {
                                     setPredictions([]);
+                                    setNotFound(true);
                                 }
                             });
                         } else {
                             setPredictions([]);
+                            setNotFound(true);
                         }
                     });
                     return;
@@ -1248,12 +1253,14 @@
                 onChange(val);
                 setIsSelected(false);
                 setHighlightedIndex(-1);
+                setNotFound(false);
                 fetchPredictions(val);
                 if (onError) onError();
             };
 
             const handleSelect = (pred) => {
                 setHighlightedIndex(-1);
+                setNotFound(false);
                 if (searchType === 'post_office' && pred.types && (pred.types.includes('postal_code') || pred.types.includes('locality'))) {
                     const zipMatch = pred.description.match(/\b\d{5}\b/);
                     let zip = '';
@@ -1481,11 +1488,11 @@
                     {searchType === 'post_office' && !isSelected && (
                         <button
                             onClick={(e) => { e.preventDefault(); e.stopPropagation(); if (value && value.trim().length === 5) fetchPredictions(value); }}
-                            className={`absolute z-30 search-btn right-2 top-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full transition-all duration-300 flex items-center justify-center gap-1.5 ${value && value.trim().length === 5 && predictions.length > 0 ? 'bg-black text-white hover:scale-105 shadow-md' : 'bg-gray-200 text-gray-500'} cursor-pointer`}
+                            className={`absolute z-30 search-btn right-2 top-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full transition-all duration-300 flex items-center justify-center gap-1.5 ${notFound ? 'bg-red-500 text-white shadow-md' : (value && value.trim().length === 5 && predictions.length > 0 ? 'bg-black text-white hover:scale-105 shadow-md' : 'bg-gray-200 text-gray-500')} cursor-pointer`}
                             style={{ height: '34px' }}
                         >
-                            <span className="text-[11px] font-bold uppercase tracking-wider">Buscar</span>
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <span className="text-[11px] font-bold uppercase tracking-wider">{notFound ? 'NO EXISTE' : 'Buscar'}</span>
+                            {!notFound && <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>}
                         </button>
                     )}
                     
@@ -3880,6 +3887,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
