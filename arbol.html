@@ -1837,7 +1837,7 @@
                                         {f.type === 'text' && (
                                             ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida'].includes(f.id) ? ( <> <PlacesAutocompleteInput
                                                     value={form[f.id] || ''}
-                                                    onChange={(val) => setForm(prev => ({...prev, [f.id]: val}))}
+                                                    onChange={(val) => setForm(prev => ({...prev, [f.id]: val, [`${f.id}_details`]: null}))}
                                                     onPlaceSelect={(details) => setForm(prev => ({...prev, [`${f.id}_details`]: details}))}
                                                     placeholder={f.placeholder}
                                                     className={inputClasses}
@@ -3890,6 +3890,7 @@
     </script>
 </body>
 </html>
+
 
 
 
