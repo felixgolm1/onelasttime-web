@@ -1513,6 +1513,7 @@
             const [deliveryMode, setDeliveryMode] = useState('direccion');
             const [errs, setErrs] = useState([]);
             const [showModal, setShowModal] = useState(false);
+            const [showCrossSellModal, setShowCrossSellModal] = useState(false);
 
             const getDeliveryHelperText = (text, details) => {
                 if (!text) return null;
@@ -1800,9 +1801,15 @@
                                                     onError={() => setErrs(errs.filter(id => id !== f.id))}
                                                 />
                                                 {(f.id === 'direccion' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[`${f.id}_details`] && getDeliveryHelperText(form[f.id], form[`${f.id}_details`]) && (
-                                                    <p className="text-[12px] text-[#CCFF00] font-medium mt-2 px-1 leading-tight text-center">
-                                                        {getDeliveryHelperText(form[f.id], form[`${f.id}_details`])} <span onClick={() => { if (onSwitchToDigital) onSwitchToDigital(form); }} className="bg-[#CCFF00] text-black px-1 font-bold cursor-pointer hover:opacity-80 transition-opacity ">¿Tu cena es antes? Obtén la versión digital en 10min pinchando aquí</span>
-                                                    </p>
+                                                    <div className="flex flex-col items-center justify-center mt-2">
+                                                        <p className="text-[12px] text-[#CCFF00] font-medium px-1 leading-tight text-center">
+                                                            {getDeliveryHelperText(form[f.id], form[`${f.id}_details`])}
+                                                        </p>
+                                                        <button type="button" onClick={() => setShowCrossSellModal(true)} className="mt-2.5 flex items-center justify-center gap-1.5 px-3 py-1 bg-transparent text-[#CCFF00] text-[10px] md:text-[11px] font-bold uppercase tracking-wider rounded-full border border-[#CCFF00] hover:bg-[#CCFF00] hover:text-black transition-colors cursor-pointer active:scale-95">
+                                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="12" height="12" rx="2"></rect><path d="M15 6h4a2 2 0 0 1 2 2v4l-3 3h-3V6Z"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                                                            ¿Tu cena es antes y no llegamos?
+                                                        </button>
+                                                    </div>
                                                 )}
                                             </>
                                             ) : (
@@ -2043,6 +2050,28 @@
                                 <div className="w-full flex flex-col gap-3">
                                     <button type="button" onClick={() => setShowModal(false)} className="btn-black w-full uppercase text-sm tracking-wider">Seguir con las cartas físicas</button>
                                 </div>
+                            </div>
+                        </div>
+                    )}
+                    {showCrossSellModal && (
+                        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 pt-24 sm:p-6 sm:pt-28 bg-black/70 backdrop-blur-sm fade-in" onClick={() => setShowCrossSellModal(false)}>
+                            <div className="relative w-full max-w-sm flex flex-col items-center bg-white rounded-[1.25rem] p-6 shadow-2xl max-h-[70vh] overflow-y-auto custom-scrollbar" onClick={(e) => e.stopPropagation()}>
+                                <button type="button" onClick={() => setShowCrossSellModal(false)} className="absolute top-3 right-3 text-black hover:text-gray-600 p-1.5 transition-colors z-10 bg-gray-100 rounded-full">
+                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                                </button>
+                                
+                                <div className="flex flex-col items-center justify-center mb-4 mt-2 text-center">
+                                    <span className="font-black text-black text-xl md:text-2xl uppercase tracking-tight">¿Tu cena es antes?</span>
+                                    <span className="font-bold text-gray-600 text-sm md:text-base leading-tight mt-1">Obtén las digitales en 10min</span>
+                                </div>
+                                <p className="text-xs md:text-sm font-medium leading-relaxed text-black font-inter text-center px-1 mb-6">
+                                    <span className="font-bold bg-black text-[#CCFF00] px-1 rounded">Puedes cambiar a la versión digital</span> de las cartas <span className="font-bold bg-black text-[#CCFF00] px-1 rounded">y tenerlas en tu móvil en solo 10 minutos</span> pinchando en el siguiente botón.
+                                </p>
+                                <button type="button" onClick={() => {
+                                    setShowCrossSellModal(false);
+                                    if (onSwitchToDigital) onSwitchToDigital(form);
+                                }} className="btn-black !bg-[#CCFF00] !text-black w-full text-sm md:text-base mt-1 border border-black shadow-sm mb-4 hover:!bg-[#b3e600]">Cambiar a cartas digitales</button>
+                                <button type="button" onClick={() => setShowCrossSellModal(false)} className="text-gray-500 hover:text-black font-bold text-sm underline decoration-gray-300 hover:decoration-black transition-all">Seguir con las físicas</button>
                             </div>
                         </div>
                     )}
@@ -3820,6 +3849,11 @@
     </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
