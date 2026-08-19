@@ -1249,7 +1249,10 @@
             };
 
             const handleChange = (e) => {
-                const val = e.target.value;
+                let val = e.target.value;
+                if (searchType === 'post_office') {
+                    val = val.replace(/\D/g, '');
+                }
                 onChange(val);
                 setIsSelected(false);
                 setHighlightedIndex(-1);
@@ -1454,7 +1457,7 @@
                 <div ref={containerRef} className="relative w-full hover-group">
                     <input 
                         ref={inputRef}
-                        type="text" maxLength={searchType === 'post_office' ? 5 : undefined} value={value} 
+                        type="text" inputMode={searchType === 'post_office' ? 'numeric' : undefined} maxLength={searchType === 'post_office' ? 5 : undefined} value={value} 
                         onChange={handleChange} 
                         placeholder={placeholder} 
                         className={`${className} ${searchType === 'post_office' && !isSelected ? 'pr-[100px]' : ''}`} 
@@ -3887,6 +3890,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
