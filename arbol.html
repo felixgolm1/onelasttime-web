@@ -469,6 +469,7 @@
         const dbLogistics = [
             { id: 'fecha', label: 'Día y hora de la cena', type: 'datetime-local', req: true, conditions: ['siempre'] },
             { id: 'ciudad_restaurante', label: 'Ciudad del restaurante', type: 'text', placeholder: 'Nombre o código postal', req: true, conditions: ['cartas_fisicas_reserva_hecha', 'delivery_restaurante'] },
+            { id: 'ciudad_entrega', label: 'Ciudad de entrega', type: 'text', placeholder: 'Nombre o código postal', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro', 'cartas_fisicas_reserva_no_hecha'] },
             { id: 'direccion', label: 'Dirección de entrega', type: 'text', placeholder: 'Ej. Calle Balmes 134, 08008, Barcelona', req: true, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro', 'cartas_fisicas_reserva_no_hecha'] },
             { id: 'info_adicional_direccion', label: 'Piso, puerta, escalera (Opcional)', type: 'text', placeholder: 'Ej. Piso 2, Puerta 1', req: false, conditions: ['cartas_fisicas_en_mi_casa_o_en_la_de_alguien', 'cartas_fisicas_otro', 'cartas_fisicas_reserva_no_hecha'] },
             { id: 'punto_recogida', label: 'Pon una dirección y te contactaremos con los puntos de recogida más cercanos para que escojas uno', type: 'text', placeholder: '', req: true, conditions: ['delivery_punto'] },
@@ -1666,11 +1667,11 @@
 
                 if (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_reserva_no_hecha') {
                     if (deliveryMode === 'punto') {
-                        f = f.filter(x => x.id !== 'direccion' && x.id !== 'info_adicional_direccion' && x.id !== 'notas_entrega');
+                        f = f.filter(x => x.id !== 'direccion' && x.id !== 'info_adicional_direccion' && x.id !== 'notas_entrega' && x.id !== 'ciudad_entrega');
                         const puntoField = { ...dbLogistics.find(x => x.id === 'punto_recogida'), label: 'INTRODUCE TU CÓDIGO POSTAL PARA SELECCIONAR UN PUNTO DE RECOGIDA', placeholder: 'Ej. 08009' };
                         f.push(puntoField);
                     } else if (deliveryMode === 'restaurante') {
-                        f = f.filter(x => x.id !== 'direccion' && x.id !== 'info_adicional_direccion' && x.id !== 'notas_entrega');
+                        f = f.filter(x => x.id !== 'direccion' && x.id !== 'info_adicional_direccion' && x.id !== 'notas_entrega' && x.id !== 'ciudad_entrega');
                         f.push(dbLogistics.find(x => x.id === 'ciudad_restaurante'));
                         f.push(dbLogistics.find(x => x.id === 'restaurante'));
                     }
@@ -1836,16 +1837,16 @@
                                             />
                                         )}
                                         {f.type === 'text' && (
-                                            ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida'].includes(f.id) ? ( <> <PlacesAutocompleteInput
+                                            ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida', 'ciudad_entrega'].includes(f.id) ? ( <> <PlacesAutocompleteInput
                                                     value={form[f.id] || ''}
                                                     onChange={(val) => setForm(prev => ({...prev, [f.id]: val, [`${f.id}_details`]: null}))}
                                                     onPlaceSelect={(details) => setForm(prev => ({...prev, [`${f.id}_details`]: details}))}
                                                     placeholder={f.placeholder}
                                                     className={inputClasses}
-                                                    searchType={f.id === 'ciudad_restaurante' ? 'city' : f.id === 'restaurante' ? 'restaurant' : f.id === 'punto_recogida' ? 'post_office' : 'address'}
+                                                    searchType={(f.id === 'ciudad_restaurante' || f.id === 'ciudad_entrega') ? 'city' : f.id === 'restaurante' ? 'restaurant' : f.id === 'punto_recogida' ? 'post_office' : 'address'}
                                                     onError={() => setErrs(errs.filter(id => id !== f.id))}
                                                 />
-                                                {(f.id === 'direccion' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[`${f.id}_details`] && getDeliveryHelperText(form[f.id], form[`${f.id}_details`]) && (
+                                                {(f.id === 'ciudad_entrega' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[`${f.id}_details`] && getDeliveryHelperText(form[f.id], form[`${f.id}_details`]) && (
                                                     <div className="flex flex-col items-center justify-center mt-2">
                                                         <p className="text-[12px] text-[#CCFF00] font-medium px-1 leading-tight text-center">
                                                             {getDeliveryHelperText(form[f.id], form[`${f.id}_details`])}
@@ -3792,7 +3793,7 @@
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
                             } else {
-                                const isBcn = isBarcelonaCity(data.direccion || data.punto_recogida || data.ciudad_restaurante);
+                                const isBcn = isBarcelonaCity(data.ciudad_entrega || data.direccion || data.punto_recogida || data.ciudad_restaurante);
                                 const reqHours = isBcn ? 4 : 48;
                                 
                                 const eventDate = new Date(data.fecha);
@@ -3891,6 +3892,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
