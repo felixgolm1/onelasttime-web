@@ -1809,7 +1809,7 @@
                                                 />
                                                 {(f.id === 'direccion' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[`${f.id}_details`] && getDeliveryHelperText(form[f.id], form[`${f.id}_details`]) && (
                                                     <p className="text-[12px] text-[#CCFF00] font-medium mt-2 px-1 leading-tight text-center">
-                                                        {getDeliveryHelperText(form[f.id], form[`${f.id}_details`])} <span onClick={() => { if (onSwitchToDigital) onSwitchToDigital(form); }} className="bg-[#CCFF00] text-black px-1 font-bold cursor-pointer hover:opacity-80 transition-opacity ">¿Tu cena es antes? Obtén la versión digital en 10min</span>
+                                                        {getDeliveryHelperText(form[f.id], form[`${f.id}_details`])} <span onClick={() => { if (onSwitchToDigital) onSwitchToDigital(form); }} className="bg-[#CCFF00] text-black px-1 font-bold cursor-pointer hover:opacity-80 transition-opacity ">¿Tu cena es antes? Obtén la versión digital en 10min pinchando aquí</span>
                                                     </p>
                                                 )}
                                             </>
@@ -3828,6 +3828,7 @@
     </script>
 </body>
 </html>
+
 
 
 
