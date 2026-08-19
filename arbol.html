@@ -2014,7 +2014,7 @@
                                             const timePart = form[f.id] && form[f.id].includes('T') ? form[f.id].split('T')[1].substring(0, 5) : '';
                                             const minDate = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0];
                                             const cityField = form.ciudad_entrega || form.direccion || form.punto_recogida || form.ciudad_restaurante;
-                                            const hasCity = !!cityField;
+                                            const hasCity = !!cityField && !!(form.ciudad_entrega_details || form.direccion_details || form.punto_recogida_details || form.ciudad_restaurante_details);
                                             let helperMessage = null;
                                             if (hasCity) {
                                                 const cityFieldDetails = form.ciudad_entrega_details || form.direccion_details || form.punto_recogida_details || form.ciudad_restaurante_details;
@@ -4054,6 +4054,7 @@
     </script>
 </body>
 </html>
+
 
 
 
