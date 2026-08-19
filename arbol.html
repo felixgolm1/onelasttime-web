@@ -1078,7 +1078,84 @@
             return false;
         };
 
-        const PlacesAutocompleteInput = ({ value, onChange, placeholder, className, searchType, onError, onPlaceSelect }) => {
+        
+        const calculateEarliestDelivery = (dateNow, deliveryMode, cityStr, placeDetails) => {
+            let isBcn = isBarcelonaCity(cityStr);
+            let zone = 'peninsula';
+            if (placeDetails) {
+                const admin1 = (placeDetails.admin1 || '').toLowerCase();
+                const admin2 = (placeDetails.admin2 || '').toLowerCase();
+                if (admin1.includes('canarias') || admin2.includes('palmas') || admin2.includes('tenerife')) {
+                    zone = 'canarias';
+                    isBcn = false;
+                } else if (admin1.includes('balears') || admin1.includes('baleares') || admin1.includes('ceuta') || admin1.includes('melilla')) {
+                    zone = 'baleares';
+                    isBcn = false;
+                }
+            }
+
+            let transitDays = 0;
+            let is4h = false;
+
+            if (isBcn && deliveryMode !== 'punto') {
+                is4h = true;
+            } else if (zone === 'canarias' || zone === 'baleares') {
+                transitDays = 5;
+            } else {
+                transitDays = 2; // 48h = 2 business days
+            }
+
+            const now = new Date(dateNow);
+            let earliest = new Date(now);
+
+            if (is4h) {
+                const currentHour = now.getHours();
+                if (currentHour >= 19 || currentHour < 8) {
+                    if (currentHour >= 19) earliest.setDate(earliest.getDate() + 1);
+                    earliest.setHours(12, 0, 0, 0);
+                } else {
+                    earliest.setHours(earliest.getHours() + 4);
+                }
+            } else {
+                const currentHour = now.getHours();
+                let dispatchDate = new Date(now);
+                dispatchDate.setHours(16, 0, 0, 0);
+
+                let addDaysForDispatch = 0;
+                if (currentHour >= 12) addDaysForDispatch = 1;
+
+                while (addDaysForDispatch > 0) {
+                    dispatchDate.setDate(dispatchDate.getDate() + 1);
+                    if (dispatchDate.getDay() !== 0 && dispatchDate.getDay() !== 6) addDaysForDispatch--;
+                }
+                
+                if (dispatchDate.getDay() === 0) dispatchDate.setDate(dispatchDate.getDate() + 1);
+                if (dispatchDate.getDay() === 6) dispatchDate.setDate(dispatchDate.getDate() + 2);
+
+                let arrivalDate = new Date(dispatchDate);
+                let daysToAdd = transitDays;
+                while (daysToAdd > 0) {
+                    arrivalDate.setDate(arrivalDate.getDate() + 1);
+                    if (arrivalDate.getDay() !== 0 && arrivalDate.getDay() !== 6) daysToAdd--;
+                }
+
+                arrivalDate.setHours(20, 0, 0, 0);
+                earliest = arrivalDate;
+            }
+            return earliest;
+        };
+
+        const formatEarliestDate = (earliestDate) => {
+            const dayName = earliestDate.toLocaleDateString('es-ES', { weekday: 'long' });
+            const dayNum = earliestDate.getDate();
+            const monthName = earliestDate.toLocaleDateString('es-ES', { month: 'long' });
+            const hours = earliestDate.getHours();
+            const minutes = earliestDate.getMinutes();
+            const aLaLas = (hours === 1 || hours === 13) ? 'a la' : 'a las';
+            const hrStr = hours.toString().padStart(2, '0');
+            const minStr = minutes.toString().padStart(2, '0');
+            return 'el ' + dayName + ' ' + dayNum + ' de ' + monthName + ' ' + aLaLas + ' ' + hrStr + '.' + minStr + 'h';
+        };const PlacesAutocompleteInput = ({ value, onChange, placeholder, className, searchType, onError, onPlaceSelect }) => {
             const [predictions, setPredictions] = useState([]);
             const [showDropdown, setShowDropdown] = useState(false);
             const [isSelected, setIsSelected] = useState(!!value);
@@ -1561,7 +1638,85 @@
             const [showModal, setShowModal] = useState(false);
             const [showCrossSellModal, setShowCrossSellModal] = useState(false);
 
-            const getDeliveryHelperText = (text, details) => {
+            const calculateEarliestDelivery = (dateNow, deliveryMode, cityStr, placeDetails) => {
+            let isBcn = isBarcelonaCity(cityStr);
+            let zone = 'peninsula';
+            if (placeDetails) {
+                const admin1 = (placeDetails.admin1 || '').toLowerCase();
+                const admin2 = (placeDetails.admin2 || '').toLowerCase();
+                if (admin1.includes('canarias') || admin2.includes('palmas') || admin2.includes('tenerife')) {
+                    zone = 'canarias';
+                    isBcn = false;
+                } else if (admin1.includes('balears') || admin1.includes('baleares') || admin1.includes('ceuta') || admin1.includes('melilla')) {
+                    zone = 'baleares';
+                    isBcn = false;
+                }
+            }
+
+            let transitDays = 0;
+            let is4h = false;
+
+            if (isBcn && deliveryMode !== 'punto') {
+                is4h = true;
+            } else if (zone === 'canarias' || zone === 'baleares') {
+                transitDays = 5;
+            } else {
+                transitDays = 2; // 48h = 2 business days
+            }
+
+            const now = new Date(dateNow);
+            let earliest = new Date(now);
+
+            if (is4h) {
+                const currentHour = now.getHours();
+                if (currentHour >= 19 || currentHour < 8) {
+                    if (currentHour >= 19) earliest.setDate(earliest.getDate() + 1);
+                    earliest.setHours(12, 0, 0, 0);
+                } else {
+                    earliest.setHours(earliest.getHours() + 4);
+                }
+            } else {
+                const currentHour = now.getHours();
+                let dispatchDate = new Date(now);
+                dispatchDate.setHours(16, 0, 0, 0);
+
+                let addDaysForDispatch = 0;
+                if (currentHour >= 12) addDaysForDispatch = 1;
+
+                while (addDaysForDispatch > 0) {
+                    dispatchDate.setDate(dispatchDate.getDate() + 1);
+                    if (dispatchDate.getDay() !== 0 && dispatchDate.getDay() !== 6) addDaysForDispatch--;
+                }
+                
+                if (dispatchDate.getDay() === 0) dispatchDate.setDate(dispatchDate.getDate() + 1);
+                if (dispatchDate.getDay() === 6) dispatchDate.setDate(dispatchDate.getDate() + 2);
+
+                let arrivalDate = new Date(dispatchDate);
+                let daysToAdd = transitDays;
+                while (daysToAdd > 0) {
+                    arrivalDate.setDate(arrivalDate.getDate() + 1);
+                    if (arrivalDate.getDay() !== 0 && arrivalDate.getDay() !== 6) daysToAdd--;
+                }
+
+                arrivalDate.setHours(20, 0, 0, 0);
+                earliest = arrivalDate;
+            }
+            return earliest;
+        };
+
+        const formatEarliestDate = (earliestDate) => {
+            const dayName = earliestDate.toLocaleDateString('es-ES', { weekday: 'long' });
+            const dayNum = earliestDate.getDate();
+            const monthName = earliestDate.toLocaleDateString('es-ES', { month: 'long' });
+            const hours = earliestDate.getHours();
+            const minutes = earliestDate.getMinutes();
+            const aLaLas = (hours === 1 || hours === 13) ? 'a la' : 'a las';
+            const hrStr = hours.toString().padStart(2, '0');
+            const minStr = minutes.toString().padStart(2, '0');
+            return 'el ' + dayName + ' ' + dayNum + ' de ' + monthName + ' ' + aLaLas + ' ' + hrStr + '.' + minStr + 'h';
+        };;
+
+        const getDeliveryHelperText = (text, details) => {
                 if (!text) return null;
                 
                 let isBalears = false;
@@ -1862,18 +2017,9 @@
                                             const hasCity = !!cityField;
                                             let helperMessage = null;
                                             if (hasCity) {
-                                                const isBcn = isBarcelonaCity(cityField);
-                                                const reqHours = isBcn ? 4 : 48;
-                                                const earliestDate = new Date(Date.now() + reqHours * 60 * 60 * 1000);
-                                                const dayName = earliestDate.toLocaleDateString('es-ES', { weekday: 'long' });
-                                                const dayNum = earliestDate.getDate();
-                                                const monthName = earliestDate.toLocaleDateString('es-ES', { month: 'long' });
-                                                const formattedDay = `${dayName} ${dayNum} de ${monthName}`;
-                                                const hours = earliestDate.getHours();
-                                                const minutes = earliestDate.getMinutes();
-                                                const aLaLas = (hours === 1 || hours === 13) ? 'a la' : 'a las';
-                                                const formattedTime = `${hours.toString().padStart(2, '0')}.${minutes.toString().padStart(2, '0')}h`;
-                                                helperMessage = `Para tu ciudad, la entrega más temprana posible es para el ${formattedDay} ${aLaLas} ${formattedTime}`;
+                                                const cityFieldDetails = form.ciudad_entrega_details || form.direccion_details || form.punto_recogida_details || form.ciudad_restaurante_details;
+                                                const earliestDate = calculateEarliestDelivery(new Date(), deliveryMode, cityField, cityFieldDetails);
+                                                helperMessage = "Para tu ciudad, la entrega más temprana posible es para " + formatEarliestDate(earliestDate);
                                             }
                                             return (
                                                 <>
@@ -2142,7 +2288,7 @@
             );
         };
 
-        const DeliveryErrorScreen = ({ isBcn, reqHours, onDigital, onChangeDate, progress, onBack }) => {
+        const DeliveryErrorScreen = ({ earliestDateStr, onDigital, onChangeDate, progress, onBack }) => {
             useEffect(() => {
                 document.body.style.overflow = 'hidden';
                 return () => {
@@ -2150,7 +2296,7 @@
                 };
             }, []);
 
-            const titleText = `Necesitamos ${reqHours}h de antelación para asegurar que las cartas físicas están en la mesa antes que tú`;
+            const titleText = 'Has puesto una fecha anterior a nuestro margen logístico. La entrega más temprana posible para tu zona es ' + earliestDateStr;
 
             return (
                 <div className="flex-1 flex flex-col items-center pt-28 px-4 relative bg-transparent pb-10 overflow-hidden">
@@ -3813,26 +3959,22 @@
                             if (globalData.formatId?.includes('digital')) {
                                 advanceTo('participants', {logistics: data});
                             } else {
-                                const isBcn = isBarcelonaCity(data.ciudad_entrega || data.direccion || data.punto_recogida || data.ciudad_restaurante);
-                                const reqHours = isBcn ? 4 : 48;
-                                
+                                const cityFieldDetails = data.ciudad_entrega_details || data.direccion_details || data.punto_recogida_details || data.ciudad_restaurante_details;
+                                const cityStr = data.ciudad_entrega || data.direccion || data.punto_recogida || data.ciudad_restaurante;
+                                const deliveryMode = globalData.deliveryMode || (data.restaurante ? 'restaurante' : (data.punto_recogida ? 'punto' : 'direccion'));
+                                const earliestDate = calculateEarliestDelivery(new Date(), deliveryMode, cityStr, cityFieldDetails);
                                 const eventDate = new Date(data.fecha);
-                                const now = new Date();
-                                const hoursDiff = (eventDate - now) / (1000 * 60 * 60);
-                                
-                                if (hoursDiff >= reqHours) {
+                                if (eventDate >= earliestDate) {
                                     advanceTo('contact_info', {logistics: data});
                                 } else {
-                                    advanceTo('delivery_error', {logistics: data, isBcn, reqHours});
+                                    advanceTo('delivery_error', {logistics: data, earliestDateStr: formatEarliestDate(earliestDate)});
                                 }
                             }
                         }} 
                         onBack={goBackPhase} />
                     }
                     
-                    {phase === 'delivery_error' && <DeliveryErrorScreen 
-                        isBcn={globalData.isBcn} 
-                        reqHours={globalData.reqHours} 
+                    {phase === 'delivery_error' && <DeliveryErrorScreen earliestDateStr={globalData.earliestDateStr} 
                         progress={getProgress()}
                         onDigital={() => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
                         onChangeDate={goBackPhase} 
@@ -3912,6 +4054,17 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
