@@ -1810,7 +1810,7 @@
                                                 {(f.id === 'direccion' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[`${f.id}_details`] && getDeliveryHelperText(form[f.id], form[`${f.id}_details`]) && (
                                                     <p className="text-[12px] text-[#CCFF00] font-medium mt-2 px-1 leading-tight text-center">
                                                         {getDeliveryHelperText(form[f.id], form[`${f.id}_details`])}
-                                                        <span className="block mt-1.5 text-gray-300">¿No llegamos? Obtén la versión digital en 10min <span className="underline cursor-pointer font-bold text-white" onClick={() => { if (onSwitchToDigital) onSwitchToDigital(form); }}>pinchando aquí</span></span>
+                                                        <span className="block mt-2 text-gray-300">¿No llegamos? <button type="button" onClick={() => { if (onSwitchToDigital) onSwitchToDigital(form); }} className="bg-white text-black px-2.5 py-0.5 rounded-full font-bold ml-1 active:scale-95 transition-transform inline-flex items-center justify-center">Obtén la versión digital en 10min</button></span>
                                                     </p>
                                                 )}
                                             </>
@@ -3829,6 +3829,7 @@
     </script>
 </body>
 </html>
+
 
 
 
