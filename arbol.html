@@ -1508,7 +1508,7 @@
                                     key={p.place_id} 
                                     onMouseDown={(e) => { e.preventDefault(); handleSelect(p); }}
                                     onMouseEnter={() => setHighlightedIndex(i)}
-                                    className={`px-4 py-3 text-sm text-gray-800 cursor-pointer flex items-center gap-3 transition-colors ${i !== predictions.length - 1 ? 'border-b border-gray-100' : ''} ${highlightedIndex === i ? 'bg-[#CCFF00]/20' : 'hover:bg-[#CCFF00]/10'}`}
+                                    className={`mx-2 my-1 px-3 py-2.5 rounded-xl text-sm text-gray-800 cursor-pointer flex items-center gap-3 transition-all ${highlightedIndex === i ? 'bg-[#ebffad]' : 'hover:bg-[#f4ffcc]'}`}
                                 >
                                     <div className="flex-shrink-0 text-gray-400">
                                         {searchType === 'restaurant' || searchType === 'post_office' ? (
@@ -3881,6 +3881,7 @@
     </script>
 </body>
 </html>
+
 
 
 
