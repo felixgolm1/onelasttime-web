@@ -1624,7 +1624,16 @@
             const fields = useMemo(() => {
                 let f = dbLogistics.filter(f => f.conditions.includes('siempre') || f.conditions.some(c => contextId?.includes(c))).map(x => ({...x}));
                 
-                if (contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_reserva_no_hecha') { const fechaField = f.find(x => x.id === 'fecha'); if (fechaField) { fechaField.label = '¿HASTA QUÉ DÍA Y HORA TE LAS PODEMOS ENTREGAR?'; } }
+                if (contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_reserva_no_hecha') { 
+                    const fechaField = f.find(x => x.id === 'fecha'); 
+                    if (fechaField) { 
+                        if (deliveryMode === 'restaurante') {
+                            fechaField.label = 'DÍA Y HORA DE LA CENA';
+                        } else {
+                            fechaField.label = '¿HASTA QUÉ DÍA Y HORA TE LAS PODEMOS ENTREGAR?'; 
+                        }
+                    } 
+                }
 
                 if (contextId === 'cartas_fisicas_en_mi_casa_o_en_la_de_alguien' || contextId === 'cartas_fisicas_otro' || contextId === 'cartas_fisicas_reserva_no_hecha') {
                     if (deliveryMode === 'punto') {
@@ -3828,6 +3837,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
