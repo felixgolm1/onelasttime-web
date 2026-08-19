@@ -1837,7 +1837,7 @@
                                             />
                                         )}
                                         {f.type === 'text' && (
-                                            ['ciudad_restaurante', 'restaurante', 'direccion', 'punto_recogida', 'ciudad_entrega'].includes(f.id) ? ( <> <PlacesAutocompleteInput
+                                            ['ciudad_restaurante', 'restaurante', 'punto_recogida', 'ciudad_entrega'].includes(f.id) ? ( <> <PlacesAutocompleteInput
                                                     value={form[f.id] || ''}
                                                     onChange={(val) => setForm(prev => ({...prev, [f.id]: val, [`${f.id}_details`]: null}))}
                                                     onPlaceSelect={(details) => setForm(prev => ({...prev, [`${f.id}_details`]: details}))}
@@ -3892,6 +3892,7 @@
     </script>
 </body>
 </html>
+
 
 
 
