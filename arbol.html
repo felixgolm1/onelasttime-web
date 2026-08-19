@@ -1470,16 +1470,17 @@
                         </button>
                     )}
                     
-                    {searchType === 'post_office' && value && value.trim().length === 5 ? (
-                        <div className={`absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden transition-all duration-500 ease-in-out origin-top ${showDropdown && predictions.length > 0 ? 'opacity-100 max-h-[350px] scale-y-100 border border-gray-100 pointer-events-auto' : 'opacity-0 max-h-0 scale-y-95 border-none pointer-events-none'}`}>
-                            <div ref={mapContainerRef} className="w-full h-[250px] bg-gray-100" />
+                    <div className={`absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden transition-all duration-500 ease-in-out origin-top ${showDropdown && predictions.length > 0 ? 'opacity-100 scale-y-100 border border-gray-100 pointer-events-auto' : 'opacity-0 scale-y-95 border-none pointer-events-none'} ${!showDropdown || predictions.length === 0 ? 'max-h-0' : (searchType === 'post_office' && value && value.trim().length === 5 ? 'max-h-[350px]' : 'max-h-60')}`}>
+                        {searchType === 'post_office' && value && value.trim().length === 5 ? (
+                            <div className="fade-in w-full transition-all duration-500">
+                                <div ref={mapContainerRef} className="w-full h-[250px] bg-gray-100" />
                             <div className="text-center py-2.5 text-[11px] text-[#ccff00] font-bold bg-black uppercase tracking-wider">
                                 Toca un punto para seleccionar tu oficina
                             </div>
-                        </div>
-                    ) : (
-                        <ul className={`absolute z-50 w-full bg-white mt-1 rounded-2xl shadow-xl overflow-hidden overflow-y-auto custom-scrollbar transition-all duration-500 ease-in-out origin-top ${showDropdown && predictions.length > 0 ? 'opacity-100 max-h-60 scale-y-100 border border-gray-100 pointer-events-auto' : 'opacity-0 max-h-0 scale-y-95 border-none pointer-events-none'}`}>
-                            {predictions.map((p, i) => {
+                            </div>
+                        ) : (
+                            <ul className="w-full overflow-y-auto custom-scrollbar fade-in max-h-60 transition-all duration-500">
+                                {predictions.map((p, i) => {
                                 const mainText = p.structured_formatting?.main_text || p.description.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim();
                                 const secText = p.structured_formatting?.secondary_text ? p.structured_formatting.secondary_text.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim() : '';
                                 return (
@@ -1508,8 +1509,9 @@
                                 </li>
                                 );
                             })}
-                        </ul>
-                    )}
+                            </ul>
+                        )}
+                    </div>
                 </div>
             );
         };
@@ -3861,6 +3863,7 @@
     </script>
 </body>
 </html>
+
 
 
 
