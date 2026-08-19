@@ -1510,8 +1510,9 @@
                         ) : (
                             <ul className="w-full overflow-y-auto custom-scrollbar fade-in max-h-60 transition-all duration-500">
                                 {predictions.map((p, i) => {
-                                const mainText = p.structured_formatting?.main_text || p.description.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim();
-                                const secText = p.structured_formatting?.secondary_text ? p.structured_formatting.secondary_text.replace(/,?\s*España/g, '').replace(/,?\s*Spain/g, '').trim() : '';
+                                const mainText = p.structured_formatting?.main_text || p.description.split(',')[0].trim();
+                                const secTextRaw = p.structured_formatting?.secondary_text || p.description.split(',').slice(1).join(',').trim();
+                                const secText = secTextRaw.replace(/,?\s*Espa.a/gi, '').replace(/,?\s*Spain/gi, '').trim();
                                 return (
                                 <li 
                                     key={p.place_id} 
@@ -3890,6 +3891,7 @@
     </script>
 </body>
 </html>
+
 
 
 
