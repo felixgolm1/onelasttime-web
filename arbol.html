@@ -1846,17 +1846,7 @@
                                                     searchType={(f.id === 'ciudad_restaurante' || f.id === 'ciudad_entrega') ? 'city' : f.id === 'restaurante' ? 'restaurant' : f.id === 'punto_recogida' ? 'post_office' : 'address'}
                                                     onError={() => setErrs(errs.filter(id => id !== f.id))}
                                                 />
-                                                {(f.id === 'ciudad_entrega' || f.id === 'punto_recogida' || f.id === 'ciudad_restaurante') && form[`${f.id}_details`] && getDeliveryHelperText(form[f.id], form[`${f.id}_details`]) && (
-                                                    <div className="flex flex-col items-center justify-center mt-2">
-                                                        <p className="text-[12px] text-[#CCFF00] font-medium px-1 leading-tight text-center">
-                                                            {getDeliveryHelperText(form[f.id], form[`${f.id}_details`])}
-                                                        </p>
-                                                        <button type="button" onClick={() => setShowCrossSellModal(true)} className="mt-2.5 flex items-center justify-center gap-1.5 px-3 py-1 bg-[#CCFF00] text-black text-[10px] md:text-[11px] font-bold uppercase tracking-wider rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer active:scale-95 shadow-sm">
-                                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                                            ¿Tu cena es antes y no llegamos?
-                                                        </button>
-                                                    </div>
-                                                )}
+                                                
                                             </>
                                             ) : (
                                                 <input type="text" placeholder={f.placeholder} className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />
@@ -3922,6 +3912,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
