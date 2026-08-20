@@ -2365,7 +2365,7 @@
             );
         };
 
-        const DeliveryErrorScreen = ({ earliestDateStr, onDigital, onChangeDate, progress, onBack }) => {
+        const DeliveryErrorScreen = ({ earliestDateStr, logisticsData, onDigital, onChangeDate, progress, onBack }) => {
             useEffect(() => {
                 document.body.style.overflow = 'hidden';
                 return () => {
@@ -2373,13 +2373,38 @@
                 };
             }, []);
 
+            let city = "tu zona";
+            let formattedDate = "la fecha indicada";
+            if (logisticsData) {
+                const cityFieldDetails = logisticsData.ciudad_entrega_details || logisticsData.direccion_details || logisticsData.punto_recogida_details || logisticsData.ciudad_restaurante_details;
+                const cityField = logisticsData.ciudad_entrega || logisticsData.direccion || logisticsData.punto_recogida || logisticsData.ciudad_restaurante;
+                if (cityFieldDetails && cityFieldDetails.locality) city = cityFieldDetails.locality;
+                else if (cityFieldDetails && cityFieldDetails.name) city = cityFieldDetails.name;
+                else if (typeof cityField === "string" && cityField.trim()) city = cityField.split(",")[0].trim();
+                
+                if (logisticsData.fecha) {
+                    const d = new Date(logisticsData.fecha);
+                    if (!isNaN(d.getTime())) {
+                        const dayName = d.toLocaleDateString("es-ES", { weekday: "long" });
+                        const dayNum = d.getDate();
+                        const monthName = d.toLocaleDateString("es-ES", { month: "long" });
+                        const timeStr = logisticsData.fecha.includes('T') ? logisticsData.fecha.split('T')[1].substring(0, 5) : '';
+                        formattedDate = `${dayName} ${dayNum} de ${monthName} a las ${timeStr}`;
+                    }
+                }
+            }
+
             return (
                 <div className="flex-1 flex flex-col items-center pt-28 px-4 relative bg-transparent pb-10 overflow-hidden">
                     
                     <div className="w-full max-w-4xl flex flex-col items-center mt-4 fade-in">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red max-w-3xl mx-auto">¡Uy! No llegamos a tiempo con el envío físico... pero tenemos soluciones.</h2>
-                            <p className="text-lg md:text-xl font-medium mt-5 text-[#CCFF00] max-w-2xl mx-auto drop-shadow-md">Lo más rápido que podemos entregar en tu zona es {earliestDateStr}. ¿Qué opción prefieres?</p>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red max-w-3xl mx-auto">
+                                ¡Uy! No llegamos el {formattedDate} a {city} con el envío físico, pero tenemos soluciones
+                            </h2>
+                            <p className="text-lg md:text-xl font-medium mt-5 text-[#CCFF00] max-w-2xl mx-auto drop-shadow-md">
+                                Lo más rápido que podemos entregar en tu zona es {earliestDateStr}. ¿Qué opción prefieres?
+                            </p>
                         </div>
                         
                         <div className="w-full flex flex-wrap gap-6 md:gap-10 justify-center items-center mt-4">
@@ -4050,7 +4075,9 @@
                         onBack={goBackPhase} />
                     }
                     
-                    {phase === 'delivery_error' && <DeliveryErrorScreen earliestDateStr={globalData.earliestDateStr} 
+                    {phase === 'delivery_error' && <DeliveryErrorScreen 
+                        earliestDateStr={globalData.earliestDateStr} 
+                        logisticsData={globalData.logistics}
                         progress={getProgress()}
                         onDigital={() => advanceTo('logistics', { formatId: globalData.formatId.replace('fisicas', 'digitales') })} 
                         onChangeDate={goBackPhase} 
