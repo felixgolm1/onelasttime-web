@@ -2407,14 +2407,14 @@
                     if (lower.match(/\b(35|38)\d{3}\b/) || lower.includes("canarias") || lower.includes("las palmas") || lower.includes("tenerife")) isCanarias = true;
                 }
                 
-                let extraCost = ". Envío gratis.";
+                let extraCost = " (envío gratis)";
                 if (isBalearesCeutaMelilla) {
-                    extraCost = mode === "punto" ? ". Gastos de envío: +2€." : ". Gastos de envío: +3€.";
+                    extraCost = mode === "punto" ? " (gastos de envío: +2€)" : " (gastos de envío: +3€)";
                 } else if (isCanarias) {
-                    extraCost = mode === "punto" ? ". Gastos de envío: +5€." : ". Gastos de envío: +6€.";
+                    extraCost = mode === "punto" ? " (gastos de envío: +5€)" : " (gastos de envío: +6€)";
                 }
 
-                fullSubtitle = `La entrega más temprana garantizada en ${cityName}${extraStr} es ${earliestDateStr}${extraCost} ¿Qué opción prefieres?`;
+                fullSubtitle = `La entrega más temprana garantizada en ${cityName}${extraStr} es ${earliestDateStr}${extraCost}. ¿Qué opción prefieres?`;
                 
                 if (logisticsData.fecha) {
                     const d = new Date(logisticsData.fecha);
