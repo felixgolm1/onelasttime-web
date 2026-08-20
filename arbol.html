@@ -2382,6 +2382,11 @@
                 else if (cityFieldDetails && cityFieldDetails.name) city = cityFieldDetails.name;
                 else if (typeof cityField === "string" && cityField.trim()) city = cityField.split(",")[0].trim();
                 
+                const mode = logisticsData.restaurante ? 'restaurante' : (logisticsData.punto_recogida ? 'punto' : 'direccion');
+                if (mode === 'punto' && city.toLowerCase().includes('barcelona')) {
+                    city += " en un punto de recogida";
+                }
+                
                 if (logisticsData.fecha) {
                     const d = new Date(logisticsData.fecha);
                     if (!isNaN(d.getTime())) {
