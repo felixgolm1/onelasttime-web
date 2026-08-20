@@ -1151,15 +1151,27 @@
         };
 
         const formatEarliestDate = (earliestDate) => {
-            const dayName = earliestDate.toLocaleDateString('es-ES', { weekday: 'long' });
+            const today = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+
+            const isToday = earliestDate.getDate() === today.getDate() && earliestDate.getMonth() === today.getMonth() && earliestDate.getFullYear() === today.getFullYear();
+            const isTomorrow = earliestDate.getDate() === tomorrow.getDate() && earliestDate.getMonth() === tomorrow.getMonth() && earliestDate.getFullYear() === tomorrow.getFullYear();
+
+            const dayName = earliestDate.toLocaleDateString("es-ES", { weekday: "long" });
             const dayNum = earliestDate.getDate();
-            const monthName = earliestDate.toLocaleDateString('es-ES', { month: 'long' });
+            const monthName = earliestDate.toLocaleDateString("es-ES", { month: "long" });
             const hours = earliestDate.getHours();
             const minutes = earliestDate.getMinutes();
-            const aLaLas = (hours === 1 || hours === 13) ? 'a la' : 'a las';
-            const hrStr = hours.toString().padStart(2, '0');
-            const minStr = minutes.toString().padStart(2, '0');
-            return 'el ' + dayName + ' ' + dayNum + ' de ' + monthName + ' ' + aLaLas + ' ' + hrStr + '.' + minStr + 'h';
+            const aLaLas = (hours === 1 || hours === 13) ? "a la" : "a las";
+            const hrStr = hours.toString().padStart(2, "0");
+            const minStr = minutes.toString().padStart(2, "0");
+            
+            let prefix = "el ";
+            if (isToday) prefix = "hoy ";
+            else if (isTomorrow) prefix = "mañana ";
+
+            return prefix + dayName + " " + dayNum + " de " + monthName + " " + aLaLas + " " + hrStr + "." + minStr + "h";
         };const PlacesAutocompleteInput = ({ value, onChange, placeholder, className, searchType, onError, onPlaceSelect }) => {
             const [predictions, setPredictions] = useState([]);
             const [showDropdown, setShowDropdown] = useState(false);
@@ -1710,15 +1722,27 @@
         };
 
         const formatEarliestDate = (earliestDate) => {
-            const dayName = earliestDate.toLocaleDateString('es-ES', { weekday: 'long' });
+            const today = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+
+            const isToday = earliestDate.getDate() === today.getDate() && earliestDate.getMonth() === today.getMonth() && earliestDate.getFullYear() === today.getFullYear();
+            const isTomorrow = earliestDate.getDate() === tomorrow.getDate() && earliestDate.getMonth() === tomorrow.getMonth() && earliestDate.getFullYear() === tomorrow.getFullYear();
+
+            const dayName = earliestDate.toLocaleDateString("es-ES", { weekday: "long" });
             const dayNum = earliestDate.getDate();
-            const monthName = earliestDate.toLocaleDateString('es-ES', { month: 'long' });
+            const monthName = earliestDate.toLocaleDateString("es-ES", { month: "long" });
             const hours = earliestDate.getHours();
             const minutes = earliestDate.getMinutes();
-            const aLaLas = (hours === 1 || hours === 13) ? 'a la' : 'a las';
-            const hrStr = hours.toString().padStart(2, '0');
-            const minStr = minutes.toString().padStart(2, '0');
-            return 'el ' + dayName + ' ' + dayNum + ' de ' + monthName + ' ' + aLaLas + ' ' + hrStr + '.' + minStr + 'h';
+            const aLaLas = (hours === 1 || hours === 13) ? "a la" : "a las";
+            const hrStr = hours.toString().padStart(2, "0");
+            const minStr = minutes.toString().padStart(2, "0");
+            
+            let prefix = "el ";
+            if (isToday) prefix = "hoy ";
+            else if (isTomorrow) prefix = "mañana ";
+
+            return prefix + dayName + " " + dayNum + " de " + monthName + " " + aLaLas + " " + hrStr + "." + minStr + "h";
         };;
 
         const getDeliveryHelperText = (text, details) => {
@@ -2025,7 +2049,12 @@
                                             if (hasCity) {
                                                 const cityFieldDetails = form.ciudad_entrega_details || form.direccion_details || form.punto_recogida_details || form.ciudad_restaurante_details;
                                                 const earliestDate = calculateEarliestDelivery(new Date(), deliveryMode, cityField, cityFieldDetails);
-                                                helperMessage = "Para tu ciudad, la entrega más temprana posible es para " + formatEarliestDate(earliestDate);
+                                                let cityName = "tu ciudad";
+                                                if (cityFieldDetails && cityFieldDetails.locality) cityName = cityFieldDetails.locality;
+                                                else if (cityFieldDetails && cityFieldDetails.name) cityName = cityFieldDetails.name;
+                                                else if (typeof cityField === "string" && cityField.trim()) cityName = cityField.split(",")[0].trim();
+                                                
+                                                helperMessage = "Para " + cityName + ", la entrega más temprana garantizada es para " + formatEarliestDate(earliestDate);
                                             }
                                             return (
                                                 <>
@@ -2302,7 +2331,7 @@
                 };
             }, []);
 
-            const titleText = 'Has puesto una fecha anterior a nuestro margen logístico. La entrega más temprana posible para tu zona es ' + earliestDateStr;
+            const titleText = 'Has puesto una fecha anterior a nuestro margen logístico. La entrega más temprana garantizada para tu zona es ' + earliestDateStr;
 
             return (
                 <div className="flex-1 flex flex-col items-center pt-28 px-4 relative bg-transparent pb-10 overflow-hidden">
@@ -4060,6 +4089,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
