@@ -4007,30 +4007,26 @@
             useEffect(() => { sessionStorage.setItem('dev_globalData', JSON.stringify(globalData)); }, [globalData]);
 
             const [transitionState, setTransitionState] = useState({ active: false, bgOpacity: 0, textOpacity: 0, text: '' });
-            const prevFormatRef = useRef(globalData.formatId);
-            useEffect(() => {
-                const prev = prevFormatRef.current;
-                const curr = globalData.formatId;
-                if (prev && curr && prev !== curr) {
-                    const text = curr.includes('digital') ? 'cartas digitales' : 'cartas físicas';
-                    setTransitionState({ active: true, bgOpacity: 1, textOpacity: 0, text });
-                }
-                prevFormatRef.current = curr;
-            }, [globalData.formatId]);
             
-            useEffect(() => {
-                let t0, t1, t2;
-                if (transitionState.active) {
-                    t0 = setTimeout(() => setTransitionState(s => ({ ...s, textOpacity: 1 })), 50);
-                    t1 = setTimeout(() => {
-                        setTransitionState(s => ({ ...s, bgOpacity: 0, textOpacity: 0 }));
-                    }, 2500); // Wait 2.5s before fading out (1s fade in + 1.5s visible)
-                    t2 = setTimeout(() => {
-                        setTransitionState({ active: false, bgOpacity: 0, textOpacity: 0, text: '' });
-                    }, 4500); // 2.5s + 2s fade out
-                }
-                return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); };
-            }, [transitionState.active]);
+            const handleFormatTransition = (newFormat, action) => {
+                const text = newFormat.includes('digital') ? 'cartas digitales' : 'cartas físicas';
+                setTransitionState({ active: true, bgOpacity: 0, textOpacity: 0, text });
+                
+                setTimeout(() => setTransitionState(s => ({ ...s, bgOpacity: 1 })), 50);
+                
+                setTimeout(() => {
+                    action(); 
+                    setTransitionState(s => ({ ...s, textOpacity: 1 })); 
+                }, 1550);
+                
+                setTimeout(() => {
+                    setTransitionState(s => ({ ...s, bgOpacity: 0, textOpacity: 0 }));
+                }, 4500); 
+                
+                setTimeout(() => {
+                    setTransitionState({ active: false, bgOpacity: 0, textOpacity: 0, text: '' });
+                }, 6600); 
+            };
 
             const getProgress = () => {
                 if (phase === 'intro') return 5;
@@ -4047,34 +4043,61 @@
                 return 0;
             };
 
-            const advanceTo = (newPhase, dataUpdate = {}) => { window.scrollTo(0, 0); sessionStorage.setItem('skipIntro', 'true');
-                setPhaseHistory(prev => [...prev, { phase, globalData }]);
-                if (dataUpdate) {
-                    setGlobalData(prev => ({ ...prev, ...dataUpdate }));
+            const advanceTo = (newPhase, dataUpdate = {}) => { 
+                window.scrollTo(0, 0); sessionStorage.setItem('skipIntro', 'true');
+                const latestData = { ...globalData, ...dataUpdate };
+                
+                if (globalData.formatId && latestData.formatId && globalData.formatId !== latestData.formatId) {
+                    handleFormatTransition(latestData.formatId, () => {
+                        if (newPhase !== phase) {
+                            setPhaseHistory(prev => [...prev, { phase, globalData }]);
+                            setPhase(newPhase);
+                        }
+                        setGlobalData(latestData);
+                    });
+                    return;
                 }
+                
+                setPhaseHistory(prev => [...prev, { phase, globalData }]);
+                setGlobalData(latestData);
                 setPhase(newPhase);
             };
 
-            const goBackPhase = (partialData) => { window.scrollTo(0, 0); let latestData = { ...globalData };
+            const goBackPhase = (partialData) => { 
+                window.scrollTo(0, 0); 
+                let latestData = { ...globalData };
                 if (partialData && typeof partialData === 'object' && !partialData.nativeEvent) {
                     latestData = { ...latestData, ...partialData };
                 }
                 
                 if (phaseHistory.length > 0) {
                     let newHistory = [...phaseHistory];
-                    let prev = newHistory.pop();
+                    let prev = newHistory[newHistory.length - 1]; // Peek
                     
+                    if (typeof prev === 'object' && prev !== null && prev.globalData) {
+                        if (globalData.formatId && prev.globalData.formatId !== globalData.formatId) {
+                            handleFormatTransition(prev.globalData.formatId, () => {
+                                newHistory.pop();
+                                setPhaseHistory(newHistory);
+                                setPhase(prev.phase);
+                                latestData.formatId = prev.globalData.formatId;
+                                latestData.audienceId = prev.globalData.audienceId;
+                                setGlobalData(latestData);
+                            });
+                            return;
+                        }
+                    }
+                    
+                    prev = newHistory.pop();
                     setPhaseHistory(newHistory);
                     
                     if (typeof prev === 'object' && prev !== null) {
                         setPhase(prev.phase);
-                        // Restore routing IDs from history so back button correctly reverts format changes
                         if (prev.globalData) {
                             latestData.formatId = prev.globalData.formatId;
                             latestData.audienceId = prev.globalData.audienceId;
                         }
                     } else {
-                        // Retrocompatibilidad con strings
                         setPhase(prev);
                     }
                 }
