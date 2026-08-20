@@ -2049,7 +2049,7 @@
                                                 else if (cityFieldDetails && cityFieldDetails.name) cityName = cityFieldDetails.name;
                                                 else if (typeof cityField === "string" && cityField.trim()) cityName = cityField.split(",")[0].trim();
                                                 
-                                                helperMessage = "Para " + cityName + ", la entrega más temprana garantizada es para " + formatEarliestDate(earliestDate);
+                                                helperMessage = "En " + cityName + ", la entrega más temprana garantizada es " + formatEarliestDate(earliestDate);
                                             }
                                             return (
                                                 <>
@@ -4084,6 +4084,7 @@
     </script>
 </body>
 </html>
+
 
 
 
