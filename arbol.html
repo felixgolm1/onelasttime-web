@@ -4014,22 +4014,23 @@
                 if (prev && curr && prev !== curr) {
                     const text = curr.includes('digital') ? 'cartas digitales' : 'cartas físicas';
                     setTransitionState({ active: true, bgOpacity: 1, textOpacity: 0, text });
-                    setTimeout(() => setTransitionState(s => ({ ...s, textOpacity: 1 })), 50);
                 }
                 prevFormatRef.current = curr;
             }, [globalData.formatId]);
             
             useEffect(() => {
-                if (transitionState.active && transitionState.bgOpacity === 1 && transitionState.textOpacity === 1) {
-                    const t1 = setTimeout(() => {
+                let t0, t1, t2;
+                if (transitionState.active) {
+                    t0 = setTimeout(() => setTransitionState(s => ({ ...s, textOpacity: 1 })), 50);
+                    t1 = setTimeout(() => {
                         setTransitionState(s => ({ ...s, bgOpacity: 0, textOpacity: 0 }));
                     }, 1500); 
-                    const t2 = setTimeout(() => {
+                    t2 = setTimeout(() => {
                         setTransitionState({ active: false, bgOpacity: 0, textOpacity: 0, text: '' });
                     }, 2500); 
-                    return () => { clearTimeout(t1); clearTimeout(t2); };
                 }
-            }, [transitionState.active, transitionState.bgOpacity, transitionState.textOpacity]);
+                return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); };
+            }, [transitionState.active]);
 
             const getProgress = () => {
                 if (phase === 'intro') return 5;
