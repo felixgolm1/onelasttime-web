@@ -4012,11 +4012,9 @@
                 const prev = prevFormatRef.current;
                 const curr = globalData.formatId;
                 if (prev && curr && prev !== curr) {
-                    if (prev.includes('fisica') && curr.includes('digital')) {
-                        setTransitionState({ active: true, opacity: 1, text: 'cartas digitales' });
-                    } else if (prev.includes('digital') && curr.includes('fisica')) {
-                        setTransitionState({ active: true, opacity: 1, text: 'cartas físicas' });
-                    }
+                    const text = curr.includes('digital') ? 'cartas digitales' : 'cartas físicas';
+                    setTransitionState({ active: true, opacity: 0, text });
+                    setTimeout(() => setTransitionState(s => ({ ...s, opacity: 1 })), 50);
                 }
                 prevFormatRef.current = curr;
             }, [globalData.formatId]);
@@ -4025,10 +4023,10 @@
                 if (transitionState.active && transitionState.opacity === 1) {
                     const t1 = setTimeout(() => {
                         setTransitionState(s => ({ ...s, opacity: 0 }));
-                    }, 2500); // Start fading out after 2.5s
+                    }, 1500); 
                     const t2 = setTimeout(() => {
                         setTransitionState({ active: false, opacity: 0, text: '' });
-                    }, 3000); // Unmount after fade out is complete
+                    }, 2500); 
                     return () => { clearTimeout(t1); clearTimeout(t2); };
                 }
             }, [transitionState.active, transitionState.opacity]);
@@ -4086,8 +4084,8 @@
             return (
                 <div className="w-full relative min-h-screen flex flex-col">
                     {transitionState.active && (
-                        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-500 ease-in-out ${transitionState.opacity === 1 ? 'opacity-100' : 'opacity-0'}`}>
-                            <h2 className="text-3xl md:text-5xl font-bold text-white text-center tracking-tight" style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
+                        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out ${transitionState.opacity === 1 ? 'opacity-100' : 'opacity-0'}`}>
+                            <h2 className={`text-3xl md:text-5xl font-bold text-white text-center tracking-tight transition-opacity duration-1000 ease-in-out ${transitionState.opacity === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
                                 Cambio a {transitionState.text}
                             </h2>
                         </div>
