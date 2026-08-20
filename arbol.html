@@ -2076,7 +2076,7 @@
                                                     extraCost = deliveryMode === "punto" ? ". Gastos de envío: +5€." : ". Gastos de envío: +6€.";
                                                 }
 
-                                                helperMessage = "En " + cityName + ", la entrega más temprana garantizada" + extraStr + " es " + formatEarliestDate(earliestDate) + extraCost;
+                                                helperMessage = "La entrega más temprana garantizada en " + cityName + extraStr + " es " + formatEarliestDate(earliestDate) + extraCost;
                                                 lastHelperMsg.current = helperMessage;
                                             }
                                             
@@ -4114,6 +4114,7 @@
     </script>
 </body>
 </html>
+
 
 
 
