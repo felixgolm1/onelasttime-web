@@ -2375,17 +2375,46 @@
 
             let city = "tu zona";
             let formattedDate = "la fecha indicada";
+            let fullSubtitle = `Lo más rápido que podemos entregar en tu zona es ${earliestDateStr}. ¿Qué opción prefieres?`;
+            
             if (logisticsData) {
                 const cityFieldDetails = logisticsData.ciudad_entrega_details || logisticsData.direccion_details || logisticsData.punto_recogida_details || logisticsData.ciudad_restaurante_details;
                 const cityField = logisticsData.ciudad_entrega || logisticsData.direccion || logisticsData.punto_recogida || logisticsData.ciudad_restaurante;
-                if (cityFieldDetails && cityFieldDetails.locality) city = cityFieldDetails.locality;
-                else if (cityFieldDetails && cityFieldDetails.name) city = cityFieldDetails.name;
-                else if (typeof cityField === "string" && cityField.trim()) city = cityField.split(",")[0].trim();
+                
+                let cityName = "tu zona";
+                if (cityFieldDetails && cityFieldDetails.locality) cityName = cityFieldDetails.locality;
+                else if (cityFieldDetails && cityFieldDetails.name) cityName = cityFieldDetails.name;
+                else if (typeof cityField === "string" && cityField.trim()) cityName = cityField.split(",")[0].trim();
                 
                 const mode = logisticsData.restaurante ? 'restaurante' : (logisticsData.punto_recogida ? 'punto' : 'direccion');
-                if (mode === 'punto' && city.toLowerCase().includes('barcelona')) {
-                    city += " en un punto de recogida";
+                let extraStr = "";
+                if (mode === 'punto' && cityName.toLowerCase().includes('barcelona')) {
+                    extraStr = " en un punto de recogida";
                 }
+                
+                city = cityName + extraStr;
+                
+                let isBalearesCeutaMelilla = false;
+                let isCanarias = false;
+                if (cityFieldDetails && cityFieldDetails.address_components) {
+                    let str = JSON.stringify(cityFieldDetails.address_components).toLowerCase();
+                    if (str.includes("balears") || str.includes("baleares") || str.includes("ceuta") || str.includes("melilla")) isBalearesCeutaMelilla = true;
+                    if (str.includes("canarias") || str.includes("las palmas") || str.includes("tenerife")) isCanarias = true;
+                }
+                if (typeof cityField === "string") {
+                    let lower = cityField.toLowerCase();
+                    if (lower.match(/\b(07|51|52)\d{3}\b/) || lower.includes("baleares") || lower.includes("ceuta") || lower.includes("melilla") || lower.includes("palma de mallorca") || lower.includes("ibiza") || lower.includes("menorca")) isBalearesCeutaMelilla = true;
+                    if (lower.match(/\b(35|38)\d{3}\b/) || lower.includes("canarias") || lower.includes("las palmas") || lower.includes("tenerife")) isCanarias = true;
+                }
+                
+                let extraCost = ". Envío gratis.";
+                if (isBalearesCeutaMelilla) {
+                    extraCost = mode === "punto" ? ". Gastos de envío: +2€." : ". Gastos de envío: +3€.";
+                } else if (isCanarias) {
+                    extraCost = mode === "punto" ? ". Gastos de envío: +5€." : ". Gastos de envío: +6€.";
+                }
+
+                fullSubtitle = `La entrega más temprana garantizada en ${cityName}${extraStr} es ${earliestDateStr}${extraCost} ¿Qué opción prefieres?`;
                 
                 if (logisticsData.fecha) {
                     const d = new Date(logisticsData.fecha);
@@ -2408,7 +2437,7 @@
                                 ¡Uy! No llegamos el {formattedDate} a {city} con el envío físico, pero tenemos soluciones
                             </h2>
                             <p className="text-lg md:text-xl font-medium mt-5 text-[#CCFF00] max-w-2xl mx-auto drop-shadow-md">
-                                Lo más rápido que podemos entregar en tu zona es {earliestDateStr}. ¿Qué opción prefieres?
+                                {fullSubtitle}
                             </p>
                         </div>
                         
