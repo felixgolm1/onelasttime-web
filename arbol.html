@@ -4017,15 +4017,15 @@
                 setTimeout(() => {
                     action(); 
                     setTransitionState(s => ({ ...s, textOpacity: 1 })); 
-                }, 1550);
+                }, 1050); // Background fade-in complete (1s)
                 
                 setTimeout(() => {
                     setTransitionState(s => ({ ...s, bgOpacity: 0, textOpacity: 0 }));
-                }, 4500); 
+                }, 3050); // Text faded in (1s) + stayed visible (1s)
                 
                 setTimeout(() => {
                     setTransitionState({ active: false, bgOpacity: 0, textOpacity: 0, text: '' });
-                }, 6600); 
+                }, 4100); // Fade-out complete (1s)
             };
 
             const getProgress = () => {
@@ -4108,8 +4108,8 @@
             return (
                 <div className="w-full relative min-h-screen flex flex-col">
                     {transitionState.active && (
-                        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-[2000ms] ease-in-out ${transitionState.bgOpacity === 1 ? 'opacity-100' : 'opacity-0'}`}>
-                            <h2 className={`text-3xl md:text-5xl font-bold text-white text-center tracking-tight transition-opacity duration-[2000ms] ease-in-out ${transitionState.textOpacity === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
+                        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out ${transitionState.bgOpacity === 1 ? 'opacity-100' : 'opacity-0'}`}>
+                            <h2 className={`text-3xl md:text-5xl font-bold text-white text-center tracking-tight transition-opacity duration-1000 ease-in-out ${transitionState.textOpacity === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
                                 Cambio a {transitionState.text}
                             </h2>
                         </div>
