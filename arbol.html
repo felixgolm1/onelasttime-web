@@ -579,7 +579,12 @@
             <>
               <style>{globalHeaderStyles}</style>
 
-              <div className={`fixed top-0 left-0 w-full h-40 px-6 pt-6 z-40 flex flex-col items-center pointer-events-none ${animateIn ? 'fade-in' : ''}`} style={{ backgroundColor: '#0b0f00', backgroundImage: 'radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.12) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.06) 0%, transparent 70%)', backgroundPosition: "top left", backgroundSize: "100vw 100vh", WebkitMaskImage: 'linear-gradient(to bottom, black 65%, transparent 100%)', maskImage: 'linear-gradient(to bottom, black 65%, transparent 100%)' }}>
+              <div className={`fixed top-0 left-0 w-full h-40 px-6 pt-6 z-40 flex flex-col items-center pointer-events-none ${animateIn ? 'fade-in' : ''}`}>
+                {/* Center Mask */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[340px] h-[140px] pointer-events-none" style={{ background: 'linear-gradient(to bottom, rgba(11,15,0,1) 50%, rgba(11,15,0,0) 100%)' }}></div>
+                
+                {/* Arrow Mask */}
+                {onBack && <div className="absolute top-0 left-0 w-[100px] h-[100px] pointer-events-none" style={{ background: 'radial-gradient(circle at 40px 40px, rgba(11,15,0,1) 30%, rgba(11,15,0,0) 70%)' }}></div>}
                 <div className={`w-full max-w-lg flex justify-center items-center relative mt-2 ${isCheckout ? 'mb-4' : 'mb-0'}`}>
                     {onBack && (
                         <button onClick={onBack} className="absolute left-0 top-[19px] -translate-y-1/2 text-2xl font-light leading-none text-white hover:text-gray-300 transition-all pointer-events-auto">
@@ -4055,6 +4060,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
