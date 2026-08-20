@@ -1651,6 +1651,18 @@
                 if (!base.tu_email && globalContactData?.email) base.tu_email = globalContactData.email;
                 return base;
             });
+
+            useEffect(() => {
+                try {
+                    const gdStr = sessionStorage.getItem('dev_globalData');
+                    if (gdStr) {
+                        const gd = JSON.parse(gdStr);
+                        gd.logistics = form;
+                        sessionStorage.setItem('dev_globalData', JSON.stringify(gd));
+                    }
+                } catch(e) {}
+            }, [form]);
+
             const [deliveryMode, setDeliveryMode] = useState('direccion');
             const [errs, setErrs] = useState([]);
             const [showModal, setShowModal] = useState(false);
