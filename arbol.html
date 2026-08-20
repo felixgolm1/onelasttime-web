@@ -4108,11 +4108,14 @@
             return (
                 <div className="w-full relative min-h-screen flex flex-col">
                     {transitionState.active && (
-                        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity ease-in-out ${transitionState.bgOpacity === 1 ? 'opacity-100 duration-500' : 'opacity-0 duration-1000'}`}>
-                            <h2 className={`text-3xl md:text-5xl font-bold text-white text-center tracking-tight transition-opacity duration-1000 ease-in-out ${transitionState.textOpacity === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
-                                Cambio a {transitionState.text}
-                            </h2>
-                        </div>
+                        <>
+                            <div className={`fixed inset-0 z-[44] bg-black transition-opacity ease-in-out ${transitionState.bgOpacity === 1 ? 'opacity-100 duration-500' : 'opacity-0 duration-1000'}`}></div>
+                            <div className="fixed inset-0 z-[50] flex items-center justify-center pointer-events-none">
+                                <h2 className={`text-3xl md:text-5xl font-bold text-white text-center tracking-tight transition-opacity duration-1000 ease-in-out ${transitionState.textOpacity === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
+                                    Cambio a {transitionState.text}
+                                </h2>
+                            </div>
+                        </>
                     )}
                     <div className="flex-1 w-full flex flex-col relative transition-all duration-500 ease-in-out" style={{ paddingTop: calculateGlobalSubtitle() ? '22px' : '0px' }}>
                     
