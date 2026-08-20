@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" class="bg-black overflow-y-scroll">
 <head><script>window.onerror = function(msg, url, lineNo, columnNo, error) { fetch('/log-error', { method: 'POST', body: msg + ' ' + lineNo }); };</script>
     <meta charset="UTF-8">
@@ -1375,7 +1375,7 @@
                 
                 const dummyElement = document.createElement('div');
                     const placesService = new window.google.maps.places.PlacesService(dummyElement);
-                    placesService.getDetails({ placeId: pred.place_id, fields: ['address_components'] }, (place, status) => {
+                    placesService.getDetails({ placeId: pred.place_id, fields: ['address_components', 'name'] }, (place, status) => {
                         if (status === window.google.maps.places.PlacesServiceStatus.OK && place.address_components) {
                             let route = '', street_number = '', postal_code = '', locality = '', admin1 = '', admin2 = '';
                             place.address_components.forEach(c => {
@@ -1390,6 +1390,11 @@
                             if (searchType === 'address') {
                                 const streetPart = route + (street_number ? ' ' + street_number : '');
                                 const formatted = [streetPart, postal_code, locality].filter(Boolean).join(', ');
+                                onChange(formatted || fallbackText);
+                            } else if (searchType === 'restaurant') {
+                                const streetPart = route + (street_number ? ' ' + street_number : '');
+                                const namePart = place.name || (pred.structured_formatting ? pred.structured_formatting.main_text : fallbackText.split(',')[0]);
+                                const formatted = [namePart, streetPart, locality].filter(Boolean).join(', ');
                                 onChange(formatted || fallbackText);
                             } else {
                                 onChange(fallbackText);
