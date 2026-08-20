@@ -2049,7 +2049,11 @@
                                                 else if (cityFieldDetails && cityFieldDetails.name) cityName = cityFieldDetails.name;
                                                 else if (typeof cityField === "string" && cityField.trim()) cityName = cityField.split(",")[0].trim();
                                                 
-                                                helperMessage = "En " + cityName + ", la entrega más temprana garantizada es " + formatEarliestDate(earliestDate);
+                                                let extraStr = "";
+                                                if (deliveryMode === "punto" && cityName.toLowerCase().includes("barcelona")) {
+                                                    extraStr = " en un punto de recogida";
+                                                }
+                                                helperMessage = "En " + cityName + ", la entrega más temprana garantizada" + extraStr + " es " + formatEarliestDate(earliestDate);
                                             }
                                             return (
                                                 <>
@@ -4084,6 +4088,7 @@
     </script>
 </body>
 </html>
+
 
 
 
