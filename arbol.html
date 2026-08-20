@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" class="bg-black overflow-y-scroll">
 <head><script>window.onerror = function(msg, url, lineNo, columnNo, error) { fetch('/log-error', { method: 'POST', body: msg + ' ' + lineNo }); };</script>
     <meta charset="UTF-8">
@@ -4212,7 +4212,6 @@
                     {phase === 'n4' && <CustomizationN4 backRef={globalBackRef} globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
                     {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
-                    </div>
                     </div>
                     </div>
                 </div>
