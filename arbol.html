@@ -2373,14 +2373,13 @@
                 };
             }, []);
 
-            const titleText = 'Has puesto una fecha anterior a nuestro margen logístico. La entrega más temprana garantizada para tu zona es ' + earliestDateStr;
-
             return (
                 <div className="flex-1 flex flex-col items-center pt-28 px-4 relative bg-transparent pb-10 overflow-hidden">
                     
                     <div className="w-full max-w-4xl flex flex-col items-center mt-4 fade-in">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red max-w-3xl mx-auto">{titleText}</h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-fade-red max-w-3xl mx-auto">¡Uy! No llegamos a tiempo con el envío físico.</h2>
+                            <p className="text-lg md:text-xl font-medium mt-5 text-fade-red max-w-2xl mx-auto opacity-90">Lo más rápido que podemos entregar en tu zona es {earliestDateStr}.</p>
                         </div>
                         
                         <div className="w-full flex flex-wrap gap-6 md:gap-10 justify-center items-center mt-4">
