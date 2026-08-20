@@ -4006,30 +4006,30 @@
             useEffect(() => { sessionStorage.setItem('dev_treeStates', JSON.stringify(treeStates)); }, [treeStates]);
             useEffect(() => { sessionStorage.setItem('dev_globalData', JSON.stringify(globalData)); }, [globalData]);
 
-            const [transitionState, setTransitionState] = useState({ active: false, opacity: 0, text: '' });
+            const [transitionState, setTransitionState] = useState({ active: false, bgOpacity: 0, textOpacity: 0, text: '' });
             const prevFormatRef = useRef(globalData.formatId);
             useEffect(() => {
                 const prev = prevFormatRef.current;
                 const curr = globalData.formatId;
                 if (prev && curr && prev !== curr) {
                     const text = curr.includes('digital') ? 'cartas digitales' : 'cartas físicas';
-                    setTransitionState({ active: true, opacity: 0, text });
-                    setTimeout(() => setTransitionState(s => ({ ...s, opacity: 1 })), 50);
+                    setTransitionState({ active: true, bgOpacity: 1, textOpacity: 0, text });
+                    setTimeout(() => setTransitionState(s => ({ ...s, textOpacity: 1 })), 50);
                 }
                 prevFormatRef.current = curr;
             }, [globalData.formatId]);
             
             useEffect(() => {
-                if (transitionState.active && transitionState.opacity === 1) {
+                if (transitionState.active && transitionState.bgOpacity === 1 && transitionState.textOpacity === 1) {
                     const t1 = setTimeout(() => {
-                        setTransitionState(s => ({ ...s, opacity: 0 }));
+                        setTransitionState(s => ({ ...s, bgOpacity: 0, textOpacity: 0 }));
                     }, 1500); 
                     const t2 = setTimeout(() => {
-                        setTransitionState({ active: false, opacity: 0, text: '' });
+                        setTransitionState({ active: false, bgOpacity: 0, textOpacity: 0, text: '' });
                     }, 2500); 
                     return () => { clearTimeout(t1); clearTimeout(t2); };
                 }
-            }, [transitionState.active, transitionState.opacity]);
+            }, [transitionState.active, transitionState.bgOpacity, transitionState.textOpacity]);
 
             const getProgress = () => {
                 if (phase === 'intro') return 5;
@@ -4084,8 +4084,8 @@
             return (
                 <div className="w-full relative min-h-screen flex flex-col">
                     {transitionState.active && (
-                        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out ${transitionState.opacity === 1 ? 'opacity-100' : 'opacity-0'}`}>
-                            <h2 className={`text-3xl md:text-5xl font-bold text-white text-center tracking-tight transition-opacity duration-1000 ease-in-out ${transitionState.opacity === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
+                        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out ${transitionState.bgOpacity === 1 ? 'opacity-100' : 'opacity-0'}`}>
+                            <h2 className={`text-3xl md:text-5xl font-bold text-white text-center tracking-tight transition-opacity duration-1000 ease-in-out ${transitionState.textOpacity === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ animation: 'floatN1 6s ease-in-out infinite' }}>
                                 Cambio a {transitionState.text}
                             </h2>
                         </div>
