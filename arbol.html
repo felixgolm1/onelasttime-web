@@ -2053,7 +2053,29 @@
                                                 if (deliveryMode === "punto" && cityName.toLowerCase().includes("barcelona")) {
                                                     extraStr = " en un punto de recogida";
                                                 }
-                                                helperMessage = "En " + cityName + ", la entrega más temprana garantizada" + extraStr + " es " + formatEarliestDate(earliestDate);
+                                                
+                                                let isBalearesCeutaMelilla = false;
+                                                let isCanarias = false;
+                                                
+                                                if (cityFieldDetails && cityFieldDetails.address_components) {
+                                                    let str = JSON.stringify(cityFieldDetails.address_components).toLowerCase();
+                                                    if (str.includes("balears") || str.includes("baleares") || str.includes("ceuta") || str.includes("melilla")) isBalearesCeutaMelilla = true;
+                                                    if (str.includes("canarias") || str.includes("las palmas") || str.includes("tenerife")) isCanarias = true;
+                                                }
+                                                if (typeof cityField === "string") {
+                                                    let lower = cityField.toLowerCase();
+                                                    if (lower.match(/\b(07|51|52)\d{3}\b/) || lower.includes("baleares") || lower.includes("ceuta") || lower.includes("melilla") || lower.includes("palma de mallorca") || lower.includes("ibiza") || lower.includes("menorca")) isBalearesCeutaMelilla = true;
+                                                    if (lower.match(/\b(35|38)\d{3}\b/) || lower.includes("canarias") || lower.includes("las palmas") || lower.includes("tenerife")) isCanarias = true;
+                                                }
+                                                
+                                                let extraCost = ". Envío gratis.";
+                                                if (isBalearesCeutaMelilla) {
+                                                    extraCost = deliveryMode === "punto" ? ". Gastos de envío: +2€." : ". Gastos de envío: +3€.";
+                                                } else if (isCanarias) {
+                                                    extraCost = deliveryMode === "punto" ? ". Gastos de envío: +5€." : ". Gastos de envío: +6€.";
+                                                }
+
+                                                helperMessage = "En " + cityName + ", la entrega más temprana garantizada" + extraStr + " es " + formatEarliestDate(earliestDate) + extraCost;
                                             }
                                             return (
                                                 <>
@@ -4088,6 +4110,7 @@
     </script>
 </body>
 </html>
+
 
 
 
