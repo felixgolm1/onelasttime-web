@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" class="bg-black overflow-y-scroll">
 <head><script>window.onerror = function(msg, url, lineNo, columnNo, error) { fetch('/log-error', { method: 'POST', body: msg + ' ' + lineNo }); };</script>
     <meta charset="UTF-8">
@@ -2058,8 +2058,9 @@
                                             const cityField = form.ciudad_entrega || form.direccion || form.punto_recogida || form.ciudad_restaurante;
                                             const detailsObj = form.ciudad_entrega_details || form.direccion_details || form.punto_recogida_details || form.ciudad_restaurante_details;
                                             const hasCity = !!cityField && typeof cityField === "string" && cityField.trim().length > 0 && !!detailsObj && Object.keys(detailsObj).length > 0;
+                                            const isDigitalFormat = contextId && contextId.includes('digital');
                                             let helperMessage = null;
-                                            if (hasCity) {
+                                            if (hasCity && !isDigitalFormat) {
                                                 const cityFieldDetails = form.ciudad_entrega_details || form.direccion_details || form.punto_recogida_details || form.ciudad_restaurante_details;
                                                 const earliestDate = calculateEarliestDelivery(new Date(), deliveryMode, cityField, cityFieldDetails);
                                                 let cityName = "tu ciudad";
