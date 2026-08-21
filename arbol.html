@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" class="bg-black overflow-y-scroll">
 <head><script>window.onerror = function(msg, url, lineNo, columnNo, error) { fetch('/log-error', { method: 'POST', body: msg + ' ' + lineNo }); };</script>
     <meta charset="UTF-8">
@@ -3242,7 +3242,7 @@
             );
         };
 
-        const CustomizationN4 = ({ onComplete, onBack, globalData, backRef, progress }) => {
+        const CustomizationN4 = ({ onComplete, onBack, globalData, backRef, progress, onProgressUpdate }) => {
             const [subStep, setSubStep] = useState(() => parseInt(sessionStorage.getItem('dev_n4_subStep')) || 1);
             const [isOut, setIsOut] = useState(false);
 
@@ -3250,6 +3250,12 @@
             
             const [age, setAge] = useState(() => JSON.parse(sessionStorage.getItem('dev_n4_age')) || { min: 14, max: 65 });
             const [extraDetails, setExtraDetails] = useState(() => sessionStorage.getItem('dev_n4_extra') || '');
+            useEffect(() => {
+                if (onProgressUpdate) {
+                    onProgressUpdate((subStep - 1) / 4);
+                }
+            }, [subStep, onProgressUpdate]);
+
 
             const [showModal, setShowModal] = useState(false);
             useEffect(() => {
@@ -3976,7 +3982,7 @@
                 return sessionStorage.getItem('dev_phase') || 'format';
             });
             const [phaseHistory, setPhaseHistory] = useState(() => JSON.parse(sessionStorage.getItem('dev_phaseHistory')) || []);
-            const [treeProgress, setTreeProgress] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeProgress')) || { format: 0, audience: 0 });
+            const [treeProgress, setTreeProgress] = useState(() => JSON.parse(sessionStorage.getItem('dev_treeProgress')) || { format: 0, audience: 0, n4: 0 });
             
                         const globalBackRef = React.useRef(null);
             const calculateGlobalSubtitle = () => {
@@ -4042,7 +4048,7 @@
                 if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
                 if (phase === 'objective') return 45;
                 if (phase === 'tones') return 75;
-                if (phase === 'n4') return 90;
+                if (phase === 'n4') return 75 + (20 * (treeProgress.n4 || 0));
                 if (phase === 'checkout') return 100;
                 return 0;
             };
@@ -4213,7 +4219,7 @@
 
                     {phase === 'tones' && <TonesNoria globalData={globalData} onComplete={sel => advanceTo('n4', {tones: sel})} progress={getProgress()} onBack={goBackPhase} backRef={globalBackRef} />}
                     
-                    {phase === 'n4' && <CustomizationN4 backRef={globalBackRef} globalData={globalData} progress={getProgress()} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
+                    {phase === 'n4' && <CustomizationN4 backRef={globalBackRef} globalData={globalData} progress={getProgress()} onProgressUpdate={(pct) => setTreeProgress(p => ({...p, n4: pct}))} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
                     {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
                     </div>
