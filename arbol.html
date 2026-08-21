@@ -3497,12 +3497,12 @@
         const SmoothAccordion = ({ title, children, defaultOpen = false, containerClass = '', summaryClass = '', contentClass = '' }) => {
             const [isOpen, setIsOpen] = useState(defaultOpen);
             return (
-                <div className={order border-gray-100 overflow-hidden }>
-                    <div onClick={() => setIsOpen(!isOpen)} className={cursor-pointer flex justify-between items-center transition-colors }>
+                <div className={`border border-gray-100 overflow-hidden ${containerClass}`}>
+                    <div onClick={() => setIsOpen(!isOpen)} className={`cursor-pointer flex justify-between items-center transition-colors ${summaryClass}`}>
                         {title}
-                        <span className={	ext-gray-400 transition-transform duration-300 }>▼</span>
+                        <span className={`text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
                     </div>
-                    <div className={grid transition-all duration-300 ease-in-out }>
+                    <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                         <div className="overflow-hidden">
                             <div className={contentClass}>
                                 {children}
