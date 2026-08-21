@@ -2050,7 +2050,7 @@
                                             )
                                         )}
                                         {f.type === 'tel' && <input type="tel" placeholder="+34 600 123 456" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
-                                        {f.type === 'email' && <input type="email" placeholder="tu@email.com" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
+                                        {f.type === 'email' && <input type="email" placeholder="tu.mejor@email.com" className={inputClasses} value={form[f.id] || ''} onChange={e => {setForm({...form, [f.id]: e.target.value}); setErrs(errs.filter(id => id !== f.id));}} />}
                                         {f.type === 'datetime-local' && (() => {
                                             const datePart = form[f.id] ? form[f.id].split('T')[0] : '';
                                             const timePart = form[f.id] && form[f.id].includes('T') ? form[f.id].split('T')[1].substring(0, 5) : '';
@@ -3149,7 +3149,7 @@
                                 <label className="label-style">Tu email</label>
                                 <input 
                                     type="email" 
-                                    placeholder="tu@email.com" 
+                                    placeholder="tu.mejor@email.com" 
                                     value={email}
                                     onChange={(e) => {
                                         setEmail(e.target.value);
