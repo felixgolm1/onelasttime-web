@@ -4040,15 +4040,15 @@
 
             const getProgress = () => {
                 if (phase === 'intro') return 5;
-                if (phase === 'format') return 5 + (15 * treeProgress.format); 
-                if (phase === 'logistics') return 20;
-                if (phase === 'contact_info') return 21;
-                if (phase === 'participants') return 22;
-                if (phase === 'delivery_error') return 25;
-                if (phase === 'audience') return 25 + (15 * treeProgress.audience); 
-                if (phase === 'objective') return 45;
-                if (phase === 'tones') return 75;
-                if (phase === 'n4') return 75 + (20 * (treeProgress.n4 || 0));
+                if (phase === 'format') return 5 + (12 * treeProgress.format); 
+                if (phase === 'logistics') return 25;
+                if (phase === 'contact_info') return 33;
+                if (phase === 'participants') return 41;
+                if (phase === 'delivery_error') return 45;
+                if (phase === 'audience') return 49 + (13 * treeProgress.audience); 
+                if (phase === 'objective') return 70;
+                if (phase === 'tones') return 78;
+                if (phase === 'n4') return 85 + (10 * (treeProgress.n4 || 0));
                 if (phase === 'checkout') return 100;
                 return 0;
             };
