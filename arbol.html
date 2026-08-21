@@ -2972,7 +2972,7 @@
                                                         >
                                                             <input
                                                                 type="text"
-                                                                className={`w-full bg-transparent outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 ${isCustomSelected ? 'text-white placeholder:text-white/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
+                                                                className={`w-full bg-transparent outline-none text-[16px] tracking-wide font-medium text-center relative z-10 transition-colors duration-700 ${isCustomSelected ? 'text-black font-bold placeholder:text-black/60' : 'text-gray-800 placeholder:text-gray-800/60'}`}
                                                                 placeholder={card.text}
                                                                 value={customToneText}
                                                                 onChange={(e) => {
@@ -3012,7 +3012,7 @@
                                                         className={`v27-card ${isSelected ? 'is-selected' : ''} ${isShaking ? 'shake' : ''}`}
                                                         style={{ marginTop: marginTop, zIndex: baseZIndex, '--rot-z': `${rotZ}deg` }}
                                                     >
-                                                        <span className={`text-[16px] tracking-wide font-medium relative z-10 transition-colors duration-700 ${isSelected ? 'text-white' : 'text-gray-800'}`}>
+                                                        <span className={`text-[16px] tracking-wide font-medium relative z-10 transition-colors duration-700 ${isSelected ? 'text-black font-bold' : 'text-gray-800'}`}>
                                                             {card.text}
                                                         </span>
                                                     </div>
