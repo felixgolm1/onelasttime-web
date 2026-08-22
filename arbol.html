@@ -3534,9 +3534,37 @@
             };
             const [editingContactField, setEditingContactField] = useState(null);
             const [editContactData, setEditContactData] = useState({ phone: globalData.contact?.phone || '', email: globalData.contact?.email || '' });
+            const [contactErrorMsg, setContactErrorMsg] = useState(null);
+            const [shakeContact, setShakeContact] = useState(false);
+
+            const isValidPhone = (phone) => {
+                if (!phone) return false;
+                return /^[\+\d\s\-]{9,20}$/.test(phone.trim());
+            };
+            const isValidEmail = (email) => {
+                if (!email) return false;
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+            };
+
+            const phoneValid = isValidPhone(editContactData.phone);
+            const emailValid = isValidEmail(editContactData.email);
+
             const handleSaveContact = () => {
+                if (editingContactField === 'phone' && !phoneValid) {
+                    setContactErrorMsg('El número debe ser válido');
+                    setShakeContact(true);
+                    setTimeout(() => setShakeContact(false), 500);
+                    return;
+                }
+                if (editingContactField === 'email' && !emailValid) {
+                    setContactErrorMsg('El email debe ser válido');
+                    setShakeContact(true);
+                    setTimeout(() => setShakeContact(false), 500);
+                    return;
+                }
                 setGlobalData(prev => ({ ...prev, contact: { ...prev.contact, phone: editContactData.phone, email: editContactData.email } }));
                 setEditingContactField(null);
+                setContactErrorMsg(null);
             };
             const [loading, setLoading] = useState(false);
             const [outOfStock, setOutOfStock] = useState(false);
