@@ -3532,11 +3532,11 @@
                     return `${dayName} ${day} de ${monthName} a las ${hours}:${minutes}`;
                 } catch(e) { return dateString.replace('T', ' a las '); }
             };
-            const [isEditingContact, setIsEditingContact] = useState(false);
+            const [editingContactField, setEditingContactField] = useState(null);
             const [editContactData, setEditContactData] = useState({ phone: globalData.contact?.phone || '', email: globalData.contact?.email || '' });
             const handleSaveContact = () => {
                 setGlobalData(prev => ({ ...prev, contact: { ...prev.contact, phone: editContactData.phone, email: editContactData.email } }));
-                setIsEditingContact(false);
+                setEditingContactField(null);
             };
             const [loading, setLoading] = useState(false);
             const [outOfStock, setOutOfStock] = useState(false);
