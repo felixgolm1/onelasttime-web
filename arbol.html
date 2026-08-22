@@ -3898,7 +3898,7 @@
                                             </strong>
                                             <div className="mt-1 space-y-2">
                                                 <div className="flex items-center min-h-[32px]">
-                                                    <span className="w-[84px] text-gray-500">WhatsApp:</span>
+                                                    <span className="text-gray-500 mr-1">WhatsApp:</span>
                                                     {editingContactField === 'phone' ? (
                                                         <div className="flex items-center bg-white rounded-full border border-[#CCFF00] p-1 flex-1 max-w-[220px] shadow-sm ml-1 transition-all">
                                                             <input type="tel" value={editContactData.phone} onChange={e => setEditContactData({...editContactData, phone: e.target.value})} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="Ej: +34 600..." />
@@ -3913,7 +3913,7 @@
                                                 </div>
 
                                                 <div className="flex items-center min-h-[32px]">
-                                                    <span className="w-[84px] text-gray-500">Email:</span>
+                                                    <span className="text-gray-500 mr-1">Email:</span>
                                                     {editingContactField === 'email' ? (
                                                         <div className="flex items-center bg-white rounded-full border border-[#CCFF00] p-1 flex-1 max-w-[220px] shadow-sm ml-1 transition-all">
                                                             <input type="email" value={editContactData.email} onChange={e => setEditContactData({...editContactData, email: e.target.value})} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="tu@email.com" />
