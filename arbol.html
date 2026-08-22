@@ -3517,6 +3517,21 @@
 
 
         const Checkout = ({ globalData, setGlobalData, progress, onBack }) => {
+            const formatDate = (dateString) => {
+                if (!dateString) return '';
+                try {
+                    const date = new Date(dateString);
+                    if (isNaN(date.getTime())) return dateString.replace('T', ' a las ');
+                    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                    const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+                    const dayName = days[date.getDay()];
+                    const day = date.getDate();
+                    const monthName = months[date.getMonth()];
+                    const hours = date.getHours().toString().padStart(2, '0');
+                    const minutes = date.getMinutes().toString().padStart(2, '0');
+                    return `${dayName} ${day} de ${monthName} a las ${hours}:${minutes}`;
+                } catch(e) { return dateString.replace('T', ' a las '); }
+            };
             const [isEditingContact, setIsEditingContact] = useState(false);
             const [editContactData, setEditContactData] = useState({ phone: globalData.contact?.phone || '', email: globalData.contact?.email || '' });
             const handleSaveContact = () => {
@@ -3864,12 +3879,12 @@
                                         
                                         {isDigital ? (
                                             <>
-                                                {globalData.logistics?.fecha && <li><strong className="text-gray-800">Día y hora de la cena:</strong> {globalData.logistics.fecha.replace('T', ' a las ')}</li>}
+                                                {globalData.logistics?.fecha && <li><strong className="text-gray-800">Día y hora de la cena:</strong> {formatDate(globalData.logistics.fecha)}</li>}
                                                 <li><strong className="text-gray-800">Entrega:</strong> Entrega con enlace por WhatsApp justo al inicio de la cena, con opción de recibirlas antes con un solo click si os adelantáis</li>
                                             </>
                                         ) : (
                                             <>
-                                                {globalData.logistics?.fecha && <li><strong className="text-gray-800">Día y hora de la cena / límite de entrega:</strong> {globalData.logistics.fecha.replace('T', ' a las ')}</li>}
+                                                {globalData.logistics?.fecha && <li><strong className="text-gray-800">Día y hora de la cena / límite de entrega:</strong> {formatDate(globalData.logistics.fecha)}</li>}
                                                 <li><strong className="text-gray-800">Entrega:</strong> {globalData.formatId?.includes('restaurante') ? `Las cartas te estarán esperando en tu mesa del ${globalData.logistics?.restaurante || 'restaurante'} reservada a nombre de ${globalData.logistics?.reserva || 'tu reserva'}.` : globalData.formatId?.includes('mi_casa') || globalData.formatId?.includes('otro') ? `${globalData.logistics?.direccion || ''}${globalData.logistics?.info_adicional_direccion ? ', ' + globalData.logistics.info_adicional_direccion : ''}, ${globalData.logistics?.ciudad || ''}` : globalData.logistics?.punto_recogida ? `En el punto de recogida ${globalData.logistics.punto_recogida}` : 'Dirección de envío'}</li>
                                             </>
                                         )}
