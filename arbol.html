@@ -3867,17 +3867,17 @@
                                 <div className="flex justify-between items-start pb-4 border-b border-gray-200">
                                     <div className="pr-4">
                                         <img src="assets/img/logo one last time.png" alt="One Last Time" className="h-6 object-contain mb-1" />
-                                        <p className="text-sm text-black font-medium mt-2">Experiencia con cartas en versión {isDigital ? 'digital' : 'física'} ultra-personalizada</p>
+                                        <p className="text-sm text-black font-medium mt-2">Experiencia con cartas en versión<br/>{isDigital ? 'digital' : 'física'} ultra-personalizada</p>
                                     </div>
                                     <div className="text-right">
                                         <p className="font-bold text-gray-900 text-lg whitespace-nowrap">{price}</p>
-                                        <p className="text-[10px] text-gray-500 mt-0.5">IVA incluido</p>
+                                        <p className="text-[10px] text-gray-500 mt-0.5 whitespace-nowrap">IVA incluido</p>
                                     </div>
                                 </div>
                                 
                                 <div className="rounded-xl bg-gray-50/50 py-4 border-y border-gray-100">
-                                    <h3 className="text-sm font-semibold text-gray-800 mb-3">Detalles del pedido</h3>
-                                    <ul className="space-y-3 text-xs text-gray-600">
+                                    <h3 className="text-lg font-bold text-black mb-4">Detalles del pedido</h3>
+                                    <ul className="space-y-3 text-sm text-gray-600">
                                         <li><strong className="text-gray-800">Formato de la experiencia:</strong> Cartas en versión {isDigital ? 'digital' : 'física'}</li>
                                         
                                         {isDigital ? (
@@ -3899,9 +3899,9 @@
                                             
                                             {isEditingContact ? (
                                                 <div className="mt-2 space-y-2 p-2 bg-white rounded border border-gray-200">
-                                                    <input type="tel" value={editContactData.phone} onChange={e => setEditContactData({...editContactData, phone: e.target.value})} placeholder="Tu WhatsApp" className="w-full text-xs p-1.5 border border-gray-300 rounded outline-none" />
-                                                    <input type="email" value={editContactData.email} onChange={e => setEditContactData({...editContactData, email: e.target.value})} placeholder="Tu Email" className="w-full text-xs p-1.5 border border-gray-300 rounded outline-none" />
-                                                    <button onClick={handleSaveContact} className="w-full bg-[#CCFF00] text-black font-semibold text-xs py-1.5 rounded transition-colors">Guardar</button>
+                                                    <input type="tel" value={editContactData.phone} onChange={e => setEditContactData({...editContactData, phone: e.target.value})} placeholder="Tu WhatsApp" className="w-full text-sm p-1.5 border border-gray-300 rounded outline-none" />
+                                                    <input type="email" value={editContactData.email} onChange={e => setEditContactData({...editContactData, email: e.target.value})} placeholder="Tu Email" className="w-full text-sm p-1.5 border border-gray-300 rounded outline-none" />
+                                                    <button onClick={handleSaveContact} className="w-full bg-[#CCFF00] text-black font-semibold text-sm py-1.5 rounded transition-colors">Guardar</button>
                                                 </div>
                                             ) : (
                                                 <div className="mt-1 space-y-1">
@@ -3925,7 +3925,7 @@
                                     </div>
                                     <div className="flex justify-between items-center text-2xl font-black pt-4 border-t border-gray-200 text-black">
                                         <span>Total</span>
-                                        <span className="bg-[#ccff00] px-3 py-1 rounded-lg shadow-sm">{price}</span>
+                                        <span>{price}</span>
                                     </div>
                                 </div>
                             </div>
