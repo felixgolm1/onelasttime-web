@@ -3900,12 +3900,15 @@
                                                 <div className="flex items-center min-h-[32px]">
                                                     <span className="text-gray-500 mr-1">WhatsApp:</span>
                                                     {editingContactField === 'phone' ? (
-                                                        <div className="flex items-center bg-white rounded-full border border-[#CCFF00] p-1 flex-1 max-w-[220px] shadow-sm ml-1 transition-all">
-                                                            <input type="tel" value={editContactData.phone} onChange={e => setEditContactData({...editContactData, phone: e.target.value})} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="Ej: +34 600..." />
-                                                            <button onClick={handleSaveContact} className="bg-[#CCFF00] text-black rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap hover:bg-[#b3e600]">OK</button>
+                                                        <div className="flex items-center flex-1 gap-2">
+                                                            <div className={`flex items-center bg-white rounded-full border p-1 w-full max-w-[220px] shadow-sm ml-1 transition-colors duration-200 ${!phoneValid ? 'border-red-500' : 'border-[#CCFF00]'} ${shakeContact && !phoneValid ? 'shake' : ''}`}>
+                                                                <input type="tel" value={editContactData.phone} onChange={e => { setEditContactData({...editContactData, phone: e.target.value}); setContactErrorMsg(null); }} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="Ej: +34 600..." />
+                                                                <button onClick={handleSaveContact} className={`rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap transition-colors duration-200 ${!phoneValid ? 'bg-red-500 text-white' : 'bg-[#CCFF00] text-black hover:bg-[#b3e600]'}`}>OK</button>
+                                                            </div>
+                                                            {contactErrorMsg && !phoneValid && <span className="text-red-500 text-[10px] sm:text-xs leading-tight">{contactErrorMsg}</span>}
                                                         </div>
                                                     ) : (
-                                                        <div className="flex items-center gap-2 group cursor-pointer ml-1" onClick={() => { setEditingContactField('phone'); setEditContactData({...editContactData, phone: globalData.contact?.phone || ''}) }}>
+                                                        <div className="flex items-center gap-2 group cursor-pointer ml-1" onClick={() => { setEditingContactField('phone'); setEditContactData({...editContactData, phone: globalData.contact?.phone || ''}); setContactErrorMsg(null); }}>
                                                             <p className="text-gray-900 font-medium">{globalData.contact?.phone || 'No indicado'}</p>
                                                             <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                         </div>
@@ -3915,12 +3918,15 @@
                                                 <div className="flex items-center min-h-[32px]">
                                                     <span className="text-gray-500 mr-1">Email:</span>
                                                     {editingContactField === 'email' ? (
-                                                        <div className="flex items-center bg-white rounded-full border border-[#CCFF00] p-1 flex-1 max-w-[220px] shadow-sm ml-1 transition-all">
-                                                            <input type="email" value={editContactData.email} onChange={e => setEditContactData({...editContactData, email: e.target.value})} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="tu@email.com" />
-                                                            <button onClick={handleSaveContact} className="bg-[#CCFF00] text-black rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap hover:bg-[#b3e600]">OK</button>
+                                                        <div className="flex items-center flex-1 gap-2">
+                                                            <div className={`flex items-center bg-white rounded-full border p-1 w-full max-w-[220px] shadow-sm ml-1 transition-colors duration-200 ${!emailValid ? 'border-red-500' : 'border-[#CCFF00]'} ${shakeContact && !emailValid ? 'shake' : ''}`}>
+                                                                <input type="email" value={editContactData.email} onChange={e => { setEditContactData({...editContactData, email: e.target.value}); setContactErrorMsg(null); }} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="tu@email.com" />
+                                                                <button onClick={handleSaveContact} className={`rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap transition-colors duration-200 ${!emailValid ? 'bg-red-500 text-white' : 'bg-[#CCFF00] text-black hover:bg-[#b3e600]'}`}>OK</button>
+                                                            </div>
+                                                            {contactErrorMsg && !emailValid && <span className="text-red-500 text-[10px] sm:text-xs leading-tight">{contactErrorMsg}</span>}
                                                         </div>
                                                     ) : (
-                                                        <div className="flex items-center gap-2 group cursor-pointer ml-1" onClick={() => { setEditingContactField('email'); setEditContactData({...editContactData, email: globalData.contact?.email || ''}) }}>
+                                                        <div className="flex items-center gap-2 group cursor-pointer ml-1" onClick={() => { setEditingContactField('email'); setEditContactData({...editContactData, email: globalData.contact?.email || ''}); setContactErrorMsg(null); }}>
                                                             <p className="text-gray-900 font-medium">{globalData.contact?.email || 'No indicado'}</p>
                                                             <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                         </div>
@@ -4307,7 +4313,6 @@
     </script>
 </body>
 </html>
-
 
 
 
