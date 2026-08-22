@@ -3597,8 +3597,16 @@
 
             const getShippingDetails = () => {
                 if (isDigital) {
+                    const phone = editContactData.phone || globalData.contact?.phone || '';
+                    const email = editContactData.email || globalData.contact?.email || '';
                     return {
-                        title: `Envío de enlace al WhatsApp ${editContactData.phone || globalData.contact?.phone || ''}`,
+                        title: (
+                            <>
+                                Envío de enlace al:<br/>
+                                WhatsApp: {phone}<br/>
+                                Email: {email}
+                            </>
+                        ),
                         cost: 0,
                         costText: '',
                         costColor: 'text-black'
