@@ -3893,28 +3893,40 @@
                                         )}
 
                                         <li>
-                                            <strong className="text-gray-800 block mb-1">
+                                            <strong className="text-gray-800 block mb-2">
                                                 {isDigital ? 'Información de contacto para la entrega:' : 'Información de contacto para el seguimiento del envío:'}
                                             </strong>
-                                            
-                                            {isEditingContact ? (
-                                                <div className="mt-2 space-y-2 p-2 bg-white rounded border border-gray-200">
-                                                    <input type="tel" value={editContactData.phone} onChange={e => setEditContactData({...editContactData, phone: e.target.value})} placeholder="Tu WhatsApp" className="w-full text-sm p-1.5 border border-gray-300 rounded outline-none" />
-                                                    <input type="email" value={editContactData.email} onChange={e => setEditContactData({...editContactData, email: e.target.value})} placeholder="Tu Email" className="w-full text-sm p-1.5 border border-gray-300 rounded outline-none" />
-                                                    <button onClick={handleSaveContact} className="w-full bg-[#CCFF00] text-black font-semibold text-sm py-1.5 rounded transition-colors">Guardar</button>
+                                            <div className="mt-1 space-y-2">
+                                                <div className="flex items-center min-h-[32px]">
+                                                    <span className="w-[72px] text-gray-500">WhatsApp:</span>
+                                                    {editingContactField === 'phone' ? (
+                                                        <div className="flex items-center bg-white rounded-full border border-[#CCFF00] p-1 flex-1 max-w-[220px] shadow-sm ml-1 transition-all">
+                                                            <input type="tel" value={editContactData.phone} onChange={e => setEditContactData({...editContactData, phone: e.target.value})} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="Ej: +34 600..." />
+                                                            <button onClick={handleSaveContact} className="bg-[#CCFF00] text-black rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap hover:bg-[#b3e600]">OK</button>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex items-center gap-2 group cursor-pointer ml-1" onClick={() => { setEditingContactField('phone'); setEditContactData({...editContactData, phone: globalData.contact?.phone || ''}) }}>
+                                                            <p className="text-gray-900 font-medium">{globalData.contact?.phone || 'No indicado'}</p>
+                                                            <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            ) : (
-                                                <div className="mt-1 space-y-1">
-                                                    <div className="flex items-center gap-2 group cursor-pointer" onClick={() => setIsEditingContact(true)}>
-                                                        <p>WhatsApp: {globalData.contact?.phone || 'No indicado'}</p>
-                                                        <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 group cursor-pointer" onClick={() => setIsEditingContact(true)}>
-                                                        <p>Email: {globalData.contact?.email || 'No indicado'}</p>
-                                                        <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                                    </div>
+
+                                                <div className="flex items-center min-h-[32px]">
+                                                    <span className="w-[72px] text-gray-500">Email:</span>
+                                                    {editingContactField === 'email' ? (
+                                                        <div className="flex items-center bg-white rounded-full border border-[#CCFF00] p-1 flex-1 max-w-[220px] shadow-sm ml-1 transition-all">
+                                                            <input type="email" value={editContactData.email} onChange={e => setEditContactData({...editContactData, email: e.target.value})} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="tu@email.com" />
+                                                            <button onClick={handleSaveContact} className="bg-[#CCFF00] text-black rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap hover:bg-[#b3e600]">OK</button>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex items-center gap-2 group cursor-pointer ml-1" onClick={() => { setEditingContactField('email'); setEditContactData({...editContactData, email: globalData.contact?.email || ''}) }}>
+                                                            <p className="text-gray-900 font-medium">{globalData.contact?.email || 'No indicado'}</p>
+                                                            <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
