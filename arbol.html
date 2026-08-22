@@ -3863,16 +3863,19 @@
                                 <h1 className="text-3xl font-semibold tracking-tight mb-4 text-black">Resumen del pedido</h1>
                             </div>
 
-                            <div className="summary-card text-black space-y-4">
+                            <div className="summary-card text-black space-y-5">
                                 <div className="flex justify-between items-start pb-4 border-b border-gray-200">
                                     <div className="pr-4">
-                                        <p className="font-bold text-lg text-black leading-tight">One Last Time</p>
-                                        <p className="text-sm text-gray-500 mt-1">Experiencia con cartas en versión {isDigital ? 'digital' : 'física'} ultra-personalizada</p>
+                                        <img src="assets/img/logo one last time.png" alt="One Last Time" className="h-6 object-contain mb-1" />
+                                        <p className="text-sm text-black font-medium mt-2">Experiencia con cartas en versión {isDigital ? 'digital' : 'física'} ultra-personalizada</p>
                                     </div>
-                                    <p className="font-bold text-gray-900 text-lg whitespace-nowrap">{price}</p>
+                                    <div className="text-right">
+                                        <p className="font-bold text-gray-900 text-lg whitespace-nowrap">{price}</p>
+                                        <p className="text-[10px] text-gray-500 mt-0.5">IVA incluido</p>
+                                    </div>
                                 </div>
                                 
-                                <div className="rounded-xl bg-gray-50/50 p-4 pt-4 border border-gray-100">
+                                <div className="rounded-xl bg-gray-50/50 py-4 border-y border-gray-100">
                                     <h3 className="text-sm font-semibold text-gray-800 mb-3">Detalles del pedido</h3>
                                     <ul className="space-y-3 text-xs text-gray-600">
                                         <li><strong className="text-gray-800">Formato de la experiencia:</strong> Cartas en versión {isDigital ? 'digital' : 'física'}</li>
@@ -3880,7 +3883,7 @@
                                         {isDigital ? (
                                             <>
                                                 {globalData.logistics?.fecha && <li><strong className="text-gray-800">Día y hora de la cena:</strong> {formatDate(globalData.logistics.fecha)}</li>}
-                                                <li><strong className="text-gray-800">Entrega:</strong> Entrega con enlace por WhatsApp justo al inicio de la cena, con opción de recibirlas antes con un solo click si os adelantáis</li>
+                                                <li><strong className="text-gray-800">Entrega:</strong> Entrega con enlace por WhatsApp justo al inicio de la cena o cuando quieras a partir de 10 minutos con un solo click. Por si os adelantáis</li>
                                             </>
                                         ) : (
                                             <>
@@ -3890,11 +3893,8 @@
                                         )}
 
                                         <li>
-                                            <strong className="text-gray-800 flex items-center gap-2">
+                                            <strong className="text-gray-800 block mb-1">
                                                 {isDigital ? 'Información de contacto para la entrega:' : 'Información de contacto para el seguimiento del envío:'}
-                                                <button onClick={() => setIsEditingContact(!isEditingContact)} className="text-gray-400 hover:text-gray-600 transition-colors p-1">
-                                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                                </button>
                                             </strong>
                                             
                                             {isEditingContact ? (
@@ -3904,16 +3904,21 @@
                                                     <button onClick={handleSaveContact} className="w-full bg-[#CCFF00] text-black font-semibold text-xs py-1.5 rounded transition-colors">Guardar</button>
                                                 </div>
                                             ) : (
-                                                <div className="mt-1 pl-2 border-l-2 border-[#CCFF00]">
-                                                    <p>WhatsApp: {globalData.contact?.phone || 'No indicado'}</p>
-                                                    <p>Email: {globalData.contact?.email || 'No indicado'}</p>
+                                                <div className="mt-1 space-y-1">
+                                                    <div className="flex items-center gap-2 group cursor-pointer" onClick={() => setIsEditingContact(true)}>
+                                                        <p>WhatsApp: {globalData.contact?.phone || 'No indicado'}</p>
+                                                        <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 group cursor-pointer" onClick={() => setIsEditingContact(true)}>
+                                                        <p>Email: {globalData.contact?.email || 'No indicado'}</p>
+                                                        <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                                    </div>
                                                 </div>
                                             )}
                                         </li>
                                     </ul>
                                 </div>
-                                
-                                <div className="space-y-2">
+                                                                <div className="space-y-2">
                                     <div className="flex justify-between text-sm text-gray-500">
                                         <span>{isDigital ? 'Envío Inmediato (Email/Web)' : `Envío a ${globalData.logistics?.ciudad || 'tu zona'}`}</span>
                                         <span className="text-green-600 font-medium">Gratis</span>
@@ -4290,7 +4295,6 @@
     </script>
 </body>
 </html>
-
 
 
 
