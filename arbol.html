@@ -3598,7 +3598,7 @@
             const getShippingDetails = () => {
                 if (isDigital) {
                     return {
-                        title: `Envío digital a ${editContactData.email || globalData.contact?.email || ''}`,
+                        title: `Envío de enlace al WhatsApp ${editContactData.phone || globalData.contact?.phone || ''}`,
                         cost: 0,
                         costText: '',
                         costColor: 'text-black'
