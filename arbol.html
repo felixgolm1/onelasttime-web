@@ -3927,25 +3927,6 @@
                                                 {isDigital ? 'Información de contacto para la entrega:' : 'Información de contacto para el seguimiento del envío:'}
                                             </strong>
                                             <div className="mt-1 space-y-2">
-                                                <div className="flex items-center min-h-[32px]">
-                                                    <span className="text-gray-500 mr-1">WhatsApp:</span>
-                                                    {editingContactField === 'phone' ? (
-                                                        <div className="flex items-center flex-1 gap-2 animate-fade-in-scale">
-                                                            <div className={`flex items-center bg-white rounded-full border p-1 w-full max-w-[220px] shadow-sm ml-1 transition-colors duration-200 ${!phoneValid ? 'border-red-500' : 'border-[#CCFF00]'} ${shakeContact && !phoneValid ? 'shake' : ''}`}>
-                                                                <input type="tel" value={editContactData.phone} onChange={e => { setEditContactData({...editContactData, phone: e.target.value}); setContactErrorMsg(null); }} onKeyDown={e => { if (e.key === 'Enter') handleSaveContact(); if (e.key === 'Escape') setEditingContactField(null); }} autoFocus className="bg-transparent outline-none text-sm px-2 w-full text-black placeholder-gray-300" placeholder="Ej: +34 600..." />
-                                                                <button onClick={() => setEditingContactField(null)} className="text-gray-300 hover:text-gray-500 px-1 text-lg leading-none mr-1" title="Cancelar">&times;</button>
-                                                                <button onClick={handleSaveContact} className={`rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap transition-colors duration-200 ${!phoneValid ? 'bg-red-500 text-white' : 'bg-[#CCFF00] text-black hover:bg-[#b3e600]'}`}>OK</button>
-                                                            </div>
-                                                            {contactErrorMsg && !phoneValid && <span className="text-red-500 text-[10px] sm:text-xs leading-tight">{contactErrorMsg}</span>}
-                                                        </div>
-                                                    ) : (
-                                                        <div className="flex items-center gap-2 group cursor-pointer ml-1 animate-fade-in-scale" onClick={() => { setEditingContactField('phone'); setEditContactData({...editContactData, phone: globalData.contact?.phone || ''}); setContactErrorMsg(null); }}>
-                                                            <p className="text-gray-900 font-medium">{globalData.contact?.phone || 'No indicado'}</p>
-                                                            <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                                        </div>
-                                                    )}
-                                                </div>
-
                                                 <div className="flex items-center min-h-[36px]">
                                                     <span className="text-gray-500 mr-2">WhatsApp:</span>
                                                     <div className="relative flex-1 h-[36px]">
