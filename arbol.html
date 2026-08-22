@@ -3516,7 +3516,13 @@
         };
 
 
-        const Checkout = ({ globalData, progress, onBack }) => {
+        const Checkout = ({ globalData, setGlobalData, progress, onBack }) => {
+            const [isEditingContact, setIsEditingContact] = useState(false);
+            const [editContactData, setEditContactData] = useState({ phone: globalData.contact?.phone || '', email: globalData.contact?.email || '' });
+            const handleSaveContact = () => {
+                setGlobalData(prev => ({ ...prev, contact: { ...prev.contact, phone: editContactData.phone, email: editContactData.email } }));
+                setIsEditingContact(false);
+            };
             const [loading, setLoading] = useState(false);
             const [outOfStock, setOutOfStock] = useState(false);
             const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -3529,7 +3535,7 @@
             const [hasSelectedPaymentMethod, setHasSelectedPaymentMethod] = useState(false);
 
             const isDigital = globalData.formatId?.includes('digital');
-            const price = isDigital ? '5,00€' : '35,00€';
+            const price = isDigital ? '8,99€' : '13,99€';
             const formatName = isDigital ? 'Edición Digital' : 'Edición Física';
 
             const audNode = dbAudience.find(a => a.id === globalData.audienceId);
@@ -3840,70 +3846,57 @@
                         <div className="space-y-8 bg-white rounded-3xl p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky md:top-[182px]">
                             <div>
                                 <h1 className="text-3xl font-semibold tracking-tight mb-4 text-black">Resumen del pedido</h1>
-                                <p className="text-gray-500 text-sm">Hemos diseñado esta experiencia exclusivamente para tu cena basada en tus respuestas.</p>
                             </div>
 
                             <div className="summary-card text-black space-y-4">
-                                <div className="flex justify-between items-center pb-4 border-b border-gray-200">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center p-2.5">
-                                            <img src="assets/img/logo one last time.png" alt="One Last Time" className="w-full h-full object-contain" />
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold text-sm">Sensibles: {formatName}</p>
-                                            <p className="text-xs text-gray-400 italic">Personalizado para: {audLabel}</p>
-                                        </div>
+                                <div className="flex justify-between items-start pb-4 border-b border-gray-200">
+                                    <div className="pr-4">
+                                        <p className="font-bold text-lg text-black leading-tight">One Last Time</p>
+                                        <p className="text-sm text-gray-500 mt-1">Experiencia con cartas en versión {isDigital ? 'digital' : 'física'} ultra-personalizada</p>
                                     </div>
-                                    <p className="font-bold text-gray-900">{price}</p>
+                                    <p className="font-bold text-gray-900 text-lg whitespace-nowrap">{price}</p>
                                 </div>
                                 
-                                <SmoothAccordion 
-                                    title={<span className="text-xs font-semibold text-gray-600">✦ Ver detalles de tu personalización</span>} 
-                                    containerClass="rounded-xl bg-gray-50/50" 
-                                    summaryClass="p-3 hover:bg-gray-50" 
-                                    contentClass="p-4 pt-2 text-xs text-gray-500 space-y-3 border-t border-gray-100"
-                                >
-                                        <ul className="space-y-1.5 list-disc list-inside mb-4">
-                                            <li><strong>Formato:</strong> {formatName}</li>
-                                            {globalData.logistics?.fecha && <li><strong>Día y hora de la cena:</strong> {globalData.logistics.fecha.replace('T', ' a las ')}</li>}
-                                            <li><strong>Lugar:</strong> {getLugarUso()}</li>
-                                            <li><strong>Entrega:</strong> {getLugarEntrega()}</li>
-                                            {globalData.contact?.notes && <li><strong>A tener en cuenta:</strong> {globalData.contact.notes}</li>}
-                                            <li><strong>Contacto:</strong> {[globalData.contact?.phone, globalData.contact?.email].filter(Boolean).join(' / ')}</li>
-                                            {participantesTextList && <li><strong>Participantes:</strong> {participantesTextList}</li>}
-                                            <li><strong>Cena con:</strong> {getRelacionCompleta()}</li>
-                                            <li><strong>Tonos elegidos:</strong> {selectedTonesStr}</li>
-                                            {globalData.n4?.age && <li><strong>Rango de edad:</strong> {globalData.n4.age.min === globalData.n4.age.max ? globalData.n4.age.min : `${globalData.n4.age.min} - ${globalData.n4.age.max} años`}</li>}
-                                            {globalData.n4?.time && <li><strong>Tiempo estimado:</strong> {globalData.n4.time} min</li>}
-                                        </ul>
+                                <div className="rounded-xl bg-gray-50/50 p-4 pt-4 border border-gray-100">
+                                    <h3 className="text-sm font-semibold text-gray-800 mb-3">Detalles del pedido</h3>
+                                    <ul className="space-y-3 text-xs text-gray-600">
+                                        <li><strong className="text-gray-800">Formato de la experiencia:</strong> Cartas en versión {isDigital ? 'digital' : 'física'}</li>
                                         
-                                        {globalData.objective && (
-                                            <SmoothAccordion 
-                                                title={<span className="font-semibold text-gray-600 text-xs">Objetivo escrito</span>} 
-                                                containerClass="rounded-lg bg-white mb-2" 
-                                                summaryClass="p-2 hover:bg-gray-50" 
-                                                contentClass="p-3 pt-0 text-gray-500 italic border-t border-gray-100 bg-gray-50"
-                                            >
-                                                "{globalData.objective}"
-                                            </SmoothAccordion>
+                                        {isDigital ? (
+                                            <>
+                                                {globalData.logistics?.fecha && <li><strong className="text-gray-800">Día y hora de la cena:</strong> {globalData.logistics.fecha.replace('T', ' a las ')}</li>}
+                                                <li><strong className="text-gray-800">Entrega:</strong> Entrega con enlace por WhatsApp justo al inicio de la cena, con opción de recibirlas antes con un solo click si os adelantáis</li>
+                                            </>
+                                        ) : (
+                                            <>
+                                                {globalData.logistics?.fecha && <li><strong className="text-gray-800">Día y hora de la cena / límite de entrega:</strong> {globalData.logistics.fecha.replace('T', ' a las ')}</li>}
+                                                <li><strong className="text-gray-800">Entrega:</strong> {globalData.formatId?.includes('restaurante') ? `Las cartas te estarán esperando en tu mesa del ${globalData.logistics?.restaurante || 'restaurante'} reservada a nombre de ${globalData.logistics?.reserva || 'tu reserva'}.` : globalData.formatId?.includes('mi_casa') || globalData.formatId?.includes('otro') ? `${globalData.logistics?.direccion || ''}${globalData.logistics?.info_adicional_direccion ? ', ' + globalData.logistics.info_adicional_direccion : ''}, ${globalData.logistics?.ciudad || ''}` : globalData.logistics?.punto_recogida ? `En el punto de recogida ${globalData.logistics.punto_recogida}` : 'Dirección de envío'}</li>
+                                            </>
                                         )}
 
-                                        {globalData.n4?.extraDetails && (
-                                            <SmoothAccordion 
-                                                title={<span className="font-semibold text-gray-600 text-xs">Info adicional escrita</span>} 
-                                                containerClass="rounded-lg bg-white mb-2" 
-                                                summaryClass="p-2 hover:bg-gray-50" 
-                                                contentClass="p-3 pt-0 text-gray-500 italic border-t border-gray-100 bg-gray-50"
-                                            >
-                                                "{globalData.n4.extraDetails}"
-                                            </SmoothAccordion>
-                                        )}
-
-                                        <div className="bg-[#CCFF00]/10 text-gray-700 p-3 rounded-lg flex gap-2 items-start mt-3">
-                                            <span className="text-sm">✨</span>
-                                            <p className="leading-relaxed"><strong>Textos e historias:</strong> Hemos guardado tus respuestas. No te preocupes por la redacción o la ortografía: nuestra IA se encarga de pulir y dar coherencia a todos los textos para que la experiencia quede impecable.</p>
-                                        </div>
-                                </SmoothAccordion>
+                                        <li>
+                                            <strong className="text-gray-800 flex items-center gap-2">
+                                                {isDigital ? 'Información de contacto para la entrega:' : 'Información de contacto para el seguimiento del envío:'}
+                                                <button onClick={() => setIsEditingContact(!isEditingContact)} className="text-gray-400 hover:text-gray-600 transition-colors p-1">
+                                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                                </button>
+                                            </strong>
+                                            
+                                            {isEditingContact ? (
+                                                <div className="mt-2 space-y-2 p-2 bg-white rounded border border-gray-200">
+                                                    <input type="tel" value={editContactData.phone} onChange={e => setEditContactData({...editContactData, phone: e.target.value})} placeholder="Tu WhatsApp" className="w-full text-xs p-1.5 border border-gray-300 rounded outline-none" />
+                                                    <input type="email" value={editContactData.email} onChange={e => setEditContactData({...editContactData, email: e.target.value})} placeholder="Tu Email" className="w-full text-xs p-1.5 border border-gray-300 rounded outline-none" />
+                                                    <button onClick={handleSaveContact} className="w-full bg-[#CCFF00] text-black font-semibold text-xs py-1.5 rounded transition-colors">Guardar</button>
+                                                </div>
+                                            ) : (
+                                                <div className="mt-1 pl-2 border-l-2 border-[#CCFF00]">
+                                                    <p>WhatsApp: {globalData.contact?.phone || 'No indicado'}</p>
+                                                    <p>Email: {globalData.contact?.email || 'No indicado'}</p>
+                                                </div>
+                                            )}
+                                        </li>
+                                    </ul>
+                                </div>
                                 
                                 <div className="space-y-2">
                                     <div className="flex justify-between text-sm text-gray-500">
@@ -4241,7 +4234,7 @@
                     
                     {phase === 'n4' && <CustomizationN4 backRef={globalBackRef} globalData={globalData} progress={getProgress()} onProgressUpdate={(pct) => setTreeProgress(p => ({...p, n4: pct}))} onComplete={data => advanceTo('checkout', {n4: data})} onBack={goBackPhase} />}
 
-                    {phase === 'checkout' && <Checkout globalData={globalData} progress={getProgress()} onBack={goBackPhase} />}
+                    {phase === 'checkout' && <Checkout globalData={globalData} setGlobalData={setGlobalData} progress={getProgress()} onBack={goBackPhase} />}
                     </div>
                     </div>
                 </div>
@@ -4282,7 +4275,6 @@
     </script>
 </body>
 </html>
-
 
 
 
