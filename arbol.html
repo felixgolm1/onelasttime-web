@@ -3698,7 +3698,12 @@ const [editingContactField, setEditingContactField] = useState(null);
                 
                 let costLabel = null;
                 if (isIslandSupplement) {
-                    costLabel = "(Suplemento islas. Gratis en península)";
+                    costLabel = (
+                        <>
+                            Suplemento islas<br />
+                            (gratis en península)
+                        </>
+                    );
                 }
                 
                 const fecha = globalData.logistics?.fecha ? formatDate(globalData.logistics.fecha) : '';
