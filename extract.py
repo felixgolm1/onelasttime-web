@@ -1,12 +1,15 @@
-﻿import os
-import re
+﻿import re
 
-filepath = r'c:\Users\Félix Gol\.gemini\antigravity\scratch\sensibles-web\3d-test.html'
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
+with open("arbol.html", "r", encoding="utf-8") as f:
+    text = f.read()
 
-scripts = re.findall(r'<script.*?>\s*(.*?)\s*</script>', content, flags=re.DOTALL | re.IGNORECASE)
+# Let's extract the exact JSX of the editable block.
+start_marker = '<div className="mt-1 flex flex-col gap-1">'
+end_marker = '</div>\n                                        </li>'
+idx_start = text.find(start_marker)
+idx_end = text.find(end_marker, idx_start)
 
-for i, script in enumerate(scripts):
-    with open(f'script_{i}.js', 'w', encoding='utf-8') as f:
-        f.write(script)
+editable_block = text[idx_start:idx_end + 6] # including the closing </div>
+# But wait, it's inside a <li>. I want just the div.
+print(editable_block[:200])
+
