@@ -3568,15 +3568,8 @@
             if (globalData.formatId?.includes('otro')) {
                 dondeLasUsaras = globalData.formatCustomPlace || 'Otro lugar';
             } else if (globalData.formatId?.includes('reserva') || globalData.formatId?.includes('restaurante')) {
-                let restName = globalData.logistics?.restaurante || '';
-                let restCity = globalData.logistics?.ciudad_restaurante || '';
-                if (restName && restCity) {
-                    dondeLasUsaras = `En el restaurante ${restName} (${restCity})`;
-                } else if (restName) {
-                    dondeLasUsaras = `En el restaurante ${restName}`;
-                } else {
-                    dondeLasUsaras = 'En un restaurante';
-                }
+                const formatted = formatRestaurante();
+                dondeLasUsaras = formatted === 'tu restaurante' ? 'En un restaurante' : `En el restaurante ${formatted}`;
             } else if (formatNode) {
                 dondeLasUsaras = formatNode.label;
             }
@@ -3646,6 +3639,28 @@ const [editingContactField, setEditingContactField] = useState(null);
                 }
             }
 
+                        const formatRestaurante = () => {
+                let restName = globalData.logistics?.restaurante || '';
+                let ciudad = globalData.logistics?.ciudad_restaurante || '';
+                if (!restName) return 'tu restaurante';
+                
+                const commaIdx = restName.indexOf(',');
+                if (commaIdx > -1) {
+                    const name = restName.substring(0, commaIdx).trim();
+                    const addr = restName.substring(commaIdx + 1).trim();
+                    if (ciudad && !addr.toLowerCase().includes(ciudad.toLowerCase())) {
+                        return `${name} (${addr}, ${ciudad})`;
+                    } else {
+                        return `${name} (${addr})`;
+                    }
+                } else {
+                    if (ciudad) {
+                        return `${restName} (${ciudad})`;
+                    }
+                    return restName;
+                }
+            };
+
             const getShippingDetails = () => {
                 if (isDigital) {
                     const phone = editContactData.phone || derivedPhone;
@@ -3677,10 +3692,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                 let title = '';
                 
                 if (isReservationMade) {
-                    let restName = globalData.logistics?.restaurante || 'tu restaurante';
-                    if (globalData.logistics?.restaurante && globalData.logistics?.ciudad_restaurante) {
-                        restName = `${globalData.logistics.restaurante} (${globalData.logistics.ciudad_restaurante})`;
-                    }
+                    const restName = formatRestaurante();
                     const resName = globalData.logistics?.reserva || 'tu nombre';
                     title = (
                         <div className="flex flex-col">
@@ -3689,10 +3701,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                         </div>
                     );
                 } else if (isRestaurantDelivery) {
-                    let restName = globalData.logistics?.restaurante || 'tu restaurante';
-                    if (globalData.logistics?.restaurante && globalData.logistics?.ciudad_restaurante) {
-                        restName = `${globalData.logistics.restaurante} (${globalData.logistics.ciudad_restaurante})`;
-                    }
+                    const restName = formatRestaurante();
                     title = (
                         <div className="flex flex-col">
                             <span>Las cartas te estarán esperando en el restaurante {restName} el {fecha}.</span>
