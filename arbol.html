@@ -3561,6 +3561,7 @@
 
 
         const Checkout = ({ globalData, setGlobalData, progress, onBack }) => {
+            useEffect(() => { window.scrollTo(0, 0); }, []);
             const formatDate = (dateString) => {
                 if (!dateString) return '';
                 try {
