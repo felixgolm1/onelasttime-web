@@ -4299,7 +4299,7 @@
                     let prev = newHistory[newHistory.length - 1]; // Peek
                     
                     if (typeof prev === 'object' && prev !== null && prev.globalData) {
-                        if (globalData.formatId && prev.globalData.formatId !== globalData.formatId) {
+                        if (globalData.formatId && prev.globalData.formatId && prev.globalData.formatId !== globalData.formatId) {
                             handleFormatTransition(prev.globalData.formatId, () => {
                                 newHistory.pop();
                                 setPhaseHistory(newHistory);
