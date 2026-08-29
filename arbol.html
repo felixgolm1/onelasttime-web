@@ -3563,6 +3563,28 @@
                 } catch(e) { return dateString.replace('T', ' a las '); }
             };
             
+const formatRestaurante = () => {
+                let restName = globalData.logistics?.restaurante || '';
+                let ciudad = globalData.logistics?.ciudad_restaurante || '';
+                if (!restName) return 'tu restaurante';
+                
+                const commaIdx = restName.indexOf(',');
+                if (commaIdx > -1) {
+                    const name = restName.substring(0, commaIdx).trim();
+                    const addr = restName.substring(commaIdx + 1).trim();
+                    if (ciudad && !addr.toLowerCase().includes(ciudad.toLowerCase())) {
+                        return `${name} (${addr}, ${ciudad})`;
+                    } else {
+                        return `${name} (${addr})`;
+                    }
+                } else {
+                    if (ciudad) {
+                        return `${restName} (${ciudad})`;
+                    }
+                    return restName;
+                }
+            };
+
             let dondeLasUsaras = '';
             const formatNode = dbFormat.find(x => x.id === globalData.formatId);
             if (globalData.formatId?.includes('otro')) {
@@ -3638,28 +3660,6 @@ const [editingContactField, setEditingContactField] = useState(null);
                     isCanarias = true;
                 }
             }
-
-                        const formatRestaurante = () => {
-                let restName = globalData.logistics?.restaurante || '';
-                let ciudad = globalData.logistics?.ciudad_restaurante || '';
-                if (!restName) return 'tu restaurante';
-                
-                const commaIdx = restName.indexOf(',');
-                if (commaIdx > -1) {
-                    const name = restName.substring(0, commaIdx).trim();
-                    const addr = restName.substring(commaIdx + 1).trim();
-                    if (ciudad && !addr.toLowerCase().includes(ciudad.toLowerCase())) {
-                        return `${name} (${addr}, ${ciudad})`;
-                    } else {
-                        return `${name} (${addr})`;
-                    }
-                } else {
-                    if (ciudad) {
-                        return `${restName} (${ciudad})`;
-                    }
-                    return restName;
-                }
-            };
 
             const getShippingDetails = () => {
                 if (isDigital) {
