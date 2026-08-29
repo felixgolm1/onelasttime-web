@@ -3562,7 +3562,18 @@
                     return `${dayName} ${day} de ${monthName} a las ${hours}:${minutes}`;
                 } catch(e) { return dateString.replace('T', ' a las '); }
             };
-            const [editingContactField, setEditingContactField] = useState(null);
+            
+            let dondeLasUsaras = '';
+            const formatNode = dbFormat.find(x => x.id === globalData.formatId);
+            if (globalData.formatId?.includes('otro')) {
+                dondeLasUsaras = globalData.formatCustomPlace || 'Otro lugar';
+            } else if (globalData.formatId?.includes('reserva') || globalData.formatId?.includes('restaurante')) {
+                dondeLasUsaras = 'En un restaurante';
+            } else if (formatNode) {
+                dondeLasUsaras = formatNode.label;
+            }
+
+const [editingContactField, setEditingContactField] = useState(null);
             const derivedPhone = globalData.contact?.phone || globalData.logistics?.tu_whatsapp || '';
             const derivedEmail = globalData.contact?.email || globalData.logistics?.tu_email || '';
             const [editContactData, setEditContactData] = useState({ phone: derivedPhone, email: derivedEmail });
@@ -4024,6 +4035,7 @@
                                         <div className="pb-4">
                                             <ul className="space-y-3 text-sm text-gray-600">
                                         <li><strong className="text-gray-800">Formato de la experiencia:</strong> Cartas en versión {isDigital ? 'digital' : 'física'}</li>
+                                        {dondeLasUsaras && <li><strong className="text-gray-800">¿Dónde las usarás?:</strong> {dondeLasUsaras}</li>}
                                         
                                         {isDigital ? (
                                             <>
