@@ -3657,16 +3657,16 @@
                 
                 if (isRestaurant) {
                     const restName = globalData.logistics?.restaurante || 'tu restaurante';
-                    const dir = globalData.logistics?.direccion || globalData.logistics?.ciudad || '';
+                    const dir = globalData.logistics?.direccion || globalData.logistics?.ciudad_entrega || globalData.logistics?.ciudad_restaurante || '';
                     title = `Envío garantizado antes del ${fecha} al restaurante ${restName} de la ${dir}`;
                 } else if (isPickup) {
                     const pickup = globalData.logistics?.punto_recogida || '';
-                    const dir = globalData.logistics?.direccion || globalData.logistics?.ciudad || '';
+                    const dir = globalData.logistics?.direccion || globalData.logistics?.ciudad_entrega || globalData.logistics?.ciudad_restaurante || '';
                     title = `Envío garantizado antes del ${fecha} al punto de recogida ${pickup} de la ${dir}`;
                 } else {
                     const dir = globalData.logistics?.direccion || '';
                     const info = globalData.logistics?.info_adicional_direccion ? ' ' + globalData.logistics.info_adicional_direccion : '';
-                    const city = globalData.logistics?.ciudad || '';
+                    const city = globalData.logistics?.ciudad_entrega || globalData.logistics?.ciudad_restaurante || '';
                     title = `Envío garantizado antes del ${fecha} a la ${dir}${info}, ${city}`;
                 }
                 
@@ -3795,7 +3795,7 @@
                     Edicion: isDigital ? 'Digital' : 'Física',
                     Tipo_Relacion: audLabel,
                     Tonos_Elegidos: selectedTonesStr,
-                    Ciudad: globalData.logistics?.ciudad || 'N/A',
+                    Ciudad: globalData.logistics?.ciudad_entrega || globalData.logistics?.ciudad_restaurante || 'N/A',
                     Fecha_Cena: globalData.logistics?.fecha || 'N/A',
                     Participantes: participantesTextList || 'Ninguno',
                     Objetivo_Cena: globalData.objective || 'N/A',
@@ -4033,7 +4033,7 @@
                                         ) : (
                                             <>
                                                 {globalData.logistics?.fecha && <li><strong className="text-gray-800">{globalData.formatId?.includes('restaurante') ? 'Día y hora de la cena:' : 'Límite de entrega:'}</strong> {formatDate(globalData.logistics.fecha)}</li>}
-                                                <li><strong className="text-gray-800">Entrega:</strong> {globalData.formatId?.includes('restaurante') ? `Las cartas te estarán esperando en tu mesa del ${globalData.logistics?.restaurante || 'restaurante'} reservada a nombre de ${globalData.logistics?.reserva || 'tu reserva'}.` : globalData.formatId?.includes('mi_casa') || globalData.formatId?.includes('otro') ? `${globalData.logistics?.direccion || ''}${globalData.logistics?.info_adicional_direccion ? ', ' + globalData.logistics.info_adicional_direccion : ''}, ${globalData.logistics?.ciudad || ''}` : globalData.logistics?.punto_recogida ? `En el punto de recogida ${globalData.logistics.punto_recogida}` : 'Dirección de envío'}</li>
+                                                <li><strong className="text-gray-800">Entrega:</strong> {globalData.formatId?.includes('restaurante') ? `Las cartas te estarán esperando en tu mesa del ${globalData.logistics?.restaurante || 'restaurante'} reservada a nombre de ${globalData.logistics?.reserva || 'tu reserva'}.` : globalData.formatId?.includes('mi_casa') || globalData.formatId?.includes('otro') ? `${globalData.logistics?.direccion || ''}${globalData.logistics?.info_adicional_direccion ? ', ' + globalData.logistics.info_adicional_direccion : ''}, ${globalData.logistics?.ciudad_entrega || globalData.logistics?.ciudad_restaurante || ''}` : globalData.logistics?.punto_recogida ? `En el punto de recogida ${globalData.logistics.punto_recogida}` : 'Dirección de envío'}</li>
                                             </>
                                         )}
 
