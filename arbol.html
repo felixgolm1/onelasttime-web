@@ -3552,7 +3552,7 @@
                 try {
                     const date = new Date(dateString);
                     if (isNaN(date.getTime())) return dateString.replace('T', ' a las ');
-                    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                    const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
                     const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
                     const dayName = days[date.getDay()];
                     const day = date.getDate();
@@ -3599,7 +3599,7 @@ const formatRestaurante = () => {
 const [editingContactField, setEditingContactField] = useState(null);
             const derivedPhone = globalData.contact?.phone || globalData.logistics?.tu_whatsapp || '';
             const derivedEmail = globalData.contact?.email || globalData.logistics?.tu_email || '';
-            const derivedNotas = globalData.contact?.notas_entrega || '';
+            const derivedNotas = globalData.contact?.notas_entrega || globalData.logistics?.notas_entrega || '';
             const [editContactData, setEditContactData] = useState({ phone: derivedPhone, email: derivedEmail, notas_entrega: derivedNotas });
             const [contactErrorMsg, setContactErrorMsg] = useState(null);
             const [shakeContact, setShakeContact] = useState(false);
@@ -3652,7 +3652,8 @@ const [editingContactField, setEditingContactField] = useState(null);
             let isBalearesCeutaMelilla = false;
             let isCanarias = false;
             if (!isDigital && globalData.logistics) {
-                let str = ((globalData.logistics.ciudad || '') + ' ' + (globalData.logistics.direccion || '')).toLowerCase();
+                let cityField = globalData.logistics.ciudad_entrega || globalData.logistics.ciudad_restaurante || globalData.logistics.punto_recogida || '';
+                let str = (cityField + ' ' + (globalData.logistics.direccion || '')).toLowerCase();
                 if (str.includes("balears") || str.includes("baleares") || str.includes("ceuta") || str.includes("melilla") || str.match(/\b(07|51|52)\d{3}\b/) || str.includes("palma de mallorca") || str.includes("ibiza") || str.includes("menorca")) {
                     isBalearesCeutaMelilla = true;
                 }
