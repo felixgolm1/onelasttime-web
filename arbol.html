@@ -3679,14 +3679,26 @@ const [editingContactField, setEditingContactField] = useState(null);
                 const isRestaurantDelivery = isReservationMade || (globalData.formatId === 'cartas_fisicas_reserva_no_hecha' && globalData.logistics?.restaurante);
                 const isPickup = globalData.logistics?.punto_recogida ? true : false;
                 
+                let isIslandSupplement = false;
                 if (isBalearesCeutaMelilla) {
                     if (isRestaurantDelivery) cost = 3;
-                    else if (isPickup) cost = 2;
-                    else cost = 3;
+                    else {
+                        if (isPickup) cost = 2;
+                        else cost = 3;
+                        isIslandSupplement = true;
+                    }
                 } else if (isCanarias) {
                     if (isRestaurantDelivery) cost = 3;
-                    else if (isPickup) cost = 5;
-                    else cost = 6;
+                    else {
+                        if (isPickup) cost = 5;
+                        else cost = 6;
+                        isIslandSupplement = true;
+                    }
+                }
+                
+                let costLabel = null;
+                if (isIslandSupplement) {
+                    costLabel = "(Suplemento islas. Gratis en península)";
                 }
                 
                 const fecha = globalData.logistics?.fecha ? formatDate(globalData.logistics.fecha) : '';
@@ -3754,7 +3766,8 @@ const [editingContactField, setEditingContactField] = useState(null);
                     title: title,
                     cost: cost,
                     costText: cost === 0 ? 'Gratis' : `${cost}€`,
-                    costColor: cost === 0 ? 'text-green-600' : 'text-gray-900'
+                    costColor: cost === 0 ? 'text-green-600' : 'text-gray-900',
+                    costLabel: costLabel
                 };
             };
 
@@ -4093,6 +4106,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                                         <div className="text-right">
                                             <span className={`text-lg font-bold whitespace-nowrap leading-none block ${shipping.costColor}`}>{shipping.costText}</span>
                                             {shipping.cost > 0 && <p className="text-[10px] text-gray-400 mt-1 whitespace-nowrap leading-none">IVA incluido</p>}
+                                            {shipping.costLabel && <p className="text-[10px] text-gray-500 mt-1 leading-tight max-w-[150px] text-right ml-auto">{shipping.costLabel}</p>}
                                         </div>
                                     </div>
                                     <div className="flex justify-between items-start text-sm text-gray-600 mb-4">
