@@ -3697,7 +3697,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                     title = (
                         <div className="flex flex-col">
                             <span>Las cartas te estarán esperando en tu mesa del restaurante {restName} el {fecha}</span>
-                            <span className="text-gray-500 text-xs mt-1 font-medium">Nombre de la reserva: {resName}</span>
+                            <span className="mt-1"><strong className="text-gray-800">Nombre de la reserva:</strong> {resName}</span>
                         </div>
                     );
                 } else if (isRestaurantDelivery) {
@@ -4097,7 +4097,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                                             {shipping.cost > 0 && <p className="text-[10px] text-gray-400 mt-0.5 whitespace-nowrap leading-none">IVA incluido</p>}
                                         </div>
                                     </div>
-                                    <div className="flex justify-between items-start text-sm text-gray-500 mb-4">
+                                    <div className="flex justify-between items-start text-sm text-gray-600 mb-4">
                                         <div className="pr-4">{shipping.title}</div>
                                     </div>
   
@@ -4126,7 +4126,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                                         </div>
                                     </div>
                                     )}
-                                    <div className="mb-6">
+                                    <div className="mb-6 text-sm">
                                             <strong className="text-gray-800 block mb-2">
                                                 {isDigital ? 'Información de contacto para la entrega:' : 'Información de contacto para el seguimiento del envío:'}
                                             </strong>
