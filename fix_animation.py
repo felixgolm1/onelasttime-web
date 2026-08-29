@@ -1,48 +1,34 @@
 ﻿import re
 
-with open("3d-test.html", "r", encoding="utf-8") as f:
-    content = f.read()
+with open("arbol.html", "r", encoding="utf-8") as f:
+    text = f.read()
 
-old_js = r'''              // 3. CIENCIA - slide UP como "RISE" en Oryzo
-              \{ const p = Math.min\(Math.max\(mapRange\(exitP, 0.05, 0.55, 0, 1\), 0\), 1\);
-                const easeUp = 1 - Math.pow\(1 - p, 2\);
-                applyExit\('mag-ciencia', 	ranslateY\(\$\{-60 \* easeUp\}px\),
-                  Math.max\(0, 1 - mapRange\(p, 0.2, 1.0, 0, 1\)\)\); \}'''
+# 1. Add CSS
+css_to_add = """
+        .fade-fast { animation: fadeInFast 0.3s ease-out both; }
+        @keyframes fadeInFast { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+"""
+text = text.replace('/* --- UTILIDADES GLOBALES --- */', '/* --- UTILIDADES GLOBALES --- */\n' + css_to_add)
 
-new_js = '''              // 3. CIENCIA - slide UP escalonado
-              { const baseP = Math.min(Math.max(mapRange(exitP, 0.05, 0.55, 0, 1), 0), 1);
-                const globalOpacity = Math.max(0, 1 - mapRange(baseP, 0.2, 1.0, 0, 1));
-                applyExit('mag-ciencia', '', globalOpacity);
-                document.querySelectorAll('[id="mag-ciencia"]').forEach(container => {
-                  container.querySelectorAll('.ciencia-letter').forEach((letter, idx) => {
-                    const stagger = idx * 0.08;
-                    const startP = stagger;
-                    const endP = 0.5 + stagger;
-                    const letterP = Math.min(Math.max(mapRange(exitP, startP, endP, 0, 1), 0), 1);
-                    const easeUp = 1 - Math.pow(1 - letterP, 2);
-                    letter.style.transform = 	ranslateY(px);
-                  });
-                });
-              }'''
+# 2. Add key and class to ObjectiveScreen
+old_p_1 = """                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic">
+                                        {formatExampleText(currentPlaceholder)}
+                                    </p>"""
+new_p_1 = """                                    <p key={placeholderIndex} className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic fade-fast">
+                                        {formatExampleText(currentPlaceholder)}
+                                    </p>"""
+text = text.replace(old_p_1, new_p_1)
 
-content = re.sub(old_js, new_js, content)
+# 3. Add key and class to CustomizationN4
+old_p_2 = """                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic">
+                                        {formatExampleText(currentModalExample)}
+                                    </p>"""
+new_p_2 = """                                    <p key={placeholderIndex} className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic fade-fast">
+                                        {formatExampleText(currentModalExample)}
+                                    </p>"""
+text = text.replace(old_p_2, new_p_2)
 
-old_reset = r'''              \['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom'\].forEach\(id => \{
-                document.querySelectorAll\(\[id="\$\{id\}"\]\).forEach\(el => \{
-                  el.style.transform = '';
-                  el.style.opacity   = '';
-                \}\);
-              \}\);'''
+with open("arbol.html", "w", encoding="utf-8") as f:
+    f.write(text)
+print("Added animations!")
 
-new_reset = '''              ['mag-saber-mas','mag-natgeo','mag-ciencia','mag-col-left','mag-col-right','mag-bottom'].forEach(id => {
-                document.querySelectorAll([id=""]).forEach(el => {
-                  el.style.transform = '';
-                  el.style.opacity   = '';
-                });
-              });
-              document.querySelectorAll('.ciencia-letter').forEach(el => el.style.transform = '');'''
-
-content = re.sub(old_reset, new_reset, content)
-
-with open("3d-test.html", "w", encoding="utf-8") as f:
-    f.write(content)

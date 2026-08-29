@@ -37,6 +37,10 @@
         #root { overflow-x: clip; min-height: 100vh; }
 
         /* --- UTILIDADES GLOBALES --- */
+
+        .fade-fast { animation: fadeInFast 0.3s ease-out both; }
+        @keyframes fadeInFast { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
         .fade-in { animation: fadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
         .fade-out { animation: fadeOut 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         .fade-in-opacity { animation: fadeInOpacity 1.2s ease-out both; }
@@ -2700,7 +2704,7 @@
                                 </h3>
                                 
                                 <div className="w-full mb-8 h-[180px] overflow-y-auto pr-2 custom-scrollbar">
-                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic">
+                                    <p key={placeholderIndex} className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic fade-fast">
                                         {formatExampleText(currentPlaceholder)}
                                     </p>
                                 </div>
@@ -3493,7 +3497,7 @@
                                 </h3>
                                 
                                 <div className="w-full mb-8 h-[180px] overflow-y-auto pr-2 custom-scrollbar">
-                                    <p className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic">
+                                    <p key={placeholderIndex} className="text-base md:text-lg font-medium leading-relaxed text-center text-gray-600 font-inter italic fade-fast">
                                         {formatExampleText(currentModalExample)}
                                     </p>
                                 </div>
