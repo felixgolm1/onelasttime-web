@@ -3696,7 +3696,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                     const resName = globalData.logistics?.reserva || 'tu nombre';
                     title = (
                         <div className="flex flex-col gap-1">
-                            <span className="mb-2">Las cartas te estarán esperando en tu mesa</span>
+                            <span className="mb-2 text-[#CCFF00] font-bold drop-shadow-sm">Las cartas te estarán esperando en tu mesa antes de que llegues</span>
                             <span><strong className="text-gray-800">Nombre del restaurante:</strong> {restName}</span>
                             <span><strong className="text-gray-800">Nombre de la reserva:</strong> {resName}</span>
                             <span><strong className="text-gray-800">Hora de la cena:</strong> {fecha}</span>
@@ -3706,7 +3706,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                     const restName = formatRestaurante();
                     title = (
                         <div className="flex flex-col gap-1">
-                            <span className="mb-2">Las cartas te estarán esperando en el restaurante</span>
+                            <span className="mb-2 text-[#CCFF00] font-bold drop-shadow-sm">Las cartas te estarán esperando en el restaurante antes de que llegues</span>
                             <span><strong className="text-gray-800">Nombre del restaurante:</strong> {restName}</span>
                             <span><strong className="text-gray-800">Hora de la cena:</strong> {fecha}</span>
                             <span className="text-gray-500 text-xs mt-2 font-medium">Pregunta por ellas al o la camarerx con la confimación de tu pedido</span>
@@ -3727,7 +3727,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                     title: title,
                     cost: cost,
                     costText: cost === 0 ? 'Gratis' : `${cost}€`,
-                    costColor: cost === 0 ? 'text-green-600' : 'text-gray-900'
+                    costColor: cost === 0 ? 'text-[#CCFF00]' : 'text-gray-900'
                 };
             };
 
