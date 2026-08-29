@@ -24,6 +24,19 @@
         ::-moz-selection { background: #CCFF00; color: #000; }
         
         .font-poppins { font-family: Poppins, sans-serif; }
+        .top-blur-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            z-index: 35;
+            pointer-events: none;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
         .font-inter { font-family: Inter, sans-serif; }
         body {
             margin: 0; font-family: 'Poppins', sans-serif;
@@ -4427,6 +4440,7 @@ const [editingContactField, setEditingContactField] = useState(null);
 
             return (
                 <div className="w-full relative min-h-screen flex flex-col">
+                    <div className="top-blur-mask"></div>
                     {transitionState.active && (
                         <>
 
