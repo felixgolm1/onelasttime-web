@@ -4067,6 +4067,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                                     </div>
   
                                     
+                                    {globalData.logistics?.direccion && (
                                     <div className="mb-6">
                                         <strong className="text-gray-800 block mb-2">
                                             ¿Quieres que tengamos algo en cuenta para la entrega?
@@ -4089,6 +4090,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                                             </div>
                                         </div>
                                     </div>
+                                    )}
                                     <div className="mb-6">
                                             <strong className="text-gray-800 block mb-2">
                                                 {isDigital ? 'Información de contacto para la entrega:' : 'Información de contacto para el seguimiento del envío:'}
