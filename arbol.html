@@ -3663,11 +3663,16 @@ const [editingContactField, setEditingContactField] = useState(null);
             }
 
             const getShippingDetails = () => {
+                const fecha = globalData.logistics?.fecha ? formatDate(globalData.logistics.fecha) : '';
+                
                 if (isDigital) {
-                    const phone = editContactData.phone || derivedPhone;
-                    const email = editContactData.email || derivedEmail;
                     return {
-                        title: "Envío de enlace digital", 
+                        title: (
+                            <div className="flex flex-col gap-2">
+                                <span>Envío de enlace a tu WhatsApp e email a la hora de la cena. Aunque las puedes recibir antes con un solo clic en caso de que os adelantéis.</span>
+                                <span><strong className="text-gray-800">Hora de la cena:</strong> {fecha}</span>
+                            </div>
+                        ), 
                         cost: 0,
                         costText: '0€',
                         costColor: 'text-black'
@@ -3705,8 +3710,6 @@ const [editingContactField, setEditingContactField] = useState(null);
                         </>
                     );
                 }
-                
-                const fecha = globalData.logistics?.fecha ? formatDate(globalData.logistics.fecha) : '';
                 let title = '';
                 
                 if (isReservationMade) {
