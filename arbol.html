@@ -3718,8 +3718,15 @@ const [editingContactField, setEditingContactField] = useState(null);
                     );
                 } else if (isPickup) {
                     const pickup = globalData.logistics?.punto_recogida || '';
-                    const dir = globalData.logistics?.direccion || globalData.logistics?.ciudad_entrega || globalData.logistics?.ciudad_restaurante || '';
-                    title = `Envío garantizado antes del ${fecha} al punto de recogida ${pickup} de la ${dir}`;
+                    title = (
+                        <div className="flex flex-col">
+                            <strong className="mb-2 text-gray-800">Envío garantizado a tu punto de recogida</strong>
+                            <ul className="list-disc ml-4 space-y-1">
+                                <li><strong className="text-gray-800">Punto de recogida:</strong> {pickup}</li>
+                                <li><strong className="text-gray-800">Límite de entrega:</strong> {fecha}</li>
+                            </ul>
+                        </div>
+                    );
                 } else {
                     const dir = globalData.logistics?.direccion || '';
                     const info = globalData.logistics?.info_adicional_direccion ? ' ' + globalData.logistics.info_adicional_direccion : '';
