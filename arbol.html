@@ -3535,7 +3535,9 @@
                 } catch(e) { return dateString.replace('T', ' a las '); }
             };
             const [editingContactField, setEditingContactField] = useState(null);
-            const [editContactData, setEditContactData] = useState({ phone: globalData.contact?.phone || '', email: globalData.contact?.email || '' });
+            const derivedPhone = globalData.contact?.phone || globalData.logistics?.tu_whatsapp || '';
+            const derivedEmail = globalData.contact?.email || globalData.logistics?.tu_email || '';
+            const [editContactData, setEditContactData] = useState({ phone: derivedPhone, email: derivedEmail });
             const [contactErrorMsg, setContactErrorMsg] = useState(null);
             const [shakeContact, setShakeContact] = useState(false);
             const [activeContactBtn, setActiveContactBtn] = useState(false);
@@ -3598,8 +3600,8 @@
 
             const getShippingDetails = () => {
                 if (isDigital) {
-                    const phone = editContactData.phone || globalData.contact?.phone || '';
-                    const email = editContactData.email || globalData.contact?.email || '';
+                    const phone = editContactData.phone || derivedPhone;
+                    const email = editContactData.email || derivedEmail;
                     return {
                         title: (
                             <>
@@ -4031,8 +4033,8 @@
                                                             <span className={`text-red-500 text-[10px] sm:text-xs leading-tight whitespace-nowrap transition-opacity duration-200 ${contactErrorMsg && !phoneValid ? 'opacity-100' : 'opacity-0'}`}>{contactErrorMsg}</span>
                                                         </div>
                                                         {/* Text (View Mode) */}
-                                                        <div className={`absolute left-0 top-0 h-full flex items-center gap-2 group cursor-pointer transition-all duration-300 ease-out ${editingContactField !== 'phone' ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-4 pointer-events-none -z-10'}`} onClick={(e) => { setEditingContactField('phone'); setEditContactData({...editContactData, phone: globalData.contact?.phone || ''}); setContactErrorMsg(null); setTimeout(() => document.getElementById('edit-phone-input')?.focus(), 50); }}>
-                                                            <p className="text-gray-900 font-medium">{globalData.contact?.phone || 'No indicado'}</p>
+                                                        <div className={`absolute left-0 top-0 h-full flex items-center gap-2 group cursor-pointer transition-all duration-300 ease-out ${editingContactField !== 'phone' ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-4 pointer-events-none -z-10'}`} onClick={(e) => { setEditingContactField('phone'); setEditContactData({...editContactData, phone: derivedPhone}); setContactErrorMsg(null); setTimeout(() => document.getElementById('edit-phone-input')?.focus(), 50); }}>
+                                                            <p className="text-gray-900 font-medium">{derivedPhone || 'No indicado'}</p>
                                                             <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                         </div>
                                                     </div>
@@ -4051,8 +4053,8 @@
                                                             <span className={`text-red-500 text-[10px] sm:text-xs leading-tight whitespace-nowrap transition-opacity duration-200 ${contactErrorMsg && !emailValid ? 'opacity-100' : 'opacity-0'}`}>{contactErrorMsg}</span>
                                                         </div>
                                                         {/* Text (View Mode) */}
-                                                        <div className={`absolute left-0 top-0 h-full flex items-center gap-2 group cursor-pointer transition-all duration-300 ease-out ${editingContactField !== 'email' ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-4 pointer-events-none -z-10'}`} onClick={(e) => { setEditingContactField('email'); setEditContactData({...editContactData, email: globalData.contact?.email || ''}); setContactErrorMsg(null); setTimeout(() => document.getElementById('edit-email-input')?.focus(), 50); }}>
-                                                            <p className="text-gray-900 font-medium">{globalData.contact?.email || 'No indicado'}</p>
+                                                        <div className={`absolute left-0 top-0 h-full flex items-center gap-2 group cursor-pointer transition-all duration-300 ease-out ${editingContactField !== 'email' ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-4 pointer-events-none -z-10'}`} onClick={(e) => { setEditingContactField('email'); setEditContactData({...editContactData, email: derivedEmail}); setContactErrorMsg(null); setTimeout(() => document.getElementById('edit-email-input')?.focus(), 50); }}>
+                                                            <p className="text-gray-900 font-medium">{derivedEmail || 'No indicado'}</p>
                                                             <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                         </div>
                                                     </div>
