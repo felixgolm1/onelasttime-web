@@ -3568,7 +3568,7 @@
             if (globalData.formatId?.includes('otro')) {
                 dondeLasUsaras = globalData.formatCustomPlace || 'Otro lugar';
             } else if (globalData.formatId?.includes('reserva') || globalData.formatId?.includes('restaurante')) {
-                dondeLasUsaras = 'En un restaurante';
+                dondeLasUsaras = globalData.logistics?.restaurante ? `En el restaurante ${globalData.logistics.restaurante}` : 'En un restaurante';
             } else if (formatNode) {
                 dondeLasUsaras = formatNode.label;
             }
