@@ -3564,15 +3564,24 @@
             useEffect(() => { window.scrollTo(0, 0); }, []);
             const rightColRef = React.useRef(null);
             React.useEffect(() => {
-                if (rightColRef.current) {
-                    const updateHeight = () => {
-                        rightColRef.current.style.setProperty("--box-height", `${rightColRef.current.offsetHeight}px`);
-                    };
+                const el = rightColRef.current;
+                if (!el) return;
+                
+                const updateHeight = () => {
+                    document.documentElement.style.setProperty("--box-height", `${el.offsetHeight}px`);
+                };
+                
+                updateHeight();
+                
+                const observer = new ResizeObserver(() => {
                     updateHeight();
-                    window.addEventListener("resize", updateHeight);
-                    return () => window.removeEventListener("resize", updateHeight);
-                }
-            }, [globalData]);
+                });
+                observer.observe(el);
+                
+                return () => {
+                    observer.disconnect();
+                };
+            }, []);
             const formatDate = (dateString) => {
                 if (!dateString) return '';
                 try {
