@@ -1,93 +1,99 @@
 ﻿import re
 
-filepath = r'c:\Users\Félix Gol\.gemini\antigravity\scratch\sensibles-web\3d-test.html'
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
+with open("arbol.html", "r", encoding="utf-8") as f:
+    text = f.read()
 
-# 1. REMOVE DUPLICATE CODE
-idx1 = content.find('(function startIntroAnim() {')
-idx2 = content.find('(function startIntroAnim() {', idx1 + 10)
-if idx2 != -1:
-    # Find the closing </script> after idx2
-    end_script = content.find('</script>', idx2)
-    if end_script != -1:
-        content = content[:idx2] + content[end_script:]
+# 1. Restore the blur mask height to 130px instead of 180px
+text = re.sub(r'\.top-blur-mask \{\s*position: fixed;\s*top: 0;\s*left: 0;\s*width: 100%;\s*height: 180px;', 
+              r'.top-blur-mask {\n            position: fixed;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 130px;', text)
 
-# 2. INJECT NEW REVIEW PANEL HTML
-html_new = '''
-    <div class="oryzo-review-panel" id="review-panel-1">
-      <div class="osr-top-line">
-        <div style="display:flex; align-items:center;">
-          <div>RESEÑA DESTACADA</div>
-          <div class="osr-stars">★★★★★</div>
-        </div>
-        <div>ORYZO - EXPERIENCIA CINEMÁTICA</div>
-      </div>
-      <div class="osr-body">
-        <div class="review-text-col">
-          <div class="osr-stars-small">5 ESTRELLAS</div>
-          <div class="review-quote">
-            <span class="review-quote-bg">"Es increíble cómo una simple carta puede generar conversaciones tan profundas y auténticas. Lo recomiendo 100%."</span>
-            <span class="review-quote-fg">"Es increíble cómo una simple carta puede generar <span class="review-highlight">conversaciones tan profundas</span> y auténticas. Lo recomiendo 100%."</span>
-          </div>
-          <div class="review-author">ELSA M.<br>APASIONADA DEL BAILE</div>
-        </div>
-        <div class="review-img-col">
-          <img src="assets/img/elsa.png" alt="Review 1">
-        </div>
-      </div>
-    </div>
-'''
-html_pattern = r'<div class="oryzo-review-panel" id="review-panel-1">.*?</div>\s*</div>\s*<div class="oryzo-review-panel" id="review-panel-2">'
-content = re.sub(html_pattern, html_new + '\n    <div class="oryzo-review-panel" id="review-panel-2">', content, flags=re.DOTALL)
+# 2. Remove z-[38] from Checkout container
+text = text.replace('<div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in z-[38]">', 
+                    '<div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">')
 
+# 3. Restore the React ResizeObserver for the right box height (safest way to get dynamic height)
+target_useeffect = """                const handleScroll = () => {
+                    const container = el.parentElement;
+                    if (!container) return;
+                    
+                    const containerRect = container.getBoundingClientRect();
+                    const elHeight = el.offsetHeight;
+                    const viewportHeight = window.innerHeight;
+                    
+                    // We want the element to stick such that its bottom is 32px from the viewport bottom
+                    // Target Y relative to viewport: viewportHeight - elHeight - 32
+                    // But it shouldn't go higher than its initial position (which is 152px from viewport top when container is at 104px margin)
+                    
+                    // Calculate how far the container has scrolled up
+                    // When container top is at 152px (initial), offset should be 0
+                    const initialContainerTop = 152; 
+                    const scrollY = initialContainerTop - containerRect.top;
+                    
+                    if (scrollY > 0) {
+                        // The container has scrolled up by `scrollY` pixels
+                        // We want to translate the element down by `scrollY` to keep it sticky at the top
+                        // BUT we want to delay the stickiness so it scrolls up a bit first!
+                        // Let's let it scroll up until its bottom hits the bottom of the viewport
+                        
+                        const elementBottomInViewport = containerRect.top + elHeight;
+                        const targetBottom = viewportHeight - 32;
+                        
+                        if (elementBottomInViewport < targetBottom) {
+                            // Element needs to be pushed down to keep its bottom at targetBottom
+                            let pushDown = targetBottom - elementBottomInViewport;
+                            
+                            // Don't push down more than the container's available height
+                            const maxPush = containerRect.height - elHeight;
+                            pushDown = Math.min(pushDown, maxPush);
+                            pushDown = Math.max(0, pushDown);
+                            
+                            el.style.transform = `translateY(${pushDown}px)`;
+                        } else {
+                            el.style.transform = `translateY(0px)`;
+                        }
+                    } else {
+                        el.style.transform = `translateY(0px)`;
+                    }
+                };
+                
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                window.addEventListener('resize', handleScroll);
+                handleScroll();
+                
+                return () => {
+                    window.removeEventListener('scroll', handleScroll);
+                    window.removeEventListener('resize', handleScroll);
+                };"""
 
-# 3. INJECT NEW JAVASCRIPT
-js_new = '''
-      // Animación de los paneles de reseña (AHORA ORYZO SLIDE UP)
-      const rev1 = document.getElementById('review-panel-1');
-      if (rev1) {
-        if (prog > 3.0 && prog < 4.6) {
-          let pRev = mapRange(prog, 3.0, 4.6, 0, 1);
-          
-          // 1. Desplazamiento desde abajo hacia arriba
-          let yVal = mapRange(prog, 3.0, 4.6, window.innerHeight, -window.innerHeight);
-          rev1.style.transform = `translateY(${yVal}px)`;
-          
-          // 2. Fade in temprano y fade out antes de llegar al menú
-          if (pRev < 0.15) {
-             rev1.style.opacity = mapRange(pRev, 0, 0.15, 0, 1);
-          } else if (pRev > 0.85) {
-             rev1.style.opacity = mapRange(pRev, 0.85, 1.0, 1, 0);
-          } else {
-             rev1.style.opacity = 1;
-          }
+replacement_useeffect = """                const updateHeight = () => {
+                    document.documentElement.style.setProperty("--box-height", `${el.offsetHeight}px`);
+                };
+                
+                updateHeight();
+                
+                const observer = new ResizeObserver(() => {
+                    updateHeight();
+                });
+                observer.observe(el);
+                
+                return () => {
+                    observer.disconnect();
+                };"""
+text = text.replace(target_useeffect, replacement_useeffect)
 
-          // 3. Texto iluminado de derecha a izquierda
-          const quoteFg = rev1.querySelector('.review-quote-fg');
-          if (quoteFg) {
-             let textP = mapRange(pRev, 0.2, 0.5, 100, 0); // inset right de 100 a 0
-             textP = Math.max(0, Math.min(100, textP));
-             quoteFg.style.clipPath = `inset(0% 0% 0% ${textP}%)`;
-          }
+# 4. Restore the CSS sticky min() logic
+target_col = """                        <div 
+                            ref={rightColRef}
+                            className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit self-start relative z-40"
+                            style={{ willChange: 'transform' }}
+                        >"""
+replacement_col = """                        <div 
+                            ref={rightColRef}
+                            className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky self-start relative z-40 transition-all duration-300"
+                            style={{ top: 'min(152px, calc(100vh - var(--box-height, 0px) - 32px))' }}
+                        >"""
+text = text.replace(target_col, replacement_col)
 
-          // 4. Imagen se agranda 30% y se ilumina
-          const img = rev1.querySelector('.review-img-col img');
-          if (img) {
-             let imgP = mapRange(pRev, 0.1, 0.6, 0, 1);
-             imgP = Math.max(0, Math.min(1, imgP));
-             let scale = 1.0 + (0.3 * imgP);
-             let brightness = 0.3 + (0.7 * imgP);
-             img.style.transform = `scale(${scale})`;
-             img.style.filter = `brightness(${brightness})`;
-          }
-        } else {
-          rev1.style.opacity = '0';
-        }
-      }
-'''
-js_pattern = r"const rev1 = document\.getElementById\('review-panel-1'\);.*?const rev2 = document\.getElementById\('review-panel-2'\);"
-content = re.sub(js_pattern, js_new + "\n      const rev2 = document.getElementById('review-panel-2');", content, flags=re.DOTALL)
-
-with open(filepath, 'w', encoding='utf-8') as f:
-    f.write(content)
+with open("arbol.html", "w", encoding="utf-8") as f:
+    f.write(text)
+print("Implemented final perfect solution")
