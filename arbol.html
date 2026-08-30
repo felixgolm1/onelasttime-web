@@ -3689,10 +3689,20 @@ const [editingContactField, setEditingContactField] = useState(null);
             if (!isDigital && globalData.logistics) {
                 let cityField = globalData.logistics.ciudad_entrega || globalData.logistics.ciudad_restaurante || globalData.logistics.punto_recogida || '';
                 let str = (cityField + ' ' + (globalData.logistics.direccion || '')).toLowerCase();
-                if (str.includes("balears") || str.includes("baleares") || str.includes("ceuta") || str.includes("melilla") || str.match(/\b(07|51|52)\d{3}\b/) || str.includes("palma de mallorca") || str.includes("ibiza") || str.includes("menorca")) {
+                if (globalData.logistics.place_details && globalData.logistics.place_details.address_components) {
+                    str += ' ' + JSON.stringify(globalData.logistics.place_details.address_components).toLowerCase();
+                }
+                if (globalData.logistics.cityFieldDetails && globalData.logistics.cityFieldDetails.address_components) {
+                    str += ' ' + JSON.stringify(globalData.logistics.cityFieldDetails.address_components).toLowerCase();
+                }
+                if (globalData.logistics.restaurante_details && globalData.logistics.restaurante_details.address_components) {
+                    str += ' ' + JSON.stringify(globalData.logistics.restaurante_details.address_components).toLowerCase();
+                }
+                
+                if (str.includes("balears") || str.includes("baleares") || str.includes("ceuta") || str.includes("melilla") || str.includes("palma de mallorca") || str.includes("ibiza") || str.includes("menorca") || str.match(/\b(07|51|52)\d{3}\b/)) {
                     isBalearesCeutaMelilla = true;
                 }
-                if (str.includes("canarias") || str.includes("las palmas") || str.includes("tenerife") || str.match(/\b(35|38)\d{3}\b/)) {
+                if (str.includes("canarias") || str.includes("las palmas") || str.includes("tenerife") || str.includes("fuerteventura") || str.includes("lanzarote") || str.includes("la palma") || str.includes("la gomera") || str.includes("el hierro") || str.match(/\b(35|38)\d{3}\b/)) {
                     isCanarias = true;
                 }
             }
