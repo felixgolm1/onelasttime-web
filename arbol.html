@@ -4078,7 +4078,7 @@ const [editingContactField, setEditingContactField] = useState(null);
             }
 
             return (
-                <div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">
+                <div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in z-[38]">
                     <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-[104px]">
                         
                         {/* COLUMNA IZQUIERDA: PAGO */}
@@ -4130,11 +4130,7 @@ const [editingContactField, setEditingContactField] = useState(null);
                         </div>
 
                         {/* COLUMNA DERECHA: RESUMEN */}
-                        <div 
-                            ref={rightColRef}
-                            className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky self-start relative z-40 transition-all duration-300"
-                            style={{ top: 'min(152px, calc(100vh - var(--box-height, 0px) - 32px))' }}
-                        >
+                        <div className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky md:top-[152px] self-start relative z-40 transition-all duration-300">
                             <div>
                                 <h1 className="text-3xl font-semibold tracking-tight mb-4 text-black">Resumen del pedido</h1>
                             </div>
