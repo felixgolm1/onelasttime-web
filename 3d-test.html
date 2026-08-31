@@ -1935,7 +1935,7 @@ window.onerror = function(msg, url, line, col, err) {
       <div class="sc-card" id="sc-4">
         <div class="sc-num">4</div>
         <div class="sc-desc">
-          <b id="dynamic-verbs" style="color: #ccff00; display: inline-block; min-width: 140px; text-align: center; transition: opacity 0.4s ease;">Disfruta</b> 
+          <b id="dynamic-verbs" style="display: inline-block; min-width: 140px; text-align: center; color: #ccff00;">Disfruta</b> 
           en una de las mejores cenas que hayas tenido jamás
         </div>
         <script>
@@ -1943,15 +1943,61 @@ window.onerror = function(msg, url, line, col, err) {
             const verbs = ["Disfruta", "Ábrete", "Escucha", "Ríe", "Llora", "Crece", "Emociónate"];
             let vIndex = 0;
             const el = document.getElementById('dynamic-verbs');
+            const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
+            
+            function runMatrixIn(targetWord) {
+              let iteration = 0;
+              const len = targetWord.length;
+              clearInterval(el.matrixTimer);
+              el.matrixTimer = setInterval(() => {
+                let html = '';
+                for (let i = 0; i < len; i++) {
+                  if (targetWord[i] === ' ') html += ' ';
+                  else if (i < Math.floor(iteration)) html += `<span style="color:#ccff00">${targetWord[i]}</span>`;
+                  else if (i < Math.floor(iteration) + 4) html += `<span style="color:#ffffff">${glyphs[Math.floor(Math.random() * glyphs.length)]}</span>`;
+                  else html += `<span style="opacity:0">${targetWord[i]}</span>`;
+                }
+                el.innerHTML = html;
+                iteration += 0.4;
+                if (iteration > len + 4) {
+                  clearInterval(el.matrixTimer);
+                  el.innerHTML = targetWord;
+                }
+              }, 40);
+            }
+
+            function runMatrixOut(currentWord, callback) {
+              let iteration = 0;
+              const len = currentWord.length;
+              clearInterval(el.matrixTimer);
+              el.matrixTimer = setInterval(() => {
+                let html = '';
+                for (let i = 0; i < len; i++) {
+                  if (currentWord[i] === ' ') html += ' ';
+                  else if (i < Math.floor(iteration)) html += `<span style="opacity:0">${currentWord[i]}</span>`;
+                  else if (i < Math.floor(iteration) + 4) html += `<span style="color:#ffffff">${glyphs[Math.floor(Math.random() * glyphs.length)]}</span>`;
+                  else html += `<span style="color:#ccff00">${currentWord[i]}</span>`;
+                }
+                el.innerHTML = html;
+                iteration += 0.4;
+                if (iteration > len + 4) {
+                  clearInterval(el.matrixTimer);
+                  el.innerHTML = '';
+                  if(callback) callback();
+                }
+              }, 40);
+            }
+
             if(el) {
-              setInterval(() => {
-                el.style.opacity = '0';
-                setTimeout(() => {
-                  vIndex = (vIndex + 1) % verbs.length;
-                  el.textContent = verbs[vIndex];
-                  el.style.opacity = '1';
-                }, 400); // Wait for fade out
-              }, 2500); // Change every 2.5 seconds
+              // Arrancar ciclo
+              setTimeout(() => {
+                setInterval(() => {
+                  runMatrixOut(verbs[vIndex], () => {
+                    vIndex = (vIndex + 1) % verbs.length;
+                    runMatrixIn(verbs[vIndex]);
+                  });
+                }, 3000);
+              }, 1000);
             }
           });
         </script>
