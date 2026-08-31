@@ -1935,72 +1935,9 @@ window.onerror = function(msg, url, line, col, err) {
       <div class="sc-card" id="sc-4">
         <div class="sc-num">4</div>
         <div class="sc-desc">
-          <b id="dynamic-verbs" style="display: inline-block; min-width: 140px; text-align: center; color: #ccff00;">Disfruta</b> 
+          <b style="color: #ccff00;">Disfruta, ábrete, escucha, ríe, llora, crece, ama...</b> 
           en una de las mejores cenas que hayas tenido jamás
         </div>
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            const verbs = ["Disfruta", "Ábrete", "Escucha", "Ríe", "Llora", "Crece", "Emociónate"];
-            let vIndex = 0;
-            const el = document.getElementById('dynamic-verbs');
-            const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
-            
-            function runMatrixIn(targetWord) {
-              let iteration = 0;
-              const len = targetWord.length;
-              clearInterval(el.matrixTimer);
-              el.matrixTimer = setInterval(() => {
-                let html = '';
-                for (let i = 0; i < len; i++) {
-                  if (targetWord[i] === ' ') html += ' ';
-                  else if (i < Math.floor(iteration)) html += `<span style="color:#ccff00">${targetWord[i]}</span>`;
-                  else if (i < Math.floor(iteration) + 4) html += `<span style="color:#ffffff">${glyphs[Math.floor(Math.random() * glyphs.length)]}</span>`;
-                  else html += `<span style="opacity:0">${targetWord[i]}</span>`;
-                }
-                el.innerHTML = html;
-                iteration += 0.4;
-                if (iteration > len + 4) {
-                  clearInterval(el.matrixTimer);
-                  el.innerHTML = targetWord;
-                }
-              }, 40);
-            }
-
-            function runMatrixOut(currentWord, callback) {
-              let iteration = 0;
-              const len = currentWord.length;
-              clearInterval(el.matrixTimer);
-              el.matrixTimer = setInterval(() => {
-                let html = '';
-                for (let i = 0; i < len; i++) {
-                  if (currentWord[i] === ' ') html += ' ';
-                  else if (i < Math.floor(iteration)) html += `<span style="opacity:0">${currentWord[i]}</span>`;
-                  else if (i < Math.floor(iteration) + 4) html += `<span style="color:#ffffff">${glyphs[Math.floor(Math.random() * glyphs.length)]}</span>`;
-                  else html += `<span style="color:#ccff00">${currentWord[i]}</span>`;
-                }
-                el.innerHTML = html;
-                iteration += 0.4;
-                if (iteration > len + 4) {
-                  clearInterval(el.matrixTimer);
-                  el.innerHTML = '';
-                  if(callback) callback();
-                }
-              }, 40);
-            }
-
-            if(el) {
-              // Arrancar ciclo
-              setTimeout(() => {
-                setInterval(() => {
-                  runMatrixOut(verbs[vIndex], () => {
-                    vIndex = (vIndex + 1) % verbs.length;
-                    runMatrixIn(verbs[vIndex]);
-                  });
-                }, 3000);
-              }, 1000);
-            }
-          });
-        </script>
       </div>
       <!-- Carta central Hola [nombre] -->
       <div class="sc-card" id="sc-intro" style="background:rgba(21,21,21,1);z-index:10; backface-visibility: hidden; transform: translate(-50%, -50%) scale(1.2) rotate(-2.5deg); pointer-events: auto;">
@@ -2235,8 +2172,9 @@ window.onerror = function(msg, url, line, col, err) {
     <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="headline-sub oh-inner" style="display:block; margin:0;">En tu restaurante favorito, o en casa</p></span>
   </div>
   <!-- Logo superior izquierda -->
-  <div id="nav-logo">
-    <img src="assets/img/logo one last time.png" alt="One Last Time">
+  <div id="nav-logo" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
+    <img src="assets/img/logo one last time.png" alt="One Last Time" style="height: 57px; width: auto; filter: brightness(0) invert(1);">
+    <img src="assets/img/by sensibles.png" alt="by Sensibles" style="height: 28px; width: auto; filter: brightness(0) invert(1); padding-left: 20px;">
   </div>
   <!-- Menú superior derecha -->
   <nav id="nav-menu">
