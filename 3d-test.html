@@ -1934,7 +1934,27 @@ window.onerror = function(msg, url, line, col, err) {
       </div>
       <div class="sc-card" id="sc-4">
         <div class="sc-num">4</div>
-        <div class="sc-desc"><b style="color: #ccff00;">Relájate y experimenta</b> una de las mejores cenas que has tenido jamás</div>
+        <div class="sc-desc">
+          <b id="dynamic-verbs" style="color: #ccff00; display: inline-block; min-width: 140px; text-align: center; transition: opacity 0.4s ease;">Disfruta</b> 
+          en una de las mejores cenas que hayas tenido jamás
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const verbs = ["Disfruta", "Ábrete", "Escucha", "Ríe", "Llora", "Crece", "Emociónate"];
+            let vIndex = 0;
+            const el = document.getElementById('dynamic-verbs');
+            if(el) {
+              setInterval(() => {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                  vIndex = (vIndex + 1) % verbs.length;
+                  el.textContent = verbs[vIndex];
+                  el.style.opacity = '1';
+                }, 400); // Wait for fade out
+              }, 2500); // Change every 2.5 seconds
+            }
+          });
+        </script>
       </div>
       <!-- Carta central Hola [nombre] -->
       <div class="sc-card" id="sc-intro" style="background:rgba(21,21,21,1);z-index:10; backface-visibility: hidden; transform: translate(-50%, -50%) scale(1.2) rotate(-2.5deg); pointer-events: auto;">
