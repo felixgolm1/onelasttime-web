@@ -3731,18 +3731,18 @@ const [editingContactField, setEditingContactField] = useState(null);
                 
                 let isIslandSupplement = false;
                 if (isBalearesCeutaMelilla) {
+                    isIslandSupplement = true;
                     if (isRestaurantDelivery) cost = 3;
                     else {
                         if (isPickup) cost = 2;
                         else cost = 3;
-                        isIslandSupplement = true;
                     }
                 } else if (isCanarias) {
+                    isIslandSupplement = true;
                     if (isRestaurantDelivery) cost = 3;
                     else {
                         if (isPickup) cost = 5;
                         else cost = 6;
-                        isIslandSupplement = true;
                     }
                 }
                 
