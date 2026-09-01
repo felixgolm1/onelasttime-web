@@ -2885,10 +2885,10 @@ window.onerror = function(msg, url, line, col, err) {
     const scIntroBackInner = scIntroBack.querySelector('div:last-child'); // El contenedor de los párrafos
 
     // Ã¢â€€Ã¢â€€ Diccionario de textos para los giros Ã¢â€€Ã¢â€€
-        const stepTexts = [
-      "CHAT",                                      // Inicio (Front)
-      "CHAT",                                     // 1er Giro (Back)
-      "CHAT", // 2do Giro (Front)
+            const stepTexts = [
+      "4 PASOS",                                   // Inicio (Front)
+      "CHAT",                                      // 1er Giro (Back)
+      "CHAT",                                      // 2do Giro (Front)
       "4 PASOS"                                    // 3er Giro (Back)
     ];
     const sc1       = document.getElementById('sc-1');
@@ -3112,14 +3112,7 @@ window.onerror = function(msg, url, line, col, err) {
         let selS = neonInput ? neonInput.selectionStart : val.length;
         let selE = neonInput ? neonInput.selectionEnd : val.length;
         if (typeof window.update3DCardTexture === 'function') {
-          window.update3DCardTexture('back', { 
-            type: 'name_input', 
-            val: val, 
-            selS: selS,
-            selE: selE,
-            cursorAlpha: cursorState.alpha, 
-            focused: isNeonFocused || val.length === 0
-          });
+          window.update3DCardTexture('back', 'CHAT');
         }
       }
     };
@@ -3168,14 +3161,7 @@ window.onerror = function(msg, url, line, col, err) {
         const currentVal = neonInput ? neonInput.value : '';
         const currentSelS = neonInput ? neonInput.selectionStart : 0;
         const currentSelE = neonInput ? neonInput.selectionEnd : 0;
-        window.update3DCardTexture('back', { 
-          type: 'name_input', 
-          val: currentVal, 
-          selS: currentSelS,
-          selE: currentSelE,
-          cursorAlpha: 0, 
-          focused: false 
-        });
+        window.update3DCardTexture('back', 'CHAT');
       }
 
       if (neonGroup) neonGroup.style.pointerEvents = 'auto';
@@ -3206,7 +3192,7 @@ window.onerror = function(msg, url, line, col, err) {
       if (scTitle) scTitle.textContent = fullTxt;
       if (neonGroup) neonGroup.style.pointerEvents = 'none';
       if (neonInput) neonInput.blur();
-      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front');
+      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front', 'CHAT');
     }, null, 0.08 + (0.80 * 270/540));
 
     // Ocultar input al pasar al siguiente flip
