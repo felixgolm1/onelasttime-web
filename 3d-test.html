@@ -7782,10 +7782,10 @@ function renderChat() {
     lastChatTime = now;
     chatScrollY += dt * 0.04;
     
-    ctx.font = '500 20px "Inter", sans-serif';
+    ctx.font = '500 30px "Inter", sans-serif';
     ctx.textBaseline = 'middle';
     
-    const spacing = 70;
+    const spacing = 105;
     const totalHeight = chatMessages.length * spacing;
     
     chatScrollY = chatScrollY % totalHeight;
@@ -7800,18 +7800,18 @@ function renderChat() {
             let isRight = (i % 2 !== 0);
             
             let textW = ctx.measureText(msg).width;
-            let bubbleW = textW + 40;
-            let bubbleH = 46;
-            let avatarSize = 36;
+            let bubbleW = textW + 60;
+            let bubbleH = 69;
+            let avatarSize = 54;
             
-            let bubbleX = isRight ? W - bubbleW - avatarSize - 40 : 40 + avatarSize + 20;
+            let bubbleX = isRight ? W - bubbleW - avatarSize - 30 : 30 + avatarSize + 20;
             let bubbleY = baseY;
             
-            let avatarX = isRight ? W - 40 - avatarSize : 40;
-            let avatarY = baseY + 5;
+            let avatarX = isRight ? W - 30 - avatarSize : 30;
+            let avatarY = baseY + 7;
             
             ctx.fillStyle = 'rgba(204, 255, 0, 0.15)'; 
-            drawRoundedRectChat(ctx, bubbleX, bubbleY, bubbleW, bubbleH, 23);
+            drawRoundedRectChat(ctx, bubbleX, bubbleY, bubbleW, bubbleH, 34);
             ctx.fill();
             
             ctx.fillStyle = '#ffffff';
