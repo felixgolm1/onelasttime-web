@@ -7876,29 +7876,15 @@ function makeCardBackTex(data = '4 PASOS') {
         ctx.fillStyle = '#0d0d0d';
         ctx.fillRect(0, 0, W, H);
         ctx.textBaseline = 'middle';
+        
+        ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
+        ctx.font = 'bold 100px "Bebas Neue", Impact, sans-serif';
+        ctx.fillText("4 PASOS", W / 2, H / 2);
         
-        ctx.fillStyle = '#ccff00';
-        ctx.font = '700 24px "Poppins", sans-serif';
-        ctx.fillText('NUESTRO MÉTODO', W/2, 100);
-        
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '500 48px "Bebas Neue", sans-serif';
-        ctx.fillText('4 PASOS HACIA LA PROFUNDIDAD', W/2, 160);
-        
-        ctx.font = '400 20px "Inter", sans-serif';
-        ctx.fillStyle = '#999999';
-        ctx.fillText('Un sistema diseñado para escalar la vulnerabilidad', W/2, 210);
-        
-        ctx.fillStyle = '#333333';
-        ctx.fillRect(W/2 - 40, 260, 80, 2);
-        
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '600 22px "Poppins", sans-serif';
-        ctx.fillText('1. Rompehielos', W/2 - 180, 320);
-        ctx.fillText('2. Superficie', W/2 + 180, 320);
-        ctx.fillText('3. Profundidad', W/2 - 180, 380);
-        ctx.fillText('4. Revelación', W/2 + 180, 380);
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(0, 1); ctx.lineTo(W, 1); ctx.stroke();
         
         globalBackTex.needsUpdate = true;
     } else if (typeof data === 'object' && data.type === 'name_input') {

@@ -1599,9 +1599,12 @@ window.onerror = function(msg, url, line, col, err) {
 </script>
 </head>
 <div id="vip-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index:999999999; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Inter', sans-serif;">
-    <img src="assets/img/logo one last time verde.png" style="width:250px; margin-bottom:40px; filter: drop-shadow(0 0 10px rgba(204,255,0,0.2));">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom:40px;">
+        <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="width: 100%; max-width: 450px; height: auto; filter: brightness(0) invert(1);">
+        <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="width: 45%; max-width: 180px; height: auto; filter: brightness(0) invert(1);">
+    </div>
     <h2 style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em;">Introduce el c&oacute;digo de acceso</h2>
-    <input type="text" id="vip-code" placeholder="C&Oacute;DIGO SECRETO" style="padding:15px 20px; border-radius:12px; border:2px solid #ccff00; background:#111; color:#ccff00; font-size:20px; font-weight:800; text-align:center; width:300px; outline:none; text-transform:uppercase; margin-bottom:25px; box-shadow: 0 0 20px rgba(204,255,0,0.1);">
+    <input type="text" id="vip-code" placeholder="C&Oacute;DIGO SECRETO" style="padding:15px 20px; border-radius:50px; border:2px solid #ccff00; background:#111; color:#ccff00; font-size:20px; font-weight:800; text-align:center; width:300px; outline:none; text-transform:uppercase; margin-bottom:25px; box-shadow: 0 0 20px rgba(204,255,0,0.1);">
     <button onclick="checkVipCode()" style="background:#ccff00; color:#000; font-weight:800; font-size:16px; padding:15px 40px; border:none; border-radius:50px; cursor:pointer; text-transform:uppercase; transition:transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(204,255,0,0.3);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Entrar</button>
     <p id="vip-error" style="color:#ff4444; margin-top:20px; font-size:15px; display:none; font-weight:500;">C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?</p>
 </div>
