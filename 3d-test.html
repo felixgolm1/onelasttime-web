@@ -6,6 +6,7 @@ window.onerror = function(msg, url, line, col, err) {
   let d = document.createElement('div');
   d.style.cssText = 'position:fixed;top:0;left:0;z-index:9999999;background:red;color:white;padding:20px;font-size:24px;width:100%;';
   d.innerHTML = '<b>JS ERROR:</b> ' + msg + ' <br>Line: ' + line;
+  if (msg.indexOf('Script error') > -1 || line === 0) return;
   document.body.appendChild(d);
 };
 </script>
@@ -1576,7 +1577,7 @@ window.onerror = function(msg, url, line, col, err) {
         pointer-events: none !important;
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
 </head>
 
 
@@ -2230,7 +2231,7 @@ window.onerror = function(msg, url, line, col, err) {
             <span style="font-family:'Inter',sans-serif; font-size:10px; color:#ffffff; opacity:0.5;">Profundo</span>
           </div>
 
-          <p id="dial-question" style="font-family:'Poppins', sans-serif; color:#ccff00; font-size: 15px; font-weight: 600; text-align: center; margin-top: 20px; min-height: 48px; line-height: 1.3;">\\u00bfCu\\u00e1l es tu pel\\u00edcula favorita?</p>
+          <p id="dial-question" style="font-family:'Poppins', sans-serif; color:#ccff00; font-size: 15px; font-weight: 600; text-align: center; margin-top: 20px; min-height: 48px; line-height: 1.3;">&#191;Cu&#225;l es tu pel&#237;cula favorita?</p>
         </div>
 
       </div>
@@ -2719,11 +2720,11 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
+  <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   
 
 
@@ -6894,14 +6895,7 @@ window.onerror = function(msg, url, line, col, err) {
           percentRight = Math.max(0, Math.min(100, percentRight));
           line.style.clipPath = `inset(0 ${100 - percentRight}% 0 0)`;
       }
-      } catch(err) { 
-            if(!window.didAlertErr) { 
-                var eD = document.createElement('div'); 
-                eD.style.cssText = 'position:fixed;inset:0;background:red;color:white;z-index:99999999;font-size:30px;padding:50px;'; 
-                eD.innerText = 'CRASH: ' + err.message + '\n' + err.stack; 
-                document.body.appendChild(eD); 
-                window.didAlertErr = true; 
-            } 
+      } catch(err) {} 
         }
 requestAnimationFrame(smoothScrollLoop);
     }
