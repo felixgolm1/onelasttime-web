@@ -7781,10 +7781,10 @@ function renderChat() {
     lastChatTime = now;
     chatScrollY += dt * 0.04; // velocidad suave
     
-    ctx.font = '500 30px "Inter", sans-serif';
+    ctx.font = '500 24px "Inter", sans-serif';
     ctx.textBaseline = 'middle';
     
-    const spacing = 105;
+    const spacing = 84;
     const totalHeight = chatMessages.length * spacing;
     
     chatScrollY = chatScrollY % totalHeight;
@@ -7800,19 +7800,19 @@ function renderChat() {
             let isRight = (i % 2 !== 0);
             
             let textW = ctx.measureText(msg).width;
-            let bubbleW = textW + 60;
-            let bubbleH = 69;
-            let avatarSize = 54;
+            let bubbleW = textW + 48;
+            let bubbleH = 55;
+            let avatarSize = 43;
             
-            let bubbleX = isRight ? W - bubbleW - avatarSize - 30 : 30 + avatarSize + 20;
+            let bubbleX = isRight ? W - bubbleW - avatarSize - 40 : 40 + avatarSize + 20;
             let bubbleY = baseY;
             
-            let avatarX = isRight ? W - 30 - avatarSize : 30;
-            let avatarY = baseY + 7;
+            let avatarX = isRight ? W - 40 - avatarSize : 40;
+            let avatarY = baseY + 6;
             
             // Fondo de la burbuja (Verde CTA con transparencia)
             ctx.fillStyle = 'rgba(204, 255, 0, 0.15)'; 
-            drawRoundedRectChat(ctx, bubbleX, bubbleY, bubbleW, bubbleH, 34);
+            drawRoundedRectChat(ctx, bubbleX, bubbleY, bubbleW, bubbleH, 27);
             ctx.fill();
             
             // Texto (Blanco)
