@@ -2885,10 +2885,10 @@ window.onerror = function(msg, url, line, col, err) {
     const scIntroBackInner = scIntroBack.querySelector('div:last-child'); // El contenedor de los párrafos
 
     // Ã¢â€€Ã¢â€€ Diccionario de textos para los giros Ã¢â€€Ã¢â€€
-    const stepTexts = [
-      "4 PASOS",                                   // Inicio (Front)
-      "Hola ",                                     // 1er Giro (Back)
-      "Si las conversaciones nos unen, hagámoslas inolvidables", // 2do Giro (Front)
+        const stepTexts = [
+      "CHAT",                                      // Inicio (Front)
+      "CHAT",                                     // 1er Giro (Back)
+      "CHAT", // 2do Giro (Front)
       "4 PASOS"                                    // 3er Giro (Back)
     ];
     const sc1       = document.getElementById('sc-1');
@@ -3003,7 +3003,7 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.call(() => {
       // Restaurar texturas originales de la carta WebGL
       if (typeof window.update3DCardTexture === 'function') {
-        window.update3DCardTexture('front'); // Vuelve al logo "One Last Time"
+        window.update3DCardTexture('front', 'CHAT');
         window.update3DCardTexture('back', stepTexts[0]); // Vuelve a "4 PASOS"
       }
       // Asegurar que el input interactivo está oculto y sin foco
@@ -3163,7 +3163,7 @@ window.onerror = function(msg, url, line, col, err) {
       
       // Reset de la cara FRONTAL al logo original mientras no se ve
       if (typeof window.update3DCardTexture === 'function') {
-        window.update3DCardTexture('front'); 
+        window.update3DCardTexture('front', 'CHAT'); 
         // Preservar el valor actual del input
         const currentVal = neonInput ? neonInput.value : '';
         const currentSelS = neonInput ? neonInput.selectionStart : 0;
@@ -3206,7 +3206,7 @@ window.onerror = function(msg, url, line, col, err) {
       if (scTitle) scTitle.textContent = fullTxt;
       if (neonGroup) neonGroup.style.pointerEvents = 'none';
       if (neonInput) neonInput.blur();
-      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front', fullTxt);
+      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front', 'CHAT');
     }, null, 0.08 + (0.80 * 270/540));
 
     // Ocultar input al pasar al siguiente flip
@@ -7663,7 +7663,16 @@ requestAnimationFrame(smoothScrollLoop);
   }
 
   function makeCardFrontTex(text1 = 'CONEXIONES SIGNIFICATIVAS', text2 = 'PARA PERSONAS QUE IMPORTAN') {
+    if (text1 === 'CHAT' || (typeof text1 === 'object' && text1.type === 'name_input')) {
+        if (!chatAnimating) {
+            chatAnimating = true;
+            lastChatTime = performance.now();
+            renderChat();
+        }
+        return globalBackTex;
+    }
     const W = 760, H = 468;
+
     const c = document.createElement('canvas');
     c.width = W; c.height = H;
     const ctx = c.getContext('2d');
@@ -7887,13 +7896,33 @@ function makeCardBackTex(data = '4 PASOS') {
         ctx.beginPath(); ctx.moveTo(0, 1); ctx.lineTo(W, 1); ctx.stroke();
         
         globalBackTex.needsUpdate = true;
-    } else if (typeof data === 'object' && data.type === 'name_input') {
+        return globalBackTex;
+    }
+    
+    if (data === 'CHAT' || (typeof data === 'object' && data.type === 'name_input')) {
         if (!chatAnimating) {
             chatAnimating = true;
             lastChatTime = performance.now();
             renderChat();
         }
+        return globalBackTex;
     }
+    
+    chatAnimating = false; // Detener para cualquier otro texto estático
+    const text = typeof data === 'string' ? data : '';
+    ctx.fillStyle = '#0d0d0d';
+    ctx.fillRect(0, 0, W, H);
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 100px "Bebas Neue", Impact, sans-serif';
+    ctx.fillText(text, W / 2, H / 2);
+    
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, 1); ctx.lineTo(W, 1); ctx.stroke();
+    
+    globalBackTex.needsUpdate = true;
     return globalBackTex;
 }
   // Textura de grano procedural para simular superficie de carta (bump)
