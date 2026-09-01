@@ -1742,12 +1742,17 @@ window.onerror = function(msg, url, line, col, err) {
         <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="width: 100%; max-width: 450px; height: auto; filter: brightness(0) invert(1);">
         <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="width: 45%; max-width: 180px; height: auto; filter: brightness(0) invert(1);">
     </div>
-    <h2 style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em;">Introduce el c&oacute;digo de acceso</h2>
+    <h2 style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em; font-size:24px; max-width: 600px; line-height: 1.4;">Introduce el c&oacute;digo de acceso para vivir la cena m&aacute;s transformadora de tu vida</h2>
     <input type="text" id="vip-code" class="vip-pill vip-input" placeholder="C&Oacute;DIGO SECRETO">
     <button onclick="checkVipCode()" class="vip-pill vip-btn btn">Entrar</button>
     <p id="vip-error" style="color:#ff4444; margin-top:20px; font-size:15px; display:none; font-weight:500;">C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?</p>
 </div>
 <script>
+// Mantener el efecto de luces siempre activo mientras se est en esta pantalla
+var vipEmberInterval = setInterval(function() {
+    window._ctaHoverActive = true;
+}, 50);
+
 function checkVipCode() {
     var code = document.getElementById('vip-code').value.trim().toUpperCase();
     var validCodes = ['PIONEROS', 'SENS-VIP', 'INFILTRADO', 'COCREADOR', 'ORIGEN', 'ZERO', '1234'];
@@ -1756,6 +1761,8 @@ function checkVipCode() {
         overlay.style.transition = 'opacity 0.8s ease';
         overlay.style.opacity = '0';
         setTimeout(function() { overlay.style.display = 'none'; }, 800);
+        clearInterval(vipEmberInterval);
+        window._ctaHoverActive = false; // dejar que vuelvan a la normalidad
     } else {
         var err = document.getElementById('vip-error');
         err.style.display = 'block';

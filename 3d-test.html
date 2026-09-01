@@ -7794,6 +7794,7 @@ function drawSpeechBubble(ctx, x, y, width, height, radius, isRight) {
 }
 
 function renderChat() {
+    if (!chatAnimating) return;
     requestAnimationFrame(renderChat);
     const W = 760, H = 468;
     const ctx = globalBackCtx;
