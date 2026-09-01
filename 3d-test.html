@@ -7783,23 +7783,6 @@ function drawSpeechBubble(ctx, x, y, width, height, radius, isRight) {
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
 }
-  
-  ctx.lineTo(x + width, y + height - radius);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  ctx.lineTo(x + radius, y + height);
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-  
-  if (!isRight) {
-    let tailY = y + height / 2;
-    ctx.lineTo(x, tailY + 8);
-    ctx.lineTo(x - 10, tailY);
-    ctx.lineTo(x, tailY - 8);
-  }
-  
-  ctx.lineTo(x, y + radius);
-  ctx.quadraticCurveTo(x, y, x + radius, y);
-  ctx.closePath();
-}
 
 function renderChat() {
     requestAnimationFrame(renderChat);
