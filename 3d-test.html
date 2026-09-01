@@ -8084,9 +8084,9 @@ function makeCardBackTex(data = '4 PASOS') {
 
     const applyDesign = () => {
       frontMesh.material = new THREE.MeshBasicMaterial({
-        map: makeCardFrontTex('CHAT'), side: THREE.FrontSide, depthTest: false });
+        map: makeCardFrontTex(), side: THREE.FrontSide, depthTest: false });
       backMesh.material  = new THREE.MeshBasicMaterial({
-        map: makeCardBackTex('CHAT'),  side: THREE.FrontSide, depthTest: false });
+        map: makeCardBackTex(),  side: THREE.FrontSide, depthTest: false });
       frontMesh.material.needsUpdate = true;
       backMesh.material.needsUpdate  = true;
     };
