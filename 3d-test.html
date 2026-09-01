@@ -7770,7 +7770,6 @@ function drawRoundedRectChat(ctx, x, y, width, height, radius) {
 }
 
 function renderChat() {
-    if (!chatAnimating) return;
     requestAnimationFrame(renderChat);
     const W = 760, H = 468;
     const ctx = globalBackCtx;
@@ -7780,7 +7779,7 @@ function renderChat() {
     let now = performance.now();
     let dt = Math.min(now - lastChatTime, 50);
     lastChatTime = now;
-    chatScrollY += dt * 0.04;
+    chatScrollY += dt * 0.04; // velocidad suave
     
     ctx.font = '500 30px "Inter", sans-serif';
     ctx.textBaseline = 'middle';
@@ -7795,6 +7794,7 @@ function renderChat() {
             let msg = chatMessages[i];
             let baseY = (i * spacing) - chatScrollY + (loop * totalHeight);
             
+            // Evitar dibujar si est fuera de pantalla
             if (baseY < -100 || baseY > H + 100) continue;
             
             let isRight = (i % 2 !== 0);
@@ -7810,14 +7810,17 @@ function renderChat() {
             let avatarX = isRight ? W - 30 - avatarSize : 30;
             let avatarY = baseY + 7;
             
+            // Fondo de la burbuja (Verde CTA con transparencia)
             ctx.fillStyle = 'rgba(204, 255, 0, 0.15)'; 
             drawRoundedRectChat(ctx, bubbleX, bubbleY, bubbleW, bubbleH, 34);
             ctx.fill();
             
+            // Texto (Blanco)
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
             ctx.fillText(msg, bubbleX + bubbleW/2, bubbleY + bubbleH/2);
             
+            // Avatar (Lauric)
             if (chatAvatar.complete && chatAvatar.naturalWidth > 0) {
                 ctx.save();
                 ctx.beginPath();
@@ -7839,45 +7842,9 @@ function renderChat() {
 }
 
 function makeCardBackTex(data = '4 PASOS') {
-    const W = 760, H = 468;
-    const ctx = globalBackCtx;
-    
-    if (data === '4 PASOS') {
-        chatAnimating = false; // Detener animación si estaba en marcha
-        ctx.fillStyle = '#0d0d0d';
-        ctx.fillRect(0, 0, W, H);
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = 'center';
-        
-        ctx.fillStyle = '#ccff00';
-        ctx.font = '700 24px "Poppins", sans-serif';
-        ctx.fillText('NUESTRO MÉTODO', W/2, 100);
-        
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '500 48px "Bebas Neue", sans-serif';
-        ctx.fillText('4 PASOS HACIA LA PROFUNDIDAD', W/2, 160);
-        
-        ctx.font = '400 20px "Inter", sans-serif';
-        ctx.fillStyle = '#999999';
-        ctx.fillText('Un sistema diseñado para escalar la vulnerabilidad', W/2, 210);
-        
-        ctx.fillStyle = '#333333';
-        ctx.fillRect(W/2 - 40, 260, 80, 2);
-        
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '600 22px "Poppins", sans-serif';
-        ctx.fillText('1. Rompehielos', W/2 - 180, 320);
-        ctx.fillText('2. Superficie', W/2 + 180, 320);
-        ctx.fillText('3. Profundidad', W/2 - 180, 380);
-        ctx.fillText('4. Revelación', W/2 + 180, 380);
-        
-        globalBackTex.needsUpdate = true;
-    } else if (typeof data === 'object' && data.type === 'name_input') {
-        if (!chatAnimating) {
-            chatAnimating = true;
-            lastChatTime = performance.now();
-            renderChat();
-        }
+    if (!chatAnimating) {
+        chatAnimating = true;
+        renderChat();
     }
     return globalBackTex;
 }
