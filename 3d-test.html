@@ -7826,13 +7826,24 @@ function renderChat() {
             let avatarX = isRight ? W - 40 - avatarSize : 40;
             let avatarY = baseY + 6;
             
-            // Fondo de la burbuja (Verde CTA con transparencia)
-            ctx.fillStyle = 'rgba(204, 255, 0, 0.15)'; 
-            drawRoundedRectChat(ctx, bubbleX, bubbleY, bubbleW, bubbleH, 27);
+            // Fondo de la burbuja estilo CTA
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+            drawSpeechBubble(ctx, bubbleX, bubbleY, bubbleW, bubbleH, 27, isRight);
             ctx.fill();
             
-            // Texto (Blanco)
-            ctx.fillStyle = '#ffffff';
+            // Glow y borde
+            let glow = ctx.createLinearGradient(bubbleX, bubbleY, bubbleX, bubbleY + bubbleH);
+            glow.addColorStop(0, 'rgba(204, 255, 0, 0.15)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
+            ctx.fill();
+            
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(204, 255, 0, 0.45)';
+            ctx.stroke();
+            
+            // Texto estilo CTA
+            ctx.fillStyle = 'rgba(204, 255, 0, 0.95)';
             ctx.textAlign = 'center';
             ctx.fillText(msg, bubbleX + bubbleW/2, bubbleY + bubbleH/2);
             
