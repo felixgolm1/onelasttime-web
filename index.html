@@ -1598,6 +1598,33 @@ window.onerror = function(msg, url, line, col, err) {
     })(window, document, "clarity", "script", "ybcl1952vm");
 </script>
 </head>
+<div id="vip-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index:999999999; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Inter', sans-serif;">
+    <img src="assets/img/logo one last time verde.png" style="width:250px; margin-bottom:40px; filter: drop-shadow(0 0 10px rgba(204,255,0,0.2));">
+    <h2 style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em;">Introduce el c&oacute;digo de acceso</h2>
+    <input type="text" id="vip-code" placeholder="C&Oacute;DIGO SECRETO" style="padding:15px 20px; border-radius:12px; border:2px solid #ccff00; background:#111; color:#ccff00; font-size:20px; font-weight:800; text-align:center; width:300px; outline:none; text-transform:uppercase; margin-bottom:25px; box-shadow: 0 0 20px rgba(204,255,0,0.1);">
+    <button onclick="checkVipCode()" style="background:#ccff00; color:#000; font-weight:800; font-size:16px; padding:15px 40px; border:none; border-radius:50px; cursor:pointer; text-transform:uppercase; transition:transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(204,255,0,0.3);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Entrar</button>
+    <p id="vip-error" style="color:#ff4444; margin-top:20px; font-size:15px; display:none; font-weight:500;">C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?</p>
+</div>
+<script>
+function checkVipCode() {
+    var code = document.getElementById('vip-code').value.trim().toUpperCase();
+    var validCodes = ['PIONEROS', 'SENS-VIP', 'INFILTRADO', 'COCREADOR', 'ORIGEN', 'ZERO', '1234'];
+    if(validCodes.includes(code)) {
+        var overlay = document.getElementById('vip-overlay');
+        overlay.style.transition = 'opacity 0.8s ease';
+        overlay.style.opacity = '0';
+        setTimeout(function() { overlay.style.display = 'none'; }, 800);
+    } else {
+        var err = document.getElementById('vip-error');
+        err.style.display = 'block';
+        err.animate([ { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' } ], { duration: 400 });
+    }
+}
+document.getElementById('vip-code').addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') checkVipCode();
+});
+</script>
+
 
 
 
