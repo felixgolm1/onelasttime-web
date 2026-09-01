@@ -5331,8 +5331,7 @@ window.addEventListener('error', function(e) {
         let width, height;
         let particles = [];
         let mouse = { x: -1000, y: -1000 };
-        let explosionIntensity = 0;
-        let isRedirecting = false;
+        let explosionActive = false;
 
         function resizeCanvas() {
             width = window.innerWidth;
@@ -5390,10 +5389,10 @@ window.addEventListener('error', function(e) {
                 this.x += this.vx;
                 this.y += this.vy;
 
-                if (explosionIntensity > 0) {
-                    this.vy -= (Math.random() * 0.05 + 0.02) * explosionIntensity; // accelerate upwards
-                    this.x += Math.sin(this.life * 1.5) * 0.5 * explosionIntensity; // wider sway
-                    this.alpha = Math.min(1, this.alpha * (1 + 0.5 * explosionIntensity)); // brighter
+                if (explosionActive) {
+                    this.vy -= (Math.random() * 0.05 + 0.02); // accelerate upwards
+                    this.x += Math.sin(this.life * 1.5) * 0.5; // wider sway
+                    this.alpha = Math.min(1, this.alpha * 1.5); // brighter
                 }
 
                 
@@ -5430,11 +5429,6 @@ window.addEventListener('error', function(e) {
         
         function animate() {
             requestAnimationFrame(animate);
-
-            if (explosionIntensity > 0) {
-                explosionIntensity -= 0.015;
-                if (explosionIntensity < 0) explosionIntensity = 0;
-            }
             
             let scrollOpacity = fakeBgFade ? (parseFloat(window.getComputedStyle(fakeBgFade).opacity) || 0) : 0;
             let targetCtaOpacity = window._ctaHoverActive ? 1.0 : 0.0;
@@ -5449,7 +5443,7 @@ window.addEventListener('error', function(e) {
             embersCanvas.style.transition = 'none';
             embersCanvas.style.setProperty('opacity', finalOpacity, 'important');
     
-            embersCanvas.style.setProperty('z-index', '99999999', 'important'); // PUSH TO ABSOLUTE FRONT (Above premium-bg)
+            embersCanvas.style.setProperty('z-index', '9999999', 'important'); // PUSH TO ABSOLUTE FRONT
             
             // ALWAYS update particles so they are distributed naturally even when invisible
             embersCtx.clearRect(0, 0, width, height);
@@ -5467,26 +5461,15 @@ window.addEventListener('error', function(e) {
                 }
             }
         }
-            }
-        }
         animate();
-
-        
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                // Force a full reload to correctly reset WebGL, GSAP, and scroll state
-                window.location.reload();
-            }
-        });
 
         document.addEventListener('click', (e) => {
             const cta = e.target.closest('a[href*="reservar-mi-cena"], button[onclick*="reservar-mi-cena"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
             if (cta) {
                 e.preventDefault();
                 e.stopPropagation();
-                if (isRedirecting) return;
-                isRedirecting = true;
-                explosionIntensity = 1.0;
+                if (explosionActive) return;
+                explosionActive = true;
                 window._ctaHoverActive = true; // force opacity to 1
                 
                 // Show overlays
@@ -5530,8 +5513,7 @@ window.addEventListener('error', function(e) {
         });
     }
 
-    
-})();
+    })();
 </script>
 \n
 <div id="hover-logger" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.8); color:lime; padding:10px; z-index:99999999; font-family:monospace; max-width: 400px;">Waiting...</div>
