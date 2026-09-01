@@ -3003,7 +3003,7 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.call(() => {
       // Restaurar texturas originales de la carta WebGL
       if (typeof window.update3DCardTexture === 'function') {
-        window.update3DCardTexture('front', 'CHAT');
+        window.update3DCardTexture('front');
         window.update3DCardTexture('back', stepTexts[0]); // Vuelve a "4 PASOS"
       }
       // Asegurar que el input interactivo está oculto y sin foco
@@ -3163,7 +3163,7 @@ window.onerror = function(msg, url, line, col, err) {
       
       // Reset de la cara FRONTAL al logo original mientras no se ve
       if (typeof window.update3DCardTexture === 'function') {
-        window.update3DCardTexture('front', 'CHAT'); 
+        window.update3DCardTexture('front'); 
         // Preservar el valor actual del input
         const currentVal = neonInput ? neonInput.value : '';
         const currentSelS = neonInput ? neonInput.selectionStart : 0;
@@ -3206,7 +3206,7 @@ window.onerror = function(msg, url, line, col, err) {
       if (scTitle) scTitle.textContent = fullTxt;
       if (neonGroup) neonGroup.style.pointerEvents = 'none';
       if (neonInput) neonInput.blur();
-      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front', 'CHAT');
+      if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front');
     }, null, 0.08 + (0.80 * 270/540));
 
     // Ocultar input al pasar al siguiente flip
