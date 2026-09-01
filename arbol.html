@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="es" class="bg-black overflow-y-scroll">
 <head><script>window.onerror = function(msg, url, lineNo, columnNo, error) { fetch('/log-error', { method: 'POST', body: msg + ' ' + lineNo }); };</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNJLJ16YP1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZNJLJ16YP1');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sensibles - Experiencia Completa V2.7</title>
@@ -4334,6 +4343,15 @@ const [editingContactField, setEditingContactField] = useState(null);
                 sessionStorage.setItem('skipIntro', 'true');
                 sessionStorage.setItem('forceSkipApplied', 'true'); // Only do this once per navigation
             }
+            
+            useEffect(() => {
+                if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                    window.gtag('event', 'page_view', {
+                        page_title: 'Fase ' + phase,
+                        page_path: '/' + phase
+                    });
+                }
+            }, [phase]);
             
             const [phase, setPhase] = useState(() => {
                 if (redirectStatus) return 'checkout';
