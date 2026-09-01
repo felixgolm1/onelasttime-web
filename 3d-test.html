@@ -8084,18 +8084,33 @@ function makeCardBackTex(data = '4 PASOS') {
 
     const applyDesign = () => {
       frontMesh.material = new THREE.MeshBasicMaterial({
-        map: makeCardFrontTex(), side: THREE.FrontSide, depthTest: false });
+        map: makeCardFrontTex('CHAT'), side: THREE.FrontSide, depthTest: false });
       backMesh.material  = new THREE.MeshBasicMaterial({
-        map: makeCardBackTex(),  side: THREE.FrontSide, depthTest: false });
+        map: makeCardBackTex('CHAT'),  side: THREE.FrontSide, depthTest: false });
       frontMesh.material.needsUpdate = true;
       backMesh.material.needsUpdate  = true;
     };
 
     // Exponemos una versión especial para el Matrix que sí fuerza el update del texto
+    
+    window.update3DCardTexture = function(side, data) {
+      if (side === 'front') {
+        const oldTex = frontMesh.material.map;
+        frontMesh.material.map = makeCardFrontTex(data);
+        if (oldTex && oldTex !== globalBackTex) oldTex.dispose();
+        frontMesh.material.needsUpdate = true;
+      } else {
+        const oldTex = backMesh.material.map;
+        backMesh.material.map = makeCardBackTex(data);
+        if (oldTex && oldTex !== globalBackTex) oldTex.dispose();
+        backMesh.material.needsUpdate = true;
+      }
+    };
+
     window._applyDesignWithMatrix = function(t1, t2) {
       const oldTex = frontMesh.material.map;
       frontMesh.material.map = makeCardFrontTex(t1, t2);
-      if (oldTex) oldTex.dispose();
+      if (oldTex && oldTex !== globalBackTex) oldTex.dispose();
       frontMesh.material.needsUpdate = true;
     };
 
