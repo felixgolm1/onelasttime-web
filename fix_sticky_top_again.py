@@ -1,0 +1,16 @@
+﻿import re
+
+with open("arbol.html", "r", encoding="utf-8") as f:
+    text = f.read()
+
+target = """                        {/* COLUMNA DERECHA: RESUMEN */}
+                        <div className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky md:bottom-8 self-start">"""
+
+replacement = """                        {/* COLUMNA DERECHA: RESUMEN */}
+                        <div className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky md:top-[128px] self-start">"""
+text = text.replace(target, replacement)
+
+with open("arbol.html", "w", encoding="utf-8") as f:
+    f.write(text)
+print("Reverted to sticky top-[128px]")
+

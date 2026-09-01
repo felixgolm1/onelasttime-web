@@ -1,0 +1,32 @@
+﻿import re
+
+with open("arbol.html", "r", encoding="utf-8") as f:
+    text = f.read()
+
+old_logic = """            const getShippingDetails = () => {
+                if (isDigital) {
+                    return {
+                        title: `Envío digital a ${editContactData.email || globalData.contact?.email || ''}`,
+                        cost: 0,
+                        costText: 'Gratis',
+                        costColor: 'text-black'
+                    };
+                }"""
+
+new_logic = """            const getShippingDetails = () => {
+                if (isDigital) {
+                    return {
+                        title: `Envío digital a ${editContactData.email || globalData.contact?.email || ''}`,
+                        cost: 0,
+                        costText: '',
+                        costColor: 'text-black'
+                    };
+                }"""
+
+if old_logic in text:
+    text = text.replace(old_logic, new_logic)
+    with open("arbol.html", "w", encoding="utf-8") as f:
+        f.write(text)
+    print("Logic injected")
+else:
+    print("Not found")

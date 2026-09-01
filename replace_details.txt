@@ -1,0 +1,49 @@
+﻿
+                                <SmoothAccordion 
+                                    title={<span className="text-xs font-semibold text-gray-600">✦ Ver detalles de tu personalización</span>} 
+                                    containerClass="rounded-xl bg-gray-50/50" 
+                                    summaryClass="p-3 hover:bg-gray-50" 
+                                    contentClass="p-4 pt-2 text-xs text-gray-500 space-y-3 border-t border-gray-100"
+                                >
+                                        <ul className="space-y-1.5 list-disc list-inside mb-4">
+                                            <li><strong>Formato:</strong> {formatName}</li>
+                                            {globalData.logistics?.fecha && <li><strong>Día y hora de la cena:</strong> {globalData.logistics.fecha.replace('T', ' a las ')}</li>}
+                                            <li><strong>Lugar:</strong> {getLugarUso()}</li>
+                                            <li><strong>Entrega:</strong> {getLugarEntrega()}</li>
+                                            {globalData.contact?.notes && <li><strong>A tener en cuenta:</strong> {globalData.contact.notes}</li>}
+                                            <li><strong>Contacto:</strong> {[globalData.contact?.phone, globalData.contact?.email].filter(Boolean).join(' / ')}</li>
+                                            {participantesTextList && <li><strong>Participantes:</strong> {participantesTextList}</li>}
+                                            <li><strong>Cena con:</strong> {getRelacionCompleta()}</li>
+                                            <li><strong>Tonos elegidos:</strong> {selectedTonesStr}</li>
+                                            {globalData.n4?.age && <li><strong>Rango de edad:</strong> {globalData.n4.age.min === globalData.n4.age.max ? globalData.n4.age.min : \\ - \ años\}</li>}
+                                            {globalData.n4?.time && <li><strong>Tiempo estimado:</strong> {globalData.n4.time} min</li>}
+                                        </ul>
+                                        
+                                        {globalData.objective && (
+                                            <SmoothAccordion 
+                                                title={<span className="font-semibold text-gray-600 text-xs">Objetivo escrito</span>} 
+                                                containerClass="rounded-lg bg-white mb-2" 
+                                                summaryClass="p-2 hover:bg-gray-50" 
+                                                contentClass="p-3 pt-0 text-gray-500 italic border-t border-gray-100 bg-gray-50"
+                                            >
+                                                "{globalData.objective}"
+                                            </SmoothAccordion>
+                                        )}
+
+                                        {globalData.n4?.extraDetails && (
+                                            <SmoothAccordion 
+                                                title={<span className="font-semibold text-gray-600 text-xs">Info adicional escrita</span>} 
+                                                containerClass="rounded-lg bg-white mb-2" 
+                                                summaryClass="p-2 hover:bg-gray-50" 
+                                                contentClass="p-3 pt-0 text-gray-500 italic border-t border-gray-100 bg-gray-50"
+                                            >
+                                                "{globalData.n4.extraDetails}"
+                                            </SmoothAccordion>
+                                        )}
+
+                                        <div className="bg-[#CCFF00]/10 text-gray-700 p-3 rounded-lg flex gap-2 items-start mt-3">
+                                            <span className="text-sm">✨</span>
+                                            <p className="leading-relaxed"><strong>Textos e historias:</strong> Hemos guardado tus respuestas. No te preocupes por la redacción o la ortografía: nuestra IA se encarga de pulir y dar coherencia a todos los textos para que la experiencia quede impecable.</p>
+                                        </div>
+                                </SmoothAccordion>
+

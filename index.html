@@ -5480,7 +5480,7 @@ window.addEventListener('error', function(e) {
         });
 
         document.addEventListener('click', (e) => {
-            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
+            const cta = e.target.closest('a[href*="reservar-mi-cena"], button[onclick*="reservar-mi-cena"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
             if (cta) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -5511,18 +5511,18 @@ window.addEventListener('error', function(e) {
                 
                 // Redirect after reading time and white fade
                 setTimeout(() => {
-                    window.location.href = 'arbol.html?skipIntro=true';
+                    window.location.href = 'reservar-mi-cena?skipIntro=true';
                 }, 3800);
             }
         }, true); // use capture phase
 
 
         document.addEventListener('mouseover', (e) => {
-            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
+            const cta = e.target.closest('a[href*="reservar-mi-cena"], button[onclick*="reservar-mi-cena"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
             if (cta) window._ctaHoverActive = true;
         });
         document.addEventListener('mouseout', (e) => {
-            const cta = e.target.closest('a[href*="arbol.html"], button[onclick*="arbol.html"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
+            const cta = e.target.closest('a[href*="reservar-mi-cena"], button[onclick*="reservar-mi-cena"], .hero-cta-area a, #heroCta, #olt-final-cta, .btn-blue, .btn');
             if (cta) {
                 if (e.relatedTarget && cta.contains(e.relatedTarget)) return;
                 window._ctaHoverActive = false;
