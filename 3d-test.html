@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -5654,10 +5654,6 @@ window.onerror = function(msg, url, line, col, err) {
           magazineScene.style.display = 'none';
           magazineScene.style.opacity = 0;
         }
-        if (heroCta) {
-          heroCta.style.opacity = '';
-          heroCta.style.pointerEvents = '';
-        }
         // Ocultar overlay si el usuario vuelve atrás
         const _bOverlay = document.getElementById('mag-breakout-overlay');
         if (_bOverlay) _bOverlay.style.display = 'none';
@@ -5672,6 +5668,10 @@ window.onerror = function(msg, url, line, col, err) {
         
         if (window.wasInMagazine) {
           window.wasInMagazine = false;
+          if (heroCta) {
+            heroCta.style.opacity = \'\';
+            heroCta.style.pointerEvents = \'\';
+          }
           if (volume) volume.style.transform = '';
           mainDeck.style.transform = '';
           mainDeck.style.opacity = '';
