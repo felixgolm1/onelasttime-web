@@ -7790,7 +7790,7 @@ function renderChat() {
     let now = performance.now();
     let dt = Math.min(now - lastChatTime, 50);
     lastChatTime = now;
-    chatScrollY += dt * 0.04; // velocidad suave
+    chatScrollY += dt * 0.048; // velocidad suave
     
     ctx.font = '500 24px "Inter", sans-serif';
     ctx.textBaseline = 'middle';
