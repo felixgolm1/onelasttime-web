@@ -3174,14 +3174,14 @@ window.onerror = function(msg, url, line, col, err) {
           }
         }, 400);
       }
-    }, null, 0.08 + (0.80 * 90/540));
+    }, null, 0.08 + (0.80 * 60/510));
 
     // Revelación del input integrada en el timeline (para que se revierta al hacer scroll back)
     scrollTl.to([neonGroup, '#card-back-inner'], {
       opacity: 1,
       duration: 0.1,
       ease: 'power2.out'
-    }, 0.08 + (0.80 * 90/540));
+    }, 0.08 + (0.80 * 60/510));
 
     // 270Â° (-270) -> Cambiar la cara frontal (que ahora está oculta)
     scrollTl.call(() => {
@@ -3193,13 +3193,13 @@ window.onerror = function(msg, url, line, col, err) {
       if (neonGroup) neonGroup.style.pointerEvents = 'none';
       if (neonInput) neonInput.blur();
       if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('front', fullTxt);
-    }, null, 0.08 + (0.80 * 270/540));
+    }, null, 0.08 + (0.80 * 240/510));
 
     // Ocultar input al pasar al siguiente flip
     scrollTl.to([neonGroup, '#card-back-inner'], {
       opacity: 0,
       duration: 0.05
-    }, 0.08 + (0.80 * 270/540));
+    }, 0.08 + (0.80 * 240/510));
 
     // 450Â° (-450) -> Cambiar la cara trasera de nuevo para el paso final
     scrollTl.call(() => {
@@ -3209,7 +3209,7 @@ window.onerror = function(msg, url, line, col, err) {
         scIntroBackInner.innerHTML = `<p style="font-family:'Bebas Neue',sans-serif; font-size:60px; font-weight:800; color:#fff; margin-top:10px;">${txt}</p>`;
       }
       if (typeof window.update3DCardTexture === 'function') window.update3DCardTexture('back', txt);
-    }, null, 0.08 + (0.80 * 450/540));
+    }, null, 0.08 + (0.80 * 420/510));
 
     // Ã¢â€€ Zoom in/out continuo durante toda la secuencia de flips (+20%) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Curva de campana suave: sine.in sube acelerando, sine.out baja desacelerando.
