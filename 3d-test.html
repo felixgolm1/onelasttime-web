@@ -11534,7 +11534,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var convergeP = Math.max(0, Math.min(1, (localP - 34.5) / 1.0));
                   
                   // Suavizado ease-out cuadrático para que frenen suavemente
-                  var easeConverge = convergeP * (2 - convergeP);
+                  var easeConverge = convergeP * (2 - convergeP); window._isFinalCtaCentered = (localP >= 35.5);
                   
                   var _oltLogoBig = document.getElementById('olt-logo-img-big');
                   var _oltCtaBig = document.getElementById('olt-final-cta');
@@ -12308,12 +12308,13 @@ document.addEventListener('mouseover', e => {
 </script>
 \n
 <script>
-  // Magnetic Effect for Final CTA (Heavy)
+  // Magnetic Effect for Final CTA (Medium Heavy)
   const finalCtaMagnetic = document.getElementById('olt-final-cta');
   if (finalCtaMagnetic) {
     finalCtaMagnetic.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.1, 0.64, 1), opacity 0.3s ease';
     
     finalCtaMagnetic.addEventListener('mousemove', function(e) {
+      if (!window._isFinalCtaCentered) return;
       const rect = this.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
@@ -12329,6 +12330,7 @@ document.addEventListener('mouseover', e => {
     });
     
     finalCtaMagnetic.addEventListener('mouseenter', function(e) {
+      if (!window._isFinalCtaCentered) return;
       this.style.transition = 'transform 0.1s ease-out, opacity 0.3s ease';
     });
   }
