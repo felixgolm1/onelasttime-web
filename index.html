@@ -1860,6 +1860,17 @@ function checkVipCode() {
 
     var validCodes = ['PASS007'];
     if(validCodes.includes(val)) {
+        // Enviar chivatazo a Google Analytics 4
+        if (typeof gtag === 'function') {
+            gtag('event', 'login_vip_exitoso', {
+                'codigo_usado': val
+            });
+        }
+        // Identificar la sesion en Clarity con el codigo usado
+        if (typeof clarity === 'function') {
+            clarity("set", "VIP_Code", val);
+        }
+        
         var overlay = document.getElementById('vip-overlay');
         overlay.style.transition = 'opacity 0.8s ease';
         overlay.style.opacity = '0';
