@@ -1852,6 +1852,13 @@ function checkVipCode() {
         if(val.includes('@') && val.includes('.')) {
             showVipError('&iexcl;Genial! Est&aacute;s en la lista. Te avisaremos pronto.', true);
             document.getElementById('vip-submit-btn').style.display = 'none';
+            
+            // Enviar al backend de Python -> Google Sheets
+            fetch('http://localhost:8003/api/waitlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: val })
+            }).catch(e => console.log('Error enviando a lista de espera', e));
         } else {
             showVipError('Por favor, introduce un email v&aacute;lido.', false);
         }
