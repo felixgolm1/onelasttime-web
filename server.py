@@ -74,10 +74,12 @@ class BackendServer(SimpleHTTPRequestHandler):
                     for ev in events:
                         rows_to_insert.append([
                             ev.get('timestamp', datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-                            "TRACK",
                             ev.get('sessionId', 'unknown'),
+                            ev.get('page', 'unknown'),
                             ev.get('event', 'unknown'),
-                            ev.get('details', '')
+                            ev.get('details', ''),
+                            ev.get('scroll', ''),
+                            ev.get('timeSpent', '')
                         ])
                     sheet.append_rows(rows_to_insert)
                 
