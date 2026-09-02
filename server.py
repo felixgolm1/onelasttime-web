@@ -77,9 +77,13 @@ class BackendServer(SimpleHTTPRequestHandler):
                             ev.get('sessionId', 'unknown'),
                             ev.get('page', 'unknown'),
                             ev.get('event', 'unknown'),
-                            ev.get('details', ''),
                             ev.get('scroll', ''),
-                            ev.get('timeSpent', '')
+                            ev.get('timeSpent', ''),
+                            ev.get('dato1', ''),
+                            ev.get('dato2', ''),
+                            ev.get('dato3', ''),
+                            ev.get('dato4', ''),
+                            ev.get('dato5', '')
                         ])
                     sheet.append_rows(rows_to_insert)
                 
