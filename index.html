@@ -1886,6 +1886,23 @@ function checkVipCode() {
         }
         localStorage.setItem('olt_vip_code', val);
         
+        // Gestionar visitas y nuevo usuario
+        var visitCount = parseInt(localStorage.getItem('olt_visits') || '0');
+        var isNewUser = "No";
+        if (!sessionStorage.getItem('olt_session_active')) {
+            visitCount++;
+            localStorage.setItem('olt_visits', visitCount);
+            sessionStorage.setItem('olt_session_active', 'true');
+        }
+        if (visitCount === 1) isNewUser = "Sí";
+        
+        // Procedencia (UTM parameters)
+        var urlParams = new URLSearchParams(window.location.search);
+        var source = urlParams.get('utm_source') || localStorage.getItem('olt_source') || 'Directo';
+        if (urlParams.get('utm_source')) {
+            localStorage.setItem('olt_source', source);
+        }
+        
         // Enviar evento de entrada a backend
         fetch('http://localhost:8003/api/track', {
             method: 'POST',
@@ -1893,6 +1910,9 @@ function checkVipCode() {
             body: JSON.stringify({
                 events: [{
                     sessionId: userId,
+                    isNewUser: isNewUser,
+                    visitCount: visitCount,
+                    trafficSource: source,
                     event: 'Login VIP',
                     details: 'Código: ' + val,
                     page: 'index.html',

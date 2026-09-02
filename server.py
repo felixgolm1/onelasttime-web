@@ -75,6 +75,9 @@ class BackendServer(SimpleHTTPRequestHandler):
                         rows_to_insert.append([
                             ev.get('timestamp', datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
                             ev.get('sessionId', 'unknown'),
+                            ev.get('isNewUser', ''),
+                            ev.get('visitCount', ''),
+                            ev.get('trafficSource', ''),
                             ev.get('page', 'unknown'),
                             ev.get('event', 'unknown'),
                             ev.get('scroll', ''),
