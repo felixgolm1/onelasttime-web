@@ -11548,7 +11548,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
                           _oltCtaBig.style.opacity = _ctaP.toFixed(2);
                           _oltCtaBig.style.pointerEvents = _ctaP > 0 ? 'auto' : 'none';
-                          _oltCtaBig.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
+                          _oltCtaBig.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh) translate(var(--mx, 0px), var(--my, 0px))';
                       }
                   } else {
                       // Fase de convergencia final (en la escena 3D final)
@@ -11556,7 +11556,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 16) + 'vh)';
                       }
                       if (_oltCtaBig) {
-                          _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 30) + 'vh)';
+                          _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 30) + 'vh) translate(var(--mx, 0px), var(--my, 0px))';
                           _oltCtaBig.style.opacity = '1';
                           _oltCtaBig.style.pointerEvents = 'auto';
                       }
@@ -11612,7 +11612,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (_oltPhase2R) _oltPhase2R.style.opacity = '0';
                   var _oltCtaR = document.getElementById('olt-final-cta');
                   if (_oltCtaR) {
-                      _oltCtaR.style.transform = 'translateY(100vh)';
+                      _oltCtaR.style.transform = 'translateY(100vh) translate(var(--mx, 0px), var(--my, 0px))';
                       _oltCtaR.style.opacity = '0';
                       _oltCtaR.style.pointerEvents = 'none';
                   }
@@ -11638,7 +11638,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
             var _p1 = document.getElementById('olt-phase-1'); if (_p1) _p1.style.opacity = '0';
             var _p2 = document.getElementById('olt-phase-2'); if (_p2) _p2.style.opacity = '0';
             var _oltDyn = document.getElementById('olt-phase-dynamic'); if (_oltDyn) _oltDyn.style.opacity = '0';
-            var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh)'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
+            var _oltC = document.getElementById('olt-final-cta'); if (_oltC) { _oltC.style.transform = 'translateY(100vh) translate(var(--mx, 0px), var(--my, 0px))'; _oltC.style.opacity = '0'; _oltC.style.pointerEvents = 'none'; }
             var _oltQ = document.getElementById('olt-final-question'); if (_oltQ) _oltQ.style.opacity = '0';
           }
       }
@@ -12306,7 +12306,35 @@ document.addEventListener('mouseover', e => {
 
 })();
 </script>
-\n</html>
+\n
+<script>
+  // Magnetic Effect for Final CTA
+  const finalCtaMagnetic = document.getElementById('olt-final-cta');
+  if (finalCtaMagnetic) {
+    finalCtaMagnetic.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease';
+    
+    finalCtaMagnetic.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      this.style.setProperty('--mx', (x * 0.15) + 'px');
+      this.style.setProperty('--my', (y * 0.3) + 'px');
+    });
+
+    finalCtaMagnetic.addEventListener('mouseleave', function(e) {
+      this.style.setProperty('--mx', '0px');
+      this.style.setProperty('--my', '0px');
+      this.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease';
+    });
+    
+    finalCtaMagnetic.addEventListener('mouseenter', function(e) {
+      this.style.transition = 'opacity 0.3s ease';
+    });
+  }
+</script>
+
+</html>
 
 
 
