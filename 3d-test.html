@@ -12318,8 +12318,8 @@ document.addEventListener('mouseover', e => {
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
       
-      this.style.setProperty('--mx', -(x * 0.15) + 'px');
-      this.style.setProperty('--my', -(y * 0.3) + 'px');
+      this.style.setProperty('--mx', (x * 0.15) + 'px');
+      this.style.setProperty('--my', (y * 0.3) + 'px');
     });
 
     finalCtaMagnetic.addEventListener('mouseleave', function(e) {
