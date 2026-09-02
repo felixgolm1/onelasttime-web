@@ -1735,13 +1735,20 @@ window.onerror = function(msg, url, line, col, err) {
         animation: none;
         transform: translateY(-2px) scale(0.96);
     }
+
+    @keyframes vipLoad {
+        0% { opacity: 0; transform: translateY(15px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    .vip-anim-1 { animation: vipLoad 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.2s; }
+    .vip-anim-2 { animation: vipLoad 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.4s; }
 </style>
 <div id="vip-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); z-index:85000000; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Inter', sans-serif;">
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom:40px;">
+    <div class="vip-anim-1" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom:40px;">
         <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="width: 100%; max-width: 450px; height: auto; filter: brightness(0) invert(1);">
         <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="width: 45%; max-width: 180px; height: auto; filter: brightness(0) invert(1);">
     </div>
-    <div id="vip-form-container" style="display:flex; flex-direction:column; align-items:center; transition: all 0.5s ease; min-height: 380px;">
+    <div id="vip-form-container" class="vip-anim-2" style="display:flex; flex-direction:column; align-items:center; transition: all 0.5s ease; min-height: 380px;">
         <h2 id="vip-title" style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em; font-size:24px; max-width: 600px; line-height: 1.4; transition: opacity 0.5s; min-height: 110px; display: flex; align-items: center; justify-content: center;">Introduce el c&oacute;digo de acceso para vivir la cena m&aacute;s transformadora de tu vida</h2>
         <input type="text" id="vip-code" class="vip-pill vip-input" placeholder="Código secreto">
         <button id="vip-submit-btn" onclick="checkVipCode()" class="vip-pill vip-btn">Entrar</button>
