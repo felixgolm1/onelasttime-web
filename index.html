@@ -1745,7 +1745,7 @@ window.onerror = function(msg, url, line, col, err) {
         <h2 id="vip-title" style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em; font-size:24px; max-width: 600px; line-height: 1.4; transition: opacity 0.3s; min-height: 110px; display: flex; align-items: center; justify-content: center;">Introduce el c&oacute;digo de acceso para vivir la cena m&aacute;s transformadora de tu vida</h2>
         <input type="text" id="vip-code" class="vip-pill vip-input" placeholder="Código secreto">
         <button id="vip-submit-btn" onclick="checkVipCode()" class="vip-pill vip-btn">Entrar</button>
-        <p id="vip-error" style="color:#ff4444; margin-top:20px; font-size:15px; display:none; font-weight:500;">C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?</p>
+        <p id="vip-error" style="color:#ff4444; margin-top:20px; font-size:15px; visibility:hidden; opacity:0; font-weight:500; height:22px; margin-bottom:0; transition: opacity 0.3s ease;">C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?</p>
         
         <div style="margin-top: 35px; text-align: center; z-index: 10; min-height: 60px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
             <div id="vip-toggle-prefix" style="color: #ffffff; font-size: 14px; font-weight: 500; margin-bottom: 6px;">&iquest;No tienes el c&oacute;digo?</div>
@@ -1775,7 +1775,7 @@ function toggleVipMode(e) {
     document.getElementById('vip-form-container').style.opacity = '0';
     
     setTimeout(function() {
-        err.style.display = 'none';
+        err.style.visibility = 'hidden';
         btn.style.display = 'block';
         
         if(vipMode === 'waitlist') {
@@ -1805,7 +1805,7 @@ function showVipError(msg, isSuccess) {
     
     err.innerHTML = msg;
     err.style.color = isSuccess ? '#ccff00' : '#ff4444';
-    err.style.display = 'block';
+    err.style.visibility = 'visible';
     
     // Fade IN
     err.style.opacity = '0';
@@ -1831,7 +1831,7 @@ function showVipError(msg, isSuccess) {
     if (!isSuccess) {
         window._vipErrTimeout = setTimeout(function() {
             err.style.opacity = '0';
-            setTimeout(function() { err.style.display = 'none'; }, 300);
+            setTimeout(function() { err.style.visibility = 'hidden'; }, 300);
         }, 3000);
     }
 }
