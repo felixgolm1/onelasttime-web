@@ -1862,7 +1862,7 @@ function checkVipCode() {
     if(validCodes.includes(val)) {
         // Enviar chivatazo a Google Analytics 4
         if (typeof gtag === 'function') {
-            gtag('event', 'login_vip_exitoso', {
+            gtag('event', 'pass_code', {
                 'codigo_usado': val
             });
         }
