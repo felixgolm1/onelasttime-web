@@ -1741,8 +1741,8 @@ window.onerror = function(msg, url, line, col, err) {
         <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="width: 100%; max-width: 450px; height: auto; filter: brightness(0) invert(1);">
         <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="width: 45%; max-width: 180px; height: auto; filter: brightness(0) invert(1);">
     </div>
-    <div id="vip-form-container" style="display:flex; flex-direction:column; align-items:center; transition: all 0.3s ease; min-height: 380px;">
-        <h2 id="vip-title" style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em; font-size:24px; max-width: 600px; line-height: 1.4; transition: opacity 0.3s; min-height: 110px; display: flex; align-items: center; justify-content: center;">Introduce el c&oacute;digo de acceso para vivir la cena m&aacute;s transformadora de tu vida</h2>
+    <div id="vip-form-container" style="display:flex; flex-direction:column; align-items:center; transition: all 0.5s ease; min-height: 380px;">
+        <h2 id="vip-title" style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em; font-size:24px; max-width: 600px; line-height: 1.4; transition: opacity 0.5s; min-height: 110px; display: flex; align-items: center; justify-content: center;">Introduce el c&oacute;digo de acceso para vivir la cena m&aacute;s transformadora de tu vida</h2>
         <input type="text" id="vip-code" class="vip-pill vip-input" placeholder="Código secreto">
         <button id="vip-submit-btn" onclick="checkVipCode()" class="vip-pill vip-btn">Entrar</button>
         <p id="vip-error" style="color:#ff4444; margin-top:20px; font-size:15px; visibility:hidden; opacity:0; font-weight:500; height:22px; margin-bottom:0; transition: opacity 0.3s ease;">C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?</p>
@@ -1796,7 +1796,7 @@ function toggleVipMode(e) {
             prefix.innerHTML = '&iquest;No tienes el c&oacute;digo? ';
         }
         document.getElementById('vip-form-container').style.opacity = '1';
-    }, 300);
+    }, 500);
 }
 
 function showVipError(msg, isSuccess) {
