@@ -1878,6 +1878,31 @@ function checkVipCode() {
             clarity("set", "VIP_Code", val);
         }
         
+        // Generar User ID unico y guardarlo
+        var userId = localStorage.getItem('olt_user_id');
+        if(!userId) {
+            userId = 'OLT-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            localStorage.setItem('olt_user_id', userId);
+        }
+        localStorage.setItem('olt_vip_code', val);
+        
+        // Enviar evento de entrada a backend
+        fetch('http://localhost:8003/api/track', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                events: [{
+                    sessionId: userId,
+                    event: 'Login VIP',
+                    details: 'Código: ' + val,
+                    page: 'index.html',
+                    scroll: 0,
+                    timeSpent: 0
+                }]
+            })
+        }).catch(e => console.log(e));
+
+        
         var overlay = document.getElementById('vip-overlay');
         overlay.style.transition = 'opacity 0.8s ease';
         overlay.style.opacity = '0';
