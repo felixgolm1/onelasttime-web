@@ -1,17 +1,16 @@
-﻿import re
+﻿# -*- coding: utf-8 -*-
+import re
 
-with open("arbol.html", "r", encoding="utf-8") as f:
-    text = f.read()
+with open('index.html', 'r', encoding='utf-8') as f:
+    content = f.read()
 
-target = """                                <div className="text-center mt-6">
-                                    <p className="text-[10px] text-gray-500 leading-relaxed px-2">"""
+# Prefix is currently: font-size: 14px;
+content = content.replace('font-size: 14px; font-weight: 500; margin-bottom: 6px;', 'font-size: 17px; font-weight: 500; margin-bottom: 8px;')
 
-replacement = """                                <div className="text-center mt-6">
-                                    <p className="text-xs text-gray-500 leading-relaxed px-2">"""
+# Link is currently: font-size: 14px;
+content = content.replace('color: #ccff00; font-size: 14px; font-weight: 600;', 'color: #ccff00; font-size: 17px; font-weight: 600;')
 
-text = text.replace(target, replacement)
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(content)
 
-with open("arbol.html", "w", encoding="utf-8") as f:
-    f.write(text)
-print("Updated font size!")
-
+print("Increased font size by 20%")
