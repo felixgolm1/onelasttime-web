@@ -1799,22 +1799,52 @@ function toggleVipMode(e) {
     }, 300);
 }
 
+function showVipError(msg, isSuccess) {
+    var err = document.getElementById('vip-error');
+    var input = document.getElementById('vip-code');
+    
+    err.innerHTML = msg;
+    err.style.color = isSuccess ? '#ccff00' : '#ff4444';
+    err.style.display = 'block';
+    
+    // Fade IN
+    err.style.opacity = '0';
+    err.style.transition = 'opacity 0.3s ease';
+    void err.offsetWidth; // force reflow
+    err.style.opacity = '1';
+    
+    if (!isSuccess) {
+        var shakeKeys = [
+            { transform: 'translateX(-8px)' },
+            { transform: 'translateX(8px)' },
+            { transform: 'translateX(-8px)' },
+            { transform: 'translateX(8px)' },
+            { transform: 'translateX(0)' }
+        ];
+        err.animate(shakeKeys, { duration: 400 });
+        input.animate(shakeKeys, { duration: 400, composite: 'add' });
+    }
+    
+    if(window._vipErrTimeout) clearTimeout(window._vipErrTimeout);
+    
+    // Fade OUT after 3s (only for errors, success stays)
+    if (!isSuccess) {
+        window._vipErrTimeout = setTimeout(function() {
+            err.style.opacity = '0';
+            setTimeout(function() { err.style.display = 'none'; }, 300);
+        }, 3000);
+    }
+}
+
 function checkVipCode() {
     var val = document.getElementById('vip-code').value.trim().toUpperCase();
-    var err = document.getElementById('vip-error');
     
     if (vipMode === 'waitlist') {
         if(val.includes('@') && val.includes('.')) {
-            // AQU ENCHUFAMOS A GOOGLE SHEETS
-            err.style.color = '#ccff00';
-            err.innerHTML = '&iexcl;Genial! Est&aacute;s en la lista. Te avisaremos pronto.';
-            err.style.display = 'block';
+            showVipError('&iexcl;Genial! Est&aacute;s en la lista. Te avisaremos pronto.', true);
             document.getElementById('vip-submit-btn').style.display = 'none';
         } else {
-            err.style.color = '#ff4444';
-            err.innerHTML = 'Por favor, introduce un email v&aacute;lido.';
-            err.style.display = 'block';
-            err.animate([ { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' } ], { duration: 400 });
+            showVipError('Por favor, introduce un email v&aacute;lido.', false);
         }
         return;
     }
@@ -1828,10 +1858,7 @@ function checkVipCode() {
         clearInterval(vipEmberInterval);
         window._ctaHoverActive = false;
     } else {
-        err.style.color = '#ff4444';
-        err.innerHTML = 'C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?';
-        err.style.display = 'block';
-        err.animate([ { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' } ], { duration: 400 });
+        showVipError('C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?', false);
     }
 }
 
