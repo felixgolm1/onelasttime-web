@@ -7813,13 +7813,13 @@ function renderChat() {
             let textW = ctx.measureText(msg).width;
             let bubbleW = textW + 48;
             let bubbleH = 55;
-            let avatarSize = 43;
+            let avatarSize = 52;
             
             let bubbleX = isRight ? W - bubbleW - avatarSize - 60 : 40 + avatarSize + 20;
             let bubbleY = baseY;
             
             let avatarX = isRight ? W - 40 - avatarSize : 40;
-            let avatarY = baseY + 12;
+            let avatarY = baseY + (bubbleH - avatarSize) / 2;
             
             // Fondo de la burbuja estilo CTA
             ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
