@@ -1697,7 +1697,7 @@ window.onerror = function(msg, url, line, col, err) {
         font-size: 18px;
         font-weight: 800;
         letter-spacing: 0.1em;
-        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s, color 0.4s;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s, color 0.4s, border-color 0.4s;
         text-align: center;
         width: 300px;
         outline: none;
@@ -1814,6 +1814,7 @@ function showVipError(msg, isSuccess) {
     err.style.opacity = '1';
     
     if (!isSuccess) {
+        input.style.borderColor = '#ff4444';
         var shakeKeys = [
             { transform: 'translateX(-8px)' },
             { transform: 'translateX(8px)' },
@@ -1831,6 +1832,7 @@ function showVipError(msg, isSuccess) {
     if (!isSuccess) {
         window._vipErrTimeout = setTimeout(function() {
             err.style.opacity = '0';
+            input.style.borderColor = '#ccff00';
             setTimeout(function() { err.style.visibility = 'hidden'; }, 300);
         }, 3000);
     }
