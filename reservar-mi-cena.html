@@ -4517,6 +4517,32 @@ const [editingContactField, setEditingContactField] = useState(null);
             const advanceTo = (newPhase, dataUpdate = {}) => { 
                 window.scrollTo(0, 0); sessionStorage.setItem('skipIntro', 'true');
                 const latestData = { ...globalData, ...dataUpdate };
+
+                // --- OLT TRACKING ---
+                if (window.oltTrackEvent) {
+                    let vals = [];
+                    // Flatten dataUpdate objects to get raw values
+                    const flatten = (obj) => {
+                        for (let k in obj) {
+                            if (typeof obj[k] === 'object' && obj[k] !== null) {
+                                flatten(obj[k]);
+                            } else {
+                                vals.push(obj[k]);
+                            }
+                        }
+                    };
+                    flatten(dataUpdate);
+                    
+                    window.oltTrackEvent('Paso Completado', 'De ' + phase + ' a ' + newPhase, {
+                        dato1: vals[0] || '',
+                        dato2: vals[1] || '',
+                        dato3: vals[2] || '',
+                        dato4: vals[3] || '',
+                        dato5: vals[4] || ''
+                    });
+                }
+                // --------------------
+
                 
                 if (globalData.formatId && latestData.formatId && globalData.formatId !== latestData.formatId) {
                     handleFormatTransition(latestData.formatId, () => {
