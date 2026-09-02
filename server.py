@@ -16,7 +16,7 @@ stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 try:
     gc = gspread.service_account(filename='credentials.json')
     # Open the sheet by title
-    sheet = gc.open('OLT Dashboard').sheet1
+    sheet = gc.open('Onle last time web traffic').sheet1
     print("Google Sheets connected successfully.")
 except Exception as e:
     print(f"Warning: Could not connect to Google Sheets. Check credentials.json and sharing permissions. Error: {e}")
