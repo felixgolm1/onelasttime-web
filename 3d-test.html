@@ -5818,7 +5818,7 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
-          ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel'].forEach(id => {
+          ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
             var el = document.getElementById(id);
             if (el) el.style.display = '';
           });
@@ -6121,7 +6121,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
         } else {
           // Ocultar todos los interactive panels del carrusel si retrocedemos antes del carrusel
-          ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel'].forEach(id => {
+          ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
             var el = document.getElementById(id);
             if (el) el.style.display = 'none';
           });
