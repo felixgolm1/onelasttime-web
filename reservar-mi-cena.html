@@ -4521,13 +4521,13 @@ const [editingContactField, setEditingContactField] = useState(null);
                 // --- OLT TRACKING ---
                 if (window.oltTrackEvent) {
                     let vals = [];
-                    // Flatten dataUpdate objects to get raw values
+                    // Flatten dataUpdate objects to get key: value strings
                     const flatten = (obj) => {
                         for (let k in obj) {
                             if (typeof obj[k] === 'object' && obj[k] !== null) {
                                 flatten(obj[k]);
                             } else {
-                                vals.push(obj[k]);
+                                vals.push(k + ': ' + obj[k]);
                             }
                         }
                     };
