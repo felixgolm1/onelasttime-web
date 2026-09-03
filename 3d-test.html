@@ -11436,7 +11436,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (window.polaroidPhotoMat) {
                           // localP va de START_3D_REVEAL (28.5) en adelante
                           // Ralentizado un 50% (antes 4.0, ahora 6.0) para que tarde más en revelar
-                          let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
+                          let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 8.0));
                           window.polaroidPhotoMat.uniforms.uProgress.value = devProg;
                           if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
                               let textProgress = Math.min(1.0, devProg / 0.75);
@@ -11528,7 +11528,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (typeof camera !== 'undefined') {
                       var zoomP = 0;
                       if (localP > START_3D_REVEAL) {
-                          zoomP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
+                          zoomP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 8.0));
                       }
                       // Suavizado del zoom (ease-in-out cuadrático)
                       easeZoom = zoomP < 0.5 ? 2 * zoomP * zoomP : -1 + (4 - 2 * zoomP) * zoomP;
@@ -11537,15 +11537,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   window._finalPolProg = tableZoomOutP;
                   
                   // Convergencia del Logo y CTA al seguir haciendo scroll DESPUÉS del zoom (de 34.5 a 36.5)
-                  var convergeP = Math.max(0, Math.min(1, (localP - 34.5) / 1.0));
+                  var convergeP = Math.max(0, Math.min(1, (localP - 36.5) / 1.0));
                   
                   // Suavizado ease-out cuadrático para que frenen suavemente
-                  var easeConverge = convergeP * (2 - convergeP); window._isFinalCtaCentered = (localP >= 35.5);
+                  var easeConverge = convergeP * (2 - convergeP); window._isFinalCtaCentered = (localP >= 37.5);
                   
                   var _oltLogoBig = document.getElementById('olt-logo-img-big');
                   var _oltCtaBig = document.getElementById('olt-final-cta');
                   
-                  if (localP < 34.5) {
+                  if (localP < 36.5) {
                       // Fase de entrada: de 100vh a 0vh (después del segundo carrusel: IS_END a IS_EXIT_END)
                       if (_oltLogoBig) {
                           _oltLogoBig.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
