@@ -12506,14 +12506,14 @@ document.addEventListener('mouseover', e => {
         var ov = document.getElementById('vip-overlay');
         if(ov) ov.style.display = 'none';
         document.body.style.overflow = 'auto';
+        window._ctaHoverActive = false;
+        var vipEmberInterval = null; // No lo iniciamos
     } else {
         document.body.style.overflow = 'hidden';
+        var vipEmberInterval = setInterval(function() {
+            window._ctaHoverActive = true;
+        }, 50);
     }
-
-// Mantener el efecto de luces siempre activo mientras se est en esta pantalla
-var vipEmberInterval = setInterval(function() {
-    window._ctaHoverActive = true;
-}, 50);
 
 var vipMode = 'code';
 
