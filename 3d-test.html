@@ -12502,6 +12502,14 @@ document.addEventListener('mouseover', e => {
     </div>
 </div>
 <script>
+    if (sessionStorage.getItem('olt_vip_unlocked') === 'true') {
+        var ov = document.getElementById('vip-overlay');
+        if(ov) ov.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    } else {
+        document.body.style.overflow = 'hidden';
+    }
+
 // Mantener el efecto de luces siempre activo mientras se est en esta pantalla
 var vipEmberInterval = setInterval(function() {
     window._ctaHoverActive = true;
@@ -12665,6 +12673,8 @@ function checkVipCode() {
 
         
         var overlay = document.getElementById('vip-overlay');
+        sessionStorage.setItem('olt_vip_unlocked', 'true');
+        document.body.style.overflow = 'auto';
         overlay.style.transition = 'opacity 0.8s ease';
         overlay.style.opacity = '0';
         setTimeout(function() { overlay.style.display = 'none'; }, 800);
