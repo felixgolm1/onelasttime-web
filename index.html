@@ -2009,13 +2009,10 @@ function checkVipCode() {
             formContainer.style.opacity = '0';
         }
         
-        // Efecto de intensificar luces
-        if (window.triggerEmberExplosion) window.triggerEmberExplosion();
-        
-        // Redirigir a la landing page despues de ver la explosion 1.5s
+        // Redirigir suavemente a la landing page
         setTimeout(function() {
             window.location.href = '3d-test.html';
-        }, 1500);
+        }, 600);
     } else {
         showVipError('C&oacute;digo incorrecto', false);
     }
