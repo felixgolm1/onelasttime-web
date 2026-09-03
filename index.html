@@ -2002,11 +2002,25 @@ function checkVipCode() {
 
         
         var overlay = document.getElementById('vip-overlay');
-        overlay.style.transition = 'opacity 0.8s ease';
-        overlay.style.opacity = '0';
-        setTimeout(function() { overlay.style.display = 'none'; }, 800);
-        clearInterval(vipEmberInterval);
-        window._ctaHoverActive = false;
+        sessionStorage.setItem('olt_vip_unlocked', 'true');
+        
+        // Efecto de intensificar luces
+        if (window.triggerEmberExplosion) window.triggerEmberExplosion();
+        
+        setTimeout(function() {
+            overlay.style.transition = 'opacity 1.2s ease';
+            overlay.style.opacity = '0';
+            setTimeout(function() { 
+                overlay.style.display = 'none'; 
+                // Secuencia de carga de la landing page (letras, etc)
+                if (typeof window._runIntroAnim === 'function') {
+                    window._runIntroAnim();
+                    window._runIntroAnim = null;
+                }
+            }, 1200);
+            if (typeof vipEmberInterval !== 'undefined' && vipEmberInterval) clearInterval(vipEmberInterval);
+            window._ctaHoverActive = false;
+        }, 800);
     } else {
         showVipError('C&oacute;digo incorrecto', false);
     }
