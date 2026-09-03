@@ -12372,6 +12372,7 @@ document.addEventListener('mouseover', e => {
         let particles = [];
         let mouse = { x: -1000, y: -1000 };
         let explosionActive = false;
+        window.triggerEmberExplosion = function() { explosionActive = true; window._ctaHoverActive = true; for (let i = 0; i < 100; i++) { particles.push(new Particle()); } };
 
         function resizeCanvas() {
             width = window.innerWidth;
