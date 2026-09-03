@@ -3701,7 +3701,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Ã¢â€€ Fase 10: 2 Flips y cambianzo (1.33) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     let t3 = t2 + 0.15;
     const mainDeck = document.getElementById('mainDeck');
-    const maxProg = 59.0;
+    const maxProg = 61.5;
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
     // Reducido maxProg para que el scroll termine justo al completar la nueva seccion
@@ -11436,7 +11436,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (window.polaroidPhotoMat) {
                           // localP va de START_3D_REVEAL (28.5) en adelante
                           // Ralentizado un 50% (antes 4.0, ahora 6.0) para que tarde más en revelar
-                          let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 8.0));
+                          let devProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 10.5));
                           window.polaroidPhotoMat.uniforms.uProgress.value = devProg;
                           if (window.polaroidTextMat && window.polaroidTextMat.uniforms) {
                               let textProgress = Math.min(1.0, devProg / 0.75);
@@ -11517,7 +11517,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   var sInd = document.querySelector('.scroll-indicator');
                   if (sInd) {
-                      var scrollIndP = Math.max(0, Math.min(1, (localP - 36.5) / 1.4));
+                      var scrollIndP = Math.max(0, Math.min(1, (localP - 39.0) / 1.4));
                       sInd.style.opacity = (1 - scrollIndP).toFixed(3);
                   }
                   
@@ -11528,7 +11528,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (typeof camera !== 'undefined') {
                       var zoomP = 0;
                       if (localP > START_3D_REVEAL) {
-                          zoomP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 8.0));
+                          zoomP = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 10.5));
                       }
                       // Suavizado del zoom (ease-in-out cuadrático)
                       easeZoom = zoomP < 0.5 ? 2 * zoomP * zoomP : -1 + (4 - 2 * zoomP) * zoomP;
@@ -11537,15 +11537,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   window._finalPolProg = tableZoomOutP;
                   
                   // Convergencia del Logo y CTA al seguir haciendo scroll DESPUÉS del zoom (de 34.5 a 36.5)
-                  var convergeP = Math.max(0, Math.min(1, (localP - 36.5) / 1.0));
+                  var convergeP = Math.max(0, Math.min(1, (localP - 39.0) / 1.0));
                   
                   // Suavizado ease-out cuadrático para que frenen suavemente
-                  var easeConverge = convergeP * (2 - convergeP); window._isFinalCtaCentered = (localP >= 37.5);
+                  var easeConverge = convergeP * (2 - convergeP); window._isFinalCtaCentered = (localP >= 40.0);
                   
                   var _oltLogoBig = document.getElementById('olt-logo-img-big');
                   var _oltCtaBig = document.getElementById('olt-final-cta');
                   
-                  if (localP < 36.5) {
+                  if (localP < 39.0) {
                       // Fase de entrada: de 100vh a 0vh (después del segundo carrusel: IS_END a IS_EXIT_END)
                       if (_oltLogoBig) {
                           _oltLogoBig.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
@@ -11586,7 +11586,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var _fakeBg = document.getElementById('fake-bg-fade');
                   if (_fakeBg) {
                       // Hacemos que llegue a 1.0 antes (en localP 35.8) para garantizar el 100% al llegar al final de la página
-                      var fadeBgP = Math.max(0, Math.min(1, (localP - 36.5) / 1.3));
+                      var fadeBgP = Math.max(0, Math.min(1, (localP - 39.0) / 1.3));
                       _fakeBg.style.opacity = fadeBgP;
                   }
                   if (typeof scene !== 'undefined') {
