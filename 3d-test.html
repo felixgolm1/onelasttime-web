@@ -12611,14 +12611,16 @@ function showVipError(msg, isSuccess) {
     if (!isSuccess) {
         input.style.borderColor = '#ff4444';
         var shakeKeys = [
-            { transform: 'translateX(-8px)' },
-            { transform: 'translateX(8px)' },
-            { transform: 'translateX(-8px)' },
-            { transform: 'translateX(8px)' },
-            { transform: 'translateX(0)' }
+            { transform: 'translateX(0)', offset: 0 },
+            { transform: 'translateX(-8px)', offset: 0.2 },
+            { transform: 'translateX(8px)', offset: 0.4 },
+            { transform: 'translateX(-8px)', offset: 0.6 },
+            { transform: 'translateX(8px)', offset: 0.8 },
+            { transform: 'translateX(0)', offset: 1.0 }
         ];
-        err.animate(shakeKeys, { duration: 400 });
-        input.animate(shakeKeys, { duration: 400, composite: 'add' });
+        var shakeOpts = { duration: 400, easing: 'ease-in-out' };
+        err.animate(shakeKeys, shakeOpts);
+        input.animate(shakeKeys, Object.assign({}, shakeOpts, { composite: 'add' }));
     }
     
     if(window._vipErrTimeout) clearTimeout(window._vipErrTimeout);
