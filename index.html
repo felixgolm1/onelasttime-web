@@ -2002,23 +2002,20 @@ function checkVipCode() {
         var overlay = document.getElementById('vip-overlay');
         sessionStorage.setItem('olt_vip_unlocked', 'true');
         
+        // Ocultar formulario sutilmente para disfrutar de la explosion
+        var formContainer = document.getElementById('vip-form-container');
+        if (formContainer) {
+            formContainer.style.transition = 'opacity 0.4s ease';
+            formContainer.style.opacity = '0';
+        }
+        
         // Efecto de intensificar luces
         if (window.triggerEmberExplosion) window.triggerEmberExplosion();
         
+        // Redirigir a la landing page despues de ver la explosion 1.5s
         setTimeout(function() {
-            overlay.style.transition = 'opacity 1.2s ease';
-            overlay.style.opacity = '0';
-            setTimeout(function() { 
-                overlay.style.display = 'none'; 
-                // Secuencia de carga de la landing page (letras, etc)
-                if (typeof window._runIntroAnim === 'function') {
-                    window._runIntroAnim();
-                    window._runIntroAnim = null;
-                }
-            }, 1200);
-            if (typeof vipEmberInterval !== 'undefined' && vipEmberInterval) clearInterval(vipEmberInterval);
-            window._ctaHoverActive = false;
-        }, 800);
+            window.location.href = '3d-test.html';
+        }, 1500);
     } else {
         showVipError('C&oacute;digo incorrecto', false);
     }
