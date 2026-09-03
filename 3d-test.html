@@ -12337,7 +12337,8 @@ document.addEventListener('mouseover', e => {
 </script>
 
 
-<!-- VIP OVERLAY START -->
+
+
 <style>
     .vip-pill {
         padding: 15px 30px;
@@ -12348,80 +12349,345 @@ document.addEventListener('mouseover', e => {
         letter-spacing: 0.1em;
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         text-align: center;
-        width: 320px;
-        max-width: 90vw;
-        border: none;
+        width: 300px;
         outline: none;
-        text-transform: uppercase;
+    }
+    .vip-input {
+        border: 2px solid #ccff00;
+        background: #111;
+        color: #ccff00;
         margin-bottom: 20px;
     }
-    #vip-code {
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
-        border: 2px solid rgba(204, 255, 0, 0.3);
-        box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    .vip-input:focus {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(204,255,0,0.25);
+        background: #1a1a1a;
     }
-    #vip-code:focus {
-        border-color: rgba(204, 255, 0, 1);
-        box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(204, 255, 0, 0.4);
-    }
-    #vip-submit-btn {
+    .vip-btn {
+        text-transform: uppercase;
         background: #ccff00;
         color: #000;
+        border: none;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(204, 255, 0, 0.3);
     }
-    #vip-submit-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 20px rgba(204, 255, 0, 0.5);
+    .vip-btn:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(204,255,0,0.3);
+        background: #d4ff33;
+    }
+    .vip-btn:active {
+        transform: translateY(-2px) scale(0.96);
     }
 </style>
+<style>
+    @keyframes vipFloatA { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+    @keyframes vipFloatB { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-4px); } }
+    
+    .vip-pill {
+        padding: 15px 30px;
+        border-radius: 9999px;
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        transition: box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s, color 0.4s;
+        text-align: center;
+        width: 300px;
+        outline: none;
+        box-shadow: 0 4px 15px rgba(204,255,0,0.1);
+    }
+    .vip-input {
+        border: 2px solid #ccff00;
+        background: #111;
+        color: #ccff00;
+        margin-bottom: 20px;
+        animation: vipFloatA 6s ease-in-out infinite;
+    }
+    .vip-input:focus {
+        animation-play-state: paused;
+        box-shadow: 0 8px 25px rgba(204,255,0,0.25);
+        background: #1a1a1a;
+        transform: translateY(-4px);
+    }
+    .vip-btn {
+        text-transform: uppercase;
+        background: #ccff00;
+        color: #000;
+        border: none;
+        cursor: pointer;
+        animation: vipFloatB 5s ease-in-out infinite 1s; /* Desfasado 1 segundo */
+    }
+    .vip-btn:hover {
+        animation-play-state: paused;
+        box-shadow: 0 12px 30px rgba(204,255,0,0.3);
+        background: #d4ff33;
+        transform: translateY(-6px);
+    }
+    .vip-btn:active {
+        transform: translateY(-2px) scale(0.96);
+    }
+</style>
+<style>
+    @keyframes vipFloatA { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+    @keyframes vipFloatB { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-4px); } }
+    
+    .vip-pill {
+        padding: 15px 30px;
+        border-radius: 9999px;
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s, color 0.4s, border-color 0.4s;
+        text-align: center;
+        width: 300px;
+        outline: none;
+    }
+    .vip-input {
+        border: 2px solid #ccff00;
+        background: #111;
+        color: #ccff00;
+        margin-bottom: 20px;
+        animation: vipFloatA 6s ease-in-out infinite;
+        box-shadow: none;
+    }
+    .vip-input:focus {
+        animation: none;
+        box-shadow: none;
+        background: #1a1a1a;
+        transform: translateY(-4px);
+    }
+    .vip-btn {
+        text-transform: uppercase;
+        background: #ccff00;
+        color: #000;
+        border: none;
+        cursor: pointer;
+        animation: vipFloatB 5s ease-in-out infinite 1s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.12);
+    }
+    .vip-btn:hover {
+        animation: none;
+        box-shadow: 0 16px 32px rgba(0,0,0,0.2);
+        background: #d4ff33;
+        transform: translateY(-8px);
+    }
+    .vip-btn:active {
+        animation: none;
+        transform: translateY(-2px) scale(0.96);
+    }
+
+    @keyframes vipLoad {
+        0% { opacity: 0; transform: translateY(25px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    .vip-anim-1 { animation: vipLoad 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.3s; }
+    .vip-anim-2 { animation: vipLoad 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.7s; }
+</style>
 <div id="vip-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); z-index:85000000; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Inter', sans-serif;">
-    <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height:28px; filter:brightness(0) invert(1); margin-bottom:50px; opacity:0.8;">
-    <h2 style="font-size:24px; font-weight:700; color:#fff; text-align:center; max-width:80%; line-height:1.4; margin-bottom:40px;">Introduce el código de acceso para vivir la cena más transformadora de tu vida</h2>
-    <input type="password" id="vip-code" class="vip-pill" placeholder="Código secreto">
-    <div id="vip-error" style="color:#ff3333; font-size:14px; margin-top:-10px; margin-bottom:15px; min-height:20px; font-weight:600; text-align:center; opacity:0; transition:opacity 0.3s;">Código incorrecto</div>
-    <button id="vip-submit-btn" class="vip-pill" onclick="checkVipCode()">ENTRAR</button>
-    <a href="#" style="color:#ccff00; font-size:14px; text-decoration:underline; margin-top:30px; opacity:0.8; font-weight:500;">¿No tienes el código?<br>Apúntate a la lista de espera</a>
+    <div class="vip-anim-1" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom:40px;">
+        <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="width: 100%; max-width: 450px; height: auto; filter: brightness(0) invert(1);">
+        <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="width: 45%; max-width: 180px; height: auto; filter: brightness(0) invert(1);">
+    </div>
+    <div id="vip-form-container" class="vip-anim-2" style="display:flex; flex-direction:column; align-items:center; transition: all 0.5s ease; min-height: 380px;">
+        <h2 id="vip-title" style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em; font-size:24px; max-width: 600px; line-height: 1.4; transition: opacity 0.5s; min-height: 110px; display: flex; align-items: center; justify-content: center;">Introduce el c&oacute;digo de acceso para vivir la cena m&aacute;s transformadora de tu vida</h2>
+        <input type="text" id="vip-code" class="vip-pill vip-input" placeholder="Código secreto">
+        <button id="vip-submit-btn" onclick="checkVipCode()" class="vip-pill vip-btn">Entrar</button>
+        <p id="vip-error" style="color:#ff4444; margin-top:20px; font-size:15px; visibility:hidden; opacity:0; font-weight:500; height:22px; margin-bottom:0; transition: opacity 0.3s ease;">C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?</p>
+        
+        <div style="margin-top: 35px; text-align: center; z-index: 10; min-height: 60px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+            <div id="vip-toggle-prefix" style="color: #ffffff; font-size: 17px; font-weight: 500; margin-bottom: 8px;">&iquest;No tienes el c&oacute;digo?</div>
+            <a href="#" id="vip-toggle-mode" onclick="toggleVipMode(event)" style="color: #ccff00; font-size: 17px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Ap&uacute;ntate a la lista de espera</a>
+        </div>
+    </div>
 </div>
 <script>
-    // Comprobar si ya esta desbloqueado en ESTA SESION
-    if (sessionStorage.getItem('olt_vip_unlocked') === 'true') {
-        document.getElementById('vip-overlay').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    } else {
-        document.body.style.overflow = 'hidden';
-    }
+// Mantener el efecto de luces siempre activo mientras se est en esta pantalla
+var vipEmberInterval = setInterval(function() {
+    window._ctaHoverActive = true;
+}, 50);
 
-    function checkVipCode() {
-        var val = document.getElementById('vip-code').value.trim().toLowerCase();
-        if (val === 'tonight' || val === 'tonight1') {
-            sessionStorage.setItem('olt_vip_unlocked', 'true');
-            if (window.oltTrackEvent) {
-                window.oltTrackEvent('Login VIP', 'Código Correcto: ' + val);
-            }
-            var overlay = document.getElementById('vip-overlay');
-            overlay.style.transition = 'opacity 0.8s ease';
-            overlay.style.opacity = '0';
-            setTimeout(function() { overlay.style.display = 'none'; }, 800);
-            document.body.style.overflow = 'auto';
+var vipMode = 'code';
+
+function toggleVipMode(e) {
+    if(e) e.preventDefault();
+    vipMode = (vipMode === 'code') ? 'waitlist' : 'code';
+    var title = document.getElementById('vip-title');
+    var input = document.getElementById('vip-code');
+    var btn = document.getElementById('vip-submit-btn');
+    var toggle = document.getElementById('vip-toggle-mode');
+    var prefix = document.getElementById('vip-toggle-prefix');
+    var err = document.getElementById('vip-error');
+    
+    // Animacion sutil
+    document.getElementById('vip-form-container').style.opacity = '0';
+    
+    setTimeout(function() {
+        err.style.visibility = 'hidden';
+        btn.style.display = 'block';
+        
+        if(vipMode === 'waitlist') {
+            title.innerHTML = 'D&eacute;janos tu email y te avisaremos cuando abramos m&aacute;s plazas';
+            input.placeholder = 'tu@email.com';
+            input.value = '';
+            input.type = 'email';
+            btn.innerHTML = 'APUNTARME';
+            toggle.innerHTML = 'Ya tengo el c&oacute;digo';
+            prefix.innerHTML = '';
         } else {
-            var err = document.getElementById('vip-error');
-            err.innerHTML = 'Código incorrecto. ¿Seguro que estás en la lista?';
-            err.style.opacity = '1';
-            setTimeout(function() { err.style.opacity = '0'; }, 3000);
-            if (window.oltTrackEvent) {
-                window.oltTrackEvent('Login VIP', 'Intento Fallido: ' + val);
-            }
+            title.innerHTML = 'Introduce el c&oacute;digo de acceso para vivir la cena m&aacute;s transformadora de tu vida';
+            input.placeholder = 'Código secreto';
+            input.value = '';
+            input.type = 'text';
+            btn.innerHTML = 'Entrar';
+            toggle.innerHTML = 'Ap&uacute;ntate a la lista de espera';
+            prefix.innerHTML = '&iquest;No tienes el c&oacute;digo? ';
         }
+        document.getElementById('vip-form-container').style.opacity = '1';
+    }, 500);
+}
+
+function showVipError(msg, isSuccess) {
+    var err = document.getElementById('vip-error');
+    var input = document.getElementById('vip-code');
+    
+    err.innerHTML = msg;
+    err.style.color = isSuccess ? '#ccff00' : '#ff4444';
+    err.style.visibility = 'visible';
+    
+    // Fade IN
+    err.style.opacity = '0';
+    err.style.transition = 'opacity 0.3s ease';
+    void err.offsetWidth; // force reflow
+    err.style.opacity = '1';
+    
+    if (!isSuccess) {
+        input.style.borderColor = '#ff4444';
+        var shakeKeys = [
+            { transform: 'translateX(-8px)' },
+            { transform: 'translateX(8px)' },
+            { transform: 'translateX(-8px)' },
+            { transform: 'translateX(8px)' },
+            { transform: 'translateX(0)' }
+        ];
+        err.animate(shakeKeys, { duration: 400 });
+        input.animate(shakeKeys, { duration: 400, composite: 'add' });
+    }
+    
+    if(window._vipErrTimeout) clearTimeout(window._vipErrTimeout);
+    
+    // Fade OUT after 3s (only for errors, success stays)
+    if (!isSuccess) {
+        window._vipErrTimeout = setTimeout(function() {
+            err.style.opacity = '0';
+            input.style.borderColor = '#ccff00';
+            setTimeout(function() { err.style.visibility = 'hidden'; }, 300);
+        }, 3000);
+    }
+}
+
+function checkVipCode() {
+    var val = document.getElementById('vip-code').value.trim().toUpperCase();
+    
+    if (vipMode === 'waitlist') {
+        if(val.includes('@') && val.includes('.')) {
+            showVipError('&iexcl;Genial! Est&aacute;s en la lista. Te avisaremos pronto.', true);
+            document.getElementById('vip-submit-btn').style.display = 'none';
+            
+            // Enviar al backend de Python -> Google Sheets
+            fetch('http://localhost:8003/api/waitlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: val })
+            }).catch(e => console.log('Error enviando a lista de espera', e));
+        } else {
+            showVipError('Por favor, introduce un email v&aacute;lido.', false);
+        }
+        return;
     }
 
-    document.getElementById('vip-code').addEventListener('keypress', function(e) {
-        if(e.key === 'Enter') checkVipCode();
-    });
-</script>
-<!-- VIP OVERLAY END -->
+    var validCodes = ['PASS007'];
+    if(validCodes.includes(val)) {
+        // Enviar chivatazo a Google Analytics 4
+        if (typeof gtag === 'function') {
+            gtag('event', 'pass_code', {
+                'codigo_usado': val
+            });
+        }
+        // Identificar la sesion en Clarity con el codigo usado
+        if (typeof clarity === 'function') {
+            clarity("set", "VIP_Code", val);
+        }
+        
+        // Generar User ID unico y guardarlo
+        var userId = sessionStorage.getItem('olt_user_id');
+        if(!userId) {
+            userId = 'OLT-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            sessionStorage.setItem('olt_user_id', userId);
+        }
+        sessionStorage.setItem('olt_vip_code', val);
+        
+        // Gestionar visitas y nuevo usuario
+        var visitCount = parseInt(sessionStorage.getItem('olt_visits') || '0');
+        var isNewUser = "No";
+        if (!sessionStorage.getItem('olt_session_active')) {
+            visitCount++;
+            sessionStorage.setItem('olt_visits', visitCount);
+            sessionStorage.setItem('olt_session_active', 'true');
+        }
+        if (visitCount === 1) isNewUser = "Sí";
+        
+        // Procedencia (UTM parameters)
+        var urlParams = new URLSearchParams(window.location.search);
+        var source = urlParams.get('utm_source') || sessionStorage.getItem('olt_source') || 'Directo';
+        if (urlParams.get('utm_source')) {
+            sessionStorage.setItem('olt_source', source);
+        }
+        
+        // Enviar evento de entrada a backend
+        fetch('http://localhost:8003/api/track', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                events: [{
+                    sessionId: userId,
+                    isNewUser: isNewUser,
+                    visitCount: visitCount,
+                    trafficSource: source,
+                    event: 'Login VIP',
+                    details: 'Código: ' + val,
+                    page: 'index.html',
+                    scroll: 0,
+                    timeSpent: 0
+                }]
+            })
+        }).catch(e => console.log(e));
 
+        
+        var overlay = document.getElementById('vip-overlay');
+        overlay.style.transition = 'opacity 0.8s ease';
+        overlay.style.opacity = '0';
+        setTimeout(function() { overlay.style.display = 'none'; }, 800);
+        clearInterval(vipEmberInterval);
+        window._ctaHoverActive = false;
+    } else {
+        showVipError('C&oacute;digo incorrecto. &iquest;Seguro que est&aacute;s en la lista?', false);
+    }
+}
+
+document.getElementById('vip-code').addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') {
+        var btn = document.getElementById('vip-submit-btn');
+        if(btn.style.display !== 'none') {
+            btn.animate([
+                { transform: 'scale(0.95) translateY(2px)', filter: 'brightness(0.8)' },
+                { transform: 'scale(1) translateY(0)', filter: 'brightness(1)' }
+            ], { duration: 150, easing: 'ease-out' });
+        }
+        setTimeout(checkVipCode, 50); // slight delay to feel the click
+    }
+});
+</script>
 </html>
 
 
