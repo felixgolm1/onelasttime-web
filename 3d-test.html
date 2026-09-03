@@ -11517,7 +11517,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   
                   var sInd = document.querySelector('.scroll-indicator');
                   if (sInd) {
-                      var scrollIndP = Math.max(0, Math.min(1, (localP - 34.5) / 1.4));
+                      var scrollIndP = Math.max(0, Math.min(1, (localP - 36.5) / 1.4));
                       sInd.style.opacity = (1 - scrollIndP).toFixed(3);
                   }
                   
@@ -11586,7 +11586,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var _fakeBg = document.getElementById('fake-bg-fade');
                   if (_fakeBg) {
                       // Hacemos que llegue a 1.0 antes (en localP 35.8) para garantizar el 100% al llegar al final de la página
-                      var fadeBgP = Math.max(0, Math.min(1, (localP - 34.5) / 1.3));
+                      var fadeBgP = Math.max(0, Math.min(1, (localP - 36.5) / 1.3));
                       _fakeBg.style.opacity = fadeBgP;
                   }
                   if (typeof scene !== 'undefined') {
