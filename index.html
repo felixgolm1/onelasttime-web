@@ -2002,17 +2002,14 @@ function checkVipCode() {
         var overlay = document.getElementById('vip-overlay');
         sessionStorage.setItem('olt_vip_unlocked', 'true');
         
-        // Ocultar formulario sutilmente para disfrutar de la explosion
-        var formContainer = document.getElementById('vip-form-container');
-        if (formContainer) {
-            formContainer.style.transition = 'opacity 0.4s ease';
-            formContainer.style.opacity = '0';
-        }
+        // Ocultar toda la pagina sutilmente (fade to black total)
+        document.body.style.transition = 'opacity 0.8s ease';
+        document.body.style.opacity = '0';
         
-        // Redirigir suavemente a la landing page
+        // Redirigir a la landing page una vez todo esta en negro
         setTimeout(function() {
             window.location.href = '3d-test.html';
-        }, 600);
+        }, 850);
     } else {
         showVipError('C&oacute;digo incorrecto', false);
     }
