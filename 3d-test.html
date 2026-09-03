@@ -11440,7 +11440,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           const pVid = window.polaroidVideoEl;
                           if (pVid && pVid.duration) {
                               // El video avanza hasta el final del scroll (8.0 unidades desde START_3D_REVEAL)
-                              let vidProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 6.0));
+                              let vidProg = Math.max(0, Math.min(1, (localP - START_3D_REVEAL) / 9.0));
                               pVid.currentTime = vidProg * pVid.duration;
                               if (window.polaroidPhotoMat && window.polaroidPhotoMat.uniforms.tDiffuse.value) {
                                   window.polaroidPhotoMat.uniforms.tDiffuse.value.needsUpdate = true;
