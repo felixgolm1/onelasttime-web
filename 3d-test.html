@@ -8482,40 +8482,46 @@ function makeCardBackTex(data = '4 PASOS') {
     if (THREE.sRGBEncoding) photoTex.encoding = THREE.sRGBEncoding;
     
     const polaroidShader = {
-      uniforms: {
-        tDiffuse: { value: photoTex },
-        uProgress: { value: 0.0 } // 0.0 = borrosa/blanca, 1.0 = nitida
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          // Recorte cover para video vertical (720x1280, aspect ratio = 9:16)
-          // Mostramos 100% de ancho, y escalamos altura a 0.5625 (720/1280), centrado
-          vUv = uv * vec2(1.0, 0.5625) + vec2(0.0, 0.21875);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D tDiffuse;
-        uniform float uProgress;
-        varying vec2 vUv;
-        void main() {
-          vec4 c = texture2D(tDiffuse, vUv);
-          
-          // Color base de polaroid sin revelar (gris oscuro / verdoso)
-          vec3 baseColor = vec3(0.1, 0.15, 0.12);
-          // Mezclar con la foto usando un curve no lineal para que suba rapido
-          float mixAmt = smoothstep(0.0, 0.8, uProgress);
-          vec3 finalColor = mix(baseColor, c.rgb, mixAmt);
-          
-          // Anadir un efecto de "quemado" o "brillo" inicial que se desvanece
-          float flash = (1.0 - smoothstep(0.0, 0.3, uProgress)) * 0.8;
-          finalColor += vec3(flash);
-          
-          gl_FragColor = vec4(finalColor, 1.0);
-        }
-      `
-    };
+        uniforms: {
+          tDiffuse: { value: photoTex },
+          uProgress: { value: 0.0 } // 0.0 = borrosa/blanca, 1.0 = nitida
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main() {
+            // Zoom out un 20% para que no quede recortado por los lados si el aspecto lo requiere
+            float zoom = 1.2;
+            vUv = (uv - 0.5) * vec2(1.0, 0.5625) * zoom + vec2(0.5, 0.5);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform sampler2D tDiffuse;
+          uniform float uProgress;
+          varying vec2 vUv;
+          void main() {
+            vec3 baseColor = vec3(0.1, 0.15, 0.12);
+            vec4 c;
+            
+            if (vUv.x < 0.0 || vUv.x > 1.0 || vUv.y < 0.0 || vUv.y > 1.0) {
+                // Fuera del encuadre del video (mismo color base oscuro de la foto polaroid)
+                c = vec4(baseColor, 1.0);
+            } else {
+                c = texture2D(tDiffuse, vUv);
+            }
+            
+            // Mezclar con la foto usando un curve no lineal para que suba rapido
+            float mixAmt = smoothstep(0.0, 0.8, uProgress);
+            vec3 finalColor = mix(baseColor, c.rgb, mixAmt);
+            
+            // Anadir un efecto de "quemado" o "brillo" inicial que se desvanece
+            float flash = (1.0 - smoothstep(0.0, 0.3, uProgress)) * 0.8;
+            finalColor += vec3(flash);
+            
+            gl_FragColor = vec4(finalColor, 1.0);
+          }
+        `
+      };
     const photoMat = new THREE.ShaderMaterial({
       uniforms: polaroidShader.uniforms,
       vertexShader: polaroidShader.vertexShader,
