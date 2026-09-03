@@ -8472,7 +8472,7 @@ function makeCardBackTex(data = '4 PASOS') {
     polaroidVideoEl.src = 'assets/img/couple-aging.mp4';
     polaroidVideoEl.muted = true;
     polaroidVideoEl.playsInline = true;
-    polaroidVideoEl.preload = 'auto';
+    polaroidVideoEl.preload = 'auto'; polaroidVideoEl.load(); var p = polaroidVideoEl.play(); if(p) { p.then(() => polaroidVideoEl.pause()).catch(() => {}); }
     window.polaroidVideoEl = polaroidVideoEl; // Lo exponemos al objeto global para usarlo en el scroll
     // No hace falta añadirlo al body, THREE.VideoTexture lo puede leer de memoria.
     const photoTex = new THREE.VideoTexture(polaroidVideoEl);
@@ -11996,7 +11996,7 @@ window._resetSensOverlay = function() {
 
 
 setTimeout(function() {
-  document.querySelectorAll('video[src*="embejecimiento"]').forEach(function(v) {
+  document.querySelectorAll('video[src*="couple-aging"]').forEach(function(v) {
     v.muted = true;
     v.preload = 'auto';
     if (v.readyState < 4) {
