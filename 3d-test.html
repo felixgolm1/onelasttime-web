@@ -6764,6 +6764,9 @@ window.onerror = function(msg, url, line, col, err) {
               var _hi  = Math.max(0, Math.min(100, _vis + _se));
               var _mv  = 'linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)';
               var _bgOp = Math.min(1, _tPdiv / 0.15);
+              if (prog > 21.6) {
+                  _bgOp *= Math.max(0, 1.0 - (prog - 21.6) / 0.5);
+              }
               if (_bgEl)  { _bgEl.style.opacity = String(_bgOp);  _bgEl.style.webkitMaskImage = _mv;  _bgEl.style.maskImage = _mv; }
               if (_silWr) { _silWr.style.opacity = String(_bgOp); _silWr.style.webkitMaskImage = _mv; _silWr.style.maskImage = _mv; }
               if (_vigEl) { _vigEl.style.opacity = String(_bgOp); _vigEl.style.webkitMaskImage = _mv; _vigEl.style.maskImage = _mv; }
