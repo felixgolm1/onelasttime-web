@@ -7998,7 +7998,12 @@ function renderChat() {
                 ctx.arc(avatarX + avatarSize/2, avatarY + avatarSize/2, avatarSize/2, 0, Math.PI*2);
                 ctx.closePath();
                 ctx.clip();
-                ctx.drawImage(chatAvatar, avatarX, avatarY, avatarSize, avatarSize);
+                let scale = Math.max(avatarSize / chatAvatar.naturalWidth, avatarSize / chatAvatar.naturalHeight);
+                let drawW = chatAvatar.naturalWidth * scale;
+                let drawH = chatAvatar.naturalHeight * scale;
+                let drawX = avatarX + (avatarSize - drawW) / 2;
+                let drawY = avatarY + (avatarSize - drawH) / 2;
+                ctx.drawImage(chatAvatar, drawX, drawY, drawW, drawH);
                 ctx.restore();
             } else {
                 ctx.fillStyle = 'rgba(204,255,0,0.5)';
