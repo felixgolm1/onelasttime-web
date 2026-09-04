@@ -1571,14 +1571,12 @@ window.onerror = function(msg, url, line, col, err) {
         background: #ccff00;
         box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         color: #111;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: transform 0.25s ease-out;
       }
       .cta-arrow-pill svg {
         stroke: currentColor;
       }
-      .btn-blue:hover .cta-arrow-pill {
-        transform: translateY(-50%) scale(1.15);
-      }
+      .btn-blue:hover .cta-arrow-pill { transform: translateY(-50%) scale(1.15); }
 
 
 </style>
@@ -1611,14 +1609,12 @@ window.onerror = function(msg, url, line, col, err) {
         background: #ccff00;
         box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         color: #111;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: transform 0.25s ease-out;
       }
       .cta-arrow-pill svg {
         stroke: currentColor;
       }
-      .btn-blue:hover .cta-arrow-pill {
-        transform: translateY(-50%) scale(1.15);
-      }
+      .btn-blue:hover .cta-arrow-pill { transform: translateY(-50%) scale(1.15); }
 
 
 </style>
@@ -2591,14 +2587,12 @@ window.onerror = function(msg, url, line, col, err) {
         background: #ccff00;
         box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         color: #111;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: transform 0.25s ease-out;
       }
       .cta-arrow-pill svg {
         stroke: currentColor;
       }
-      .btn-blue:hover .cta-arrow-pill {
-        transform: translateY(-50%) scale(1.15);
-      }
+      .btn-blue:hover .cta-arrow-pill { transform: translateY(-50%) scale(1.15); }
 
 
 </style>
@@ -6647,7 +6641,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       if (Math.abs(targetProg - prog) > 0.000005 || window.isAutoScrolling) {
         if (!window.isAutoScrolling) {
-            prog += (targetProg - prog) * lerpF;
+            if (Math.abs(targetProg - prog) > 10) { prog = targetProg; } else { prog += (targetProg - prog) * lerpF; }
             if (Math.abs(targetProg - prog) <= 0.000005) prog = targetProg;
         }
         sessionStorage.setItem('dev_prog', prog);
@@ -10167,14 +10161,12 @@ setInterval(function() {
         background: #ccff00;
         box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         color: #111;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: transform 0.25s ease-out;
       }
       .cta-arrow-pill svg {
         stroke: currentColor;
       }
-      .btn-blue:hover .cta-arrow-pill {
-        transform: translateY(-50%) scale(1.15);
-      }
+      .btn-blue:hover .cta-arrow-pill { transform: translateY(-50%) scale(1.15); }
 
 
 </style>
