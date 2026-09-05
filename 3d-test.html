@@ -1705,7 +1705,7 @@ window.onerror = function(msg, url, line, col, err) {
     display: none !important;
   }
   #card-morph-group {
-    transform: scale(0.85) !important;
+    
   }
 
   /* Logo breathing room */
@@ -4117,20 +4117,6 @@ window.onerror = function(msg, url, line, col, err) {
       // Dar ID único al overlay del largeTrack para que dismissSens no afecte la miniatura
       const _largeOvEl = largeTrack.querySelector('#dummy-sens-ov');
       if (_largeOvEl) _largeOvEl.id = 'dummy-sens-ov-large';
-
-      // Asegurar que todos los videos autoplay se reproduzcan
-      originalTrack.querySelectorAll('video').forEach(function(v) {
-        if (v.hasAttribute('autoplay')) {
-          var p = v.play();
-          if (p && p.catch) p.catch(function(){});
-        }
-      });
-      largeTrack.querySelectorAll('video').forEach(function(v) {
-        if (v.hasAttribute('autoplay')) {
-          var p = v.play();
-          if (p && p.catch) p.catch(function(){});
-        }
-      });
 
 
 
