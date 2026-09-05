@@ -2100,7 +2100,7 @@ window.onerror = function(msg, url, line, col, err) {
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">El ligue del viaje a Bali con el que hago videollamadas cada semana</div></li>
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">La que siempre me saca 2 kil&oacute;metros en el <i>run club</i></div></li>
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">El <i>crush</i> del ascensor con el que por fin hemos pasado del "hola que tal"</div></li>
-        <li style="color: rgba(255,255,255,0.7); display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: rgba(204,255,0,0.7);">&#8226;</div></div><div class="dyn-text">Mi ex (solo para valientes... o insensatxs).</div></li>
+        <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">Mi ex (solo para valientes... o insensatxs).</div></li>
       </ul>
     </div>
 
@@ -3191,18 +3191,36 @@ window.onerror = function(msg, url, line, col, err) {
     wrapDynText();
 
     function splitFltChars(selector) {
-
       const chars = [];
       document.querySelectorAll(selector).forEach(span => {
         const text = span.textContent;
         span.textContent = '';
-        [...text].forEach(ch => {
-          const el = document.createElement('span');
-          el.className = 'flt-ch';
-          el.style.display = 'inline-block';
-          el.textContent = ch === ' ' ? '\u00a0' : ch;
-          span.appendChild(el);
-          chars.push(el);
+        
+        const words = text.split(' ');
+        words.forEach((word, wIdx) => {
+           const wordSpan = document.createElement('span');
+           wordSpan.style.whiteSpace = 'nowrap';
+           wordSpan.style.display = 'inline-block';
+           
+           [...word].forEach(ch => {
+             const el = document.createElement('span');
+             el.className = 'flt-ch';
+             el.style.display = 'inline-block';
+             el.textContent = ch;
+             wordSpan.appendChild(el);
+             chars.push(el);
+           });
+           
+           span.appendChild(wordSpan);
+           
+           if (wIdx < words.length - 1) {
+               const spaceEl = document.createElement('span');
+               spaceEl.className = 'flt-ch';
+               spaceEl.style.display = 'inline-block';
+               spaceEl.innerHTML = '&nbsp;';
+               span.appendChild(spaceEl);
+               chars.push(spaceEl);
+           }
         });
       });
       return chars;
