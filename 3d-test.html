@@ -3698,9 +3698,9 @@ window.onerror = function(msg, url, line, col, err) {
             scrollTl.to('#glass-who .glass-bullet', { opacity: 1, duration: 0.01, stagger: 0, ease: 'power2.out' }, t + 0.02);
           } else {
             scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.02, ease: 'none' }, t);
-            scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01 }, t);
-            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 110, duration: 0.01 }, t);
-            scrollTl.to('#glass-who .glass-bullet', { opacity: 0, duration: 0.01 }, t);
+            scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01, stagger: -0.0004, ease: 'none' }, t);
+            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 110, duration: 0.02, stagger: 0, ease: 'power2.out' }, t);
+            scrollTl.to('#glass-who .glass-bullet', { opacity: 0, duration: 0.01, stagger: 0, ease: 'power2.out' }, t);
           }
 
           // Animacion de la caja glass-objectives en el Paso 3
@@ -3712,10 +3712,10 @@ window.onerror = function(msg, url, line, col, err) {
             scrollTl.to('#glass-objectives .glass-bullet', { opacity: 1, duration: 0.01, stagger: 0, ease: 'power2.out' }, t + 0.02);
           } else {
             scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.02, ease: 'none' }, t);
-            scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01 }, t);
-            scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01 }, t);
-            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 110, duration: 0.01 }, t);
-            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 0, duration: 0.01 }, t);
+            scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01, stagger: -0.0004, ease: 'none' }, t);
+            scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01, stagger: 0.00015, ease: 'none' }, t);
+            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 110, duration: 0.02, stagger: 0, ease: 'power2.out' }, t);
+            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 0, duration: 0.01, stagger: 0, ease: 'power2.out' }, t);
           }
       
       // Animar el texto del recuadro global correspondiente a este paso
