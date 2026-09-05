@@ -1699,6 +1699,9 @@ window.onerror = function(msg, url, line, col, err) {
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
 @media screen and (max-width: 768px) {
+  /* Modern mobile viewport fix */
+  #vip-overlay { height: 100dvh !important; }
+
   /* Logo breathing room */
   #vip-overlay .vip-anim-1 {
     width: 100%;
