@@ -6993,7 +6993,16 @@ window.onerror = function(msg, url, line, col, err) {
                   globalGlbCard.rotation.set(0, Math.PI, totalRz, 'XYZ');
 
                   const boardScale = gsap.getProperty(scBoard, 'scaleX') || 1;
-                  globalGlbCard.scale.setScalar(lc.scale * boardScale * 1.25);
+                  // Compensacion de perspectiva: al alejarse del centro, la camara 3D lo hace ver mas pequeno.
+                  // Calculamos la distancia real a la lente y escalamos proporcionalmente para mantener tamano visual 2D constante.
+                  const currentDist = Math.sqrt(
+                      Math.pow(globalGlbCard.position.x, 2) + 
+                      Math.pow(globalGlbCard.position.y, 2) + 
+                      Math.pow(DIST, 2)
+                  );
+                  const perspectiveComp = currentDist / DIST;
+                  
+                  globalGlbCard.scale.setScalar(lc.scale * boardScale * perspectiveComp);
 
               } else {
                   const scBoardScale = gsap.getProperty(scBoard, 'scaleX') || 0.66;
