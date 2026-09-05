@@ -3131,10 +3131,7 @@ window.onerror = function(msg, url, line, col, err) {
     gsap.set(scCta,   { opacity: 0 });
       gsap.set('#glass-who', { opacity: 0, autoAlpha: 0 });
       gsap.set('#glass-objectives', { opacity: 0, autoAlpha: 0 });
-      gsap.set(glassWhoTitle, { opacity: 0 });
-      gsap.set(glassObjTitle, { opacity: 0 });
-      gsap.set('#glass-who li', { opacity: 0, y: 30 });
-      gsap.set('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { opacity: 0, y: 30 });
+
     // Caracteres del título: invisible + blur + desplazados (GSAP sobreescribe el CSS)
     gsap.set(ftChars, { opacity: 0, filter: 'blur(10px)', x: -18 });
     // Ã¢â€€ Split por caracteres para el efecto Oryzo letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -3159,6 +3156,10 @@ window.onerror = function(msg, url, line, col, err) {
     const rightChars = splitFltChars('.flt-in-up'); // texto derecho:   slide desde abajo
       const glassWhoTitle = splitFltChars('#glass-who h3');
       const glassObjTitle = splitFltChars('#glass-objectives h3');
+      gsap.set(glassWhoTitle, { opacity: 0 });
+      gsap.set(glassObjTitle, { opacity: 0 });
+      gsap.set('#glass-who li', { opacity: 0, y: 30 });
+      gsap.set('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { opacity: 0, y: 30 });
 
     // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
     // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
