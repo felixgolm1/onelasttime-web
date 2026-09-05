@@ -12819,7 +12819,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
               cCtx.clearRect(0,0, ctaCanvas.width, ctaCanvas.height);
               cCtx.fillStyle = '#ccff00';
               ctaParticles.forEach(p => {
-                  p.y -= p.v * 0.02;
+                  p.y -= p.v * 0.01;
                   p.a += 0.05;
                   if (p.y < 0) p.y = 1;
                   cCtx.globalAlpha = (Math.sin(p.a) * 0.5 + 0.5) * 0.7;
