@@ -3135,8 +3135,63 @@ window.onerror = function(msg, url, line, col, err) {
     // Caracteres del título: invisible + blur + desplazados (GSAP sobreescribe el CSS)
     gsap.set(ftChars, { opacity: 0, filter: 'blur(10px)', x: -18 });
     // Ã¢â€€ Split por caracteres para el efecto Oryzo letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
+    function wrapDynText() {
+      document.querySelectorAll('.dyn-text').forEach(container => {
+          let nodes = Array.from(container.childNodes);
+          container.innerHTML = '';
+          let spans = [];
+          
+          nodes.forEach(node => {
+              if (node.nodeType === 3) {
+                  let words = node.nodeValue.split(' ');
+                  words.forEach((w, i) => {
+                      if (w === '' && i === words.length - 1) return;
+                      let s = document.createElement('span');
+                      s.textContent = w + (i < words.length - 1 ? ' ' : '');
+                      container.appendChild(s);
+                      spans.push(s);
+                  });
+              } else {
+                  let s = document.createElement('span');
+                  s.appendChild(node.cloneNode(true));
+                  s.innerHTML += ' ';
+                  container.appendChild(s);
+                  spans.push(s);
+              }
+          });
+          
+          let lines = [];
+          let current = [];
+          let lastY = -1;
+          spans.forEach(s => {
+              let y = Math.round(s.getBoundingClientRect().top);
+              if (lastY === -1) lastY = y;
+              if (Math.abs(y - lastY) > 5) {
+                  lines.push(current);
+                  current = [];
+                  lastY = y;
+              }
+              current.push(s);
+          });
+          if (current.length) lines.push(current);
+          
+          container.innerHTML = '';
+          container.style.display = 'block';
+          lines.forEach(line => {
+              let lineWrap = document.createElement('div');
+              lineWrap.style.overflow = 'hidden';
+              let inner = document.createElement('div');
+              inner.className = 'glass-mask-line';
+              line.forEach(s => inner.appendChild(s));
+              lineWrap.appendChild(inner);
+              container.appendChild(lineWrap);
+          });
+      });
+    }
+    wrapDynText();
 
     function splitFltChars(selector) {
+
       const chars = [];
       document.querySelectorAll(selector).forEach(span => {
         const text = span.textContent;
