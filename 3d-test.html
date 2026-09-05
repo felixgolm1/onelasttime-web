@@ -2109,7 +2109,7 @@ window.onerror = function(msg, url, line, col, err) {
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">El ligue del viaje a Bali con el que hago videollamadas cada semana</div></li>
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">La que siempre me saca 2 kil&oacute;metros en el <i>run club</i></div></li>
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">El <i>crush</i> del ascensor con el que por fin hemos pasado del "hola que tal"</div></li>
-        <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">Mi ex (solo para valientes... o insensatxs).</div></li>
+        <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">Mi ex (solo para valientes... o insensatxs)</div></li>
       </ul>
     </div>
 
@@ -3191,6 +3191,7 @@ window.onerror = function(msg, url, line, col, err) {
               lineWrap.style.overflow = 'hidden';
               let inner = document.createElement('div');
               inner.className = 'glass-mask-line';
+              inner.style.paddingRight = '5px';
               line.forEach(s => inner.appendChild(s));
               lineWrap.appendChild(inner);
               container.appendChild(lineWrap);
