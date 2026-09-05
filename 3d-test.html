@@ -11642,6 +11642,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   var magClone = document.getElementById('mag-model-clone');
                   
                   if (localP > EARLY_FADE_START) {
+                      if (magClone) magClone.style.display = 'none';
                       document.body.classList.add("hide-all-cards-final-scene");
                       if (typeof globalGlbCard !== "undefined" && globalGlbCard) { globalGlbCard.visible = false; }
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
@@ -11694,6 +11695,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       // Ponemos el fondo gris oscuro para tapar el verde del body
                       // (Se controla dinámicamente en la sección de convergencia más abajo)
                   } else {
+                      var magClone2 = document.getElementById('mag-model-clone');
+                      if (magClone2) magClone2.style.display = '';
                       document.body.classList.remove("hide-all-cards-final-scene");
                       if (typeof globalGlbCard !== "undefined" && globalGlbCard) { globalGlbCard.visible = true; }
                       if (typeof cards !== 'undefined' && Array.isArray(cards)) {
