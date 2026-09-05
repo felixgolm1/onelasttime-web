@@ -3224,14 +3224,9 @@ window.onerror = function(msg, url, line, col, err) {
            
            span.appendChild(wordSpan);
            
-           if (wIdx < words.length - 1) {
-               const spaceEl = document.createElement('span');
-               spaceEl.className = 'flt-ch';
-               spaceEl.style.display = 'inline-block';
-               spaceEl.innerHTML = '&nbsp;';
-               span.appendChild(spaceEl);
-               chars.push(spaceEl);
-           }
+             if (wIdx < words.length - 1) {
+                 span.appendChild(document.createTextNode(' '));
+             }
         });
       });
       return chars;
