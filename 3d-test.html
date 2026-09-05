@@ -2088,7 +2088,21 @@ window.onerror = function(msg, url, line, col, err) {
   </div><!-- end steps-overlay -->
 
   <!-- Recuadro de detalle GLOBAL (visible en todos los pasos) -->
-  <div id="sc-detail-global" class="sc-detail-box">
+  
+    <!-- Recuadro Glassmorphism de Objetivos (Paso 3) -->
+    <div id="glass-objectives" style="position: fixed; top: 50%; left: 6vw; transform: translateY(-50%); width: 25vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 35px 30px; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+      <h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; letter-spacing: 0.05em;">Ejemplos de objetivos</h3>
+      <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 24px; margin: 0; list-style-type: none;">
+        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Conocernos a&uacute;n m&aacute;s</li>
+        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Desconectar de la rutina riendo</li>
+        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Tener una conversaci&oacute;n profunda</li>
+        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Conseguir otra cita</li>
+        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Mejorar la comunicaci&oacute;n entre nosotrxs</li>
+        <li style="position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Celebrar nuestro aniversario de pareja</li>
+      </ul>
+    </div>
+
+    <div id="sc-detail-global" class="sc-detail-box">
     
     <!-- Texto Paso 1 -->
     <div class="sc-step-text-wrapper" id="sc-text-1" style="text-align: left;">
@@ -3095,6 +3109,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Ajuste de centro vertical afinado de 34 a 37 para cuadrar al pixel la ilusión
     gsap.set(scTitle, { y: 37 });
     gsap.set(scCta,   { opacity: 0 });
+      gsap.set('#glass-objectives', { opacity: 0, autoAlpha: 0 });
     // Caracteres del título: invisible + blur + desplazados (GSAP sobreescribe el CSS)
     gsap.set(ftChars, { opacity: 0, filter: 'blur(10px)', x: -18 });
     // Ã¢â€€ Split por caracteres para el efecto Oryzo letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -3589,6 +3604,13 @@ window.onerror = function(msg, url, line, col, err) {
       const otherCards = focusOrder.filter(c => c !== focusedCard);
       scrollTl.to(focusedCard, { opacity: 1, duration: PAN, ease: 'power1.inOut' }, t);
       scrollTl.to(otherCards,  { opacity: 0.15, duration: PAN, ease: 'power1.inOut' }, t);
+        
+        // Animacion de la caja glass-objectives en el Paso 3
+        if (i === 2) {
+          scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: PAN, ease: 'power1.inOut' }, t);
+        } else {
+          scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: PAN, ease: 'power1.inOut' }, t);
+        }
       
       // Animar el texto del recuadro global correspondiente a este paso
       const stepTextData = detailStepTexts[i];
