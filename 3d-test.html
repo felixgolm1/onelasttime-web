@@ -4128,48 +4128,14 @@ window.onerror = function(msg, url, line, col, err) {
         ];
         let currentCopyIdx = 0;
         window.updateEnvejCopy = function(pct) {
-          let idx = 0;
-          if (pct > 0.90) idx = 4;
-          else if (pct > 0.66) idx = 3;
-          else if (pct > 0.33) idx = 2;
-          else if (pct > 0.05) idx = 1;
-          
-          const tEl = document.getElementById('envej-copy-title');
-          const sEl = document.getElementById('envej-copy-sub');
-          const ctaEl = document.getElementById('envej-final-cta');
-
-          if (sEl) sEl.style.display = 'none';
-
-          if (pct >= 0.99) {
-             if (tEl) {
-                 tEl.style.opacity = '0';
-                 tEl.style.pointerEvents = 'none';
-             }
-             if (ctaEl) {
-                 ctaEl.style.opacity = '1';
-                 ctaEl.style.pointerEvents = 'auto';
-             }
-          } else {
-             if (ctaEl) {
-                 ctaEl.style.opacity = '0';
-                 ctaEl.style.pointerEvents = 'none';
-             }
-             if (tEl) {
-                 tEl.style.pointerEvents = 'auto';
-                 if (idx !== currentCopyIdx) {
-                   currentCopyIdx = idx;
-                   tEl.style.opacity = '0';
-                   setTimeout(() => {
-                     tEl.textContent = envejCopies[idx];
-                     tEl.style.opacity = '1';
-                   }, 400);
-                 } else {
-                   if (tEl.style.opacity === '0') tEl.style.opacity = '1';
-                 }
-             }
-          }
-        };
-        window.envejSeekByRange = function(val) {
+            const ctaContainer = document.getElementById('envej-cta-container');
+            if (pct >= 0.99) {
+               if (ctaContainer) ctaContainer.style.display = 'flex';
+            } else {
+               if (ctaContainer) ctaContainer.style.display = 'none';
+            }
+          };
+          window.envejSeekByRange = function(val) {
           var pct = val / 9999;
           if (!window._envejVideoRef) {
             var _lt = document.querySelector('.carousel-track-large');
@@ -11995,14 +11961,12 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   </div>
 
   <!-- Copy superior (ahora debajo de la barra) -->
-  <div style="position:relative; display:flex; flex-direction:column; gap:4px; min-height: 42px; text-align:center; align-items:center; justify-content:center; margin-top:2px;">
-    <span id="envej-copy-title" style="color:#fff; font-family:'Inter','Helvetica Neue',sans-serif; font-size:12.5px; font-weight:400; line-height:1.6; letter-spacing:0.05em; text-transform:uppercase; transition:opacity 0.4s ease;">El tiempo parece infinito</span>
-    <span id="envej-copy-sub" style="display:none;"></span>
-    <button id="envej-final-cta" onclick="window.location.href='reservar-mi-cena.html'" style="position: absolute; inset: 0; margin: auto; z-index: 100000; background-color: #a3cc00; color: #111; border: none; border-radius: 100px; padding: 6px 18px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-align: center; line-height: 1.3; text-transform: uppercase; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; box-shadow: 0 4px 12px rgba(163,204,0,0.4); width: max-content; height: max-content; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-      <span style="display:block;">No te dejes nada por decir</span>
-      <span style="display:block;">Díselo en la próxima cena</span>
-    </button>
-  </div>
+    <div id="envej-cta-container" style="display:none; position:relative; flex-direction:column; gap:4px; text-align:center; align-items:center; justify-content:center; margin-top:16px;">
+      <button id="envej-final-cta" onclick="window.location.href='reservar-mi-cena.html'" style="background-color: #a3cc00; color: #111; border: none; border-radius: 100px; padding: 8px 20px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; text-align: center; line-height: 1.3; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 12px rgba(163,204,0,0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+        <span style="display:block; letter-spacing: 0.05em;">No te dejes nada por decir</span>
+        <span style="display:block; letter-spacing: 0.05em;">D&iacute;selo en la pr&oacute;xima cena</span>
+      </button>
+    </div>
   <button id="envej-play-btn" onclick="window.envejPlayPause()" style="display:none;">&#9654;</button>
 
 
