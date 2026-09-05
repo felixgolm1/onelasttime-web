@@ -1699,6 +1699,15 @@ window.onerror = function(msg, url, line, col, err) {
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
 @media screen and (max-width: 768px) {
+
+  /* Fix intro card overflow and hide desktop scrollbar */
+  #custom-scroll-track, #custom-scroll-thumb {
+    display: none !important;
+  }
+  #card-morph-group {
+    transform: scale(0.85) !important;
+  }
+
   /* Logo breathing room */
   #vip-overlay .vip-anim-1 {
     width: 100%;
