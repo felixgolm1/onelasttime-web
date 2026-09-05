@@ -2092,22 +2092,22 @@ window.onerror = function(msg, url, line, col, err) {
     <!-- Recuadro Glassmorphism de Quien (Paso 2) -->
     <div id="glass-who" style="position: fixed; top: 0; right: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-left: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 0 2.5vw 0 30px; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: -5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
       <h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; letter-spacing: 0.05em;">Compa&ntilde;&iacute;as que nos hemos encontrado</h3>
-      <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 24px; margin: 0; list-style-type: none;">
-        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Mi mujer con la que ya hemos compartido 40 a&ntilde;os y 2 hijxs</li>
-        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Mi pareja de hace m&aacute;s de 7 a&ntilde;os</li>
-        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> La cita de Bumble que pinta demasiado bien</li>
-        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Mi compi de trabajo con quien ya hace 3 meses que compartimos m&aacute;s que trabajo</li>
-        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> El ligue del viaje a Bali con el que hago videollamadas cada semana</li>
-        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> La que siempre me saca 2 kil&oacute;metros en el <i>run club</i></li>
-        <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> El <i>crush</i> del ascensor con el que por fin hemos pasado del "hola que tal"</li>
-        <li style="position: relative; color: rgba(255,255,255,0.7);"><span style="position: absolute; left: -20px; color: rgba(204,255,0,0.7);">&#8226;</span> Mi ex (solo para valientes... o insensatxs).</li>
+      <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 0; margin: 0; list-style-type: none;">
+        <li class="mask-li" style="margin-bottom: 16px; overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: #ccff00;">&#8226;</span><span>Mi mujer con la que ya hemos compartido 40 a&ntilde;os y 2 hijxs</span></div></li>
+        <li class="mask-li" style="margin-bottom: 16px; overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: #ccff00;">&#8226;</span><span>Mi pareja de hace m&aacute;s de 7 a&ntilde;os</span></div></li>
+        <li class="mask-li" style="margin-bottom: 16px; overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: #ccff00;">&#8226;</span><span>La cita de Bumble que pinta demasiado bien</span></div></li>
+        <li class="mask-li" style="margin-bottom: 16px; overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: #ccff00;">&#8226;</span><span>Mi compi de trabajo con quien ya hace 3 meses que compartimos m&aacute;s que trabajo</span></div></li>
+        <li class="mask-li" style="margin-bottom: 16px; overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: #ccff00;">&#8226;</span><span>El ligue del viaje a Bali con el que hago videollamadas cada semana</span></div></li>
+        <li class="mask-li" style="margin-bottom: 16px; overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: #ccff00;">&#8226;</span><span>La que siempre me saca 2 kil&oacute;metros en el <i>run club</i></span></div></li>
+        <li class="mask-li" style="margin-bottom: 16px; overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: #ccff00;">&#8226;</span><span>El <i>crush</i> del ascensor con el que por fin hemos pasado del "hola que tal"</span></div></li>
+        <li class="mask-li" style="color: rgba(255,255,255,0.7); overflow: hidden;"><div class="glass-mask-inner" style="display: flex;"><span style="flex-shrink: 0; width: 20px; color: rgba(204,255,0,0.7);">&#8226;</span><span>Mi ex (solo para valientes... o insensatxs).</span></div></li>
       </ul>
     </div>
 
     <!-- Recuadro Glassmorphism de Objetivos (Paso 3) -->
     <div id="glass-objectives" style="position: fixed; top: 0; left: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-right: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 0 30px 0 2.5vw; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: 5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
       <h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;">Objetivos m&aacute;s pedidos</h3>
-      <p style="color: rgba(255,255,255,0.8); font-family: 'Inter', sans-serif; font-size: 0.85rem; line-height: 1.4; margin-bottom: 24px; padding-right: 10px;">Puede ser literalmente lo que quieras con la especificidad que quieras (excepto conseguir que te paguen la cena, en eso a&uacute;n estamos trabajando):</p>
+      <div style="overflow: hidden; margin-bottom: 24px; padding-right: 10px;"><p class="glass-mask-inner" style="color: rgba(255,255,255,0.8); font-family: 'Inter', sans-serif; font-size: 0.85rem; line-height: 1.4; margin: 0;">Puede ser literalmente lo que quieras con la especificidad que quieras (excepto conseguir que te paguen la cena, en eso a&uacute;n estamos trabajando):</p></div>
       <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 24px; margin: 0; list-style-type: none; margin-bottom: 40px;">
         <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Conocernos a&uacute;n m&aacute;s</li>
         <li style="margin-bottom: 16px; position: relative;"><span style="position: absolute; left: -20px; color: #ccff00;">&#8226;</span> Mejorar la comunicaci&oacute;n entre nosotrxs</li>
@@ -3158,8 +3158,7 @@ window.onerror = function(msg, url, line, col, err) {
       const glassObjTitle = splitFltChars('#glass-objectives h3');
       gsap.set(glassWhoTitle, { opacity: 0 });
       gsap.set(glassObjTitle, { opacity: 0 });
-      gsap.set('#glass-who li', { opacity: 0, y: 30 });
-      gsap.set('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { opacity: 0, y: 30 });
+      gsap.set('#glass-who .glass-mask-inner, #glass-objectives .glass-mask-inner', { yPercent: 110 });
 
     // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
     // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
@@ -3637,22 +3636,22 @@ window.onerror = function(msg, url, line, col, err) {
           if (i === 1) {
             scrollTl.to('#glass-who', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
             scrollTl.to(glassWhoTitle, { opacity: 1, duration: 0.015, stagger: 0.001, ease: 'none' }, t + 0.01);
-            scrollTl.to('#glass-who li', { y: 0, opacity: 1, duration: 0.01, stagger: 0.005, ease: 'power2.out' }, t + 0.01);
+            scrollTl.to('#glass-who .glass-mask-inner', { yPercent: 0, duration: 0.02, stagger: 0, ease: 'power2.out' }, t + 0.01);
           } else {
             scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.02, ease: 'none' }, t);
             scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01 }, t);
-            scrollTl.to('#glass-who li', { y: 30, opacity: 0, duration: 0.01 }, t);
+            scrollTl.to('#glass-who .glass-mask-inner', { yPercent: 110, duration: 0.01 }, t);
           }
 
           // Animacion de la caja glass-objectives en el Paso 3
           if (i === 2) {
             scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
             scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.015, stagger: 0.001, ease: 'none' }, t + 0.01);
-            scrollTl.to('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { y: 0, opacity: 1, duration: 0.01, stagger: 0.005, ease: 'power2.out' }, t + 0.01);
+            scrollTl.to('#glass-objectives .glass-mask-inner', { yPercent: 0, duration: 0.02, stagger: 0, ease: 'power2.out' }, t + 0.01);
           } else {
             scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.02, ease: 'none' }, t);
             scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01 }, t);
-            scrollTl.to('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { y: 30, opacity: 0, duration: 0.01 }, t);
+            scrollTl.to('#glass-objectives .glass-mask-inner', { yPercent: 110, duration: 0.01 }, t);
           }
       
       // Animar el texto del recuadro global correspondiente a este paso
