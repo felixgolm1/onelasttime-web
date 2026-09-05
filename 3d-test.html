@@ -3691,7 +3691,7 @@ window.onerror = function(msg, url, line, col, err) {
         // Animacion de la caja glass-who en el Paso 2
           if (i === 1) {
             scrollTl.to('#glass-who', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
-            scrollTl.to(glassWhoTitle, { opacity: 1, duration: 0.015, stagger: 0.001, ease: 'none' }, t + 0.01);
+            scrollTl.to(glassWhoTitle, { opacity: 1, duration: 0.01, stagger: 0.0004, ease: 'none' }, t + 0.01);
             scrollTl.to('#glass-who .glass-mask-line', { yPercent: 0, duration: 0.02, stagger: 0, ease: 'power2.out' }, t + 0.01);
             scrollTl.to('#glass-who .glass-bullet', { opacity: 1, duration: 0.01, stagger: 0, ease: 'power2.out' }, t + 0.02);
           } else {
@@ -3704,7 +3704,7 @@ window.onerror = function(msg, url, line, col, err) {
           // Animacion de la caja glass-objectives en el Paso 3
           if (i === 2) {
             scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
-            scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.015, stagger: 0.001, ease: 'none' }, t + 0.01);
+            scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.01, stagger: 0.0004, ease: 'none' }, t + 0.01);
             scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 0, duration: 0.02, stagger: 0, ease: 'power2.out' }, t + 0.01);
             scrollTl.to('#glass-objectives .glass-bullet', { opacity: 1, duration: 0.01, stagger: 0, ease: 'power2.out' }, t + 0.02);
           } else {
