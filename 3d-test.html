@@ -3040,7 +3040,7 @@ window.onerror = function(msg, url, line, col, err) {
       // Mantenemos realCard en el DOM porque GSAP scrollTl lo lee para visibility swaps
 
       // Estado auxiliar para escalar la carta inicial
-      let introState = { scaleMult: 1.5 };
+      let introState = { scaleMult: window.innerWidth <= 768 ? 1.0 : 1.5 };
 
       // Helper: posiciona la 3D card para que coincida con morphGroup
       function syncCard3DToMorphGroup() {
