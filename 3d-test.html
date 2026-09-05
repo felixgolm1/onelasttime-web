@@ -3132,6 +3132,10 @@ window.onerror = function(msg, url, line, col, err) {
     gsap.set(scCta,   { opacity: 0 });
       gsap.set('#glass-who', { opacity: 0, autoAlpha: 0 });
       gsap.set('#glass-objectives', { opacity: 0, autoAlpha: 0 });
+      gsap.set(glassWhoTitle, { opacity: 0 });
+      gsap.set(glassObjTitle, { opacity: 0 });
+      gsap.set('#glass-who li', { opacity: 0, y: 30 });
+      gsap.set('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { opacity: 0, y: 30 });
     // Caracteres del título: invisible + blur + desplazados (GSAP sobreescribe el CSS)
     gsap.set(ftChars, { opacity: 0, filter: 'blur(10px)', x: -18 });
     // Ã¢â€€ Split por caracteres para el efecto Oryzo letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -3154,6 +3158,8 @@ window.onerror = function(msg, url, line, col, err) {
     }
     const leftChars  = splitFltChars('.flt-in');    // texto izquierdo: slide desde arriba
     const rightChars = splitFltChars('.flt-in-up'); // texto derecho:   slide desde abajo
+      const glassWhoTitle = splitFltChars('#glass-who h3');
+      const glassObjTitle = splitFltChars('#glass-objectives h3');
 
     // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
     // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
@@ -3629,16 +3635,24 @@ window.onerror = function(msg, url, line, col, err) {
         
         // Animacion de la caja glass-who en el Paso 2
           if (i === 1) {
-            scrollTl.to('#glass-who', { autoAlpha: 1, duration: PAN, ease: 'power1.inOut' }, t);
+            scrollTl.to('#glass-who', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
+            scrollTl.to(glassWhoTitle, { opacity: 1, duration: 0.03, stagger: 0.002, ease: 'none' }, t + 0.01);
+            scrollTl.to('#glass-who li', { y: 0, opacity: 1, duration: 0.04, stagger: 0.006, ease: 'power2.out' }, t + 0.02);
           } else {
-            scrollTl.to('#glass-who', { autoAlpha: 0, duration: PAN, ease: 'power1.inOut' }, t);
+            scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.02, ease: 'none' }, t);
+            scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01 }, t);
+            scrollTl.to('#glass-who li', { y: 30, opacity: 0, duration: 0.01 }, t);
           }
 
           // Animacion de la caja glass-objectives en el Paso 3
           if (i === 2) {
-            scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: PAN, ease: 'power1.inOut' }, t);
+            scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
+            scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.03, stagger: 0.002, ease: 'none' }, t + 0.01);
+            scrollTl.to('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { y: 0, opacity: 1, duration: 0.04, stagger: 0.006, ease: 'power2.out' }, t + 0.02);
           } else {
-            scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: PAN, ease: 'power1.inOut' }, t);
+            scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.02, ease: 'none' }, t);
+            scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01 }, t);
+            scrollTl.to('#glass-objectives p, #glass-objectives li, #glass-objectives hr', { y: 30, opacity: 0, duration: 0.01 }, t);
           }
       
       // Animar el texto del recuadro global correspondiente a este paso
