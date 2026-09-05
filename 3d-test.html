@@ -3204,10 +3204,10 @@ window.onerror = function(msg, url, line, col, err) {
     function splitFltChars(selector) {
       const chars = [];
       document.querySelectorAll(selector).forEach(span => {
-        const text = span.textContent;
+        const text = span.textContent.trim();
         span.textContent = '';
         
-        const words = text.split(' ');
+        const words = text.split(/\s+/);
         words.forEach((word, wIdx) => {
            const wordSpan = document.createElement('span');
            wordSpan.style.whiteSpace = 'nowrap';
