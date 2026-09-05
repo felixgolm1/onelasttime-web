@@ -6060,6 +6060,15 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
+          if (!window._carouselVideosPlayed) {
+            window._carouselVideosPlayed = true;
+            document.querySelectorAll('.carousel-track-small video, .carousel-track-large video').forEach(function(v) {
+              if (v.hasAttribute('autoplay') && v.paused) {
+                var p = v.play();
+                if (p && p.catch) p.catch(function(){});
+              }
+            });
+          }
           ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
             var el = document.getElementById(id);
             if (el) el.style.display = '';
