@@ -4109,6 +4109,20 @@ window.onerror = function(msg, url, line, col, err) {
       const _largeOvEl = largeTrack.querySelector('#dummy-sens-ov');
       if (_largeOvEl) _largeOvEl.id = 'dummy-sens-ov-large';
 
+      // Asegurar que todos los videos autoplay se reproduzcan
+      originalTrack.querySelectorAll('video').forEach(function(v) {
+        if (v.hasAttribute('autoplay')) {
+          var p = v.play();
+          if (p && p.catch) p.catch(function(){});
+        }
+      });
+      largeTrack.querySelectorAll('video').forEach(function(v) {
+        if (v.hasAttribute('autoplay')) {
+          var p = v.play();
+          if (p && p.catch) p.catch(function(){});
+        }
+      });
+
 
 
 
@@ -12109,6 +12123,14 @@ window.dismissSens = function(e) {
   // Ocultar botón con fade
   var btn = document.getElementById('sens-cta-btn');
   if (btn) { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
+
+  // Ensure videos play when interacted
+  document.querySelectorAll('.carousel-track-large video, .carousel-track-small video').forEach(function(v) {
+    if (v.hasAttribute('autoplay')) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){});
+    }
+  });
 
   // Inyectar regla CSS !important que destruye el overlay del LARGE (miniatura no se toca)
   var ss = document.getElementById('__sens_dismiss_css');
