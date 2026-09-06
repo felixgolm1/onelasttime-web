@@ -3161,18 +3161,11 @@ window.onerror = function(msg, url, line, col, err) {
   let introMorphGroup = null;
 
   function buildScene(gltf) {
-      const isMobile = window.innerWidth <= 768;
-      if (isMobile) {
-        // Mobile: platos arriba y abajo (eje Z)
-        placeTableSet(gltf,  0, -7.0, 0);
-        placeTableSet(gltf,  0,  7.0, Math.PI);
-      } else {
-        placeTableSet(gltf, -7.0, 0, -Math.PI / 2);
-        placeTableSet(gltf,  7.0, 0,  Math.PI / 2);
-      }
-      gltfReady = true;
-      tryReveal();
-    }
+    placeTableSet(gltf, -7.0, 0, -Math.PI / 2);
+    placeTableSet(gltf,  7.0, 0,  Math.PI / 2);
+    gltfReady = true;
+    tryReveal();
+  }
 
 
   function tryReveal() {
@@ -7685,7 +7678,8 @@ requestAnimationFrame(smoothScrollLoop);
   const _isMobileScene = window.innerWidth <= 768;
   const camera = new THREE.PerspectiveCamera(_isMobileScene ? 56 : 42, window.innerWidth / window.innerHeight, 0.1, 100);
   window.camera = camera;
-  camera.position.set(_isMobileScene ? 0 : -0.3, _isMobileScene ? 20 : 12, _isMobileScene ? 0 : 3);
+  camera.position.set(_isMobileScene ? 0 : -0.3, _isMobileScene ? 22 : 12, _isMobileScene ? 0 : 3);
+  if (_isMobileScene) camera.up.set(1, 0, 0); // rotate view 90° so x-axis plates appear top/bottom
   camera.lookAt(0, 0, 0);
 
   // Ã¢â€€Ã¢â€€ PARALLAX DE RATÓN Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -8810,14 +8804,8 @@ function makeCardBackTex(data = '4 PASOS') {
     );
     gltfLoader.load('assets/models/sm_zinfandel_glass.glb',
       (gltf) => {
-        const isMob = window.innerWidth <= 768;
-        if (isMob) {
-          placeWineGlass(gltf,  0, -5.0);
-          placeWineGlass(gltf,  0,  5.0);
-        } else {
-          placeWineGlass(gltf, -3.0, +2.4);
-          placeWineGlass(gltf,  3.0, -2.4);
-        }
+        placeWineGlass(gltf, -3.0, +2.4);
+        placeWineGlass(gltf,  3.0, -2.4);
       },
       null,
       (err) => { console.error('Error copa:', err); }
@@ -10697,8 +10685,7 @@ setInterval(function() {
           <img src="assets/img/cartas viejas.jfif" style="width:100%;height:100%;object-fit:cover;display:block;">
           <!-- Texto diagonal upper-left -> lower-right -->
           <div style="position:absolute;top:15%;left:calc(10% + 3cm);z-index:10;pointer-events:none;">
-            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(1.1rem,2.2vw,2.2rem);line-height:1.2;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">No es una cena,</p>
-            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(1.1rem,2.2vw,2.2rem);line-height:1.2;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">es una nueva pieza</p>
+            <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(1.1rem,2.2vw,2.2rem);line-height:1.2;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">No es una cena, es una nueva pieza</p>
             <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(1.1rem,2.2vw,2.2rem);line-height:1.2;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;">de vuestra historia</p>
           </div>
         </div>
