@@ -1699,6 +1699,8 @@ window.onerror = function(msg, url, line, col, err) {
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
 @media screen and (max-width: 768px) {
+  .sc-card { transform: scale(0.85); transform-origin: center center; }
+
 
   /* Fix intro card overflow and hide desktop scrollbar */
   #custom-scroll-track, #custom-scroll-thumb {
@@ -3367,7 +3369,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         if (globalGlbCard._baseScaleFact) {
           const _GS_SC  = 1.22;
           const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
-          const _scSmall = globalGlbCard._baseScaleFact * 0.65;
+          const _scSmall = globalGlbCard._baseScaleFact * (window.innerWidth <= 768 ? 0.5525 : 0.65);
           const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * 0.90;
           // Aplicamos el multiplicador inicial (1.5 -> 1.0)
           globalGlbCard.scale.setScalar((_scSmall + _t * (_scLarge - _scSmall)) * introState.scaleMult);
@@ -3377,7 +3379,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       }
 
       // Preparar estado visual 3D instantáneamente
-      gsap.set(morphGroup, { x: 0, y: 0, scaleX: 1, scaleY: 1, rotation: 0 });
+      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window.innerWidth <= 768 ? 0.85 : 1, scaleY: window.innerWidth <= 768 ? 0.85 : 1, rotation: 0 });
       syncCard3DToMorphGroup();
 
       // Forzar 1 frame de renderizado 3D AHORA MISMO, antes de hacer visible el canvas.
@@ -7324,7 +7326,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
               if (globalGlbCard._baseScaleFact && gSY > 0) {
                   const _GS_SC  = 1.22;
                   const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
-                  const _scSmall = globalGlbCard._baseScaleFact * 0.65;
+                  const _scSmall = globalGlbCard._baseScaleFact * (window.innerWidth <= 768 ? 0.5525 : 0.65);
                   const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * 0.90;
                   globalGlbCard.scale.setScalar(_scSmall + _t * (_scLarge - _scSmall));
               }
