@@ -1700,7 +1700,7 @@ window.onerror = function(msg, url, line, col, err) {
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
 @media screen and (max-width: 768px) {
-  .sc-card { transform: scale(0.85); transform-origin: center center; }
+  .sc-card { transform: scale(0.80); transform-origin: center center; }
 
 
   /* Fix intro card overflow and hide desktop scrollbar */
@@ -3043,7 +3043,7 @@ window.onerror = function(msg, url, line, col, err) {
       // Mantenemos realCard en el DOM porque GSAP scrollTl lo lee para visibility swaps
 
       // Estado auxiliar para escalar la carta inicial
-      let introState = { scaleMult: window.innerWidth <= 768 ? 1.0 : 1.5 };
+      let introState = { scaleMult: window.matchMedia('(max-width: 768px)').matches ? 1.0 : 1.5 };
 
       // Helper: posiciona la 3D card para que coincida con morphGroup
       function syncCard3DToMorphGroup() {
@@ -3063,8 +3063,8 @@ window.onerror = function(msg, url, line, col, err) {
         if (globalGlbCard._baseScaleFact) {
           const _GS_SC  = 1.22;
           const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
-          const _scSmall = globalGlbCard._baseScaleFact * (window.innerWidth <= 768 ? 0.5525 : 0.65);
-          const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.innerWidth <= 768 ? 0.765 : 0.90);
+          const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.52 : 0.65);
+          const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? 0.765 : 0.90);
           // Aplicamos el multiplicador inicial (1.5 -> 1.0)
           globalGlbCard.scale.setScalar((_scSmall + _t * (_scLarge - _scSmall)) * introState.scaleMult);
         }
@@ -3073,7 +3073,7 @@ window.onerror = function(msg, url, line, col, err) {
       }
 
       // Preparar estado visual 3D instantáneamente
-      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window.innerWidth <= 768 ? 0.85 : 1, scaleY: window.innerWidth <= 768 ? 0.85 : 1, rotation: 0 });
+      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window.matchMedia('(max-width: 768px)').matches ? 0.80 : 1, scaleY: window.matchMedia('(max-width: 768px)').matches ? 0.80 : 1, rotation: 0 });
       syncCard3DToMorphGroup();
 
       // Forzar 1 frame de renderizado 3D AHORA MISMO, antes de hacer visible el canvas.
@@ -3351,7 +3351,7 @@ window.onerror = function(msg, url, line, col, err) {
       { x:  '34vw', y: '-26vh', r: -18 },
       { x: '-26vw', y: '-24vh', r:  12 },
     ];
-    const focusZoom = window.innerWidth <= 768 ? 1.05 : 1.35;
+    const focusZoom = window.matchMedia('(max-width: 768px)').matches ? 1.05 : 1.35;
     const sIntroProxy = { opacity: 1 };
     const updateIntroOpacity = () => { if (scIntro) scIntro.style.opacity = sIntroProxy.opacity; };
 
@@ -7081,8 +7081,8 @@ window.onerror = function(msg, url, line, col, err) {
               if (globalGlbCard._baseScaleFact && gSY > 0) {
                   const _GS_SC  = 1.22;
                   const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
-                  const _scSmall = globalGlbCard._baseScaleFact * (window.innerWidth <= 768 ? 0.5525 : 0.65);
-                  const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.innerWidth <= 768 ? 0.765 : 0.90);
+                  const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.52 : 0.65);
+                  const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? 0.765 : 0.90);
                   globalGlbCard.scale.setScalar(_scSmall + _t * (_scLarge - _scSmall));
               }
 
