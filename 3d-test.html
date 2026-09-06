@@ -1725,11 +1725,11 @@ window.onerror = function(msg, url, line, col, err) {
 
   #nav-logo {
     left: 5% !important;
-    top: 10%;
+    top: 8%;
   }
 
   #headline {
-    top: 25% !important;
+    top: 20% !important;
     left: 5% !important;
     right: 5% !important;
     max-width: 100% !important;
@@ -1748,7 +1748,7 @@ window.onerror = function(msg, url, line, col, err) {
 
   #subheadline {
     top: auto !important;
-    bottom: 22% !important;
+    bottom: 28% !important;
     left: 5% !important;
     right: 5% !important;
     transform: none;
@@ -1756,6 +1756,7 @@ window.onerror = function(msg, url, line, col, err) {
   #subheadline p {
     text-align: center !important;
     margin: 0 !important;
+    font-size: 1.4rem !important;
   }
 
   #nav-menu > a { display: none !important; }
@@ -7106,9 +7107,6 @@ window.onerror = function(msg, url, line, col, err) {
               var _hi  = Math.max(0, Math.min(100, _vis + _se));
               var _mv  = 'linear-gradient(to bottom left, black 0%, black ' + _lo + '%, transparent ' + _hi + '%)';
               var _bgOp = Math.min(1, _tPdiv / 0.15);
-              if (prog > 21.6) {
-                  _bgOp *= Math.max(0, 1.0 - (prog - 21.6) / 0.5);
-              }
               if (_bgEl)  { _bgEl.style.opacity = String(_bgOp);  _bgEl.style.webkitMaskImage = _mv;  _bgEl.style.maskImage = _mv; }
               if (_silWr) { _silWr.style.opacity = String(_bgOp); _silWr.style.webkitMaskImage = _mv; _silWr.style.maskImage = _mv; }
               if (_vigEl) { _vigEl.style.opacity = String(_bgOp); _vigEl.style.webkitMaskImage = _mv; _vigEl.style.maskImage = _mv; }
@@ -11857,29 +11855,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
                         if (oryzoBg) oryzoBg.style.opacity = '1';
-                        if (magClone) {
-                            if (prog > 21.6) {
-                                magClone.style.opacity = Math.max(0, 1.0 - (prog - 21.6) / 0.5).toFixed(3);
-                            } else {
-                                magClone.style.opacity = '1';
-                            }
-                        }
-                        var _oxi = document.getElementById('oxitocina-title');
-                        if (_oxi) {
-                            if (prog > 21.6) {
-                                _oxi.style.opacity = Math.max(0, 1.0 - (prog - 21.6) / 0.5).toFixed(3);
-                            } else {
-                                _oxi.style.opacity = '1';
-                            }
-                        }
-                        var _sci = document.getElementById('sciencia-title');
-                        if (_sci) {
-                            if (prog > 21.6) {
-                                _sci.style.opacity = Math.max(0, 1.0 - (prog - 21.6) / 0.5).toFixed(3);
-                            } else {
-                                _sci.style.opacity = '1';
-                            }
-                        }
+                        if (magClone) magClone.style.opacity = '1';
                       var _oryzoSec = document.getElementById('oryzo-section');
                       if (_oryzoSec) _oryzoSec.style.opacity = '1';
                       var _deckC = document.getElementById('oryzo-deck-clone');
