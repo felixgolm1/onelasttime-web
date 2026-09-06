@@ -7678,13 +7678,13 @@ requestAnimationFrame(smoothScrollLoop);
   const _isMobileScene = window.innerWidth <= 768;
   const camera = new THREE.PerspectiveCamera(_isMobileScene ? 56 : 42, window.innerWidth / window.innerHeight, 0.1, 100);
   window.camera = camera;
-  camera.position.set(_isMobileScene ? 0 : -0.3, _isMobileScene ? 22 : 12, _isMobileScene ? 0 : 3);
+  camera.position.set(_isMobileScene ? 0 : -0.3, _isMobileScene ? 26 : 12, _isMobileScene ? 0 : 3);
   if (_isMobileScene) camera.up.set(1, 0, 0); // rotate view 90° so x-axis plates appear top/bottom
   camera.lookAt(0, 0, 0);
 
   // Ã¢â€€Ã¢â€€ PARALLAX DE RATÓN Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Posición base de la cámara (sin parallax)
-  const CAM_BASE = _isMobileScene ? { x: 0, y: 22, z: 0 } : { x: -0.3, y: 12, z: 3 };
+  const CAM_BASE = _isMobileScene ? { x: 0, y: 26, z: 0 } : { x: -0.3, y: 12, z: 3 };
   const CAM_LOOK = { x: 0, y: 0, z: 0 };
   // Valores actuales suavizados (lerp)
   let mouseNX = 0, mouseNY = 0;   // normalizado -1..+1, con lerp
@@ -10654,9 +10654,10 @@ setInterval(function() {
           <!-- Texto estático z:20 (siempre visible sobre todo) -->
           <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;pointer-events:none;display:flex;align-items:center;">
             <div style="padding-left:calc(50% + 1cm);text-align:left;transform:translateY(-2cm);">
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);" id="slide3-copy-1">De seguir sorprendiéndoos</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);" id="slide3-copy-2">incluso cuando creéis</p>
-              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);" id="slide3-copy-3">saberlo todo</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);white-space:nowrap;" id="slide3-copy-1">De seguir</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);white-space:nowrap;" id="slide3-copy-2">sorprendiéndoos</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);white-space:nowrap;">incluso cuando creéis</p>
+              <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(0.9rem,1.8vw,1.9rem);line-height:1.4;color:#ffffff;margin:0;text-transform:uppercase;letter-spacing:-0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.5);white-space:nowrap;" id="slide3-copy-3">saberlo todo</p>
             </div>
           </div>
         </div>
