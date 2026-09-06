@@ -3525,7 +3525,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Overlay: 0→100% â€â€ power3.inOut: lento al inicio, se dispara, y suaviza al llegar al negro total
     scrollTl.to(scOverlay, { opacity: 1, duration: 0.08, ease: 'power3.inOut' }, 0);
     // Logo se hace más pequeño al hacer scroll hacia adelante
-    scrollTl.to('#nav-logo', { scale: 0.5, top: window.matchMedia('(max-width: 768px)').matches ? '3%' : '1.5rem', transformOrigin: 'top left', ease: 'power1.inOut', duration: 0.08 }, 0);
+    scrollTl.to('#nav-logo', { scale: 0.5, top: window.matchMedia('(max-width: 768px)').matches ? '1%' : '1.5rem', transformOrigin: 'top left', ease: 'power1.inOut', duration: 0.08 }, 0);
     
     // Los recuadros de texto desaparecen con efectos hiper-específicos (Oryzo style)
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
