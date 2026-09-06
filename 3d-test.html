@@ -3161,11 +3161,18 @@ window.onerror = function(msg, url, line, col, err) {
   let introMorphGroup = null;
 
   function buildScene(gltf) {
-    placeTableSet(gltf, -7.0, 0, -Math.PI / 2);
-    placeTableSet(gltf,  7.0, 0,  Math.PI / 2);
-    gltfReady = true;
-    tryReveal();
-  }
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        // Mobile: platos arriba y abajo (eje Z)
+        placeTableSet(gltf,  0, -7.0, 0);
+        placeTableSet(gltf,  0,  7.0, Math.PI);
+      } else {
+        placeTableSet(gltf, -7.0, 0, -Math.PI / 2);
+        placeTableSet(gltf,  7.0, 0,  Math.PI / 2);
+      }
+      gltfReady = true;
+      tryReveal();
+    }
 
 
   function tryReveal() {
@@ -7675,14 +7682,15 @@ requestAnimationFrame(smoothScrollLoop);
   // Sin background â€â€ el canvas es transparente fuera de los objetos 3D (alpha:true)
   scene.fog    = new THREE.FogExp2(0x0d0b09, 0.028);
 
-  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+  const _isMobileScene = window.innerWidth <= 768;
+  const camera = new THREE.PerspectiveCamera(_isMobileScene ? 56 : 42, window.innerWidth / window.innerHeight, 0.1, 100);
   window.camera = camera;
-  camera.position.set(-0.3, 12, 3);
+  camera.position.set(_isMobileScene ? 0 : -0.3, _isMobileScene ? 15 : 12, _isMobileScene ? 0 : 3);
   camera.lookAt(0, 0, 0);
 
   // Ã¢â€€Ã¢â€€ PARALLAX DE RATÓN Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   // Posición base de la cámara (sin parallax)
-  const CAM_BASE = { x: -0.3, y: 12, z: 3 };
+  const CAM_BASE = _isMobileScene ? { x: 0, y: 15, z: 0 } : { x: -0.3, y: 12, z: 3 };
   const CAM_LOOK = { x: 0, y: 0, z: 0 };
   // Valores actuales suavizados (lerp)
   let mouseNX = 0, mouseNY = 0;   // normalizado -1..+1, con lerp
@@ -8802,8 +8810,14 @@ function makeCardBackTex(data = '4 PASOS') {
     );
     gltfLoader.load('assets/models/sm_zinfandel_glass.glb',
       (gltf) => {
-        placeWineGlass(gltf, -3.0, +2.4);
-        placeWineGlass(gltf,  3.0, -2.4);
+        const isMob = window.innerWidth <= 768;
+        if (isMob) {
+          placeWineGlass(gltf,  0, -5.0);
+          placeWineGlass(gltf,  0,  5.0);
+        } else {
+          placeWineGlass(gltf, -3.0, +2.4);
+          placeWineGlass(gltf,  3.0, -2.4);
+        }
       },
       null,
       (err) => { console.error('Error copa:', err); }
