@@ -4117,9 +4117,13 @@ window.onerror = function(msg, url, line, col, err) {
       // Ocultar el botón visual en el largeTrack (la vista grande usa el botón fixed real)
       const _largeVisualBtn = largeTrack.querySelector('.sens-visual-btn');
       if (_largeVisualBtn) _largeVisualBtn.style.display = 'none';
-      // Dar ID único al overlay del largeTrack para que dismissSens no afecte la miniatura
+      // Dar ID nico al overlay del largeTrack para que dismissSens no afecte la miniatura
       const _largeOvEl = largeTrack.querySelector('#dummy-sens-ov');
-      if (_largeOvEl) _largeOvEl.id = 'dummy-sens-ov-large';
+      if (_largeOvEl) {
+        _largeOvEl.id = 'dummy-sens-ov-large';
+        _largeOvEl.style.backdropFilter = 'blur(22px) saturate(0.6) brightness(0.75)';
+        _largeOvEl.style.webkitBackdropFilter = 'blur(22px) saturate(0.6) brightness(0.75)';
+      }
 
 
 
@@ -12130,6 +12134,17 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   _ss.textContent = '';
   document.head.appendChild(_ss);
 })();
+  
+  // Add global interaction listener to ensure autoplay videos start in Safari
+  window.addEventListener('pointerdown', function() {
+    document.querySelectorAll('video').forEach(function(v) {
+      if (v.hasAttribute('autoplay') && v.paused) {
+        v.muted = true;
+        var p = v.play();
+        if (p && p.catch) p.catch(function(){});
+      }
+    });
+  }, { once: false, passive: true });
 
 window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
