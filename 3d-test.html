@@ -11856,8 +11856,30 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (_thermal) _thermal.style.opacity = '1';
                       var _scOverlay = document.getElementById('scene-overlay');
                       if (_scOverlay) _scOverlay.style.opacity = '1';
-                      if (oryzoBg) oryzoBg.style.opacity = '1';
-                      if (magClone) magClone.style.opacity = '1';
+                        if (oryzoBg) oryzoBg.style.opacity = '1';
+                        if (magClone) {
+                            if (prog > 21.6) {
+                                magClone.style.opacity = Math.max(0, 1.0 - (prog - 21.6) / 0.5).toFixed(3);
+                            } else {
+                                magClone.style.opacity = '1';
+                            }
+                        }
+                        var _oxi = document.getElementById('oxitocina-title');
+                        if (_oxi) {
+                            if (prog > 21.6) {
+                                _oxi.style.opacity = Math.max(0, 1.0 - (prog - 21.6) / 0.5).toFixed(3);
+                            } else {
+                                _oxi.style.opacity = '1';
+                            }
+                        }
+                        var _sci = document.getElementById('sciencia-title');
+                        if (_sci) {
+                            if (prog > 21.6) {
+                                _sci.style.opacity = Math.max(0, 1.0 - (prog - 21.6) / 0.5).toFixed(3);
+                            } else {
+                                _sci.style.opacity = '1';
+                            }
+                        }
                       var _oryzoSec = document.getElementById('oryzo-section');
                       if (_oryzoSec) _oryzoSec.style.opacity = '1';
                       var _deckC = document.getElementById('oryzo-deck-clone');
