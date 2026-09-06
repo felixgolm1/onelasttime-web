@@ -6618,6 +6618,10 @@ window.onerror = function(msg, url, line, col, err) {
             }
           }
       });
+    } else {
+      requestAnimationFrame(() => {
+        if (typeof updateGlobalScenes === 'function') updateGlobalScenes();
+      });
     }
 
     // Ã¢â€€Ã¢â€€ GLOBAL SCENE ROUTER Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -13000,6 +13004,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   </script>
 
 </html>
+
+
 
 
 
