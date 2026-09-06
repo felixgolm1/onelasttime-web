@@ -3063,7 +3063,7 @@ window.onerror = function(msg, url, line, col, err) {
           const _GS_SC  = 1.22;
           const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
           const _scSmall = globalGlbCard._baseScaleFact * (window.innerWidth <= 768 ? 0.5525 : 0.65);
-          const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * 0.90;
+          const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.innerWidth <= 768 ? 0.765 : 0.90);
           // Aplicamos el multiplicador inicial (1.5 -> 1.0)
           globalGlbCard.scale.setScalar((_scSmall + _t * (_scLarge - _scSmall)) * introState.scaleMult);
         }
@@ -7081,7 +7081,7 @@ window.onerror = function(msg, url, line, col, err) {
                   const _GS_SC  = 1.22;
                   const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
                   const _scSmall = globalGlbCard._baseScaleFact * (window.innerWidth <= 768 ? 0.5525 : 0.65);
-                  const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * 0.90;
+                  const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.innerWidth <= 768 ? 0.765 : 0.90);
                   globalGlbCard.scale.setScalar(_scSmall + _t * (_scLarge - _scSmall));
               }
 
