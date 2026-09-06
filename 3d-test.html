@@ -11237,12 +11237,16 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
              return outMin + t * (outMax - outMin);
          }
          
-         // tOpen: animacion de apertura SEPARADA de la subida â€â€ arranca cuando la caja ya es visible
+         // tOpen: animacion de apertura SEPARADA de la subida â€ â€  arranca cuando la caja ya es visible
          var tOpen = clamp01((p - 23.3) / 0.3); // 23.3 a 23.6
          // tClose: cierra la caja a la misma velocidad en p = 30.79
          var tClose = clamp01((p - 30.79) / 0.3);
          let eOpen = ease(tOpen) * (1 - ease(tClose));
          if(deckClone) {
+           let iCardsWrap = deckClone.querySelector('.interior-cards');
+           if (iCardsWrap) {
+               iCardsWrap.style.opacity = eOpen === 0 ? '0' : '1';
+           }
            let df1 = deckClone.querySelector('.interior-cards .interior-card:nth-child(1)');
            if(df1) df1.style.transform = `translateZ(6px) translateY(${-60 * eOpen}px)`;
            let df2 = deckClone.querySelector('.interior-cards .interior-card:nth-child(2)');
