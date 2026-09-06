@@ -2017,10 +2017,11 @@ window.onerror = function(msg, url, line, col, err) {
           <div id="mag-copy-right-clip" style="position: absolute; top: 32%; right: 0; width: 38%; z-index: 4; overflow: hidden; pointer-events: none;">
             <div id="mag-copy-right" style="padding-right: 5%; text-align: right;">
               <div style="font-family: 'Inter', sans-serif; text-transform: uppercase; text-shadow: 2px 2px 8px rgba(0,0,0,0.9); color: #fff;">
-                <div class="copy-right-line" style="display: block; font-weight: 900; font-size: 1.8rem; line-height: 0.95; letter-spacing: -0.03em;">CÓDIGO</div>
+                <div class="copy-right-line" style="display: block; font-weight: 900; font-size: 1.8rem; line-height: 0.95; letter-spacing: -0.03em;">C&Oacute;DIGO</div>
                 <div class="copy-right-line" style="display: block; font-weight: 900; font-size: 1.8rem; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 8px;"><span style="color: #fff;">OLT-35</span></div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CÓMO</div>
-                <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CREAR</div>
+                <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CREAR Y</div>
+                <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">REFORZAR LA</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">CONEXIÓN</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">BIOQUÍMICA</div>
                 <div class="copy-right-line" style="display: block; font-weight: 700; font-size: 0.75rem; line-height: 1.3; color: #e6e6e6; letter-spacing: 0.05em;">EN UNA</div>
@@ -3217,13 +3218,13 @@ window.onerror = function(msg, url, line, col, err) {
     // Ã¢â€€Ã¢â€€ Estado inicial Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Las sCards empiezan con opacity 0 para que no asomen mientras gira el morphGroup
     gsap.set(sCards,  { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                        scale: 1.2, rotation: 0, opacity: 0, zIndex: 5 });
+                        scale: window.matchMedia('(max-width: 768px)').matches ? 1.45 : 1.2, rotation: 0, opacity: 0, zIndex: 5 });
     gsap.set(scIntro, { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                        scale: 1.2, rotation: -2.5, opacity: 1, zIndex: 10 });
+                        scale: window.matchMedia('(max-width: 768px)').matches ? 1.45 : 1.2, rotation: -2.5, opacity: 1, zIndex: 10 });
     // Es crítico "imprimir" los ángulos Euler desde JS para scIntroBack, porque GSAP al parsear rotateY(180) genera una matriz ambivalente
     if (scIntroBack) {
       gsap.set(scIntroBack, { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                              scale: 1.2, rotation: -2.5, rotationY: 180, rotationX: 0, z: 1 });
+                              scale: window.matchMedia('(max-width: 768px)').matches ? 1.45 : 1.2, rotation: -2.5, rotationY: 180, rotationX: 0, z: 1 });
     }
     // Ajuste de centro vertical afinado de 34 a 37 para cuadrar al pixel la ilusión
     gsap.set(scTitle, { y: 37 });
