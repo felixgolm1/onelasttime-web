@@ -1700,7 +1700,7 @@ window.onerror = function(msg, url, line, col, err) {
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
 @media screen and (max-width: 768px) {
-  #card-morph-group, .sc-card { transform: scale(0.80); transform-origin: center center; }
+  #card-morph-group, .sc-card { transform: scale(0.90); transform-origin: center center; }
 
 
   /* Fix intro card overflow and hide desktop scrollbar */
@@ -3073,7 +3073,7 @@ window.onerror = function(msg, url, line, col, err) {
       }
 
       // Preparar estado visual 3D instantáneamente
-      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window.matchMedia('(max-width: 768px)').matches ? 0.80 : 1, scaleY: window.matchMedia('(max-width: 768px)').matches ? 0.80 : 1, rotation: 0 });
+      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1, scaleY: window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1, rotation: 0 });
       syncCard3DToMorphGroup();
 
       // Forzar 1 frame de renderizado 3D AHORA MISMO, antes de hacer visible el canvas.
