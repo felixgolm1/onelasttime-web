@@ -3189,7 +3189,7 @@ window.onerror = function(msg, url, line, col, err) {
       // Mantenemos realCard en el DOM porque GSAP scrollTl lo lee para visibility swaps
 
       // Estado auxiliar para escalar la carta inicial
-      let introState = { scaleMult: window.matchMedia('(max-width: 768px)').matches ? 1.0 : 1.5 };
+      let introState = { scaleMult: window.matchMedia('(max-width: 768px)').matches ? 1.333333 : 1.5 };
 
       // Helper: posiciona la 3D card para que coincida con morphGroup
       function syncCard3DToMorphGroup() {
@@ -3209,7 +3209,7 @@ window.onerror = function(msg, url, line, col, err) {
         if (globalGlbCard._baseScaleFact) {
           const _GS_SC  = 1.22;
           const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
-          const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 1.0 : 0.65);
+          const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.75 : 0.65);
           const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? (1.0/_GS_SC) : 0.90);
           // Aplicamos el multiplicador inicial (1.5 -> 1.0)
           globalGlbCard.scale.setScalar((_scSmall + _t * (_scLarge - _scSmall)) * introState.scaleMult);
@@ -7232,7 +7232,7 @@ window.onerror = function(msg, url, line, col, err) {
               if (globalGlbCard._baseScaleFact && gSY > 0) {
                   const _GS_SC  = 1.22;
                   const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
-                  const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 1.0 : 0.65);
+                  const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.75 : 0.65);
                   const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? (1.0/_GS_SC) : 0.90);
                   globalGlbCard.scale.setScalar(_scSmall + _t * (_scLarge - _scSmall));
               }
@@ -7262,7 +7262,7 @@ window.onerror = function(msg, url, line, col, err) {
                   // Funciona en cold-load porque globalGlbCard._baseScaleFact siempre está disponible
                   // tras la carga del GLB (independiente de si !inScatter ha corrido)
                   const _snapScale = (globalGlbCard._baseScaleFact > 0)
-                      ? (globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 1.0 : (_gSY2 * 0.90)))
+                      ? (globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.75 : (_gSY2 * 0.90)))
                       : Math.abs(globalGlbCard.scale.x);   // fallback solo si el GLB aún no ha cargado
                   smoothScrollLoop._lockedCard = {
                       rotBaseZ: +2.5 * Math.PI / 180,
