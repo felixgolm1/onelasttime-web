@@ -8680,7 +8680,7 @@ requestAnimationFrame(smoothScrollLoop);
 
     const dist      = 6.0;
     const vH        = 2 * Math.tan((42 * Math.PI / 180) / 2) * dist;
-    const targetH   = vH * (basePxH / window.innerHeight);
+    const targetH   = vH * (basePxH / window.innerHeight) * (window.matchMedia('(max-width: 768px)').matches ? 0.8 : 1.0);
     const scaleFact = targetH / Math.max(size.z, 0.001);
 
     pivot.scale.setScalar(scaleFact);
