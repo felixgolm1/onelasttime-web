@@ -1700,6 +1700,61 @@ window.onerror = function(msg, url, line, col, err) {
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
 @media screen and (max-width: 768px) {
+
+  #cta-top-container { display: none !important; }
+  
+  #mobile-menu-pill {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    backdrop-filter: blur(4px);
+  }
+
+  #nav-logo {
+    left: 5% !important;
+    top: 5% !important;
+  }
+
+  #headline {
+    top: 18% !important;
+    left: 5% !important;
+    right: 5% !important;
+    max-width: 100% !important;
+    transform: translateZ(1000px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 !important;
+  }
+  #headline h1 {
+    text-align: center !important;
+  }
+  .headline-sub {
+    text-align: center !important;
+  }
+
+  #subheadline {
+    top: auto !important;
+    bottom: 22% !important;
+    left: 5% !important;
+    right: 5% !important;
+    transform: none;
+  }
+  #subheadline p {
+    text-align: center !important;
+    margin: 0 !important;
+  }
+
   #card-morph-group, .sc-card { transform: scale(0.90); transform-origin: center center; }
 
 
@@ -2429,6 +2484,7 @@ window.onerror = function(msg, url, line, col, err) {
   </div>
   <!-- Logo superior izquierda -->
   <div id="nav-logo" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
+    <div id="mobile-menu-pill" style="display: none;">+ MENU</div>
     <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="height: 57px; width: auto; filter: brightness(0) invert(1);">
     <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height: 28px; width: auto; filter: brightness(0) invert(1); padding-left: 0px;">
   </div>
