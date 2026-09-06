@@ -1716,17 +1716,20 @@ window.onerror = function(msg, url, line, col, err) {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    margin-bottom: 12px;
     backdrop-filter: blur(4px);
+    position: fixed !important;
+    top: 4% !important;
+    right: 5% !important;
+    left: auto !important;
   }
 
   #nav-logo {
     left: 5% !important;
-    top: 5% !important;
+    top: 4% !important;
   }
 
   #headline {
-    top: 18% !important;
+    top: 14% !important;
     left: 5% !important;
     right: 5% !important;
     max-width: 100% !important;
@@ -2544,7 +2547,7 @@ window.onerror = function(msg, url, line, col, err) {
   </div>
   <!-- Subheadline derecha -->
   <div id="subheadline">
-    <p>¿Otra cena más con tu pareja u otra cita?<br>Nah, hagámosla inolvidable</p>
+    <p>¿Otra cena más con tu pareja u otra cita? Nah, hagámosla inolvidable</p>
   </div>
   <!-- Headline izquierda -->
   <div id="headline">
@@ -2557,8 +2560,8 @@ window.onerror = function(msg, url, line, col, err) {
       <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="headline-sub oh-inner" style="display:block; margin:0;">En tu restaurante favorito o en casa</p></span>
   </div>
   <!-- Logo superior izquierda -->
+  <div id="mobile-menu-pill" style="display: none; position: fixed; z-index: 10000020;">+ MENU</div>
   <div id="nav-logo" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
-    <div id="mobile-menu-pill" style="display: none;">+ MENU</div>
     <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="height: 57px; width: auto; filter: brightness(0) invert(1);">
     <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height: 28px; width: auto; filter: brightness(0) invert(1); padding-left: 0px;">
   </div>
