@@ -1700,7 +1700,7 @@ window.onerror = function(msg, url, line, col, err) {
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
 @media screen and (max-width: 768px) {
-  .sc-card { transform: scale(0.80); transform-origin: center center; }
+  #card-morph-group, .sc-card { transform: scale(0.80); transform-origin: center center; }
 
 
   /* Fix intro card overflow and hide desktop scrollbar */
@@ -8499,7 +8499,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
     const dist      = 6.0;
     const vH        = 2 * Math.tan((42 * Math.PI / 180) / 2) * dist;
-    const targetH   = vH * (basePxH / window.innerHeight) * (window.matchMedia('(max-width: 768px)').matches ? 0.8 : 1.0);
+    const targetH   = vH * (basePxH / window.innerHeight);
     const scaleFact = targetH / Math.max(size.z, 0.001);
 
     pivot.scale.setScalar(scaleFact);
