@@ -7989,7 +7989,8 @@ requestAnimationFrame(smoothScrollLoop);
     ];
     cards = cardPos.map((p,i) => {
       const w = buildCard(cardData[i], p.x, p.z, p.rY, p.rZ, p.yOffset);
-      scene.add(w);
+      if (window.matchMedia('(max-width: 768px)').matches) { w.scale.setScalar(1.3); }
+        scene.add(w);
       return w;
     });
   }
@@ -8726,7 +8727,8 @@ function makeCardBackTex(data = '4 PASOS') {
     const setting = gltf.scene.clone(true);
     const box  = new THREE.Box3().setFromObject(setting);
     const size = box.getSize(new THREE.Vector3());
-    const targetWidth = 9.0;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const targetWidth = isMobile ? 9.0 * 1.3 : 9.0;
     const scale = targetWidth / Math.max(size.x, size.z);
     setting.scale.setScalar(scale);
     setting.rotation.y = rotY;
@@ -8766,7 +8768,8 @@ function makeCardBackTex(data = '4 PASOS') {
     const glass = gltf.scene.clone(true);
     const box  = new THREE.Box3().setFromObject(glass);
     const size = box.getSize(new THREE.Vector3());
-    const targetH = 4.16;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const targetH = isMobile ? 4.16 * 1.3 : 4.16;
     const scale   = targetH / Math.max(size.y, 0.001);
     glass.scale.setScalar(scale);
     const box2    = new THREE.Box3().setFromObject(glass);
@@ -9025,7 +9028,8 @@ function makeCardBackTex(data = '4 PASOS') {
     window.polaroidMesh.position.set(0, 0.117, 0.03); 
     
     // Escala final
-    window.polaroidMesh.scale.set(0.83, 0.83, 0.83); 
+    const polS = window.matchMedia('(max-width: 768px)').matches ? 0.83 * 1.3 : 0.83;
+      window.polaroidMesh.scale.set(polS, polS, polS); 
     scene.add(window.polaroidMesh);
 
 
