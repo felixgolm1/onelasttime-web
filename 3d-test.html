@@ -11605,9 +11605,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       _oltPhaseDyn.style.filter = 'blur(' + blurAmount.toFixed(1) + 'px)';
                       
                       // Ajustar la posición vertical al aparecer la garantía
-                      // Empieza 60px más arriba para centrarse visualmente entre el logo y el CTA,
-                      // luego sube otros 70px para hacer sitio a la garantía.
-                      var dynOffsetY = 60 + (_p1ReverseP * 70); 
+                      // Empieza 40px más arriba para centrar las 2 líneas iniciales entre el logo y el CTA,
+                      // luego sube otros 40px exactos para mantener el centro visual del bloque cuando aparecen las 3 líneas.
+                      var dynOffsetY = 40 + (_p1ReverseP * 40); 
                       _oltPhaseDyn.style.transform = 'translate(-50%, calc(-50% - ' + dynOffsetY + 'px))';
                       
                       // Iluminación de la pregunta
