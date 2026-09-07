@@ -10733,7 +10733,7 @@ setInterval(function() {
     <!-- P2 Guarantee -->
     <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 110px); width: 100%; display:flex; justify-content:center; align-items:center; gap:15px; opacity: 0; will-change: opacity;">
       <div id="leaf-left" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.5s ease;"></div>
-      <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700; color:#ccff00;">Si la experiencia no os fascina, te devolvemos el 100% y te regalamos otra. Sin preguntas.</p>
+      <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700; color:#ccff00;">Si la experiéncia no os fascina, te pagamos esta y os regalamos otra. Sin preguntas</p>
       <div id="leaf-right" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.5s ease;"></div>
     </div>
   </div>
@@ -11606,7 +11606,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       _oltPhaseDyn.style.filter = 'blur(' + blurAmount.toFixed(1) + 'px)';
                       
                       // Ajustar la posición vertical al aparecer la garantía
-                      var dynOffsetY = _p1ReverseP * 40; // Sube hasta 40px progresivamente
+                      var dynOffsetY = -80 + (_p1ReverseP * 120); // Sube 120px para hacer sitio a la garantia, empezando 80px mas abajo
                       _oltPhaseDyn.style.transform = 'translate(-50%, calc(-50% - ' + dynOffsetY + 'px))';
                       
                       // Iluminación de la pregunta
