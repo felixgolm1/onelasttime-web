@@ -10713,23 +10713,23 @@ setInterval(function() {
     
     <!-- P1 Question -->
     <div id="p1-question" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -100%); width: 100%; opacity: 0; will-change: opacity;">
-        <p style="margin:0;">¿Si tuvieras que vender la mejor conversación que recuerdas<br>con tu pareja o cita, teniendo en cuenta lo que os unió...<br>qué precio le pondrías?</p>
+        <p style="margin:0;">¿Qué precio le pondrías a la mejor conversación que habéis tenido nunca?</p>
     </div>
 
     <!-- P1/P2 Dynamic Price Row -->
     <div id="dynamic-pricing-row" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 30px); display:flex; align-items:center; justify-content:center; white-space:nowrap; opacity: 0; will-change: transform, opacity;">
-        <span id="dp-left" style="display:inline-block; margin-right: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;">Ahora por</span>
+        <span id="dp-left" style="display:inline-block; margin-right: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;">Ahora, provocar esa misma magia solo te cuesta </span>
         <div style="position:relative; display:inline-block; color: #ffffff;" id="p1-counter-container">
-            <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">7,99€</span>
+            <span id="p1-counter" style="transition: color 0.2s ease-out; font-weight:700;">8,99€</span>
             <div id="p1-strikethrough" style="position:absolute; top:50%; left:0; width:0%; height:3px; background-color:#ccff00; transform:translateY(-50%); transition: width 0.1s linear;"></div>
         </div>
-        <span id="dp-right" style="display:inline-block; margin-left: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;"> tienes la habilidad de tenerla cuando quieras</span>
+        <span id="dp-right" style="display:inline-block; margin-left: 5px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;">.</span>
     </div>
 
     <!-- P2 Guarantee -->
     <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 110px); width: 100%; display:flex; justify-content:center; align-items:center; gap:15px; opacity: 0; will-change: opacity;">
       <div id="leaf-left" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.5s ease;"></div>
-      <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700; color:#ccff00;">Si no te gusta te devolvemos el 100% del dinero. Sin preguntas</p>
+      <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700; color:#ccff00;">Si la experiencia no os fascina, te devolvemos el 100% y te regalamos otra. Sin preguntas.</p>
       <div id="leaf-right" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.5s ease;"></div>
     </div>
   </div>
@@ -11682,7 +11682,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                   counterSpan.style.color = '#ffffff';
                               } else {
                                   // Enteros 9, 8 hasta precio final 7,99
-                                  var intSteps = ['9', '8', '7,99'];
+                                  var intSteps = ['10', '9', '8,99'];
                                   var decP = (_p1ReverseP - 0.5) * 2.0; // 0 to 1
                                   var stepIdx = Math.min(intSteps.length - 1, Math.floor(decP * intSteps.length));
                                   var countVal = intSteps[stepIdx];
@@ -11693,8 +11693,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           
                           // Expansión lateral (Centrado)
                           if (dpLeft && dpRight) {
-                              var maxWLeft = 200; 
-                              var maxWRight = 800; // Increased to ensure it fits the whole sentence
+                              var maxWLeft = 600; 
+                              var maxWRight = 50; // Increased to ensure it fits the whole sentence
                               dpLeft.style.maxWidth = (_p1ReverseP * maxWLeft) + 'px';
                               dpLeft.style.opacity = _p1ReverseP.toFixed(2);
                               dpRight.style.maxWidth = (_p1ReverseP * maxWRight) + 'px';
