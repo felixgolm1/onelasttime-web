@@ -6537,52 +6537,6 @@ window.onerror = function(msg, url, line, col, err) {
 
       // dragHint es ahora fijo (no sigue el ratón)
 
-    // Ã¢â€€Ã¢â€€ DRAG CAJA Ã¢â€€Ã¢â€€ (igual que index.html: arrastramos el wrapper mainDeck)
-    // Ahora mainDeck es del tamaño de la caja (como en index.html), así que
-    // arrastrarlo mueve toda la caja+cartas juntas.
-    let isBoxDragging = false;
-    let startBoxX, startBoxY, initialBoxLeft, initialBoxTop;
-
-    mainDeck.addEventListener('pointerdown', (e) => {
-      // Si pinchamos una carta que asoma, ignoramos arrastrar la caja
-      if (e.target.closest('.card-wrap')) return;
-
-      isBoxDragging = true;
-
-      // Primera vez: convertir de margin-based (CSS) a left/top explícitos
-      if (!mainDeck.dataset.dragged) {
-        mainDeck.dataset.dragged = 'true';
-        const currentLeft = mainDeck.offsetLeft;
-        const currentTop  = mainDeck.offsetTop;
-        mainDeck.style.marginLeft = '0';
-        mainDeck.style.marginTop  = '0';
-        mainDeck.style.left = currentLeft + 'px';
-        mainDeck.style.top  = currentTop  + 'px';
-      }
-
-      startBoxX = e.clientX;
-      startBoxY = e.clientY;
-      initialBoxLeft = parseFloat(mainDeck.style.left) || mainDeck.offsetLeft;
-      initialBoxTop  = parseFloat(mainDeck.style.top)  || mainDeck.offsetTop;
-
-      mainDeck.setPointerCapture(e.pointerId);
-    });
-
-    mainDeck.addEventListener('pointermove', (e) => {
-      if (!isBoxDragging) return;
-      const dx = e.clientX - startBoxX;
-      const dy = e.clientY - startBoxY;
-      mainDeck.style.left = `${initialBoxLeft + dx}px`;
-      mainDeck.style.top  = `${initialBoxTop  + dy}px`;
-    });
-
-    const endBoxDrag = (e) => {
-      isBoxDragging = false;
-      try { mainDeck.releasePointerCapture(e.pointerId); } catch (err) { }
-    };
-    mainDeck.addEventListener('pointerup', endBoxDrag);
-    window.addEventListener('pointerup', endBoxDrag);
-    window.addEventListener('pointercancel', endBoxDrag);
 
 
 
