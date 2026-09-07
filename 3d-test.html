@@ -3161,8 +3161,8 @@ window.onerror = function(msg, url, line, col, err) {
   let introMorphGroup = null;
 
   function buildScene(gltf) {
-    placeTableSet(gltf, -7.0, 0, -Math.PI / 2);
-    placeTableSet(gltf,  7.0, 0,  Math.PI / 2);
+    placeTableSet(gltf, _isMobileScene ? -7.0 * 0.7 : -7.0, 0, -Math.PI / 2);
+    placeTableSet(gltf, _isMobileScene ? 7.0 * 0.7 : 7.0, 0,  Math.PI / 2);
     gltfReady = true;
     tryReveal();
   }
@@ -8806,8 +8806,8 @@ function makeCardBackTex(data = '4 PASOS') {
     );
     gltfLoader.load('assets/models/sm_zinfandel_glass.glb',
       (gltf) => {
-        placeWineGlass(gltf, -3.0, +2.4);
-        placeWineGlass(gltf,  3.0, -2.4);
+        placeWineGlass(gltf, _isMobileScene ? -3.0 * 0.7 : -3.0, +2.4);
+        placeWineGlass(gltf, _isMobileScene ? 3.0 * 0.7 : 3.0, -2.4);
       },
       null,
       (err) => { console.error('Error copa:', err); }
