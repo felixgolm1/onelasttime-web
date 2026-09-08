@@ -13298,33 +13298,31 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   /* Header floating bar */
   .faq-top-bar {
     width: 100%;
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 22px;
-    padding: 0 2px;
+    padding: 0 4px;
+    min-height: 42px;
   }
-  .faq-top-badge {
-    color: #ccff00;
+  .faq-title {
+    color: #ffffff;
     font-family: 'Inter', sans-serif;
-    font-size: 0.74rem;
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
     font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .faq-top-badge::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #ccff00;
-    box-shadow: 0 0 10px #ccff00;
-    display: inline-block;
+    margin: 0;
+    letter-spacing: -0.02em;
+    text-align: center;
+    padding: 0 76px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .faq-close-pill {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
     color: #ffffff;
@@ -13497,12 +13495,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     
     <!-- Top Header Bar -->
     <div class="faq-top-bar">
-      <div>
-        <div class="faq-top-badge">One Last Time · Baraja de Respuestas</div>
-        <h2 id="olt-faq-title" style="color:#ffffff; font-family:'Inter',sans-serif; font-size:clamp(1.1rem, 2.2vw, 1.35rem); font-weight:800; margin:4px 0 0; letter-spacing:-0.02em;">
-          Preguntas frecuentes &amp; Garantía
-        </h2>
-      </div>
+      <h2 id="olt-faq-title" class="faq-title">
+        Preguntas frecuentes &amp; Garantía
+      </h2>
       <button type="button" class="faq-close-pill" onclick="window.closeFaqModal()">
         <span>Cerrar</span>
         <span>✕</span>
