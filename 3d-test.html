@@ -3580,8 +3580,8 @@ window.onerror = function(msg, url, line, col, err) {
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
     scrollTl.to('#blur-bg-head', { opacity: 0, duration: 0.08, ease: 'power2.inOut' }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
-      scrollTl.to('#blur-bg-sub', { opacity: 0, duration: 0.08, ease: 'power2.inOut' }, 0);
-      scrollTl.to('.sub-oh-inner', { y: '-150%', autoAlpha: 0, duration: 0.05, ease: 'power2.in', stagger: { each: 0.005, from: 'start' } }, 0);
+      scrollTl.to('#blur-bg-sub', { opacity: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
+      scrollTl.to('.sub-oh-inner', { y: '-150%', autoAlpha: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'start' } }, 0);
 
 
     // Ã¢â€€ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -13348,12 +13348,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     color: #ccff00;
   }
 
-  /* PHYSICAL DECK STACK CONTAINER: Floating weightlessly (Decision Tree float effect) */
-  @keyframes floatIdleDeck {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-7px); }
-  }
-
+  /* PHYSICAL DECK STACK CONTAINER */
   .wallet-stack {
     position: relative;
     width: 100%;
@@ -13362,14 +13357,53 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     align-items: center;
     perspective: 1200px;
     padding-bottom: 26px;
-    animation: floatIdleDeck 5s ease-in-out infinite;
+  }
+
+  /* CARD WRAPPER: INDEPENDENT FLOATING WAVE (Decision Tree float effect per card) */
+  .wallet-card-wrap {
+    position: relative;
+    width: 100%;
+    animation: floatCard 4.8s ease-in-out infinite;
     will-change: transform;
   }
 
-  /* Pause on hover or when a card is actively opened for comfortable reading */
-  .wallet-stack:hover,
-  .wallet-stack.has-active {
+  .wallet-card-wrap:not(:first-child) {
+    margin-top: -186px;
+  }
+
+  /* Staggered floating delays & natural z-index plane */
+  .wallet-card-wrap:nth-child(1)  { animation-delay: 0.0s;  z-index: 1; }
+  .wallet-card-wrap:nth-child(2)  { animation-delay: 0.45s; z-index: 2; }
+  .wallet-card-wrap:nth-child(3)  { animation-delay: 0.9s;  z-index: 3; }
+  .wallet-card-wrap:nth-child(4)  { animation-delay: 1.35s; z-index: 4; }
+  .wallet-card-wrap:nth-child(5)  { animation-delay: 1.8s;  z-index: 5; }
+  .wallet-card-wrap:nth-child(6)  { animation-delay: 2.25s; z-index: 6; }
+  .wallet-card-wrap:nth-child(7)  { animation-delay: 2.7s;  z-index: 7; }
+  .wallet-card-wrap:nth-child(8)  { animation-delay: 3.15s; z-index: 8; }
+  .wallet-card-wrap:nth-child(9)  { animation-delay: 3.6s;  z-index: 9; }
+  .wallet-card-wrap:nth-child(10) { animation-delay: 4.05s; z-index: 10; }
+
+  /* Base organic card rotations */
+  .wallet-card-wrap:nth-child(1)  .wallet-card { --base-rot: -1.0deg; }
+  .wallet-card-wrap:nth-child(2)  .wallet-card { --base-rot:  1.2deg; }
+  .wallet-card-wrap:nth-child(3)  .wallet-card { --base-rot: -0.8deg; }
+  .wallet-card-wrap:nth-child(4)  .wallet-card { --base-rot:  0.9deg; }
+  .wallet-card-wrap:nth-child(5)  .wallet-card { --base-rot: -1.2deg; }
+  .wallet-card-wrap:nth-child(6)  .wallet-card { --base-rot:  0.7deg; }
+  .wallet-card-wrap:nth-child(7)  .wallet-card { --base-rot: -0.9deg; }
+  .wallet-card-wrap:nth-child(8)  .wallet-card { --base-rot:  1.1deg; }
+  .wallet-card-wrap:nth-child(9)  .wallet-card { --base-rot: -0.6deg; }
+  .wallet-card-wrap:nth-child(10) .wallet-card { --base-rot:  0.8deg; }
+
+  /* Pause individual float on hover or when an answer is open */
+  .wallet-card-wrap:hover,
+  .wallet-stack.has-active .wallet-card-wrap {
     animation-play-state: paused;
+  }
+
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
   }
 
   /* PHYSICAL PLAYING CARD (Organic ease-in-out glide) */
@@ -13393,23 +13427,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     flex-direction: column;
     padding: 22px 24px 20px;
   }
-
-  /* Physical Deck Overlap (76px visible peek for comfortable 2-line headers) */
-  .wallet-card:not(:first-child) {
-    margin-top: -188px;
-  }
-
-  /* Alternating organic angles */
-  .wallet-card:nth-child(1)  { --base-rot: -1.0deg; z-index: 1; }
-  .wallet-card:nth-child(2)  { --base-rot:  1.2deg; z-index: 2; }
-  .wallet-card:nth-child(3)  { --base-rot: -0.8deg; z-index: 3; }
-  .wallet-card:nth-child(4)  { --base-rot:  0.9deg; z-index: 4; }
-  .wallet-card:nth-child(5)  { --base-rot: -1.2deg; z-index: 5; }
-  .wallet-card:nth-child(6)  { --base-rot:  0.7deg; z-index: 6; }
-  .wallet-card:nth-child(7)  { --base-rot: -0.9deg; z-index: 7; }
-  .wallet-card:nth-child(8)  { --base-rot:  1.1deg; z-index: 8; }
-  .wallet-card:nth-child(9)  { --base-rot: -0.6deg; z-index: 9; }
-  .wallet-card:nth-child(10) { --base-rot:  0.8deg; z-index: 10; }
 
   /* Subtle Hover: gentle nudge up with smooth ease */
   .wallet-card:not(.active):hover {
@@ -13525,7 +13542,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     <div id="faq-wallet-stack" class="wallet-stack">
 
       <!-- CARD 1 -->
-      <div class="wallet-card" data-index="0" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="0" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Qué pasa si no me gusta la experiencia?</h3>
         </div>
@@ -13534,9 +13552,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p><strong>Sin preguntas y sin letra pequeña.</strong> Confiamos tanto en la experiencia que si no sentís que ha merecido la pena, el riesgo es 100% nuestro.</p>
         </div>
       </div>
+      </div>
 
       <!-- CARD 2 -->
-      <div class="wallet-card" data-index="1" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="1" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Cuánto tiempo tardo en recibir las cartas?</h3>
         </div>
@@ -13551,9 +13571,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           </ul>
         </div>
       </div>
+      </div>
 
       <!-- CARD 3 -->
-      <div class="wallet-card" data-index="2" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="2" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Dónde me entregaréis las cartas?</h3>
         </div>
@@ -13566,9 +13588,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           </ul>
         </div>
       </div>
+      </div>
 
       <!-- CARD 4 -->
-      <div class="wallet-card" data-index="3" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="3" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Cuánto cuesta la experiencia con las cartas?</h3>
         </div>
@@ -13577,9 +13601,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>El precio si escoges la edición de <strong>cartas físicas</strong> es de <strong>13,99€</strong> (envío peninsular gratuito incluido).</p>
         </div>
       </div>
+      </div>
 
       <!-- CARD 5 -->
-      <div class="wallet-card" data-index="4" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="4" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿El envío de las cartas tiene algún coste para mí?</h3>
         </div>
@@ -13588,9 +13614,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>Los envíos a Baleares, Ceuta y Melilla tienen un suplemento de 3€, y los envíos a Canarias tienen un suplemento de 6€.</p>
         </div>
       </div>
+      </div>
 
       <!-- CARD 6 -->
-      <div class="wallet-card" data-index="5" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="5" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Solo sirven para una cena en un restaurante?</h3>
         </div>
@@ -13600,9 +13628,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>Lo esencial es elegir un momento en el que prioricéis la conversación y estéis libres de distracciones.</p>
         </div>
       </div>
+      </div>
 
       <!-- CARD 7 -->
-      <div class="wallet-card" data-index="6" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="6" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Cómo preparáis las preguntas?</h3>
         </div>
@@ -13614,9 +13644,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           </ol>
         </div>
       </div>
+      </div>
 
       <!-- CARD 8 -->
-      <div class="wallet-card" data-index="7" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="7" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿En qué idiomas hacéis las cartas?</h3>
         </div>
@@ -13625,9 +13657,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>Nuestro modelo OLT-1 y nuestro equipo son nativos en español, catalán, inglés, francés, italiano y cualquier idioma que elijas al configurar la reserva.</p>
         </div>
       </div>
+      </div>
 
       <!-- CARD 9 -->
-      <div class="wallet-card" data-index="8" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="8" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Hacéis envíos fuera de España de las cartas físicas?</h3>
         </div>
@@ -13636,15 +13670,18 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>Escríbenos directamente por WhatsApp al <strong>649 67 16 50</strong> y dinos dónde las necesitas para coordinarlo contigo.</p>
         </div>
       </div>
+      </div>
 
       <!-- CARD 10 -->
-      <div class="wallet-card" data-index="9" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card-wrap">
+        <div class="wallet-card" data-index="9" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <h3 class="wallet-question">¿Qué recibiré exactamente?</h3>
         </div>
         <div class="wallet-body">
           <p>Recibirás una <strong>baraja física de acabado de lujo</strong> (o tu acceso digital interactivo en smartphone) con una <strong>secuencia graduada de preguntas psicológicas</strong> diseñadas para romper la rutina y conectar de verdad como el primer día.</p>
         </div>
+      </div>
       </div>
 
     </div>
@@ -13710,7 +13747,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var stack = document.getElementById('faq-wallet-stack');
     if (stack) stack.classList.add('has-active');
 
-    var shiftAmount = 188; 
+    var shiftAmount = 186; 
 
     allCards.forEach(function(card, idx) {
       if (idx === clickedIndex) {
