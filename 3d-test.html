@@ -98,7 +98,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     #loader {
       position:fixed; inset:0; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; z-index:10001;
+      align-items:center; justify-content:center; z-index:10000020;
       background: #000; background-image: radial-gradient(ellipse at 0% 100%, rgba(204,255,0,0.36) 0%, transparent 80%), radial-gradient(ellipse at 100% 100%, rgba(204,255,0,0.18) 0%, transparent 70%); gap:1.2rem;
       font-family:'Poppins',sans-serif;
       transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -656,7 +656,7 @@ window.onerror = function(msg, url, line, col, err) {
       transform: translateY(-50%) translateZ(1000px);
       z-index: 100000;
       max-width: 40vw;
-      opacity: 0;
+      opacity: 1;
       padding: 1.6rem 2rem;
     }
     #blur-bg-head {
@@ -742,7 +742,7 @@ window.onerror = function(msg, url, line, col, err) {
       transform: translateY(-50%) translateZ(1000px);
       z-index: 100000;
       max-width: 29vw;
-      opacity: 0;
+      opacity: 1;
     }
     #blur-bg-sub {
       position: absolute;
@@ -1123,7 +1123,7 @@ window.onerror = function(msg, url, line, col, err) {
       left: 2rem;
       z-index: 10000010;
       pointer-events: auto;
-      opacity: 0;
+      opacity: 1;
     }
     #nav-logo img {
       height: 57px;
@@ -1139,7 +1139,7 @@ window.onerror = function(msg, url, line, col, err) {
       align-items: center;
       gap: 2.2rem;
       pointer-events: auto;
-      opacity: 0;
+      opacity: 1;
     }
     /* CTA Superior (Fixed) */
     #cta-top-container {
@@ -1161,7 +1161,7 @@ window.onerror = function(msg, url, line, col, err) {
       letter-spacing: 0.2em;
       text-transform: uppercase;
       white-space: nowrap;
-      opacity: 0;
+      opacity: 1;
     }
     .oryzo-scroll-icon {
       position: relative;
@@ -1231,7 +1231,7 @@ window.onerror = function(msg, url, line, col, err) {
       transform: translate3d(-50%, 0, 0);
       z-index: 10008;  /* encima de #card-table (10005) que se pone pointer-events:auto por JS */
       width: 100%;
-      opacity: 0;
+      opacity: 1;
       max-width: 540px;
       padding: 0 1.5rem;
       pointer-events: none;
@@ -1715,7 +1715,7 @@ window.onerror = function(msg, url, line, col, err) {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    opacity: 0;
+    opacity: 1;
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
     color: #fff;
@@ -3307,20 +3307,7 @@ window.onerror = function(msg, url, line, col, err) {
 
           }
 
-          // Reveal UI periférico
-          gsap.to(['#nav-logo', '#nav-menu', '#mobile-menu-pill', '#cta-top-container', '#cta-bottom-container', '.scroll-indicator', '#headline', '#subheadline'], {
-            opacity: 1,
-            duration: 1.5,
-            ease: 'power2.out',
-            stagger: 0.15,
-            onComplete: function() {
-              // Safari bug fix: force repaint of backdrop-filters after opacity animation finishes
-              var h = document.getElementById('blur-bg-head');
-              if (h) { h.style.display = 'none'; h.offsetHeight; h.style.display = 'block'; }
-              var s = document.getElementById('blur-bg-sub');
-              if (s) { s.style.display = 'none'; s.offsetHeight; s.style.display = 'block'; }
-            }
-          });
+          
 
           introMorphGroup = morphGroup;
           setupScrollAnim();
