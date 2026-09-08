@@ -13379,9 +13379,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding: 22px 24px 20px;
   }
 
-  /* Physical Deck Overlap */
+  /* Physical Deck Overlap (76px visible peek for comfortable 2-line headers) */
   .wallet-card:not(:first-child) {
-    margin-top: -198px;
+    margin-top: -188px;
   }
 
   /* Alternating organic angles */
@@ -13409,9 +13409,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.38);
   }
 
-  /* Card Header: identical geometry in active and resting states so there is NEVER a layout jump */
+  /* Card Header: flexible height for 2-line titles without overlapping */
   .wallet-header {
-    height: 46px;
+    min-height: 46px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -13693,7 +13693,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       return;
     }
 
-    var shiftAmount = 198; 
+    var shiftAmount = 188; 
 
     allCards.forEach(function(card, idx) {
       if (idx === clickedIndex) {
