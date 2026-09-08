@@ -13357,6 +13357,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
+    transform: translateY(var(--shift-y, 0px)) rotate(var(--base-rot, 0deg));
     transition: transform 0.72s cubic-bezier(0.19, 1, 0.22, 1), 
                 box-shadow 0.35s ease;
     will-change: transform;
@@ -13372,26 +13373,26 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   }
 
   /* Alternating organic angles */
-  .wallet-card:nth-child(1)  { --base-rot: -1.0deg; transform: rotate(var(--base-rot)); z-index: 1; }
-  .wallet-card:nth-child(2)  { --base-rot:  1.2deg; transform: rotate(var(--base-rot)); z-index: 2; }
-  .wallet-card:nth-child(3)  { --base-rot: -0.8deg; transform: rotate(var(--base-rot)); z-index: 3; }
-  .wallet-card:nth-child(4)  { --base-rot:  0.9deg; transform: rotate(var(--base-rot)); z-index: 4; }
-  .wallet-card:nth-child(5)  { --base-rot: -1.2deg; transform: rotate(var(--base-rot)); z-index: 5; }
-  .wallet-card:nth-child(6)  { --base-rot:  0.7deg; transform: rotate(var(--base-rot)); z-index: 6; }
-  .wallet-card:nth-child(7)  { --base-rot: -0.9deg; transform: rotate(var(--base-rot)); z-index: 7; }
-  .wallet-card:nth-child(8)  { --base-rot:  1.1deg; transform: rotate(var(--base-rot)); z-index: 8; }
-  .wallet-card:nth-child(9)  { --base-rot: -0.6deg; transform: rotate(var(--base-rot)); z-index: 9; }
-  .wallet-card:nth-child(10) { --base-rot:  0.8deg; transform: rotate(var(--base-rot)); z-index: 10; }
+  .wallet-card:nth-child(1)  { --base-rot: -1.0deg; z-index: 1; }
+  .wallet-card:nth-child(2)  { --base-rot:  1.2deg; z-index: 2; }
+  .wallet-card:nth-child(3)  { --base-rot: -0.8deg; z-index: 3; }
+  .wallet-card:nth-child(4)  { --base-rot:  0.9deg; z-index: 4; }
+  .wallet-card:nth-child(5)  { --base-rot: -1.2deg; z-index: 5; }
+  .wallet-card:nth-child(6)  { --base-rot:  0.7deg; z-index: 6; }
+  .wallet-card:nth-child(7)  { --base-rot: -0.9deg; z-index: 7; }
+  .wallet-card:nth-child(8)  { --base-rot:  1.1deg; z-index: 8; }
+  .wallet-card:nth-child(9)  { --base-rot: -0.6deg; z-index: 9; }
+  .wallet-card:nth-child(10) { --base-rot:  0.8deg; z-index: 10; }
 
-  /* Subtle Hover */
+  /* Subtle Hover: ALWAYS nudges up 3.5px relative to its current shifted position! */
   .wallet-card:not(.active):hover {
-    transform: translateY(-3.5px) rotate(var(--base-rot)) !important;
+    transform: translateY(calc(var(--shift-y, 0px) - 3.5px)) rotate(var(--base-rot, 0deg)) !important;
     box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
   }
 
   /* ACTIVE CARD */
   .wallet-card.active {
-    transform: rotate(0deg) scale(1.015) !important;
+    transform: translateY(0px) rotate(0deg) scale(1.015) !important;
     z-index: 60 !important;
     border-color: rgba(0, 0, 0, 0.14);
     box-shadow: 0 26px 60px rgba(0, 0, 0, 0.48);
@@ -13678,7 +13679,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var allCards = document.querySelectorAll('.wallet-card');
     allCards.forEach(function(card) {
       card.classList.remove('active');
-      card.style.transform = '';
+      card.style.setProperty('--shift-y', '0px');
     });
   };
 
@@ -13695,16 +13696,15 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var shiftAmount = 198; 
 
     allCards.forEach(function(card, idx) {
-      var baseRot = card.style.getPropertyValue('--base-rot') || '0deg';
       if (idx === clickedIndex) {
         card.classList.add('active');
-        card.style.transform = 'translateY(0) rotate(0deg) scale(1.015)';
+        card.style.setProperty('--shift-y', '0px');
       } else {
         card.classList.remove('active');
         if (idx < clickedIndex) {
-          card.style.transform = '';
+          card.style.setProperty('--shift-y', '0px');
         } else {
-          card.style.transform = 'translateY(' + shiftAmount + 'px) rotate(' + baseRot + ')';
+          card.style.setProperty('--shift-y', shiftAmount + 'px');
         }
       }
     });
@@ -13744,6 +13744,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
