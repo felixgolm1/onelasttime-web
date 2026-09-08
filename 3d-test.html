@@ -659,17 +659,16 @@ window.onerror = function(msg, url, line, col, err) {
       opacity: 0;
       padding: 1.6rem 2rem;
     }
-    #headline::before {
-      content: '';
+    #blur-bg-head {
       position: absolute;
       top: -2rem; bottom: -2rem; left: -2rem; right: -2rem;
       z-index: -1;
       pointer-events: none;
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
-      backdrop-filter: blur(var(--head-blur));
-      -webkit-backdrop-filter: blur(var(--head-blur));
-      background: rgba(0, 0, 0, var(--head-alpha));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.05);
       mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
       -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
     }
@@ -745,20 +744,16 @@ window.onerror = function(msg, url, line, col, err) {
       max-width: 29vw;
       opacity: 0;
     }
-    #subheadline::before {
-      content: '';
+    #blur-bg-sub {
       position: absolute;
-      /* Expande el radio de difuminado más allá del texto */
       top: -3rem; bottom: -3rem; left: -3rem; right: -3rem;
       z-index: -1;
       pointer-events: none;
-      /* Efecto blur dinámico para poder animarlo sin romper la tarjeta gráfica */
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
-      backdrop-filter: blur(var(--sub-blur));
-      -webkit-backdrop-filter: blur(var(--sub-blur));
-      background: rgba(0, 0, 0, var(--sub-alpha));
-      /* Máscara para que el blur se desvanezca en los bordes y no sea un "cajón" cuadrado */
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.05);
       -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
       mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
     }
@@ -2581,13 +2576,15 @@ window.onerror = function(msg, url, line, col, err) {
     <div id="custom-scroll-thumb"></div>
   </div>
   <!-- Subheadline derecha -->
-  <div id="subheadline" style="--sub-blur: 6px; --sub-alpha: 0.05;">
+  <div id="subheadline">
+      <div id="blur-bg-sub"></div>
     <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">¿Otra cena más con tu</p></span>
     <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">pareja u otra cita? Nah,</p></span>
     <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">hagámosla inolvidable</p></span>
   </div>
   <!-- Headline izquierda -->
-  <div id="headline" style="--head-blur: 10px; --head-alpha: 0.05;">
+  <div id="headline">
+      <div id="blur-bg-head"></div>
     <h1>
       <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">EXPERIMENTA LA CENA</span></span>
       <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">MÁS TRANSFORMADORA</span></span>
@@ -3574,9 +3571,9 @@ window.onerror = function(msg, url, line, col, err) {
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.06, ease: 'power3.in' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
-    scrollTl.fromTo('#headline', { '--head-blur': '10px', '--head-alpha': 0.05 }, { '--head-blur': '0px', '--head-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
+    scrollTl.to('#blur-bg-head', { opacity: 0, duration: 0.08, ease: 'power2.inOut' }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
-      scrollTl.fromTo('#subheadline', { '--sub-blur': '6px', '--sub-alpha': 0.05 }, { '--sub-blur': '0px', '--sub-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
+      scrollTl.to('#blur-bg-sub', { opacity: 0, duration: 0.08, ease: 'power2.inOut' }, 0);
       scrollTl.to('.sub-oh-inner', { y: '-150%', autoAlpha: 0, duration: 0.05, ease: 'power2.in', stagger: { each: 0.005, from: 'start' } }, 0);
 
 
