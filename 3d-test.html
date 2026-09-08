@@ -3562,7 +3562,7 @@ window.onerror = function(msg, url, line, col, err) {
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.06, ease: 'power3.in' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
-    scrollTl.to('#headline', { borderColor: 'rgba(255,255,255,0)', backdropFilter: 'blur(0px)', webkitBackdropFilter: 'blur(0px)', duration: 0.08, ease: 'power2.inOut' }, 0);
+    scrollTl.to('#headline', { '--head-blur': '0px', '--head-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
       scrollTl.to('#subheadline', { '--sub-blur': '0px', '--sub-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
       scrollTl.to('.sub-oh-inner', { y: '-150%', autoAlpha: 0, duration: 0.05, ease: 'power2.in', stagger: { each: 0.005, from: 'start' } }, 0);
@@ -13345,7 +13345,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding-bottom: 26px;
   }
 
-  /* PHYSICAL PLAYING CARD */
+  /* PHYSICAL PLAYING CARD (Ultra-smooth 1.45s luxury curve) */
   .wallet-card {
     position: relative;
     width: 100%;
@@ -13358,8 +13358,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     cursor: pointer;
     user-select: none;
     transform: translateY(var(--shift-y, 0px)) rotate(var(--base-rot, 0deg));
-    transition: transform 0.72s cubic-bezier(0.19, 1, 0.22, 1), 
-                box-shadow 0.35s ease;
+    transition: transform 1.45s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.6s ease;
     will-change: transform;
     overflow: hidden;
     display: flex;
@@ -13384,10 +13384,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card:nth-child(9)  { --base-rot: -0.6deg; z-index: 9; }
   .wallet-card:nth-child(10) { --base-rot:  0.8deg; z-index: 10; }
 
-  /* Subtle Hover: ALWAYS nudges up 3.5px relative to its current shifted position! */
+  /* Subtle Hover */
   .wallet-card:not(.active):hover {
     transform: translateY(calc(var(--shift-y, 0px) - 3.5px)) rotate(var(--base-rot, 0deg)) !important;
     box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
+    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
   }
 
   /* ACTIVE CARD */
@@ -13711,7 +13712,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     setTimeout(function() {
       clickedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 150);
+    }, 300);
   };
 
   // Prevent wheel & touchmove from getting hijacked by the global 3D scroll
@@ -13744,6 +13745,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
