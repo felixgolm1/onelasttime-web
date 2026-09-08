@@ -665,8 +665,10 @@ window.onerror = function(msg, url, line, col, err) {
       top: -2rem; bottom: -2rem; left: -2rem; right: -2rem;
       z-index: -1;
       pointer-events: none;
+      transform: translateZ(0);
       backdrop-filter: blur(var(--head-blur));
-      -webkit-backdrop-filter: blur(var(--head-blur));
+      -webkit-transform: translateZ(0);
+      backdrop-filter: blur(var(--head-blur));
       background: rgba(0, 0, 0, var(--head-alpha));
       mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
       -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
@@ -751,8 +753,10 @@ window.onerror = function(msg, url, line, col, err) {
       z-index: -1;
       pointer-events: none;
       /* Efecto blur dinámico para poder animarlo sin romper la tarjeta gráfica */
-      backdrop-filter: blur(var(--sub-blur));
-      -webkit-backdrop-filter: blur(var(--sub-blur));
+      transform: translateZ(0);
+        backdrop-filter: blur(var(--sub-blur));
+      -webkit-transform: translateZ(0);
+        backdrop-filter: blur(var(--sub-blur));
       background: rgba(0, 0, 0, var(--sub-alpha));
       /* Máscara para que el blur se desvanezca en los bordes y no sea un "cajón" cuadrado */
       -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
@@ -3570,9 +3574,9 @@ window.onerror = function(msg, url, line, col, err) {
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.06, ease: 'power3.in' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
-    scrollTl.to('#headline', { '--head-blur': '0px', '--head-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
+    scrollTl.fromTo('#headline', { '--head-blur': '10px', '--head-alpha': 0.05 }, { '--head-blur': '0px', '--head-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
-      scrollTl.to('#subheadline', { '--sub-blur': '0px', '--sub-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
+      scrollTl.fromTo('#subheadline', { '--sub-blur': '6px', '--sub-alpha': 0.05 }, { '--sub-blur': '0px', '--sub-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
       scrollTl.to('.sub-oh-inner', { y: '-150%', autoAlpha: 0, duration: 0.05, ease: 'power2.in', stagger: { each: 0.005, from: 'start' } }, 0);
 
 
@@ -13468,13 +13472,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     color: #0d1208;
     font-weight: 700;
   }
-  .wallet-highlight {
-    color: #2d3c05;
-    font-weight: 700;
-    background: rgba(204, 255, 0, 0.28);
-    padding: 1px 5px;
-    border-radius: 3px;
-  }
+
 
   /* Bottom CTA Banner */
   .faq-bottom-cta {
@@ -13520,7 +13518,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <h3 class="wallet-question">¿Qué pasa si no me gusta la experiencia?</h3>
         </div>
         <div class="wallet-body">
-          <p><span class="wallet-highlight">Te devolvemos todo el dinero</span> y te regalamos otra experiencia diferente.</p>
+          <p><strong>Te devolvemos todo el dinero</strong> y te regalamos otra experiencia diferente.</p>
           <p><strong>Sin preguntas y sin letra pequeña.</strong> Confiamos tanto en la experiencia que si no sentís que ha merecido la pena, el riesgo es 100% nuestro.</p>
         </div>
       </div>
@@ -13531,7 +13529,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <h3 class="wallet-question">¿Cuánto tiempo tardo en recibir las cartas?</h3>
         </div>
         <div class="wallet-body">
-          <p><strong>Cartas digitales:</strong> Las tienes en tu móvil en menos de <span class="wallet-highlight">10 minutos</span>.</p>
+          <p><strong>Cartas digitales:</strong> Las tienes en tu móvil en menos de <strong>10 minutos</strong>.</p>
           <p><strong>Cartas físicas:</strong></p>
           <ul>
             <li><strong>Barcelona ciudad:</strong> Entrega gratis inmediata en <strong>4 horas</strong> si las necesitas hoy.</li>
@@ -13563,8 +13561,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <h3 class="wallet-question">¿Cuánto cuesta la experiencia con las cartas?</h3>
         </div>
         <div class="wallet-body">
-          <p>El precio si escoges <strong>cartas digitales</strong> es de <span class="wallet-highlight">8,99€</span>.</p>
-          <p>El precio si escoges la edición de <strong>cartas físicas</strong> es de <span class="wallet-highlight">13,99€</span> (envío peninsular gratuito incluido).</p>
+          <p>El precio si escoges <strong>cartas digitales</strong> es de <strong>8,99€</strong>.</p>
+          <p>El precio si escoges la edición de <strong>cartas físicas</strong> es de <strong>13,99€</strong> (envío peninsular gratuito incluido).</p>
         </div>
       </div>
 
@@ -13574,7 +13572,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <h3 class="wallet-question">¿El envío de las cartas tiene algún coste para mí?</h3>
         </div>
         <div class="wallet-body">
-          <p>El envío es <span class="wallet-highlight">100% GRATIS</span> en toda España peninsular.</p>
+          <p>El envío es <strong>100% GRATIS</strong> en toda España peninsular.</p>
           <p>Los envíos a Baleares, Ceuta y Melilla tienen un suplemento de 3€, y los envíos a Canarias tienen un suplemento de 6€.</p>
         </div>
       </div>
