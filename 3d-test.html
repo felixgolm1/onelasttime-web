@@ -13529,27 +13529,34 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     width: 100%;
   }
 
-  /* Card Body (Answer with internal scroll) */
+  /* Card Body (Answer with internal scroll: exact decision tree scrollbar) */
   .wallet-body {
     flex: 1;
     overflow-y: auto;
     opacity: 1;
     max-height: 165px;
-    padding: 6px 2px 4px;
+    padding: 6px 6px 4px 2px;
     color: #2b3127;
     font-family: 'Inter', sans-serif;
     font-size: 0.86rem;
     line-height: 1.58;
     text-align: left;
     scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
   }
   .wallet-body::-webkit-scrollbar {
-    width: 4px;
+    width: 5px;
+  }
+  .wallet-body::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 12px 0;
   }
   .wallet-body::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.22);
-    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+  }
+  .wallet-body::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
   .wallet-body p {
