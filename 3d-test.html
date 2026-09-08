@@ -3208,7 +3208,8 @@ window.onerror = function(msg, url, line, col, err) {
         
         if (globalGlbCard._baseScaleFact) {
           const _GS_SC  = 1.22;
-          const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
+          const _baseGSY = window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1.0;
+            const _t = Math.max(0, Math.min(1, (gSY - _baseGSY) / (_GS_SC - _baseGSY)));
           const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.5 : 0.65);
           const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? (1.0/_GS_SC) : 0.90);
           // Aplicamos el multiplicador inicial (1.5 -> 1.0)
@@ -7185,7 +7186,8 @@ window.onerror = function(msg, url, line, col, err) {
               // Mismo rango que scrollTl Phase 1 â€â€ la pantalla se va poniendo negra a la vez
               if (globalGlbCard._baseScaleFact && gSY > 0) {
                   const _GS_SC  = 1.22;
-                  const _t      = Math.max(0, Math.min(1, (gSY - 1.0) / (_GS_SC - 1.0)));
+                  const _baseGSY = window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1.0;
+            const _t = Math.max(0, Math.min(1, (gSY - _baseGSY) / (_GS_SC - _baseGSY)));
                   const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.5 : 0.65);
                   const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? (1.0/_GS_SC) : 0.90);
                   globalGlbCard.scale.setScalar(_scSmall + _t * (_scLarge - _scSmall));
