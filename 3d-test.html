@@ -1708,6 +1708,7 @@ window.onerror = function(msg, url, line, col, err) {
     display: flex !important;
     align-items: center;
     justify-content: center;
+    opacity: 0;
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
     color: #fff;
@@ -3284,7 +3285,7 @@ window.onerror = function(msg, url, line, col, err) {
           }
 
           // Reveal UI periférico
-          gsap.to(['#nav-logo', '#nav-menu', '#cta-top-container', '#cta-bottom-container', '.scroll-indicator', '#headline', '#subheadline'], {
+          gsap.to(['#nav-logo', '#nav-menu', '#mobile-menu-pill', '#cta-top-container', '#cta-bottom-container', '.scroll-indicator', '#headline', '#subheadline'], {
             opacity: 1,
             duration: 1.5,
             ease: 'power2.out',
