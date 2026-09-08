@@ -13226,21 +13226,21 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       });
     });
   </script>
-<!-- OLT FAQs Modal (Mazo Vertical Estilo Apple Wallet) -->
+<!-- OLT FAQs Modal (Mazo Vertical de Cartas Físicas Reales) -->
 <style>
   #olt-faq-modal {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 20000000;
-    background: rgba(5, 8, 4, 0.90);
+    background: rgba(5, 8, 4, 0.92);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     opacity: 0;
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     justify-content: center;
     align-items: flex-start;
-    padding: clamp(12px, 2.5vw, 30px);
+    padding: clamp(14px, 3vw, 36px) 14px 80px;
     box-sizing: border-box;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -13257,14 +13257,15 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     display: flex;
   }
 
-  /* Modal Wrapper */
+  /* Modal Container */
   #olt-faq-card {
     position: relative;
     width: 100%;
-    max-width: 680px;
-    margin: 40px auto 60px;
+    max-width: 540px;
+    margin: 20px auto 40px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     transform: scale(0.96) translateY(20px);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -13272,8 +13273,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     transform: scale(1) translateY(0);
   }
 
-  /* Top Bar Floating */
+  /* Header floating bar */
   .faq-top-bar {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13322,83 +13324,96 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     color: #ccff00;
   }
 
-  /* VERTICAL CARD STACK */
+  /* PHYSICAL DECK STACK CONTAINER */
   .wallet-stack {
     position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    perspective: 1200px;
+    padding-bottom: 30px;
   }
 
-  /* Individual Physical Card */
+  /* PHYSICAL PLAYING CARD (True Proportion: ~1.45 : 1) */
   .wallet-card {
     position: relative;
     width: 100%;
-    background: #fbfbfa;
-    border-radius: 20px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 2px 6px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 350px;
+    background: linear-gradient(165deg, #fdfdfc 0%, #f4f3ee 100%);
+    border-radius: 22px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32), 0 3px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
                 box-shadow 0.35s ease, 
                 border-color 0.3s ease;
     will-change: transform, box-shadow;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 28px 18px;
   }
 
-  /* Overlap: each card partially sits over the bottom of the card above it */
+  /* Physical Deck Overlap: cards overlap by ~268px so only the top ~82px header peeks */
   .wallet-card:not(:first-child) {
-    margin-top: -24px;
+    margin-top: -268px;
   }
 
-  /* Alternating realistic subtle angles */
-  .wallet-card:nth-child(1) { transform: rotate(-0.5deg); z-index: 1; }
-  .wallet-card:nth-child(2) { transform: rotate(0.6deg); z-index: 2; }
-  .wallet-card:nth-child(3) { transform: rotate(-0.4deg); z-index: 3; }
-  .wallet-card:nth-child(4) { transform: rotate(0.5deg); z-index: 4; }
-  .wallet-card:nth-child(5) { transform: rotate(-0.7deg); z-index: 5; }
-  .wallet-card:nth-child(6) { transform: rotate(0.4deg); z-index: 6; }
-  .wallet-card:nth-child(7) { transform: rotate(-0.5deg); z-index: 7; }
-  .wallet-card:nth-child(8) { transform: rotate(0.6deg); z-index: 8; }
-  .wallet-card:nth-child(9) { transform: rotate(-0.3deg); z-index: 9; }
-  .wallet-card:nth-child(10) { transform: rotate(0.5deg); z-index: 10; }
+  /* Alternating organic table rotation angles */
+  .wallet-card:nth-child(1)  { --base-rot: -1.0deg; transform: rotate(var(--base-rot)); z-index: 1; }
+  .wallet-card:nth-child(2)  { --base-rot:  1.2deg; transform: rotate(var(--base-rot)); z-index: 2; }
+  .wallet-card:nth-child(3)  { --base-rot: -0.8deg; transform: rotate(var(--base-rot)); z-index: 3; }
+  .wallet-card:nth-child(4)  { --base-rot:  0.9deg; transform: rotate(var(--base-rot)); z-index: 4; }
+  .wallet-card:nth-child(5)  { --base-rot: -1.2deg; transform: rotate(var(--base-rot)); z-index: 5; }
+  .wallet-card:nth-child(6)  { --base-rot:  0.7deg; transform: rotate(var(--base-rot)); z-index: 6; }
+  .wallet-card:nth-child(7)  { --base-rot: -0.9deg; transform: rotate(var(--base-rot)); z-index: 7; }
+  .wallet-card:nth-child(8)  { --base-rot:  1.1deg; transform: rotate(var(--base-rot)); z-index: 8; }
+  .wallet-card:nth-child(9)  { --base-rot: -0.6deg; transform: rotate(var(--base-rot)); z-index: 9; }
+  .wallet-card:nth-child(10) { --base-rot:  0.8deg; transform: rotate(var(--base-rot)); z-index: 10; }
 
-  /* Hover (when closed) */
+  /* Hover peek (elevates slightly) */
   .wallet-card:not(.active):hover {
-    transform: translateY(-6px) scale(1.008) !important;
-    box-shadow: 0 20px 42px rgba(0, 0, 0, 0.4);
-    z-index: 20 !important;
+    transform: translateY(-8px) rotate(var(--base-rot)) scale(1.01) !important;
+    box-shadow: 0 22px 46px rgba(0, 0, 0, 0.42);
+    z-index: 25 !important;
   }
 
-  /* ACTIVE (OPEN) CARD */
+  /* ACTIVE CARD (Fully Uncovered and Straightened) */
   .wallet-card.active {
-    transform: rotate(0deg) scale(1.015) !important;
-    z-index: 50 !important;
-    border-color: rgba(204, 255, 0, 0.6);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 35px rgba(204, 255, 0, 0.25);
+    transform: rotate(0deg) scale(1.02) !important;
+    z-index: 60 !important;
+    border-color: rgba(204, 255, 0, 0.65);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 35px rgba(204, 255, 0, 0.25);
     background: #ffffff;
+    height: auto;
+    min-height: 350px;
   }
 
   /* Card Header (Visible in peek) */
   .wallet-header {
-    padding: 24px 26px 20px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 14px;
+    flex-shrink: 0;
   }
   .wallet-card.active .wallet-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     padding-bottom: 14px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    height: auto;
   }
 
   .wallet-question-box {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
     text-align: left;
+    flex: 1;
   }
   .wallet-tag {
     font-family: 'Inter', sans-serif;
@@ -13406,12 +13421,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     font-weight: 800;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #6d8417;
+    color: #647a16;
   }
   .wallet-question {
     color: #121510;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.95rem, 1.35vw, 1.12rem);
+    font-size: clamp(0.92rem, 1.35vw, 1.05rem);
     font-weight: 800;
     line-height: 1.35;
     letter-spacing: -0.02em;
@@ -13419,10 +13434,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     margin: 0;
   }
 
-  /* Chevron / Icon */
+  /* Small round indicator icon */
   .wallet-icon {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.05);
     display: flex;
@@ -13442,25 +13457,23 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     color: #0c1208;
   }
 
-  /* Card Content (Answer) */
+  /* Card Body (Answer) */
   .wallet-body {
-    max-height: 0;
-    overflow: hidden;
+    flex: 1;
+    overflow-y: auto;
     opacity: 0;
-    transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.35s ease,
-                padding 0.35s ease;
-    padding: 0 26px;
-    color: #2b3128;
+    transition: opacity 0.35s ease;
+    padding: 14px 2px 10px;
+    color: #262c23;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.9rem, 1.1vw, 1rem);
-    line-height: 1.65;
+    font-size: 0.92rem;
+    line-height: 1.6;
     text-align: left;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(204, 255, 0, 0.4) transparent;
   }
   .wallet-card.active .wallet-body {
     opacity: 1;
-    padding-top: 18px;
-    padding-bottom: 12px;
   }
 
   .wallet-body p {
@@ -13470,7 +13483,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     margin-bottom: 0;
   }
   .wallet-body ul, .wallet-body ol {
-    margin: 6px 0 10px 20px;
+    margin: 6px 0 10px 18px;
     padding: 0;
   }
   .wallet-body li {
@@ -13488,47 +13501,49 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     border-radius: 4px;
   }
 
-  /* Card Physical Footer: One Last Time branding */
+  /* Card Physical Footer (Identical to physical card) */
   .wallet-footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px 0 20px;
-    margin-top: 16px;
+    padding-top: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.06);
-    color: #888884;
+    color: #90908c;
     font-family: 'Inter', sans-serif;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    flex-shrink: 0;
   }
 
   /* Bottom CTA Banner */
   .faq-bottom-cta {
+    width: 100%;
     margin-top: 36px;
     background: linear-gradient(180deg, rgba(20, 26, 18, 0.95) 0%, rgba(10, 14, 8, 0.98) 100%);
     border: 1px solid rgba(204, 255, 0, 0.3);
     border-radius: 20px;
-    padding: 22px 28px;
+    padding: 20px 26px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
   }
 </style>
 
 <div id="olt-faq-modal" role="dialog" aria-modal="true" aria-labelledby="olt-faq-title">
   <div id="olt-faq-card">
     
-    <!-- Top Header -->
+    <!-- Top Header Bar -->
     <div class="faq-top-bar">
       <div>
         <div class="faq-top-badge">One Last Time · Baraja de Respuestas</div>
-        <h2 id="olt-faq-title" style="color:#ffffff; font-family:'Inter',sans-serif; font-size:clamp(1.2rem, 2.2vw, 1.6rem); font-weight:800; margin:6px 0 0; letter-spacing:-0.03em;">
-          Preguntas frecuentes &amp; Garantía
+        <h2 id="olt-faq-title" style="color:#ffffff; font-family:'Inter',sans-serif; font-size:clamp(1.15rem, 2.2vw, 1.5rem); font-weight:800; margin:6px 0 0; letter-spacing:-0.03em;">
+          Toca una carta para deslizar el mazo
         </h2>
       </div>
       <button type="button" class="faq-close-pill" onclick="window.closeFaqModal()">
@@ -13537,11 +13552,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       </button>
     </div>
 
-    <!-- WALLET STACK CONTAINER -->
+    <!-- PHYSICAL CARDS STACK CONTAINER -->
     <div id="faq-wallet-stack" class="wallet-stack">
 
       <!-- CARD 1 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="0" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">01 · GARANTÍA TOTAL</span>
@@ -13552,14 +13567,14 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           </div>
         </div>
         <div class="wallet-body">
-          <p><span class="wallet-highlight">Te devolvemos todo el dinero</span> y te regalamos otra experiencia.</p>
-          <p><strong>Sin preguntas y sin letra pequeña.</strong> Confiamos tanto en la experiencia que si no sentís que ha merecido la pena, el riesgo es 100% de nuestro bolsillo.</p>
-          <div class="wallet-footer">One Last Time ®</div>
+          <p><span class="wallet-highlight">Te devolvemos todo el dinero</span> y te regalamos otra experiencia diferente.</p>
+          <p><strong>Sin preguntas y sin letra pequeña.</strong> Confiamos tanto en la experiencia que si no sentís que ha merecido la pena, el riesgo es 100% nuestro.</p>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 2 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="1" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">02 · TIEMPOS DE ENTREGA</span>
@@ -13578,12 +13593,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             <li><strong>Baleares, Ceuta y Melilla:</strong> 3-5 días (+3€ de suplemento).</li>
             <li><strong>Canarias:</strong> 3-8 días (+6€ de suplemento).</li>
           </ul>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 3 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="2" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">03 · DÓNDE RECIBIRLAS</span>
@@ -13600,12 +13615,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             <li>Podemos dejarlas <strong>en tu mesa del restaurante</strong> para que te las encuentres allí al llegar.</li>
             <li>O te las entregamos en mano en tu <strong>casa, oficina o punto de recogida</strong>.</li>
           </ul>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 4 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="3" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">04 · PRECIO</span>
@@ -13618,12 +13633,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         <div class="wallet-body">
           <p>El precio si escoges <strong>cartas digitales</strong> es de <span class="wallet-highlight">8,99€</span>.</p>
           <p>El precio si escoges la edición de <strong>cartas físicas</strong> es de <span class="wallet-highlight">13,99€</span> (envío peninsular gratuito incluido).</p>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 5 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="4" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">05 · COSTES DE ENVÍO</span>
@@ -13636,12 +13651,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         <div class="wallet-body">
           <p>El envío es <span class="wallet-highlight">100% GRATIS</span> en toda España peninsular.</p>
           <p>Los envíos a Baleares, Ceuta y Melilla tienen un suplemento de 3€, y los envíos a Canarias tienen un suplemento de 6€.</p>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 6 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="5" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">06 · OCASIÓN</span>
@@ -13653,14 +13668,14 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         </div>
         <div class="wallet-body">
           <p><strong>No, en absoluto.</strong></p>
-          <p>Aunque durante una cena íntima es el escenario perfecto, puedes pedirlas para donde y cuando queráis: desayunando en el sofá, caminando por la montaña, en un velero cruzando la Costa Brava o en un viaje.</p>
+          <p>Aunque durante una cena íntima es el escenario perfecto, puedes pedirlas para donde y cuando queráis: desayunando en el sofá, caminando por la montaña, en un velero o en un viaje.</p>
           <p>Lo esencial es elegir un momento en el que prioricéis la conversación y estéis libres de distracciones.</p>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 7 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="6" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">07 · CIENCIA Y MÉTODO</span>
@@ -13676,12 +13691,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             <li>El modelo genera preguntas ultra-personalizadas con tu descripción del contexto y objetivo.</li>
             <li>Un equipo de especialistas las revisa una a una para asegurar una progresión emocional que garantice la conexión.</li>
           </ol>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 8 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="7" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">08 · IDIOMAS</span>
@@ -13694,12 +13709,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         <div class="wallet-body">
           <p><strong>En el que quieras.</strong></p>
           <p>Nuestro modelo OLT-1 y nuestro equipo son nativos en español, catalán, inglés, francés, italiano y cualquier idioma que elijas al configurar la reserva.</p>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 9 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="8" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">09 · ENVÍOS INTERNACIONALES</span>
@@ -13712,12 +13727,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         <div class="wallet-body">
           <p><strong>Sí, lo gestionamos de manera personalizada.</strong></p>
           <p>Escríbenos directamente por WhatsApp al <strong style="color:#2a3d02;">649 67 16 50</strong> y dinos dónde las necesitas para coordinarlo contigo.</p>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 10 -->
-      <div class="wallet-card" onclick="window.toggleWalletCard(this)">
+      <div class="wallet-card" data-index="9" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
             <span class="wallet-tag">10 · CONTENIDO</span>
@@ -13729,8 +13744,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         </div>
         <div class="wallet-body">
           <p>Recibirás una <strong>baraja física de acabado de lujo</strong> (o tu acceso digital interactivo en smartphone) con una <strong>secuencia graduada de preguntas psicológicas</strong> diseñadas para romper la rutina y conectar de verdad como el primer día.</p>
-          <div class="wallet-footer">One Last Time ®</div>
         </div>
+        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
     </div>
@@ -13768,43 +13783,59 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     m.style.opacity = '0';
     setTimeout(function() {
       m.classList.remove('active');
-      // Cerrar todas las cartas al salir
-      document.querySelectorAll('.wallet-card.active').forEach(function(card) {
-        card.classList.remove('active');
-        var body = card.querySelector('.wallet-body');
-        if (body) body.style.maxHeight = '0px';
-      });
+      // Reset all cards on close
+      window.resetWalletStack();
     }, 300);
   };
 
+  window.resetWalletStack = function() {
+    var allCards = document.querySelectorAll('.wallet-card');
+    allCards.forEach(function(card) {
+      card.classList.remove('active');
+      var baseRot = card.style.getPropertyValue('--base-rot') || '0deg';
+      card.style.transform = '';
+    });
+  };
+
   window.toggleWalletCard = function(clickedCard) {
-    var body = clickedCard.querySelector('.wallet-body');
+    var allCards = Array.from(document.querySelectorAll('.wallet-card'));
+    var clickedIndex = parseInt(clickedCard.getAttribute('data-index'));
     var isAlreadyActive = clickedCard.classList.contains('active');
 
-    // Cerrar las demas cartas
-    document.querySelectorAll('.wallet-card').forEach(function(other) {
-      if (other !== clickedCard) {
-        other.classList.remove('active');
-        var b = other.querySelector('.wallet-body');
-        if (b) b.style.maxHeight = '0px';
+    if (isAlreadyActive) {
+      // Collapse everything back to natural deck stack
+      window.resetWalletStack();
+      return;
+    }
+
+    // Measure how much space the active card needs
+    // Natural card height is ~350px. When uncovered, it needs all cards below to slide down by ~270px
+    var shiftAmount = 265; 
+
+    allCards.forEach(function(card, idx) {
+      var baseRot = card.style.getPropertyValue('--base-rot') || '0deg';
+      if (idx === clickedIndex) {
+        card.classList.add('active');
+        card.style.transform = 'translateY(0) rotate(0deg) scale(1.02)';
+      } else {
+        card.classList.remove('active');
+        if (idx < clickedIndex) {
+          // Cards above stay in their deck positions
+          card.style.transform = '';
+        } else {
+          // Cards below slide DOWN smoothly to uncover the clicked card
+          card.style.transform = 'translateY(' + shiftAmount + 'px) rotate(' + baseRot + ')';
+        }
       }
     });
 
-    if (isAlreadyActive) {
-      clickedCard.classList.remove('active');
-      body.style.maxHeight = '0px';
-    } else {
-      clickedCard.classList.add('active');
-      body.style.maxHeight = (body.scrollHeight + 40) + 'px';
-      
-      // Auto-scroll suave para que la carta abierta quede bien visible si es necesario
-      setTimeout(function() {
-        clickedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 150);
-    }
+    // Auto-scroll so the revealed card is perfectly centered in viewport
+    setTimeout(function() {
+      clickedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 120);
   };
 
-  // Cerrar al pulsar en el fondo fuera del contenedor
+  // Close when clicking background outside card
   document.addEventListener('click', function(e) {
     var m = document.getElementById('olt-faq-modal');
     if (m && e.target === m) {
@@ -13812,7 +13843,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     }
   });
 
-  // Cerrar con Escape
+  // Close on Escape
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       window.closeFaqModal();
@@ -13820,6 +13851,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
