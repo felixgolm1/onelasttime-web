@@ -2562,9 +2562,9 @@ window.onerror = function(msg, url, line, col, err) {
   </div>
   <!-- Subheadline derecha -->
   <div id="subheadline">
-    <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">¿Otra cena más con tu</p></span>
-    <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">pareja u otra cita? Nah,</p></span>
-    <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">hagámosla inolvidable</p></span>
+    <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">¿Otra cena más con tu</p></span>
+    <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">pareja u otra cita? Nah,</p></span>
+    <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">hagámosla inolvidable</p></span>
   </div>
   <!-- Headline izquierda -->
   <div id="headline">
@@ -3557,7 +3557,7 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.to('#headline', { borderColor: 'rgba(255,255,255,0)', backdropFilter: 'blur(0px)', webkitBackdropFilter: 'blur(0px)', duration: 0.08, ease: 'power2.inOut' }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
       scrollTl.to('#subheadline', { '--sub-blur': '0px', '--sub-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
-      scrollTl.to('.sub-oh-inner', { y: '-150%', duration: 0.05, ease: 'power2.in', stagger: { each: 0.005, from: 'start' } }, 0);
+      scrollTl.to('.sub-oh-inner', { y: '-150%', autoAlpha: 0, duration: 0.05, ease: 'power2.in', stagger: { each: 0.005, from: 'start' } }, 0);
 
 
     // Ã¢â€€ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
