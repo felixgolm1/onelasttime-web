@@ -1756,6 +1756,10 @@ window.onerror = function(msg, url, line, col, err) {
   .headline-sub {
     text-align: center !important;
   }
+  .headline-divider {
+    width: 75% !important;
+    margin: 0.8rem 0 !important;
+  }
 
   #subheadline {
     top: auto !important;
@@ -1767,10 +1771,14 @@ window.onerror = function(msg, url, line, col, err) {
   #cta-bottom-container {
     bottom: 6.5rem !important;
   }
+  .scroll-indicator {
+    bottom: 3.2rem !important;
+  }
   #subheadline p {
     text-align: center !important;
     margin: 0 !important;
     font-size: 1.4rem !important;
+    line-height: 1.05 !important;
   }
 
   #nav-menu > a { display: none !important; }
@@ -13337,7 +13345,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding-bottom: 26px;
   }
 
-  /* PHYSICAL PLAYING CARD (+20% Scale: 456px x 264px) */
+  /* PHYSICAL PLAYING CARD */
   .wallet-card {
     position: relative;
     width: 100%;
@@ -13355,11 +13363,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 20px 24px 16px;
+    padding: 22px 24px 20px;
   }
 
-  /* Physical Deck Overlap: cards overlap by 198px so top 66px peeks */
+  /* Physical Deck Overlap */
   .wallet-card:not(:first-child) {
     margin-top: -198px;
   }
@@ -13376,13 +13383,13 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card:nth-child(9)  { --base-rot: -0.6deg; transform: rotate(var(--base-rot)); z-index: 9; }
   .wallet-card:nth-child(10) { --base-rot:  0.8deg; transform: rotate(var(--base-rot)); z-index: 10; }
 
-  /* Subtle Hover: gentle nudge up without showing hidden body */
+  /* Subtle Hover */
   .wallet-card:not(.active):hover {
     transform: translateY(-3.5px) rotate(var(--base-rot)) !important;
     box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
   }
 
-  /* ACTIVE CARD (Revealed when clicked, NO green border) */
+  /* ACTIVE CARD */
   .wallet-card.active {
     transform: rotate(0deg) scale(1.015) !important;
     z-index: 60 !important;
@@ -13401,7 +13408,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card.active .wallet-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     padding-bottom: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     height: auto;
   }
 
@@ -13418,17 +13425,17 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     width: 100%;
   }
 
-  /* Card Body (Answer with internal scroll if text overflows) */
+  /* Card Body (Answer with internal scroll) */
   .wallet-body {
     flex: 1;
     overflow-y: auto;
     opacity: 1;
-    max-height: 135px;
-    padding: 8px 2px 8px;
+    max-height: 165px;
+    padding: 6px 2px 4px;
     color: #2b3127;
     font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    line-height: 1.55;
+    font-size: 0.86rem;
+    line-height: 1.58;
     text-align: left;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
@@ -13464,22 +13471,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     background: rgba(204, 255, 0, 0.28);
     padding: 1px 5px;
     border-radius: 3px;
-  }
-
-  /* Card Physical Footer */
-  .wallet-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 8px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    color: #90908c;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.70rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    flex-shrink: 0;
   }
 
   /* Bottom CTA Banner */
@@ -13529,7 +13520,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p><span class="wallet-highlight">Te devolvemos todo el dinero</span> y te regalamos otra experiencia diferente.</p>
           <p><strong>Sin preguntas y sin letra pequeña.</strong> Confiamos tanto en la experiencia que si no sentís que ha merecido la pena, el riesgo es 100% nuestro.</p>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 2 -->
@@ -13547,7 +13537,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             <li><strong>Canarias:</strong> 3-8 días (+6€ de suplemento).</li>
           </ul>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 3 -->
@@ -13563,7 +13552,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             <li>O te las entregamos en mano en tu <strong>casa, oficina o punto de recogida</strong>.</li>
           </ul>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 4 -->
@@ -13575,7 +13563,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>El precio si escoges <strong>cartas digitales</strong> es de <span class="wallet-highlight">8,99€</span>.</p>
           <p>El precio si escoges la edición de <strong>cartas físicas</strong> es de <span class="wallet-highlight">13,99€</span> (envío peninsular gratuito incluido).</p>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 5 -->
@@ -13587,7 +13574,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>El envío es <span class="wallet-highlight">100% GRATIS</span> en toda España peninsular.</p>
           <p>Los envíos a Baleares, Ceuta y Melilla tienen un suplemento de 3€, y los envíos a Canarias tienen un suplemento de 6€.</p>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 6 -->
@@ -13600,7 +13586,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p>Aunque durante una cena íntima es el escenario perfecto, puedes pedirlas para donde y cuando queráis: desayunando en el sofá, caminando por la montaña, en un velero o en un viaje.</p>
           <p>Lo esencial es elegir un momento en el que prioricéis la conversación y estéis libres de distracciones.</p>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 7 -->
@@ -13615,7 +13600,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             <li>Un equipo de especialistas las revisa una a una para asegurar una progresión emocional que garantice la conexión.</li>
           </ol>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 8 -->
@@ -13627,7 +13611,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p><strong>En el que quieras.</strong></p>
           <p>Nuestro modelo OLT-1 y nuestro equipo son nativos en español, catalán, inglés, francés, italiano y cualquier idioma que elijas al configurar la reserva.</p>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 9 -->
@@ -13639,7 +13622,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           <p><strong>Sí, lo gestionamos de manera personalizada.</strong></p>
           <p>Escríbenos directamente por WhatsApp al <strong>649 67 16 50</strong> y dinos dónde las necesitas para coordinarlo contigo.</p>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
       <!-- CARD 10 -->
@@ -13650,7 +13632,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         <div class="wallet-body">
           <p>Recibirás una <strong>baraja física de acabado de lujo</strong> (o tu acceso digital interactivo en smartphone) con una <strong>secuencia graduada de preguntas psicológicas</strong> diseñadas para romper la rutina y conectar de verdad como el primer día.</p>
         </div>
-        <div class="wallet-footer">One Last Time ®</div>
       </div>
 
     </div>
@@ -13711,7 +13692,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       return;
     }
 
-    // Distance cards below must slide down to uncover this card (equal to overlap)
     var shiftAmount = 198; 
 
     allCards.forEach(function(card, idx) {
@@ -13764,6 +13744,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
