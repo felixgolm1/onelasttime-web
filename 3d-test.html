@@ -13257,11 +13257,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     position: fixed;
     inset: 0;
     z-index: 20000000;
-    background: rgba(5, 8, 4, 0.92);
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.70) 100%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.35s ease, backdrop-filter 0.35s ease;
     justify-content: center;
     align-items: flex-start;
     padding: clamp(14px, 3vw, 36px) 14px 80px;
@@ -13292,11 +13292,33 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: scale(0.96) translateY(20px);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: none;
   }
   #olt-faq-modal.active #olt-faq-card {
-    transform: scale(1) translateY(0);
+    transform: none;
+  }
+  #olt-faq-modal.modal-closing #olt-faq-card {
+    transform: translateY(60px);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+  }
+
+  /* Top header bar entrance */
+  #olt-faq-modal.active .faq-top-bar {
+    animation: fadeTopBarIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+  }
+  @keyframes fadeTopBarIn {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Bottom CTA entrance */
+  #olt-faq-modal.active .faq-bottom-cta {
+    animation: fadeBottomCtaIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.82s both;
+  }
+  @keyframes fadeBottomCtaIn {
+    from { opacity: 0; transform: translateY(35px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   /* Header floating bar */
@@ -13359,29 +13381,72 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding-bottom: 26px;
   }
 
-  /* CARD WRAPPER: INDEPENDENT FLOATING WAVE (Decision Tree float effect per card) */
+  /* CARD WRAPPER: CROUPIER DEAL & INDEPENDENT FLOATING WAVE */
   .wallet-card-wrap {
     position: relative;
     width: 100%;
-    animation: floatCard 4.8s ease-in-out infinite;
-    will-change: transform;
+    will-change: transform, opacity;
   }
 
   .wallet-card-wrap:not(:first-child) {
     margin-top: -186px;
   }
 
-  /* Staggered floating delays & natural z-index plane */
-  .wallet-card-wrap:nth-child(1)  { animation-delay: 0.0s;  z-index: 1; }
-  .wallet-card-wrap:nth-child(2)  { animation-delay: 0.45s; z-index: 2; }
-  .wallet-card-wrap:nth-child(3)  { animation-delay: 0.9s;  z-index: 3; }
-  .wallet-card-wrap:nth-child(4)  { animation-delay: 1.35s; z-index: 4; }
-  .wallet-card-wrap:nth-child(5)  { animation-delay: 1.8s;  z-index: 5; }
-  .wallet-card-wrap:nth-child(6)  { animation-delay: 2.25s; z-index: 6; }
-  .wallet-card-wrap:nth-child(7)  { animation-delay: 2.7s;  z-index: 7; }
-  .wallet-card-wrap:nth-child(8)  { animation-delay: 3.15s; z-index: 8; }
-  .wallet-card-wrap:nth-child(9)  { animation-delay: 3.6s;  z-index: 9; }
-  .wallet-card-wrap:nth-child(10) { animation-delay: 4.05s; z-index: 10; }
+  /* Natural z-index plane */
+  .wallet-card-wrap:nth-child(1)  { z-index: 1; }
+  .wallet-card-wrap:nth-child(2)  { z-index: 2; }
+  .wallet-card-wrap:nth-child(3)  { z-index: 3; }
+  .wallet-card-wrap:nth-child(4)  { z-index: 4; }
+  .wallet-card-wrap:nth-child(5)  { z-index: 5; }
+  .wallet-card-wrap:nth-child(6)  { z-index: 6; }
+  .wallet-card-wrap:nth-child(7)  { z-index: 7; }
+  .wallet-card-wrap:nth-child(8)  { z-index: 8; }
+  .wallet-card-wrap:nth-child(9)  { z-index: 9; }
+  .wallet-card-wrap:nth-child(10) { z-index: 10; }
+
+  /* 1. CROUPIER DEAL ENTRANCE (Cards deal in 1 by 1 from below the screen) */
+  @keyframes dealCardIn {
+    0% {
+      opacity: 0;
+      transform: translateY(115vh) rotate(calc(var(--base-rot, 0deg) + 6deg)) scale(0.92);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px) rotate(0deg) scale(1);
+    }
+  }
+
+  #faq-wallet-stack.is-dealing .wallet-card-wrap {
+    animation: dealCardIn 0.82s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(1)  { animation-delay: 0.04s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(2)  { animation-delay: 0.11s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(3)  { animation-delay: 0.18s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(4)  { animation-delay: 0.25s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(5)  { animation-delay: 0.32s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(6)  { animation-delay: 0.39s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(7)  { animation-delay: 0.46s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(8)  { animation-delay: 0.53s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(9)  { animation-delay: 0.60s; }
+  #faq-wallet-stack.is-dealing .wallet-card-wrap:nth-child(10) { animation-delay: 0.67s; }
+
+  /* 2. CONTINUOUS FLOATING WAVE (Starts smoothly once croupier completes the deal) */
+  #faq-wallet-stack.is-floating .wallet-card-wrap {
+    animation: floatCard 4.8s ease-in-out infinite;
+  }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(1)  { animation-delay: 0.0s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(2)  { animation-delay: 0.45s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(3)  { animation-delay: 0.9s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(4)  { animation-delay: 1.35s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(5)  { animation-delay: 1.8s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(6)  { animation-delay: 2.25s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(7)  { animation-delay: 2.7s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(8)  { animation-delay: 3.15s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(9)  { animation-delay: 3.6s; }
+  #faq-wallet-stack.is-floating .wallet-card-wrap:nth-child(10) { animation-delay: 4.05s; }
 
   /* Base organic card rotations */
   .wallet-card-wrap:nth-child(1)  .wallet-card { --base-rot: -1.0deg; }
@@ -13705,23 +13770,54 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     var m = document.getElementById('olt-faq-modal');
     if (!m) return;
+    
+    // Clear any pending timer and reset closing state
+    clearTimeout(window._faqDealTimeout);
+    m.classList.remove('modal-closing');
+    window.resetWalletStack();
+    
+    // Trigger croupier dealing sequence
+    var stack = document.getElementById('faq-wallet-stack');
+    if (stack) {
+      stack.classList.remove('is-floating');
+      stack.classList.add('is-dealing');
+    }
+    
     document.body.style.overflow = 'hidden';
     m.classList.add('active');
     requestAnimationFrame(function() {
       m.style.opacity = '1';
     });
+
+    // Once all 10 cards are dealt onto the table (~1.55s), transition to gentle floating wave
+    window._faqDealTimeout = setTimeout(function() {
+      if (stack && m.classList.contains('active')) {
+        stack.classList.remove('is-dealing');
+        stack.classList.add('is-floating');
+      }
+    }, 1550);
   };
 
   window.closeFaqModal = function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     var m = document.getElementById('olt-faq-modal');
     if (!m) return;
+    
+    clearTimeout(window._faqDealTimeout);
+    m.classList.add('modal-closing');
     m.style.opacity = '0';
     document.body.style.overflow = '';
+    
     setTimeout(function() {
       m.classList.remove('active');
+      m.classList.remove('modal-closing');
+      var stack = document.getElementById('faq-wallet-stack');
+      if (stack) {
+        stack.classList.remove('is-dealing');
+        stack.classList.remove('is-floating');
+      }
       window.resetWalletStack();
-    }, 300);
+    }, 350);
   };
 
   window.resetWalletStack = function() {
