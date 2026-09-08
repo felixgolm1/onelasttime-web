@@ -2562,7 +2562,9 @@ window.onerror = function(msg, url, line, col, err) {
   </div>
   <!-- Subheadline derecha -->
   <div id="subheadline">
-    <p>¿Otra cena más con tu pareja u otra cita? Nah, hagámosla inolvidable</p>
+    <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">¿Otra cena más con tu</p></span>
+    <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">pareja u otra cita? Nah,</p></span>
+    <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">hagámosla inolvidable</p></span>
   </div>
   <!-- Headline izquierda -->
   <div id="headline">
@@ -3553,9 +3555,9 @@ window.onerror = function(msg, url, line, col, err) {
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.06, ease: 'power3.in' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
     scrollTl.to('#headline', { borderColor: 'rgba(255,255,255,0)', backdropFilter: 'blur(0px)', webkitBackdropFilter: 'blur(0px)', duration: 0.08, ease: 'power2.inOut' }, 0);
-    // 5. Texto derecha: se desliza hacia la derecha mientras bajan las VARIABLES del blur para que no se corte por culpa del composite de Safari/Chrome
-    scrollTl.to('#subheadline', { x: 50, '--sub-blur': '0px', '--sub-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
-    scrollTl.to('#subheadline p', { autoAlpha: 0, duration: 0.08, ease: 'power2.inOut' }, 0);
+    // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
+      scrollTl.to('#subheadline', { '--sub-blur': '0px', '--sub-alpha': 0, duration: 0.08, ease: 'power2.inOut' }, 0);
+      scrollTl.to('.sub-oh-inner', { y: '-150%', duration: 0.05, ease: 'power2.in', stagger: { each: 0.005, from: 'start' } }, 0);
 
 
     // Ã¢â€€ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
