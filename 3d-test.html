@@ -13541,9 +13541,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-body {
     flex: 1;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     opacity: 1;
     max-height: 165px;
-    padding: 6px 6px 4px 2px;
+    padding: 6px 8px 4px 2px;
     color: #2b3127;
     font-family: 'Inter', sans-serif;
     font-size: 0.86rem;
@@ -13553,7 +13555,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
   }
   .wallet-body::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
   }
   .wallet-body::-webkit-scrollbar-track {
     background: transparent;
@@ -13838,6 +13840,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   window.resetWalletStack = function() {
     var stack = document.getElementById('faq-wallet-stack');
     if (stack) stack.classList.remove('has-active');
+    document.querySelectorAll('.wallet-card-wrap').forEach(function(wrap) {
+      wrap.classList.remove('is-active');
+    });
     var allCards = document.querySelectorAll('.wallet-card');
     allCards.forEach(function(card) {
       card.classList.remove('active');
@@ -13864,14 +13869,17 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var stack = document.getElementById('faq-wallet-stack');
     if (stack) stack.classList.add('has-active');
 
-    var shiftAmount = 186; 
+    var shiftAmount = 210; 
 
     allCards.forEach(function(card, idx) {
+      var wrap = card.parentElement;
       if (idx === clickedIndex) {
         card.classList.add('active');
+        if (wrap) wrap.classList.add('is-active');
         card.style.setProperty('--shift-y', '0px');
       } else {
         card.classList.remove('active');
+        if (wrap) wrap.classList.remove('is-active');
         if (idx < clickedIndex) {
           card.style.setProperty('--shift-y', '0px');
         } else {
@@ -13882,6 +13890,47 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     // Zero viewport jump: the screen remains steady while cards glide organically
   };
+
+  // Dedicated active card wheel & touch scrolling (prevents modal hijacking & ensures responsive card scrolling)
+  (function() {
+    var cards = document.querySelectorAll('.wallet-card');
+    cards.forEach(function(card) {
+      // 1. Mouse wheel / trackpad scroll on the active card
+      card.addEventListener('wheel', function(e) {
+        if (!card.classList.contains('active')) return;
+        var b = card.querySelector('.wallet-body');
+        if (!b) return;
+        if (b.scrollHeight > b.clientHeight) {
+          b.scrollTop += e.deltaY;
+          e.stopPropagation();
+          if (e.cancelable) e.preventDefault();
+        }
+      }, { passive: false });
+
+      // 2. Mobile touch drag scroll on the active card
+      var touchStartY = 0;
+      var startScrollTop = 0;
+      card.addEventListener('touchstart', function(e) {
+        if (!card.classList.contains('active')) return;
+        var b = card.querySelector('.wallet-body');
+        if (b && b.scrollHeight > b.clientHeight && e.touches.length > 0) {
+          touchStartY = e.touches[0].clientY;
+          startScrollTop = b.scrollTop;
+        }
+      }, { passive: true });
+
+      card.addEventListener('touchmove', function(e) {
+        if (!card.classList.contains('active')) return;
+        var b = card.querySelector('.wallet-body');
+        if (b && b.scrollHeight > b.clientHeight && e.touches.length > 0) {
+          var dy = touchStartY - e.touches[0].clientY;
+          b.scrollTop = startScrollTop + dy;
+          e.stopPropagation();
+          if (e.cancelable) e.preventDefault();
+        }
+      }, { passive: false });
+    });
+  })();
 
   // Prevent wheel & touchmove from getting hijacked by the global 3D scroll
   (function() {

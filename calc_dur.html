@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<script>
+    const scrollTl = gsap.timeline({ paused: true });
+    
+    // Reproducing exact timeline commands
+    const PAN  = 0.05;
+    const HOLD = 0.025;
+    let t = 0.92;
+    for (let i = 0; i < 4; i++) {
+        scrollTl.to({}, { duration: PAN }, t);
+        scrollTl.to({}, { duration: PAN }, t);
+        scrollTl.to({}, { duration: PAN }, t);
+        
+        if (i === 1) {
+            scrollTl.to({}, { duration: 0.01 }, t);
+            scrollTl.to({}, { duration: 0.01, stagger: 0.0004 }, t + 0.01);
+            scrollTl.to({}, { duration: 0.02, stagger: 0 }, t + 0.01);
+            scrollTl.to({}, { duration: 0.01, stagger: 0 }, t + 0.02);
+        } else if (i === 2) {
+            scrollTl.to({}, { duration: 0.01 }, t);
+            scrollTl.to({}, { duration: 0.01, stagger: 0.0004 }, t + 0.01);
+            scrollTl.to({}, { duration: 0.01, stagger: -0.00015 }, t + 0.01);
+            scrollTl.to({}, { duration: 0.02, stagger: 0 }, t + 0.01);
+            scrollTl.to({}, { duration: 0.01, stagger: 0 }, t + 0.02);
+        }
+        
+        t += PAN + HOLD;
+    }
+    
+    scrollTl.to({}, { duration: 0.034 }, t);
+    scrollTl.to({}, { duration: PAN }, t);
+    scrollTl.to({}, { duration: PAN }, t);
+    
+    let t2 = t + PAN; // ~1.18
+    scrollTl.to({}, { duration: 0.15 }, t2);
+    scrollTl.to({}, { duration: 0.20 }, t2 + 0.075);
+    
+    let t3 = t2 + 0.15;
+    scrollTl.set({}, { autoAlpha: 0 }, t3);
+    scrollTl.to({}, { duration: 0.27 }, t3);
+    scrollTl.set({}, { autoAlpha: 0 }, t3 + 0.09);
+    
+    let tSwap = t3 + 0.27;
+    scrollTl.set({}, { autoAlpha: 1 }, t2 - 0.08);
+    scrollTl.to({}, { duration: (tSwap - (t2 - 0.08)) }, t2 - 0.08);
+    
+    let tAiStart = t2 - 0.08;
+    scrollTl.set({}, { autoAlpha: 1 }, tAiStart);
+    scrollTl.to({}, { duration: (tSwap - tAiStart) }, tAiStart);
+    
+    scrollTl.to({}, { duration: 0.35 }, tSwap);
+    scrollTl.to({}, { duration: 0.35 }, tSwap);
+    scrollTl.to({}, { duration: 0.08 }, tSwap + 0.20);
+    scrollTl.to({}, { duration: 0.35 }, tSwap);
+    scrollTl.fromTo({}, { autoAlpha: 0 }, { duration: 0.03 }, tSwap);
+    scrollTl.fromTo({}, { rotationY: 270 }, { duration: 0.35 }, tSwap);
+
+    console.log("Total Duration:", scrollTl.duration());
+</script>
+</body>
+</html>
