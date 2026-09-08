@@ -13263,7 +13263,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   #olt-faq-card {
     position: relative;
     width: 100%;
-    max-width: 380px;
+    max-width: 456px;
     margin: 20px auto 40px;
     display: flex;
     flex-direction: column;
@@ -13281,19 +13281,19 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     padding: 0 2px;
   }
   .faq-top-badge {
     color: #ccff00;
     font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
   }
   .faq-top-badge::before {
     content: '';
@@ -13308,10 +13308,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
     color: #ffffff;
-    padding: 6px 14px;
+    padding: 7px 16px;
     border-radius: 999px;
     font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
@@ -13334,17 +13334,17 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     flex-direction: column;
     align-items: center;
     perspective: 1200px;
-    padding-bottom: 24px;
+    padding-bottom: 26px;
   }
 
-  /* COMPACT PHYSICAL PLAYING CARD (50% scale, ~1.45:1 aspect) */
+  /* PHYSICAL PLAYING CARD (+20% Scale: 456px x 264px) */
   .wallet-card {
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 264px;
     background: linear-gradient(165deg, #fdfdfc 0%, #f4f3ee 100%);
-    border-radius: 18px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.12);
+    border-radius: 20px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30), 0 3px 8px rgba(0, 0, 0, 0.13);
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
     cursor: pointer;
@@ -13356,12 +13356,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 18px 20px 14px;
+    padding: 20px 24px 16px;
   }
 
-  /* Physical Deck Overlap: cards overlap by 165px so top 55px peeks */
+  /* Physical Deck Overlap: cards overlap by 198px so top 66px peeks */
   .wallet-card:not(:first-child) {
-    margin-top: -165px;
+    margin-top: -198px;
   }
 
   /* Alternating organic angles */
@@ -13378,8 +13378,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
   /* Subtle Hover: gentle nudge up without showing hidden body */
   .wallet-card:not(.active):hover {
-    transform: translateY(-3px) rotate(var(--base-rot)) !important;
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+    transform: translateY(-3.5px) rotate(var(--base-rot)) !important;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
   }
 
   /* ACTIVE CARD (Revealed when clicked, NO green border) */
@@ -13387,30 +13387,30 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     transform: rotate(0deg) scale(1.015) !important;
     z-index: 60 !important;
     border-color: rgba(0, 0, 0, 0.14);
-    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.48);
     background: #ffffff;
   }
 
   /* Card Header */
   .wallet-header {
-    height: 42px;
+    height: 48px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
   }
   .wallet-card.active .wallet-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    padding-bottom: 8px;
-    margin-bottom: 4px;
+    padding-bottom: 10px;
+    margin-bottom: 6px;
     height: auto;
   }
 
   .wallet-question {
     color: #121510;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.78rem, 1.2vw, 0.85rem);
+    font-size: clamp(0.85rem, 1.25vw, 0.94rem);
     font-weight: 800;
-    line-height: 1.32;
+    line-height: 1.34;
     letter-spacing: -0.01em;
     text-transform: uppercase;
     margin: 0;
@@ -13423,36 +13423,36 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     flex: 1;
     overflow-y: auto;
     opacity: 1;
-    max-height: 105px;
-    padding: 6px 2px 6px;
+    max-height: 135px;
+    padding: 8px 2px 8px;
     color: #2b3127;
     font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    line-height: 1.5;
+    font-size: 0.85rem;
+    line-height: 1.55;
     text-align: left;
     scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
   }
   .wallet-body::-webkit-scrollbar {
     width: 4px;
   }
   .wallet-body::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.22);
     border-radius: 999px;
   }
 
   .wallet-body p {
-    margin: 0 0 6px 0;
+    margin: 0 0 8px 0;
   }
   .wallet-body p:last-child {
     margin-bottom: 0;
   }
   .wallet-body ul, .wallet-body ol {
-    margin: 4px 0 6px 14px;
+    margin: 5px 0 8px 16px;
     padding: 0;
   }
   .wallet-body li {
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
   .wallet-body strong {
     color: #0d1208;
@@ -13462,7 +13462,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     color: #2d3c05;
     font-weight: 700;
     background: rgba(204, 255, 0, 0.28);
-    padding: 1px 4px;
+    padding: 1px 5px;
     border-radius: 3px;
   }
 
@@ -13471,11 +13471,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 6px;
+    padding-top: 8px;
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     color: #90908c;
     font-family: 'Inter', sans-serif;
-    font-size: 0.65rem;
+    font-size: 0.70rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -13485,17 +13485,17 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   /* Bottom CTA Banner */
   .faq-bottom-cta {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 26px;
     background: linear-gradient(180deg, rgba(20, 26, 18, 0.95) 0%, rgba(10, 14, 8, 0.98) 100%);
     border: 1px solid rgba(204, 255, 0, 0.25);
     border-radius: 18px;
-    padding: 16px 20px;
+    padding: 18px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    gap: 14px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
     box-sizing: border-box;
   }
 </style>
@@ -13507,7 +13507,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     <div class="faq-top-bar">
       <div>
         <div class="faq-top-badge">One Last Time · Baraja de Respuestas</div>
-        <h2 id="olt-faq-title" style="color:#ffffff; font-family:'Inter',sans-serif; font-size:clamp(1rem, 2vw, 1.25rem); font-weight:800; margin:4px 0 0; letter-spacing:-0.02em;">
+        <h2 id="olt-faq-title" style="color:#ffffff; font-family:'Inter',sans-serif; font-size:clamp(1.1rem, 2.2vw, 1.35rem); font-weight:800; margin:4px 0 0; letter-spacing:-0.02em;">
           Preguntas frecuentes &amp; Garantía
         </h2>
       </div>
@@ -13657,10 +13657,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     <!-- Bottom CTA Bar -->
     <div class="faq-bottom-cta">
-      <div style="color:rgba(255,255,255,0.75); font-family:'Inter',sans-serif; font-size:0.8rem; display:flex; align-items:center; gap:6px;">
+      <div style="color:rgba(255,255,255,0.75); font-family:'Inter',sans-serif; font-size:0.82rem; display:flex; align-items:center; gap:6px;">
         <span>Garantía incondicional 100% · Devolución sin preguntas</span>
       </div>
-      <a href="reservar-mi-cena.html" style="background:#ccff00; color:#0d1208; font-family:'Inter',sans-serif; font-weight:800; font-size:0.85rem; padding:10px 22px; border-radius:999px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 18px rgba(204,255,0,0.35); transition:transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 24px rgba(204,255,0,0.5)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 18px rgba(204,255,0,0.35)';">
+      <a href="reservar-mi-cena.html" style="background:#ccff00; color:#0d1208; font-family:'Inter',sans-serif; font-weight:800; font-size:0.88rem; padding:11px 24px; border-radius:999px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 18px rgba(204,255,0,0.35); transition:transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 24px rgba(204,255,0,0.5)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 18px rgba(204,255,0,0.35)';">
         <span>TRANSFORMAR MI CENA</span>
         <span>→</span>
       </a>
@@ -13711,8 +13711,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       return;
     }
 
-    // Distance cards below must slide down to uncover this card (equal to the overlap distance)
-    var shiftAmount = 165; 
+    // Distance cards below must slide down to uncover this card (equal to overlap)
+    var shiftAmount = 198; 
 
     allCards.forEach(function(card, idx) {
       var baseRot = card.style.getPropertyValue('--base-rot') || '0deg';
@@ -13764,6 +13764,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
