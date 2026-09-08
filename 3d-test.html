@@ -13377,7 +13377,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card:nth-child(9)  { --base-rot: -0.6deg; transform: rotate(var(--base-rot)); z-index: 9; }
   .wallet-card:nth-child(10) { --base-rot:  0.8deg; transform: rotate(var(--base-rot)); z-index: 10; }
 
-  /* Subtle Hover: lightly nudges up without changing z-index so it NEVER reveals the hidden card body on hover */
+  /* Subtle Hover: lightly nudges up without changing z-index */
   .wallet-card:not(.active):hover {
     transform: translateY(-4px) rotate(var(--base-rot)) !important;
     box-shadow: 0 20px 42px rgba(0, 0, 0, 0.38);
@@ -13390,31 +13390,20 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     border-color: rgba(204, 255, 0, 0.65);
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 35px rgba(204, 255, 0, 0.25);
     background: #ffffff;
-    height: auto;
-    min-height: 350px;
   }
 
-  /* Card Header */
+  /* Card Header (Clean Question without icon) */
   .wallet-header {
-    height: 52px;
+    min-height: 48px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 14px;
     flex-shrink: 0;
   }
   .wallet-card.active .wallet-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    padding-bottom: 14px;
-    height: auto;
+    padding-bottom: 12px;
   }
 
-  .wallet-question-box {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    flex: 1;
-  }
   .wallet-question {
     color: #121510;
     font-family: 'Inter', sans-serif;
@@ -13424,37 +13413,15 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     letter-spacing: -0.02em;
     text-transform: uppercase;
     margin: 0;
+    text-align: left;
+    width: 100%;
   }
 
-  /* Small round indicator icon */
-  .wallet-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: transform 0.35s ease, background 0.2s ease, color 0.2s ease;
-    color: #1a1a1a;
-  }
-  .wallet-card:hover .wallet-icon {
-    background: #111;
-    color: #fff;
-  }
-  .wallet-card.active .wallet-icon {
-    transform: rotate(180deg);
-    background: #ccff00;
-    color: #0c1208;
-  }
-
-  /* Card Body (Answer) */
+  /* Card Body (Answer - ALWAYS RENDERED, uncovered physically by sliding) */
   .wallet-body {
     flex: 1;
     overflow-y: auto;
-    opacity: 0;
-    transition: opacity 0.35s ease;
+    opacity: 1;
     padding: 14px 2px 10px;
     color: #262c23;
     font-family: 'Inter', sans-serif;
@@ -13463,9 +13430,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     text-align: left;
     scrollbar-width: thin;
     scrollbar-color: rgba(204, 255, 0, 0.4) transparent;
-  }
-  .wallet-card.active .wallet-body {
-    opacity: 1;
   }
 
   .wallet-body p {
@@ -13550,12 +13514,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 1 -->
       <div class="wallet-card" data-index="0" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Qué pasa si no me gusta la experiencia?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Qué pasa si no me gusta la experiencia?</h3>
         </div>
         <div class="wallet-body">
           <p><span class="wallet-highlight">Te devolvemos todo el dinero</span> y te regalamos otra experiencia diferente.</p>
@@ -13567,12 +13526,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 2 -->
       <div class="wallet-card" data-index="1" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Cuánto tiempo tardo en recibir las cartas?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Cuánto tiempo tardo en recibir las cartas?</h3>
         </div>
         <div class="wallet-body">
           <p>📱 <strong>Cartas digitales:</strong> Las tienes en tu móvil en menos de <span class="wallet-highlight">10 minutos</span>.</p>
@@ -13590,12 +13544,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 3 -->
       <div class="wallet-card" data-index="2" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Dónde me entregaréis las cartas?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Dónde me entregaréis las cartas?</h3>
         </div>
         <div class="wallet-body">
           <p><strong>Cartas digitales:</strong> Te las enviamos en un enlace privado directo a tu WhatsApp y email.</p>
@@ -13611,12 +13560,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 4 -->
       <div class="wallet-card" data-index="3" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Cuánto cuesta la experiencia con las cartas?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Cuánto cuesta la experiencia con las cartas?</h3>
         </div>
         <div class="wallet-body">
           <p>El precio si escoges <strong>cartas digitales</strong> es de <span class="wallet-highlight">8,99€</span>.</p>
@@ -13628,12 +13572,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 5 -->
       <div class="wallet-card" data-index="4" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿El envío de las cartas tiene algún coste para mí?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿El envío de las cartas tiene algún coste para mí?</h3>
         </div>
         <div class="wallet-body">
           <p>El envío es <span class="wallet-highlight">100% GRATIS</span> en toda España peninsular.</p>
@@ -13645,12 +13584,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 6 -->
       <div class="wallet-card" data-index="5" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Solo sirven para una cena en un restaurante?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Solo sirven para una cena en un restaurante?</h3>
         </div>
         <div class="wallet-body">
           <p><strong>No, en absoluto.</strong></p>
@@ -13663,12 +13597,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 7 -->
       <div class="wallet-card" data-index="6" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Cómo preparáis las preguntas?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Cómo preparáis las preguntas?</h3>
         </div>
         <div class="wallet-body">
           <p>Combinando años de feedback creando preguntas excepcionales con el modelo de IA <strong>OLT-1</strong>:</p>
@@ -13683,12 +13612,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 8 -->
       <div class="wallet-card" data-index="7" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿En qué idiomas hacéis las cartas?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿En qué idiomas hacéis las cartas?</h3>
         </div>
         <div class="wallet-body">
           <p><strong>En el que quieras.</strong></p>
@@ -13700,12 +13624,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 9 -->
       <div class="wallet-card" data-index="8" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Hacéis envíos fuera de España de las cartas físicas?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Hacéis envíos fuera de España de las cartas físicas?</h3>
         </div>
         <div class="wallet-body">
           <p><strong>Sí, lo gestionamos de manera personalizada.</strong></p>
@@ -13717,12 +13636,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <!-- CARD 10 -->
       <div class="wallet-card" data-index="9" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
-          <div class="wallet-question-box">
-            <h3 class="wallet-question">¿Qué recibiré exactamente?</h3>
-          </div>
-          <div class="wallet-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <h3 class="wallet-question">¿Qué recibiré exactamente?</h3>
         </div>
         <div class="wallet-body">
           <p>Recibirás una <strong>baraja física de acabado de lujo</strong> (o tu acceso digital interactivo en smartphone) con una <strong>secuencia graduada de preguntas psicológicas</strong> diseñadas para romper la rutina y conectar de verdad como el primer día.</p>
@@ -13789,7 +13703,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       return;
     }
 
-    var shiftAmount = 265; 
+    var shiftAmount = 268; 
 
     allCards.forEach(function(card, idx) {
       var baseRot = card.style.getPropertyValue('--base-rot') || '0deg';
@@ -13841,6 +13755,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
