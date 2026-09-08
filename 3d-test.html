@@ -13253,7 +13253,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     opacity: 0;
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.4s ease;
     justify-content: center;
     align-items: flex-start;
     padding: clamp(14px, 3vw, 36px) 14px 80px;
@@ -13285,7 +13285,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     flex-direction: column;
     align-items: center;
     transform: scale(0.96) translateY(20px);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   #olt-faq-modal.active #olt-faq-card {
     transform: scale(1) translateY(0);
@@ -13353,20 +13353,20 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding-bottom: 26px;
   }
 
-  /* PHYSICAL PLAYING CARD (Ultra-smooth 1.45s luxury curve) */
+  /* PHYSICAL PLAYING CARD (Organic ease-in-out glide) */
   .wallet-card {
     position: relative;
     width: 100%;
     height: 264px;
     background: linear-gradient(165deg, #fdfdfc 0%, #f4f3ee 100%);
     border-radius: 20px;
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30), 0 3px 8px rgba(0, 0, 0, 0.13);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28), 0 3px 8px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
     transform: translateY(var(--shift-y, 0px)) rotate(var(--base-rot, 0deg));
-    transition: transform 1.45s cubic-bezier(0.16, 1, 0.3, 1), 
+    transition: transform 1.25s cubic-bezier(0.4, 0.0, 0.2, 1.0), 
                 box-shadow 0.6s ease;
     will-change: transform;
     overflow: hidden;
@@ -13392,34 +13392,31 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card:nth-child(9)  { --base-rot: -0.6deg; z-index: 9; }
   .wallet-card:nth-child(10) { --base-rot:  0.8deg; z-index: 10; }
 
-  /* Subtle Hover */
+  /* Subtle Hover: gentle nudge up with smooth ease */
   .wallet-card:not(.active):hover {
     transform: translateY(calc(var(--shift-y, 0px) - 3.5px)) rotate(var(--base-rot, 0deg)) !important;
-    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
-    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
   }
 
-  /* ACTIVE CARD */
+  /* ACTIVE CARD (Zero scale pop, zero layout jump) */
   .wallet-card.active {
-    transform: translateY(0px) rotate(0deg) scale(1.015) !important;
+    transform: translateY(0px) rotate(0deg) !important;
     z-index: 60 !important;
-    border-color: rgba(0, 0, 0, 0.14);
-    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.48);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.42);
     background: #ffffff;
   }
 
-  /* Card Header */
+  /* Card Header: identical geometry in active and resting states so there is NEVER a layout jump */
   .wallet-header {
-    height: 48px;
+    height: 46px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
-  }
-  .wallet-card.active .wallet-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    padding-bottom: 10px;
-    margin-bottom: 8px;
-    height: auto;
+    padding-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .wallet-question {
@@ -13718,9 +13715,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       }
     });
 
-    setTimeout(function() {
-      clickedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 300);
+    // Zero viewport jump: the screen remains steady while cards glide organically
   };
 
   // Prevent wheel & touchmove from getting hijacked by the global 3D scroll
@@ -13753,6 +13748,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
