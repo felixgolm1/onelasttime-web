@@ -648,20 +648,28 @@ window.onerror = function(msg, url, line, col, err) {
     }
     /* Headline principal */
     #headline {
+      --head-blur: 10px;
+      --head-alpha: 0;
       position: fixed;
       left: 5%;
       top: 50%;
       transform: translateY(-50%) translateZ(1000px);
-      z-index: 100000; /* Superpuesto a las cartas 3D */
+      z-index: 100000;
       max-width: 40vw;
       opacity: 0;
-      /* Frosted blur â€â€ sin color propio, hereda el fondo */
-      background: transparent;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 3px;
       padding: 1.6rem 2rem;
+    }
+    #headline::before {
+      content: '';
+      position: absolute;
+      top: -2rem; bottom: -2rem; left: -2rem; right: -2rem;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: blur(var(--head-blur));
+      -webkit-backdrop-filter: blur(var(--head-blur));
+      background: rgba(0, 0, 0, var(--head-alpha));
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+      -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
     }
     #headline h1 {
       font-family: 'Inter', sans-serif;
