@@ -13341,7 +13341,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     color: #ccff00;
   }
 
-  /* PHYSICAL DECK STACK CONTAINER */
+  /* PHYSICAL DECK STACK CONTAINER: Floating weightlessly (Decision Tree float effect) */
+  @keyframes floatIdleDeck {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+
   .wallet-stack {
     position: relative;
     width: 100%;
@@ -13350,6 +13355,14 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     align-items: center;
     perspective: 1200px;
     padding-bottom: 26px;
+    animation: floatIdleDeck 5s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Pause on hover or when a card is actively opened for comfortable reading */
+  .wallet-stack:hover,
+  .wallet-stack.has-active {
+    animation-play-state: paused;
   }
 
   /* PHYSICAL PLAYING CARD (Organic ease-in-out glide) */
@@ -13668,6 +13681,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   };
 
   window.resetWalletStack = function() {
+    var stack = document.getElementById('faq-wallet-stack');
+    if (stack) stack.classList.remove('has-active');
     var allCards = document.querySelectorAll('.wallet-card');
     allCards.forEach(function(card) {
       card.classList.remove('active');
@@ -13684,6 +13699,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       window.resetWalletStack();
       return;
     }
+
+    var stack = document.getElementById('faq-wallet-stack');
+    if (stack) stack.classList.add('has-active');
 
     var shiftAmount = 188; 
 
