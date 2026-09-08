@@ -2577,7 +2577,7 @@ window.onerror = function(msg, url, line, col, err) {
       <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="headline-sub oh-inner" style="display:block; margin:0;">En tu restaurante favorito o en casa</p></span>
   </div>
   <!-- Logo superior izquierda -->
-  <div id="mobile-menu-pill" style="display: none; position: fixed; z-index: 1000000000; transition: all 0.3s ease;">MENU</div>
+  <div id="mobile-menu-pill" style="display: none; position: fixed; z-index: 1000000000; transition: all 0.3s ease;"><span id="menu-dot" style="display:inline-block; width:4px; height:4px; background-color:currentColor; border-radius:50%; margin-right:6px;"></span><span id="menu-text">MENU</span></div>
   <div id="nav-logo" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
     <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="height: 57px; width: auto; filter: brightness(0) invert(1);">
     <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height: 28px; width: auto; filter: brightness(0) invert(1); padding-left: 0px;">
@@ -13182,7 +13182,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           sidebar.classList.remove('open');
           overlay.classList.remove('open');
           if (pill) {
-              pill.innerHTML = 'MENU';
+              document.getElementById('menu-text').innerHTML = 'MENU';
               pill.style.background = 'rgba(255,255,255,0.1)';
               pill.style.color = '#fff';
           }
@@ -13192,7 +13192,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           sidebar.classList.add('open');
           overlay.classList.add('open');
           if (pill) {
-              pill.innerHTML = 'CERRAR';
+              document.getElementById('menu-text').innerHTML = 'CERRAR';
               pill.style.background = '#fff';
               pill.style.color = '#000';
           }
