@@ -103,8 +103,8 @@ window.onerror = function(msg, url, line, col, err) {
       font-family:'Poppins',sans-serif;
       transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    #loader p { color:rgba(255,255,255,0.35); font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; transition: opacity 0.4s ease; }
-    #loader-bar-wrap { width:160px; height:2px; background:rgba(255,255,255,0.1); border-radius:2px; transition: opacity 0.4s ease; }
+    #loader p { color:rgba(255,255,255,0.35); font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; transition: opacity 0.5s ease; }
+    #loader-bar-wrap { width:160px; height:2px; background:rgba(255,255,255,0.1); border-radius:2px; transition: opacity 0.5s ease; }
     #loader-bar { height:100%; width:0%; background:#ccff00; border-radius:2px; transition: width 0.2s ease; }
 
     /* Ã¢â€€Ã¢â€€ INTRO CARD ANIMATION Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
@@ -116,7 +116,7 @@ window.onerror = function(msg, url, line, col, err) {
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.5s ease;
       perspective: 1200px;
     }
     #intro-card.visible { opacity: 1; }
@@ -1704,6 +1704,7 @@ window.onerror = function(msg, url, line, col, err) {
   #cta-top-container { display: none !important; }
   
   #mobile-menu-pill {
+    -webkit-tap-highlight-color: transparent;
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -1786,7 +1787,7 @@ window.onerror = function(msg, url, line, col, err) {
     display: flex;
     flex-direction: column;
     padding: 1rem 1rem;
-    transition: right 0.4s cubic-bezier(0.85, 0, 0.15, 1);
+    transition: right 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: -10px 0 30px rgba(0,0,0,0.5);
   }
   #mobile-sidebar.open {
@@ -1801,7 +1802,7 @@ window.onerror = function(msg, url, line, col, err) {
     z-index: 99999998;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
   }
   #sidebar-overlay.open {
     opacity: 1;
@@ -2573,7 +2574,7 @@ window.onerror = function(msg, url, line, col, err) {
       <span style="display:block; overflow:hidden; padding-bottom:4px;"><p class="headline-sub oh-inner" style="display:block; margin:0;">En tu restaurante favorito o en casa</p></span>
   </div>
   <!-- Logo superior izquierda -->
-  <div id="mobile-menu-pill" style="display: none; position: fixed; z-index: 1000000000; transition: all 0.3s ease;">+ MENU</div>
+  <div id="mobile-menu-pill" style="display: none; position: fixed; z-index: 1000000000; transition: all 0.3s ease;">MENU</div>
   <div id="nav-logo" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
     <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="height: 57px; width: auto; filter: brightness(0) invert(1);">
     <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height: 28px; width: auto; filter: brightness(0) invert(1); padding-left: 0px;">
@@ -13178,7 +13179,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
           sidebar.classList.remove('open');
           overlay.classList.remove('open');
           if (pill) {
-              pill.innerHTML = '+ MENU';
+              pill.innerHTML = 'MENU';
               pill.style.background = 'rgba(255,255,255,0.1)';
               pill.style.color = '#fff';
           }
