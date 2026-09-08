@@ -13399,13 +13399,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
   }
 
-  /* ACTIVE CARD (Zero scale pop, zero layout jump) */
+  /* ACTIVE CARD: natural z-index plane, seamless progressive uncover */
   .wallet-card.active {
-    transform: translateY(0px) rotate(0deg) !important;
-    z-index: 60 !important;
     border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.42);
-    background: #ffffff;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.38);
   }
 
   /* Card Header: identical geometry in active and resting states so there is NEVER a layout jump */
