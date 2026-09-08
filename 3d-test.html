@@ -664,8 +664,8 @@ window.onerror = function(msg, url, line, col, err) {
       top: -2rem; bottom: -2rem; left: -2rem; right: -2rem;
       z-index: -1;
       pointer-events: none;
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
+      transform: translate3d(0,0,0) rotate(0.001deg);
+      -webkit-transform: translate3d(0,0,0) rotate(0.001deg);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       background: rgba(0, 0, 0, 0.05);
@@ -749,8 +749,8 @@ window.onerror = function(msg, url, line, col, err) {
       top: -3rem; bottom: -3rem; left: -3rem; right: -3rem;
       z-index: -1;
       pointer-events: none;
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
+      transform: translate3d(0,0,0) rotate(0.001deg);
+      -webkit-transform: translate3d(0,0,0) rotate(0.001deg);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       background: rgba(0, 0, 0, 0.05);
@@ -3308,7 +3308,14 @@ window.onerror = function(msg, url, line, col, err) {
             opacity: 1,
             duration: 1.5,
             ease: 'power2.out',
-            stagger: 0.15
+            stagger: 0.15,
+            onComplete: function() {
+              // Safari bug fix: force repaint of backdrop-filters after opacity animation finishes
+              var h = document.getElementById('blur-bg-head');
+              if (h) { h.style.display = 'none'; h.offsetHeight; h.style.display = 'block'; }
+              var s = document.getElementById('blur-bg-sub');
+              if (s) { s.style.display = 'none'; s.offsetHeight; s.style.display = 'block'; }
+            }
           });
 
           introMorphGroup = morphGroup;
