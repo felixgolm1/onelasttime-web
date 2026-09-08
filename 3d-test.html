@@ -13408,7 +13408,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card-wrap:nth-child(8)  { z-index: 8; }
   .wallet-card-wrap:nth-child(9)  { z-index: 9; }
   .wallet-card-wrap:nth-child(10) { z-index: 10; }
-  .wallet-card-wrap.is-active { z-index: 25 !important; }
 
   /* 1. CROUPIER DEAL ENTRANCE (Cards deal in 1 by 1 from below the screen) */
   @keyframes dealCardIn {
@@ -13483,10 +13482,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     position: relative;
     width: 100%;
     height: 264px;
-    background: linear-gradient(165deg, #1c1c1c 0%, #0a0a0a 100%);
+    background: linear-gradient(165deg, #fdfdfc 0%, #f4f3ee 100%);
     border-radius: 20px;
     box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28), 0 3px 8px rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
@@ -13525,7 +13524,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   }
 
   .wallet-question {
-    color: #ffffff;
+    color: #121510;
     font-family: 'Inter', sans-serif;
     font-size: clamp(0.85rem, 1.25vw, 0.94rem);
     font-weight: 800;
@@ -13546,13 +13545,13 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     opacity: 1;
     max-height: 165px;
     padding: 6px 8px 4px 2px;
-    color: #e0e0e0;
+    color: #2b3127;
     font-family: 'Inter', sans-serif;
     font-size: 0.86rem;
     line-height: 1.58;
     text-align: left;
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
   }
   .wallet-body::-webkit-scrollbar {
     width: 6px;
@@ -13562,11 +13561,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     margin: 12px 0;
   }
   .wallet-body::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 10px;
   }
   .wallet-body::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
   .wallet-body p {
