@@ -666,9 +666,9 @@ window.onerror = function(msg, url, line, col, err) {
       z-index: -1;
       pointer-events: none;
       transform: translateZ(0);
-      backdrop-filter: blur(var(--head-blur));
       -webkit-transform: translateZ(0);
       backdrop-filter: blur(var(--head-blur));
+      -webkit-backdrop-filter: blur(var(--head-blur));
       background: rgba(0, 0, 0, var(--head-alpha));
       mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
       -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
@@ -754,9 +754,9 @@ window.onerror = function(msg, url, line, col, err) {
       pointer-events: none;
       /* Efecto blur dinámico para poder animarlo sin romper la tarjeta gráfica */
       transform: translateZ(0);
-        backdrop-filter: blur(var(--sub-blur));
       -webkit-transform: translateZ(0);
-        backdrop-filter: blur(var(--sub-blur));
+      backdrop-filter: blur(var(--sub-blur));
+      -webkit-backdrop-filter: blur(var(--sub-blur));
       background: rgba(0, 0, 0, var(--sub-alpha));
       /* Máscara para que el blur se desvanezca en los bordes y no sea un "cajón" cuadrado */
       -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
