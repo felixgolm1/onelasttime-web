@@ -13243,6 +13243,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding: clamp(14px, 3vw, 36px) 14px 80px;
     box-sizing: border-box;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     scrollbar-width: thin;
     scrollbar-color: rgba(204, 255, 0, 0.3) transparent;
   }
@@ -13335,7 +13337,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding-bottom: 30px;
   }
 
-  /* PHYSICAL PLAYING CARD (True Proportion: ~1.45 : 1) */
+  /* PHYSICAL PLAYING CARD */
   .wallet-card {
     position: relative;
     width: 100%;
@@ -13347,7 +13349,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
                 box-shadow 0.35s ease, 
                 border-color 0.3s ease;
     will-change: transform, box-shadow;
@@ -13358,12 +13360,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     padding: 24px 28px 18px;
   }
 
-  /* Physical Deck Overlap: cards overlap by ~268px so only the top ~82px header peeks */
+  /* Physical Deck Overlap */
   .wallet-card:not(:first-child) {
     margin-top: -268px;
   }
 
-  /* Alternating organic table rotation angles */
+  /* Alternating organic angles */
   .wallet-card:nth-child(1)  { --base-rot: -1.0deg; transform: rotate(var(--base-rot)); z-index: 1; }
   .wallet-card:nth-child(2)  { --base-rot:  1.2deg; transform: rotate(var(--base-rot)); z-index: 2; }
   .wallet-card:nth-child(3)  { --base-rot: -0.8deg; transform: rotate(var(--base-rot)); z-index: 3; }
@@ -13375,14 +13377,13 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card:nth-child(9)  { --base-rot: -0.6deg; transform: rotate(var(--base-rot)); z-index: 9; }
   .wallet-card:nth-child(10) { --base-rot:  0.8deg; transform: rotate(var(--base-rot)); z-index: 10; }
 
-  /* Hover peek (elevates slightly) */
+  /* Subtle Hover: lightly nudges up without changing z-index so it NEVER reveals the hidden card body on hover */
   .wallet-card:not(.active):hover {
-    transform: translateY(-8px) rotate(var(--base-rot)) scale(1.01) !important;
-    box-shadow: 0 22px 46px rgba(0, 0, 0, 0.42);
-    z-index: 25 !important;
+    transform: translateY(-4px) rotate(var(--base-rot)) !important;
+    box-shadow: 0 20px 42px rgba(0, 0, 0, 0.38);
   }
 
-  /* ACTIVE CARD (Fully Uncovered and Straightened) */
+  /* ACTIVE CARD (Revealed when clicked) */
   .wallet-card.active {
     transform: rotate(0deg) scale(1.02) !important;
     z-index: 60 !important;
@@ -13393,12 +13394,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     min-height: 350px;
   }
 
-  /* Card Header (Visible in peek) */
+  /* Card Header */
   .wallet-header {
-    height: 60px;
+    height: 52px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 14px;
     flex-shrink: 0;
   }
@@ -13411,17 +13412,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-question-box {
     display: flex;
     flex-direction: column;
-    gap: 5px;
     text-align: left;
     flex: 1;
-  }
-  .wallet-tag {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #647a16;
   }
   .wallet-question {
     color: #121510;
@@ -13501,7 +13493,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     border-radius: 4px;
   }
 
-  /* Card Physical Footer (Identical to physical card) */
+  /* Card Physical Footer */
   .wallet-footer {
     display: flex;
     justify-content: center;
@@ -13559,7 +13551,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="0" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">01 · GARANTÍA TOTAL</span>
             <h3 class="wallet-question">¿Qué pasa si no me gusta la experiencia?</h3>
           </div>
           <div class="wallet-icon">
@@ -13577,7 +13568,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="1" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">02 · TIEMPOS DE ENTREGA</span>
             <h3 class="wallet-question">¿Cuánto tiempo tardo en recibir las cartas?</h3>
           </div>
           <div class="wallet-icon">
@@ -13601,7 +13591,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="2" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">03 · DÓNDE RECIBIRLAS</span>
             <h3 class="wallet-question">¿Dónde me entregaréis las cartas?</h3>
           </div>
           <div class="wallet-icon">
@@ -13623,7 +13612,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="3" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">04 · PRECIO</span>
             <h3 class="wallet-question">¿Cuánto cuesta la experiencia con las cartas?</h3>
           </div>
           <div class="wallet-icon">
@@ -13641,7 +13629,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="4" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">05 · COSTES DE ENVÍO</span>
             <h3 class="wallet-question">¿El envío de las cartas tiene algún coste para mí?</h3>
           </div>
           <div class="wallet-icon">
@@ -13659,7 +13646,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="5" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">06 · OCASIÓN</span>
             <h3 class="wallet-question">¿Solo sirven para una cena en un restaurante?</h3>
           </div>
           <div class="wallet-icon">
@@ -13678,7 +13664,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="6" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">07 · CIENCIA Y MÉTODO</span>
             <h3 class="wallet-question">¿Cómo preparáis las preguntas?</h3>
           </div>
           <div class="wallet-icon">
@@ -13699,7 +13684,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="7" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">08 · IDIOMAS</span>
             <h3 class="wallet-question">¿En qué idiomas hacéis las cartas?</h3>
           </div>
           <div class="wallet-icon">
@@ -13717,7 +13701,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="8" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">09 · ENVÍOS INTERNACIONALES</span>
             <h3 class="wallet-question">¿Hacéis envíos fuera de España de las cartas físicas?</h3>
           </div>
           <div class="wallet-icon">
@@ -13735,7 +13718,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       <div class="wallet-card" data-index="9" onclick="window.toggleWalletCard(this)">
         <div class="wallet-header">
           <div class="wallet-question-box">
-            <span class="wallet-tag">10 · CONTENIDO</span>
             <h3 class="wallet-question">¿Qué recibiré exactamente?</h3>
           </div>
           <div class="wallet-icon">
@@ -13770,6 +13752,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     var m = document.getElementById('olt-faq-modal');
     if (!m) return;
+    document.body.style.overflow = 'hidden';
     m.classList.add('active');
     requestAnimationFrame(function() {
       m.style.opacity = '1';
@@ -13781,9 +13764,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var m = document.getElementById('olt-faq-modal');
     if (!m) return;
     m.style.opacity = '0';
+    document.body.style.overflow = '';
     setTimeout(function() {
       m.classList.remove('active');
-      // Reset all cards on close
       window.resetWalletStack();
     }, 300);
   };
@@ -13792,7 +13775,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var allCards = document.querySelectorAll('.wallet-card');
     allCards.forEach(function(card) {
       card.classList.remove('active');
-      var baseRot = card.style.getPropertyValue('--base-rot') || '0deg';
       card.style.transform = '';
     });
   };
@@ -13803,13 +13785,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var isAlreadyActive = clickedCard.classList.contains('active');
 
     if (isAlreadyActive) {
-      // Collapse everything back to natural deck stack
       window.resetWalletStack();
       return;
     }
 
-    // Measure how much space the active card needs
-    // Natural card height is ~350px. When uncovered, it needs all cards below to slide down by ~270px
     var shiftAmount = 265; 
 
     allCards.forEach(function(card, idx) {
@@ -13820,22 +13799,33 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       } else {
         card.classList.remove('active');
         if (idx < clickedIndex) {
-          // Cards above stay in their deck positions
           card.style.transform = '';
         } else {
-          // Cards below slide DOWN smoothly to uncover the clicked card
           card.style.transform = 'translateY(' + shiftAmount + 'px) rotate(' + baseRot + ')';
         }
       }
     });
 
-    // Auto-scroll so the revealed card is perfectly centered in viewport
     setTimeout(function() {
       clickedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 120);
   };
 
-  // Close when clicking background outside card
+  // Prevent wheel & touchmove from getting hijacked by the global 3D scroll
+  (function() {
+    var m = document.getElementById('olt-faq-modal');
+    if (m) {
+      m.addEventListener('wheel', function(e) {
+        e.stopPropagation();
+      }, { passive: false });
+
+      m.addEventListener('touchmove', function(e) {
+        e.stopPropagation();
+      }, { passive: true });
+    }
+  })();
+
+  // Close on backdrop click
   document.addEventListener('click', function(e) {
     var m = document.getElementById('olt-faq-modal');
     if (m && e.target === m) {
@@ -13851,6 +13841,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   });
 </script>
 <!-- End OLT FAQs Modal -->
+
 
 
 
