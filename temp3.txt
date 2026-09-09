@@ -1,0 +1,56 @@
+ Ã¢â€€Ã¢â€€ Primera carga (savedProg=0): exponer función que activa la animación Ã¢â€€Ã¢â€€
+    window._runIntroAnim = function () {
+      // 1. Fade in de la carta completa
+      if (introCard) introCard.classList.add('visible');
+
+      // 2. Efecto Matrix en el texto
+      const introMatrix1 = document.getElementById('intro-matrix-text-1');
+      const introMatrix2 = document.getElementById('intro-matrix-text-2');
+      const finalStr1 = "CONEXIONES SIGNIFICATIVAS";
+      const finalStr2 = "PARA PERSONAS QUE IMPORTAN";
+      
+      if (introMatrix1 && introMatrix2) {
+        // Inicializamos con los caracteres originales en opacidad 0 para mantener el layout intacto
+        let initHtml1 = '', initHtml2 = '';
+        for (let i = 0; i < finalStr1.length; i++) {
+          if (finalStr1[i] === ' ') initHtml1 += ' ';
+          else initHtml1 += `<span style="opacity:0">${finalStr1[i]}</span>`;
+        }
+        for (let i = 0; i < finalStr2.length; i++) {
+          if (finalStr2[i] === ' ') initHtml2 += ' ';
+          else initHtml2 += `<span style="opacity:0">${finalStr2[i]}</span>`;
+        }
+        introMatrix1.innerHTML = initHtml1;
+        introMatrix2.innerHTML = initHtml2;
+
+        const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
+        let iteration = 0;
+        console.log("Matrix effect initialized for intro text (2 lines).");
+        
+        // Empezar el matrix justo al terminar gran parte del fade de la carta (400ms)
+        setTimeout(() => {
+          console.log("Matrix effect wave starting now!");
+          const timer = setInterval(() => {
+            let html1 = '', html2 = '';
+            
+            // Line 1
+            for (let i = 0; i < finalStr1.length; i++) {
+              if (finalStr1[i] === ' ') {
+                html1 += ' ';
+              } else if (i < Math.floor(iteration)) {
+                html1 += `<span style="color:#ffffff">${finalStr1[i]}</span>`;
+              } else if (i < Math.floor(iteration) + 6) {
+                const r = Math.floor(Math.random() * glyphs.length);
+                html1 += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
+              } else {
+                html1 += `<span style="opacity:0">${finalStr1[i]}</span>`;
+              }
+            }
+            
+            // Line 2 (con un desfase visual para que la ola baje secuencialmente)
+            for (let i = 0; i < finalStr2.length; i++) {
+              let j = i + finalStr1.length; 
+              if (finalStr2[i] === ' ') {
+                html2 += ' ';
+              } else if (j < Math.floor(iteration)) {
+     

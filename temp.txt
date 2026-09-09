@@ -1,0 +1,73 @@
+function checkVipCode() {
+    var val = document.getElementById('vip-code').value.trim().toUpperCase();
+    
+    if (vipMode === 'waitlist') {
+        if(val.includes('@') && val.includes('.')) {
+            showVipError('&iexcl;Genial! Est&aacute;s en la lista. Te avisaremos pronto.', true);
+            document.getElementById('vip-submit-btn').style.display = 'none';
+            
+            // Enviar al backend de Python -> Google Sheets
+            fetch('http://localhost:8003/api/waitlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: val })
+            }).catch(e => console.log('Error enviando a lista de espera', e));
+        } else {
+            showVipError('Introduce un email v&aacute;lido', false);
+        }
+        return;
+    }
+
+    var validCodes = ['PASS007'];
+    if(validCodes.includes(val)) {
+        // Enviar chivatazo a Google Analytics 4
+        if (typeof gtag === 'function') {
+            gtag('event', 'pass_code', {
+                'codigo_usado': val
+            });
+        }
+        // Identificar la sesion en Clarity con el codigo usado
+        if (typeof clarity === 'function') {
+            clarity("set", "VIP_Code", val);
+        }
+        
+        // Generar User ID unico y guardarlo
+        var userId = sessionStorage.getItem('olt_user_id');
+        if(!userId) {
+            userId = 'OLT-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            sessionStorage.setItem('olt_user_id', userId);
+        }
+        sessionStorage.setItem('olt_vip_code', val);
+        
+        // Gestionar visitas y nuevo usuario
+        var visitCount = parseInt(sessionStorage.getItem('olt_visits') || '0');
+        var isNewUser = "No";
+        if (!sessionStorage.getItem('olt_session_active')) {
+            visitCount++;
+            sessionStorage.setItem('olt_visits', visitCount);
+            sessionStorage.setItem('olt_session_active', 'true');
+        }
+        if (visitCount === 1) isNewUser = "Sí";
+        
+        // Procedencia (UTM parameters)
+        var urlParams = new URLSearchParams(window.location.search);
+        var source = urlParams.get('utm_source') || sessionStorage.getItem('olt_source') || 'Directo';
+        if (urlParams.get('utm_source')) {
+            sessionStorage.setItem('olt_source', source);
+        }
+        
+        // Enviar evento de entrada a backend
+        fetch('http://localhost:8003/api/track', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                events: [{
+                    sessionId: userId,
+                    isNewUser: isNewUser,
+                    visitCount: visitCount,
+                    trafficSource: source,
+                    event: 'Login VIP',
+                    details: 'Código: ' + val,
+                    page: 'index.html',
+                    scroll: 0,
+                    timeSpe

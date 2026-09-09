@@ -1,0 +1,80 @@
+        globalGlbCard.rotation.set(0, -gRY * Math.PI / 180, -gRZ * Math.PI / 180);
+        globalGlbCard.visible = true;
+      }
+
+      // Preparar estado visual 3D instantáneamente
+      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1, scaleY: window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1, rotation: 0 });
+      syncCard3DToMorphGroup();
+
+      // Forzar 1 frame de renderizado 3D AHORA MISMO, antes de hacer visible el canvas.
+      // Esto evita que se vea un "flash" de 1 frame de la carta en su posición y textura antigua
+      // porque requestAnimationFrame() pintaría el DOM (opacity=1) antes de que el motor de render 3D
+      // pinte el buffer con las coordenadas nuevas.
+      if (typeof cardRenderer2 !== 'undefined' && cardScene2 && cardCam2) {
+        cardRenderer2.render(cardScene2, cardCam2);
+      }
+
+      if (cardCanvasEl) {
+        cardCanvasEl.style.transition = 'none';
+        cardCanvasEl.style.opacity = '1';
+      }
+
+      // Volar y encoger: de 1.5x a 1.0x, rotando -3 grados
+      gsap.to(introState, {
+        scaleMult: 1.0,
+        duration: 1.8,
+        ease: 'power2.out',
+        onUpdate: syncCard3DToMorphGroup
+      });
+
+      gsap.to(morphGroup, {
+        rotation: -3,
+        duration: 1.8,
+        ease: 'power2.out',
+        onComplete: () => {
+          // Revelar escena de fondo
+          if (loaderEl) {
+            loaderEl.style.transition = 'opacity 1.4s ease';
+            loaderEl.style.opacity       = '0';
+            loaderEl.style.pointerEvents = 'none';
+            setTimeout(() => { loaderEl.style.display = 'none'; }, 1500);
+          }
+          
+          const canvas = document.querySelector('canvas:not(#card-canvas)');
+          if (canvas) {
+            canvas.style.transition = 'none';
+            canvas.style.opacity = '1';
+            let maskObj = { p: -50 };
+            gsap.to(maskObj, {
+              p: 150,
+              duration: 1.2,
+              ease: "power2.inOut",
+              onUpdate: function() {
+                let maskStr = `linear-gradient(45deg, black ${maskObj.p}%, transparent ${maskObj.p + 50}%)`;
+                canvas.style.webkitMaskImage = maskStr;
+                canvas.style.maskImage = maskStr;
+              },
+              onComplete: function() {
+                canvas.style.webkitMaskImage = '';
+                canvas.style.maskImage = '';
+              }
+            });
+
+          }
+
+          
+
+          introMorphGroup = morphGroup;
+          setupScrollAnim();
+        }
+      });
+    });
+  }
+
+  // Ã¢â€€Ã¢â€€ SCROLL ANIMATION: zoom → flip → scatter → macro-camera Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
+  function setupScrollAnim() {
+    const mg        = introMorphGroup;
+    if (!mg) return;
+    const visGroup  = document.getElementById('visible-input-group');
+    const scOverlay = document.getElementById('scene-overlay');
+    const stOverlay = document.getElementById('steps-over
