@@ -13520,10 +13520,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     width: 100%;
   }
 
-  /* Card Body (Answer with internal scroll: exact decision tree scrollbar) */
   .wallet-body {
     flex: 1;
-    overflow-y: hidden;
+    overflow-y: auto;
+    pointer-events: none;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     opacity: 1;
@@ -13541,7 +13541,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   }
   .wallet-card.active .wallet-body,
   .wallet-card-wrap:last-child .wallet-card .wallet-body {
-    overflow-y: auto;
+    pointer-events: auto;
   }
   .wallet-body::-webkit-scrollbar {
     width: 6px;
