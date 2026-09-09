@@ -2594,6 +2594,7 @@ window.onerror = function(msg, url, line, col, err) {
           <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">EXPERIMENTA LA CENA</span></span>
           <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">MÁS TRANSFORMADORA</span></span>
           <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">QUE HAS TENIDO JAMÁS</span></span>
+          <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">CON TU PAREJA O <span id="h1-dynamic-text" style="color: rgba(255,255,255,0.7); font-style: italic;">NO PAREJA</span></span></span>
         </h1>
       </div>
       <hr class="headline-divider" style="position:relative; z-index:2;">
@@ -2601,6 +2602,59 @@ window.onerror = function(msg, url, line, col, err) {
         <div class="blur-bg-head" style="top: -1rem; bottom: -1rem;"></div>
         <span style="display:block; overflow:hidden; padding-bottom:4px; position:relative; z-index:1;"><p class="headline-sub oh-inner" style="display:block; margin:0;">En tu restaurante favorito o en casa</p></span>
       </div>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const dynamicSpan = document.getElementById("h1-dynamic-text");
+        if (!dynamicSpan) return;
+        
+        const words = [
+          "NO PAREJA",
+          "CASI PAREJA",
+          "PERSONA ESPECIAL",
+          "CRUSH",
+          "CITA ESPECIAL",
+          "...YA SABES",
+          "ESE ALGUIEN"
+        ];
+        let currentWordIndex = 1;
+        const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
+
+        function scrambleWord(newWord) {
+          let iteration = 0;
+          const maxIterations = 14;
+          const originalColor = dynamicSpan.style.color;
+          
+          const interval = setInterval(() => {
+            let scrambled = newWord.split("").map((char, index) => {
+              if (char === " ") return " ";
+              if (index < (iteration / maxIterations) * newWord.length) {
+                return newWord[index];
+              }
+              return glyphs[Math.floor(Math.random() * glyphs.length)];
+            }).join("");
+            
+            dynamicSpan.textContent = scrambled;
+            // Matrix glitch color during animation
+            dynamicSpan.style.color = 'rgba('+(180+Math.random()*40|0)+','+(230+Math.random()*25|0)+',0,0.95)';
+            dynamicSpan.style.textShadow = '0 0 8px rgba(180,255,0,0.8)';
+            
+            iteration++;
+            if (iteration > maxIterations) {
+              clearInterval(interval);
+              dynamicSpan.textContent = newWord;
+              dynamicSpan.style.color = originalColor;
+              dynamicSpan.style.textShadow = 'none';
+            }
+          }, 45); // 45ms * 14 = ~630ms animation duration
+        }
+
+        setInterval(() => {
+          scrambleWord(words[currentWordIndex]);
+          currentWordIndex = (currentWordIndex + 1) % words.length;
+        }, 1500); // 1.5s loop
+      });
+    </script>
     </div>
   <!-- Logo superior izquierda -->
   <div id="mobile-menu-pill" style="display: none; position: fixed; z-index: 10000016; transition: all 0.3s ease;"><span id="menu-dot" style="display:inline-block; width:4px; height:4px; background-color:currentColor; border-radius:50%; margin-right:6px;"></span><span id="menu-text">MENU</span></div>
