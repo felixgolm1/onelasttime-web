@@ -1,0 +1,26 @@
+gGltf);
+              }, 600); // 600ms extra para leer la frase antes del giro 3D
+            }
+          }, 20); 
+        }, 300); 
+      } else {
+        // Fallback si no hay texto matrix
+        setTimeout(() => {
+          animReady = true;
+          if (pendingGltf) buildScene(pendingGltf);
+        }, 1800);
+      }
+
+    };
+  })();
+
+  // Start loading immediately (parse in background during animation)
+  startLoading();
+  if (typeof window._runIntroAnim === 'function' && !animReady) {
+    window._runIntroAnim();
+    window._runIntroAnim = null;
+  }
+
+  // Ã¢â€€Ã¢â€€ NAV HOVER Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
+  const navOverlay = document.getElementById('nav-overlay');
+  document.querySe
