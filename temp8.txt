@@ -1,0 +1,15 @@
+/span>
+  </div>
+  <!-- Headline izquierda -->
+  <div id="headline">
+      <div style="position:relative; width:100%;">
+        <div class="blur-bg-head"></div>
+        <h1 style="position:relative; z-index:1; margin:0;">
+          <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">EXPERIMENTA UNA CENA</span></span>
+          <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">TRANSFORMADORA CON</span></span>
+          <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">TU PAREJA O <span id="h1-dynamic-text" style="color: rgba(255,255,255,0.7); font-style: italic;">NO PAREJA</span></span></span>
+        </h1>
+      </div>
+      <hr class="headline-divider" style="position:relative; z-index:2;">
+      <div style="position:relative; width:100%;">
+        <div class="blur-bg-head" style="top: -1rem; bottom: -1re
