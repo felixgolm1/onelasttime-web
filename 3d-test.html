@@ -13303,14 +13303,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Bottom CTA entrance */
-  #olt-faq-modal.active .faq-bottom-cta {
-    animation: fadeBottomCtaIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.82s both;
-  }
-  @keyframes fadeBottomCtaIn {
-    from { opacity: 0; transform: translateY(35px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
 
   /* Header floating bar */
   .faq-top-bar {
@@ -13539,6 +13531,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     text-align: left;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,1) 16px, rgba(0,0,0,1) calc(100% - 16px), transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,1) 16px, rgba(0,0,0,1) calc(100% - 16px), transparent 100%);
   }
   .wallet-body::-webkit-scrollbar {
     width: 6px;
@@ -13574,22 +13568,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   }
 
 
-  /* Bottom CTA Banner */
-  .faq-bottom-cta {
-    width: 100%;
-    margin-top: 26px;
-    background: linear-gradient(180deg, rgba(20, 26, 18, 0.95) 0%, rgba(10, 14, 8, 0.98) 100%);
-    border: 1px solid rgba(204, 255, 0, 0.25);
-    border-radius: 18px;
-    padding: 18px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 14px;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
-    box-sizing: border-box;
-  }
 </style>
 
 <div id="olt-faq-modal" role="dialog" aria-modal="true" aria-labelledby="olt-faq-title">
@@ -13752,17 +13730,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       </div>
       </div>
 
-    </div>
-
-    <!-- Bottom CTA Bar -->
-    <div class="faq-bottom-cta">
-      <div style="color:rgba(255,255,255,0.75); font-family:'Inter',sans-serif; font-size:0.82rem; display:flex; align-items:center; gap:6px;">
-        <span>Garantía incondicional 100% · Devolución sin preguntas</span>
-      </div>
-      <a href="reservar-mi-cena.html" style="background:#ccff00; color:#0d1208; font-family:'Inter',sans-serif; font-weight:800; font-size:0.88rem; padding:11px 24px; border-radius:999px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 18px rgba(204,255,0,0.35); transition:transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 24px rgba(204,255,0,0.5)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 18px rgba(204,255,0,0.35)';">
-        <span>TRANSFORMAR MI CENA</span>
-        <span>→</span>
-      </a>
     </div>
 
   </div>
