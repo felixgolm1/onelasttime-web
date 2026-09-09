@@ -2634,16 +2634,11 @@ window.onerror = function(msg, url, line, col, err) {
             }).join("");
             
             dynamicSpan.textContent = scrambled;
-            // Matrix glitch color during animation
-            dynamicSpan.style.color = 'rgba('+(180+Math.random()*40|0)+','+(230+Math.random()*25|0)+',0,0.95)';
-            dynamicSpan.style.textShadow = '0 0 8px rgba(180,255,0,0.8)';
             
             iteration++;
             if (iteration > maxIterations) {
               clearInterval(interval);
               dynamicSpan.textContent = newWord;
-              dynamicSpan.style.color = originalColor;
-              dynamicSpan.style.textShadow = 'none';
             }
           }, 45); // 45ms * 14 = ~630ms animation duration
         }
