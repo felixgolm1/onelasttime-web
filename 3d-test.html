@@ -13523,7 +13523,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   /* Card Body (Answer with internal scroll: exact decision tree scrollbar) */
   .wallet-body {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: hidden;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     opacity: 1;
@@ -13538,6 +13538,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,1) 16px, rgba(0,0,0,1) calc(100% - 16px), transparent 100%);
     mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,1) 16px, rgba(0,0,0,1) calc(100% - 16px), transparent 100%);
+  }
+  .wallet-card.active .wallet-body,
+  .wallet-card-wrap:last-child .wallet-card .wallet-body {
+    overflow-y: auto;
   }
   .wallet-body::-webkit-scrollbar {
     width: 6px;
@@ -13853,9 +13857,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   (function() {
     var cards = document.querySelectorAll('.wallet-card');
     cards.forEach(function(card) {
-      // 1. Mouse wheel / trackpad scroll on the active card
+      // 1. Mouse wheel / trackpad scroll on the active card (or last card)
       card.addEventListener('wheel', function(e) {
-        if (!card.classList.contains('active')) return;
+        var isLast = card.getAttribute('data-index') === '9';
+        if (!card.classList.contains('active') && !isLast) return;
         var b = card.querySelector('.wallet-body');
         if (!b) return;
         if (b.scrollHeight > b.clientHeight) {
@@ -13865,11 +13870,12 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         }
       }, { passive: false });
 
-      // 2. Mobile touch drag scroll on the active card
+      // 2. Mobile touch drag scroll on the active card (or last card)
       var touchStartY = 0;
       var startScrollTop = 0;
       card.addEventListener('touchstart', function(e) {
-        if (!card.classList.contains('active')) return;
+        var isLast = card.getAttribute('data-index') === '9';
+        if (!card.classList.contains('active') && !isLast) return;
         var b = card.querySelector('.wallet-body');
         if (b && b.scrollHeight > b.clientHeight && e.touches.length > 0) {
           touchStartY = e.touches[0].clientY;
@@ -13878,7 +13884,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       }, { passive: true });
 
       card.addEventListener('touchmove', function(e) {
-        if (!card.classList.contains('active')) return;
+        var isLast = card.getAttribute('data-index') === '9';
+        if (!card.classList.contains('active') && !isLast) return;
         var b = card.querySelector('.wallet-body');
         if (b && b.scrollHeight > b.clientHeight && e.touches.length > 0) {
           var dy = touchStartY - e.touches[0].clientY;
