@@ -1586,6 +1586,25 @@ window.onerror = function(msg, url, line, col, err) {
       .btn-blue:hover .cta-arrow-pill { transform: translateY(-50%) scale(1.15); }
 
 
+
+    @media (max-width: 768px) {
+      #flip-left-text {
+        top: 20% !important;
+        left: 0 !important;
+        width: 100% !important;
+        text-align: center;
+      }
+      #flip-right-text {
+        top: 75% !important;
+        right: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        text-align: center;
+      }
+      #flip-left-text .flt-line, #flip-right-text .flt-line {
+        justify-content: center !important;
+      }
+    }
 </style>
 
   <style>
@@ -3549,8 +3568,8 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
     // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
-    gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, y: -40 });
-    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, y:  40 });
+    gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, x: -40 });
+    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, x:  40 });
     // Chars: solo invisibles â€â€ sin desplazamiento propio
     gsap.set(leftChars,  { opacity: 0 });
     gsap.set(rightChars, { opacity: 0 });
@@ -3807,13 +3826,13 @@ window.onerror = function(msg, url, line, col, err) {
     // Ã¢â€€ Desplazamiento Y: arranca desde t=0, desplazamiento amplio (160px) para que
     // el movimiento sea claramente visible durante el fade-in de los chars.
     scrollTl.fromTo('#flip-left-text',
-      { y: -40 },
-      { y: 40, duration: 0.60, ease: 'none' },
+      { x: -40 },
+      { x: 40, duration: 0.60, ease: 'none' },
       0
     );
     scrollTl.fromTo('#flip-right-text',
-      { y: 40 },
-      { y: -40, duration: 0.60, ease: 'none' },
+      { x: 40 },
+      { x: -40, duration: 0.60, ease: 'none' },
       0
     );
 
@@ -9187,8 +9206,10 @@ function makeCardBackTex(data = '4 PASOS') {
   // Start loading immediately (parse in background during animation)
   startLoading();
   if (typeof window._runIntroAnim === 'function' && !animReady) {
-    window._runIntroAnim();
-    window._runIntroAnim = null;
+    if (sessionStorage.getItem('olt_vip_unlocked') === 'true') {
+      window._runIntroAnim();
+      window._runIntroAnim = null;
+    }
   }
 
   // Ã¢â€€Ã¢â€€ NAV HOVER Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
