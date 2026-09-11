@@ -1,6 +1,6 @@
 # REGLAS DEL PROYECTO: SENSIBLES WEB
 
-## 1. MODIFICACIONES DE FRONTEND (COPY Y LAYOUT)
-- Toda modificación de copys, tamaños, posicionamiento o animaciones asume por defecto que es **exclusivamente para la vista móvil (`@media (max-width: 768px)` o condicionales JS de móvil)**.
-- **PROHIBIDO** alterar la estructura de etiquetas HTML, los saltos de línea (como los divs `.flt-line`) o el CSS general de la vista Desktop, a menos que el usuario especifique explícitamente "cambiar también en desktop".
-- La vista Desktop se considera sagrada y estable. No la desordenes.
+## 1. MODIFICACIONES EXCLUSIVAS PARA MÓVIL (SANTUARIO DE DESKTOP)
+- **ABSOLUTAMENTE NINGÚN CAMBIO EN DESKTOP:** Tienes prohibido alterar copys, tamaños, colores, estructuras HTML, clases base, o cualquier configuración global que afecte a la vista de ordenador. Ni tamaños, ni copys, ni absolutamente nada.
+- **ENTORNO DE TRABAJO:** Toda instrucción de modificación visual que dé el usuario aplica **ÚNICA Y EXCLUSIVAMENTE** a las reglas CSS de `@media (max-width: 768px)` o a la lógica JS condicionada para pantallas pequeñas.
+- La vista Desktop se considera terminada, sagrada e inalterable. Si el usuario no dice la palabra mágica explícita "modificar desktop", asume que cualquier petición es solo para el móvil.
