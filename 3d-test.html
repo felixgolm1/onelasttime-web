@@ -3348,9 +3348,9 @@ window.onerror = function(msg, url, line, col, err) {
       gsap.set(['#nav-menu', '#cta-top-container', '.blur-bg-head', '.oh-inner', '#blur-bg-sub', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator', '.flt-in', '.flt-in-up'], { opacity: 0 });
         gsap.set('#nav-logo', { 
             opacity: 0,
-            xPercent: window._cIsMobile ? 0 : -50,
-            left: window._cIsMobile ? '5%' : '50%',
-            top: window._cIsMobile ? '1.2rem' : '3.2rem',
+            xPercent: 0,
+            left: window._cIsMobile ? '5%' : '2rem',
+            top: window._cIsMobile ? '1.2rem' : '1.5rem',
             scale: 1.0,
             transformOrigin: 'top left'
           });
