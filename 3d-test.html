@@ -3367,8 +3367,8 @@ window.onerror = function(msg, url, line, col, err) {
           if (!wrap) {
               wrap = document.createElement('div');
               wrap.id = 'dealer-pile-wrap';
-              // Compensamos el centro visual de la carta 3D moviendo la baraja -14px arriba y a la izquierda
-              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(calc(-50% - 14px), calc(-50% - 14px)); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
+              // Compensamos el pivot point asimetrico del modelo 3D moviendo la baraja -28px a la izq y -24px arriba
+              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(calc(-50% - 28px), calc(-50% - 24px)); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
               let scale = window._cIsMobile ? 0.5 : 0.65;
               let cardsHtml = '';
@@ -3392,14 +3392,14 @@ window.onerror = function(msg, url, line, col, err) {
               
               let cards = wrap.querySelectorAll('.dealer-card');
               
-              // Composicion manual super sutil para que no esten demasiado separadas
+              // Composicion manual super sutil para que asomen en cruz
               const scatterOffsets = [
-                  { x: -5, y: -4, r: -1.5 },
-                  { x:  4, y:  4, r:  1.5 },
-                  { x: -3, y:  5, r: -0.5 },
-                  { x:  5, y: -3, r:  1.0 },
-                  { x: -6, y:  1, r: -2.0 },
-                  { x:  3, y:  6, r:  0.5 }
+                  { x: -6, y: -5, r: -2.0 },
+                  { x:  6, y:  5, r:  2.0 },
+                  { x: -4, y:  6, r: -1.0 },
+                  { x:  5, y: -4, r:  1.5 },
+                  { x: -8, y:  2, r: -2.5 },
+                  { x:  4, y:  7, r:  1.0 }
               ];
 
               cards.forEach((c, idx) => {
