@@ -9639,8 +9639,10 @@ function makeCardBackTex(data = '4 PASOS') {
         pos3D.project(camera);
         
         // Convertimos las coordenadas normalizadas (-1 a 1) a píxeles exactos de la pantalla
-        const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth;
-        const screenY = -(pos3D.y * 0.5 - 0.5) * window.innerHeight;
+        // Y aplicamos una corrección estática (-22px en X, -18px en Y) porque la malla geométrica 
+        // de la carta 3D no está perfectamente centrada en su propio origen 0,0,0
+        const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth - 22;
+        const screenY = -(pos3D.y * 0.5 - 0.5) * window.innerHeight - 18;
         
         dealerPile.style.left = screenX + 'px';
         dealerPile.style.top = screenY + 'px';
