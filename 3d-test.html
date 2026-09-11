@@ -1593,7 +1593,7 @@ window.onerror = function(msg, url, line, col, err) {
         left: 0 !important;
         width: 100% !important;
         text-align: left !important;
-        padding-left: 12vw !important;
+        padding-left: 5vw !important;
       }
       #flip-right-text {
         top: 75% !important;
@@ -1602,7 +1602,7 @@ window.onerror = function(msg, url, line, col, err) {
         width: 100% !important;
         max-width: none !important;
         text-align: right !important;
-        padding-right: 12vw !important;
+        padding-right: 5vw !important;
       }
       #flip-left-text .flt-line {
         justify-content: flex-start !important;
@@ -3844,13 +3844,13 @@ window.onerror = function(msg, url, line, col, err) {
     // el movimiento sea claramente visible durante el fade-in de los chars.
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     scrollTl.fromTo('#flip-left-text',
-      isMobile ? { x: -40, y: 0 } : { y: -40, x: 0 },
-      isMobile ? { x: 40, duration: 0.60, ease: 'none' } : { y: 40, duration: 0.60, ease: 'none' },
+      isMobile ? { x: -20, y: 0 } : { y: -40, x: 0 },
+      isMobile ? { x: 20, duration: 0.60, ease: 'none' } : { y: 40, duration: 0.60, ease: 'none' },
       0
     );
     scrollTl.fromTo('#flip-right-text',
-      isMobile ? { x: 40, y: 0 } : { y: 40, x: 0 },
-      isMobile ? { x: -40, duration: 0.60, ease: 'none' } : { y: -40, duration: 0.60, ease: 'none' },
+      isMobile ? { x: 20, y: 0 } : { y: 40, x: 0 },
+      isMobile ? { x: -20, duration: 0.60, ease: 'none' } : { y: -40, duration: 0.60, ease: 'none' },
       0
     );
 
