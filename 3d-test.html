@@ -2635,26 +2635,25 @@ window.onerror = function(msg, url, line, col, err) {
         function scrambleWord(newWord) {
           let iteration = 0;
           const maxIterations = 14;
-          const originalColor = dynamicSpan.style.color;
           
-          dynamicSpan.style.color = '#CCFF00';
-
           const interval = setInterval(() => {
-            let scrambled = newWord.split("").map((char, index) => {
+            let scrambledHTML = newWord.split("").map((char, index) => {
               if (char === " ") return " ";
               if (index < (iteration / maxIterations) * newWord.length) {
-                return newWord[index];
+                // Resolved letter -> inherited color (white)
+                return `<span style="color: inherit;">${newWord[index]}</span>`;
               }
-              return glyphs[Math.floor(Math.random() * glyphs.length)];
+              // Random matrix letter -> green
+              const randomGlyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+              return `<span style="color: #CCFF00;">${randomGlyph}</span>`;
             }).join("");
             
-            dynamicSpan.textContent = scrambled;
+            dynamicSpan.innerHTML = scrambledHTML;
             
             iteration++;
             if (iteration > maxIterations) {
               clearInterval(interval);
               dynamicSpan.textContent = newWord;
-              dynamicSpan.style.color = originalColor;
             }
           }, 45); // 45ms * 14 = ~630ms animation duration
         }
@@ -9155,22 +9154,22 @@ function makeCardBackTex(data = '4 PASOS') {
                 html1 += `<span style="color:#ffffff">${finalStr1[i]}</span>`;
               } else if (i < Math.floor(iteration) + 6) {
                 const r = Math.floor(Math.random() * glyphs.length);
-                html1 += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
+                html1 += `<span style="color:#CCFF00">${glyphs[r]}</span>`;
               } else {
                 html1 += `<span style="opacity:0">${finalStr1[i]}</span>`;
               }
             }
             
-            // Line 2 (con un desfase visual para que la ola baje secuencialmente)
+            // Line 2
             for (let i = 0; i < finalStr2.length; i++) {
-              let j = i + finalStr1.length; 
+              let relativeI = i + finalStr1.length;
               if (finalStr2[i] === ' ') {
                 html2 += ' ';
-              } else if (j < Math.floor(iteration)) {
+              } else if (relativeI < Math.floor(iteration)) {
                 html2 += `<span style="color:#ffffff">${finalStr2[i]}</span>`;
-              } else if (j < Math.floor(iteration) + 6) {
+              } else if (relativeI < Math.floor(iteration) + 6) {
                 const r = Math.floor(Math.random() * glyphs.length);
-                html2 += `<span style="color:#a3cc00">${glyphs[r]}</span>`;
+                html2 += `<span style="color:#CCFF00">${glyphs[r]}</span>`;
               } else {
                 html2 += `<span style="opacity:0">${finalStr2[i]}</span>`;
               }
