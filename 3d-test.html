@@ -2282,17 +2282,14 @@ window.onerror = function(msg, url, line, col, err) {
 
   <!-- Textos flanqueadores estilo Oryzo: izq desde arriba, der desde abajo -->
   <div id="flip-left-text">
-    <div class="flt-line"><div class="flt-oh"><span class="flt-in">UNA EXPERIENCIA</span></div></div>
-    <div class="flt-line"><div class="flt-oh"><span class="flt-in">CON CARTAS</span></div></div>
+    <div class="flt-line"><div class="flt-oh"><span class="flt-in">UNA EXPERIENCIA CON CARTAS</span></div></div>
     <div class="flt-line"><div class="flt-oh"><span class="flt-in">CONVERSACIONALES</span></div></div>
     <div class="flt-line"><div class="flt-oh"><span class="flt-in">ULTRA-PERSONALIZADAS</span></div></div>
     <div class="flt-line"><div class="flt-oh"><span class="flt-in">A VOSOTRXS DOS</span></div></div>
   </div>
   <div id="flip-right-text">
-      <div class="flt-line"><div class="flt-oh"><span class="flt-in-up">Que os unirán</span></div></div>
-      <div class="flt-line"><div class="flt-oh"><span class="flt-in-up">como nunca antes</span></div></div>
-      <div class="flt-line"><div class="flt-oh"><span class="flt-in-up">por menos de lo que</span></div></div>
-      <div class="flt-line"><div class="flt-oh"><span class="flt-in-up">cuestan dos cheesecakes</span></div></div>
+      <div class="flt-line"><div class="flt-oh"><span class="flt-in-up">Que os unirán como nunca antes</span></div></div>
+      <div class="flt-line"><div class="flt-oh"><span class="flt-in-up">por menos de lo que cuestan dos cheesecakes</span></div></div>
     </div>
 
   <!-- Nuevo texto gigante al estilo Oryzo -->
@@ -3263,7 +3260,9 @@ window.onerror = function(msg, url, line, col, err) {
 
 
   function tryReveal() {
-    if (!animReady || !gltfReady) return;
+    if (!animReady || !gltfReady || !globalGlbCard) return;
+    if (window._hasRevealed) return;
+    window._hasRevealed = true;
       
     requestAnimationFrame(() => {
       const loaderEl   = document.getElementById('loader');
@@ -8737,6 +8736,7 @@ function makeCardBackTex(data = '4 PASOS') {
     pivot._basePxH       = basePxH;
 
     globalGlbCard = pivot;
+    tryReveal();
     console.log('[Card3D] GLB W:', size.x.toFixed(3), 'H:', size.z.toFixed(3),
                 'T:', size.y.toFixed(3), '| scale:', scaleFact.toFixed(4));
 
