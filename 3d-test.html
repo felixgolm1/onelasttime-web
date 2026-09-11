@@ -1813,7 +1813,7 @@ window.onerror = function(msg, url, line, col, err) {
   }
   #headline h1 {
     text-align: center !important;
-    font-size: 1.55rem !important;
+    font-size: 1.4rem !important;
   }
   #headline h1 > span:nth-child(1) .oh-inner,
   #headline h1 > span:nth-child(2) .oh-inner {
@@ -3670,7 +3670,7 @@ window.onerror = function(msg, url, line, col, err) {
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
     //    stagger from:'end' → la última .oh-inner (más abajo) empieza en t=0, cada línea superior espera 0.02 más.
     //    duration 0.10 + 3Ã—0.02 = 0.16 → encaja exacto con la duración de Fase 1.
-    scrollTl.to('.oh-inner:not(.headline-sub)', { y: '150%', duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'end' } }, 0);
+    scrollTl.to('.oh-inner:not(.headline-sub)', { y: '150%', autoAlpha: 0, duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'end' } }, 0);
     scrollTl.to('.headline-sub', { y: '150%', duration: 0.045, ease: 'power2.inOut' }, 0);
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.045, ease: 'power2.inOut' }, 0);
