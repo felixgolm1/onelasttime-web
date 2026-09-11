@@ -7383,22 +7383,21 @@ window.onerror = function(msg, url, line, col, err) {
           const mainDeckEl = document.getElementById('mainDeck');
           const dealerPile = document.getElementById('dealer-pile-wrap');
           
-          // Ocultar la baraja secundaria recogiendola detras de la principal sin usar opacity (evita que se vuelva blanca/gris)
+          // Ocultar la baraja secundaria reduciendo su escala suavemente (como si se quedara en la mesa)
           if (dealerPile) {
               if (prog > 0.001) {
-                  let clumpFactor = Math.max(0, 1 - (prog / 0.04)); // Se recogen entre prog 0.0 y 0.04
-                  let dCards = dealerPile.querySelectorAll('.dealer-card');
-                  dCards.forEach(c => {
-                      gsap.killTweensOf(c); // Matamos la animacion inicial si hacen scroll antes de acabar
-                      let fx = parseFloat(c.dataset.fx || 0) * clumpFactor;
-                      let fy = parseFloat(c.dataset.fy || 0) * clumpFactor;
-                      let fr = parseFloat(c.dataset.fr || 0) * clumpFactor;
-                      let fz = parseFloat(c.dataset.fz || 0);
-                      c.style.transform = `translate3d(${fx}px, ${fy}px, ${fz}px) rotateZ(${fr}deg)`;
-                      c.style.opacity = '1'; 
-                  });
-                  dealerPile.style.visibility = prog > 0.04 ? 'hidden' : 'visible';
+                  let s = Math.max(0.7, 1 - (prog / 0.06) * 0.3); // baja de 1.0 a 0.7 en prog 0.06
+                  dealerPile.style.transform = `translate(-50%, -50%) scale(${s})`;
+                  
+                  // Para evitar conflictos con la animacion inicial de GSAP si hacen scroll muy rapido
+                  if (prog > 0.01) {
+                      let dCards = dealerPile.querySelectorAll('.dealer-card');
+                      dCards.forEach(c => gsap.killTweensOf(c));
+                  }
+                  
+                  dealerPile.style.visibility = prog > 0.06 ? 'hidden' : 'visible';
               } else {
+                  dealerPile.style.transform = `translate(-50%, -50%) scale(1)`;
                   dealerPile.style.visibility = 'visible';
               }
           }
