@@ -3335,7 +3335,7 @@ window.onerror = function(msg, url, line, col, err) {
       }
 
       // 1. Ocultar la UI explícitamente para que no se vea mientras la carta cae
-      gsap.set(['#nav-logo', '#nav-menu', '#nav-cta', '#footer-info', '#headline h1', '#subheadline', '#hero-cta', '#hero-scroll', '.flt-in', '.flt-in-up'], { opacity: 0 });
+      gsap.set(['#nav-logo', '#nav-menu', '#cta-top-container', '#headline', '#subheadline', '#cta-bottom-container', '.scroll-indicator', '.flt-in', '.flt-in-up'], { opacity: 0 });
 
       // 2. Volar y encoger: de 1.5x a 1.0x, rotando -3 grados
       gsap.to(introState, {
@@ -3389,12 +3389,12 @@ window.onerror = function(msg, url, line, col, err) {
           // Parallax ya esta activo globalmente
           
           // NAV fade in
-          gsap.to(['#nav-logo', '#nav-menu', '#nav-cta'], {
+          gsap.to(['#nav-logo', '#nav-menu', '#cta-top-container'], {
             opacity: 1, duration: 1.2, delay: 0.2
           });
 
           // Footer & Hero UI fade in
-          gsap.to(['#footer-info', '#headline h1', '#subheadline', '#hero-cta', '#hero-scroll'], {
+          gsap.to(['#headline', '#subheadline', '#cta-bottom-container', '.scroll-indicator'], {
             opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.1
           });
 
