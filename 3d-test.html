@@ -3379,22 +3379,46 @@ window.onerror = function(msg, url, line, col, err) {
               wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
               let scale = window._cIsMobile ? 0.5 : 0.65;
-              let cardsHtml = '';
-              const cardContent = `
-                  <div style="position:absolute; width:100%; height:100%; background:#151515; border-radius:20px; border:1px solid rgba(255,255,255,0.08); overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.5);">
-                      <div style="position:absolute; top:50%; left:0; right:0; transform: translateY(calc(-50% - 30px)); display:flex; justify-content:center;">
-                          <img src="assets/img/logo one last time verde.png" style="height:34px; opacity:0.8;">
-                      </div>
-                      <div style="position:absolute; top:135px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:4px; opacity:0.6;">
-                          <p style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:13.5px; font-weight:800; color:#fff; letter-spacing:0; line-height:1; text-transform:uppercase;">CONEXIONES SIGNIFICATIVAS</p>
-                          <p style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:13.5px; font-weight:800; color:#fff; letter-spacing:0; line-height:1; text-transform:uppercase;">PARA PERSONAS QUE IMPORTAN</p>
-                      </div>
-                  </div>
-              `;
+                let cardsHtml = '';
+                
+                for (let i = 0; i < 6; i++) {
+                    let bgColor = '#151515';
+                    let textColor = '#fff';
+                    let logoSrc = 'assets/img/logo one last time verde.png';
+                    let borderCol = 'rgba(255,255,255,0.08)';
+                    let filterCss = '';
 
-              for (let i = 0; i < 6; i++) {
-                  cardsHtml += '<div class="dealer-card" style="position:absolute; width:100%; height:100%; opacity:0;">' + cardContent + '</div>';
-              }
+                    // Hacemos la carta 2 blanca
+                    if (i === 1) { 
+                        bgColor = '#ffffff';
+                        textColor = '#151515';
+                        logoSrc = 'assets/img/logo one last time.png';
+                        borderCol = 'rgba(0,0,0,0.08)';
+                        filterCss = 'filter: brightness(0);'; // Forzar logo negro
+                    } 
+                    // Hacemos la carta 5 verde
+                    else if (i === 4) { 
+                        bgColor = '#ccff00';
+                        textColor = '#151515';
+                        logoSrc = 'assets/img/logo one last time.png';
+                        borderCol = 'rgba(0,0,0,0.08)';
+                        filterCss = 'filter: brightness(0);'; // Forzar logo negro
+                    }
+
+                    const cardContent = `
+                        <div style="position:absolute; width:100%; height:100%; background:${bgColor}; border-radius:20px; border:1px solid ${borderCol}; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.5);">
+                            <div style="position:absolute; top:50%; left:0; right:0; transform: translateY(calc(-50% - 30px)); display:flex; justify-content:center;">
+                                <img src="${logoSrc}" style="height:34px; opacity:0.8; ${filterCss}">
+                            </div>
+                            <div style="position:absolute; top:135px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:4px; opacity:0.6;">
+                                <p style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:13.5px; font-weight:800; color:${textColor}; letter-spacing:0; line-height:1; text-transform:uppercase;">CONEXIONES SIGNIFICATIVAS</p>
+                                <p style="margin:0; text-align:center; font-family:'Inter',sans-serif; font-size:13.5px; font-weight:800; color:${textColor}; letter-spacing:0; line-height:1; text-transform:uppercase;">PARA PERSONAS QUE IMPORTAN</p>
+                            </div>
+                        </div>
+                    `;
+
+                    cardsHtml += '<div class="dealer-card" style="position:absolute; width:100%; height:100%; opacity:0;">' + cardContent + '</div>';
+                }
               wrap.innerHTML = '<div style="position:relative; width:100%; height:100%; transform: scale(' + scale + ') rotate(-3deg); transform-style:preserve-3d;">' + cardsHtml + '</div>';
               document.body.appendChild(wrap);
               
