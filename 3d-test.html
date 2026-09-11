@@ -9423,10 +9423,64 @@ function makeCardBackTex(data = '4 PASOS') {
 
   // Ã¢â€€Ã¢â€€ PARALLAX DE RATÓN Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   let mX=0, mY=0, tX=0, tY=0;
+
   document.addEventListener('mousemove', e => {
-    tX = (e.clientX/window.innerWidth  - 0.5) * 2;
-    tY = (e.clientY/window.innerHeight - 0.5) * 2;
+
+    if (window.innerWidth > 768) {
+
+      tX = (e.clientX/window.innerWidth  - 0.5) * 2;
+
+      tY = (e.clientY/window.innerHeight - 0.5) * 2;
+
+    }
+
   });
+
+
+  let hasGyro = false;
+
+  window.addEventListener('deviceorientation', (e) => {
+
+    if (e.gamma !== null && window.innerWidth <= 768) {
+
+      hasGyro = true;
+
+      let g = e.gamma;
+
+      let b = e.beta - 45; 
+
+      if (g > 30) g = 30; if (g < -30) g = -30;
+
+      if (b > 30) b = 30; if (b < -30) b = -30;
+
+      tX = g / 30;
+
+      tY = b / 30;
+
+    }
+
+  });
+
+
+  let floatTime = 0;
+
+  function updateMobileFloat() {
+
+    if (window.innerWidth <= 768 && !hasGyro) {
+
+      floatTime += 0.012;
+
+      tX = Math.sin(floatTime * 0.5) * 0.4 * Math.sin(floatTime * 0.3);
+
+      tY = Math.cos(floatTime * 0.4) * 0.4 * Math.sin(floatTime * 0.6);
+
+    }
+
+    requestAnimationFrame(updateMobileFloat);
+
+  }
+
+  updateMobileFloat();
 
   // Ã¢â€€Ã¢â€€ SOMBRAS DE PERSONAS (canvas animado sobre la mesa) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   function mapRange(p, inMin, inMax, outMin, outMax) {
