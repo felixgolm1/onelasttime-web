@@ -3405,6 +3405,11 @@ window.onerror = function(msg, url, line, col, err) {
                   const finalRotZ = scatterOffsets[idx].r;
                   const finalZ = (idx * -4) - 4; // Aseguramos que queden debajo
                   
+                  c.dataset.fx = finalX;
+                  c.dataset.fy = finalY;
+                  c.dataset.fr = finalRotZ;
+                  c.dataset.fz = finalZ;
+                  
                   gsap.fromTo(c, {
                       x: startX,
                       y: startY,
@@ -7369,15 +7374,24 @@ window.onerror = function(msg, url, line, col, err) {
           const mainDeckEl = document.getElementById('mainDeck');
           const dealerPile = document.getElementById('dealer-pile-wrap');
           
-          // Fade out dealerPile rapidito al hacer scroll
+          // Ocultar la baraja secundaria recogiendola detras de la principal sin usar opacity (evita que se vuelva blanca/gris)
           if (dealerPile) {
-              let dpOp = 1;
-              if (prog > 0.01 && prog < 0.1) {
-                  dpOp = 1 - ((prog - 0.01) / 0.09);
-              } else if (prog >= 0.1) {
-                  dpOp = 0;
+              if (prog > 0.001) {
+                  let clumpFactor = Math.max(0, 1 - (prog / 0.04)); // Se recogen entre prog 0.0 y 0.04
+                  let dCards = dealerPile.querySelectorAll('.dealer-card');
+                  dCards.forEach(c => {
+                      gsap.killTweensOf(c); // Matamos la animacion inicial si hacen scroll antes de acabar
+                      let fx = parseFloat(c.dataset.fx || 0) * clumpFactor;
+                      let fy = parseFloat(c.dataset.fy || 0) * clumpFactor;
+                      let fr = parseFloat(c.dataset.fr || 0) * clumpFactor;
+                      let fz = parseFloat(c.dataset.fz || 0);
+                      c.style.transform = `translate3d(${fx}px, ${fy}px, ${fz}px) rotateZ(${fr}deg)`;
+                      c.style.opacity = '1'; 
+                  });
+                  dealerPile.style.visibility = prog > 0.04 ? 'hidden' : 'visible';
+              } else {
+                  dealerPile.style.visibility = 'visible';
               }
-              dealerPile.style.opacity = dpOp.toString();
           }
 
           if (mainDeckEl && mainDeckEl.style.display === 'block') {
