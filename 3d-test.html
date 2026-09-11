@@ -9634,7 +9634,20 @@ function makeCardBackTex(data = '4 PASOS') {
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
 
-    // Sincronizar el mazo de cartas HTML usando la proyección real de Three.js (infalible)
+    // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
+    if (typeof mainLightGroup !== 'undefined') {
+        mainLightGroup.position.x = mouseNX * PX * parallaxStr;
+        mainLightGroup.position.y = -mouseNY * PY * parallaxStr;
+    }
+    camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
+                  currentLookY - mouseNY * 0.05 * parallaxStr,
+                  currentLookZ);
+
+    // CRÍTICO: Actualizar la matriz de la cámara ANTES de proyectar, de lo contrario
+    // las coordenadas 2D tendrán 1 frame de retraso respecto al render 3D y se deslizarán!
+    camera.updateMatrixWorld();
+
+    // Sincronizar el mazo de cartas HTML usando la proyección real de Three.js
     const dealerPile = document.getElementById('dealer-pile-wrap');
     if (dealerPile && dealerPile.style.visibility !== 'hidden' && typeof morphGroup !== 'undefined' && camera) {
         // Obtenemos la posición 3D real de la carta y la proyectamos a 2D en la pantalla
@@ -9655,16 +9668,7 @@ function makeCardBackTex(data = '4 PASOS') {
         // mientras la carta 3D principal rota y se mueve por encima de ellas independientemente.
         dealerPile.style.transform = `translate(-50%, -50%)`;
     }
-
-    // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
-    if (typeof mainLightGroup !== 'undefined') {
-        mainLightGroup.position.x = mouseNX * PX * parallaxStr;
-        mainLightGroup.position.y = -mouseNY * PY * parallaxStr;
-    }
-    camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
-                  currentLookY - mouseNY * 0.05 * parallaxStr,
-                  currentLookZ);
-    // cardCam2 siempre en el origen â€â€ carta congelada en viewport
+    // cardCam2 siempre en el origen â€ â€  carta congelada en viewport
 
     renderer.render(scene, camera);
     cssRenderer.render(scene, camera);
