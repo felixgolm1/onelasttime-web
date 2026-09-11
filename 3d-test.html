@@ -3852,17 +3852,7 @@ window.onerror = function(msg, url, line, col, err) {
     // el movimiento sea claramente visible durante el fade-in de los chars.
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     if (isMobile) {
-      // Aplicar desplazamiento vertical invertido al contenedor (Mobile)
-      scrollTl.fromTo('#flip-left-text',
-        { y: 40 },
-        { y: -40, duration: 0.60, ease: 'none' },
-        0
-      );
-      scrollTl.fromTo('#flip-right-text',
-        { y: -40 },
-        { y: 40, duration: 0.60, ease: 'none' },
-        0
-      );
+
 
       const leftItems = document.querySelectorAll('#flip-left-text .flt-in');
       leftItems.forEach((item, index) => {
