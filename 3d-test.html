@@ -9453,48 +9453,32 @@ function makeCardBackTex(data = '4 PASOS') {
 
 
   let hasGyro = false;
-
-  window.addEventListener('deviceorientation', (e) => {
-
-    if (e.gamma !== null && window.innerWidth <= 768) {
-
-      hasGyro = true;
-
-      let g = e.gamma;
-
-      let b = e.beta - 45; 
-
-      if (g > 30) g = 30; if (g < -30) g = -30;
-
-      if (b > 30) b = 30; if (b < -30) b = -30;
-
-      tX = g / 30;
-
-      tY = b / 30;
-
-    }
-
+  let isMobileParallax = window.innerWidth <= 768;
+  window.addEventListener('resize', () => {
+    isMobileParallax = window.innerWidth <= 768;
   });
 
+  window.addEventListener('deviceorientation', (e) => {
+    if (e.gamma !== null && isMobileParallax) {
+      hasGyro = true;
+      let g = e.gamma;
+      let b = e.beta - 45; 
+      if (g > 30) g = 30; if (g < -30) g = -30;
+      if (b > 30) b = 30; if (b < -30) b = -30;
+      tX = g / 30;
+      tY = b / 30;
+    }
+  });
 
   let floatTime = 0;
-
   function updateMobileFloat() {
-
-    if (window.innerWidth <= 768 && !hasGyro) {
-
+    if (isMobileParallax && !hasGyro) {
       floatTime += 0.012;
-
       tX = Math.sin(floatTime * 0.5) * 0.4 * Math.sin(floatTime * 0.3);
-
       tY = Math.cos(floatTime * 0.4) * 0.4 * Math.sin(floatTime * 0.6);
-
     }
-
     requestAnimationFrame(updateMobileFloat);
-
   }
-
   updateMobileFloat();
 
   // Ã¢â€€Ã¢â€€ SOMBRAS DE PERSONAS (canvas animado sobre la mesa) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
