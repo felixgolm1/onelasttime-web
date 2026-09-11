@@ -1594,6 +1594,8 @@ window.onerror = function(msg, url, line, col, err) {
         width: 100% !important;
         text-align: left !important;
         padding-left: 5vw !important;
+        white-space: nowrap !important;
+        font-size: min(4.5vw, 1.35rem) !important;
       }
       #flip-right-text {
         top: 75% !important;
@@ -1603,33 +1605,28 @@ window.onerror = function(msg, url, line, col, err) {
         max-width: none !important;
         text-align: right !important;
         padding-right: 5vw !important;
-      }
-      #flip-left-text .flt-line {
-        justify-content: flex-start !important;
-      }
-      #flip-right-text .flt-line {
-        justify-content: flex-end !important;
+        white-space: nowrap !important;
+        font-size: min(3.5vw, 1.35rem) !important;
       }
 
-      /* Transformar wrappers en inline para que fluyan como parrafo natural */
-      #flip-right-text .flt-line,
-      #flip-right-text .flt-oh {
+      /* Reset to inline to flow them naturally without wrapping */
+      #flip-left-text .flt-line, #flip-left-text .flt-oh,
+      #flip-right-text .flt-line, #flip-right-text .flt-oh {
         display: inline !important;
       }
-      #flip-right-text .flt-in-up {
+
+      /* Preserve GSAP transform capabilities */
+      #flip-left-text .flt-in, #flip-right-text .flt-in-up {
         display: inline-block !important;
       }
 
-      /* Lo mismo para las dos primeras lineas del texto izquierdo */
-      #flip-left-text .flt-line:nth-child(1),
-      #flip-left-text .flt-line:nth-child(2),
-      #flip-left-text .flt-line:nth-child(1) .flt-oh,
-      #flip-left-text .flt-line:nth-child(2) .flt-oh {
-        display: inline !important;
-      }
-      #flip-left-text .flt-line:nth-child(1) .flt-in,
-      #flip-left-text .flt-line:nth-child(2) .flt-in {
-        display: inline-block !important;
+      /* Force line breaks using block pseudo-elements */
+      #flip-left-text .flt-line:nth-child(3)::before,
+      #flip-left-text .flt-line:nth-child(4)::before,
+      #flip-left-text .flt-line:nth-child(5)::before,
+      #flip-right-text .flt-line:nth-child(3)::before {
+        content: '';
+        display: block;
       }
     }
 </style>
