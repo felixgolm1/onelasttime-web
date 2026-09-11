@@ -1843,7 +1843,8 @@ window.onerror = function(msg, url, line, col, err) {
   #subheadline {
     max-width: 95% !important;
   }
-  
+}
+
   #mobile-sidebar {
     position: fixed;
     top: 0; right: -100%;
@@ -1911,7 +1912,7 @@ window.onerror = function(msg, url, line, col, err) {
     text-transform: uppercase;
   }
 
-
+@media screen and (max-width: 768px) {
   #card-morph-group, .sc-card { transform: scale(0.90); transform-origin: center center; }
 
 
@@ -8295,9 +8296,9 @@ requestAnimationFrame(smoothScrollLoop);
       ctx.fillText(text1, W / 2, 310);
     } else {
       // Two line mode for initial state
-      ctx.font = 'bold 28px Arial, sans-serif';
-      ctx.fillText(text1, W / 2, 290);
-      ctx.fillText(text2, W / 2, 330);
+      ctx.font = '800 27px "Inter", sans-serif';
+      ctx.fillText(text1, W / 2, 283.5);
+      ctx.fillText(text2, W / 2, 322.5);
     }
     
     const tex = new THREE.CanvasTexture(c);
