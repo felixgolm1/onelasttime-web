@@ -9635,7 +9635,7 @@ function makeCardBackTex(data = '4 PASOS') {
         // Calculamos la traslación equivalente en píxeles. 
         // Ajustado empiricamente para que el mazo inferior se mantenga perfectamente "pegado" al mazo 3D.
         const pShiftX = -(mouseNX * PX * parallaxStr) * 41; 
-        const pShiftY =  (mouseNY * PY * parallaxStr) * 41; 
+        const pShiftY = -(mouseNY * PY * parallaxStr) * 41; // Corregido el signo
         dealerPile.style.transform = `translate(calc(-50% - 21px + ${pShiftX}px), calc(-50% - 19px + ${pShiftY}px))`;
     }
 
