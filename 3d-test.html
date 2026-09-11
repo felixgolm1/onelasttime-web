@@ -3360,7 +3360,7 @@ window.onerror = function(msg, url, line, col, err) {
               wrap.id = 'dealer-pile-wrap';
               wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
-              let scale = window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1;
+              let scale = window.matchMedia('(max-width: 768px)').matches ? 0.5 : 0.65;
               let cardsHtml = '';
               const cardContent = `
                   <div style="position:absolute; width:100%; height:100%; background:#151515; border-radius:20px; border:1px solid rgba(255,255,255,0.08); overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.5);">
