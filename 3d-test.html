@@ -3334,7 +3334,10 @@ window.onerror = function(msg, url, line, col, err) {
         cardCanvasEl.style.opacity = '1';
       }
 
-      // Volar y encoger: de 1.5x a 1.0x, rotando -3 grados
+      // 1. Ocultar la UI explícitamente para que no se vea mientras la carta cae
+      gsap.set(['#nav-logo', '#nav-menu', '#nav-cta', '#footer-info', '#headline h1', '#subheadline', '#hero-cta', '#hero-scroll', '.flt-in', '.flt-in-up'], { opacity: 0 });
+
+      // 2. Volar y encoger: de 1.5x a 1.0x, rotando -3 grados
       gsap.to(introState, {
         scaleMult: 1.0,
         duration: 1.8,
@@ -3342,14 +3345,12 @@ window.onerror = function(msg, url, line, col, err) {
         onUpdate: syncCard3DToMorphGroup
       });
 
-      // Revelar escena de fondo INMEDIATAMENTE para que la carta se vea volando SOBRE la mesa
+      // 3. Eliminar el loader INMEDIATAMENTE. Como la UI está oculta, veremos el fondo oscuro del body
       if (loaderEl) {
-        loaderEl.style.transition = 'opacity 1.4s ease';
-        loaderEl.style.opacity       = '0';
-        loaderEl.style.pointerEvents = 'none';
-        setTimeout(() => { loaderEl.style.display = 'none'; }, 1500);
+        loaderEl.style.display = 'none';
       }
       
+      // 4. Efecto mantel (wipe) revelando la mesa sincronizado con la caída de la carta
       const canvas = document.querySelector('canvas:not(#card-canvas)');
       if (canvas) {
         canvas.style.transition = 'none';
@@ -3357,7 +3358,7 @@ window.onerror = function(msg, url, line, col, err) {
         let maskObj = { p: -50 };
         gsap.to(maskObj, {
           p: 150,
-          duration: 1.8, // Sincronizado con la caida de la carta
+          duration: 1.8,
           ease: "power2.inOut",
           onUpdate: function() {
             let maskStr = `linear-gradient(45deg, black ${maskObj.p}%, transparent ${maskObj.p + 50}%)`;
@@ -3371,12 +3372,46 @@ window.onerror = function(msg, url, line, col, err) {
         });
       }
 
+      // 5. Animación de rotación y OnComplete
       gsap.to(morphGroup, {
         rotation: -3,
         duration: 1.8,
         ease: 'power2.out',
         onComplete: () => {
           introMorphGroup = morphGroup;
+          
+          if (globalGlbCard) {
+            let finalPos = new THREE.Vector3();
+            globalGlbCard.getWorldPosition(finalPos);
+            console.log("Intro anim finalizada. Card pos:", finalPos);
+          }
+          
+          // Activar parallax una vez caida la carta
+          if (typeof document.addEventListener !== 'undefined') {
+            document.addEventListener('mousemove', onMouseMoveParallax);
+          }
+          
+          // NAV fade in
+          gsap.to(['#nav-logo', '#nav-menu', '#nav-cta'], {
+            opacity: 1, duration: 1.2, delay: 0.2
+          });
+
+          // Footer & Hero UI fade in
+          gsap.to(['#footer-info', '#headline h1', '#subheadline', '#hero-cta', '#hero-scroll'], {
+            opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.1
+          });
+
+          // Textos laterales fade in (Flanqueadores)
+          gsap.to('.flt-in', {
+            y: '0%', duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.6
+          });
+          gsap.to('.flt-in-up', {
+            y: '0%', duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.8
+          });
+
+          // Desbloquear scroll
+          document.body.style.overflow = 'auto';
+          
           setupScrollAnim();
         }
       });
