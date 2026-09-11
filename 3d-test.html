@@ -3374,12 +3374,12 @@ window.onerror = function(msg, url, line, col, err) {
           
           // NAV fade in
           gsap.to(['#nav-logo', '#nav-menu', '#cta-top-container'], {
-            opacity: 1, duration: 1.2, delay: 0.2
+            opacity: 1, duration: 1.2, delay: 0.2, clearProps: 'opacity'
           });
 
           // Footer & Hero UI fade in
           gsap.to(['#headline', '#subheadline', '#cta-bottom-container', '.scroll-indicator'], {
-            opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.1
+            opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.1, clearProps: 'opacity'
           });
 
           // Textos laterales fade in (Flanqueadores)
