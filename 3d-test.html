@@ -1604,24 +1604,37 @@ window.onerror = function(msg, url, line, col, err) {
         max-width: none !important;
         text-align: right !important;
         padding-right: 5vw !important;
-        white-space: nowrap !important;
       }
 
-      /* Reset to inline to flow them naturally without wrapping */
-      #flip-left-text .flt-line, #flip-left-text .flt-oh,
-      #flip-right-text .flt-line, #flip-right-text .flt-oh {
+      /* Reset to inline to flow them naturally without wrapping (Only for LEFT text) */
+      #flip-left-text .flt-line, #flip-left-text .flt-oh {
         display: inline !important;
       }
 
       /* Preserve GSAP transform capabilities */
-      #flip-left-text .flt-in, #flip-right-text .flt-in-up {
+      #flip-left-text .flt-in {
         display: inline-block !important;
       }
 
-      /* Force line breaks using block pseudo-elements */
+      /* Force line breaks using block pseudo-elements for LEFT text */
       #flip-left-text .flt-line:nth-child(3)::before,
       #flip-left-text .flt-line:nth-child(4)::before,
-      #flip-left-text .flt-line:nth-child(5)::before,
+      #flip-left-text .flt-line:nth-child(5)::before {
+        content: '';
+        display: block;
+      }
+
+      /* Right Text: Combine line 1 and 2, leave 3 and 4 on their own lines (total 3 lines) */
+      #flip-right-text .flt-line:nth-child(1),
+      #flip-right-text .flt-line:nth-child(2),
+      #flip-right-text .flt-line:nth-child(1) .flt-oh,
+      #flip-right-text .flt-line:nth-child(2) .flt-oh {
+        display: inline !important;
+      }
+      #flip-right-text .flt-line:nth-child(1) .flt-in-up,
+      #flip-right-text .flt-line:nth-child(2) .flt-in-up {
+        display: inline-block !important;
+      }
       #flip-right-text .flt-line:nth-child(3)::before {
         content: '';
         display: block;
@@ -3856,7 +3869,8 @@ window.onerror = function(msg, url, line, col, err) {
       rightItems.forEach((item, index) => {
         let visualLine = index;
         if (index === 0 || index === 1) visualLine = 0;
-        else visualLine = 1;
+        else if (index === 2) visualLine = 1;
+        else visualLine = 2;
         let speedMult = Math.pow(1.2, visualLine);
         scrollTl.fromTo(item,
           { x: 20 * speedMult },
