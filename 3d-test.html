@@ -9647,12 +9647,9 @@ function makeCardBackTex(data = '4 PASOS') {
         dealerPile.style.left = screenX + 'px';
         dealerPile.style.top = screenY + 'px';
         
-        // El modelo 3D rota sobre sus ejes con el ratón. Si el mazo HTML no rota, 
-        // sus bordes rectos sobresaldrán por debajo cuando la carta 3D gire (lo que parece movimiento).
-        // Aplicamos la misma rotación que tiene morphGroup: X (-mouseNY*4) e Y (mouseNX*5).
-        const cssRotX = -mouseNY * 4;
-        const cssRotY = mouseNX * 5;
-        dealerPile.style.transform = `translate(-50%, -50%) rotateX(${cssRotX}deg) rotateY(${cssRotY}deg)`;
+        // Las mantenemos 100% planas sin rotación, así se quedan "quietas en la mesa" 
+        // mientras la carta 3D principal rota y se mueve por encima de ellas independientemente.
+        dealerPile.style.transform = `translate(-50%, -50%)`;
     }
 
     // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
