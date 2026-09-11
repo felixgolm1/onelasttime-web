@@ -1611,21 +1611,25 @@ window.onerror = function(msg, url, line, col, err) {
         justify-content: flex-end !important;
       }
 
-      /* Combinar lineas visualmente sin tocar HTML */
-      #flip-left-text .flt-line:nth-child(1),
-      #flip-left-text .flt-line:nth-child(2) {
+      /* Transformar wrappers en inline para que fluyan como parrafo natural */
+      #flip-right-text .flt-line,
+      #flip-right-text .flt-oh {
+        display: inline !important;
+      }
+      #flip-right-text .flt-in-up {
         display: inline-block !important;
-        margin-right: 1.5vw;
       }
 
-      #flip-right-text .flt-line {
-        display: inline-block !important;
-        margin-left: 1.5vw;
+      /* Lo mismo para las dos primeras lineas del texto izquierdo */
+      #flip-left-text .flt-line:nth-child(1),
+      #flip-left-text .flt-line:nth-child(2),
+      #flip-left-text .flt-line:nth-child(1) .flt-oh,
+      #flip-left-text .flt-line:nth-child(2) .flt-oh {
+        display: inline !important;
       }
-      /* Forzar salto de linea despues de la 2da linea para que sean exactamente 2 lineas */
-      #flip-right-text .flt-line:nth-child(2)::after {
-        content: "\A";
-        white-space: pre;
+      #flip-left-text .flt-line:nth-child(1) .flt-in,
+      #flip-left-text .flt-line:nth-child(2) .flt-in {
+        display: inline-block !important;
       }
     }
 </style>
