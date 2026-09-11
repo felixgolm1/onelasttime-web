@@ -1,0 +1,19 @@
+oFinalText, { opacity: 0 });
+      gsap.set(glassObjTitle, { opacity: 0 });
+      gsap.set(glassObjFinalText, { opacity: 0 });
+      gsap.set('#glass-who .glass-mask-line, #glass-objectives .glass-mask-line', { yPercent: 110 });
+      gsap.set('#glass-who .glass-bullet, #glass-objectives .glass-bullet', { opacity: 0 });
+
+    // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
+    // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
+    gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, y: -40 });
+    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, y:  40 });
+    // Chars: solo invisibles â€â€ sin desplazamiento propio
+    gsap.set(leftChars,  { opacity: 0 });
+    gsap.set(rightChars, { opacity: 0 });
+
+    const sData = [
+      { el: sc1, x: '-26vw', y: '-24vh', r: -16 },
+      { el: sc2, x:  '26vw', y: '-20vh', r:   9 },
+      { el: sc3, x: '-24vw', y:  '26vh', r:  18 },
+      { el: sc4, x:  '26vw', y:  

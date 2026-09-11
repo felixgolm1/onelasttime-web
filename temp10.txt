@@ -1,0 +1,19 @@
+, 0.60);
+    // Ã¢â€€ Textos flanqueadores izq/der estilo Oryzo â€â€ letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
+    // Hacer visibles los contenedores en t=0.08 (pantalla al 100% negra)
+    scrollTl.set(['#flip-left-text', '#flip-right-text'], { autoAlpha: 1 }, 0.04);
+
+    // Ã¢â€€ Desplazamiento Y: arranca desde t=0, desplazamiento amplio (160px) para que
+    // el movimiento sea claramente visible durante el fade-in de los chars.
+    scrollTl.fromTo('#flip-left-text',
+      { y: -40 },
+      { y: 40, duration: 0.60, ease: 'none' },
+      0
+    );
+    scrollTl.fromTo('#flip-right-text',
+      { y: 40 },
+      { y: -40, duration: 0.60, ease: 'none' },
+      0
+    );
+
+    // Ã¢â€€ Fade in chars Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢

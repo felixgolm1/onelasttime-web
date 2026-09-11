@@ -1,0 +1,12 @@
+x-width: 42vw;
+    }
+    /* Contenedor de cada línea: simple bloque, sin clip (fade-in puro) */
+    .flt-oh { display: block; }
+    .flt-in, .flt-in-up { display: block; }
+    /* Ã¢â€€Ã¢â€€ SCATTER NAME INPUT Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€ */
+    .sc-name-field {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(255,255,255,0.25);
+      color: #ccff00;
+      font-family: '

@@ -1,0 +1,10 @@
+d="flip-title"><span class="ft-c">C</span><span class="ft-c">ó</span><span class="ft-c">m</span><span class="ft-c" style="margin-right:0.35em;">o</span><span class="ft-c">f</span><span class="ft-c">u</span><span class="ft-c">n</span><span class="ft-c">c</span><span class="ft-c">i</span><span class="ft-c">o</span><span class="ft-c">n</span><span class="ft-c">a</span></div>
+
+  <!-- Textos flanqueadores estilo Oryzo: izq desde arriba, der desde abajo -->
+  <div id="flip-left-text">
+    <div class="flt-line"><div class="flt-oh"><span class="flt-in">UNA EXPERIENCIA</span></div></div>
+    <div class="flt-line"><div class="flt-oh"><span class="flt-in">CON CARTAS</span></div></div>
+    <div class="flt-line"><div class="flt-oh"><span class="flt-in">CONVERSACIONALES</span></div></div>
+    <div class="flt-line"><div class="flt-oh"><span class="flt-in">ULTRA-PERSONALIZADAS</span></div></div>
+    <div class="flt-line"><div class="flt-oh"><span class="flt-in">A VOSOTRXS DOS</span></div></div>
+  </di

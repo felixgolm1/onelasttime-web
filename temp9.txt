@@ -1,0 +1,81 @@
+@media (max-width: 768px) {
+      #magazine-scene { width: 90vw; height: 130vw; }
+      #camera-flash-container { width: 90vw; height: 130vw; }
+      .magazine-title { font-size: 4.5rem; }
+    }
+    #intro-logo-img.visible { opacity: 1; }
+    #intro-logo-img.green   { filter: none; } /* verde nativo del PNG */
+
+    /* Text block â€â€ absolutamente posicionado respecto a #intro-real-card  */
+    /* NO está dentro del flex, así no afecta la posición del logo        */
+    #intro-card-text {
+      position: absolute;
+      /* card 234px: logo tope final = 70px, logo h = 34px, gap = 18px → texto a 122px */
+      top: 122px;
+      left: 0; right: 0;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+      opacity: 0;
+      transition: opacity 0.65s ease;
+    }
+    /* Estilo para los recuadros de detalle en el scatter */
+    .sc-detail-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 540px;
+      padding: 18px 24px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 4px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      z-index: 10005; /* Must be higher than .sc-board's 10001 */
+      pointer-events: none;
+      opacity: 0;
+      display: grid;
+      align-items: center;
+    }
+    .sc-step-text-wrapper {
+      grid-area: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .sc-detail-mask {
+      overflow: hidden;
+      width: 100%;
+    }
+    .sc-detail-p {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      font-weight: 400;
+      color: rgba(255,255,255,0.9);
+      margin: 0;
+    }
+    
+    @keyframes magicPulse {
+      0%, 100% { transform: scale(0.9) rotate(0deg); filter: drop-shadow(0 0 2px rgba(255,255,255,0.2)); }
+      50% { transform: scale(1.15) rotate(15deg); filter: drop-shadow(0 0 10px rgba(255,255,255,0.9)); }
+    }
+    .magic-icon {
+      display: inline-block;
+      vertical-align: middle;
+      animation: magicPulse 2.5s ease-in-out infinite;
+      color: #fff;
+      margin-left: 4px;
+      overflow: visible;
+    }
+    .sc-step-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: inline-flex;
+      align-items: center;
+      j
