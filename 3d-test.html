@@ -3391,14 +3391,14 @@ window.onerror = function(msg, url, line, col, err) {
               
               let cards = wrap.querySelectorAll('.dealer-card');
               
-              // Composicion manual para asegurar que asoman por todos los lados
+              // Composicion manual super sutil para que no esten demasiado separadas
               const scatterOffsets = [
-                  { x: -16, y: -12, r: -4 },  // Arriba-Izquierda
-                  { x:  14, y:  14, r:  3 },  // Abajo-Derecha
-                  { x: -12, y:  16, r: -2 },  // Abajo-Izquierda
-                  { x:  12, y: -14, r:  5 },  // Arriba-Derecha
-                  { x: -20, y:   2, r: -5 },  // Lejos-Izquierda
-                  { x:   8, y:  20, r:  2 }   // Lejos-Abajo
+                  { x: -5, y: -4, r: -1.5 },
+                  { x:  4, y:  4, r:  1.5 },
+                  { x: -3, y:  5, r: -0.5 },
+                  { x:  5, y: -3, r:  1.0 },
+                  { x: -6, y:  1, r: -2.0 },
+                  { x:  3, y:  6, r:  0.5 }
               ];
 
               cards.forEach((c, idx) => {
@@ -3408,9 +3408,9 @@ window.onerror = function(msg, url, line, col, err) {
                   const startY = Math.sin(angle) * dist;
                   const startRotZ = (Math.random() - 0.5) * 720;
                   
-                  // Aplicamos offset global (-8px en X e Y) para compensar la desviacion visual de la carta 3D
-                  const finalX = scatterOffsets[idx].x - 8;
-                  const finalY = scatterOffsets[idx].y - 8;
+                  // Sin offset global loco, solo las posiciones relativas
+                  const finalX = scatterOffsets[idx].x;
+                  const finalY = scatterOffsets[idx].y;
                   const finalRotZ = scatterOffsets[idx].r;
                   const finalZ = (idx * -4) - 4; // Aseguramos que queden debajo
                   
@@ -9495,34 +9495,7 @@ function makeCardBackTex(data = '4 PASOS') {
   });
 
 
-  let hasGyro = false;
-  let isMobileParallax = window.innerWidth <= 768;
-  window.addEventListener('resize', () => {
-    isMobileParallax = window.innerWidth <= 768;
-  });
 
-  window.addEventListener('deviceorientation', (e) => {
-    if (e.gamma !== null && isMobileParallax) {
-      hasGyro = true;
-      let g = e.gamma;
-      let b = e.beta - 45; 
-      if (g > 30) g = 30; if (g < -30) g = -30;
-      if (b > 30) b = 30; if (b < -30) b = -30;
-      tX = g / 30;
-      tY = b / 30;
-    }
-  });
-
-  let floatTime = 0;
-  function updateMobileFloat() {
-    if (isMobileParallax && !hasGyro) {
-      floatTime += 0.012;
-      tX = Math.sin(floatTime * 0.5) * 0.4 * Math.sin(floatTime * 0.3);
-      tY = Math.cos(floatTime * 0.4) * 0.4 * Math.sin(floatTime * 0.6);
-    }
-    requestAnimationFrame(updateMobileFloat);
-  }
-  updateMobileFloat();
 
   // Ã¢â€€Ã¢â€€ SOMBRAS DE PERSONAS (canvas animado sobre la mesa) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
   function mapRange(p, inMin, inMax, outMin, outMax) {
