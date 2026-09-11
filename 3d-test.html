@@ -3369,8 +3369,9 @@ window.onerror = function(msg, url, line, col, err) {
           if (!wrap) {
               wrap = document.createElement('div');
               wrap.id = 'dealer-pile-wrap';
-              // Compensamos el pivot point asimetrico del modelo 3D con un valor intermedio
-              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(calc(-50% - 21px), calc(-50% - 19px)); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
+              // El centro 3D es perfectamente el centro de la pantalla (porque la cámara mira a 0,0,0).
+              // No hace falta offset base, solo sincronizar el parallax dinámico
+              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
               let scale = window._cIsMobile ? 0.5 : 0.65;
               let cardsHtml = '';
@@ -9628,15 +9629,23 @@ function makeCardBackTex(data = '4 PASOS') {
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
 
-    // Sincronizar el mazo de cartas HTML con el efecto parallax de la cámara 3D para evitar que se deslicen
+    // Sincronizar el mazo de cartas HTML con el efecto parallax exacto de la cámara 3D
     const dealerPile = document.getElementById('dealer-pile-wrap');
     if (dealerPile && dealerPile.style.visibility !== 'hidden') {
-        // La cámara 3D se mueve, por lo que el objeto parece moverse en dirección contraria en 2D
-        // Calculamos la traslación equivalente en píxeles. 
-        // Ajustado empiricamente para que el mazo inferior se mantenga perfectamente "pegado" al mazo 3D.
-        const pShiftX = -(mouseNX * PX * parallaxStr) * 41; 
-        const pShiftY = -(mouseNY * PY * parallaxStr) * 41; // Corregido el signo
-        dealerPile.style.transform = `translate(calc(-50% - 21px + ${pShiftX}px), calc(-50% - 19px + ${pShiftY}px))`;
+        // En 3D, el target de la camara se mueve:
+        // currentLookX + mouseNX * 0.1 * parallaxStr
+        // currentLookY - mouseNY * 0.05 * parallaxStr
+        // Proyectado en pantalla, la desviacion equivale al target.
+        // Factor de conversion de unidades 3D a pixeles CSS basado en el FOV vertical (42) y altura del viewport:
+        const vh = window.innerHeight;
+        // viewHeight_3d = 2 * dist * tan(FOV/2) => 2 * 3 * tan(21) = 2.30
+        const pixPerUnit = vh / 2.30;
+        
+        // Multiplicamos el desplazamiento del lookAt en unidades 3D por el ratio de pixeles/unidad
+        const pShiftX = -(mouseNX * 0.1 * parallaxStr) * pixPerUnit;
+        const pShiftY = -(mouseNY * 0.05 * parallaxStr) * pixPerUnit; 
+        
+        dealerPile.style.transform = `translate(calc(-50% + ${pShiftX}px), calc(-50% + ${pShiftY}px))`;
     }
 
     // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
