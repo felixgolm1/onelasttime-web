@@ -13577,10 +13577,21 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   #olt-faq-modal.active #olt-faq-card {
     transform: none;
   }
-  #olt-faq-modal.modal-closing #olt-faq-card {
-    transform: translateY(60px);
+  #olt-faq-modal.modal-closing {
+    background: transparent;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: background 0.8s ease, backdrop-filter 0.8s ease, -webkit-backdrop-filter 0.8s ease;
+  }
+  #olt-faq-modal.modal-closing .faq-top-bar {
     opacity: 0;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+    transform: translateY(-20px);
+    transition: all 0.4s ease;
+  }
+  #olt-faq-modal.modal-closing #olt-faq-card {
+    /* Mantenemos el contenedor estático para que las cartas salgan animadas por dentro */
+    transform: none;
+    opacity: 1;
   }
 
   /* Top header bar entrance */
@@ -13732,6 +13743,35 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   .wallet-card-wrap:nth-child(8)  .wallet-card { --base-rot:  1.1deg; }
   .wallet-card-wrap:nth-child(9)  .wallet-card { --base-rot: -0.6deg; }
   .wallet-card-wrap:nth-child(10) .wallet-card { --base-rot:  0.8deg; }
+
+  /* 3. CROUPIER DEAL EXIT (Cards deal out 1 by 1 downwards) */
+  @keyframes dealCardOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(115vh) rotate(calc(var(--base-rot, 0deg) + 6deg)) scale(0.92);
+    }
+  }
+
+  #faq-wallet-stack.is-leaving .wallet-card-wrap {
+    animation: dealCardOut 1.0s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(10) { animation-delay: 0.00s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(9)  { animation-delay: 0.08s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(8)  { animation-delay: 0.16s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(7)  { animation-delay: 0.24s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(6)  { animation-delay: 0.32s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(5)  { animation-delay: 0.40s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(4)  { animation-delay: 0.48s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(3)  { animation-delay: 0.56s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(2)  { animation-delay: 0.64s; }
+  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(1)  { animation-delay: 0.72s; }
 
   /* Pause individual float on hover or when an answer is open */
   .wallet-card-wrap:hover,
@@ -14037,6 +14077,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     
     // Clear any pending timer and reset closing state
     clearTimeout(window._faqDealTimeout);
+    clearTimeout(window._faqCloseTimeout);
     m.classList.remove('modal-closing');
     window.resetWalletStack();
     
@@ -14044,22 +14085,34 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var stack = document.getElementById('faq-wallet-stack');
     if (stack) {
       stack.classList.remove('is-floating');
+      stack.classList.remove('is-leaving');
       stack.classList.add('is-dealing');
-    }
-    
-    document.body.style.overflow = 'hidden';
-    m.classList.add('active');
-    requestAnimationFrame(function() {
-      m.style.opacity = '1';
-    });
+      
+      document.body.style.overflow = 'hidden';
+      m.classList.add('active');
+      
+      // Asegurar que el modal se hace visible tras el display: flex
+      requestAnimationFrame(function() {
+        m.style.opacity = '1';
+      });
+      
+      // Force layout recalculation
+      void stack.offsetWidth;
 
-    // Once all 10 cards are dealt onto the table (~1.55s), transition to gentle floating wave
-    window._faqDealTimeout = setTimeout(function() {
-      if (stack && m.classList.contains('active')) {
-        stack.classList.remove('is-dealing');
-        stack.classList.add('is-floating');
-      }
-    }, 1550);
+      // Ensure all cards are visible and active
+      document.querySelectorAll('.wallet-card-wrap').forEach(function(wrap) {
+        wrap.style.display = 'block';
+        wrap.classList.add('is-active');
+      });
+
+      // Once all 10 cards are dealt onto the table (~3.0s), transition to gentle floating wave
+      window._faqDealTimeout = setTimeout(function() {
+        if (stack && m.classList.contains('active')) {
+          stack.classList.remove('is-dealing');
+          stack.classList.add('is-floating');
+        }
+      }, 3000); // 1.34s max delay + 1.64s duration = 2.98s
+    }
   };
 
   window.closeFaqModal = function(e) {
@@ -14068,20 +14121,34 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     if (!m) return;
     
     clearTimeout(window._faqDealTimeout);
-    m.classList.add('modal-closing');
-    m.style.opacity = '0';
-    document.body.style.overflow = '';
+    clearTimeout(window._faqCloseTimeout);
     
-    setTimeout(function() {
-      m.classList.remove('active');
-      m.classList.remove('modal-closing');
-      var stack = document.getElementById('faq-wallet-stack');
-      if (stack) {
-        stack.classList.remove('is-dealing');
-        stack.classList.remove('is-floating');
-      }
-      window.resetWalletStack();
-    }, 350);
+    // Collapse any open cards instantly
+    window.resetWalletStack();
+    
+    var stack = document.getElementById('faq-wallet-stack');
+    if (stack) {
+      stack.classList.remove('is-dealing');
+      stack.classList.remove('is-floating');
+      stack.classList.add('is-leaving');
+    }
+    
+    // Solo desvanecemos la barra superior y el fondo, mantenemos el contenedor opaco para que las cartas se vean salir
+    m.classList.add('modal-closing');
+    
+    // Tiempo suficiente para que termine la animacin dealCardOut (0.72s max delay + 1.0s duration = 1.72s)
+    window._faqCloseTimeout = setTimeout(function() {
+      m.style.opacity = '0';
+      document.body.style.overflow = '';
+      setTimeout(function() {
+        m.classList.remove('active');
+        m.classList.remove('modal-closing');
+        m.style.opacity = '';
+        if (stack) {
+          stack.classList.remove('is-leaving');
+        }
+      }, 350);
+    }, 1500); // Wait 1.5s before fading out the entire modal container
   };
 
   window.resetWalletStack = function() {
