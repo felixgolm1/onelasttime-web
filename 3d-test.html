@@ -8690,10 +8690,17 @@ function makeCardBackTex(data = '4 PASOS') {
 
     const applyDesign = () => {
       document.fonts.ready.then(() => {
+        const oldFront = frontMesh.material.map;
+        const oldBack = backMesh.material.map;
+        
         frontMesh.material = new THREE.MeshBasicMaterial({
           map: makeCardFrontTex(), side: THREE.FrontSide, depthTest: false });
         backMesh.material  = new THREE.MeshBasicMaterial({
           map: makeCardBackTex(),  side: THREE.FrontSide, depthTest: false });
+          
+        if (oldFront) oldFront.dispose();
+        if (oldBack) oldBack.dispose();
+        
         frontMesh.material.needsUpdate = true;
         backMesh.material.needsUpdate  = true;
       });
@@ -8722,12 +8729,8 @@ function makeCardBackTex(data = '4 PASOS') {
       frontMesh.material.needsUpdate = true;
     };
 
-    // Llamar síncronamente (fuentes del sistema como fallback)
-    // y de nuevo cuando Poppins/Bebas Neue estén listas
+    // Llamar cuando las fuentes estén cargadas
     applyDesign();
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(applyDesign);
-    }
     // Re-trigger si el logo carga después de las fuentes
     if (!OLT_LOGO.complete || OLT_LOGO.naturalWidth === 0) {
       OLT_LOGO.onload  = applyDesign;
