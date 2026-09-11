@@ -3863,25 +3863,16 @@ window.onerror = function(msg, url, line, col, err) {
 
       const leftItems = document.querySelectorAll('#flip-left-text .flt-in');
       leftItems.forEach((item, index) => {
-        let visualLine = index;
-        if (index === 0 || index === 1) visualLine = 0;
-        else visualLine = index - 1;
-        let speedMult = Math.pow(1.3, visualLine);
         scrollTl.fromTo(item,
-          { x: 40 * speedMult },
+          { x: 40 },
           { x: 0, duration: 0.60, ease: 'none' },
           0
         );
       });
       const rightItems = document.querySelectorAll('#flip-right-text .flt-in-up');
       rightItems.forEach((item, index) => {
-        let visualLine = index;
-        if (index === 0 || index === 1) visualLine = 0;
-        else if (index === 2) visualLine = 1;
-        else visualLine = 2;
-        let speedMult = Math.pow(1.3, visualLine);
         scrollTl.fromTo(item,
-          { x: -40 * speedMult },
+          { x: -40 },
           { x: 0, duration: 0.60, ease: 'none' },
           0
         );
