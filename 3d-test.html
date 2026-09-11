@@ -3674,9 +3674,9 @@ window.onerror = function(msg, url, line, col, err) {
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.045, ease: 'power2.inOut' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
-    scrollTl.to('.blur-bg-head', { opacity: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
+    scrollTl.to('.blur-bg-head', { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
-      scrollTl.to('#blur-bg-sub', { opacity: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
+      scrollTl.to('#blur-bg-sub', { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
       scrollTl.to('.sub-oh-inner', { y: '-150%', autoAlpha: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'start' } }, 0);
 
 
