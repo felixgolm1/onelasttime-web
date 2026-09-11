@@ -1610,6 +1610,23 @@ window.onerror = function(msg, url, line, col, err) {
       #flip-right-text .flt-line {
         justify-content: flex-end !important;
       }
+
+      /* Combinar lineas visualmente sin tocar HTML */
+      #flip-left-text .flt-line:nth-child(1),
+      #flip-left-text .flt-line:nth-child(2) {
+        display: inline-block !important;
+        margin-right: 1.5vw;
+      }
+
+      #flip-right-text .flt-line {
+        display: inline-block !important;
+        margin-left: 1.5vw;
+      }
+      /* Forzar salto de linea despues de la 2da linea para que sean exactamente 2 lineas */
+      #flip-right-text .flt-line:nth-child(2)::after {
+        content: "\A";
+        white-space: pre;
+      }
     }
 </style>
 
@@ -2605,13 +2622,13 @@ window.onerror = function(msg, url, line, col, err) {
     <div id="custom-scroll-thumb"></div>
   </div>
   <!-- Subheadline derecha -->
-  <div id="subheadline">
+  <div id="subheadline" style="opacity: 0;">
       <div id="blur-bg-sub"></div>
     <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">En tu restaurante favorito,</p></span>
     <span style="display:block; padding-bottom:4px;"><p class="sub-oh-inner" style="display:block; margin:0;">en casa o donde quieras</p></span>
   </div>
   <!-- Headline izquierda -->
-  <div id="headline">
+  <div id="headline" style="opacity: 0;">
       <div style="position:relative; width:100%;">
         <div class="blur-bg-head"></div>
         <h1 style="position:relative; z-index:1; margin:0;">
@@ -2672,13 +2689,19 @@ window.onerror = function(msg, url, line, col, err) {
     </script>
     </div>
   <!-- Logo superior izquierda -->
+  <style>
+    #nav-logo { position: fixed !important; top: 1.5rem !important; left: 2rem !important; z-index: 10000010 !important; pointer-events: auto !important; }
+    #nav-logo img { filter: brightness(0) invert(1) !important; }
+    #nav-menu { position: fixed !important; top: 1.5rem !important; right: 2.5rem !important; z-index: 10000010 !important; display: flex !important; align-items: center !important; gap: 2.2rem !important; pointer-events: auto !important; }
+    #nav-menu > a { font-family: 'Inter', sans-serif !important; font-weight: 600 !important; font-size: 0.8rem !important; color: #fff !important; text-decoration: none !important; }
+  </style>
   <div id="mobile-menu-pill" style="display: none; position: fixed; z-index: 10000016; transition: all 0.3s ease;"><span id="menu-dot" style="display:inline-block; width:4px; height:4px; background-color:currentColor; border-radius:50%; margin-right:6px;"></span><span id="menu-text">MENU</span></div>
-  <div id="nav-logo" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
+  <div id="nav-logo" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px; opacity: 0;">
     <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="height: 57px; width: auto; filter: brightness(0) invert(1);">
     <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height: 28px; width: auto; filter: brightness(0) invert(1); padding-left: 0px;">
   </div>
-  <!-- Menú superior derecha -->
-  <nav id="nav-menu">
+  <!-- Menǧ superior derecha -->
+  <nav id="nav-menu" style="opacity: 0;">
     <a href="#" class="active" data-text="INTRO" data-scroll="0.00">INTRO</a>
     <a href="#" data-text="COMO FUNCIONA" data-scroll="0.91">COMO FUNCIONA</a>
     <a href="#" data-text="LA EXPERIENCIA" data-scroll="2.18">LA EXPERIENCIA</a>
