@@ -3388,16 +3388,19 @@ window.onerror = function(msg, url, line, col, err) {
             opacity: 1, duration: 1.2, delay: 0.2, clearProps: 'opacity'
           });
 
-          // Footer & Hero UI fade in
-          gsap.to(['#headline', '#subheadline', '#cta-bottom-container', '.scroll-indicator'], {
-            opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.1, clearProps: 'opacity',
+          // Footer & Hero UI fade in (animamos blur y textos por separado para que el blur funcione en Chrome durante el fade in)
+          gsap.to(['.blur-bg-head', '#blur-bg-sub'], {
+            opacity: 1, duration: 1.2, delay: 0.4, clearProps: 'opacity',
             onComplete: () => {
-              // Hack radical para forzar a Chrome a repintar el backdrop-filter tras la animación
+              // Mantener el hack por si Chrome se atasca en alguna versi&oacute;n
               const bg1 = document.querySelector('.blur-bg-head');
               const bg2 = document.querySelector('#blur-bg-sub');
               if (bg1) { bg1.style.display = 'none'; bg1.offsetHeight; bg1.style.display = ''; }
               if (bg2) { bg2.style.display = 'none'; bg2.offsetHeight; bg2.style.display = ''; }
             }
+          });
+          gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
+            opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05, clearProps: 'opacity'
           });
 
           // Textos laterales fade in (Flanqueadores)
