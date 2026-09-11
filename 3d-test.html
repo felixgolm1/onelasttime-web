@@ -8751,7 +8751,7 @@ function makeCardBackTex(data = '4 PASOS') {
     shape.lineTo(-w2, -h2 + R);
     shape.quadraticCurveTo(-w2, -h2, -w2 + R, -h2);
 
-    // Extruir SOLO para conseguir los cantos redondeados â€â€ faces frontal/trasera
+    // Extruir SOLO para conseguir los cantos redondeados â€ â€  faces frontal/trasera
     // del extrude las OCULTAMOS con el overlay de canvas.
     const bodyGeo = new THREE.ExtrudeGeometry(shape, {
       depth: D,
@@ -8760,15 +8760,13 @@ function makeCardBackTex(data = '4 PASOS') {
     bodyGeo.translate(0, 0, -D / 2);
 
     const bodyMesh = new THREE.Mesh(bodyGeo, edgeMat);
-    bodyMesh.renderOrder = 0;
 
     // 3. Pivot
     const pivot = new THREE.Group();
-    pivot.add(bodyMesh);
 
     const halfT = D / 2;
 
-    // Ã¢â€€Ã¢â€€Ã¢â€€ Helper: crea una ShapeGeometry REDONDEADA con UVs de 0→1 Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
+    // Ã¢â€ €Ã¢â€ €Ã¢â€ € Helper: crea una ShapeGeometry REDONDEADA con UVs de 0→1 Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €
     // La geometría ya tiene la forma exacta del canto → no hace falta clipCardShape
     // ni alphaTest → las esquinas son físicamente inexistentes (sin polígonos).
     function makeRoundedFaceGeo(flipU = false) {
