@@ -2,6 +2,15 @@
 <html lang="es">
 <head>
 <script>
+  window._cw = window.innerWidth;
+  window._ch = window.innerHeight;
+  window._cIsMobile = window.innerWidth <= 768;
+  window.addEventListener('resize', () => {
+    window._cw = window.innerWidth;
+    window._ch = window.innerHeight;
+    window._cIsMobile = window.innerWidth <= 768;
+  });
+
 window.onerror = function(msg, url, line, col, err) {
   let msgStr = String(msg);
   if (msgStr.toLowerCase().indexOf('script error') > -1 || parseInt(line) === 0 || msgStr.indexOf('Extension') > -1) return;
@@ -3288,7 +3297,7 @@ window.onerror = function(msg, url, line, col, err) {
       // Mantenemos realCard en el DOM porque GSAP scrollTl lo lee para visibility swaps
 
       // Estado auxiliar para escalar la carta inicial
-      let introState = { scaleMult: window.matchMedia('(max-width: 768px)').matches ? 2.0 : 1.5 };
+      let introState = { scaleMult: window._cIsMobile ? 2.0 : 1.5 };
 
       // Helper: posiciona la 3D card para que coincida con morphGroup
       function syncCard3DToMorphGroup() {
@@ -3300,17 +3309,17 @@ window.onerror = function(msg, url, line, col, err) {
         const gRZ = gsap.getProperty(morphGroup, 'rotation')  || 0;
         const DIST = 6.0;
         const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
-        const vW   = vH * (window.innerWidth / window.innerHeight);
-        const ndcX = ((window.innerWidth  / 2 + gx) / window.innerWidth ) * 2 - 1;
-        const ndcY = -((window.innerHeight / 2 + gy) / window.innerHeight) * 2 + 1;
+        const vW   = vH * (window._cw / window._ch);
+        const ndcX = ((window._cw  / 2 + gx) / window._cw ) * 2 - 1;
+        const ndcY = -((window._ch / 2 + gy) / window._ch) * 2 + 1;
         globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
         
         if (globalGlbCard._baseScaleFact) {
           const _GS_SC  = 1.22;
-          const _baseGSY = window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1.0;
+          const _baseGSY = window._cIsMobile ? 0.90 : 1.0;
             const _t = Math.max(0, Math.min(1, (gSY - _baseGSY) / (_GS_SC - _baseGSY)));
-          const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.5 : 0.65);
-          const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? (1.0/_GS_SC) : 0.90);
+          const _scSmall = globalGlbCard._baseScaleFact * (window._cIsMobile ? 0.5 : 0.65);
+          const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window._cIsMobile ? (1.0/_GS_SC) : 0.90);
           // Aplicamos el multiplicador inicial (1.5 -> 1.0)
           globalGlbCard.scale.setScalar((_scSmall + _t * (_scLarge - _scSmall)) * introState.scaleMult);
         }
@@ -3319,7 +3328,7 @@ window.onerror = function(msg, url, line, col, err) {
       }
 
       // Preparar estado visual 3D instantáneamente
-      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1, scaleY: window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1, rotation: 0 });
+      gsap.set(morphGroup, { x: 0, y: 0, scaleX: window._cIsMobile ? 0.90 : 1, scaleY: window._cIsMobile ? 0.90 : 1, rotation: 0 });
       syncCard3DToMorphGroup();
 
       // Forzar 1 frame de renderizado 3D AHORA MISMO, antes de hacer visible el canvas.
@@ -3339,9 +3348,9 @@ window.onerror = function(msg, url, line, col, err) {
       gsap.set(['#nav-menu', '#cta-top-container', '.blur-bg-head', '.oh-inner', '#blur-bg-sub', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator', '.flt-in', '.flt-in-up'], { opacity: 0 });
         gsap.set('#nav-logo', { 
           opacity: 0,
-          xPercent: window.matchMedia('(max-width: 768px)').matches ? -50 : 0,
-          left: window.matchMedia('(max-width: 768px)').matches ? '50%' : '2rem',
-          top: window.matchMedia('(max-width: 768px)').matches ? '3.2rem' : '1.5rem'
+          xPercent: window._cIsMobile ? -50 : 0,
+          left: window._cIsMobile ? '50%' : '2rem',
+          top: window._cIsMobile ? '3.2rem' : '1.5rem'
         });
 
       // 2. Volar y encoger: de 1.5x a 1.0x, rotando -3 grados
@@ -3360,7 +3369,7 @@ window.onerror = function(msg, url, line, col, err) {
               wrap.id = 'dealer-pile-wrap';
               wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
-              let scale = window.matchMedia('(max-width: 768px)').matches ? 0.5 : 0.65;
+              let scale = window._cIsMobile ? 0.5 : 0.65;
               let cardsHtml = '';
               const cardContent = `
                   <div style="position:absolute; width:100%; height:100%; background:#151515; border-radius:20px; border:1px solid rgba(255,255,255,0.08); overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.5);">
@@ -3579,13 +3588,13 @@ window.onerror = function(msg, url, line, col, err) {
     // Ã¢â€€Ã¢â€€ Estado inicial Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Las sCards empiezan con opacity 0 para que no asomen mientras gira el morphGroup
     gsap.set(sCards,  { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                        scale: window.matchMedia('(max-width: 768px)').matches ? 1.45 : 1.2, rotation: 0, opacity: 0, zIndex: 5 });
+                        scale: window._cIsMobile ? 1.45 : 1.2, rotation: 0, opacity: 0, zIndex: 5 });
     gsap.set(scIntro, { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                        scale: window.matchMedia('(max-width: 768px)').matches ? 1.45 : 1.2, rotation: -2.5, opacity: 1, zIndex: 10 });
+                        scale: window._cIsMobile ? 1.45 : 1.2, rotation: -2.5, opacity: 1, zIndex: 10 });
     // Es crítico "imprimir" los ángulos Euler desde JS para scIntroBack, porque GSAP al parsear rotateY(180) genera una matriz ambivalente
     if (scIntroBack) {
       gsap.set(scIntroBack, { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                              scale: window.matchMedia('(max-width: 768px)').matches ? 1.45 : 1.2, rotation: -2.5, rotationY: 180, rotationX: 0, z: 1 });
+                              scale: window._cIsMobile ? 1.45 : 1.2, rotation: -2.5, rotationY: 180, rotationX: 0, z: 1 });
     }
     // Ajuste de centro vertical afinado de 34 a 37 para cuadrar al pixel la ilusión
     gsap.set(scTitle, { y: 37 });
@@ -3697,8 +3706,8 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
     // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
-    gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, x: 0, y: window.matchMedia('(max-width: 768px)').matches ? 0 : -40 });
-    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, x: 0, y: window.matchMedia('(max-width: 768px)').matches ? 0 : 40 });
+    gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, x: 0, y: window._cIsMobile ? 0 : -40 });
+    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, x: 0, y: window._cIsMobile ? 0 : 40 });
     // Chars: solo invisibles â€â€ sin desplazamiento propio
     gsap.set(leftChars,  { opacity: 0 });
     gsap.set(rightChars, { opacity: 0 });
@@ -3715,7 +3724,7 @@ window.onerror = function(msg, url, line, col, err) {
       { x:  '34vw', y: '-34vh', r: -18 },
       { x: '-26vw', y: '-24vh', r:  12 },
     ];
-    const focusZoom = window.matchMedia('(max-width: 768px)').matches ? 1.05 : 1.35;
+    const focusZoom = window._cIsMobile ? 1.05 : 1.35;
     const sIntroProxy = { opacity: 1 };
     const updateIntroOpacity = () => { if (scIntro) scIntro.style.opacity = sIntroProxy.opacity; };
 
@@ -3753,7 +3762,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Overlay: 0→100% â€â€ power3.inOut: lento al inicio, se dispara, y suaviza al llegar al negro total
     scrollTl.to(scOverlay, { opacity: 1, duration: 0.08, ease: 'power3.inOut' }, 0);
     // Logo se hace más pequeño al hacer scroll hacia adelante
-    scrollTl.to('#nav-logo', { scale: window.matchMedia('(max-width: 768px)').matches ? 0.6 : 0.5, top: window.matchMedia('(max-width: 768px)').matches ? '1.2rem' : '1.5rem', left: window.matchMedia('(max-width: 768px)').matches ? '5%' : '2rem', xPercent: 0, transformOrigin: 'top left', ease: 'power1.inOut', duration: 0.08 }, 0);
+    scrollTl.to('#nav-logo', { scale: window._cIsMobile ? 0.6 : 0.5, top: window._cIsMobile ? '1.2rem' : '1.5rem', left: window._cIsMobile ? '5%' : '2rem', xPercent: 0, transformOrigin: 'top left', ease: 'power1.inOut', duration: 0.08 }, 0);
     
     // Los recuadros de texto desaparecen con efectos hiper-específicos (Oryzo style)
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
@@ -3954,7 +3963,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€€ Desplazamiento Y: arranca desde t=0, desplazamiento amplio (160px) para que
     // el movimiento sea claramente visible durante el fade-in de los chars.
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const isMobile = window._cIsMobile;
     if (isMobile) {
 
 
@@ -5281,12 +5290,12 @@ window.onerror = function(msg, url, line, col, err) {
              c1.style.transition = 'none';
           }
           const startX = parseFloat(c1.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
-          const startY = parseFloat(c1.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          const startY = parseFloat(c1.dataset.boxTop) || (window._ch / 2 - 114.75);
           
           const isDesktop = window.innerWidth > 768;
           const zoomScale = isDesktop ? 1.1 : 0.97; // Aumentado un 10% según solicitud
           const zoomX = window.innerWidth / 2;
-          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          const zoomY = window._ch / 2 - (isDesktop ? 100 : 150);
           
           const endX = zoomX; // Se mantiene en el centro en lugar de ir a la izquierda
           const endY = zoomY + 60; // Baja suavemente
@@ -5438,12 +5447,12 @@ window.onerror = function(msg, url, line, col, err) {
              c2.style.transition = 'none';
           }
           const startX = parseFloat(c2.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
-          const startY = parseFloat(c2.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          const startY = parseFloat(c2.dataset.boxTop) || (window._ch / 2 - 114.75);
           
           const isDesktop = window.innerWidth > 768;
           const zoomScale = isDesktop ? 1.1 : 0.97;
           const zoomX = window.innerWidth / 2;
-          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          const zoomY = window._ch / 2 - (isDesktop ? 100 : 150);
           
           let currentX, currentY, currentRotY, currentRotZ, currentScale, shadowAlpha;
 
@@ -5587,12 +5596,12 @@ window.onerror = function(msg, url, line, col, err) {
              c3.style.transition = 'none';
           }
           const startX = parseFloat(c3.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
-          const startY = parseFloat(c3.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          const startY = parseFloat(c3.dataset.boxTop) || (window._ch / 2 - 114.75);
           
           const isDesktop = window.innerWidth > 768;
           const zoomScale = isDesktop ? 1.1 : 0.97;
           const zoomX = window.innerWidth / 2;
-          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          const zoomY = window._ch / 2 - (isDesktop ? 100 : 150);
           
           let currentX, currentY, currentRotY, currentRotZ, currentScale, shadowAlpha;
 
@@ -5736,12 +5745,12 @@ window.onerror = function(msg, url, line, col, err) {
              c4.style.transition = 'none';
           }
           const startX = parseFloat(c4.dataset.boxLeft) || (window.innerWidth / 2 + 132.5);
-          const startY = parseFloat(c4.dataset.boxTop) || (window.innerHeight / 2 - 114.75);
+          const startY = parseFloat(c4.dataset.boxTop) || (window._ch / 2 - 114.75);
           
           const isDesktop = window.innerWidth > 768;
           const zoomScale = isDesktop ? 1.1 : 0.97;
           const zoomX = window.innerWidth / 2;
-          const zoomY = window.innerHeight / 2 - (isDesktop ? 100 : 150);
+          const zoomY = window._ch / 2 - (isDesktop ? 100 : 150);
           
           let currentX, currentY, currentRotY, currentRotZ, currentScale, shadowAlpha;
 
@@ -6892,10 +6901,10 @@ window.onerror = function(msg, url, line, col, err) {
         let baseTargetX, baseTargetY;
         if (card.classList.contains('card-n2')) {
           baseTargetX = isDesktop ? window.innerWidth * 0.82 : window.innerWidth / 2 + 10;
-          baseTargetY = isDesktop ? window.innerHeight / 2 + 110 : window.innerHeight / 2 - 10;
+          baseTargetY = isDesktop ? window._ch / 2 + 110 : window._ch / 2 - 10;
         } else {
           baseTargetX = isDesktop ? window.innerWidth * 0.22 : window.innerWidth / 2;
-          baseTargetY = isDesktop ? window.innerHeight / 2 - 120 : window.innerHeight / 2 - 20;
+          baseTargetY = isDesktop ? window._ch / 2 - 120 : window._ch / 2 - 20;
         }
         card.dataset.userOffsetX = (newLeft - baseTargetX).toString();
         card.dataset.userOffsetY = (newTop - baseTargetY).toString();
@@ -7433,26 +7442,26 @@ window.onerror = function(msg, url, line, col, err) {
 
               const DIST = 6.0;
               const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
-              const vW   = vH * (window.innerWidth / window.innerHeight);
+              const vW   = vH * (window._cw / window._ch);
 
               // Posición: centro natural (50vw,50vh) + offset GSAP (sin perspectiva)
               const gx    = gsap.getProperty(mgEl, 'x')      || 0;
               const gy    = gsap.getProperty(mgEl, 'y')      || 0;
               const gSY   = gsap.getProperty(mgEl, 'scaleY') || 1;
               const screenCX = document.documentElement.clientWidth / 2 + gx;
-              const screenCY = window.innerHeight / 2 + gy;
-              const ndcX  =  (screenCX / window.innerWidth)  * 2 - 1;
-              const ndcY  = -(screenCY / window.innerHeight) * 2 + 1;
+              const screenCY = window._ch / 2 + gy;
+              const ndcX  =  (screenCX / window._cw)  * 2 - 1;
+              const ndcY  = -(screenCY / window._ch) * 2 + 1;
               globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
 
               // Smooth zoom: gSY=1.0 (mesa) → gSY=1.22 (scatter entry)
               // Mismo rango que scrollTl Phase 1 â€â€ la pantalla se va poniendo negra a la vez
               if (globalGlbCard._baseScaleFact && gSY > 0) {
                   const _GS_SC  = 1.22;
-                  const _baseGSY = window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1.0;
+                  const _baseGSY = window._cIsMobile ? 0.90 : 1.0;
             const _t = Math.max(0, Math.min(1, (gSY - _baseGSY) / (_GS_SC - _baseGSY)));
-                  const _scSmall = globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.5 : 0.65);
-                  const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window.matchMedia('(max-width: 768px)').matches ? (1.0/_GS_SC) : 0.90);
+                  const _scSmall = globalGlbCard._baseScaleFact * (window._cIsMobile ? 0.5 : 0.65);
+                  const _scLarge = globalGlbCard._baseScaleFact * _GS_SC * (window._cIsMobile ? (1.0/_GS_SC) : 0.90);
                   globalGlbCard.scale.setScalar(_scSmall + _t * (_scLarge - _scSmall));
               }
 
@@ -7481,7 +7490,7 @@ window.onerror = function(msg, url, line, col, err) {
                   // Funciona en cold-load porque globalGlbCard._baseScaleFact siempre está disponible
                   // tras la carga del GLB (independiente de si !inScatter ha corrido)
                   const _snapScale = (globalGlbCard._baseScaleFact > 0)
-                      ? (globalGlbCard._baseScaleFact * (window.matchMedia('(max-width: 768px)').matches ? 0.5 : (_gSY2 * 0.90)))
+                      ? (globalGlbCard._baseScaleFact * (window._cIsMobile ? 0.5 : (_gSY2 * 0.90)))
                       : Math.abs(globalGlbCard.scale.x);   // fallback solo si el GLB aún no ha cargado
                   smoothScrollLoop._lockedCard = {
                       rotBaseZ: +2.5 * Math.PI / 180,
@@ -7498,7 +7507,7 @@ window.onerror = function(msg, url, line, col, err) {
               cardCanvasEl.style.transform = 'none';
               const DIST = 6.0;
               const vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
-              const vW   = vH * (window.innerWidth / window.innerHeight);
+              const vW   = vH * (window._cw / window._ch);
               if (inFlipBack) {
                   let tP = 0;
                   if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
@@ -7512,8 +7521,8 @@ window.onerror = function(msg, url, line, col, err) {
                   if (scRect.width > 0 && scRect.height > 0) {
                       const screenCX = scRect.left + scRect.width  / 2;
                       const screenCY = scRect.top  + scRect.height / 2;
-                      const ndcX =  (screenCX / window.innerWidth)  * 2 - 1;
-                      const ndcY = -(screenCY / window.innerHeight) * 2 + 1;
+                      const ndcX =  (screenCX / window._cw)  * 2 - 1;
+                      const ndcY = -(screenCY / window._ch) * 2 + 1;
                       globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
                   }
               }
@@ -7895,7 +7904,7 @@ requestAnimationFrame(smoothScrollLoop);
   scene.fog    = new THREE.FogExp2(0x0d0b09, 0.028);
 
   const _isMobileScene = window.innerWidth <= 768;
-  const camera = new THREE.PerspectiveCamera(_isMobileScene ? 56 : 42, window.innerWidth / window.innerHeight, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(_isMobileScene ? 56 : 42, window._cw / window._ch, 0.1, 100);
   window.camera = camera;
   camera.position.set(_isMobileScene ? 0 : -0.3, _isMobileScene ? 20 : 12, _isMobileScene ? 0 : 3);
   if (_isMobileScene) camera.up.set(1, 0, 0); // rotate view 90° so x-axis plates appear top/bottom
@@ -7909,8 +7918,8 @@ requestAnimationFrame(smoothScrollLoop);
   let mouseNX = 0, mouseNY = 0;   // normalizado -1..+1, con lerp
   let mouseRawX = 0, mouseRawY = 0; // raw del evento
   window.addEventListener('pointermove', (e) => {
-    mouseRawX = (e.clientX / window.innerWidth)  * 2 - 1;  // -1 izq, +1 der
-    mouseRawY = (e.clientY / window.innerHeight) * 2 - 1;  // -1 arr, +1 abj
+    mouseRawX = (e.clientX / window._cw)  * 2 - 1;  // -1 izq, +1 der
+    mouseRawY = (e.clientY / window._ch) * 2 - 1;  // -1 arr, +1 abj
   });
 
   // Ã¢â€€Ã¢â€€ ENV MAP PROCEDURAL (simula HDRI de restaurante oscuro) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -8326,13 +8335,13 @@ requestAnimationFrame(smoothScrollLoop);
     cardScene2.add(specRim);
 
     // Cámara perspectiva igual que la principal (FOV 42)
-    cardCam2 = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+    cardCam2 = new THREE.PerspectiveCamera(42, window._cw / window._ch, 0.1, 100);
     cardCam2.position.set(0, 0, 0);
 
 
     window.addEventListener('resize', () => {
       cardRenderer2.setSize(window.innerWidth, window.innerHeight);
-      cardCam2.aspect = window.innerWidth / window.innerHeight;
+      cardCam2.aspect = window._cw / window._ch;
       cardCam2.updateProjectionMatrix();
     });
   }
@@ -8878,7 +8887,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
     const dist      = 6.0;
     const vH        = 2 * Math.tan((42 * Math.PI / 180) / 2) * dist;
-    const targetH   = vH * (basePxH / window.innerHeight);
+    const targetH   = vH * (basePxH / window._ch);
     const scaleFact = targetH / Math.max(size.z, 0.001);
 
     pivot.scale.setScalar(scaleFact);
@@ -9680,7 +9689,7 @@ function makeCardBackTex(data = '4 PASOS') {
   })();
 
   window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = window._cw / window._ch;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     cssRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -10106,7 +10115,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
     // Escena y camara
     _brainScene = new THREE.Scene();
-    _brainCamera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.01, 100);
+    _brainCamera = new THREE.PerspectiveCamera(42, window._cw / window._ch, 0.01, 100);
     _brainCamera.position.set(0, 0, 0);
 
     // ILUMINACION QUE COMPLEMENTA LOS MAPAS BAKED:
@@ -10275,7 +10284,7 @@ function makeCardBackTex(data = '4 PASOS') {
     window.addEventListener('resize', function() {
       if (!_brainRenderer) return;
       _brainRenderer.setSize(window.innerWidth, window.innerHeight);
-      _brainCamera.aspect = window.innerWidth / window.innerHeight;
+      _brainCamera.aspect = window._cw / window._ch;
       _brainCamera.updateProjectionMatrix();
     });
   });
@@ -10300,7 +10309,7 @@ function makeCardBackTex(data = '4 PASOS') {
     // DIST constante â€â€ el zoom se hace por CSS sobre #thermal-overlay
     var DIST = 5.0;
     var vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
-    var vW   = vH * (window.innerWidth / window.innerHeight);
+    var vW   = vH * (window._cw / window._ch);
     var posX = -0.008 * vW / 2;
     var posY =  0.312 * vH / 2;
 
