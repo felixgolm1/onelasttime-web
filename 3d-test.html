@@ -3343,43 +3343,40 @@ window.onerror = function(msg, url, line, col, err) {
         onUpdate: syncCard3DToMorphGroup
       });
 
+      // Revelar escena de fondo INMEDIATAMENTE para que la carta se vea volando SOBRE la mesa
+      if (loaderEl) {
+        loaderEl.style.transition = 'opacity 1.4s ease';
+        loaderEl.style.opacity       = '0';
+        loaderEl.style.pointerEvents = 'none';
+        setTimeout(() => { loaderEl.style.display = 'none'; }, 1500);
+      }
+      
+      const canvas = document.querySelector('canvas:not(#card-canvas)');
+      if (canvas) {
+        canvas.style.transition = 'none';
+        canvas.style.opacity = '1';
+        let maskObj = { p: -50 };
+        gsap.to(maskObj, {
+          p: 150,
+          duration: 1.8, // Sincronizado con la caida de la carta
+          ease: "power2.inOut",
+          onUpdate: function() {
+            let maskStr = `linear-gradient(45deg, black ${maskObj.p}%, transparent ${maskObj.p + 50}%)`;
+            canvas.style.webkitMaskImage = maskStr;
+            canvas.style.maskImage = maskStr;
+          },
+          onComplete: function() {
+            canvas.style.webkitMaskImage = '';
+            canvas.style.maskImage = '';
+          }
+        });
+      }
+
       gsap.to(morphGroup, {
         rotation: -3,
         duration: 1.8,
         ease: 'power2.out',
         onComplete: () => {
-          // Revelar escena de fondo
-          if (loaderEl) {
-            loaderEl.style.transition = 'opacity 1.4s ease';
-            loaderEl.style.opacity       = '0';
-            loaderEl.style.pointerEvents = 'none';
-            setTimeout(() => { loaderEl.style.display = 'none'; }, 1500);
-          }
-          
-          const canvas = document.querySelector('canvas:not(#card-canvas)');
-          if (canvas) {
-            canvas.style.transition = 'none';
-            canvas.style.opacity = '1';
-            let maskObj = { p: -50 };
-            gsap.to(maskObj, {
-              p: 150,
-              duration: 1.2,
-              ease: "power2.inOut",
-              onUpdate: function() {
-                let maskStr = `linear-gradient(45deg, black ${maskObj.p}%, transparent ${maskObj.p + 50}%)`;
-                canvas.style.webkitMaskImage = maskStr;
-                canvas.style.maskImage = maskStr;
-              },
-              onComplete: function() {
-                canvas.style.webkitMaskImage = '';
-                canvas.style.maskImage = '';
-              }
-            });
-
-          }
-
-          
-
           introMorphGroup = morphGroup;
           setupScrollAnim();
         }
