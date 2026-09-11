@@ -1812,9 +1812,10 @@ window.onerror = function(msg, url, line, col, err) {
   }
   #headline h1 {
     text-align: center !important;
-    font-size: min(4.6vw, 1.55rem) !important;
+    font-size: 1.55rem !important;
   }
-  #headline h1 .oh-inner {
+  #headline h1 > span:nth-child(1) .oh-inner,
+  #headline h1 > span:nth-child(2) .oh-inner {
     white-space: nowrap !important;
   }
   .headline-sub {
@@ -10841,7 +10842,7 @@ setInterval(function() {
     <!-- P2 Guarantee -->
     <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 110px); width: 100%; display:flex; justify-content:center; align-items:center; gap:15px; opacity: 0; will-change: opacity;">
       <div id="leaf-left" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.9s ease;"></div>
-      <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700; color:#ccff00;">Si la experiéncia no os fascina, te la pagamos nosotrxs y te regalamos otra. Sin preguntas</p>
+      <p id="garantia-text" style="margin:0; font-family:'Inter', sans-serif; font-weight:700; color:#ccff00; max-width: 650px;">Si la experi&egrave;ncia no os fascina, te la pagamos nosotrxs y te regalamos otra. Sin preguntas</p>
       <div id="leaf-right" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.9s ease;"></div>
     </div>
   </div>
