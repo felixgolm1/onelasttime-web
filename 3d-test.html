@@ -2037,23 +2037,6 @@ window.onerror = function(msg, url, line, col, err) {
     }
   </style>
 </head>
-  <!-- Mobile Top Progress Bar (Oryzo style) -->
-  <div id="mobile-top-progress" style="display: none; position: fixed; top: 0; left: 0; height: 3px; background: #ccff00; box-shadow: 0 0 10px #ccff00; z-index: 10000020; width: 0%; transition: width 0.1s linear;"></div>
-
-  <script>
-    requestAnimationFrame(function updateMobileProg() {
-      if (typeof scrollTl !== 'undefined' && scrollTl.progress) {
-        const pLine = document.getElementById('mobile-top-progress');
-        if (pLine && window.innerWidth <= 768) {
-          pLine.style.display = 'block';
-          pLine.style.width = (scrollTl.progress() * 100) + '%';
-        } else if (pLine) {
-          pLine.style.display = 'none';
-        }
-      }
-      requestAnimationFrame(updateMobileProg);
-    });
-  </script>
 <body>
   <!-- Mobile Top Progress Bar (Oryzo style) -->
   <div id="mobile-top-progress" style="display: none; position: fixed; top: 0; left: 0; height: 3px; background: #ccff00; box-shadow: 0 0 10px #ccff00; z-index: 10000020; width: 0%; transition: width 0.1s linear;"></div>
