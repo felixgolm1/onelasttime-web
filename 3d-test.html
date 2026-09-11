@@ -7368,11 +7368,22 @@ window.onerror = function(msg, url, line, col, err) {
           // Así nunca hay un "vacío" entre carta oculta y caja visible.
           const mainDeckEl = document.getElementById('mainDeck');
           const dealerPile = document.getElementById('dealer-pile-wrap');
+          
+          // Fade out dealerPile rapidito al hacer scroll
+          if (dealerPile) {
+              let dpOp = 1;
+              if (prog > 0.01 && prog < 0.1) {
+                  dpOp = 1 - ((prog - 0.01) / 0.09);
+              } else if (prog >= 0.1) {
+                  dpOp = 0;
+              }
+              dealerPile.style.opacity = dpOp.toString();
+          }
+
           if (mainDeckEl && mainDeckEl.style.display === 'block') {
               const mdOp = parseFloat(mainDeckEl.style.opacity || '0');
               cardCanvasEl.style.transition = 'none';
               cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp));
-              if(dealerPile) dealerPile.style.opacity = String(Math.max(0, 1 - mdOp));
               globalGlbCard.visible         = mdOp < 0.99;
               if (mdOp >= 0.99) {
                   requestAnimationFrame(smoothScrollLoop);
@@ -7389,7 +7400,6 @@ window.onerror = function(msg, url, line, col, err) {
           // (si mainDeck es visible, el crossfade ya gestiona opacity y visible arriba)
           if (!mainDeckEl || mainDeckEl.style.display !== 'block') {
               cardCanvasEl.style.opacity = '1';
-              if(dealerPile) dealerPile.style.opacity = '1';
               globalGlbCard.visible      = true;
           }
 
