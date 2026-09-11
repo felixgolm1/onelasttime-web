@@ -3367,7 +3367,8 @@ window.onerror = function(msg, url, line, col, err) {
           if (!wrap) {
               wrap = document.createElement('div');
               wrap.id = 'dealer-pile-wrap';
-              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
+              // Compensamos el centro visual de la carta 3D moviendo la baraja -14px arriba y a la izquierda
+              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(calc(-50% - 14px), calc(-50% - 14px)); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
               let scale = window._cIsMobile ? 0.5 : 0.65;
               let cardsHtml = '';
