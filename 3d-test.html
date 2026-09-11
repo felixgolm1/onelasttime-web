@@ -2709,7 +2709,7 @@ window.onerror = function(msg, url, line, col, err) {
     <div id="nav-progress-line" style="position: absolute; bottom: -10px; height: 14px; background: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 20\' preserveAspectRatio=\'none\'%3E%3Cfilter id=\'ink\' x=\'-10%25\' y=\'-50%25\' width=\'120%25\' height=\'200%25\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.5\' numOctaves=\'3\' result=\'n\'/%3E%3CfeDisplacementMap in=\'SourceGraphic\' in2=\'n\' scale=\'2.5\' xChannelSelector=\'R\' yChannelSelector=\'G\'/%3E%3C/filter%3E%3Cpath filter=\'url(%23ink)\' d=\'M 1,8 Q 30,9 60,11 T 98,13 C 100,13 100,17 98,17 Q 60,14 30,14 T 1,13 C -1,13 -1,8 1,8 Z\' fill=\'rgba(255,255,255,0.95)\'/%3E%3C/svg%3E') no-repeat left center; background-size: 100% 100%; pointer-events: none; clip-path: inset(0 100% 0 0); will-change: clip-path;"></div>
     
     <!-- CTA superior derecha -->
-    <div id="cta-top-container">
+    <div id="cta-top-container" style="opacity: 0;">
       <a href="reservar-mi-cena.html" class="btn btn-blue btn-full" style="padding: 0.8rem 0; font-size: 0.85rem;">
         <span style="position:relative; z-index:2; text-align:center; padding-right:20px; transform: translateX(-22px); display: inline-block;">TRANSFORMAR MI CENA</span>
         <div class="cta-arrow-pill" style="right: 6px;   width: 38px; height: 24px;      ">
@@ -2726,7 +2726,7 @@ window.onerror = function(msg, url, line, col, err) {
   <div id="nav-overlay"></div>
 
   <!-- CTA flotante inferior -->
-  <div id="cta-bottom-container">
+  <div id="cta-bottom-container" style="opacity: 0;">
     <a href="reservar-mi-cena.html" class="btn btn-blue btn-full btn-floating" id="heroCta">
       <span style="position:relative; z-index:2; text-align:center; padding-right:20px; transform: translateX(-22px); display: inline-block;">TRANSFORMAR MI CENA</span>
         <div class="cta-arrow-pill" style="right: 10px;   width: 52px; height: 32px;      ">
@@ -2753,7 +2753,7 @@ window.onerror = function(msg, url, line, col, err) {
   </div>
 
   <!-- Scroll indicator separado: z-index bajo para quedar detras de las cartas -->
-  <div class="scroll-indicator">
+  <div class="scroll-indicator" style="opacity: 0;">
     <div class="oryzo-scroll-icon">
       <svg class="ring" viewBox="0 0 50 50" fill="none">
         <circle cx="25" cy="25" r="23" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="4 6" stroke-linecap="round"></circle>
