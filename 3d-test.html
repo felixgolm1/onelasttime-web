@@ -1812,7 +1812,10 @@ window.onerror = function(msg, url, line, col, err) {
   }
   #headline h1 {
     text-align: center !important;
-    font-size: 1.55rem !important;
+    font-size: min(5.5vw, 1.55rem) !important;
+  }
+  #headline h1 .oh-inner {
+    white-space: nowrap !important;
   }
   .headline-sub {
     text-align: center !important;
