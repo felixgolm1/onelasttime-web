@@ -3369,8 +3369,8 @@ window.onerror = function(msg, url, line, col, err) {
           if (!wrap) {
               wrap = document.createElement('div');
               wrap.id = 'dealer-pile-wrap';
-              // Compensamos el pivot point asimetrico del modelo 3D moviendo la baraja -28px a la izq y -24px arriba
-              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(calc(-50% - 28px), calc(-50% - 24px)); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
+              // Compensamos el pivot point asimetrico del modelo 3D con un valor intermedio
+              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(calc(-50% - 21px), calc(-50% - 19px)); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
               let scale = window._cIsMobile ? 0.5 : 0.65;
               let cardsHtml = '';
@@ -3394,14 +3394,14 @@ window.onerror = function(msg, url, line, col, err) {
               
               let cards = wrap.querySelectorAll('.dealer-card');
               
-              // Composicion manual super sutil para que asomen en cruz
+              // Distribucion homogeneamente desorganizada: asomando por todas partes con rotaciones
               const scatterOffsets = [
-                  { x: -6, y: -5, r: -2.0 },
-                  { x:  6, y:  5, r:  2.0 },
-                  { x: -4, y:  6, r: -1.0 },
-                  { x:  5, y: -4, r:  1.5 },
-                  { x: -8, y:  2, r: -2.5 },
-                  { x:  4, y:  7, r:  1.0 }
+                  { x: -8,  y: -8, r: -4 },  // Arriba-Izquierda
+                  { x:  8,  y: -6, r:  5 },  // Arriba-Derecha
+                  { x: -10, y:  8, r:  3 },  // Abajo-Izquierda
+                  { x:  10, y: 10, r: -5 },  // Abajo-Derecha
+                  { x: -12, y:  2, r: -2 },  // Centro-Izquierda
+                  { x:  12, y: -2, r:  4 }   // Centro-Derecha
               ];
 
               cards.forEach((c, idx) => {
@@ -14193,6 +14193,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
