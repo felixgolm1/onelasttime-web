@@ -1,0 +1,22 @@
+    #flip-right-text {
+        top: 75% !important;
+        right: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        text-align: center;
+      }
+      #flip-left-text .flt-line, #flip-right-text .flt-line {
+        justify-content: center !important;
+      }
+    }
+</style>
+
+  <style>
+    body.hide-all-cards-final-scene #card-canvas,
+    body.hide-all-cards-final-scene #oryzo-deck-clone,
+    body.hide-all-cards-final-scene #mainDeck,
+    body.hide-all-cards-final-scene #magazine-scene,
+    body.hide-all-cards-final-scene #oryzo-deck-container,
+    body.hide-all-cards-final-scene .card-on-table,
+    body.hide-all-cards-final-scene .card-peeking,
+    body.hide-al
