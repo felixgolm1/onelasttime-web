@@ -3394,14 +3394,14 @@ window.onerror = function(msg, url, line, col, err) {
               
               let cards = wrap.querySelectorAll('.dealer-card');
               
-              // Distribucion homogeneamente desorganizada: asomando por todas partes con rotaciones
+              // Baraja apilada pero desorganizada realista (pequeños desajustes aleatorios, no una estrella perfecta)
               const scatterOffsets = [
-                  { x: -8,  y: -8, r: -4 },  // Arriba-Izquierda
-                  { x:  8,  y: -6, r:  5 },  // Arriba-Derecha
-                  { x: -10, y:  8, r:  3 },  // Abajo-Izquierda
-                  { x:  10, y: 10, r: -5 },  // Abajo-Derecha
-                  { x: -12, y:  2, r: -2 },  // Centro-Izquierda
-                  { x:  12, y: -2, r:  4 }   // Centro-Derecha
+                  { x: -3, y:  2, r: -3 },
+                  { x:  4, y: -2, r:  2 },
+                  { x: -1, y: -4, r: -1 },
+                  { x:  2, y:  3, r:  4 },
+                  { x: -4, y:  0, r:  1 },
+                  { x:  3, y:  1, r: -2 }
               ];
 
               cards.forEach((c, idx) => {
@@ -9627,6 +9627,18 @@ function makeCardBackTex(data = '4 PASOS') {
     camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
+
+    // Sincronizar el mazo de cartas HTML con el efecto parallax de la cámara 3D para evitar que se deslicen
+    const dealerPile = document.getElementById('dealer-pile-wrap');
+    if (dealerPile && dealerPile.style.visibility !== 'hidden') {
+        // La cámara 3D se mueve, por lo que el objeto parece moverse en dirección contraria en 2D
+        // Calculamos la traslación equivalente en píxeles. 
+        // Ajustado empiricamente para que el mazo inferior se mantenga perfectamente "pegado" al mazo 3D.
+        const pShiftX = -(mouseNX * PX * parallaxStr) * 41; 
+        const pShiftY =  (mouseNY * PY * parallaxStr) * 41; 
+        dealerPile.style.transform = `translate(calc(-50% - 21px + ${pShiftX}px), calc(-50% - 19px + ${pShiftY}px))`;
+    }
+
     // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
     if (typeof mainLightGroup !== 'undefined') {
         mainLightGroup.position.x = mouseNX * PX * parallaxStr;
