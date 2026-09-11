@@ -3607,8 +3607,8 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
     // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
-    gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, y: -40 });
-    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, y:  40 });
+    gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, x: window.matchMedia('(max-width: 768px)').matches ? -40 : 0, y: window.matchMedia('(max-width: 768px)').matches ? 0 : -40 });
+    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, x: window.matchMedia('(max-width: 768px)').matches ? 40 : 0, y: window.matchMedia('(max-width: 768px)').matches ? 0 : 40 });
     // Chars: solo invisibles â€â€ sin desplazamiento propio
     gsap.set(leftChars,  { opacity: 0 });
     gsap.set(rightChars, { opacity: 0 });
@@ -3864,14 +3864,15 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€€ Desplazamiento Y: arranca desde t=0, desplazamiento amplio (160px) para que
     // el movimiento sea claramente visible durante el fade-in de los chars.
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
     scrollTl.fromTo('#flip-left-text',
-      { y: -40 },
-      { y: 40, duration: 0.60, ease: 'none' },
+      isMobile ? { x: -40, y: 0 } : { y: -40, x: 0 },
+      isMobile ? { x: 40, duration: 0.60, ease: 'none' } : { y: 40, duration: 0.60, ease: 'none' },
       0
     );
     scrollTl.fromTo('#flip-right-text',
-      { y: 40 },
-      { y: -40, duration: 0.60, ease: 'none' },
+      isMobile ? { x: 40, y: 0 } : { y: 40, x: 0 },
+      isMobile ? { x: -40, duration: 0.60, ease: 'none' } : { y: -40, duration: 0.60, ease: 'none' },
       0
     );
 
