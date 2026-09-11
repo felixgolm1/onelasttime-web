@@ -3386,10 +3386,7 @@ window.onerror = function(msg, url, line, col, err) {
             console.log("Intro anim finalizada. Card pos:", finalPos);
           }
           
-          // Activar parallax una vez caida la carta
-          if (typeof document.addEventListener !== 'undefined') {
-            document.addEventListener('mousemove', onMouseMoveParallax);
-          }
+          // Parallax ya esta activo globalmente
           
           // NAV fade in
           gsap.to(['#nav-logo', '#nav-menu', '#nav-cta'], {
