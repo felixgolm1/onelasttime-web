@@ -3871,8 +3871,8 @@ window.onerror = function(msg, url, line, col, err) {
         else visualLine = index - 1;
         let speedMult = Math.pow(1.2, visualLine);
         scrollTl.fromTo(item,
-          { x: -20 * speedMult },
-          { x: 20 * speedMult, duration: 0.60, ease: 'none' },
+          { x: 20 * speedMult },
+          { x: -20 * speedMult, duration: 0.60, ease: 'none' },
           0
         );
       });
@@ -3884,8 +3884,8 @@ window.onerror = function(msg, url, line, col, err) {
         else visualLine = 2;
         let speedMult = Math.pow(1.2, visualLine);
         scrollTl.fromTo(item,
-          { x: 20 * speedMult },
-          { x: -20 * speedMult, duration: 0.60, ease: 'none' },
+          { x: -20 * speedMult },
+          { x: 20 * speedMult, duration: 0.60, ease: 'none' },
           0
         );
       });
