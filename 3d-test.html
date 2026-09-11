@@ -9629,23 +9629,21 @@ function makeCardBackTex(data = '4 PASOS') {
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
 
-    // Sincronizar el mazo de cartas HTML con el efecto parallax exacto de la cámara 3D
+    // Sincronizar el mazo de cartas HTML usando la proyección real de Three.js (infalible)
     const dealerPile = document.getElementById('dealer-pile-wrap');
-    if (dealerPile && dealerPile.style.visibility !== 'hidden') {
-        // En 3D, el target de la camara se mueve:
-        // currentLookX + mouseNX * 0.1 * parallaxStr
-        // currentLookY - mouseNY * 0.05 * parallaxStr
-        // Proyectado en pantalla, la desviacion equivale al target.
-        // Factor de conversion de unidades 3D a pixeles CSS basado en el FOV vertical (42) y altura del viewport:
-        const vh = window.innerHeight;
-        // viewHeight_3d = 2 * dist * tan(FOV/2) => 2 * 3 * tan(21) = 2.30
-        const pixPerUnit = vh / 2.30;
+    if (dealerPile && dealerPile.style.visibility !== 'hidden' && typeof morphGroup !== 'undefined' && camera) {
+        // Obtenemos la posición 3D real de la carta y la proyectamos a 2D en la pantalla
+        const pos3D = new THREE.Vector3();
+        morphGroup.getWorldPosition(pos3D);
+        pos3D.project(camera);
         
-        // Multiplicamos el desplazamiento del lookAt en unidades 3D por el ratio de pixeles/unidad
-        const pShiftX = -(mouseNX * 0.1 * parallaxStr) * pixPerUnit;
-        const pShiftY = -(mouseNY * 0.05 * parallaxStr) * pixPerUnit; 
+        // Convertimos las coordenadas normalizadas (-1 a 1) a píxeles exactos de la pantalla
+        const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth;
+        const screenY = -(pos3D.y * 0.5 - 0.5) * window.innerHeight;
         
-        dealerPile.style.transform = `translate(calc(-50% + ${pShiftX}px), calc(-50% + ${pShiftY}px))`;
+        dealerPile.style.left = screenX + 'px';
+        dealerPile.style.top = screenY + 'px';
+        dealerPile.style.transform = `translate(-50%, -50%)`;
     }
 
     // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
