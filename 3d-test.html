@@ -2633,60 +2633,10 @@ window.onerror = function(msg, url, line, col, err) {
         <div class="blur-bg-head"></div>
         <h1 style="position:relative; z-index:1; margin:0;">
           <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">CONVIERTE "UNA CENA MÁS"</span></span>
-          <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block; white-space: nowrap;">CON TU PAREJA <span style="font-size: 0.6em; color: #ffffff; vertical-align: middle;">(O <span id="h1-dynamic-text" style="color: #ffffff;">NO PAREJA</span>)</span></span></span>
+          <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block; white-space: nowrap;">CON TU PAREJA <span style="font-size: 0.6em; color: #ffffff; vertical-align: middle;">(O CITA ESPECIAL)</span></span></span>
           <span style="display:block; overflow:hidden; padding-bottom:4px;"><span class="oh-inner" style="display:block;">EN UN HITO DE VUESTRA HISTORIA</span></span>
         </h1>
       </div>
-    
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const dynamicSpan = document.getElementById("h1-dynamic-text");
-        if (!dynamicSpan) return;
-        
-        const words = [
-          "NO PAREJA",
-          "CASI PAREJA",
-          "PERSONA ESPECIAL",
-          "CRUSH",
-          "CITA ESPECIAL",
-          "...YA SABES",
-          "ESE ALGUIEN"
-        ];
-        let currentWordIndex = 1;
-        const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*+^~!';
-
-        function scrambleWord(newWord) {
-          let iteration = 0;
-          const maxIterations = 14;
-          
-          const interval = setInterval(() => {
-            let scrambledHTML = newWord.split("").map((char, index) => {
-              if (char === " ") return " ";
-              if (index < (iteration / maxIterations) * newWord.length) {
-                // Resolved letter -> inherited color (white)
-                return `<span style="color: inherit;">${newWord[index]}</span>`;
-              }
-              // Random matrix letter -> green
-              const randomGlyph = glyphs[Math.floor(Math.random() * glyphs.length)];
-              return `<span style="color: #CCFF00;">${randomGlyph}</span>`;
-            }).join("");
-            
-            dynamicSpan.innerHTML = scrambledHTML;
-            
-            iteration++;
-            if (iteration > maxIterations) {
-              clearInterval(interval);
-              dynamicSpan.textContent = newWord;
-            }
-          }, 45); // 45ms * 14 = ~630ms animation duration
-        }
-
-        setInterval(() => {
-          scrambleWord(words[currentWordIndex]);
-          currentWordIndex = (currentWordIndex + 1) % words.length;
-        }, 3500); // 3.5s loop
-      });
-    </script>
     </div>
   <!-- Logo superior izquierda -->
   <style>
