@@ -3336,7 +3336,13 @@ window.onerror = function(msg, url, line, col, err) {
       }
 
       // 1. Ocultar la UI explícitamente para que no se vea mientras la carta cae
-      gsap.set(['#nav-logo', '#nav-menu', '#cta-top-container', '.blur-bg-head', '.oh-inner', '#blur-bg-sub', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator', '.flt-in', '.flt-in-up'], { opacity: 0 });
+      gsap.set(['#nav-menu', '#cta-top-container', '.blur-bg-head', '.oh-inner', '#blur-bg-sub', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator', '.flt-in', '.flt-in-up'], { opacity: 0 });
+        gsap.set('#nav-logo', { 
+          opacity: 0,
+          xPercent: window.matchMedia('(max-width: 768px)').matches ? -50 : 0,
+          left: window.matchMedia('(max-width: 768px)').matches ? '50%' : '2rem',
+          top: window.matchMedia('(max-width: 768px)').matches ? '4.5rem' : '1.5rem'
+        });
 
       // 2. Volar y encoger: de 1.5x a 1.0x, rotando -3 grados
       gsap.to(introState, {
@@ -3668,7 +3674,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Overlay: 0→100% â€â€ power3.inOut: lento al inicio, se dispara, y suaviza al llegar al negro total
     scrollTl.to(scOverlay, { opacity: 1, duration: 0.08, ease: 'power3.inOut' }, 0);
     // Logo se hace más pequeño al hacer scroll hacia adelante
-    scrollTl.to('#nav-logo', { scale: window.matchMedia('(max-width: 768px)').matches ? 0.6 : 0.5, top: window.matchMedia('(max-width: 768px)').matches ? '2.5%' : '1.5rem', left: window.matchMedia('(max-width: 768px)').matches ? '5%' : '2rem', transformOrigin: 'top left', ease: 'power1.inOut', duration: 0.08 }, 0);
+    scrollTl.to('#nav-logo', { scale: window.matchMedia('(max-width: 768px)').matches ? 0.6 : 0.5, top: window.matchMedia('(max-width: 768px)').matches ? '1.2rem' : '1.5rem', left: window.matchMedia('(max-width: 768px)').matches ? '5%' : '2rem', xPercent: 0, transformOrigin: 'top left', ease: 'power1.inOut', duration: 0.08 }, 0);
     
     // Los recuadros de texto desaparecen con efectos hiper-específicos (Oryzo style)
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
