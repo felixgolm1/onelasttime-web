@@ -3352,6 +3352,54 @@ window.onerror = function(msg, url, line, col, err) {
         onUpdate: syncCard3DToMorphGroup
       });
 
+      // Animacion "Dealer": las cartas de debajo entran desde los lados
+      function playDealerAnim() {
+          let wrap = document.getElementById('dealer-pile-wrap');
+          if (!wrap) {
+              wrap = document.createElement('div');
+              wrap.id = 'dealer-pile-wrap';
+              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
+              
+              let scale = window.matchMedia('(max-width: 768px)').matches ? 0.90 : 1;
+              let cardsHtml = '';
+              const zOffsets = [6, 8, 10, 12, 14, 16]; 
+              const classes = ['black-card', '', '', '', '', 'gold-card'];
+              for (let i = 0; i < 6; i++) {
+                  cardsHtml += '<div class="interior-card ' + classes[i] + '" style="transform: translateZ(' + zOffsets[i] + 'px); opacity:0; width:100%; height:100%; top:0; left:0; bottom:0; right:0;"></div>';
+              }
+              wrap.innerHTML = '<div class="interior-cards" style="width:100%; height:100%; transform: scale(' + scale + ') rotate(-3deg); transform-style:preserve-3d;">' + cardsHtml + '</div>';
+              document.body.appendChild(wrap);
+              
+              let cards = wrap.querySelectorAll('.interior-card');
+              cards.forEach((c, idx) => {
+                  const angle = Math.random() * Math.PI * 2;
+                  const dist = Math.max(window.innerWidth, window.innerHeight) + 200;
+                  const startX = Math.cos(angle) * dist;
+                  const startY = Math.sin(angle) * dist;
+                  const startRotZ = (Math.random() - 0.5) * 720;
+                  const finalZ = zOffsets[idx];
+                  
+                  gsap.fromTo(c, {
+                      x: startX,
+                      y: startY,
+                      z: finalZ + 200,
+                      rotationZ: startRotZ,
+                      opacity: 0
+                  }, {
+                      x: 0,
+                      y: 0,
+                      z: finalZ,
+                      rotationZ: 0,
+                      opacity: 1,
+                      duration: 0.8,
+                      delay: 0.2 + (idx * 0.12),
+                      ease: "power3.out"
+                  });
+              });
+          }
+      }
+      playDealerAnim();
+
       // 3. Eliminar el loader INMEDIATAMENTE. Como la UI está oculta, veremos el fondo oscuro del body
       if (loaderEl) {
         loaderEl.style.display = 'none';
@@ -7286,15 +7334,19 @@ window.onerror = function(msg, url, line, col, err) {
 
           mgEl.style.opacity = '0'; // CSS card siempre oculta â€â€ reemplazada por la 3D
 
-          // Ã¢â€€Ã¢â€€ CROSSFADE carta Ã¢â€ â€ caja Ã¢â€€Ã¢â€€
+          mgEl.style.opacity = '0'; // CSS card siempre oculta â€ â€  reemplazada por la 3D
+
+          // Ã¢â€ €Ã¢â€ € CROSSFADE carta Ã¢â€ â€  caja Ã¢â€ €Ã¢â€ €
           // Cuando mainDeck es display:'block', la carta se desvanece exactamente al ritmo
           // que la caja aparece: cardCanvas.opacity = 1 - mainDeck.opacity.
           // Así nunca hay un "vacío" entre carta oculta y caja visible.
           const mainDeckEl = document.getElementById('mainDeck');
+          const dealerPile = document.getElementById('dealer-pile-wrap');
           if (mainDeckEl && mainDeckEl.style.display === 'block') {
               const mdOp = parseFloat(mainDeckEl.style.opacity || '0');
               cardCanvasEl.style.transition = 'none';
               cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp));
+              if(dealerPile) dealerPile.style.opacity = String(Math.max(0, 1 - mdOp));
               globalGlbCard.visible         = mdOp < 0.99;
               if (mdOp >= 0.99) {
                   requestAnimationFrame(smoothScrollLoop);
@@ -7311,6 +7363,7 @@ window.onerror = function(msg, url, line, col, err) {
           // (si mainDeck es visible, el crossfade ya gestiona opacity y visible arriba)
           if (!mainDeckEl || mainDeckEl.style.display !== 'block') {
               cardCanvasEl.style.opacity = '1';
+              if(dealerPile) dealerPile.style.opacity = '1';
               globalGlbCard.visible      = true;
           }
 
