@@ -7383,23 +7383,10 @@ window.onerror = function(msg, url, line, col, err) {
           const mainDeckEl = document.getElementById('mainDeck');
           const dealerPile = document.getElementById('dealer-pile-wrap');
           
-          // Ocultar la baraja secundaria reduciendo su escala suavemente (como si se quedara en la mesa)
+          // Ocultar la baraja secundaria cuando la carta 3D la tape completamente
           if (dealerPile) {
-              if (prog > 0.001) {
-                  let s = Math.max(0.7, 1 - (prog / 0.06) * 0.3); // baja de 1.0 a 0.7 en prog 0.06
-                  dealerPile.style.transform = `translate(-50%, -50%) scale(${s})`;
-                  
-                  // Para evitar conflictos con la animacion inicial de GSAP si hacen scroll muy rapido
-                  if (prog > 0.01) {
-                      let dCards = dealerPile.querySelectorAll('.dealer-card');
-                      dCards.forEach(c => gsap.killTweensOf(c));
-                  }
-                  
-                  dealerPile.style.visibility = prog > 0.06 ? 'hidden' : 'visible';
-              } else {
-                  dealerPile.style.transform = `translate(-50%, -50%) scale(1)`;
-                  dealerPile.style.visibility = 'visible';
-              }
+              // La carta 3D se hace grande y las tapa. Una vez tapadas (prog > 0.05) las ocultamos.
+              dealerPile.style.visibility = prog > 0.05 ? 'hidden' : 'visible';
           }
 
           if (mainDeckEl && mainDeckEl.style.display === 'block') {
