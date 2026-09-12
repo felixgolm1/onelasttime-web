@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -4416,11 +4416,13 @@ window.onerror = function(msg, url, line, col, err) {
             scrollTl.to('#glass-who .glass-mask-line', { yPercent: 0, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
             scrollTl.to('#glass-who .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0285);
           } else {
-            scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.0335, ease: 'none' }, glassT);
-            scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01, stagger: -0.00069, ease: 'none' }, glassT);
-            scrollTl.to(glassWhoFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassT);
-            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 110, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassT);
-            scrollTl.to('#glass-who .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT);
+            // Hacemos que desaparezca a la mitad del tiempo entre pasos (reduce tiempo en pantalla)
+            let glassWhoHideT = (i > 1) ? glassT - 0.0375 : (i < 1 ? glassT + 0.0375 : glassT);
+            scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.0335, ease: 'none' }, glassWhoHideT);
+            scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01, stagger: -0.00069, ease: 'none' }, glassWhoHideT);
+            scrollTl.to(glassWhoFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassWhoHideT);
+            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 110, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassWhoHideT);
+            scrollTl.to('#glass-who .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassWhoHideT);
           }
 
           // Animacion de la caja glass-objectives en el Paso 3
@@ -4431,11 +4433,13 @@ window.onerror = function(msg, url, line, col, err) {
             scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 0, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
             scrollTl.to('#glass-objectives .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0277);
           } else {
-            scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.0327, ease: 'none' }, glassT);
-            scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01, stagger: -0.00108, ease: 'none' }, glassT);
-            scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassT);
-            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 110, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassT);
-            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT);
+            // Hacemos que desaparezca a la mitad del tiempo entre pasos (reduce tiempo en pantalla)
+            let glassObjHideT = (i > 2) ? glassT - 0.0375 : (i < 2 ? glassT + 0.0375 : glassT);
+            scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.0327, ease: 'none' }, glassObjHideT);
+            scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01, stagger: -0.00108, ease: 'none' }, glassObjHideT);
+            scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassObjHideT);
+            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 110, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassObjHideT);
+            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassObjHideT);
           }
       
       // Animar el texto del recuadro global correspondiente a este paso
