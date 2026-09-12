@@ -12785,21 +12785,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
      Controlado desde la lógica JS del carousel (currIndex) -->
 <script>
 // Ã¢â€€Ã¢â€€ SENS OVERLAY CONTROL Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-// Inyectamos un <style> en el <head>
-    <script>
-    window.safePlay = function(v) {
-      if (!v || v.paused === false || v._isPlayPending) return;
-      try {
-        var p = v.play();
-        if (p !== undefined && typeof p.catch === 'function') {
-          v._isPlayPending = true;
-          p.then(function() { v._isPlayPending = false; }).catch(function(e){ v._isPlayPending = false; });
-        }
-      } catch (e) {
-        v._isPlayPending = false;
-      }
-    };
-    </script> con !important.
+// Inyectamos un <style> en el <head> con !important.
 // Las reglas de hoja de estilo con !important ganan sobre CUALQUIER inline style,
 // incluyendo el backdrop-filter que Chrome composita en GPU.
 (function() {
@@ -14521,6 +14507,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
