@@ -2104,6 +2104,90 @@ window.onerror = function(msg, url, line, col, err) {
       }
     </style>
 
+  
+    <style>
+      .glass-close-btn { display: none; }
+      @media (max-width: 768px) {
+        .glass-close-btn {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.2);
+          color: white;
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 10;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+        
+        .glass-modal-mode {
+          position: fixed !important;
+          top: 7.5vh !important;
+          bottom: auto !important;
+          height: 85vh !important;
+          width: 90vw !important;
+          left: 5vw !important;
+          border-radius: 20px !important;
+          z-index: 9999999 !important;
+          background: rgba(20, 20, 20, 0.75) !important;
+          backdrop-filter: blur(30px) !important;
+          -webkit-backdrop-filter: blur(30px) !important;
+          border: 1px solid rgba(255,255,255,0.3) !important;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.6) !important;
+          padding-top: 4rem !important;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        
+        .glass-modal-mode .glass-close-btn {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        
+        .glass-modal-mode .mobile-expandable-content {
+          max-height: 1000px !important;
+          -webkit-mask-image: none !important;
+          mask-image: none !important;
+          overflow-y: auto !important;
+          padding-bottom: 30px;
+        }
+        
+        /* Ocultar el HR original para que no estorbe si hay scroll */
+        .glass-modal-mode hr {
+          display: block;
+        }
+        
+        /* Animar el botón para que parezca de cerrar */
+        .glass-modal-mode .mobile-see-more-container {
+          margin-top: 10px;
+        }
+        
+        .glass-modal-mode .btn-text-more { display: none !important; }
+        .glass-modal-mode .btn-text-less { display: inline !important; }
+        .glass-modal-mode .btn-chevron { transform: rotate(180deg); }
+      }
+    </style>
+    
+    <script>
+      function toggleGlassModal(glassId) {
+        const glassEl = document.getElementById(glassId);
+        if (!glassEl) return;
+        
+        if (glassEl.classList.contains('glass-modal-mode')) {
+          glassEl.classList.remove('glass-modal-mode');
+        } else {
+          glassEl.classList.add('glass-modal-mode');
+        }
+      }
+    </script>
+
   </head>
 
 <body>
@@ -2530,7 +2614,8 @@ window.onerror = function(msg, url, line, col, err) {
     
     <!-- Recuadro Glassmorphism de Quien (Paso 2) -->
     <div id="glass-who" style="position: fixed; top: 0; right: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-left: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 10vh 2.5vw 0 30px; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: -5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
-      <h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; letter-spacing: 0.05em;">Parejas (y no parejas) que nos hemos encontrado</h3>
+      <button class="glass-close-btn" onclick="toggleGlassModal('glass-who')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+<h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; letter-spacing: 0.05em;">Parejas (y no parejas) que nos hemos encontrado</h3>
       <div class="mobile-expandable-content">
 <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 0; margin: 0; list-style-type: none;" class="dynamic-lines-list">
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">Mi mujer con la que ya hemos compartido 40 a&ntilde;os y 2 hijxs</div></li>
@@ -2547,13 +2632,18 @@ window.onerror = function(msg, url, line, col, err) {
       </p>
 </div>
 <div class="mobile-see-more-container">
-  <button class="mobile-see-more-btn" onclick="this.parentElement.previousElementSibling.classList.add('expanded'); this.parentElement.style.display='none';">Ver m&aacute;s ejemplos <svg style="display:inline-block; vertical-align:middle; margin-left:4px;" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+  <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-who')">
+    <span class="btn-text-more">Ver m&aacute;s ejemplos</span>
+    <span class="btn-text-less" style="display:none;">Ver menos ejemplos</span>
+    <svg style="display:inline-block; vertical-align:middle; margin-left:4px; transition: transform 0.3s;" class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
 </div>
     </div>
 
     <!-- Recuadro Glassmorphism de Objetivos (Paso 3) -->
     <div id="glass-objectives" style="position: fixed; top: 0; left: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-right: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 10vh 30px 0 2.5vw; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: 5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
-      <h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;">Objetivos m&aacute;s pedidos</h3>
+      <button class="glass-close-btn" onclick="toggleGlassModal('glass-objectives')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+<h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;">Objetivos m&aacute;s pedidos</h3>
       <div class="dyn-text" style="color: rgba(255,255,255,0.8); font-family: 'Inter', sans-serif; font-size: 0.85rem; line-height: 1.4; margin-bottom: 24px; padding-right: 10px;">Puede ser literalmente lo que quieras con el nivel de precisi&oacute;n que necesites (excepto conseguir que te paguen la cena, en eso a&uacute;n estamos trabajando).</div>
       <div class="mobile-expandable-content">
 <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 0; margin: 0; list-style-type: none; margin-bottom: 40px;" class="dynamic-lines-list">
@@ -2569,7 +2659,11 @@ window.onerror = function(msg, url, line, col, err) {
       </p>
 </div>
 <div class="mobile-see-more-container">
-  <button class="mobile-see-more-btn" onclick="this.parentElement.previousElementSibling.classList.add('expanded'); this.parentElement.style.display='none';">Ver m&aacute;s ejemplos <svg style="display:inline-block; vertical-align:middle; margin-left:4px;" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+  <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-objectives')">
+    <span class="btn-text-more">Ver m&aacute;s ejemplos</span>
+    <span class="btn-text-less" style="display:none;">Ver menos ejemplos</span>
+    <svg style="display:inline-block; vertical-align:middle; margin-left:4px; transition: transform 0.3s;" class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
 </div>
     </div>
 
