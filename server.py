@@ -1,114 +1,89 @@
-﻿# -*- coding: utf-8 -*-
+import http.server
+import socketserver
 import os
-import json
-import stripe
-import gspread
-from datetime import datetime
-from http.server import SimpleHTTPRequestHandler, HTTPServer
-from urllib.parse import urlparse
+import re
 
-from dotenv import load_dotenv
-
-load_dotenv()
-stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
-
-# Initialize gspread
-try:
-    gc = gspread.service_account(filename='credentials.json')
-    # Open the sheet by title
-    sheet = gc.open('Onle last time web traffic').sheet1
-    print("Google Sheets connected successfully.")
-except Exception as e:
-    print(f"Warning: Could not connect to Google Sheets. Check credentials.json and sharing permissions. Error: {e}")
-    sheet = None
-
-class BackendServer(SimpleHTTPRequestHandler):
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        self.end_headers()
-
-    def do_POST(self):
-        parsed_path = urlparse(self.path)
-        content_length = int(self.headers.get('Content-Length', 0))
-        post_data = self.rfile.read(content_length)
+class RangeRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def send_head(self):
+        if 'Range' not in self.headers:
+            return super().send_head()
         
         try:
-            data = json.loads(post_data) if post_data else {}
+            path = self.translate_path(self.path)
+            f = open(path, 'rb')
+        except OSError:
+            self.send_error(404, "File not found")
+            return None
+        
+        fs = os.fstat(f.fileno())
+        size = int(fs.st_size)
+        
+        range_header = self.headers.get('Range')
+        match = re.search(r'bytes=(\d+)-(\d*)', range_header)
+        
+        if not match:
+            self.send_error(400, "Bad Request")
+            return None
             
-            if parsed_path.path == '/create-payment-intent':
-                intent = stripe.PaymentIntent.create(
-                    amount=3500,
-                    currency='eur',
-                    automatic_payment_methods={
-                        'enabled': True,
-                    },
-                    metadata={
-                        'deliveryMode': data.get('deliveryMode'),
-                    }
-                )
-                self.send_response(200)
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.send_header('Content-Type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({'clientSecret': intent.client_secret}).encode('utf-8'))
-                
-            elif parsed_path.path == '/api/waitlist':
-                email = data.get('email')
-                if sheet and email:
-                    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    sheet.append_row([now, "WAITLIST", email, "N/A", "N/A"])
-                
-                self.send_response(200)
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.send_header('Content-Type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({'status': 'ok'}).encode('utf-8'))
-                
-            elif parsed_path.path == '/api/track':
-                events = data.get('events', [])
-                if sheet and events:
-                    rows_to_insert = []
-                    for ev in events:
-                        rows_to_insert.append([
-                            ev.get('timestamp', datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-                            ev.get('sessionId', 'unknown'),
-                            ev.get('isNewUser', ''),
-                            ev.get('visitCount', ''),
-                            ev.get('trafficSource', ''),
-                            ev.get('page', 'unknown'),
-                            ev.get('event', 'unknown'),
-                            ev.get('scroll', ''),
-                            ev.get('timeSpent', ''),
-                            ev.get('dato1', ''),
-                            ev.get('dato2', ''),
-                            ev.get('dato3', ''),
-                            ev.get('dato4', ''),
-                            ev.get('dato5', '')
-                        ])
-                    sheet.append_rows(rows_to_insert)
-                
-                self.send_response(200)
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.send_header('Content-Type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({'status': 'ok'}).encode('utf-8'))
-                
-            else:
-                self.send_response(404)
-                self.end_headers()
-                
-        except Exception as e:
-            self.send_response(400)
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.send_header('Content-Type', 'application/json')
+        first_byte = int(match.group(1))
+        last_byte = int(match.group(2)) if match.group(2) else size - 1
+        
+        if first_byte >= size or last_byte >= size:
+            self.send_error(416, "Requested Range Not Satisfiable")
+            self.send_header("Content-Range", f"bytes */{size}")
             self.end_headers()
-            self.wfile.write(json.dumps({'error': str(e)}).encode('utf-8'))
+            return None
+            
+        length = last_byte - first_byte + 1
+        
+        self.send_response(206)
+        self.send_header("Content-type", self.guess_type(path))
+        self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Content-Range", f"bytes {first_byte}-{last_byte}/{size}")
+        self.send_header("Content-Length", str(length))
+        self.send_header("Cache-Control", "no-cache")
+        self.end_headers()
+        
+        return f
+
+    def copyfile(self, source, outputfile):
+        if 'Range' not in self.headers:
+            super().copyfile(source, outputfile)
+            return
+            
+        range_header = self.headers.get('Range')
+        match = re.search(r'bytes=(\d+)-(\d*)', range_header)
+        if not match:
+            return
+            
+        first_byte = int(match.group(1))
+        fs = os.fstat(source.fileno())
+        size = int(fs.st_size)
+        last_byte = int(match.group(2)) if match.group(2) else size - 1
+        
+        length = last_byte - first_byte + 1
+        source.seek(first_byte)
+        
+        chunk_size = 64 * 1024
+        while length > 0:
+            chunk = source.read(min(length, chunk_size))
+            if not chunk:
+                break
+            try:
+                outputfile.write(chunk)
+            except Exception:
+                break
+            length -= len(chunk)
 
 if __name__ == '__main__':
-    port = 8003
-    print(f"Starting Backend API server on port {port}...")
-    httpd = HTTPServer(('localhost', port), BackendServer)
-    httpd.serve_forever()
+    port = 8000
+    socketserver.TCPServer.allow_reuse_address = True
+    try:
+        httpd = socketserver.TCPServer(("", port), RangeRequestHandler)
+        print(f"Server START (Range Support ON) -> http://localhost:{port}")
+        httpd.serve_forever()
+    except OSError:
+        print(f"Puerto {port} ocupado. Probando 8002...")
+        httpd = socketserver.TCPServer(("", 8002), RangeRequestHandler)
+        print(f"Server START (Range Support ON) -> http://localhost:8002")
+        httpd.serve_forever()
