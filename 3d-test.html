@@ -10295,24 +10295,20 @@ window.onerror = function(msg, url, line, col, err) {
       // Controlar la visibilidad del CTA inferior
         const bottomCta = document.getElementById('cta-bottom-container');
         if (bottomCta) {
-            // Remove previous classes just in case
             bottomCta.classList.remove('smoke-out');
-            
             if (prog >= 38.45) {
                 let pOffset = prog - 38.45;
-                // Move up slower than page scroll (parallax). 1 prog = 100vh. Slower = 70vh per prog.
-                let yMove = pOffset * 70; 
-                // Fade out completely when it's near the top (around 85vh moved)
-                let opacityVal = Math.max(0, 1 - (yMove / 85));
+                // Move exactly with the scroll (1 prog = approx 100vh)
+                let yMove = pOffset * 100; 
                 
                 gsap.set(bottomCta, {
                     xPercent: -50, x: 0,
                     y: -yMove + 'vh',
-                    opacity: opacityVal,
+                    opacity: 1,
                     scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, filter: 'blur(0px)',
                     overwrite: true
                 });
-                bottomCta.style.pointerEvents = 'none';
+                bottomCta.style.pointerEvents = 'auto';
             } else {
                 gsap.set(bottomCta, {
                     xPercent: -50, x: 0,
