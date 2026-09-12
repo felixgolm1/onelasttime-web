@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <script>
@@ -6702,16 +6702,10 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
-          // Re-evaluar reproducción continuamente por si el navegador pausa videos out-of-viewport (ahorro de batería)
+          // Re-evaluar reproducción continuamente
           document.querySelectorAll('.carousel-track-small video, .carousel-track-large video').forEach(function(v) {
-              if (v.hasAttribute('autoplay') && v.paused && !v._isPlayPending) {
-                var p = v.play();
-                if (p !== undefined && p.catch) {
-                  v._isPlayPending = true;
-                  p.then(function() { v._isPlayPending = false; }).catch(function(){ v._isPlayPending = false; });
-                }
-              }
-            });
+            if (v.hasAttribute('autoplay')) window.safePlay(v);
+          });
             
             ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
               var el = document.getElementById(id);
@@ -8009,11 +8003,7 @@ requestAnimationFrame(smoothScrollLoop);
             const slide0Video = document.querySelector('.carousel-item video');
             if (slide0Video) {
               slide0Video.currentTime = 0;
-              if (!slide0Video._isPlayPending) {
-                slide0Video._isPlayPending = true;
-                let p = slide0Video.play();
-                if (p && p.catch) p.then(() => slide0Video._isPlayPending = false).catch(() => slide0Video._isPlayPending = false);
-              }
+              window.safePlay(slide0Video);
             }
           }
       }
@@ -12823,11 +12813,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   // Add global interaction listener to ensure autoplay videos start in Safari
     window.addEventListener('pointerdown', function() {
     document.querySelectorAll('video').forEach(function(v) {
-      if (v.hasAttribute('autoplay') && v.paused && !v._isPlayPending) {
+      if (v.hasAttribute('autoplay')) {
         v.muted = true;
-        v._isPlayPending = true;
-        var p = v.play();
-        if (p && p.catch) p.then(() => v._isPlayPending = false).catch(() => v._isPlayPending = false);
+        window.safePlay(v);
       }
     });
   }, { once: false, passive: true });
@@ -12844,11 +12832,7 @@ window.dismissSens = function(e) {
   // Ensure videos play when interacted
   document.querySelectorAll('video').forEach(function(v) {
     if ((v.src && v.src.indexOf('besos') !== -1) || v.hasAttribute('autoplay')) {
-      if (v.paused && !v._isPlayPending) {
-        v._isPlayPending = true;
-        var p = v.play();
-        if (p && p.catch) p.then(() => v._isPlayPending = false).catch(() => v._isPlayPending = false);
-      }
+      window.safePlay(v);
     }
   });
 
@@ -14537,6 +14521,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
