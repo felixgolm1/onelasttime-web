@@ -6150,7 +6150,7 @@ window.onerror = function(msg, url, line, col, err) {
         let shiftX = 0;
 
         if (transP < 0.4) {
-           shiftX = mapRange(transP, 0, 0.4, 0, -44.87);
+           let baseW_s = window._cIsMobile ? 88.489 : 89.74; shiftX = mapRange(transP, 0, 0.4, 0, -(baseW_s / 2));
         } else if (transP >= 0.4 && transP <= 0.85) {
            let tScale = mapRange(transP, 0.4, 0.85, 0, 1);
            // Ease-out cuadrático para X
@@ -6161,23 +6161,23 @@ window.onerror = function(msg, url, line, col, err) {
            let magScene = document.getElementById('magazine-scene');
            let magW = magScene ? magScene.offsetWidth * 0.85 : 396.1;
            let magH = magScene ? magScene.offsetHeight * 0.85 : 532.1;
-           let baseW = window._cIsMobile ? 82 : 89.74;
-           let baseH = window._cIsMobile ? 255 : 329.41;
+           let baseW = window._cIsMobile ? 88.489 : 89.74;
+           let baseH = window._cIsMobile ? 275.18 : 329.41;
            let targetScaleX = magW / baseW;
            let targetScaleY = magH / baseH;
            
            boxScaleX = 1 + (targetScaleX - 1) * tX;
            boxScaleY = 1 + (targetScaleY - 1) * tY;
-           shiftX = -44.87 * boxScaleX;
+           shiftX = -( (window._cIsMobile ? 88.489 : 89.74) / 2 ) * boxScaleX;
         } else if (transP > 0.85) {
            let magScene = document.getElementById('magazine-scene');
            let magW = magScene ? magScene.offsetWidth * 0.85 : 396.1;
            let magH = magScene ? magScene.offsetHeight * 0.85 : 532.1;
-           let baseW = window._cIsMobile ? 82 : 89.74;
-           let baseH = window._cIsMobile ? 255 : 329.41;
+           let baseW = window._cIsMobile ? 88.489 : 89.74;
+           let baseH = window._cIsMobile ? 275.18 : 329.41;
            boxScaleX = magW / baseW;
            boxScaleY = magH / baseH;
-           shiftX = -44.87 * boxScaleX;
+           shiftX = -( (window._cIsMobile ? 88.489 : 89.74) / 2 ) * boxScaleX;
         }
         mainDeck.style.transform = `translateX(${shiftX}px) scaleX(${boxScaleX}) scaleY(${boxScaleY})`;
         
@@ -14498,6 +14498,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
 
 
 
