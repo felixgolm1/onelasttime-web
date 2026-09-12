@@ -1268,7 +1268,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     .sc-board {
 
-      position: absolute; top: 50%; left: 50%;
+      position: absolute; top: calc(50% - 4.5vh); left: 50%;
 
       width: 0; height: 0;
 
@@ -1642,7 +1642,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       position: fixed;           /* fixed porque la escena está pinned */
 
-      top: 50%;
+      top: calc(50% - 4.5vh);
 
       left: 50%;
 
@@ -5166,11 +5166,11 @@ window.onerror = function(msg, url, line, col, err) {
 
   <!-- Nuevo texto gigante al estilo Oryzo -->
 
-  <div id="made-by-humans" style="position: fixed; top: 50%; left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10001; pointer-events: none; visibility: hidden;">hecho por personas</div>
+  <div id="made-by-humans" style="position: fixed; top: calc(50% - 4.5vh); left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10001; pointer-events: none; visibility: hidden;">hecho por personas</div>
 
   
 
-                  <div id="made-by-ai" style="position: fixed; top: 50%; left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10001; pointer-events: none; visibility: hidden;">
+                  <div id="made-by-ai" style="position: fixed; top: calc(50% - 4.5vh); left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10001; pointer-events: none; visibility: hidden;">
 
       <span style="position: relative; display: inline-block;">
 
@@ -5948,7 +5948,7 @@ window.onerror = function(msg, url, line, col, err) {
 
   <!-- OPCION B: Input HTML visible perfectamente sincronizado con WebGL -->
 
-  <div id="visible-input-overlay" style="display: none !important; position: fixed; inset: 0; pointer-events: none; z-index: 10050; align-items: center; justify-content: center;">
+  <div id="visible-input-overlay" style="display: none !important; position: fixed; inset: 0; pointer-events: none; z-index: 10050; padding-bottom: 9vh; align-items: center; justify-content: center;">
 
     <div id="visible-input-group" style="width: 380px; height: 234px; pointer-events: none; transform-style: preserve-3d; opacity: 0;">
 
@@ -18396,7 +18396,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
       _svgWrap.style.cssText = [
 
-        'position:fixed', 'left:50%', (window._cIsMobile ? 'top:45%' : 'top:50%'),
+        'position:fixed', 'left:50%', (window._cIsMobile ? 'top:45%' : 'top:calc(50% - 4.5vh)'),
 
         'width:380px', 'height:234px',
 
