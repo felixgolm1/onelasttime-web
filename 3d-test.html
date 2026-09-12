@@ -4512,27 +4512,31 @@ window.onerror = function(msg, url, line, col, err) {
       // Hacemos que la caja global complete su fade out en el mismo milisegundo exacto.
       scrollTl.to(detailGlobal, { opacity: 0, duration: 0.034, ease: 'none' }, t);
     }
+        // Hacemos que toda la recogida sea un solo movimiento largo y suave
+    // Solapamos el recentrado del scBoard y el agrupamiento de las cartas para aprovechar el tiempo
+    let gatherStart = t - HOLD; // Iniciamos justo cuando termina el movimiento a Paso 4
+    let gatherDur = HOLD + PAN + 0.15; // Usamos todo el tiempo disponible hasta t3
+
     scrollTl.to(scBoard, { x: 0, y: 0, rotation: 0, scale: 1,
-      duration: PAN, ease: 'power2.inOut' }, t);
-    scrollTl.to(sIntroProxy, { opacity: 1, duration: PAN,
-      ease: 'power2.inOut', onUpdate: updateIntroOpacity }, t);
+      duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
+    scrollTl.to(sIntroProxy, { opacity: 1, duration: gatherDur,
+      ease: 'power2.inOut', onUpdate: updateIntroOpacity }, gatherStart);
     // Restaurar opacidad de todas las cartas al volver al overview
-    scrollTl.to(focusOrder, { opacity: 1, duration: PAN, ease: 'power2.inOut' }, t);
+    scrollTl.to(focusOrder, { opacity: 1, duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
 
+    let t2 = gatherStart + gatherDur - 0.15; // Mantenemos el mismo valor sem�ntico para que nada se rompa
 
-    let t2 = t + PAN; // ~1.18
-
-    // Ã¢â€€ Fase 9: Recoger (0.15s) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-    // Escalan a 1.02 (0.85 equivalente bajo escala de 1.2 base) para quedar eclipsadas y escondidas a la perfección sin opacidades raras
+    // ? Fase 9: Recoger (Smooth) ?
+    // Escalan a 1.02 (0.85 equivalente bajo escala de 1.2 base) para quedar eclipsadas y escondidas a la perfecci�n sin opacidades raras
     scrollTl.to([sc1, sc2, sc3, sc4], {
-      x: '0%', y: '0%', rotation: 0, scale: 1.02, duration: 0.15, ease: 'power2.inOut'
-    }, t2);
+      x: '0%', y: '0%', rotation: 0, scale: 1.02, duration: gatherDur, ease: 'power2.inOut'
+    }, gatherStart); // Overlap
 
-    // Ã¢â€€ CTA: fade in suave del botón cuando las cartas terminan de recogerse Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
+    // ? CTA: fade in suave del bot�n cuando las cartas terminan de recogerse ?
     // (Ya no hacemos que reaparezca porque nunca lo ocultamos)
 
-    // Ã¢â€€ Fase 10: 2 Flips y cambianzo (1.33) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-    let t3 = t2 + 0.15;
+    // ? Fase 10: 2 Flips y cambianzo (1.33) ?
+    let t3 = gatherStart + gatherDur;
     const mainDeck = document.getElementById('mainDeck');
     const maxProg = 61.5;
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
@@ -14483,6 +14487,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
