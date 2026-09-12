@@ -10294,19 +10294,11 @@ window.onerror = function(msg, url, line, col, err) {
 
 
       // Controlar la visibilidad del CTA inferior
-      const bottomCta = document.getElementById('cta-bottom-container');
-      if (bottomCta) {
-         // Ocultar el CTA durante la seccin de la revista y el cerebro trmico (localP aprox 7.0 a 14.0)
-         // Para usar localP de forma segura, podemos usar prog (sabiendo que prog = localP en rangos bajos, y luego hay un offset)
-         // Usaremos prog > 13.0 y prog < 20.0
-         if (prog >= 16.1 && prog < 18.5) {
-             bottomCta.style.opacity = '0';
-             bottomCta.style.pointerEvents = 'none';
-         } else {
-             bottomCta.style.opacity = '1';
-             bottomCta.style.pointerEvents = 'auto';
-         }
-      }
+        const bottomCta = document.getElementById('cta-bottom-container');
+        if (bottomCta) {
+           bottomCta.style.opacity = '1';
+           bottomCta.style.pointerEvents = 'auto';
+        }
 
 
 
