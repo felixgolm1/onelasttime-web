@@ -4576,7 +4576,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€ € Animación del texto deslizable "hecho por personas"
     // Lo subimos verticalmente (yPercent: -95) y encendemos su opacidad en posición inicial
-    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: -50, y: window._cIsMobile ? '-30vh' : 0, x: '92vw' }, t2 - 0.08);
+    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -95, y: window._cIsMobile ? '-30vh' : 0, x: '92vw' }, t2 - 0.08);
     scrollTl.to('#made-by-humans', {
       x: '0vw', 
       duration: (tSwap - (t2 - 0.08)), 
@@ -4591,7 +4591,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€ € Animación del segundo texto "personalizado con IA"
     let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" → prog ~1.47
-    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -50, y: window._cIsMobile ? '30vh' : 0, x: '-92vw' }, tAiStart);
+    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -5, y: window._cIsMobile ? '30vh' : 0, x: '-92vw' }, tAiStart);
     scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
     // Ã¢â€ € Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €
