@@ -1817,7 +1817,10 @@ window.onerror = function(msg, url, line, col, err) {
 
 <!-- MOBILE OPTIMIZATIONS FOR VIP OVERLAY -->
 <style>
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45.5% !important; }
+  #card-morph-group { top: -4.5vh; }
+  #magazine-scene, #camera-flash-container { top: 45.5%; }
 
   #cta-top-container { display: none !important; }
   
@@ -1986,7 +1989,10 @@ window.onerror = function(msg, url, line, col, err) {
     text-transform: uppercase;
   }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45.5% !important; }
+  #card-morph-group { top: -4.5vh; }
+  #magazine-scene, #camera-flash-container { top: 45.5%; }
   #card-morph-group, .sc-card { transform: scale(0.90); transform-origin: center center; }
 
 
@@ -9194,7 +9200,7 @@ function makeCardBackTex(data = '4 PASOS') {
       _svgWrap.id = 'intro-card-svg-wrap';
       // position:fixed centrado con left/top 50% + GSAP xPercent/yPercent:-50
       _svgWrap.style.cssText = [
-        'position:fixed', 'left:50%', 'top:50%',
+        'position:fixed', 'left:50%', (window._cIsMobile ? 'top:45.5%' : 'top:50%'),
         'width:380px', 'height:234px',
         'z-index:10004', 'pointer-events:none'
       ].join(';');
@@ -14638,5 +14644,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 
+
 
 
