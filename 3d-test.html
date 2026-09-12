@@ -7989,11 +7989,18 @@ requestAnimationFrame(smoothScrollLoop);
       if (prevTarget <= 10.42 && targetProg > 10.42 && !window._carouselEntryStart) {
         window._carouselEntryStart = Date.now();
         // Primera vez que el usuario entra en el carrusel: vídeo slide 0 empieza desde 0
-        if (!window._slide0VideoReset) {
-          window._slide0VideoReset = true;
-          const slide0Video = document.querySelector('.carousel-item video');
-          if (slide0Video) { slide0Video.currentTime = 0; slide0Video.play(); }
-        }
+                  if (!window._slide0VideoReset) {
+            window._slide0VideoReset = true;
+            const slide0Video = document.querySelector('.carousel-item video');
+            if (slide0Video) {
+              slide0Video.currentTime = 0;
+              if (!slide0Video._isPlayPending) {
+                slide0Video._isPlayPending = true;
+                let p = slide0Video.play();
+                if (p && p.catch) p.then(() => slide0Video._isPlayPending = false).catch(() => slide0Video._isPlayPending = false);
+              }
+            }
+          }
       }
       // Si el usuario retrocede antes del flash: cancela el timer
       if (targetProg <= 10.42) {
@@ -12784,12 +12791,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 })();
   
   // Add global interaction listener to ensure autoplay videos start in Safari
-  window.addEventListener('pointerdown', function() {
+    window.addEventListener('pointerdown', function() {
     document.querySelectorAll('video').forEach(function(v) {
-      if (v.hasAttribute('autoplay') && v.paused) {
+      if (v.hasAttribute('autoplay') && v.paused && !v._isPlayPending) {
         v.muted = true;
+        v._isPlayPending = true;
         var p = v.play();
-        if (p && p.catch) p.catch(function(){});
+        if (p && p.catch) p.then(() => v._isPlayPending = false).catch(() => v._isPlayPending = false);
       }
     });
   }, { once: false, passive: true });
@@ -12797,7 +12805,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
 
-  // Ocultar botón con fade
+  // Ocultar bot�n con fade
   var btn = document.getElementById('sens-cta-btn');
   if (btn) { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
 
@@ -12805,15 +12813,20 @@ window.dismissSens = function(e) {
 
   // Ensure videos play when interacted
   document.querySelectorAll('video').forEach(function(v) {
-    if (v.src && v.src.indexOf('besos') !== -1) {
-      if (v.paused) {
+    if ((v.src && v.src.indexOf('besos') !== -1) || v.hasAttribute('autoplay')) {
+      if (v.paused && !v._isPlayPending) {
+        v._isPlayPending = true;
         var p = v.play();
-        if (p && p.catch) p.catch(function(){});
+        if (p && p.catch) p.then(() => v._isPlayPending = false).catch(() => v._isPlayPending = false);
       }
-    } else if (v.hasAttribute('autoplay') && v.paused) {
-      var p = v.play();
-      if (p && p.catch) p.catch(function(){});
     }
+  });
+      }
+          } else if (v.hasAttribute('autoplay') && v.paused && !v._isPlayPending) {
+        v._isPlayPending = true;
+        var p = v.play();
+        if (p && p.catch) p.then(() => v._isPlayPending = false).catch(() => v._isPlayPending = false);
+      }
   });
 
   // Inyectar regla CSS !important que destruye el overlay del LARGE (miniatura no se toca)
@@ -14501,6 +14514,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
+
+
 
 
 
