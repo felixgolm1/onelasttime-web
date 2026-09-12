@@ -3633,7 +3633,8 @@ window.onerror = function(msg, url, line, col, err) {
 <style>
 
 @media screen and (max-width: 768px) {
-  .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45dvh !important; }
+  .sc-board, #made-by-humans, #made-by-ai { top: 50dvh !important; }
+  .box-3d-wrapper { top: 45dvh !important; }
   #card-morph-group { top: 0; }
   #magazine-scene, #camera-flash-container { top: 45dvh; }
 
@@ -3974,7 +3975,8 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 @media screen and (max-width: 768px) {
-  .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45dvh !important; }
+  .sc-board, #made-by-humans, #made-by-ai { top: 50dvh !important; }
+  .box-3d-wrapper { top: 45dvh !important; }
   #card-morph-group { top: 0; }
   #magazine-scene, #camera-flash-container { top: 45dvh; }
 
@@ -8082,7 +8084,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     scrollTl.to([mg, visGroup], {
 
-      rotationY: -540, rotation: -2.5, y: window._cIsMobile ? '-5dvh' : 0,
+      rotationY: -540, rotation: -2.5,
 
       duration: 0.80, ease: 'linear'
 
@@ -10295,8 +10297,38 @@ window.onerror = function(msg, url, line, col, err) {
       // Controlar la visibilidad del CTA inferior
         const bottomCta = document.getElementById('cta-bottom-container');
         if (bottomCta) {
-           bottomCta.style.opacity = '1';
-           bottomCta.style.pointerEvents = 'auto';
+           if (prog >= 38.45) {
+               if (!bottomCta.classList.contains('smoke-out')) {
+                   bottomCta.classList.add('smoke-out');
+                   gsap.to(bottomCta, {
+                       y: -50,
+                       scale: 1.2,
+                       opacity: 0,
+                       filter: 'blur(12px)',
+                       duration: 0.4,
+                       ease: 'power2.out',
+                       overwrite: true
+                   });
+                   bottomCta.style.pointerEvents = 'none';
+               }
+           } else {
+               if (bottomCta.classList.contains('smoke-out')) {
+                   bottomCta.classList.remove('smoke-out');
+                   gsap.to(bottomCta, {
+                       y: 0,
+                       scale: 1,
+                       opacity: 1,
+                       filter: 'blur(0px)',
+                       duration: 0.3,
+                       ease: 'power2.in',
+                       overwrite: true
+                   });
+                   bottomCta.style.pointerEvents = 'auto';
+               } else if (!bottomCta.style.opacity || bottomCta.style.opacity === '0') {
+                   bottomCta.style.opacity = '1';
+                   bottomCta.style.pointerEvents = 'auto';
+               }
+           }
         }
 
 
@@ -12314,8 +12346,9 @@ window.onerror = function(msg, url, line, col, err) {
         }
 
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
-
-        gsap.set(scBoard, { y: boardY + 'vh' });
+        let scatterOffsetY = mapRange(prog, 0.92, 1.27, 0, -5);
+        if (window._cIsMobile) boardY += scatterOffsetY;
+        gsap.set(scBoard, { y: boardY + (window._cIsMobile ? 'dvh' : 'vh') });
 
         
 
@@ -29066,6 +29099,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
