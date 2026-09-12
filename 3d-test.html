@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -2801,7 +2801,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
         <div class="face-left">
-          <span>�breme para abrirte</span>
+          <span>?breme para abrirte</span>
           <div class="dust-flap left">
             <div class="dust-front"></div>
             <div class="dust-back"></div>
@@ -6223,7 +6223,7 @@ window.onerror = function(msg, url, line, col, err) {
              track.style.opacity = transP < 0.85 ? 0 : mapRange(transP, 0.85, 0.95, 0, 1);
              let revBlur = transP < 0.85 ? 40 : mapRange(transP, 0.85, 1.0, 40, 0);
              let scaleVal = transP < 0.85 ? 0.9 : mapRange(transP, 0.85, 1.0, 0.95, 1);
-             track.style.filter = `blur(${revBlur}px)`;
+             track.style.filter = revBlur <= 0.1 ? 'none' : "blur(${revBlur}px)";
              track.style.transform = `translate(-50%, -50%) scale(${scaleVal})`;
            });
         }
@@ -6702,13 +6702,14 @@ window.onerror = function(msg, url, line, col, err) {
                 [sv, lv].forEach(v => {
                   if (!v) return;
                   if (isVisible) {
-                    if (!v._wasVisible) {
-                      v._wasVisible = true;
-                      if (v.hasAttribute('autoplay')) {
+                    if (v.hasAttribute('autoplay') && v.paused) {
+                      if (!v._playThrottle || (Date.now() - v._playThrottle > 1000)) {
+                        v._playThrottle = Date.now();
                         v.muted = true;
-                          v.currentTime = 0;
-                          let p = v.play();
-                        if (p && p.catch) p.catch(()=>{});
+                        let p = v.play();
+                        if (p && typeof p.catch === 'function') {
+                          p.catch(() => {});
+                        }
                       }
                     }
                   } else {
@@ -7129,7 +7130,7 @@ window.onerror = function(msg, url, line, col, err) {
           return;
         }
 
-        // Carta en la mesa: mover li��bremente
+        // Carta en la mesa: mover li??bremente
         let newLeft = initialLeft + (e.clientX - startX);
         let newTop  = initialTop  + (e.clientY - startY);
         
@@ -8312,7 +8313,7 @@ requestAnimationFrame(smoothScrollLoop);
 
     const tex = new THREE.CanvasTexture(c);
     tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(6, 4);   // ~threads visibles: (28u/6)/(S/T) � hilo cada ~18px en pantalla
+    tex.repeat.set(6, 4);   // ~threads visibles: (28u/6)/(S/T) ? hilo cada ~18px en pantalla
     tex.anisotropy = 16;
     return tex;
   }
@@ -14532,6 +14533,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
 
 
 
