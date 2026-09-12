@@ -7490,6 +7490,7 @@ window.onerror = function(msg, url, line, col, err) {
 
           // Footer & Hero UI fade in (animamos blur y textos por separado para que el blur funcione en Chrome durante el fade in)
 
+          if (prog < 0.2) {
           gsap.to(['.blur-bg-head', '#blur-bg-sub'], {
 
             opacity: 1, duration: 1.2, delay: 0.4, clearProps: 'opacity',
@@ -7509,26 +7510,26 @@ window.onerror = function(msg, url, line, col, err) {
             }
 
           });
+          }
 
-          gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
-              opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05
-            });
+          if (prog < 0.2) {
+              gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
+                opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05
+              });
+            }
 
 
 
           // Textos laterales fade in (Flanqueadores)
 
-          gsap.to('.flt-in', {
-
-            y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.6
-
-          });
-
-          gsap.to('.flt-in-up', {
-
-            y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.8
-
-          });
+          if (prog < 0.2) {
+            gsap.to('.flt-in', {
+              y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.6
+            });
+            gsap.to('.flt-in-up', {
+              y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.8
+            });
+          }
 
 
 
