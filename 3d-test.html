@@ -9671,6 +9671,22 @@ function makeCardBackTex(data = '4 PASOS') {
                   currentLookY - mouseNY * 0.05 * parallaxStr,
                   currentLookZ);
     camera.updateMatrixWorld();
+
+    // --- Sincronizar el mazo de cartas HTML con la MESA (efecto parallax real) ---
+    // Proyectamos el centro de la mesa (0,0,0) usando la cámara principal CON parallax.
+    // Así, el mazo HTML se mueve por la pantalla exactamente igual que los platos.
+    const dealerPile = document.getElementById('dealer-pile-wrap');
+    if (dealerPile && dealerPile.style.visibility !== 'hidden' && camera) {
+        const tableCenter = new THREE.Vector3(0, 0, 0);
+        tableCenter.project(camera);
+        
+        // Convertimos a píxeles y aplicamos el offset estático del diseño de la carta
+        const screenX = (tableCenter.x * 0.5 + 0.5) * window.innerWidth - 22;
+        const screenY = -(tableCenter.y * 0.5 - 0.5) * window.innerHeight - 18;
+        
+        dealerPile.style.left = screenX + 'px';
+        dealerPile.style.top = screenY + 'px';
+    }
     // cardCam2 siempre en el origen â€ â€  carta congelada en viewport
 
     renderer.render(scene, camera);
