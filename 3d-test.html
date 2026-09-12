@@ -2059,7 +2059,52 @@ window.onerror = function(msg, url, line, col, err) {
         }
       }
     </style>
-</head>
+
+    <style>
+      .mobile-see-more-container { display: none; }
+      @media (max-width: 768px) {
+        .mobile-expandable-content {
+          position: relative;
+          max-height: 135px; /* Roughly 2.5 lines */
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+          transition: max-height 0.5s ease;
+        }
+        .mobile-expandable-content.expanded {
+          max-height: 1000px;
+          -webkit-mask-image: none;
+          mask-image: none;
+          overflow-y: visible; /* Let the parent container handle scroll */
+        }
+        .mobile-see-more-container {
+          display: flex;
+          justify-content: center;
+          margin-top: -15px;
+          position: relative;
+          z-index: 10;
+        }
+        .mobile-see-more-btn {
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.2);
+          color: #fff;
+          border-radius: 20px;
+          padding: 8px 20px;
+          font-size: 0.85rem;
+          font-family: 'Inter', sans-serif;
+          cursor: pointer;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          transition: all 0.2s ease;
+        }
+        .mobile-see-more-btn:active {
+          transform: scale(0.95);
+          background: rgba(255,255,255,0.15);
+        }
+      }
+    </style>
+
+  </head>
 
 <body>
   <!-- Mobile Top Progress Bar (Oryzo style) -->
