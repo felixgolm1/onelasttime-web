@@ -3432,8 +3432,7 @@ window.onerror = function(msg, url, line, col, err) {
               wrap = document.createElement('div');
               wrap.id = 'dealer-pile-wrap';
               // El centro 3D es perfectamente el centro de la pantalla (porque la cámara mira a 0,0,0).
-              // Aplicamos el offset estático (-22px, -18px) para que coincida exactamente con la malla 3D de la carta principal en reposo.
-              wrap.style.cssText = 'position:fixed; top:calc(50% - 18px); left:calc(50% - 22px); transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
+              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
               let scale = window._cIsMobile ? 0.5 : 0.65;
               let cardsHtml = '';
@@ -8260,7 +8259,19 @@ requestAnimationFrame(smoothScrollLoop);
   // Las cartas se construyen DESPUÉS de que el logo cargue para que aparezca en el canvas
   let cards = [];
   function buildAllCards() {
-    cards = [];
+    const isMobile = window.innerWidth <= 768;
+    const mobRYOffset = isMobile ? -Math.PI / 2 : 0;
+    const cardPos = [
+      {x: 0.15, z: 0.1,  rY:  0.08 + mobRYOffset,  rZ:  0.03,  yOffset: 0.000},  // base
+      {x: 0.15, z: 0.1,  rY:  0.04 + mobRYOffset,  rZ: -0.015,  yOffset: 0.034},  // encima
+      {x: 0.15, z: 0.1,  rY: -0.06 + mobRYOffset,  rZ:  0.025,  yOffset: 0.068},  // encima
+      {x: 0.15, z: 0.1,  rY: -0.02 + mobRYOffset,  rZ: -0.01,   yOffset: 0.102},  // tope
+    ];
+    cards = cardPos.map((p,i) => {
+      const w = buildCard(cardData[i], p.x, p.z, p.rY, p.rZ, p.yOffset);
+      scene.add(w);
+      return w;
+    });
   }
   // Si el logo ya cargó (caché), construimos ya. Si no, esperamos.
   if (OLT_LOGO.complete && OLT_LOGO.naturalWidth > 0) {
@@ -9696,9 +9707,9 @@ function makeCardBackTex(data = '4 PASOS') {
         const tableCenter = new THREE.Vector3(0, 0, 0);
         tableCenter.project(camera);
         
-        // Convertimos a píxeles y aplicamos el offset estático del diseño de la carta
-        const screenX = (tableCenter.x * 0.5 + 0.5) * window.innerWidth - 22;
-        const screenY = -(tableCenter.y * 0.5 - 0.5) * window.innerHeight - 18;
+        // Convertimos a píxeles
+        const screenX = (tableCenter.x * 0.5 + 0.5) * window.innerWidth;
+        const screenY = -(tableCenter.y * 0.5 - 0.5) * window.innerHeight;
         
         dealerPile.style.left = screenX + 'px';
         dealerPile.style.top = screenY + 'px';
