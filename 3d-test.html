@@ -4416,8 +4416,8 @@ window.onerror = function(msg, url, line, col, err) {
             scrollTl.to('#glass-who .glass-mask-line', { yPercent: 0, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
             scrollTl.to('#glass-who .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0285);
           } else {
-            // Hacemos que desaparezca a la mitad del tiempo entre pasos (reduce tiempo en pantalla)
-            let glassWhoHideT = (i > 1) ? glassT - 0.0375 : (i < 1 ? glassT + 0.0375 : glassT);
+            // Hacemos que desaparezca un poco antes (punto medio entre antes y ahora = -0.018)
+            let glassWhoHideT = (i > 1) ? glassT - 0.018 : (i < 1 ? glassT + 0.018 : glassT);
             scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.0335, ease: 'none' }, glassWhoHideT);
             scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01, stagger: -0.00069, ease: 'none' }, glassWhoHideT);
             scrollTl.to(glassWhoFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassWhoHideT);
@@ -4433,8 +4433,8 @@ window.onerror = function(msg, url, line, col, err) {
             scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 0, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
             scrollTl.to('#glass-objectives .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0277);
           } else {
-            // Hacemos que desaparezca a la mitad del tiempo entre pasos (reduce tiempo en pantalla)
-            let glassObjHideT = (i > 2) ? glassT - 0.0375 : (i < 2 ? glassT + 0.0375 : glassT);
+            // Hacemos que desaparezca un poco antes (punto medio entre antes y ahora = -0.018)
+            let glassObjHideT = (i > 2) ? glassT - 0.018 : (i < 2 ? glassT + 0.018 : glassT);
             scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.0327, ease: 'none' }, glassObjHideT);
             scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01, stagger: -0.00108, ease: 'none' }, glassObjHideT);
             scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassObjHideT);
