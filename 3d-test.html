@@ -12340,6 +12340,15 @@ window.onerror = function(msg, url, line, col, err) {
         if (window._cIsMobile) {
             scBoard.style.setProperty('top', (50 + glideY) + 'vh', 'important');
             scBoard.style.marginTop = '0px';
+        let dbg = document.getElementById('my-dbg');
+        if (!dbg) {
+          dbg = document.createElement('div');
+          dbg.id = 'my-dbg';
+          dbg.style = 'position:fixed;top:50px;left:10px;z-index:999999;background:red;color:white;font-size:16px;padding:10px;pointer-events:none;';
+          document.body.appendChild(dbg);
+        }
+        dbg.innerText = "PROG: " + prog.toFixed(2) + " | M: " + window._cIsMobile + " | GLIDE: " + glideY + " | TOP: " + scBoard.style.top;
+
         } else {
             let yPx = boardY * (window._ch / 100);
             gsap.set(scBoard, { y: yPx });
