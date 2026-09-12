@@ -5,14 +5,19 @@
     <script>
     window.safePlay = function(v) {
       if (!v || v.paused === false || v._isPlayPending) return;
+      if (v._lastPlayFail && (Date.now() - v._lastPlayFail < 1000)) return;
       try {
         var p = v.play();
         if (p !== undefined && typeof p.catch === 'function') {
           v._isPlayPending = true;
-          p.then(function() { v._isPlayPending = false; }).catch(function(e){ v._isPlayPending = false; });
+          p.then(function() { v._isPlayPending = false; v._lastPlayFail = 0; }).catch(function(e){ 
+            v._isPlayPending = false; 
+            v._lastPlayFail = Date.now(); 
+          });
         }
       } catch (e) {
         v._isPlayPending = false;
+        v._lastPlayFail = Date.now();
       }
     };
     
@@ -6731,6 +6736,10 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
+            // Re-evaluar reproducción continuamente pero protegido por throttle de 1s
+            document.querySelectorAll('.carousel-track video, .carousel-track-small video, .carousel-track-large video').forEach(function(v) {
+              if (v.hasAttribute('autoplay')) window.safePlay(v);
+            });
             
             ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
               var el = document.getElementById(id);
@@ -14533,6 +14542,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
