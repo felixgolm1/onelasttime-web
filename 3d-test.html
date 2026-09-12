@@ -4574,9 +4574,9 @@ window.onerror = function(msg, url, line, col, err) {
     let tSwap = t3 + 0.27;
     glowTSwap = tSwap; // persiana: exponer tSwap al bucle de scroll
 
-    // Ã¢â€€ Animación del texto deslizable "hecho por personas"
+    // Ã¢â€ € Animación del texto deslizable "hecho por personas"
     // Lo subimos verticalmente (yPercent: -95) y encendemos su opacidad en posición inicial
-    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: -50, y: '-30vh', x: '92vw' }, t2 - 0.08);
+    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: -50, y: window._cIsMobile ? '-30vh' : 0, x: '92vw' }, t2 - 0.08);
     scrollTl.to('#made-by-humans', {
       x: '0vw', 
       duration: (tSwap - (t2 - 0.08)), 
@@ -4589,13 +4589,13 @@ window.onerror = function(msg, url, line, col, err) {
 
       
 
-    // Ã¢â€€ Animación del segundo texto "personalizado con IA"
+    // Ã¢â€ € Animación del segundo texto "personalizado con IA"
     let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" → prog ~1.47
-    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -50, y: '30vh', x: '-92vw' }, tAiStart);
+    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -50, y: window._cIsMobile ? '30vh' : 0, x: '-92vw' }, tAiStart);
     scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
-    // Ã¢â€€ Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-    //   (sin tweens GSAP â€â€ la persiana la mueve el scroll puro)
+    // Ã¢â€ € Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €
+    //   (sin tweens GSAP â€ â€  la persiana la mueve el scroll puro)
 
     // Deriva lenta después de llegar al centro → continúan en la misma dirección mientras se desvanecen
     // 'none' = velocidad perfectamente constante, sensación de movimiento que no para nunca
