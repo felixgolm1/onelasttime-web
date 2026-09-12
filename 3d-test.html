@@ -3634,7 +3634,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 @media screen and (max-width: 768px) {
   .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45dvh !important; }
-  #card-morph-group { top: -5vh; }
+  #card-morph-group { top: 0; }
   #magazine-scene, #camera-flash-container { top: 45dvh; }
 
 
@@ -3975,7 +3975,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 @media screen and (max-width: 768px) {
   .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45dvh !important; }
-  #card-morph-group { top: -5vh; }
+  #card-morph-group { top: 0; }
   #magazine-scene, #camera-flash-container { top: 45dvh; }
 
   #card-morph-group, .sc-card { transform: scale(0.90); transform-origin: center center; }
@@ -8082,7 +8082,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     scrollTl.to([mg, visGroup], {
 
-      rotationY: -540, rotation: -2.5,
+      rotationY: -540, rotation: -2.5, y: window._cIsMobile ? '-5dvh' : 0,
 
       duration: 0.80, ease: 'linear'
 
@@ -29066,6 +29066,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
+
 
 
 
