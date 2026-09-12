@@ -3634,9 +3634,10 @@ window.onerror = function(msg, url, line, col, err) {
 
 @media screen and (max-width: 768px) {
   .sc-board, #made-by-humans, #made-by-ai { top: 50vh; }
-  .box-3d-wrapper { top: 32vh !important; }
+  .box-3d-wrapper { top: 50vh !important; }
+  
   #card-morph-group { top: 0; }
-  #magazine-scene, #camera-flash-container { top: 32vh; }
+  #magazine-scene, #camera-flash-container { top: 50vh; }
 
 
 
@@ -3976,9 +3977,10 @@ window.onerror = function(msg, url, line, col, err) {
 
 @media screen and (max-width: 768px) {
   .sc-board, #made-by-humans, #made-by-ai { top: 50vh; }
-  .box-3d-wrapper { top: 32vh !important; }
+  .box-3d-wrapper { top: 50vh !important; }
+  
   #card-morph-group { top: 0; }
-  #magazine-scene, #camera-flash-container { top: 32vh; }
+  #magazine-scene, #camera-flash-container { top: 50vh; }
 
   #card-morph-group, .sc-card { transform: scale(0.90); transform-origin: center center; }
 
@@ -12339,19 +12341,9 @@ if (_sInd) { gsap.set(_sInd, { y: 0, opacity: 1 }); }
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
         
         
-        let glideY = window._cIsMobile ? mapRange(prog, 0.92, 1.27, 15, -18) : 0;
         if (window._cIsMobile) {
-            scBoard.style.setProperty('top', (50 + glideY) + 'vh', 'important');
+            scBoard.style.setProperty('top', '50vh', 'important');
             scBoard.style.marginTop = '0px';
-        let dbg = document.getElementById('my-dbg');
-        if (!dbg) {
-          dbg = document.createElement('div');
-          dbg.id = 'my-dbg';
-          dbg.style = 'position:fixed;top:50px;left:10px;z-index:999999;background:red;color:white;font-size:16px;padding:10px;pointer-events:none;';
-          document.body.appendChild(dbg);
-        }
-        dbg.innerText = "PROG: " + prog.toFixed(2) + " | M: " + window._cIsMobile + " | GLIDE: " + glideY + " | TOP: " + scBoard.style.top;
-
         } else {
             let yPx = boardY * (window._ch / 100);
             gsap.set(scBoard, { y: yPx });
@@ -15561,7 +15553,7 @@ if (_sInd) { gsap.set(_sInd, { y: 0, opacity: 1 }); }
                     let tP = 0;
                     if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
                     
-                    const baseCY = window._cIsMobile ? (window._ch * 0.32) : window._ch * 0.455;
+                    const baseCY = window._cIsMobile ? (window._ch * 0.5) : (window._ch * 0.455);
                     const baseNdcY = -(baseCY / window._ch) * 2 + 1;
                     const startY = baseNdcY * vH / 2;
                     
