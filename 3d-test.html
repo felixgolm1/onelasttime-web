@@ -2035,8 +2035,26 @@ window.onerror = function(msg, url, line, col, err) {
         font-size: 2.9rem !important;
       }
     }
-  </style>
+      @media (max-width: 768px) {
+        #glass-who, #glass-objectives {
+          top: auto !important;
+          bottom: calc(3% + 5.2rem + 60px) !important;
+          height: 38vh !important;
+          width: 90vw !important;
+          left: 5vw !important;
+          right: auto !important;
+          padding: 1.5rem !important;
+          border: 1px solid rgba(255,255,255,0.1) !important;
+          border-radius: 16px !important;
+          overflow-y: auto !important;
+          pointer-events: auto !important;
+          justify-content: flex-start !important;
+          box-shadow: 0 -10px 30px rgba(0,0,0,0.3) !important;
+        }
+      }
+    </style>
 </head>
+
 <body>
   <!-- Mobile Top Progress Bar (Oryzo style) -->
   <div id="mobile-top-progress" style="display: none; position: fixed; top: 0; left: 0; height: 3px; background: #ccff00; box-shadow: 0 0 10px #ccff00; z-index: 10000020; width: 0%; transition: width 0.1s linear;"></div>
