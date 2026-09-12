@@ -15,6 +15,34 @@
         v._isPlayPending = false;
       }
     };
+    
+    window._visibleVideos = new Set();
+    document.addEventListener("DOMContentLoaded", function() {
+      if ('IntersectionObserver' in window) {
+        var videoObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              window._visibleVideos.add(entry.target);
+              window.safePlay(entry.target);
+            } else {
+              window._visibleVideos.delete(entry.target);
+              if (entry.target.paused === false) {
+                entry.target.pause();
+              }
+            }
+          });
+        }, { threshold: 0.0 });
+        
+        setInterval(function() {
+          document.querySelectorAll('video[autoplay]').forEach(function(v) {
+            if (!v._isObservedByIO) {
+              v._isObservedByIO = true;
+              videoObserver.observe(v);
+            }
+          });
+        }, 1000);
+      }
+    });
     </script>
 
 <script>
@@ -6703,10 +6731,6 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
-          // Re-evaluar reproducción continuamente
-          document.querySelectorAll('.carousel-track-small video, .carousel-track-large video').forEach(function(v) {
-            if (v.hasAttribute('autoplay')) window.safePlay(v);
-          });
             
             ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
               var el = document.getElementById(id);
@@ -12798,12 +12822,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
   
   // Add global interaction listener to ensure autoplay videos start in Safari
     window.addEventListener('pointerdown', function() {
-    document.querySelectorAll('video').forEach(function(v) {
-      if (v.hasAttribute('autoplay')) {
-        v.muted = true;
-        window.safePlay(v);
-      }
-    });
+    if (window._visibleVideos) {
+      window._visibleVideos.forEach(function(v) {
+        if (v.hasAttribute('autoplay')) {
+          v.muted = true;
+          window.safePlay(v);
+        }
+      });
+    }
   }, { once: false, passive: true });
 
 window.dismissSens = function(e) {
@@ -14507,6 +14533,9 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
+
 
 
 
