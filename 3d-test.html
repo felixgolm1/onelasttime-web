@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 
@@ -4028,15 +4028,15 @@ window.onerror = function(msg, url, line, col, err) {
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
     //    stagger from:'end' → la última .oh-inner (más abajo) empieza en t=0, cada línea superior espera 0.02 más.
     //    duration 0.10 + 3Ã—0.02 = 0.16 → encaja exacto con la duración de Fase 1.
-    scrollTl.to('.oh-inner:not(.headline-sub)', { y: '-150%', autoAlpha: 0, duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'start' } }, 0);
+    scrollTl.fromTo('.oh-inner:not(.headline-sub)', { y: '0%', autoAlpha: 1 }, { y: '-150%', autoAlpha: 0, duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'start' }, immediateRender: false }, 0);
     scrollTl.to('.headline-sub', { y: '150%', duration: 0.045, ease: 'power2.inOut' }, 0);
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.045, ease: 'power2.inOut' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
-    scrollTl.to('.blur-bg-head', { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
+    scrollTl.fromTo('.blur-bg-head', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut', immediateRender: false }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
-      scrollTl.to('#blur-bg-sub', { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
-      scrollTl.to('.sub-oh-inner', { y: '150%', autoAlpha: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'end' } }, 0);
+      scrollTl.fromTo('#blur-bg-sub', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut', immediateRender: false }, 0);
+      scrollTl.fromTo('.sub-oh-inner', { y: '0%', autoAlpha: 1 }, { y: '150%', autoAlpha: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'end' }, immediateRender: false }, 0);
 
 
     // Ã¢â€€ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -14542,6 +14542,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
