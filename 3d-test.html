@@ -4312,34 +4312,36 @@ window.onerror = function(msg, url, line, col, err) {
       scrollTl.to(focusedCard, { opacity: 1, duration: PAN, ease: 'power1.inOut' }, t);
       scrollTl.to(otherCards,  { opacity: 0.15, duration: PAN, ease: 'power1.inOut' }, t);
         
-        // Animacion de la caja glass-who en el Paso 2
+          // Retraso explícito solicitado para cuadrar el completado con prog=1.15
+          let glassT = t + 0.0275;
+          // Animacion de la caja glass-who en el Paso 2
           if (i === 1) {
-            scrollTl.to('#glass-who', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
-            scrollTl.to(glassWhoTitle, { opacity: 1, duration: 0.01, stagger: 0.00069, ease: 'none' }, t + 0.01);
-            scrollTl.to(glassWhoFinalText, { opacity: 1, duration: 0.01, stagger: -0.00029, ease: 'none' }, t + 0.01);
-            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 0, duration: 0.0335, stagger: 0, ease: 'power2.out' }, t + 0.01);
-            scrollTl.to('#glass-who .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, t + 0.0285);
+            scrollTl.to('#glass-who', { autoAlpha: 1, duration: 0.01, ease: 'none' }, glassT);
+            scrollTl.to(glassWhoTitle, { opacity: 1, duration: 0.01, stagger: 0.00069, ease: 'none' }, glassT + 0.01);
+            scrollTl.to(glassWhoFinalText, { opacity: 1, duration: 0.01, stagger: -0.00029, ease: 'none' }, glassT + 0.01);
+            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 0, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
+            scrollTl.to('#glass-who .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0285);
           } else {
-            scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.0335, ease: 'none' }, t);
-            scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01, stagger: -0.00069, ease: 'none' }, t);
-            scrollTl.to(glassWhoFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, t);
-            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 110, duration: 0.0335, stagger: 0, ease: 'power2.out' }, t);
-            scrollTl.to('#glass-who .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, t);
+            scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.0335, ease: 'none' }, glassT);
+            scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01, stagger: -0.00069, ease: 'none' }, glassT);
+            scrollTl.to(glassWhoFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassT);
+            scrollTl.to('#glass-who .glass-mask-line', { yPercent: 110, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassT);
+            scrollTl.to('#glass-who .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT);
           }
 
           // Animacion de la caja glass-objectives en el Paso 3
           if (i === 2) {
-            scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: 0.01, ease: 'none' }, t);
-            scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.01, stagger: 0.00108, ease: 'none' }, t + 0.01);
-            scrollTl.to(glassObjFinalText, { opacity: 1, duration: 0.01, stagger: -0.00029, ease: 'none' }, t + 0.01);
-            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 0, duration: 0.0327, stagger: 0, ease: 'power2.out' }, t + 0.01);
-            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, t + 0.0277);
+            scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: 0.01, ease: 'none' }, glassT);
+            scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.01, stagger: 0.00108, ease: 'none' }, glassT + 0.01);
+            scrollTl.to(glassObjFinalText, { opacity: 1, duration: 0.01, stagger: -0.00029, ease: 'none' }, glassT + 0.01);
+            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 0, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
+            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0277);
           } else {
-            scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.0327, ease: 'none' }, t);
-            scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01, stagger: -0.00108, ease: 'none' }, t);
-            scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, t);
-            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 110, duration: 0.0327, stagger: 0, ease: 'power2.out' }, t);
-            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, t);
+            scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.0327, ease: 'none' }, glassT);
+            scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01, stagger: -0.00108, ease: 'none' }, glassT);
+            scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassT);
+            scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 110, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassT);
+            scrollTl.to('#glass-objectives .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT);
           }
       
       // Animar el texto del recuadro global correspondiente a este paso
