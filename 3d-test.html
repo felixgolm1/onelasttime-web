@@ -15540,7 +15540,7 @@ window.onerror = function(msg, url, line, col, err) {
                     let tP = 0;
                     if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
                     
-                    const baseCY = window._cIsMobile ? window._ch * 0.40 : window._ch * 0.5;
+                    const baseCY = window._cIsMobile ? window._ch * 0.40 : window._ch * 0.455;
                     const baseNdcY = -(baseCY / window._ch) * 2 + 1;
                     const startY = baseNdcY * vH / 2;
                     
