@@ -1,6 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+    <script>
+    window.safePlay = function(v) {
+      if (!v || v.paused === false || v._isPlayPending) return;
+      try {
+        var p = v.play();
+        if (p !== undefined && typeof p.catch === 'function') {
+          v._isPlayPending = true;
+          p.then(function() { v._isPlayPending = false; }).catch(function(e){ v._isPlayPending = false; });
+        }
+      } catch (e) {
+        v._isPlayPending = false;
+      }
+    };
+    </script>
+
 <script>
   window._cw = window.innerWidth;
   window._ch = window.innerHeight;
@@ -4576,7 +4591,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€ € Animación del texto deslizable "hecho por personas"
     // Lo subimos verticalmente (yPercent: -95) y encendemos su opacidad en posición inicial
-    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -95, y: window._cIsMobile ? '-30vh' : 0, x: '92vw' }, t2 - 0.08);
+    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -95, y: window._cIsMobile ? '-23vh' : 0, x: '92vw' }, t2 - 0.08);
     scrollTl.to('#made-by-humans', {
       x: '0vw', 
       duration: (tSwap - (t2 - 0.08)), 
@@ -4591,7 +4606,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€ € Animación del segundo texto "personalizado con IA"
     let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" → prog ~1.47
-    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -5, y: window._cIsMobile ? '30vh' : 0, x: '-92vw' }, tAiStart);
+    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -5, y: window._cIsMobile ? '23vh' : 0, x: '-92vw' }, tAiStart);
     scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
     // Ã¢â€ € Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €
@@ -12779,7 +12794,22 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
      Controlado desde la lógica JS del carousel (currIndex) -->
 <script>
 // Ã¢â€€Ã¢â€€ SENS OVERLAY CONTROL Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-// Inyectamos un <style> en el <head> con !important.
+// Inyectamos un <style> en el <head>
+    <script>
+    window.safePlay = function(v) {
+      if (!v || v.paused === false || v._isPlayPending) return;
+      try {
+        var p = v.play();
+        if (p !== undefined && typeof p.catch === 'function') {
+          v._isPlayPending = true;
+          p.then(function() { v._isPlayPending = false; }).catch(function(e){ v._isPlayPending = false; });
+        }
+      } catch (e) {
+        v._isPlayPending = false;
+      }
+    };
+    </script>
+ con !important.
 // Las reglas de hoja de estilo con !important ganan sobre CUALQUIER inline style,
 // incluyendo el backdrop-filter que Chrome composita en GPU.
 (function() {
@@ -12805,7 +12835,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
 
-  // Ocultar bot�n con fade
+  // Ocultar bot�n con fade
   var btn = document.getElementById('sens-cta-btn');
   if (btn) { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
 
@@ -14507,6 +14537,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
 
 
 
