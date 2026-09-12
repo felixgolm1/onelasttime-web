@@ -12337,7 +12337,7 @@ window.onerror = function(msg, url, line, col, err) {
         
         let glideY = window._cIsMobile ? mapRange(prog, 0.92, 1.27, 0, -18) : 0;
         let yPx = (boardY + glideY) * (window._ch / 100);
-        gsap.set(scBoard, { y: yPx });
+        gsap.set(scBoard, { marginTop: yPx });
 
 
         
@@ -13407,7 +13407,7 @@ window.onerror = function(msg, url, line, col, err) {
 
           mainDeck.style.filter = '';
 
-          gsap.set(scBoard, { y: '0vh' });
+          gsap.set(scBoard, { marginTop: 0 });
 
           scrollTl.progress(0);
 
