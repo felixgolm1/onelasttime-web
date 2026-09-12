@@ -10301,6 +10301,7 @@ window.onerror = function(msg, url, line, col, err) {
                if (!bottomCta.classList.contains('smoke-out')) {
                    bottomCta.classList.add('smoke-out');
                    gsap.to(bottomCta, {
+                       xPercent: -50, x: 0,
                        y: -50,
                        scale: 1.2,
                        opacity: 0,
@@ -10315,6 +10316,7 @@ window.onerror = function(msg, url, line, col, err) {
                if (bottomCta.classList.contains('smoke-out')) {
                    bottomCta.classList.remove('smoke-out');
                    gsap.to(bottomCta, {
+                       xPercent: -50, x: 0,
                        y: 0,
                        scale: 1,
                        opacity: 1,
