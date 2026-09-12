@@ -3642,9 +3642,9 @@ window.onerror = function(msg, url, line, col, err) {
     // Ã¢â€€Ã¢â€€ Estado inicial Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     // Las sCards empiezan con opacity 0 para que no asomen mientras gira el morphGroup
     gsap.set(sCards,  { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                        scale: window._cIsMobile ? 1.45 : 1.2, rotation: 0, opacity: 0, zIndex: 5 });
+                          scale: window._cIsMobile ? 1.0 : 1.2, rotation: 0, opacity: 0, zIndex: 5 });
     gsap.set(scIntro, { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                        scale: window._cIsMobile ? 1.45 : 1.2, rotation: -2.5, opacity: 1, zIndex: 10 });
+                          scale: window._cIsMobile ? 1.0 : 1.2, rotation: -2.5, opacity: 1, zIndex: 10 });
     // Es crítico "imprimir" los ángulos Euler desde JS para scIntroBack, porque GSAP al parsear rotateY(180) genera una matriz ambivalente
     if (scIntroBack) {
       gsap.set(scIntroBack, { xPercent: -50, yPercent: -50, x: 0, y: 0,
@@ -4116,9 +4116,9 @@ window.onerror = function(msg, url, line, col, err) {
     // Esparción empieza en t=0.86, robándole la energía al final del flip extendido (no hay zona muerta)
     sData.forEach(({ el, x, y, r }) => {
       scrollTl.to(el, {
-        x, y, rotation: r,
-        duration: 0.05, ease: 'none'
-      }, 0.86);
+          x, y, rotation: r,
+          duration: 0.08, ease: 'power2.out'
+        }, 0.86);
     });
 
     // Detalle del Paso 1: aparece con desvanecimiento al entrar en el Paso 1 y desaparece al pasar al 2
