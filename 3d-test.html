@@ -15551,22 +15551,17 @@ window.onerror = function(msg, url, line, col, err) {
               const vW   = vH * (window._cw / window._ch);
 
               if (inFlipBack) {
-
-                  let tP = 0;
-
-                  if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
-
-                  
-
-                  // Interpolamos la posición hacia la esquina inferior derecha
-
-                  let endX = vW * 0.28;
-
-                  let endY = -vH * 0.22;
-
-                  globalGlbCard.position.set(tP * endX, tP * endY, -DIST);
-
-              } else if (scIntroEl) {
+                    let tP = 0;
+                    if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
+                    
+                    const baseCY = window._cIsMobile ? window._ch * 0.45 : window._ch * 0.5;
+                    const baseNdcY = -(baseCY / window._ch) * 2 + 1;
+                    const startY = baseNdcY * vH / 2;
+                    
+                    let endX = vW * 0.28;
+                    let endY = -vH * 0.22;
+                    globalGlbCard.position.set(tP * endX, startY + tP * (endY - startY), -DIST);
+                } else if (scIntroEl) {
 
                   const scRect = scIntroEl.getBoundingClientRect();
 
