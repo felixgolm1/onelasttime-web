@@ -1,34 +1,39 @@
-﻿import re
+import re
 
-with open("arbol.html", "r", encoding="utf-8") as f:
-    text = f.read()
+file = '3d-test.html'
+with open(file, 'r', encoding='utf-8') as f:
+    content = f.read()
 
-# Replace the wrapper
-text = text.replace(
-    '<div className="mt-1 space-y-2">',
-    '<div className="mt-1 flex flex-col gap-1">'
-)
+bad_js = """    const sData = [
+      { el: sc1, x: '-26vw', y: '-24vh', r: -16 },
+      { el: sc2, x:  '26vw', y: '-20vh', r:   9 },
+      { el: sc3, x: '-24vw', y:  '26vh', r:  18 },
+      { el: sc4, x:  '26vw', y:  '24vh', r: -12 },
+    ];
+    const panData = [
+      { x:  '26vw', y:  '24vh', r:  16 },
+      { x: '-34vw', y:  '20vh', r:  -9 },
+      { x:  '34vw', y: '-34vh', r: -18 },
+      { x: '-26vw', y: '-24vh', r:  12 },
+    ];"""
 
-# Replace phone row
-text = text.replace(
-    '<div className="flex items-center min-h-[36px]">',
-    '<div className={`flex items-center transition-all duration-300 ease-out ${editingContactField === \'phone\' ? \'h-[36px]\' : \'h-[24px]\'}`}>',
-    1
-)
+good_js = """    const isM = window._cIsMobile;
+    const sData = [
+      { el: sc1, x: isM ? '-31.2vw' : '-26vw', y: isM ? '-28.8vh' : '-24vh', r: -16 },
+      { el: sc2, x: isM ? '31.2vw'  : '26vw',  y: isM ? '-24vh'   : '-20vh', r:   9 },
+      { el: sc3, x: '-24vw', y:  '26vh', r:  18 },
+      { el: sc4, x:  '26vw', y:  '24vh', r: -12 },
+    ];
+    const panData = [
+      { x: isM ? '31.2vw'  : '26vw',  y: isM ? '28.8vh' : '24vh', r:  16 },
+      { x: isM ? '-40.8vw' : '-34vw', y: isM ? '24vh'   : '20vh', r:  -9 },
+      { x:  '34vw', y: '-34vh', r: -18 },
+      { x: '-26vw', y: '-24vh', r:  12 },
+    ];"""
 
-# Replace email row
-text = text.replace(
-    '<div className="flex items-center min-h-[36px]">',
-    '<div className={`flex items-center transition-all duration-300 ease-out ${editingContactField === \'email\' ? \'h-[36px]\' : \'h-[24px]\'}`}>',
-    1
-)
+content = content.replace(bad_js, good_js)
 
-# Replace internal relative wrappers to inherit height perfectly
-text = text.replace(
-    '<div className="relative flex-1 h-[36px]">',
-    '<div className="relative flex-1 h-full">'
-)
+with open(file, 'w', encoding='utf-8') as f:
+    f.write(content)
 
-with open("arbol.html", "w", encoding="utf-8") as f:
-    f.write(text)
-print("Updated spacing and heights!")
+print("done")
