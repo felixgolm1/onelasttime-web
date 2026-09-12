@@ -3404,8 +3404,8 @@ window.onerror = function(msg, url, line, col, err) {
               wrap = document.createElement('div');
               wrap.id = 'dealer-pile-wrap';
               // El centro 3D es perfectamente el centro de la pantalla (porque la cámara mira a 0,0,0).
-              // No hace falta offset base, solo sincronizar el parallax dinámico
-              wrap.style.cssText = 'position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
+              // Aplicamos el offset estático (-22px, -18px) para que coincida exactamente con la malla 3D de la carta principal en reposo.
+              wrap.style.cssText = 'position:fixed; top:calc(50% - 18px); left:calc(50% - 22px); transform: translate(-50%, -50%); width:380px; height:234px; z-index:10002; pointer-events:none; perspective:1200px; transform-style:preserve-3d;';
               
               let scale = window._cIsMobile ? 0.5 : 0.65;
               let cardsHtml = '';
@@ -9705,12 +9705,9 @@ function makeCardBackTex(data = '4 PASOS') {
         const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth - 22;
         const screenY = -(pos3D.y * 0.5 - 0.5) * window.innerHeight - 18;
         
-        dealerPile.style.left = screenX + 'px';
-        dealerPile.style.top = screenY + 'px';
-        
-        // Las mantenemos 100% planas sin rotación, así se quedan "quietas en la mesa" 
-        // mientras la carta 3D principal rota y se mueve por encima de ellas independientemente.
-        dealerPile.style.transform = `translate(-50%, -50%)`;
+        // El usuario quiere que las cartas HTML de debajo se queden CLAVADAS en la mesa
+        // y que solo la carta 3D se mueva con el parallax. Por tanto, dejamos de
+        // actualizar su left/top/transform aquí. Su CSS inicial ya las centra.
     }
     // cardCam2 siempre en el origen â€ â€  carta congelada en viewport
 
