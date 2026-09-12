@@ -1,55 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-
-    <script>
-    window.safePlay = function(v) {
-      if (!v || v.paused === false || v._isPlayPending) return;
-      if (v._lastPlayFail && (Date.now() - v._lastPlayFail < 1000)) return;
-      try {
-        var p = v.play();
-        if (p !== undefined && typeof p.catch === 'function') {
-          v._isPlayPending = true;
-          p.then(function() { v._isPlayPending = false; v._lastPlayFail = 0; }).catch(function(e){ 
-            v._isPlayPending = false; 
-            v._lastPlayFail = Date.now(); 
-          });
-        }
-      } catch (e) {
-        v._isPlayPending = false;
-        v._lastPlayFail = Date.now();
-      }
-    };
-    
-    window._visibleVideos = new Set();
-    document.addEventListener("DOMContentLoaded", function() {
-      if ('IntersectionObserver' in window) {
-        var videoObserver = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              window._visibleVideos.add(entry.target);
-              window.safePlay(entry.target);
-            } else {
-              window._visibleVideos.delete(entry.target);
-              if (entry.target.paused === false) {
-                entry.target.pause();
-              }
-            }
-          });
-        }, { threshold: 0.0 });
-        
-        setInterval(function() {
-          document.querySelectorAll('video[autoplay]').forEach(function(v) {
-            if (!v._isObservedByIO) {
-              v._isObservedByIO = true;
-              videoObserver.observe(v);
-            }
-          });
-        }, 1000);
-      }
-    });
-    </script>
-
 <script>
   window._cw = window.innerWidth;
   window._ch = window.innerHeight;
@@ -428,8 +379,8 @@ window.onerror = function(msg, url, line, col, err) {
     .mag-col { width: 30%; line-height: 1.3; color: #ccc; }
     .mag-col strong { color: #f5cf87; font-size: 0.5rem; display: block; margin-bottom: 2px; text-transform: uppercase; }
     @media (max-width: 768px) {
-      #magazine-scene { width: 90vw; height: 130vw; }
-      #camera-flash-container { width: 90vw; height: 130vw; }
+      #magazine-scene { width: 100vw; height: 144vw; }
+      #camera-flash-container { width: 100vw; height: 144vw; }
       .magazine-title { font-size: 4.5rem; }
     }
     #intro-logo-img.visible { opacity: 1; }
@@ -4028,15 +3979,15 @@ window.onerror = function(msg, url, line, col, err) {
     // 1. Cada línea sale con escalonado: la más baja primero y más rápida (efecto Oryzo cascade)
     //    stagger from:'end' → la última .oh-inner (más abajo) empieza en t=0, cada línea superior espera 0.02 más.
     //    duration 0.10 + 3Ã—0.02 = 0.16 → encaja exacto con la duración de Fase 1.
-    scrollTl.fromTo('.oh-inner:not(.headline-sub)', { y: '0%', autoAlpha: 1 }, { y: '-150%', autoAlpha: 0, duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'start' }, immediateRender: false }, 0);
+    scrollTl.to('.oh-inner:not(.headline-sub)', { y: '-150%', autoAlpha: 0, duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'start' } }, 0);
     scrollTl.to('.headline-sub', { y: '150%', duration: 0.045, ease: 'power2.inOut' }, 0);
     // 2. Línea izquierda: se borra dinámicamente de derecha a izquierda recortándose (sin fade out)
     scrollTl.to('.headline-divider', { clipPath: 'inset(0% 100% 0% 0%)', duration: 0.045, ease: 'power2.inOut' }, 0);
     // 3. Recuadro izquierdo: pierde blur y bordes progresivamente (es lo único que se difumina)
-    scrollTl.fromTo('.blur-bg-head', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut', immediateRender: false }, 0);
+    scrollTl.to('.blur-bg-head', { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
     // 5. Texto derecha: se recorta hacia arriba (Oryzo effect)
-      scrollTl.fromTo('#blur-bg-sub', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut', immediateRender: false }, 0);
-      scrollTl.fromTo('.sub-oh-inner', { y: '0%', autoAlpha: 1 }, { y: '150%', autoAlpha: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'end' }, immediateRender: false }, 0);
+      scrollTl.to('#blur-bg-sub', { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut' }, 0);
+      scrollTl.to('.sub-oh-inner', { y: '150%', autoAlpha: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'end' } }, 0);
 
 
     // Ã¢â€€ Fase 2: LOS 3 FLIPS CONTINUOS (0→Ã¢Ë†â€™540Â°) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -4625,7 +4576,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€ € Animación del texto deslizable "hecho por personas"
     // Lo subimos verticalmente (yPercent: -95) y encendemos su opacidad en posición inicial
-    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -95, y: window._cIsMobile ? '-23vh' : 0, x: '92vw' }, t2 - 0.08);
+    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: -50, y: window._cIsMobile ? '-30vh' : 0, x: '92vw' }, t2 - 0.08);
     scrollTl.to('#made-by-humans', {
       x: '0vw', 
       duration: (tSwap - (t2 - 0.08)), 
@@ -4640,7 +4591,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Ã¢â€ € Animación del segundo texto "personalizado con IA"
     let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" → prog ~1.47
-    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -5, y: window._cIsMobile ? '23vh' : 0, x: '-92vw' }, tAiStart);
+    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: -50, y: window._cIsMobile ? '30vh' : 0, x: '-92vw' }, tAiStart);
     scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
     // Ã¢â€ € Edge glow: opacity calculada directamente en updateGlobalScenes Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €
@@ -6736,16 +6687,10 @@ window.onerror = function(msg, url, line, col, err) {
       const largeItems = document.querySelectorAll('.carousel-track-large .carousel-item');
       if (smallItems.length > 0 && largeItems.length > 0) {
         if (prog > 9.62) {
-            // Re-evaluar reproducción continuamente pero protegido por throttle de 1s
-            document.querySelectorAll('.carousel-track video, .carousel-track-small video, .carousel-track-large video').forEach(function(v) {
-              if (v.hasAttribute('autoplay')) window.safePlay(v);
-            });
-            
-            ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
-              var el = document.getElementById(id);
-              if (el) el.style.display = '';
-            });
-            
+          ['aging-panel-clip', 'besos-panel-clip', 'envej-panel-clip', 'final-feliz-panel', 'citas-slider-panel', 'sens-btn-clip'].forEach(id => {
+            var el = document.getElementById(id);
+            if (el) el.style.display = '';
+          });
           let currIndex = getCarouselIndex(prog);
           
           // Resetear overlay si el usuario se aleja del slide de besos parejas
@@ -8032,14 +7977,11 @@ requestAnimationFrame(smoothScrollLoop);
       if (prevTarget <= 10.42 && targetProg > 10.42 && !window._carouselEntryStart) {
         window._carouselEntryStart = Date.now();
         // Primera vez que el usuario entra en el carrusel: vídeo slide 0 empieza desde 0
-                  if (!window._slide0VideoReset) {
-            window._slide0VideoReset = true;
-            const slide0Video = document.querySelector('.carousel-item video');
-            if (slide0Video) {
-              slide0Video.currentTime = 0;
-              window.safePlay(slide0Video);
-            }
-          }
+        if (!window._slide0VideoReset) {
+          window._slide0VideoReset = true;
+          const slide0Video = document.querySelector('.carousel-item video');
+          if (slide0Video) { slide0Video.currentTime = 0; slide0Video.play(); }
+        }
       }
       // Si el usuario retrocede antes del flash: cancela el timer
       if (targetProg <= 10.42) {
@@ -12830,21 +12772,20 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 })();
   
   // Add global interaction listener to ensure autoplay videos start in Safari
-    window.addEventListener('pointerdown', function() {
-    if (window._visibleVideos) {
-      window._visibleVideos.forEach(function(v) {
-        if (v.hasAttribute('autoplay')) {
-          v.muted = true;
-          window.safePlay(v);
-        }
-      });
-    }
+  window.addEventListener('pointerdown', function() {
+    document.querySelectorAll('video').forEach(function(v) {
+      if (v.hasAttribute('autoplay') && v.paused) {
+        v.muted = true;
+        var p = v.play();
+        if (p && p.catch) p.catch(function(){});
+      }
+    });
   }, { once: false, passive: true });
 
 window.dismissSens = function(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
 
-  // Ocultar bot�n con fade
+  // Ocultar botón con fade
   var btn = document.getElementById('sens-cta-btn');
   if (btn) { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
 
@@ -12852,8 +12793,14 @@ window.dismissSens = function(e) {
 
   // Ensure videos play when interacted
   document.querySelectorAll('video').forEach(function(v) {
-    if ((v.src && v.src.indexOf('besos') !== -1) || v.hasAttribute('autoplay')) {
-      window.safePlay(v);
+    if (v.src && v.src.indexOf('besos') !== -1) {
+      if (v.paused) {
+        var p = v.play();
+        if (p && p.catch) p.catch(function(){});
+      }
+    } else if (v.hasAttribute('autoplay') && v.paused) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){});
     }
   });
 
@@ -14542,18 +14489,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
