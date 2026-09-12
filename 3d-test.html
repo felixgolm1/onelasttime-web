@@ -3648,7 +3648,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Es crítico "imprimir" los ángulos Euler desde JS para scIntroBack, porque GSAP al parsear rotateY(180) genera una matriz ambivalente
     if (scIntroBack) {
       gsap.set(scIntroBack, { xPercent: -50, yPercent: -50, x: 0, y: 0,
-                              scale: window._cIsMobile ? 1.45 : 1.2, rotation: -2.5, rotationY: 180, rotationX: 0, z: 1 });
+                                scale: window._cIsMobile ? 1.0 : 1.2, rotation: -2.5, rotationY: 180, rotationX: 0, z: 1 });
     }
     // Ajuste de centro vertical afinado de 34 a 37 para cuadrar al pixel la ilusión
     gsap.set(scTitle, { y: 37 });
@@ -3778,7 +3778,7 @@ window.onerror = function(msg, url, line, col, err) {
       { x:  '34vw', y: '-34vh', r: -18 },
       { x: '-26vw', y: '-24vh', r:  12 },
     ];
-    const focusZoom = window._cIsMobile ? 1.22 : 1.35;
+    const focusZoom = window._cIsMobile ? 1.05 : 1.35;
     const sIntroProxy = { opacity: 1 };
     const updateIntroOpacity = () => { if (scIntro) scIntro.style.opacity = sIntroProxy.opacity; };
 
@@ -7530,7 +7530,7 @@ window.onerror = function(msg, url, line, col, err) {
                   // Funciona en cold-load porque globalGlbCard._baseScaleFact siempre está disponible
                   // tras la carga del GLB (independiente de si !inScatter ha corrido)
                   const _snapScale = (globalGlbCard._baseScaleFact > 0)
-                      ? (globalGlbCard._baseScaleFact * (window._cIsMobile ? 0.5 : (_gSY2 * 0.90)))
+                        ? (globalGlbCard._baseScaleFact * (window._cIsMobile ? 1.0 : (_gSY2 * 0.90)))
                       : Math.abs(globalGlbCard.scale.x);   // fallback solo si el GLB aún no ha cargado
                   smoothScrollLoop._lockedCard = {
                       rotBaseZ: +2.5 * Math.PI / 180,
