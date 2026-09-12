@@ -6241,9 +6241,9 @@ window.onerror = function(msg, url, line, col, err) {
         }
 
         if (heroCta) {
-          let ctaOp = mapRange(transP, 0.0, 0.20, 1, 0);
-          heroCta.style.opacity = ctaOp;
-          heroCta.style.pointerEvents = ctaOp > 0 ? 'auto' : 'none';
+          // removed ctaOp
+          heroCta.style.opacity = '1';
+          heroCta.style.pointerEvents = 'auto';
         }
 
         // EFECTO FLASH DE CÁMARA (blanco puro en pantalla completa)
@@ -14638,4 +14638,5 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 
+
 
