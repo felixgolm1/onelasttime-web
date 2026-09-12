@@ -3445,14 +3445,14 @@ window.onerror = function(msg, url, line, col, err) {
               
               let cards = wrap.querySelectorAll('.dealer-card');
               
-              // Baraja apilada: escalonada hacia abajo-izquierda para que todas se asomen y se vea la intercalación
+              // Baraja apilada: escalonada hacia abajo-izquierda muy sutilmente para que se intercalen pero estén juntas
               const scatterOffsets = [
-                  { x: -3,  y:  2, r: -2 }, // 0: Blanca
-                  { x: -5,  y:  5, r:  1 }, // 1: Negra
-                  { x: -8,  y:  8, r: -1 }, // 2: Blanca
-                  { x: -11, y: 11, r:  3 }, // 3: Negra
-                  { x: -14, y: 14, r:  0 }, // 4: Blanca
-                  { x: -17, y: 17, r: -2 }  // 5: Negra
+                  { x: -1, y:  1, r: -2 }, // 0: Blanca
+                  { x: -2, y:  2, r:  1 }, // 1: Negra
+                  { x: -3, y:  3, r: -1 }, // 2: Blanca
+                  { x: -4, y:  4, r:  2 }, // 3: Negra
+                  { x: -5, y:  5, r:  0 }, // 4: Blanca
+                  { x: -6, y:  6, r: -2 }  // 5: Negra
               ];
 
               cards.forEach((c, idx) => {
@@ -9673,12 +9673,32 @@ function makeCardBackTex(data = '4 PASOS') {
         }
     }
 
-    // Cámara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
+    // --- 1. Calcular posición estática de las cartas HTML sin parallax ---
+    // Colocamos la cámara temporalmente en su posición base (sin offset de ratón)
+    camera.position.x = currentCamX;
+    camera.position.y = currentCamY;
+    camera.position.z = currentCamZ;
+    camera.lookAt(currentLookX, currentLookY, currentLookZ);
+    camera.updateMatrixWorld();
+
+    const dealerPile = document.getElementById('dealer-pile-wrap');
+    if (dealerPile && dealerPile.style.visibility !== 'hidden' && typeof morphGroup !== 'undefined') {
+        const pos3D = new THREE.Vector3();
+        morphGroup.getWorldPosition(pos3D);
+        pos3D.project(camera);
+        
+        const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth - 22;
+        const screenY = -(pos3D.y * 0.5 - 0.5) * window.innerHeight - 18;
+        
+        dealerPile.style.left = screenX + 'px';
+        dealerPile.style.top = screenY + 'px';
+    }
+
+    // --- 2. Aplicar parallax para el render 3D de la carta principal ---
     camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
 
-    // Mover las luces junto con la cámara para que los reflejos especulares no se escapen de la geometría
     if (typeof mainLightGroup !== 'undefined') {
         mainLightGroup.position.x = mouseNX * PX * parallaxStr;
         mainLightGroup.position.y = -mouseNY * PY * parallaxStr;
@@ -9686,29 +9706,7 @@ function makeCardBackTex(data = '4 PASOS') {
     camera.lookAt(currentLookX + mouseNX * 0.1 * parallaxStr,
                   currentLookY - mouseNY * 0.05 * parallaxStr,
                   currentLookZ);
-
-    // CRÍTICO: Actualizar la matriz de la cámara ANTES de proyectar, de lo contrario
-    // las coordenadas 2D tendrán 1 frame de retraso respecto al render 3D y se deslizarán!
     camera.updateMatrixWorld();
-
-    // Sincronizar el mazo de cartas HTML usando la proyección real de Three.js
-    const dealerPile = document.getElementById('dealer-pile-wrap');
-    if (dealerPile && dealerPile.style.visibility !== 'hidden' && typeof morphGroup !== 'undefined' && camera) {
-        // Obtenemos la posición 3D real de la carta y la proyectamos a 2D en la pantalla
-        const pos3D = new THREE.Vector3();
-        morphGroup.getWorldPosition(pos3D);
-        pos3D.project(camera);
-        
-        // Convertimos las coordenadas normalizadas (-1 a 1) a píxeles exactos de la pantalla
-        // Y aplicamos una corrección estática (-22px en X, -18px en Y) porque la malla geométrica 
-        // de la carta 3D no está perfectamente centrada en su propio origen 0,0,0
-        const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth - 22;
-        const screenY = -(pos3D.y * 0.5 - 0.5) * window.innerHeight - 18;
-        
-        // El usuario quiere que las cartas HTML de debajo se queden CLAVADAS en la mesa
-        // y que solo la carta 3D se mueva con el parallax. Por tanto, dejamos de
-        // actualizar su left/top/transform aquí. Su CSS inicial ya las centra.
-    }
     // cardCam2 siempre en el origen â€ â€  carta congelada en viewport
 
     renderer.render(scene, camera);
