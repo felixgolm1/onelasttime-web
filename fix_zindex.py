@@ -1,21 +1,16 @@
-﻿import re
+import re
 
-with open("arbol.html", "r", encoding="utf-8") as f:
-    text = f.read()
+file = '3d-test.html'
+with open(file, 'r', encoding='utf-8') as f:
+    content = f.read()
 
-target = """<div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">"""
-replacement = """<div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in z-[38]">"""
-text = text.replace(target, replacement)
+bad_html = """<div id="made-by-humans" style="position: fixed; top: 50%; left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10001; pointer-events: none; visibility: hidden;">hecho por personas</div>"""
 
-# And revert the right column back to just top-[152px] and remove the JS complexity
-target_col = """                        <div 
-                            ref={rightColRef}
-                            className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky self-start relative z-40 transition-all duration-300"
-                            style={{ top: 'min(152px, calc(100vh - var(--box-height, 0px) - 32px))' }}
-                        >"""
-replacement_col = """                        <div className="space-y-8 bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.05)] h-fit md:sticky md:top-[152px] self-start relative z-40 transition-all duration-300">"""
-text = text.replace(target_col, replacement_col)
+good_html = """<div id="made-by-humans" style="position: fixed; top: 50%; left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10005; pointer-events: none; visibility: hidden;">hecho por personas</div>"""
 
-with open("arbol.html", "w", encoding="utf-8") as f:
-    f.write(text)
-print("Updated Checkout z-index and reverted to simple sticky top-152px")
+content = content.replace(bad_html, good_html)
+
+with open(file, 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("done")
