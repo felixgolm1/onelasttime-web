@@ -12336,7 +12336,7 @@ window.onerror = function(msg, url, line, col, err) {
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
         
         
-        let glideY = window._cIsMobile ? mapRange(prog, 0.92, 1.27, 0, -18) : 0;
+        let glideY = window._cIsMobile ? mapRange(prog, 0.92, 1.27, 15, -18) : 0;
         if (window._cIsMobile) {
             scBoard.style.setProperty('top', (50 + glideY) + 'vh', 'important');
             scBoard.style.marginTop = '0px';
