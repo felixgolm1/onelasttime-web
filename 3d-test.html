@@ -7511,10 +7511,8 @@ window.onerror = function(msg, url, line, col, err) {
           });
 
           gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
-
-            opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05, clearProps: 'opacity'
-
-          });
+              opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05
+            });
 
 
 
@@ -8050,7 +8048,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     //    duration 0.10 + 3Ã0.02 = 0.16 ? encaja exacto con la duración de Fase 1.
 
-    scrollTl.fromTo('.oh-inner:not(.headline-sub)', { y: '0%', autoAlpha: 1 }, { y: '-150%', autoAlpha: 0, duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'start' }, immediateRender: false }, 0);
+    scrollTl.fromTo('.oh-inner:not(.headline-sub)', { y: '0%', opacity: 1 }, { y: '-150%', opacity: 0, duration: 0.039, ease: 'power2.in', stagger: { each: 0.003, from: 'start' }, immediateRender: false }, 0);
 
     scrollTl.to('.headline-sub', { y: '150%', duration: 0.045, ease: 'power2.inOut' }, 0);
 
@@ -8066,7 +8064,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       scrollTl.fromTo('#blur-bg-sub', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.045, ease: 'power2.inOut', immediateRender: false }, 0);
 
-      scrollTl.fromTo('.sub-oh-inner', { y: '0%', autoAlpha: 1 }, { y: '150%', autoAlpha: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'end' }, immediateRender: false }, 0);
+      scrollTl.fromTo('.sub-oh-inner', { y: '0%', opacity: 1 }, { y: '150%', opacity: 0, duration: 0.035, ease: 'power2.in', stagger: { each: 0.003, from: 'end' }, immediateRender: false }, 0);
 
 
 
