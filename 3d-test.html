@@ -3445,14 +3445,14 @@ window.onerror = function(msg, url, line, col, err) {
               
               let cards = wrap.querySelectorAll('.dealer-card');
               
-              // Baraja apilada pero desorganizada realista (pequeños desajustes aleatorios, no una estrella perfecta)
+              // Baraja apilada pero desorganizada realista (más descolocada para que se vean bien las blancas)
               const scatterOffsets = [
-                  { x: -3, y:  2, r: -3 }, // 0: left
-                  { x:  4, y: -2, r:  2 }, // 1: right
-                  { x: -1, y: -4, r: -1 }, // 2: left
-                  { x:  2, y:  3, r:  4 }, // 3: right
-                  { x: -4, y:  0, r:  1 }, // 4: left
-                  { x:  3, y:  1, r: -2 }  // 5: right
+                  { x: -5, y:  4, r: -4 }, // 0: Blanca (sobresale abajo-izquierda)
+                  { x:  5, y: -3, r:  3 }, // 1: Negra (sobresale arriba-derecha)
+                  { x: -2, y: -6, r: -1 }, // 2: Blanca (sobresale arriba-izquierda)
+                  { x:  3, y:  5, r:  5 }, // 3: Negra (sobresale abajo-derecha)
+                  { x:  6, y:  1, r: -3 }, // 4: Blanca (sobresale a la derecha)
+                  { x: -6, y: -1, r:  2 }  // 5: Negra (sobresale a la izquierda)
               ];
 
               cards.forEach((c, idx) => {
