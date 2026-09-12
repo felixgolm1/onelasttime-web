@@ -8810,10 +8810,10 @@ function makeCardBackTex(data = '4 PASOS') {
 
     const bodyMesh = new THREE.Mesh(bodyGeo, edgeMat);
 
-    // 3. Pivot
-    const pivot = new THREE.Group();
-
-    const halfT = D / 2;
+      // 3. Pivot
+      const pivot = new THREE.Group();
+  
+      const halfT = 0; // Eliminamos la distancia entre caras para que no asomen por detrás al rotar
 
     // Ã¢â€ €Ã¢â€ €Ã¢â€ € Helper: crea una ShapeGeometry REDONDEADA con UVs de 0→1 Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €Ã¢â€ €
     // La geometría ya tiene la forma exacta del canto → no hace falta clipCardShape
