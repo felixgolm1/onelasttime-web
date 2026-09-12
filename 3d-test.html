@@ -9243,7 +9243,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Lo subimos verticalmente (yPercent: -95) y encendemos su opacidad en posición inicial
 
-    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -95, y: window._cIsMobile ? '-23vh' : 0, x: '92vw' }, t2 - 0.08);
+    scrollTl.set('#made-by-humans', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -95, y: window._cIsMobile ? '-23dvh' : 0, x: '92vw' }, t2 - 0.08);
 
     scrollTl.to('#made-by-humans', {
 
@@ -9273,7 +9273,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     let tAiStart = t2 - 0.08; // Mismo arranque que "hecho por personas" ? prog ~1.47
 
-    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -5, y: window._cIsMobile ? '23vh' : 0, x: '-92vw' }, tAiStart);
+    scrollTl.set('#made-by-ai', { autoAlpha: 1, yPercent: window._cIsMobile ? -50 : -5, y: window._cIsMobile ? '23dvh' : 0, x: '-92vw' }, tAiStart);
 
     scrollTl.to('#made-by-ai', { x: '0vw', duration: (tSwap - tAiStart), ease: 'power2.inOut' }, tAiStart);
 
@@ -29076,6 +29076,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
