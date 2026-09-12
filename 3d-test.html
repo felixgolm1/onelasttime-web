@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -2084,7 +2084,7 @@ window.onerror = function(msg, url, line, col, err) {
           position: relative;
           z-index: 10;
         }
-        .mobile-see-more-btn {
+        .mobile-see-more-btn { pointer-events: auto !important;
           background: rgba(255,255,255,0.08);
           border: 1px solid rgba(255,255,255,0.2);
           color: #fff;
@@ -2614,7 +2614,7 @@ window.onerror = function(msg, url, line, col, err) {
     
     <!-- Recuadro Glassmorphism de Quien (Paso 2) -->
     <div id="glass-who" style="position: fixed; top: 0; right: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-left: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 10vh 2.5vw 0 30px; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: -5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
-      <button class="glass-close-btn" onclick="toggleGlassModal('glass-who')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <button class="glass-close-btn" onclick="toggleGlassModal('glass-who')" ontouchend="toggleGlassModal('glass-who'); event.preventDefault();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
 <h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; letter-spacing: 0.05em;">Parejas (y no parejas) que nos hemos encontrado</h3>
       <div class="mobile-expandable-content">
 <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 0; margin: 0; list-style-type: none;" class="dynamic-lines-list">
@@ -2632,7 +2632,7 @@ window.onerror = function(msg, url, line, col, err) {
       </p>
 </div>
 <div class="mobile-see-more-container">
-  <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-who')">
+  <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-who')" ontouchend="toggleGlassModal('glass-who'); event.preventDefault();">
     <span class="btn-text-more">Ver m&aacute;s ejemplos</span>
     <span class="btn-text-less" style="display:none;">Ver menos ejemplos</span>
     <svg style="display:inline-block; vertical-align:middle; margin-left:4px; transition: transform 0.3s;" class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -2642,7 +2642,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     <!-- Recuadro Glassmorphism de Objetivos (Paso 3) -->
     <div id="glass-objectives" style="position: fixed; top: 0; left: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-right: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 10vh 30px 0 2.5vw; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: 5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
-      <button class="glass-close-btn" onclick="toggleGlassModal('glass-objectives')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <button class="glass-close-btn" onclick="toggleGlassModal('glass-objectives')" ontouchend="toggleGlassModal('glass-objectives'); event.preventDefault();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
 <h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;">Objetivos m&aacute;s pedidos</h3>
       <div class="dyn-text" style="color: rgba(255,255,255,0.8); font-family: 'Inter', sans-serif; font-size: 0.85rem; line-height: 1.4; margin-bottom: 24px; padding-right: 10px;">Puede ser literalmente lo que quieras con el nivel de precisi&oacute;n que necesites (excepto conseguir que te paguen la cena, en eso a&uacute;n estamos trabajando).</div>
       <div class="mobile-expandable-content">
@@ -2659,7 +2659,7 @@ window.onerror = function(msg, url, line, col, err) {
       </p>
 </div>
 <div class="mobile-see-more-container">
-  <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-objectives')">
+  <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-objectives')" ontouchend="toggleGlassModal('glass-objectives'); event.preventDefault();">
     <span class="btn-text-more">Ver m&aacute;s ejemplos</span>
     <span class="btn-text-less" style="display:none;">Ver menos ejemplos</span>
     <svg style="display:inline-block; vertical-align:middle; margin-left:4px; transition: transform 0.3s;" class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -4524,15 +4524,15 @@ window.onerror = function(msg, url, line, col, err) {
     // Restaurar opacidad de todas las cartas al volver al overview
     scrollTl.to(focusOrder, { opacity: 1, duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
 
-    let t2 = gatherStart + gatherDur - 0.15; // Mantenemos el mismo valor semántico para que nada se rompa
+    let t2 = gatherStart + gatherDur - 0.15; // Mantenemos el mismo valor semï¿½ntico para que nada se rompa
 
     // ? Fase 9: Recoger (Smooth) ?
-    // Escalan a 1.02 (0.85 equivalente bajo escala de 1.2 base) para quedar eclipsadas y escondidas a la perfección sin opacidades raras
+    // Escalan a 1.02 (0.85 equivalente bajo escala de 1.2 base) para quedar eclipsadas y escondidas a la perfecciï¿½n sin opacidades raras
     scrollTl.to([sc1, sc2, sc3, sc4], {
       x: '0%', y: '0%', rotation: 0, scale: 1.02, duration: gatherDur, ease: 'power2.inOut'
     }, gatherStart); // Overlap
 
-    // ? CTA: fade in suave del botón cuando las cartas terminan de recogerse ?
+    // ? CTA: fade in suave del botï¿½n cuando las cartas terminan de recogerse ?
     // (Ya no hacemos que reaparezca porque nunca lo ocultamos)
 
     // ? Fase 10: 2 Flips y cambianzo (1.33) ?
@@ -14487,6 +14487,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
+
+
 
 
 
