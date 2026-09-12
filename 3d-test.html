@@ -4111,9 +4111,6 @@ window.onerror = function(msg, url, line, col, err) {
       ease: 'power2.in'
     }, 0.82);
 
-    // El CTA original desaparece justo antes del scatter
-    if (!window._cIsMobile) scrollTl.to('#heroCta', { autoAlpha: 0, scale: 0.95, transformOrigin: '50% 50%', duration: 0.06, ease: 'power2.inOut' }, 0.84);
-
     // La carta central desaparece MIENTRAS hace el último grado del giro
     scrollTl.to(mg, { opacity: 0, duration: 0.03 }, 0.85);
     scrollTl.to('#sc-intro', { opacity: 0, duration: 0.03 }, 0.85);
@@ -4381,7 +4378,7 @@ window.onerror = function(msg, url, line, col, err) {
     }, t2);
 
     // Ã¢â€€ CTA: fade in suave del botón cuando las cartas terminan de recogerse Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
-    if (!window._cIsMobile) scrollTl.to('#heroCta', { autoAlpha: 1, scale: 1, transformOrigin: '50% 50%', duration: 0.20, ease: 'power2.out' }, t2 + 0.075);
+    // (Ya no hacemos que reaparezca porque nunca lo ocultamos)
 
     // Ã¢â€€ Fase 10: 2 Flips y cambianzo (1.33) Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     let t3 = t2 + 0.15;
