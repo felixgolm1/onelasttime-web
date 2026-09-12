@@ -12335,7 +12335,7 @@ window.onerror = function(msg, url, line, col, err) {
 
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
         let glideY = window._cIsMobile ? mapRange(prog, 0.92, 1.27, 0, -5) : 0;
-        gsap.set(scBoard, { yPercent: boardY + glideY });
+        gsap.set(scBoard, { y: (boardY + glideY) + (window._cIsMobile ? 'dvh' : 'vh') });
 
         
 
