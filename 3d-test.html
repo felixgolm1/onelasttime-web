@@ -6158,18 +6158,25 @@ window.onerror = function(msg, url, line, col, err) {
            // Lineal para Y
            let tY = tScale;
            
-           // Factor de perspectiva: 1200 / (1200 - 103.5) = 1.09438
-           // Anchura visual base = 82 * 1.09438 = 89.74px.
-           // Altura visual base = 301 * 1.09438 = 329.41px.
-           // El magazine-scene tiene un scale(0.85), por lo que el recuadro de 466x626 en realidad mide 396.1x532.1 píxeles en pantalla.
-           // Escala objetivo X = 396.1 / 89.74 = 4.414
-           // Escala objetivo Y = 532.1 / 329.41 = 1.615
-           boxScaleX = 1 + (4.414 - 1) * tX;
-           boxScaleY = 1 + (1.615 - 1) * tY;
+           let magScene = document.getElementById('magazine-scene');
+           let magW = magScene ? magScene.offsetWidth * 0.85 : 396.1;
+           let magH = magScene ? magScene.offsetHeight * 0.85 : 532.1;
+           let baseW = window._cIsMobile ? 82 : 89.74;
+           let baseH = window._cIsMobile ? 255 : 329.41;
+           let targetScaleX = magW / baseW;
+           let targetScaleY = magH / baseH;
+           
+           boxScaleX = 1 + (targetScaleX - 1) * tX;
+           boxScaleY = 1 + (targetScaleY - 1) * tY;
            shiftX = -44.87 * boxScaleX;
         } else if (transP > 0.85) {
-           boxScaleX = 4.414;
-           boxScaleY = 1.615;
+           let magScene = document.getElementById('magazine-scene');
+           let magW = magScene ? magScene.offsetWidth * 0.85 : 396.1;
+           let magH = magScene ? magScene.offsetHeight * 0.85 : 532.1;
+           let baseW = window._cIsMobile ? 82 : 89.74;
+           let baseH = window._cIsMobile ? 255 : 329.41;
+           boxScaleX = magW / baseW;
+           boxScaleY = magH / baseH;
            shiftX = -44.87 * boxScaleX;
         }
         mainDeck.style.transform = `translateX(${shiftX}px) scaleX(${boxScaleX}) scaleY(${boxScaleY})`;
