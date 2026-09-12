@@ -9682,9 +9682,9 @@ function makeCardBackTex(data = '4 PASOS') {
     camera.updateMatrixWorld();
 
     const dealerPile = document.getElementById('dealer-pile-wrap');
-    if (dealerPile && dealerPile.style.visibility !== 'hidden' && typeof morphGroup !== 'undefined') {
+    if (dealerPile && dealerPile.style.visibility !== 'hidden' && typeof globalGlbCard !== 'undefined' && globalGlbCard) {
         const pos3D = new THREE.Vector3();
-        morphGroup.getWorldPosition(pos3D);
+        globalGlbCard.getWorldPosition(pos3D);
         pos3D.project(camera);
         
         const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth - 22;
