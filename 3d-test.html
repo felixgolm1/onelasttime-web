@@ -12821,13 +12821,6 @@ window.dismissSens = function(e) {
       }
     }
   });
-      }
-          } else if (v.hasAttribute('autoplay') && v.paused && !v._isPlayPending) {
-        v._isPlayPending = true;
-        var p = v.play();
-        if (p && p.catch) p.then(() => v._isPlayPending = false).catch(() => v._isPlayPending = false);
-      }
-  });
 
   // Inyectar regla CSS !important que destruye el overlay del LARGE (miniatura no se toca)
   var ss = document.getElementById('__sens_dismiss_css');
@@ -14514,6 +14507,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
