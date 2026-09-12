@@ -8883,7 +8883,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     panData.forEach(({ x, y, r }, i) => {
 
-      scrollTl.to(scBoard, { x, y, rotation: r, scale: focusZoom,
+      scrollTl.to(scBoard, { x, rotation: r, scale: focusZoom,
 
         duration: PAN, ease: 'power1.inOut' }, t);
 
@@ -9133,7 +9133,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-    scrollTl.to(scBoard, { x: 0, y: 0, rotation: 0, scale: 1,
+    scrollTl.to(scBoard, { x: 0, rotation: 0, scale: 1,
 
       duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
 
