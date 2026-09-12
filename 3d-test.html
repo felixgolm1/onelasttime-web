@@ -3633,7 +3633,7 @@ window.onerror = function(msg, url, line, col, err) {
 <style>
 
 @media screen and (max-width: 768px) {
-  .sc-board, #made-by-humans, #made-by-ai { top: 50vh !important; }
+  .sc-board, #made-by-humans, #made-by-ai { top: 50vh; }
   .box-3d-wrapper { top: 32vh !important; }
   #card-morph-group { top: 0; }
   #magazine-scene, #camera-flash-container { top: 32vh; }
@@ -3975,7 +3975,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 @media screen and (max-width: 768px) {
-  .sc-board, #made-by-humans, #made-by-ai { top: 50vh !important; }
+  .sc-board, #made-by-humans, #made-by-ai { top: 50vh; }
   .box-3d-wrapper { top: 32vh !important; }
   #card-morph-group { top: 0; }
   #magazine-scene, #camera-flash-container { top: 32vh; }
@@ -12335,9 +12335,15 @@ window.onerror = function(msg, url, line, col, err) {
 
         let boardY = mapRange(transP, 0, 0.8, 0, -150);
         
+        
         let glideY = window._cIsMobile ? mapRange(prog, 0.92, 1.27, 0, -18) : 0;
-        let yPx = (boardY + glideY) * (window._ch / 100);
-        gsap.set(scBoard, { marginTop: yPx });
+        if (window._cIsMobile) {
+            scBoard.style.setProperty('top', (50 + glideY) + 'vh', 'important');
+            scBoard.style.marginTop = '0px';
+        } else {
+            let yPx = boardY * (window._ch / 100);
+            gsap.set(scBoard, { y: yPx });
+        }
 
 
         
@@ -13407,7 +13413,7 @@ window.onerror = function(msg, url, line, col, err) {
 
           mainDeck.style.filter = '';
 
-          gsap.set(scBoard, { marginTop: 0 });
+          if (window._cIsMobile) { scBoard.style.setProperty('top', '50vh', 'important'); } else { gsap.set(scBoard, {y: 0}); }
 
           scrollTl.progress(0);
 
