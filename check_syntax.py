@@ -1,41 +1,66 @@
-﻿import re
+import re
 
-filepath = r'c:\Users\Félix Gol\.gemini\antigravity\scratch\sensibles-web\3d-test.html'
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
+with open('3d-test.html', 'r', encoding='utf-8') as f:
+    text = f.read()
 
-# Find the main script
-match = re.search(r'<script>(.*?)</script>', content[content.find('id_card_base64'):], re.DOTALL)
-if match:
-    script = match.group(1)
-    
-    # Strip comments
-    script = re.sub(r'//.*', '', script)
-    script = re.sub(r'/\*.*?\*/', '', script, flags=re.DOTALL)
-    
-    # Check string literal closures
-    in_single = False
-    in_double = False
-    in_backtick = False
-    
-    for i, char in enumerate(script):
-        if char == "'" and not in_double and not in_backtick:
-            if i == 0 or script[i-1] != '\\':
-                in_single = not in_single
-        elif char == '"' and not in_single and not in_backtick:
-            if i == 0 or script[i-1] != '\\':
-                in_double = not in_double
-        elif char == '' and not in_single and not in_double:
-            if i == 0 or script[i-1] != '\\':
-                in_backtick = not in_backtick
-                
-    print(f"Unclosed strings -> Single: {in_single}, Double: {in_double}, Backtick: {in_backtick}")
-    
-    braces = 0
-    parens = 0
-    for i, char in enumerate(script):
-        if char == '{': braces += 1
-        elif char == '}': braces -= 1
-        elif char == '(': parens += 1
-        elif char == ')': parens -= 1
-    print(f"Unclosed Braces: {braces}, Parens: {parens}")
+script_start = text.find('<script>') + 8
+script_end = text.rfind('</script>')
+code = text[script_start:script_end]
+
+state = 'CODE'
+clean_code = []
+i = 0
+while i < len(code):
+    char = code[i]
+    if state == 'CODE':
+        if char == '/' and i+1 < len(code) and code[i+1] == '/':
+            state = 'LINE_COMMENT'
+            i += 1
+        elif char == '/' and i+1 < len(code) and code[i+1] == '*':
+            state = 'BLOCK_COMMENT'
+            i += 1
+        elif char in '\"\'\':
+            state = 'STRING_' + char
+        else:
+            clean_code.append(char)
+    elif state == 'LINE_COMMENT':
+        if char == '\n':
+            state = 'CODE'
+            clean_code.append('\n')
+    elif state == 'BLOCK_COMMENT':
+        if char == '*' and i+1 < len(code) and code[i+1] == '/':
+            state = 'CODE'
+            i += 1
+        elif char == '\n':
+            clean_code.append('\n')
+    elif state.startswith('STRING_'):
+        quote = state[-1]
+        if char == '\\\\':
+            i += 1 
+        elif char == quote:
+            state = 'CODE'
+        elif char == '\n': 
+            clean_code.append('\n')
+    i += 1
+
+clean_code_str = ''.join(clean_code)
+
+stack = []
+for i, char in enumerate(clean_code_str):
+    if char in '{[(':
+        stack.append((char, i))
+    elif char in '}])':
+        if len(stack) == 0:
+            line_num = clean_code_str[:i].count('\n') + text[:script_start].count('\n') + 2
+            print(f'Extra {char} found around line {line_num}')
+            break
+        last_char, last_i = stack.pop()
+        if (char == '}' and last_char != '{') or (char == ']' and last_char != '[') or (char == ')' and last_char != '('):
+            line_num = clean_code_str[:i].count('\n') + text[:script_start].count('\n') + 2
+            print(f'Mismatched {char} for {last_char} found around line {line_num}')
+            break
+
+if len(stack) > 0:
+    for char, idx in stack:
+        line_num = clean_code_str[:idx].count('\n') + text[:script_start].count('\n') + 2
+        print(f'Unclosed {char} found around line {line_num}')
