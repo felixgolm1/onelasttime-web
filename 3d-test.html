@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <script>
@@ -379,8 +379,8 @@ window.onerror = function(msg, url, line, col, err) {
     .mag-col { width: 30%; line-height: 1.3; color: #ccc; }
     .mag-col strong { color: #f5cf87; font-size: 0.5rem; display: block; margin-bottom: 2px; text-transform: uppercase; }
     @media (max-width: 768px) {
-      #magazine-scene { width: 90vw; height: 130vw; }
-      #camera-flash-container { width: 90vw; height: 130vw; }
+      #magazine-scene { width: 90vw; height: 130vw; top: 45.5%; }
+      #camera-flash-container { width: 90vw; height: 130vw; top: 45.5%; }
       .magazine-title { font-size: 4.5rem; }
     }
     #intro-logo-img.visible { opacity: 1; }
@@ -2801,7 +2801,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
         <div class="face-left">
-          <span>?breme para abrirte</span>
+          <span>Ábreme para abrirte</span>
           <div class="dust-flap left">
             <div class="dust-front"></div>
             <div class="dust-back"></div>
@@ -10474,7 +10474,7 @@ function makeCardBackTex(data = '4 PASOS') {
     function checkReady() {
       if (!_fullLoaded) return;
       _brainReady = true;
-      console.log('[BRAIN] Listo ?? swap 2D activo');
+      console.log('[BRAIN] Listo - swap 2D activo');
       _renderBrainLoop();
     }
 
@@ -14533,6 +14533,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
 
 
 
