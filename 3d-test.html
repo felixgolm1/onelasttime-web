@@ -9673,28 +9673,7 @@ function makeCardBackTex(data = '4 PASOS') {
         }
     }
 
-    // --- 1. Calcular posición estática de las cartas HTML sin parallax ---
-    // Colocamos la cámara temporalmente en su posición base (sin offset de ratón)
-    camera.position.x = currentCamX;
-    camera.position.y = currentCamY;
-    camera.position.z = currentCamZ;
-    camera.lookAt(currentLookX, currentLookY, currentLookZ);
-    camera.updateMatrixWorld();
-
-    const dealerPile = document.getElementById('dealer-pile-wrap');
-    if (dealerPile && dealerPile.style.visibility !== 'hidden' && typeof globalGlbCard !== 'undefined' && globalGlbCard) {
-        const pos3D = new THREE.Vector3();
-        globalGlbCard.getWorldPosition(pos3D);
-        pos3D.project(camera);
-        
-        const screenX = (pos3D.x * 0.5 + 0.5) * window.innerWidth - 22;
-        const screenY = -(pos3D.y * 0.5 - 0.5) * window.innerHeight - 18;
-        
-        dealerPile.style.left = screenX + 'px';
-        dealerPile.style.top = screenY + 'px';
-    }
-
-    // --- 2. Aplicar parallax para el render 3D de la carta principal ---
+    // Cámara siempre posicionada en currentCam + offset de parallax (cuando parallaxStr=0 => sin offset)
     camera.position.x = currentCamX + mouseNX * PX * parallaxStr;
     camera.position.y = currentCamY - mouseNY * PY * parallaxStr;
     camera.position.z = currentCamZ;
