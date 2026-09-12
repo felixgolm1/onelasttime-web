@@ -3447,12 +3447,12 @@ window.onerror = function(msg, url, line, col, err) {
               
               // Baraja apilada pero desorganizada realista (más descolocada para que se vean bien las blancas)
               const scatterOffsets = [
-                  { x: -5, y:  4, r: -4 }, // 0: Blanca (sobresale abajo-izquierda)
-                  { x:  5, y: -3, r:  3 }, // 1: Negra (sobresale arriba-derecha)
-                  { x: -2, y: -6, r: -1 }, // 2: Blanca (sobresale arriba-izquierda)
-                  { x:  3, y:  5, r:  5 }, // 3: Negra (sobresale abajo-derecha)
-                  { x:  6, y:  1, r: -3 }, // 4: Blanca (sobresale a la derecha)
-                  { x: -6, y: -1, r:  2 }  // 5: Negra (sobresale a la izquierda)
+                  { x: -8, y:  6, r: -5 }, // 0: Blanca (sobresale mucho abajo-izquierda)
+                  { x:  1, y: -1, r:  1 }, // 1: Negra (apretada al centro)
+                  { x: -2, y:-12, r: -2 }, // 2: Blanca (sobresale mucho arriba-izquierda)
+                  { x: -1, y:  2, r: -1 }, // 3: Negra (apretada al centro)
+                  { x: 10, y:  2, r:  4 }, // 4: Blanca (sobresale mucho a la derecha)
+                  { x:  2, y: -1, r:  2 }  // 5: Negra (apretada al centro)
               ];
 
               cards.forEach((c, idx) => {
