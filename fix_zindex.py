@@ -1,16 +1,17 @@
+﻿# -*- coding: utf-8 -*-
 import re
 
-file = '3d-test.html'
-with open(file, 'r', encoding='utf-8') as f:
-    content = f.read()
+with open('3d-test.html', 'r', encoding='utf-8') as f:
+    html = f.read()
 
-bad_html = """<div id="made-by-humans" style="position: fixed; top: 50%; left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10001; pointer-events: none; visibility: hidden;">hecho por personas</div>"""
+pattern = re.compile(r'(#cta-bottom-container\s*\{\s*position:\s*fixed;\s*bottom:\s*3\.7rem;)')
+replacement = r'\1 z-index: 10000020 !important;'
 
-good_html = """<div id="made-by-humans" style="position: fixed; top: 50%; left: 50%; font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 8vw, 10rem); font-weight: 700; color: #f4f2ea; letter-spacing: -0.05em; white-space: nowrap; opacity: 1; z-index: 10005; pointer-events: none; visibility: hidden;">hecho por personas</div>"""
+html = pattern.sub(replacement, html)
 
-content = content.replace(bad_html, good_html)
+pattern2 = re.compile(r'(#cta-bottom-container\s*\{\s*bottom:\s*3%\s*!important;\s*padding:\s*0\s*0\.4rem\s*!important;)')
+replacement2 = r'\1 z-index: 10000020 !important;'
+html = pattern2.sub(replacement2, html)
 
-with open(file, 'w', encoding='utf-8') as f:
-    f.write(content)
-
-print("done")
+with open('3d-test.html', 'w', encoding='utf-8') as f:
+    f.write(html)

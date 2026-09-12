@@ -2556,7 +2556,7 @@ window.onerror = function(msg, url, line, col, err) {
 
       position: fixed;
 
-      bottom: 3.7rem;
+      bottom: 3.7rem; z-index: 10000020 !important;
 
       left: 50%;
 
@@ -3634,7 +3634,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 @media screen and (max-width: 768px) {
   .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45dvh !important; }
-  #card-morph-group { top: -5dvh; }
+  #card-morph-group { top: -5vh; }
   #magazine-scene, #camera-flash-container { top: 45dvh; }
 
 
@@ -3795,7 +3795,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     bottom: 3% !important;
 
-    padding: 0 0.4rem !important;
+    padding: 0 0.4rem !important; z-index: 10000020 !important;
 
   }
 
@@ -3975,7 +3975,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 @media screen and (max-width: 768px) {
   .sc-board, .box-3d-wrapper, #made-by-humans, #made-by-ai { top: 45dvh !important; }
-  #card-morph-group { top: -5dvh; }
+  #card-morph-group { top: -5vh; }
   #magazine-scene, #camera-flash-container { top: 45dvh; }
 
   #card-morph-group, .sc-card { transform: scale(0.90); transform-origin: center center; }
@@ -5920,7 +5920,7 @@ window.onerror = function(msg, url, line, col, err) {
 
   <!-- CTA flotante inferior -->
 
-  <div id="cta-bottom-container" style="opacity: 0;">
+  <div id="cta-bottom-container" style="opacity: 0; z-index: 10000020 !important;">
 
     <a href="reservar-mi-cena.html" class="btn btn-blue btn-full btn-floating" id="heroCta">
 
@@ -7126,8 +7126,7 @@ window.onerror = function(msg, url, line, col, err) {
 
         const ndcX = ((window._cw  / 2 + gx) / window._cw ) * 2 - 1;
 
-        const baseCY = window._cIsMobile ? window._ch * 0.45 : window._ch / 2;
-        const ndcY = -((baseCY + gy) / window._ch) * 2 + 1;
+        const ndcY = -((window._ch / 2 + gy) / window._ch) * 2 + 1;
 
         globalGlbCard.position.set(ndcX * vW / 2, ndcY * vH / 2, -DIST);
 
@@ -15400,8 +15399,7 @@ window.onerror = function(msg, url, line, col, err) {
 
               const screenCX = document.documentElement.clientWidth / 2 + gx;
 
-              const baseCY = window._cIsMobile ? window._ch * 0.45 : window._ch / 2;
-                const screenCY = baseCY + gy;
+              const screenCY = window._ch / 2 + gy;
 
               const ndcX  =  (screenCX / window._cw)  * 2 - 1;
 
@@ -29068,6 +29066,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
 </html>
+
+
 
 
 
