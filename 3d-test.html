@@ -1949,10 +1949,12 @@ window.onerror = function(msg, url, line, col, err) {
   /* Show desktop-style scrollbar on mobile */
   #custom-scroll-track {
     display: block !important;
+    width: 13px !important;
   }
   #custom-scroll-thumb {
     display: block !important;
     background: #ffffff !important;
+    height: 15vh !important;
   }
   #card-morph-group {
     
@@ -7315,7 +7317,7 @@ window.onerror = function(msg, url, line, col, err) {
           let fakeMax = maxProg - 7.42;
           const scrollPercent = Math.max(0, Math.min(1, fakeProg / fakeMax));
           // Asumimos un track de 100vh y thumb de 29vh, nos queda 71vh de recorrido libre
-          scrollThumb.style.transform = `translateY(${scrollPercent * 71}vh)`;
+          scrollThumb.style.transform = `translateY(${scrollPercent * (window.innerWidth <= 768 ? 85 : 71)}vh)`;
         }
       
       // Ã¢â€€Ã¢â€€ THERMAL CURTAIN Ã¢â€€Ã¢â€€ incondicional, ejecuta cada frame Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
