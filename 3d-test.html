@@ -10295,11 +10295,12 @@ window.onerror = function(msg, url, line, col, err) {
 
       // Controlar la visibilidad del CTA inferior
         const bottomCta = document.getElementById('cta-bottom-container');
-        if (bottomCta) {
-            bottomCta.classList.remove('smoke-out');
-            if (prog >= 38.45) {
-                let pOffset = prog - 38.45;
-                let yMove = pOffset * 100; 
+var _sInd = document.querySelector('.scroll-indicator');
+if (bottomCta) {
+bottomCta.classList.remove('smoke-out');
+if (prog >= 38.60) {
+let pOffset = prog - 38.60;
+let yMove = pOffset * 30; 
                 
                 gsap.set(bottomCta, {
                     xPercent: -50, x: 0,
@@ -10309,17 +10310,19 @@ window.onerror = function(msg, url, line, col, err) {
                     overwrite: true
                 });
                 bottomCta.style.pointerEvents = 'auto';
-            } else {
-                gsap.set(bottomCta, {
-                    xPercent: -50, x: 0,
-                    y: 0,
-                    opacity: 1,
-                    scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, filter: 'blur(0px)',
-                    overwrite: true
-                });
-                bottomCta.style.pointerEvents = 'auto';
-            }
-        }
+if (_sInd) { gsap.set(_sInd, { y: -yMove + 'vh', opacity: 1 }); }
+} else {
+gsap.set(bottomCta, {
+xPercent: -50, x: 0,
+y: 0,
+opacity: 1,
+scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, filter: 'blur(0px)',
+overwrite: true
+});
+bottomCta.style.pointerEvents = 'auto';
+if (_sInd) { gsap.set(_sInd, { y: 0, opacity: 1 }); }
+}
+}
 
         // Animación de los paneles de reseña (Solo Fade In/Out)
 
@@ -24875,17 +24878,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                   
 
-                  var sInd = document.querySelector('.scroll-indicator');
-                  if (sInd) {
-                      if (localP > 39.0) {
-                          let tExit = Math.min(1, (localP - 39.0) / 1.4);
-                          gsap.set(sInd, { y: -(window.innerHeight * 0.8 * tExit) });
-                          sInd.style.opacity = '1';
-                      } else {
-                          gsap.set(sInd, { y: 0 });
-                          sInd.style.opacity = '1';
-                      }
-                  }
+                  /* scroll-indicator movido arriba */
 
                   
 
