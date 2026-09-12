@@ -10298,16 +10298,24 @@ window.onerror = function(msg, url, line, col, err) {
            if (prog >= 38.45) {
                if (!bottomCta.classList.contains('smoke-out')) {
                    bottomCta.classList.add('smoke-out');
-                   gsap.to(bottomCta, {
+                   const t = gsap.timeline({overwrite: true});
+                   t.to(bottomCta, {
                        xPercent: -50, x: 0,
-                       y: -50,
-                       scale: 1.2,
+                       y: -80,
                        opacity: 0,
-                       filter: 'blur(12px)',
-                       duration: 0.4,
-                       ease: 'power2.out',
-                       overwrite: true
-                   });
+                       duration: 0.6,
+                       ease: 'power2.out'
+                   }, 0);
+                   t.to(bottomCta, {
+                       skewX: 8,
+                       scaleX: 1.08,
+                       scaleY: 0.92,
+                       rotation: 2,
+                       duration: 0.12,
+                       yoyo: true,
+                       repeat: 4,
+                       ease: 'sine.inOut'
+                   }, 0);
                    bottomCta.style.pointerEvents = 'none';
                }
            } else {
@@ -10316,11 +10324,12 @@ window.onerror = function(msg, url, line, col, err) {
                    gsap.to(bottomCta, {
                        xPercent: -50, x: 0,
                        y: 0,
-                       scale: 1,
+                       scaleX: 1, scaleY: 1,
+                       skewX: 0, rotation: 0,
                        opacity: 1,
                        filter: 'blur(0px)',
-                       duration: 0.3,
-                       ease: 'power2.in',
+                       duration: 0.35,
+                       ease: 'power2.out',
                        overwrite: true
                    });
                    bottomCta.style.pointerEvents = 'auto';
