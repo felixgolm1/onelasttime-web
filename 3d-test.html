@@ -7492,39 +7492,40 @@ window.onerror = function(msg, url, line, col, err) {
 
           // Footer & Hero UI fade in (animamos blur y textos por separado para que el blur funcione en Chrome durante el fade in)
 
+          window._introTweens = [];
           if ((parseFloat(sessionStorage.getItem('dev_prog')) || 0) < 0.2) {
-          gsap.to(['.blur-bg-head', '#blur-bg-sub'], {
-            opacity: 1, duration: 1.2, delay: 0.4, clearProps: 'opacity',
-            onComplete: () => {
-              const bg1 = document.querySelector('.blur-bg-head');
-              const bg2 = document.querySelector('#blur-bg-sub');
-              if (bg1) { bg1.style.display = 'none'; bg1.offsetHeight; bg1.style.display = ''; }
-              if (bg2) { bg2.style.display = 'none'; bg2.offsetHeight; bg2.style.display = ''; }
-            }
-          });
+            window._introTweens.push(gsap.to(['.blur-bg-head', '#blur-bg-sub'], {
+              opacity: 1, duration: 1.2, delay: 0.4, clearProps: 'opacity',
+              onComplete: () => {
+                const bg1 = document.querySelector('.blur-bg-head');
+                const bg2 = document.querySelector('#blur-bg-sub');
+                if (bg1) { bg1.style.display = 'none'; bg1.offsetHeight; bg1.style.display = ''; }
+                if (bg2) { bg2.style.display = 'none'; bg2.offsetHeight; bg2.style.display = ''; }
+              }
+            }));
           } else {
             gsap.set(['.blur-bg-head', '#blur-bg-sub'], { clearProps: 'opacity' });
           }
 
           if ((parseFloat(sessionStorage.getItem('dev_prog')) || 0) < 0.2) {
-              gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
-                opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05
-              });
-            } else {
-              gsap.set(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], { opacity: 1 });
-            }
+            window._introTweens.push(gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
+              opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05
+            }));
+          } else {
+            gsap.set(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], { opacity: 1 });
+          }
 
 
 
           // Textos laterales fade in (Flanqueadores)
 
           if ((parseFloat(sessionStorage.getItem('dev_prog')) || 0) < 0.2) {
-            gsap.to('.flt-in', {
+            window._introTweens.push(gsap.to('.flt-in', {
               y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.6
-            });
-            gsap.to('.flt-in-up', {
+            }));
+            window._introTweens.push(gsap.to('.flt-in-up', {
               y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.8
-            });
+            }));
           } else {
             gsap.set(['.flt-in', '.flt-in-up'], { opacity: 1, y: '0%' });
           }
@@ -14912,9 +14913,14 @@ bottomCta.style.pointerEvents = 'auto';
 
 
     function smoothScrollLoop() {
-
-        try {
-
+      try {
+        if (typeof prog !== 'undefined' && prog > 0.05 && !window._introKilled) {
+          window._introKilled = true;
+          if (window._introTweens) {
+            window._introTweens.forEach(t => { if (t && t.kill) t.kill(); });
+            window._introTweens = null;
+          }
+        }
         const lerpF = 0.40;
 
         
