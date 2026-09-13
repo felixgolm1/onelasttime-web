@@ -10297,22 +10297,22 @@ window.onerror = function(msg, url, line, col, err) {
 
       // Controlar la visibilidad del CTA inferior
         const bottomCta = document.getElementById('cta-bottom-container');
-var _sInd = document.querySelector('.scroll-indicator');
 if (bottomCta) {
 bottomCta.classList.remove('smoke-out');
 if (prog >= 38.60) {
 let pOffset = prog - 38.60;
-let yMove = pOffset * 30; 
+let yMove = pOffset * 30;
+// Fade out CTA to 0 by prog = 39.86 (which is pOffset = 1.26)
+let ctaOp = Math.max(0, 1 - (pOffset / 1.26)); 
                 
                 gsap.set(bottomCta, {
-                    xPercent: -50, x: 0,
-                    y: -yMove + 'vh',
-                    opacity: 1,
+xPercent: -50, x: 0,
+y: -yMove + 'vh',
+opacity: ctaOp,
                     scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, filter: 'blur(0px)',
                     overwrite: true
                 });
-                bottomCta.style.pointerEvents = 'auto';
-if (_sInd) { gsap.set(_sInd, { y: -yMove + 'vh', opacity: 1 }); }
+                bottomCta.style.pointerEvents = ctaOp > 0 ? 'auto' : 'none';
 } else {
 gsap.set(bottomCta, {
 xPercent: -50, x: 0,
@@ -10322,7 +10322,6 @@ scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, filter: 'blur(0px)',
 overwrite: true
 });
 bottomCta.style.pointerEvents = 'auto';
-if (_sInd) { gsap.set(_sInd, { y: 0, opacity: 1 }); }
 }
 }
 
@@ -24870,7 +24869,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                   
 
-                  /* scroll-indicator movido arriba */
+                  var sInd = document.querySelector('.scroll-indicator');
+if (sInd) {
+    // Restaurar transform y fade out original
+    gsap.set(sInd, { y: 0 });
+    var scrollIndP = Math.max(0, Math.min(1, (localP - 39.0) / 1.4));
+    sInd.style.opacity = (1 - scrollIndP).toFixed(3);
+}
 
                   
 
