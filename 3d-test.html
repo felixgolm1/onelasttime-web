@@ -12342,7 +12342,11 @@ bottomCta.style.pointerEvents = 'auto';
         
         
         if (window._cIsMobile) {
-            scBoard.style.setProperty('top', '50vh', 'important');
+            let targetVH = 50;
+            if (prog <= 0.40) {
+                targetVH = mapRange(prog, 0, 0.40, 65, 50);
+            }
+            scBoard.style.setProperty('top', targetVH + 'vh', 'important');
             scBoard.style.marginTop = '0px';
         } else {
             let yPx = boardY * (window._ch / 100);
