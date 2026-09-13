@@ -9,37 +9,29 @@
     <script>
 
     window.safePlay = function(v) {
-
-      if (!v || v.paused === false || v._isPlayPending) return;
-
-      if (v._lastPlayFail && (Date.now() - v._lastPlayFail < 1000)) return;
-
-      try {
-
-        var p = v.play();
-
-        if (p !== undefined && typeof p.catch === 'function') {
-
-          v._isPlayPending = true;
-
-          p.then(function() { v._isPlayPending = false; v._lastPlayFail = 0; }).catch(function(e){ 
-
-            v._isPlayPending = false; 
-
-            v._lastPlayFail = Date.now(); 
-
-          });
-
+      if (!v || v.paused === false) return;
+      if (v._isPlayPending) {
+        if (Date.now() - (v._pendingStart || 0) > 2000) {
+          v._isPlayPending = false;
+        } else {
+          return;
         }
-
-      } catch (e) {
-
-        v._isPlayPending = false;
-
-        v._lastPlayFail = Date.now();
-
       }
-
+      if (v._lastPlayFail && (Date.now() - v._lastPlayFail < 1000)) return;
+      try {
+        var p = v.play();
+        if (p !== undefined && typeof p.catch === 'function') {
+          v._isPlayPending = true;
+          v._pendingStart = Date.now();
+          p.then(function() { v._isPlayPending = false; v._lastPlayFail = 0; }).catch(function(e){ 
+            v._isPlayPending = false; 
+            v._lastPlayFail = Date.now(); 
+          });
+        }
+      } catch (e) {
+        v._isPlayPending = false;
+        v._lastPlayFail = Date.now();
+      }
     };
 
     
@@ -12489,7 +12481,15 @@ bottomCta.style.pointerEvents = 'auto';
 
         mainDeck.style.opacity = boxOpacity.toString();
 
-        mainDeck.style.filter = `blur(${boxBlur}px)`;
+        if (boxBlur <= 0.01) {
+
+          mainDeck.style.filter = '';
+
+        } else {
+
+          mainDeck.style.filter = `blur(${boxBlur}px)`;
+
+        }
 
 
 
@@ -12565,7 +12565,15 @@ bottomCta.style.pointerEvents = 'auto';
 
              let scaleVal = transP < 0.85 ? 0.9 : mapRange(transP, 0.85, 1.0, 0.95, 1);
 
-             track.style.filter = `blur(${revBlur}px)`;
+             if (revBlur <= 0.01) {
+
+               track.style.filter = '';
+
+             } else {
+
+               track.style.filter = `blur(${revBlur}px)`;
+
+             }
 
              track.style.transform = `translate(-50%, -50%) scale(${scaleVal})`;
 
