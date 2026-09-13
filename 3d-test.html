@@ -15348,13 +15348,22 @@ bottomCta.style.pointerEvents = 'auto';
 
 
 
+          let scatterFade = 1;
+          if (prog >= 0.85 && prog < 0.90) {
+              scatterFade = 1 - (prog - 0.85) / (0.90 - 0.85);
+          } else if (prog >= 0.90 && prog < 1.25) {
+              scatterFade = 0;
+          } else if (prog >= 1.25 && prog < 1.30) {
+              scatterFade = (prog - 1.25) / (1.30 - 1.25);
+          }
+          
           if (mainDeckEl && mainDeckEl.style.display === 'block') {
 
               const mdOp = parseFloat(mainDeckEl.style.opacity || '0');
 
               cardCanvasEl.style.transition = 'none';
 
-              cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp) * (typeof sIntroProxy !== 'undefined' ? sIntroProxy.opacity : 1));
+              cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp) * scatterFade);
 
               globalGlbCard.visible         = mdOp < 0.99;
 
@@ -15370,7 +15379,7 @@ bottomCta.style.pointerEvents = 'auto';
 
 
 
-          // Detectar scatter cuando los 3 flips terminan (rotationY Ã¢â€°Â¤ Ã¢Ëâ€539Â°)
+          // Detectar scatter cuando los 3 flips terminan (rotationY Ã¢â€°Â¤ Ã¢Ë†â€™539Â°)
 
           // Con 3 flips el destino es -540Â°; el umbral de -179Â° disparaba tras el 1er flip
 
@@ -15386,9 +15395,9 @@ bottomCta.style.pointerEvents = 'auto';
 
           if (!mainDeckEl || mainDeckEl.style.display !== 'block') {
 
-              cardCanvasEl.style.opacity = String(typeof sIntroProxy !== 'undefined' ? sIntroProxy.opacity : 1);
+              cardCanvasEl.style.opacity = String(scatterFade);
 
-              globalGlbCard.visible      = true;
+              globalGlbCard.visible      = scatterFade > 0;
 
           }
 
