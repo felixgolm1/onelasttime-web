@@ -8873,21 +8873,24 @@ window.onerror = function(msg, url, line, col, err) {
 
     let t = 0.92;
 
-    // sCards[i] corresponds to which card is the FOCUS of each panData step
+// Inyectar un wrapper dinámico para no entrar en conflicto con el smoothScrollLoop en Y
+const boardEl = document.getElementById('sc-board');
+const pWrap = document.createElement('div');
+pWrap.id = 'sc-pan-wrapper';
+pWrap.style.cssText = 'width:0; height:0; position:absolute; top:0; left:0;';
+while(boardEl.firstChild) pWrap.appendChild(boardEl.firstChild);
+boardEl.appendChild(pWrap);
 
-    // panData[0] ? sc1 focused, panData[1] ? sc2, panData[2] ? sc3, panData[3] ? sc4
+// sCards[i] corresponds to which card is the FOCUS of each panData step
+// panData[0] -> sc1 focused, panData[1] -> sc2, panData[2] -> sc3, panData[3] -> sc4
+const focusOrder = [sc1, sc2, sc3, sc4];
 
-    const focusOrder = [sc1, sc2, sc3, sc4];
-
-    panData.forEach(({ x, y, r }, i) => {
-
-      scrollTl.to(scBoard, { x, rotation: r, scale: focusZoom,
-
-        duration: PAN, ease: 'power1.inOut' }, t);
-
-      scrollTl.to(sIntroProxy, { opacity: 0.25, duration: PAN,
-
-        ease: 'power1.inOut', onUpdate: updateIntroOpacity }, t);
+panData.forEach(({ x, y, r }, i) => {
+    scrollTl.to(pWrap, { x, y, rotation: r, scale: focusZoom,
+                        duration: PAN, ease: 'power1.inOut' }, t);
+    
+    scrollTl.to(sIntroProxy, { opacity: 0.25, duration: PAN, 
+                              ease: 'power1.inOut', onUpdate: updateIntroOpacity }, t);
 
       // Apagar todas las cartas menos la que está en foco
 
@@ -9132,9 +9135,8 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-    scrollTl.to(scBoard, { x: 0, rotation: 0, scale: 1,
-
-      duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
+    scrollTl.to('#sc-pan-wrapper', { x: 0, y: 0, rotation: 0, scale: 1,
+        duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
 
     scrollTl.to(sIntroProxy, { opacity: 1, duration: gatherDur,
 
