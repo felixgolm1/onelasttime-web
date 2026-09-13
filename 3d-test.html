@@ -8587,20 +8587,6 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-    scrollTl.to(ftChars, {
-
-      filter: 'blur(15px)',
-
-      duration: 0.08, 
-
-      stagger: 0.012, 
-
-      ease: 'power2.in'
-
-    }, 0.82);
-
-
-
     // La carta central desaparece MIENTRAS hace el último grado del giro
 
     scrollTl.to(mg, { opacity: 0, duration: 0.03 }, 0.85);
@@ -9130,9 +9116,8 @@ panData.forEach(({ x, y, r }, i) => {
     scrollTl.to('#sc-pan-wrapper', { x: 0, y: 0, rotation: 0, scale: 1,
         duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
 
-    scrollTl.to(sIntroProxy, { opacity: 1, duration: gatherDur,
-
-      ease: 'power2.inOut', onUpdate: updateIntroOpacity }, gatherStart);
+    scrollTl.to(sIntroProxy, { opacity: 1, duration: 0.1,
+        ease: 'power2.inOut', onUpdate: updateIntroOpacity }, gatherStart);
 
     // Restaurar opacidad de todas las cartas al volver al overview
 
