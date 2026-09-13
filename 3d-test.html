@@ -8423,7 +8423,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     scrollTl.to(ftChars, {
 
-      opacity: 1, filter: 'blur(0px)', x: 0,
+      opacity: 1, clearProps: 'filter', x: 0,
 
       duration: 0.06, stagger: 0.008, ease: 'power2.out'
 
@@ -10309,7 +10309,7 @@ let ctaOp = Math.max(0, 1 - (pOffset / 1.26));
 xPercent: -50, x: 0,
 y: -yMove + 'vh',
 opacity: ctaOp,
-                    scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, filter: 'blur(0px)',
+                    scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, clearProps: 'filter',
                     overwrite: true
                 });
                 bottomCta.style.pointerEvents = ctaOp > 0 ? 'auto' : 'none';
@@ -10318,7 +10318,7 @@ gsap.set(bottomCta, {
 xPercent: -50, x: 0,
 y: 0,
 opacity: 1,
-scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, filter: 'blur(0px)',
+scaleX: 1, scaleY: 1, skewX: 0, rotation: 0, clearProps: 'filter',
 overwrite: true
 });
 bottomCta.style.pointerEvents = 'auto';
