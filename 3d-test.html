@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="es">
 
@@ -15429,9 +15429,20 @@ bottomCta.style.pointerEvents = 'auto';
 
               const gSY   = gsap.getProperty(mgEl, 'scaleY') || 1;
 
+              let driftY = 0;
+              if (typeof prog !== 'undefined') {
+                  if (prog > 0.60 && prog < 0.88) {
+                      let phase1Prog = (prog - 0.60) / 0.28;
+                      let ease = phase1Prog < 0.5 ? 2 * phase1Prog * phase1Prog : 1 - Math.pow(-2 * phase1Prog + 2, 2) / 2;
+                      driftY = ease * (-window._ch * 0.045);
+                  } else if (prog >= 0.88) {
+                      driftY = -window._ch * 0.045;
+                  }
+              }
+
               const screenCX = document.documentElement.clientWidth / 2 + gx;
 
-              const screenCY = window._ch / 2 + gy;
+              const screenCY = window._ch / 2 + gy + driftY;
 
               const ndcX  =  (screenCX / window._cw)  * 2 - 1;
 
