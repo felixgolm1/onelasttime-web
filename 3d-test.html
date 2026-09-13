@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="es">
 
@@ -8417,13 +8417,11 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Más lento y espaciado para dar peso al momento
 
-    scrollTl.to(ftChars, {
-
-      opacity: 1, clearProps: 'filter', x: 0,
-
-      duration: 0.06, stagger: 0.008, ease: 'power2.out'
-
-    }, 0.60);
+        scrollTl.fromTo(ftChars, 
+          { opacity: 0, filter: 'blur(10px)', x: -18 },
+          { opacity: 1, filter: 'blur(0px)', x: 0,
+            duration: 0.06, stagger: 0.008, ease: 'power2.out', immediateRender: false
+          }, 0.60);
 
     // Ã¢â€€ Textos flanqueadores izq/der estilo Oryzo â€â€ letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 
