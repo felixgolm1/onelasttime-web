@@ -15386,7 +15386,7 @@ bottomCta.style.pointerEvents = 'auto';
 
           if (!mainDeckEl || mainDeckEl.style.display !== 'block') {
 
-              cardCanvasEl.style.opacity = '1';
+              cardCanvasEl.style.opacity = String(typeof sIntroProxy !== 'undefined' ? sIntroProxy.opacity : 1);
 
               globalGlbCard.visible      = true;
 
