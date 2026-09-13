@@ -8866,9 +8866,6 @@ const focusOrder = [sc1, sc2, sc3, sc4];
 panData.forEach(({ x, y, r }, i) => {
     scrollTl.to(pWrap, { x, y, rotation: r, scale: focusZoom,
                         duration: PAN, ease: 'power1.inOut' }, t);
-    
-    scrollTl.to(sIntroProxy, { opacity: 0.25, duration: PAN, 
-                              ease: 'power1.inOut', onUpdate: updateIntroOpacity }, t);
 
       // Apagar todas las cartas menos la que está en foco
 
@@ -9106,9 +9103,6 @@ panData.forEach(({ x, y, r }, i) => {
     // Cámara vuelve a la posición central (4 PASOS)
     scrollTl.to('#sc-pan-wrapper', { x: 0, y: 0, rotation: 0, scale: 1,
         duration: PAN, ease: 'power2.inOut' }, t);
-
-    scrollTl.to(sIntroProxy, { opacity: 1, duration: 0.1,
-        ease: 'power2.inOut', onUpdate: updateIntroOpacity }, t);
 
     // Restaurar opacidad de todas las cartas al volver al overview
     scrollTl.to(focusOrder, { opacity: 1, duration: PAN, ease: 'power2.inOut' }, t);
