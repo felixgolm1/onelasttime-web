@@ -8860,7 +8860,7 @@ window.onerror = function(msg, url, line, col, err) {
 
         // Transición suave para que la carta y el título aterricen más arriba (alineándose con la caja verde)
     scrollTl.to(scTitle, { y: 0, duration: 0.30, ease: 'power2.inOut' }, 0.60);
-    scrollTl.to(morphGroup, { y: () => window._cIsMobile ? 0 : -(window._ch * 0.045), duration: 0.30, ease: 'power2.inOut' }, 0.60);
+    scrollTl.to('#card-morph-group', { y: () => window._cIsMobile ? 0 : -(window._ch * 0.045), duration: 0.30, ease: 'power2.inOut' }, 0.60);
     scrollTl.to(scCta,   { autoAlpha: 1, duration: 0.05, ease: 'none' }, 0.88);
 
 
