@@ -15376,11 +15376,12 @@ bottomCta.style.pointerEvents = 'auto';
           // (si mainDeck es visible, el crossfade ya gestiona opacity y visible arriba)
 
           if (!mainDeckEl || mainDeckEl.style.display !== 'block') {
-
-              cardCanvasEl.style.opacity = '1';
-
+              if (typeof sIntroProxy !== 'undefined' && typeof inScatter !== 'undefined' && inScatter) {
+                  cardCanvasEl.style.opacity = String(sIntroProxy.opacity);
+              } else {
+                  cardCanvasEl.style.opacity = '1';
+              }
               globalGlbCard.visible      = true;
-
           }
 
 
