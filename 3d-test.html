@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="es">
 
@@ -7492,40 +7492,39 @@ window.onerror = function(msg, url, line, col, err) {
 
           // Footer & Hero UI fade in (animamos blur y textos por separado para que el blur funcione en Chrome durante el fade in)
 
-          window._introTweens = [];
           if ((parseFloat(sessionStorage.getItem('dev_prog')) || 0) < 0.2) {
-            window._introTweens.push(gsap.to(['.blur-bg-head', '#blur-bg-sub'], {
-              opacity: 1, duration: 1.2, delay: 0.4, clearProps: 'opacity',
-              onComplete: () => {
-                const bg1 = document.querySelector('.blur-bg-head');
-                const bg2 = document.querySelector('#blur-bg-sub');
-                if (bg1) { bg1.style.display = 'none'; bg1.offsetHeight; bg1.style.display = ''; }
-                if (bg2) { bg2.style.display = 'none'; bg2.offsetHeight; bg2.style.display = ''; }
-              }
-            }));
+          gsap.to(['.blur-bg-head', '#blur-bg-sub'], {
+            opacity: 1, duration: 1.2, delay: 0.4, clearProps: 'opacity',
+            onComplete: () => {
+              const bg1 = document.querySelector('.blur-bg-head');
+              const bg2 = document.querySelector('#blur-bg-sub');
+              if (bg1) { bg1.style.display = 'none'; bg1.offsetHeight; bg1.style.display = ''; }
+              if (bg2) { bg2.style.display = 'none'; bg2.offsetHeight; bg2.style.display = ''; }
+            }
+          });
           } else {
             gsap.set(['.blur-bg-head', '#blur-bg-sub'], { clearProps: 'opacity' });
           }
 
           if ((parseFloat(sessionStorage.getItem('dev_prog')) || 0) < 0.2) {
-            window._introTweens.push(gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
-              opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05
-            }));
-          } else {
-            gsap.set(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], { opacity: 1 });
-          }
+              gsap.to(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], {
+                opacity: 1, duration: 1.2, delay: 0.4, stagger: 0.05
+              });
+            } else {
+              gsap.set(['.oh-inner', '.sub-oh-inner', '#cta-bottom-container', '.scroll-indicator'], { opacity: 1 });
+            }
 
 
 
           // Textos laterales fade in (Flanqueadores)
 
           if ((parseFloat(sessionStorage.getItem('dev_prog')) || 0) < 0.2) {
-            window._introTweens.push(gsap.to('.flt-in', {
+            gsap.to('.flt-in', {
               y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.6
-            }));
-            window._introTweens.push(gsap.to('.flt-in-up', {
+            });
+            gsap.to('.flt-in-up', {
               y: '0%', opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.05, delay: 0.8
-            }));
+            });
           } else {
             gsap.set(['.flt-in', '.flt-in-up'], { opacity: 1, y: '0%' });
           }
@@ -7964,11 +7963,7 @@ window.onerror = function(msg, url, line, col, err) {
 
     const sIntroProxy = { opacity: 1 };
 
-    const updateIntroOpacity = () => { 
-    if (scIntro) scIntro.style.opacity = sIntroProxy.opacity; 
-    const cce = document.getElementById('card-canvas');
-    if (cce) cce.style.opacity = sIntroProxy.opacity;
-};
+    const updateIntroOpacity = () => { if (scIntro) scIntro.style.opacity = sIntroProxy.opacity; };
 
 
 
@@ -8422,11 +8417,13 @@ window.onerror = function(msg, url, line, col, err) {
 
     // Más lento y espaciado para dar peso al momento
 
-        scrollTl.fromTo(ftChars, 
-          { opacity: 0, filter: 'blur(10px)', x: -18 },
-          { opacity: 1, filter: 'blur(0px)', x: 0,
-            duration: 0.06, stagger: 0.008, ease: 'power2.out', immediateRender: false
-          }, 0.60);
+    scrollTl.to(ftChars, {
+
+      opacity: 1, clearProps: 'filter', x: 0,
+
+      duration: 0.06, stagger: 0.008, ease: 'power2.out'
+
+    }, 0.60);
 
     // Ã¢â€€ Textos flanqueadores izq/der estilo Oryzo â€â€ letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 
@@ -8862,14 +8859,13 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 
-        // Transición suave para que la carta y el título aterricen más arriba (alineándose con la caja verde)
-    scrollTl.to(scTitle, { y: 0, duration: 0.30, ease: 'power2.inOut' }, 0.60);
-    scrollTl.to('#card-morph-group', { y: () => window._cIsMobile ? 0 : -(window._ch * 0.045), duration: 0.30, ease: 'power2.inOut' }, 0.60);
+    scrollTl.to(scTitle, { y: 0, duration: 0.05, ease: 'none' }, 0.86);
+
     scrollTl.to(scCta,   { autoAlpha: 1, duration: 0.05, ease: 'none' }, 0.88);
 
 
 
-    // Ã¢â€€ Fases 5â€â€œ8: MACRO CAMERA Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
+    // Ã¢â€€ Fases 5â€â€8: MACRO CAMERA Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
 
     const PAN  = 0.05;
 
@@ -8889,7 +8885,7 @@ window.onerror = function(msg, url, line, col, err) {
 
         duration: PAN, ease: 'power1.inOut' }, t);
 
-      scrollTl.to(sIntroProxy, { opacity: 0, duration: PAN,
+      scrollTl.to(sIntroProxy, { opacity: 0.25, duration: PAN,
 
         ease: 'power1.inOut', onUpdate: updateIntroOpacity }, t);
 
@@ -14918,14 +14914,9 @@ bottomCta.style.pointerEvents = 'auto';
 
 
     function smoothScrollLoop() {
-      try {
-        if (typeof prog !== 'undefined' && prog > 0.05 && !window._introKilled) {
-          window._introKilled = true;
-          if (window._introTweens) {
-            window._introTweens.forEach(t => { if (t && t.kill) t.kill(); });
-            window._introTweens = null;
-          }
-        }
+
+        try {
+
         const lerpF = 0.40;
 
         
@@ -15348,22 +15339,13 @@ bottomCta.style.pointerEvents = 'auto';
 
 
 
-          let scatterFade = 1;
-          if (prog >= 0.85 && prog < 0.90) {
-              scatterFade = 1 - (prog - 0.85) / (0.90 - 0.85);
-          } else if (prog >= 0.90 && prog < 1.25) {
-              scatterFade = 0;
-          } else if (prog >= 1.25 && prog < 1.30) {
-              scatterFade = (prog - 1.25) / (1.30 - 1.25);
-          }
-          
           if (mainDeckEl && mainDeckEl.style.display === 'block') {
 
               const mdOp = parseFloat(mainDeckEl.style.opacity || '0');
 
               cardCanvasEl.style.transition = 'none';
 
-              cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp) * scatterFade);
+              cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp));
 
               globalGlbCard.visible         = mdOp < 0.99;
 
@@ -15379,7 +15361,7 @@ bottomCta.style.pointerEvents = 'auto';
 
 
 
-          // Detectar scatter cuando los 3 flips terminan (rotationY Ã¢â€°Â¤ Ã¢Ë†â€™539Â°)
+          // Detectar scatter cuando los 3 flips terminan (rotationY Ã¢â€°Â¤ Ã¢Ëâ€539Â°)
 
           // Con 3 flips el destino es -540Â°; el umbral de -179Â° disparaba tras el 1er flip
 
@@ -15395,9 +15377,9 @@ bottomCta.style.pointerEvents = 'auto';
 
           if (!mainDeckEl || mainDeckEl.style.display !== 'block') {
 
-              cardCanvasEl.style.opacity = String(scatterFade);
+              cardCanvasEl.style.opacity = '1';
 
-              globalGlbCard.visible      = scatterFade > 0;
+              globalGlbCard.visible      = true;
 
           }
 
