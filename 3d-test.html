@@ -3633,8 +3633,7 @@ window.onerror = function(msg, url, line, col, err) {
 <style>
 
 @media screen and (max-width: 768px) {
-  .sc-board { top: 50vh; }
-  #made-by-humans, #made-by-ai { top: 46vh; }
+  .sc-board, #made-by-humans, #made-by-ai { top: 50vh; }
   .box-3d-wrapper { top: 46vh !important; }
   
   #card-morph-group { top: 0; }
@@ -3977,8 +3976,7 @@ window.onerror = function(msg, url, line, col, err) {
 
 
 @media screen and (max-width: 768px) {
-  .sc-board { top: 50vh; }
-  #made-by-humans, #made-by-ai { top: 46vh; }
+  .sc-board, #made-by-humans, #made-by-ai { top: 50vh; }
   .box-3d-wrapper { top: 46vh !important; }
   
   #card-morph-group { top: 0; }
@@ -12343,10 +12341,6 @@ bottomCta.style.pointerEvents = 'auto';
             let targetVH = 50;
             if (prog <= 0.40) {
                 targetVH = mapRange(prog, 0, 0.40, 65, 50);
-            } else if (prog > 0.90 && prog <= 1.30) {
-                targetVH = mapRange(prog, 0.90, 1.30, 50, 46);
-            } else if (prog > 1.30) {
-                targetVH = 46;
             }
             scBoard.style.setProperty('top', targetVH + 'vh', 'important');
             scBoard.style.marginTop = '0px';
@@ -15559,7 +15553,13 @@ bottomCta.style.pointerEvents = 'auto';
                     let tP = 0;
                     if (prog >= 13.62) tP = Math.max(0, Math.min(1, (prog - 13.62) / 1.0));
                     
-                    const baseCY = window._cIsMobile ? (window._ch * 0.46) : (window._ch * 0.455);
+                    let flipProg = Math.max(0, Math.min(1, (prog - 1.30) / 0.27));
+                    let easeFlip = flipProg * flipProg; // ease-in cuadratico
+                    
+                    const initialCY = window._ch * 0.5; // HTML card center (50vh)
+                    const finalCY = window._cIsMobile ? (window._ch * 0.46) : (window._ch * 0.455);
+                    const baseCY = initialCY + easeFlip * (finalCY - initialCY);
+                    
                     const baseNdcY = -(baseCY / window._ch) * 2 + 1;
                     const startY = baseNdcY * vH / 2;
                     
