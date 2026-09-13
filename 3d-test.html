@@ -9103,53 +9103,26 @@ panData.forEach(({ x, y, r }, i) => {
 
     }
 
-        // Hacemos que toda la recogida sea un solo movimiento largo y suave
-
-    // Solapamos el recentrado del scBoard y el agrupamiento de las cartas para aprovechar el tiempo
-
-    let gatherStart = t - HOLD; // Iniciamos justo cuando termina el movimiento a Paso 4
-
-    let gatherDur = HOLD + PAN + 0.15; // Usamos todo el tiempo disponible hasta t3
-
-
-
+    // Cámara vuelve a la posición central (4 PASOS)
     scrollTl.to('#sc-pan-wrapper', { x: 0, y: 0, rotation: 0, scale: 1,
-        duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
+        duration: PAN, ease: 'power2.inOut' }, t);
 
     scrollTl.to(sIntroProxy, { opacity: 1, duration: 0.1,
-        ease: 'power2.inOut', onUpdate: updateIntroOpacity }, gatherStart);
+        ease: 'power2.inOut', onUpdate: updateIntroOpacity }, t);
 
     // Restaurar opacidad de todas las cartas al volver al overview
+    scrollTl.to(focusOrder, { opacity: 1, duration: PAN, ease: 'power2.inOut' }, t);
 
-    scrollTl.to(focusOrder, { opacity: 1, duration: gatherDur, ease: 'power2.inOut' }, gatherStart);
+    let t2 = t + PAN; // Cámara en el centro.
 
-
-
-    let t2 = gatherStart + gatherDur - 0.15; // Mantenemos el mismo valor sem?ntico para que nada se rompa
-
-
-
-    // ? Fase 9: Recoger (Smooth) ?
-
-    // Escalan a 1.02 (0.85 equivalente bajo escala de 1.2 base) para quedar eclipsadas y escondidas a la perfecci?n sin opacidades raras
-
+    // 🔸 Fase 9: Recoger
+    // Las cartas esparcidas se recogen de vuelta a la carta central
     scrollTl.to([sc1, sc2, sc3, sc4], {
+        x: '0%', y: '0%', rotation: 0, scale: 1.02, duration: 0.15, ease: 'power2.inOut'
+    }, t2);
 
-      x: '0%', y: '0%', rotation: 0, scale: 1.02, duration: gatherDur, ease: 'power2.inOut'
-
-    }, gatherStart); // Overlap
-
-
-
-    // ? CTA: fade in suave del bot?n cuando las cartas terminan de recogerse ?
-
-    // (Ya no hacemos que reaparezca porque nunca lo ocultamos)
-
-
-
-    // ? Fase 10: 2 Flips y cambianzo (1.33) ?
-
-    let t3 = gatherStart + gatherDur;
+    // 🔸 Fase 10: 2 Flips y cambianzo
+    let t3 = t2 + 0.15;
 
     const mainDeck = document.getElementById('mainDeck');
 
