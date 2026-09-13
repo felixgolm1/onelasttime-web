@@ -7964,7 +7964,11 @@ window.onerror = function(msg, url, line, col, err) {
 
     const sIntroProxy = { opacity: 1 };
 
-    const updateIntroOpacity = () => { if (scIntro) scIntro.style.opacity = sIntroProxy.opacity; };
+    const updateIntroOpacity = () => { 
+    if (scIntro) scIntro.style.opacity = sIntroProxy.opacity; 
+    const cce = document.getElementById('card-canvas');
+    if (cce) cce.style.opacity = sIntroProxy.opacity;
+};
 
 
 
@@ -8885,7 +8889,7 @@ window.onerror = function(msg, url, line, col, err) {
 
         duration: PAN, ease: 'power1.inOut' }, t);
 
-      scrollTl.to(sIntroProxy, { opacity: 0.25, duration: PAN,
+      scrollTl.to(sIntroProxy, { opacity: 0, duration: PAN,
 
         ease: 'power1.inOut', onUpdate: updateIntroOpacity }, t);
 
@@ -15350,7 +15354,7 @@ bottomCta.style.pointerEvents = 'auto';
 
               cardCanvasEl.style.transition = 'none';
 
-              cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp));
+              cardCanvasEl.style.opacity    = String(Math.max(0, 1 - mdOp) * (typeof sIntroProxy !== 'undefined' ? sIntroProxy.opacity : 1));
 
               globalGlbCard.visible         = mdOp < 0.99;
 
