@@ -28644,7 +28644,6 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     clearTimeout(window._faqCloseTimeout);
     m.classList.remove('modal-closing');
-    m.scrollTop = 0;
 
     window.resetWalletStack();
 
@@ -28675,6 +28674,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       requestAnimationFrame(function() {
 
         m.style.opacity = '1';
+        m.scrollTop = 0; // Aplicar scroll AHORA que el modal tiene display:flex
 
       });
 
