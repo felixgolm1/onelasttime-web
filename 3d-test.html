@@ -6486,7 +6486,7 @@ window.onerror = function(msg, url, line, col, err) {
 
                         span.textContent = c;
 
-                        span.style.opacity = '0.075';
+                        span.style.opacity = '0.045';
 
                         parentEl.appendChild(span);
 
@@ -24322,7 +24322,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                                   if (dist < 0) {
 
-                                      char.style.opacity = '0.075';
+                                      char.style.opacity = '0.045';
 
                                       char.style.color = '';
 
@@ -24332,7 +24332,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                                       var ratio = dist / blurLen;
 
-                                      var opC = 0.075 + 0.925 * Math.pow(ratio, 0.8);
+                                      var opC = 0.045 + 0.955 * Math.pow(ratio, 0.8);
 
                                       char.style.opacity = opC.toFixed(2);
 
@@ -24412,7 +24412,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                               counterSpan.innerText = '¿' + countVal.toLocaleString('es-ES') + '€?';
 
-                              counterSpan.style.color = (_p1CountP === 0) ? 'rgba(255, 255, 255, 0.075)' : '#ffffff';
+                              counterSpan.style.color = (_p1CountP === 0) ? 'rgba(255, 255, 255, 0.045)' : '#ffffff';
 
                               strikeLine.style.width = '0%';
 
