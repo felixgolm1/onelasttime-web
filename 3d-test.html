@@ -15581,7 +15581,9 @@ bottomCta.style.pointerEvents = 'auto';
 
                   // Ã¢â€€Ã¢â€€ SCATTER normal (4 pasos / macro-cámara) Ã¢â€€Ã¢â€€
 
-                  const boardRotDeg = gsap.getProperty(scBoard, 'rotation') || 0;
+                  const pWrapEl = document.getElementById('sc-pan-wrapper');
+                  const targetWrap = pWrapEl || scBoard;
+                  const boardRotDeg = gsap.getProperty(targetWrap, 'rotation') || 0;
 
                   const totalRz     = lc.rotBaseZ + boardRotDeg * Math.PI / 180;
 
@@ -15589,7 +15591,7 @@ bottomCta.style.pointerEvents = 'auto';
 
 
 
-                  const boardScale = gsap.getProperty(scBoard, 'scaleX') || 1;
+                  const boardScale = gsap.getProperty(targetWrap, 'scaleX') || 1;
 
                   // Compensacion de perspectiva: al alejarse del centro, la camara 3D lo hace ver mas pequeno.
 
