@@ -28013,7 +28013,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
       opacity: 1;
 
-      transform: translateY(115vh) rotate(calc(var(--base-rot, 0deg) + 6deg)) scale(0.92);
+      transform: translateY(calc(115vh + var(--faq-scroll-y, 0px))) rotate(calc(var(--base-rot, 0deg) + 6deg)) scale(0.92);
 
     }
 
@@ -28725,6 +28725,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     var m = document.getElementById('olt-faq-modal');
 
     if (!m) return;
+    m.style.setProperty('--faq-scroll-y', m.scrollTop + 'px');
 
     
 
