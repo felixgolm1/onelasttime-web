@@ -28643,8 +28643,8 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
     clearTimeout(window._faqDealTimeout);
 
     clearTimeout(window._faqCloseTimeout);
-
     m.classList.remove('modal-closing');
+    m.scrollTop = 0;
 
     window.resetWalletStack();
 
