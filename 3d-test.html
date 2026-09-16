@@ -27651,6 +27651,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
   }
 
+  #olt-faq-modal.modal-closing {
+    pointer-events: none;
+  }
+
   #olt-faq-modal.modal-closing::before {
     opacity: 0;
     transition: opacity 2.0s ease-in-out;
@@ -28747,9 +28751,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     
 
+      // Restore body scroll immediately so user can interact right away
+      document.body.style.overflow = '';
+
       // Tiempo suficiente para que termine la animacion dealCardOut (0.90s max delay + 2.0s duration = 2.90s)
       window._faqCloseTimeout = setTimeout(function() {
-        document.body.style.overflow = '';
         setTimeout(function() {
           m.classList.remove('active');
           m.classList.remove('modal-closing');
