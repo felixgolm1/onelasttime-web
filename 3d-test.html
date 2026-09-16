@@ -27593,9 +27593,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     overscroll-behavior: contain;
 
-    scrollbar-width: thin;
-
-    scrollbar-color: rgba(204, 255, 0, 0.3) transparent;
+    scrollbar-width: none;
 
   }
 
@@ -27616,21 +27614,11 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 }
 
   #olt-faq-modal::-webkit-scrollbar {
-
-    width: 6px;
-
-  }
-
-  #olt-faq-modal::-webkit-scrollbar-thumb {
-
-    background: rgba(204, 255, 0, 0.3);
-
-    border-radius: 999px;
-
+    display: none;
+    width: 0;
   }
 
   #olt-faq-modal.active {
-
     display: flex;
 
   }
