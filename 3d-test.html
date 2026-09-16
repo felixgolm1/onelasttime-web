@@ -16060,6 +16060,11 @@ requestAnimationFrame(smoothScrollLoop);
         
       }
       
+      // Nuevo ajuste: 50% más rápido en el tramo del precio dinámico (p: 33.68 a 42.00)
+      if (targetProg >= 33.68 && targetProg <= 42.00) {
+        divisor = divisor / 1.5;
+      }
+      
 
       let rawDelta = cappedDY / divisor;
 
@@ -16312,6 +16317,11 @@ requestAnimationFrame(smoothScrollLoop);
 
         divisorT = divisorT / 2.925;
 
+      }
+
+      // Nuevo ajuste: 50% más rápido en el tramo del precio dinámico (p: 33.68 a 42.00)
+      if (targetProg >= 33.68 && targetProg <= 42.00) {
+        divisorT = divisorT / 1.5;
       }
 
         
