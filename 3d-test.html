@@ -27665,7 +27665,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     -webkit-backdrop-filter: blur(0px);
 
-    transition: background 0.8s ease, backdrop-filter 0.8s ease, -webkit-backdrop-filter 0.8s ease;
+    transition: background 2.0s ease, backdrop-filter 2.0s ease, -webkit-backdrop-filter 2.0s ease;
 
   }
 
@@ -28022,21 +28022,19 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
   #faq-wallet-stack.is-leaving .wallet-card-wrap {
+  animation: dealCardOut 2.0s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
 
-    animation: dealCardOut 1.0s cubic-bezier(0.4, 0, 0.2, 1) both;
-
-  }
-
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(1)  { animation-delay: 0.00s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(2)  { animation-delay: 0.05s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(3)  { animation-delay: 0.10s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(4)  { animation-delay: 0.15s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(5)  { animation-delay: 0.20s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(6)  { animation-delay: 0.25s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(7)  { animation-delay: 0.30s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(8)  { animation-delay: 0.35s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(9)  { animation-delay: 0.40s; }
-  #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(10) { animation-delay: 0.45s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(1)  { animation-delay: 0.00s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(2)  { animation-delay: 0.10s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(3)  { animation-delay: 0.20s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(4)  { animation-delay: 0.30s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(5)  { animation-delay: 0.40s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(6)  { animation-delay: 0.50s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(7)  { animation-delay: 0.60s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(8)  { animation-delay: 0.70s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(9)  { animation-delay: 0.80s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(10) { animation-delay: 0.90s; }
 
 
 
@@ -28766,7 +28764,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
     
 
-      // Tiempo suficiente para que termine la animacion dealCardOut (0.45s max delay + 1.0s duration = 1.45s)
+      // Tiempo suficiente para que termine la animacion dealCardOut (0.90s max delay + 2.0s duration = 2.90s)
       window._faqCloseTimeout = setTimeout(function() {
         m.style.opacity = '0';
         document.body.style.overflow = '';
@@ -28778,7 +28776,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             stack.classList.remove('is-leaving');
           }
         }, 350);
-      }, 1450); // Wait 1.45s antes de ocultar del todo
+      }, 2900); // Wait 2.90s antes de ocultar del todo
 
   };
 
