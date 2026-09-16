@@ -16053,10 +16053,10 @@ requestAnimationFrame(smoothScrollLoop);
 
       
 
-      // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61
+      // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61 (y luego otro 50% extra = 2.25)
       if (targetProg >= 51.86 && targetProg <= 60.03) {
         
-        divisor = divisor / 1.5;
+        divisor = divisor / 2.25;
         
       }
       
@@ -16307,11 +16307,10 @@ requestAnimationFrame(smoothScrollLoop);
 
       
 
-      // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61
-
+      // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61 (y luego otro 50% extra = 2.25)
       if (targetProg >= 51.86 && targetProg <= 60.03) {
 
-        divisorT = divisorT / 1.5;
+        divisorT = divisorT / 2.25;
 
       }
 
