@@ -28666,16 +28666,17 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
       document.body.style.overflow = 'hidden';
 
+      // First force layout so browser knows the element exists
+      m.style.display = 'flex';
+      // Force a reflow
+      void m.offsetWidth;
+
+      // Now add active class to trigger CSS transitions
       m.classList.add('active');
 
-      
-
       // Asegurar que el modal se hace visible tras el display: flex
-
       requestAnimationFrame(function() {
-
         m.scrollTop = 0; // Aplicar scroll AHORA que el modal tiene display:flex
-
       });
 
       
@@ -28767,6 +28768,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
         setTimeout(function() {
           m.classList.remove('active');
           m.classList.remove('modal-closing');
+          m.style.display = '';
           if (stack) {
             stack.classList.remove('is-leaving');
           }
