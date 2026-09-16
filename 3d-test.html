@@ -16053,6 +16053,14 @@ requestAnimationFrame(smoothScrollLoop);
 
       
 
+      // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61
+      if (targetProg >= 51.86 && targetProg <= 60.03) {
+        
+        divisor = divisor / 1.5;
+        
+      }
+      
+
       let rawDelta = cappedDY / divisor;
 
       let magneticDelta = applyMagneticFriction(targetProg, rawDelta);
@@ -16294,6 +16302,16 @@ requestAnimationFrame(smoothScrollLoop);
       if (targetProg >= 55.52) {
 
         divisorT = divisorT / 2.0;
+
+      }
+
+      
+
+      // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61
+
+      if (targetProg >= 51.86 && targetProg <= 60.03) {
+
+        divisorT = divisorT / 1.5;
 
       }
 
