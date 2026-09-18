@@ -25233,11 +25233,12 @@ if (sInd) {
         }
 
         // Efecto de crecimiento continuo (zoom) que no se detiene al llegar a 1.0
-        // Utilizamos slideY directamente sin clamp01 para que siga creciendo mientras sube
-        var unclampedProg = (40 - slideY) / 40;
-        var scaleVal = 0.5 + (0.5 * unclampedProg);
-        // Opcional: poner un límite muy alto para evitar bugs si el usuario hace mucho scroll
-        scaleVal = Math.min(scaleVal, 3.0); 
+        // Utilizamos slideY para la fase de aparicion y contentY para la fase de subida
+        var baseProg = (40 - slideY) / 40;
+        // contentY es 0 al principio, y luego se hace negativo cuando el texto sube
+        var scaleVal = 0.5 + (0.5 * baseProg) - (contentY / 60);
+        // Límite generoso
+        scaleVal = Math.max(0, Math.min(scaleVal, 5.0)); 
         
         textGradR.style.transformOrigin = "left center";
         textGradR.style.transform = "scale(" + scaleVal + ")";
