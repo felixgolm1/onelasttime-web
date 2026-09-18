@@ -20410,7 +20410,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
         <script>
 
-          var textR = "No nos creas a nosotros,<br>escúchales a ellos";
+          var textR = "No nos creas a nosotros,<br>escúchales a ellxs";
 
           var newHtmlR = "";
 
@@ -25199,14 +25199,14 @@ if (sInd) {
         if (chars.length > 0) {
 
            var targetIdx = txtP * (chars.length + blurLen) - blurLen;
-           // Transición de salida al revés (de derecha a izquierda)
+           // Transición de salida en la misma dirección que entra (de principio a fin)
            var exitProg = Math.max(0, Math.min(1, Math.abs(contentY) / 80));
-           var targetExitIdx = (1 - exitProg) * (chars.length + blurLen);
+           var targetExitIdx = exitProg * (chars.length + blurLen) - blurLen;
 
            for (var i = 0; i < chars.length; i++) {
 
               var op = 1 - (i - targetIdx) / blurLen;
-              var exitOp = (targetExitIdx - i) / blurLen;
+              var exitOp = (i - targetExitIdx) / blurLen;
               var finalOp = Math.min(op, exitOp);
 
               chars[i].style.opacity = Math.max(0, Math.min(1, finalOp));
@@ -25226,14 +25226,14 @@ if (sInd) {
         if (charsR.length > 0) {
 
            var targetIdxR = txtPR * (charsR.length + blurLen) - blurLen;
-           // Transición de salida al revés (de final a principio)
+           // Transición de salida en la misma dirección que entra (de principio a fin)
            var exitProgR = Math.max(0, Math.min(1, Math.abs(contentY) / 80));
-           var targetExitIdxR = (1 - exitProgR) * (charsR.length + blurLen);
+           var targetExitIdxR = exitProgR * (charsR.length + blurLen) - blurLen;
 
            for (var j = 0; j < charsR.length; j++) {
 
               var opR = 1 - (j - targetIdxR) / blurLen;
-              var exitOpR = (targetExitIdxR - j) / blurLen;
+              var exitOpR = (j - targetExitIdxR) / blurLen;
               var finalOpR = Math.min(opR, exitOpR);
 
               charsR[j].style.opacity = Math.max(0, Math.min(1, finalOpR));
