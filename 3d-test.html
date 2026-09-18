@@ -25199,12 +25199,17 @@ if (sInd) {
         if (chars.length > 0) {
 
            var targetIdx = txtP * (chars.length + blurLen) - blurLen;
+           // Transición de salida al revés (de derecha a izquierda)
+           var exitProg = Math.max(0, Math.min(1, Math.abs(contentY) / 80));
+           var targetExitIdx = (1 - exitProg) * (chars.length + blurLen);
 
            for (var i = 0; i < chars.length; i++) {
 
               var op = 1 - (i - targetIdx) / blurLen;
+              var exitOp = (targetExitIdx - i) / blurLen;
+              var finalOp = Math.min(op, exitOp);
 
-              chars[i].style.opacity = Math.max(0, Math.min(1, op));
+              chars[i].style.opacity = Math.max(0, Math.min(1, finalOp));
 
            }
 
@@ -25221,12 +25226,17 @@ if (sInd) {
         if (charsR.length > 0) {
 
            var targetIdxR = txtPR * (charsR.length + blurLen) - blurLen;
+           // Transición de salida al revés (de final a principio)
+           var exitProgR = Math.max(0, Math.min(1, Math.abs(contentY) / 80));
+           var targetExitIdxR = (1 - exitProgR) * (charsR.length + blurLen);
 
            for (var j = 0; j < charsR.length; j++) {
 
               var opR = 1 - (j - targetIdxR) / blurLen;
+              var exitOpR = (targetExitIdxR - j) / blurLen;
+              var finalOpR = Math.min(opR, exitOpR);
 
-              charsR[j].style.opacity = Math.max(0, Math.min(1, opR));
+              charsR[j].style.opacity = Math.max(0, Math.min(1, finalOpR));
 
            }
 
