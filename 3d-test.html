@@ -28071,19 +28071,19 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
 
   #faq-wallet-stack.is-leaving .wallet-card-wrap {
-  animation: dealCardOut 2.0s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: dealCardOut 1.4s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 #faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(1)  { animation-delay: 0.00s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(2)  { animation-delay: 0.10s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(3)  { animation-delay: 0.20s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(4)  { animation-delay: 0.30s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(5)  { animation-delay: 0.40s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(6)  { animation-delay: 0.50s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(7)  { animation-delay: 0.60s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(8)  { animation-delay: 0.70s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(9)  { animation-delay: 0.80s; }
-#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(10) { animation-delay: 0.90s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(2)  { animation-delay: 0.07s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(3)  { animation-delay: 0.14s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(4)  { animation-delay: 0.21s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(5)  { animation-delay: 0.28s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(6)  { animation-delay: 0.35s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(7)  { animation-delay: 0.42s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(8)  { animation-delay: 0.49s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(9)  { animation-delay: 0.56s; }
+#faq-wallet-stack.is-leaving .wallet-card-wrap:nth-child(10) { animation-delay: 0.63s; }
 
 
 
@@ -28813,7 +28813,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
       // Restore body scroll immediately so user can interact right away
       document.body.style.overflow = '';
 
-      // Tiempo suficiente para que termine la animacion dealCardOut (0.90s max delay + 2.0s duration = 2.90s)
+      // Tiempo suficiente para que termine la animacion dealCardOut (0.63s max delay + 1.4s duration = 2.03s)
       window._faqCloseTimeout = setTimeout(function() {
         setTimeout(function() {
           m.classList.remove('active');
@@ -28823,7 +28823,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
             stack.classList.remove('is-leaving');
           }
         }, 50); // Small delay to let overflow reset take effect before removing flex
-      }, 2900); // Wait 2.90s antes de ocultar del todo
+      }, 2050); // Wait 2.05s antes de ocultar del todo
 
   };
 
