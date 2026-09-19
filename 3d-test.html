@@ -17649,7 +17649,7 @@ function renderChat() {
 
     
 
-    const spacing = 92;
+    const spacing = 125;
 
     const totalHeight = chatData.length * spacing;
 
@@ -17680,11 +17680,31 @@ function renderChat() {
 
             
 
-            let textW = ctx.measureText(msg).width;
+            let words = msg.split(' ');
+            let lines = [];
+            let currentLine = words[0];
+            for (let w = 1; w < words.length; w++) {
+                let testLine = currentLine + " " + words[w];
+                if (ctx.measureText(testLine).width < 450) {
+                    currentLine = testLine;
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[w];
+                }
+            }
+            lines.push(currentLine);
+
+            let maxLineW = 0;
+            lines.forEach(l => {
+                let w = ctx.measureText(l).width;
+                if (w > maxLineW) maxLineW = w;
+            });
+
+            let textW = maxLineW;
 
             let bubbleW = textW + 48;
 
-            let bubbleH = 55;
+            let bubbleH = 55 + (lines.length - 1) * 32;
 
             let avatarSize = 104;
 
@@ -17740,7 +17760,10 @@ function renderChat() {
 
             ctx.textAlign = 'center';
 
-            ctx.fillText(msg, bubbleX + bubbleW/2, bubbleY + bubbleH/2);
+            let textStartY = bubbleY + bubbleH/2 - ((lines.length - 1) * 32) / 2;
+            for (let l = 0; l < lines.length; l++) {
+                ctx.fillText(lines[l], bubbleX + bubbleW/2, textStartY + l * 32);
+            }
 
             
 
