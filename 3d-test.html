@@ -22618,9 +22618,9 @@ setInterval(function() {
     </div>
   </div>
 
-  <div id="olt-legal-links" style="position: fixed; bottom: 30px; left: 40px; display: flex; gap: 24px; z-index: 999999; opacity: 0; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
-    <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Términos & Condiciones</a>
-    <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Política de Privacidad</a>
+  <div id="olt-legal-links" style="position: fixed; bottom: 30px; left: 40px; display: flex; gap: 24px; z-index: 999999; opacity: 0; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+    <a href="#" class="hover-text-fx" data-text="Términos & Condiciones" style="color: rgba(255,255,255,0.6); text-decoration: none; display: inline-flex; outline: none;">Términos & Condiciones</a>
+    <a href="#" class="hover-text-fx" data-text="Política de Privacidad" style="color: rgba(255,255,255,0.6); text-decoration: none; display: inline-flex; outline: none;">Política de Privacidad</a>
   </div>
 
   <script>
@@ -22661,6 +22661,7 @@ setInterval(function() {
             clip.appendChild(word);
             link.appendChild(clip);
           });
+          const origColor = link.style.color;
           link.style.transition = 'color 0.3s ease';
           link.addEventListener('mouseenter', () => {
             link.style.color = '#ccff00';
@@ -22668,7 +22669,7 @@ setInterval(function() {
             allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1.2em)'; });
           });
           link.addEventListener('mouseleave', () => {
-            link.style.color = 'inherit';
+            link.style.color = origColor;
             allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
             allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
           });
