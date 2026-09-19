@@ -60,14 +60,16 @@
             color: #ffffff;
         }
     
-        .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 1.3rem 2rem; border-radius: 100px; text-decoration: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; overflow: hidden; white-space: nowrap; pointer-events: auto; -webkit-font-smoothing: antialiased; }
+        
+        .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; border-radius: 100px; text-decoration: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; overflow: hidden; white-space: nowrap; pointer-events: auto; -webkit-font-smoothing: antialiased; }
         .btn-full { width: 100%; }
-        .btn-blue { background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: rgba(204, 255, 0, 0.95); border: 1px solid rgba(204, 255, 0, 0.45); box-shadow: inset 0 0 20px rgba(204, 255, 0, 0.25); letter-spacing: 0.1em; font-size: 1.25rem; text-transform: uppercase; transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .btn-blue:hover { background: rgba(0, 0, 0, 0.35); border-color: rgba(204, 255, 0, 0.9); box-shadow: inset 0 0 45px rgba(204, 255, 0, 0.6); }
-        .cta-arrow-pill { position: absolute; top: 50%; transform: translateY(-50%); border-radius: 100px; display: flex; align-items: center; justify-content: center; z-index: 2; background: #ccff00; box-shadow: 0 2px 8px rgba(0,0,0,0.4); color: #111; transition: transform 0.25s ease-out; }
-        .btn-blue:hover .cta-arrow-pill { transform: translateY(-50%) scale(1.15); }
-        .cta-text-span { padding-right: 20px !important; transform: translateX(-18px) !important; }
-    </style>
+        .btn-blue { background: rgba(204, 255, 0, 0.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: rgba(204, 255, 0, 0.95); border: 1px solid rgba(204, 255, 0, 0.6); box-shadow: inset 0 0 20px rgba(204, 255, 0, 0.25); letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .btn-blue:hover { background: rgba(204, 255, 0, 0.15); border-color: rgba(204, 255, 0, 1); box-shadow: inset 0 0 45px rgba(204, 255, 0, 0.6); }
+        .cta-content-wrapper { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; height: 100%; pointer-events: none; }
+        .cta-text-span { text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .cta-arrow-pill { border-radius: 100px; display: flex; align-items: center; justify-content: center; background: #ccff00; box-shadow: 0 2px 8px rgba(0,0,0,0.4); color: #111; transition: transform 0.25s ease-out; flex-shrink: 0; }
+        .btn-blue:hover .cta-arrow-pill { transform: scale(1.15); }
+</style>
 
 </head>
 <body>
@@ -76,17 +78,19 @@
             <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="height: 48px; width: auto; filter: brightness(0) invert(1);">
             <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height: 24px; width: auto; filter: brightness(0) invert(1); transform: translateZ(0);">
         </a>
-        <a href="3d-test.html" class="btn btn-blue" style="padding: 0.8rem 1.2rem; font-size: 0.85rem; height: auto; min-width: 250px;">
-            <div style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
-                <span class="cta-text-span" style="position:relative; z-index:2; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-size: 0.85rem; padding-right: 44px !important; transform: translateX(-10px) !important;">VOLVER A ONE LAST TIME</span>
-                <div class="cta-arrow-pill" style="right: 6px; width: 38px; height: 24px;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <div style="width: 280px; display: flex; justify-content: flex-end;">
+        <a href="3d-test.html" class="btn btn-blue btn-full" style="padding: 0.8rem 0; font-size: 0.85rem; height: auto;">
+            <div class="cta-content-wrapper">
+                <span class="cta-text-span">VOLVER A ONE LAST TIME</span>
+                <div class="cta-arrow-pill" style="width: 32px; height: 22px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
                 </div>
             </div>
         </a>
+    </div>
     </header>
     <div class="container" style="padding: 40px 20px;">
         
@@ -137,19 +141,19 @@
         <p><strong>4. MODIFICACIONES POR PARTE DEL RESTAURANTE</strong></p>
         <p>En caso de fuerza mayor o problemas técnicos/logísticos que impidan la prestación del servicio por parte de <em>One Last Time</em>, se contactará inmediatamente con el Usuario para ofrecerle una fecha alternativa o el reembolso íntegro del 100% del importe de la reserva.</p>
         
-        <div style="display: flex; justify-content: center; margin-top: 80px; margin-bottom: 40px;">
-            <a href="3d-test.html" class="btn btn-blue btn-full" style="padding: 0.85rem 2rem !important; height: auto; max-width: 400px;">
-                <div style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
-                    <span class="cta-text-span" style="position:relative; z-index:2; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-size: 0.95rem;">VOLVER A ONE LAST TIME</span>
-                    <div class="cta-arrow-pill" style="right: 8px; width: 36px; height: 36px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </div>
+    <div style="display: flex; justify-content: center; margin-top: 80px; margin-bottom: 40px; width: 100%;">
+        <a href="3d-test.html" class="btn btn-blue btn-full" style="padding: 1.8rem 0; font-size: 1.4rem; height: auto; width: 80vw; max-width: 600px;">
+            <div class="cta-content-wrapper" style="gap: 20px;">
+                <span class="cta-text-span">VOLVER A ONE LAST TIME</span>
+                <div class="cta-arrow-pill" style="width: 64px; height: 40px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
+    </div>
     </div>
 
 <script>
