@@ -15992,9 +15992,9 @@ requestAnimationFrame(smoothScrollLoop);
         divisor = divisor * 2.0;
       }
 
-      // Ajuste pedido: de 34.01 a 40.16 (prog), hacer el scroll un 50% más lento que antes (fricción / 1.5)
+      // Ajuste pedido: de 34.01 a 40.16 (prog), hacer el scroll un 50% más lento (fricción / 0.75)
       if (targetProg >= 34.01 && targetProg <= 40.16) {
-        divisor = divisor / 1.5;
+        divisor = divisor / 0.75;
       }
 
       
@@ -16256,9 +16256,9 @@ requestAnimationFrame(smoothScrollLoop);
 
       }
 
-      // Ajuste pedido: de 34.01 a 40.16 (prog), hacer el scroll un 50% más lento que antes (fricción / 1.5)
+      // Ajuste pedido: de 34.01 a 40.16 (prog), hacer el scroll un 50% más lento (fricción / 0.75)
       if (targetProg >= 34.01 && targetProg <= 40.16) {
-        divisorT = divisorT / 1.5;
+        divisorT = divisorT / 0.75;
       }
       
 
