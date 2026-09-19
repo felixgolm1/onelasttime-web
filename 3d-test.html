@@ -22661,11 +22661,14 @@ setInterval(function() {
             clip.appendChild(word);
             link.appendChild(clip);
           });
+          link.style.transition = 'color 0.3s ease';
           link.addEventListener('mouseenter', () => {
+            link.style.color = '#ccff00';
             allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1.2em)'; });
             allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1.2em)'; });
           });
           link.addEventListener('mouseleave', () => {
+            link.style.color = 'inherit';
             allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
             allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
           });
