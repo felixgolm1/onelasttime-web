@@ -24969,7 +24969,7 @@ if (sInd) {
         var yVal = (1 - scrollIndP) * 115;
         var xVal = (1 - scrollIndP) * 20;
         var rotVal = -3 + ((1 - scrollIndP) * 15);
-        var scaleVal = 1 - ((1 - scrollIndP) * 0.2);
+        var scaleVal = 1.1 - ((1 - scrollIndP) * 0.3);
         cCard.style.transform = 'translate(-3vw, -1vh) translate(' + xVal + 'vw, ' + yVal + 'vh) rotate(' + rotVal + 'deg) scale(' + scaleVal + ')';
         cCard.style.pointerEvents = scrollIndP > 0.5 ? 'auto' : 'none';
     }
