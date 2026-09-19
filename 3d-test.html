@@ -22639,12 +22639,13 @@ setInterval(function() {
             word.appendChild(makeRow(allR2));
             const clip = document.createElement('div');
             clip.className = 'nav-clip';
+            clip.style.height = '1.2em';
             clip.appendChild(word);
             link.appendChild(clip);
           });
           link.addEventListener('mouseenter', () => {
-            allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1em)'; });
-            allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1em)'; });
+            allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1.2em)'; });
+            allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1.2em)'; });
           });
           link.addEventListener('mouseleave', () => {
             allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
