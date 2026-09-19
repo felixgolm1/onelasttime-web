@@ -76,9 +76,16 @@
             <img src="assets/img/logo%20one%20last%20time.png" alt="One Last Time" style="height: 48px; width: auto; filter: brightness(0) invert(1);">
             <img src="assets/img/by_sensibles.png" alt="by Sensibles" style="height: 24px; width: auto; filter: brightness(0) invert(1); transform: translateZ(0);">
         </a>
-        <a href="3d-test.html" style="display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: #fff; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.75rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#ccff00'; this.style.borderColor='rgba(204,255,0,0.4)'; this.style.background='rgba(204,255,0,0.05)';" onmouseout="this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.2)'; this.style.background='rgba(255,255,255,0.1)';">
-            <span style="display:inline-block; width:4px; height:4px; background-color:currentColor; border-radius:50%; margin-right:6px;"></span>
-            VOLVER A ONE LAST TIME
+        <a href="3d-test.html" class="btn btn-blue" style="padding: 0.8rem 1.2rem; font-size: 0.85rem; height: auto; min-width: 250px;">
+            <div style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                <span class="cta-text-span" style="position:relative; z-index:2; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-size: 0.85rem; padding-right: 44px !important; transform: translateX(-10px) !important;">VOLVER A ONE LAST TIME</span>
+                <div class="cta-arrow-pill" style="right: 6px; width: 38px; height: 24px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </div>
         </a>
     </header>
     <div class="container" style="padding: 40px 20px;">
@@ -137,6 +144,56 @@
             </a>
         </div>
     </div>
-</body>
+
+<script>
+document.querySelectorAll('.btn-blue').forEach(btn => {
+    btn.style.overflow = 'hidden';
+    btn.style.position = 'relative';
+    const ctaCanvas = document.createElement('canvas');
+    ctaCanvas.style.position = 'absolute';
+    ctaCanvas.style.top = '0';
+    ctaCanvas.style.left = '0';
+    ctaCanvas.style.width = '100%';
+    ctaCanvas.style.height = '100%';
+    ctaCanvas.style.pointerEvents = 'none';
+    ctaCanvas.style.zIndex = '0';
+    ctaCanvas.style.opacity = '1';
+    btn.appendChild(ctaCanvas);
+    const cCtx = ctaCanvas.getContext('2d');
+    let ctaParticles = [];
+    for(let i=0; i<40; i++){
+        ctaParticles.push({
+            x: Math.random(),
+            y: Math.random(),
+            s: Math.random() * 3 + 1,
+            a: Math.random() * Math.PI * 2,
+            v: (Math.random() * 0.5 + 0.2)
+        });
+    }
+    let ctaHovered = false;
+    btn.addEventListener('mouseenter', () => ctaHovered = true);
+    btn.addEventListener('mouseleave', () => ctaHovered = false);
+    function animateCta() {
+        if(!ctaCanvas.parentElement) return;
+        const w = ctaCanvas.width = btn.offsetWidth;
+        const h = ctaCanvas.height = btn.offsetHeight;
+        cCtx.clearRect(0,0,w,h);
+        const speedMult = ctaHovered ? 3.5 : 1;
+        cCtx.fillStyle = 'rgba(204, 255, 0, ' + (ctaHovered ? '0.8' : '0.4') + ')';
+        ctaParticles.forEach(p => {
+            p.x += Math.cos(p.a) * (p.v * speedMult) / w;
+            p.y += Math.sin(p.a) * (p.v * speedMult) / h;
+            if(p.x < 0) p.x = 1; if(p.x > 1) p.x = 0;
+            if(p.y < 0) p.y = 1; if(p.y > 1) p.y = 0;
+            cCtx.beginPath();
+            cCtx.arc(p.x * w, p.y * h, p.s, 0, Math.PI*2);
+            cCtx.fill();
+        });
+        requestAnimationFrame(animateCta);
+    }
+    animateCta();
+});
+</script>
+\n</body>
 
 </html>
