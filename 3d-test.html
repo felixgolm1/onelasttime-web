@@ -19366,7 +19366,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
   const navOverlay = document.getElementById('nav-overlay');
 
-  document.querySelectorAll('#nav-menu > a[data-text], .hover-text-fx').forEach(link => {
+  document.querySelectorAll('#nav-menu > a[data-text]').forEach(link => {
 
     const text = link.getAttribute('data-text');
 
@@ -22602,7 +22602,54 @@ setInterval(function() {
     </div>
   </div>
 
-
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.hover-text-fx').forEach(link => {
+          const text = link.getAttribute('data-text');
+          const lines = text.split('|');
+          const allR1 = [], allR2 = [];
+          link.innerHTML = '';
+          if (lines.length > 1) {
+            link.style.flexDirection = 'column';
+            link.style.alignItems = 'center';
+            link.style.gap = '0.3em';
+            link.style.textAlign = 'center';
+          }
+          lines.forEach((lineText) => {
+            const chars = lineText.split('');
+            const lineLen = chars.length;
+            const makeRow = (dest) => {
+              const row = document.createElement('div');
+              row.className = 'nav-row';
+              chars.forEach((ch, i) => {
+                const s = document.createElement('span');
+                s.className = 'nav-ch';
+                s.textContent = ch === ' ' ? '\u00a0' : ch;
+                row.appendChild(s);
+                dest.push({ el: s, delay: (lineLen - 1 - i) * 10 });
+              });
+              return row;
+            };
+            const word = document.createElement('div');
+            word.className = 'nav-word';
+            word.appendChild(makeRow(allR1));
+            word.appendChild(makeRow(allR2));
+            const clip = document.createElement('div');
+            clip.className = 'nav-clip';
+            clip.appendChild(word);
+            link.appendChild(clip);
+          });
+          link.addEventListener('mouseenter', () => {
+            allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1em)'; });
+            allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1em)'; });
+          });
+          link.addEventListener('mouseleave', () => {
+            allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
+            allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
+          });
+        });
+    });
+  </script>
 
 
 
