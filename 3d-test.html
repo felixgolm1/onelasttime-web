@@ -22618,6 +22618,11 @@ setInterval(function() {
     </div>
   </div>
 
+  <div id="olt-legal-links" style="position: fixed; bottom: 30px; left: 40px; display: flex; gap: 24px; z-index: 999999; opacity: 0; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+    <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Términos & Condiciones</a>
+    <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Política de Privacidad</a>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.hover-text-fx').forEach(link => {
@@ -24986,6 +24991,13 @@ if (sInd) {
         cCard.style.transform = 'translate(-3vw, -1vh) translate(' + xVal + 'vw, ' + yVal + 'vh) rotate(' + rotVal + 'deg) scale(' + scaleVal + ')';
         cCard.style.pointerEvents = scrollIndP > 0.5 ? 'auto' : 'none';
     }
+    
+    // Animacion enlaces legales
+    var legalL = document.getElementById('olt-legal-links');
+    if (legalL) {
+        legalL.style.opacity = scrollIndP.toFixed(3);
+        legalL.style.pointerEvents = scrollIndP > 0.5 ? 'auto' : 'none';
+    }
 }
 
                   
@@ -25215,6 +25227,12 @@ if (sInd) {
                   if (_cCardR) {
                       _cCardR.style.opacity = '0';
                       _cCardR.style.pointerEvents = 'none';
+                  }
+
+                  var _legalLR = document.getElementById('olt-legal-links');
+                  if (_legalLR) {
+                      _legalLR.style.opacity = '0';
+                      _legalLR.style.pointerEvents = 'none';
                   }
 
               }
