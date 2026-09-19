@@ -25180,23 +25180,19 @@ if (sInd) {
                   if (_oltPhase1R) _oltPhase1R.style.opacity = '0';
 
                   var _oltPhase2R = document.getElementById('olt-phase-2');
-
                   if (_oltPhase2R) _oltPhase2R.style.opacity = '0';
 
                   var _oltCtaR = document.getElementById('olt-final-cta');
-
                   if (_oltCtaR) {
-
                       _oltCtaR.style.transform = 'translateY(100vh) translate(var(--mx, 0px), var(--my, 0px))';
-
                       _oltCtaR.style.opacity = '0';
-
                       _oltCtaR.style.pointerEvents = 'none';
-
                   }
+                  
+                  var _fakeBgR = document.getElementById('fake-bg-fade');
+                  if (_fakeBgR) _fakeBgR.style.opacity = '0';
 
                   // Restaurar el scroll indicator al salir de la fase final
-
                   var _scrollIndR = document.querySelector('.scroll-indicator');
 
                   if (_scrollIndR) _scrollIndR.style.opacity = '1';
