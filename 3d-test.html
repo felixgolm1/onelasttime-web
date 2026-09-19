@@ -14840,25 +14840,15 @@ bottomCta.style.pointerEvents = 'auto';
          } else if (visibleProg <= sections[0].startP) {
 
              targetX = sections[0].startX;
-
          } else {
-
              for (let i = 0; i < sections.length; i++) {
-
                 if (visibleProg >= sections[i].startP && visibleProg <= sections[i].endP) {
-
-                   let fraction = (visibleProg - sections[i].startP) / (sections[i].endP - sections[i].startP);
-
-                   // Animación creativa: la barra crece proporcionalmente al ancho exacto de la palabra activa.
-
-                   targetX = sections[i].startX + fraction * (sections[i].endX - sections[i].startX);
-
+                   // En lugar de crecer proporcionalmente a lo largo de toda la seccion (lo que hacia que al pinchar se viera corta),
+                   // saltamos directamente a cubrir toda la palabra activa. El lerp de abajo se encargara de animarlo suavemente.
+                   targetX = sections[i].endX;
                    break;
-
                 }
-
              }
-
          }
 
          
