@@ -22588,13 +22588,18 @@ setInterval(function() {
   <!-- FAQ Trigger Link / Pill -->
 
   <div id="olt-faq-trigger" style="position:fixed; top:79%; left:50%; transform:translate(-50%, -50%); z-index:10000000; opacity:0; pointer-events:none; transition: opacity 0.3s ease; text-align:center; width:90vw;">
-
     <button type="button" onclick="window.openFaqModal(event)" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.85); padding: 9px 22px; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: clamp(0.85rem, 1.2vw, 0.95rem); font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 9px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: all 0.25s ease;" onmouseover="this.style.borderColor='#ccff00'; this.style.color='#ffffff'; this.style.background='rgba(255,255,255,0.12)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'; this.style.color='rgba(255,255,255,0.85)'; this.style.background='rgba(255,255,255,0.06)';">
-
       <span><strong style='color:#fff; font-weight:600;'>Preguntas frecuentes</strong></span>
-
     </button>
+  </div>
 
+  <div id="olt-contact-card" style="position:fixed; bottom: 3vh; right: 3vw; width: clamp(260px, 22vw, 340px); background: #151515; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); padding: 25px; z-index:10000000; opacity:0; pointer-events:none; display:flex; flex-direction:column; gap: 12px; color: #fff; font-family: 'Inter', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(30px);">
+    <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #ccff00;">Contacto</div>
+    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.85); line-height: 1.4;">
+      <div>hola@sensibles.co</div>
+      <div>649671650 (WhatsApp only)</div>
+      <div>@sensibles.co (Instagram)</div>
+    </div>
   </div>
 
 
@@ -24905,6 +24910,14 @@ if (sInd) {
     gsap.set(sInd, { y: 0 });
     var scrollIndP = Math.max(0, Math.min(1, (localP - 39.0) / 1.4));
     sInd.style.opacity = (1 - scrollIndP).toFixed(3);
+    
+    // Animacion para la carta de contacto
+    var cCard = document.getElementById('olt-contact-card');
+    if (cCard) {
+        cCard.style.opacity = scrollIndP.toFixed(3);
+        cCard.style.transform = 'translateY(' + ((1 - scrollIndP) * 30) + 'px)';
+        cCard.style.pointerEvents = scrollIndP > 0.5 ? 'auto' : 'none';
+    }
 }
 
                   
@@ -25132,6 +25145,13 @@ if (sInd) {
                   var _scrollIndR = document.querySelector('.scroll-indicator');
 
                   if (_scrollIndR) _scrollIndR.style.opacity = '1';
+                  
+                  var _cCardR = document.getElementById('olt-contact-card');
+                  
+                  if (_cCardR) {
+                      _cCardR.style.opacity = '0';
+                      _cCardR.style.pointerEvents = 'none';
+                  }
 
               }
 
