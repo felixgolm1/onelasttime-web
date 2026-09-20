@@ -22532,15 +22532,29 @@ setInterval(function() {
 
         </div>
 
-        <span id="dp-right" style="display:inline-block; margin-left: 0px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;"></span>
+        <span id="dp-right" style="display:inline-block; margin-left: 0px; opacity:0; overflow:hidden; max-width:0px; vertical-align:middle;"> y recibir&aacute;s:</span>
 
     </div>
 
 
 
+    
+    <!-- P2 Pack List (Bullets) -->
+    <div id="p2-pack-list" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 90px); width: 100%; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px; opacity: 0; will-change: opacity, transform;">
+      <div style="font-family:'Inter', sans-serif; font-size:clamp(0.9rem, 1.2vw, 1.1rem); color:rgba(255,255,255,0.9); line-height:1.4; text-align:center;">
+        <span style="color:#ccff00; font-weight:700;">Una baraja de cartas</span> con 15+ preguntas ultra-personalizadas para vosotros
+      </div>
+      <div style="font-family:'Inter', sans-serif; font-size:clamp(0.9rem, 1.2vw, 1.1rem); color:rgba(255,255,255,0.9); line-height:1.4; text-align:center;">
+        <span style="color:#ccff00; font-weight:700;">Horas de conversaci&oacute;n</span> de alta calidad para seguiros descubriendo ahora y siempre
+      </div>
+      <div style="font-family:'Inter', sans-serif; font-size:clamp(0.9rem, 1.2vw, 1.1rem); color:rgba(255,255,255,0.9); line-height:1.4; text-align:center;">
+        <span style="color:#ccff00; font-weight:700;">Una conexi&oacute;n m&aacute;s fuerte</span> cada vez que las us&eacute;is
+      </div>
+    </div>
+
     <!-- P2 Guarantee -->
 
-    <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 110px); width: 100%; display:flex; justify-content:center; align-items:center; gap:0px; opacity: 0; will-change: opacity;">
+    <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 90px); width: 100%; display:flex; justify-content:center; align-items:center; gap:0px; opacity: 0; will-change: opacity;">
 
       <div id="leaf-left" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.9s ease;"></div>
 
@@ -24497,14 +24511,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                           
 
-                          // Opacity is tied to _p1FadeInP
-
-                          var counterOp = Math.min(1, _p1FadeInP * 2.0);
-
+                          // Starts swapping after _p1ReverseP is 1 (localP 25.5 to 27.5)
+                          var swapP = Math.max(0, Math.min(1, (localP - 25.5) / (27.5 - 25.5)));
+                          
+                          // Opacity is tied to _p1FadeInP, but fades out during swapP
+                          var counterOp = Math.max(0, Math.min(1, _p1FadeInP * 2.0) - swapP);
                           if (localP >= 28.5) counterOp = 0; // Hide at flash peak
-
                           counterContainer.style.opacity = counterOp.toFixed(2);
-
                           dynRow.style.opacity = counterOp.toFixed(2);
 
                           
@@ -24583,7 +24596,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                               var maxWLeft = 600; 
 
-                              var maxWRight = 50; // Increased to ensure it fits the whole sentence
+                              var maxWRight = 150; // Increased to ensure it fits the whole sentence
 
                               dpLeft.style.maxWidth = (_p1ReverseP * maxWLeft) + 'px';
 
@@ -24599,30 +24612,32 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                       
 
-                      // Guarantee Phase
-
+                      // Swap Phase (Pack List -> Guarantee)
                       var guaranteeRow = document.getElementById('p2-guarantee');
+                      var packListRow = document.getElementById('p2-pack-list');
+                      
+                      var packListOp = _p1ReverseP - swapP;
+                      var guaranteeOp = swapP;
+                      
+                      if (localP >= 28.5) { // Hide at flash peak
+                          packListOp = 0;
+                          guaranteeOp = 0;
+                      }
+
+                      if (packListRow) {
+                          packListRow.style.opacity = Math.max(0, packListOp).toFixed(2);
+                      }
 
                       if (guaranteeRow) {
-
-                          guaranteeRow.style.opacity = _p1ReverseP.toFixed(2);
-
+                          guaranteeRow.style.opacity = Math.max(0, guaranteeOp).toFixed(2);
                           
-
                           var leafLeft = document.getElementById('leaf-left');
-
                           var leafRight = document.getElementById('leaf-right');
-
                           if (leafLeft && leafRight) {
-
-                              var leafOp = 0.15 + 0.85 * _p1ReverseP;
-
+                              var leafOp = 0.15 + 0.85 * guaranteeOp;
                               leafLeft.style.opacity = leafOp.toFixed(2);
-
                               leafRight.style.opacity = leafOp.toFixed(2);
-
                           }
-
                       }
 
                   }
