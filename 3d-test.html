@@ -19461,7 +19461,8 @@ function makeCardBackTex(data = '4 PASOS') {
 
 
 
-    link.addEventListener('mouseenter', () => {
+    const trigger = link.closest('a') || link;
+          trigger.addEventListener('mouseenter', () => {
 
       allR1.forEach(item => {
 
@@ -19485,7 +19486,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
 
 
-    link.addEventListener('mouseleave', () => {
+    trigger.addEventListener('mouseleave', () => {
 
       allR1.forEach(item => {
 
@@ -22606,9 +22607,17 @@ setInterval(function() {
     </button>
   </div>
 
-  <div id="olt-contact-card" style="position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: row; gap: 24px; z-index: 999999; opacity: 0; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+  <style>
+    #olt-contact-card a svg {
+      transition: transform 0.3s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+    #olt-contact-card a:hover svg {
+      transform: translateY(-3px) scale(1.1);
+    }
+  </style>
+  <div id="olt-contact-card" style="position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: row; gap: 24px; z-index: 999999; opacity: 0; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
     <a href="mailto:hola@sensibles.co" style="color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; outline: none;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
       <span class="hover-text-fx" data-text="hola@sensibles.co">hola@sensibles.co</span>
     </a>
     <a href="https://wa.me/34649671650" target="_blank" style="color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; outline: none;">
@@ -22616,12 +22625,12 @@ setInterval(function() {
       <span class="hover-text-fx" data-text="649671650">649671650</span>
     </a>
     <a href="https://www.instagram.com/sensibles.co/" target="_blank" style="color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; outline: none;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
       <span class="hover-text-fx" data-text="@sensibles.co">@sensibles.co</span>
     </a>
   </div>
 
-  <div id="olt-legal-links" style="position: fixed; bottom: 30px; left: 40px; display: flex; flex-direction: column; gap: 12px; z-index: 999999; opacity: 0; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+  <div id="olt-legal-links" style="position: fixed; bottom: 30px; left: 40px; display: flex; flex-direction: column; gap: 12px; z-index: 999999; opacity: 0; pointer-events: none; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
 <a href="garantia.html" target="_blank" class="hover-text-fx" data-text="Garantía de Devolución" style="color: #ffffff; text-decoration: none; display: inline-flex; outline: none;">Garantía de Devolución</a>
     <a href="terminos.html" target="_blank" class="hover-text-fx" data-text="Términos & Condiciones" style="color: #ffffff; text-decoration: none; display: inline-flex; outline: none;">Términos & Condiciones</a>
     <a href="privacidad.html" target="_blank" class="hover-text-fx" data-text="Política de Privacidad" style="color: #ffffff; text-decoration: none; display: inline-flex; outline: none;">Política de Privacidad</a>
@@ -22667,12 +22676,13 @@ setInterval(function() {
           });
           const origColor = link.style.color;
           link.style.transition = 'color 0.3s ease';
-          link.addEventListener('mouseenter', () => {
+          const trigger = link.closest('a') || link;
+          trigger.addEventListener('mouseenter', () => {
             link.style.color = '#ccff00';
             allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1.2em)'; });
             allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = 'translateY(-1.2em)'; });
           });
-          link.addEventListener('mouseleave', () => {
+          trigger.addEventListener('mouseleave', () => {
             link.style.color = origColor;
             allR1.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
             allR2.forEach(item => { item.el.style.transitionDelay = `${item.delay}ms`; item.el.style.transform = ''; });
