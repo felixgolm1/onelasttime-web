@@ -17649,37 +17649,11 @@ function renderChat() {
 
     
 
-    const spacing = 90;
-
-    const totalHeight = chatData.length * spacing;
-
-    
-
-    chatScrollY = chatScrollY % totalHeight;
-
-    
-
-    for (let loop = 0; loop < 2; loop++) {
-
+    // Pre-calculate heights and Y positions if not done yet
+    if (!chatData[0].baseY) {
+        let currentY = 0;
         for (let i = 0; i < chatData.length; i++) {
-
             let msg = chatData[i].msg;
-              let currentAvatar = chatData[i].img;
-
-            let baseY = (i * spacing) - chatScrollY + (loop * totalHeight);
-
-            
-
-            // Evitar dibujar si est fuera de pantalla
-
-            if (baseY < -100 || baseY > H + 100) continue;
-
-            
-
-            let isRight = (i % 2 !== 0);
-
-            
-
             let words = msg.split(' ');
             let lines = [];
             let currentLine = words[0];
@@ -17693,18 +17667,46 @@ function renderChat() {
                 }
             }
             lines.push(currentLine);
-
+            chatData[i].lines = lines;
+            
             let maxLineW = 0;
             lines.forEach(l => {
                 let w = ctx.measureText(l).width;
                 if (w > maxLineW) maxLineW = w;
             });
-
-            let textW = maxLineW;
-
-            let bubbleW = textW + 48;
-
+            chatData[i].maxLineW = maxLineW;
+            
             let bubbleH = 55 + (lines.length - 1) * 32;
+            chatData[i].bubbleH = bubbleH;
+            
+            chatData[i].baseY = currentY;
+            // The gap between bubbles is exactly 35px, just like 1-line bubbles with spacing=90 had!
+            // Wait, 1-line bubble H=55, spacing=90 means distance from top of A to top of B is 90.
+            // 90 - 55 = 35px gap.
+            currentY += bubbleH + 35;
+        }
+        window.chatTotalHeight = currentY;
+    }
+
+    const totalHeight = window.chatTotalHeight;
+    chatScrollY = chatScrollY % totalHeight;
+
+    for (let loop = 0; loop < 2; loop++) {
+        for (let i = 0; i < chatData.length; i++) {
+            let item = chatData[i];
+            let currentAvatar = item.img;
+            let baseY = item.baseY - chatScrollY + (loop * totalHeight);
+
+            // Evitar dibujar si est fuera de pantalla
+            if (baseY < -150 || baseY > H + 150) continue;
+
+            let isRight = (i % 2 !== 0);
+            
+            let lines = item.lines;
+            let maxLineW = item.maxLineW;
+            let textW = maxLineW;
+            let bubbleW = textW + 48;
+            let bubbleH = item.bubbleH;
 
             let avatarSize = 104;
 
