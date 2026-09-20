@@ -17649,7 +17649,7 @@ function renderChat() {
 
     
 
-    const spacing = 125;
+    const spacing = 90;
 
     const totalHeight = chatData.length * spacing;
 
@@ -17758,11 +17758,17 @@ function renderChat() {
 
             ctx.fillStyle = 'rgba(204, 255, 0, 0.95)';
 
-            ctx.textAlign = 'center';
-
             let textStartY = bubbleY + bubbleH/2 - ((lines.length - 1) * 32) / 2;
-            for (let l = 0; l < lines.length; l++) {
-                ctx.fillText(lines[l], bubbleX + bubbleW/2, textStartY + l * 32);
+            if (isRight) {
+                ctx.textAlign = 'right';
+                for (let l = 0; l < lines.length; l++) {
+                    ctx.fillText(lines[l], bubbleX + bubbleW - 24, textStartY + l * 32);
+                }
+            } else {
+                ctx.textAlign = 'left';
+                for (let l = 0; l < lines.length; l++) {
+                    ctx.fillText(lines[l], bubbleX + 24, textStartY + l * 32);
+                }
             }
 
             
