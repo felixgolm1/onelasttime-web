@@ -24431,9 +24431,12 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                       if (questionP) {
 
-                          // El usuario pidió que no desaparezca la pregunta, por lo que su opacidad principal será 1
-
-                          questionP.style.opacity = '1';
+                          // Fades out during the first half of _p1ReverseP (0 to 0.5)
+                          var qOp = 1.0;
+                          if (_p1ReverseP > 0) {
+                              qOp = 1.0 - Math.min(1, _p1ReverseP * 2.0);
+                          }
+                          questionP.style.opacity = qOp.toFixed(2);
 
 
 
@@ -24511,9 +24514,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                       if (dynRow && counterSpan && strikeLine && counterContainer) {
 
-                          // El precio se queda fijo en su línea
-
-                          dynRow.style.transform = 'translate(-50%, 30px)';
+                          // El precio sube hacia arriba durante _p1ReverseP (de 30px a -40px)
+                          var currentDynY = 30 - (_p1ReverseP * 70); 
+                          dynRow.style.transform = 'translate(-50%, ' + currentDynY.toFixed(2) + 'px)';
 
                           
 
