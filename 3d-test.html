@@ -24641,15 +24641,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           var blurPx = (1.0 - finalPackOp) * 10;
                           packListRow.style.filter = 'blur(' + blurPx.toFixed(1) + 'px)';
 
-                          // Los 5 puntos suben durante _p1ReverseP (de 80px a 30px)
-                          var currentPackY = 80 - (_p1ReverseP * 50);
+                          // Los 5 puntos suben durante _p1ReverseP (de 90px a 10px)
+                          var currentPackY = 90 - (_p1ReverseP * 80);
                           packListRow.style.transform = 'translate(-50%, ' + currentPackY.toFixed(2) + 'px)';
                       }
 
                       if (guaranteeRow) {
                           guaranteeRow.style.opacity = Math.max(0, guaranteeOp).toFixed(2);
-                          // La garantía asume la misma posición elevada que dejaron los 5 puntos (30px)
-                          guaranteeRow.style.transform = 'translate(-50%, 30px)';
+                          // La garantía asume la misma posición elevada que dejaron los 5 puntos (10px)
+                          guaranteeRow.style.transform = 'translate(-50%, 10px)';
                           
                           var leafLeft = document.getElementById('leaf-left');
                           var leafRight = document.getElementById('leaf-right');
