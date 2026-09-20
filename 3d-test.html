@@ -22540,7 +22540,7 @@ setInterval(function() {
 
     
     <!-- P2 Pack List (Bullets) -->
-    <div id="p2-pack-list" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 90px); width: 100%; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; opacity: 0; will-change: opacity, transform;">
+    <div id="p2-pack-list" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 90px); width: 100%; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; opacity: 0; will-change: opacity, transform, filter;">
       <div style="font-family:'Inter', sans-serif; font-size:clamp(0.85rem, 1.1vw, 1rem); color:rgba(255,255,255,0.9); line-height:1.4; text-align:center;">
         <span style="color:#ccff00; font-weight:700;">1. Una baraja de cartas</span> con 15+ preguntas altamente cautivadoras y ultra-personalizadas para vosotrxs (la mayor&iacute;a no las termina en una sola cena)
       </div>
@@ -24634,7 +24634,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       }
 
                       if (packListRow) {
-                          packListRow.style.opacity = Math.max(0, packListOp).toFixed(2);
+                          var finalPackOp = Math.max(0, packListOp);
+                          packListRow.style.opacity = finalPackOp.toFixed(2);
+                          
+                          // Efecto Blur: cuanta menos opacidad, más blur (hasta 10px)
+                          var blurPx = (1.0 - finalPackOp) * 10;
+                          packListRow.style.filter = 'blur(' + blurPx.toFixed(1) + 'px)';
+
                           // Los 5 puntos suben durante _p1ReverseP (de 80px a 30px)
                           var currentPackY = 80 - (_p1ReverseP * 50);
                           packListRow.style.transform = 'translate(-50%, ' + currentPackY.toFixed(2) + 'px)';
