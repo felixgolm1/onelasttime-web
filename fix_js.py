@@ -1,19 +1,23 @@
-# -*- coding: utf-8 -*-
+import re
+
 with open('3d-test.html', 'r', encoding='utf-8') as f:
     text = f.read()
 
-banner = '''<body>
-<div style="position: fixed; top: 0; left: 0; width: 100vw; background: red; color: white; display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 999999; font-size: 30px; font-weight: bold; pointer-events: none;">
-  VERSION ACTUALIZADA - RECARGA FUNCIONO OK
-</div>'''
+# Replace the GSAP block for showing contact card
+pattern_show = r'gsap\.to\(contactCard, \{\s*y:\s*"0%",\s*rotate:\s*0,\s*scale:\s*1,\s*opacity:\s*1,\s*pointerEvents:\s*"auto",\s*duration:\s*1\.2,\s*ease:\s*"expo\.out",\s*overwrite:\s*true\s*\}\);'
+replacement_show = r'gsap.to(contactCard, { opacity: 1, pointerEvents: "auto", duration: 0.5, ease: "power2.out", overwrite: true });'
+text = re.sub(pattern_show, replacement_show, text)
 
-# 1. Remove banner
-text = text.replace(banner, '<body>')
+# Replace the GSAP block for hiding contact card
+pattern_hide = r'gsap\.to\(contactCard, \{\s*y:\s*"115vh",\s*rotate:\s*12,\s*scale:\s*0\.8,\s*opacity:\s*0,\s*pointerEvents:\s*"none",\s*duration:\s*0\.8,\s*ease:\s*"power2\.in",\s*overwrite:\s*true\s*\}\);'
+replacement_hide = r'gsap.to(contactCard, { opacity: 0, pointerEvents: "none", duration: 0.5, ease: "power2.out", overwrite: true });'
+text = re.sub(pattern_hide, replacement_hide, text)
 
-# 2. Fix the GSAP null error: replace 'sc-title' target with 'sc-title-wrap'
-# We have a line: const scTitle   = document.getElementById('sc-title');
-text = text.replace("document.getElementById('sc-title')", "document.getElementById('sc-title-wrap')")
+# Replace the direct style transform
+pattern_transform = r"_cCardR\.style\.transform\s*=\s*'translateY\(115vh\) rotate\(12deg\) scale\(0\.8\)';"
+replacement_transform = r"_cCardR.style.transform = 'none';"
+text = re.sub(pattern_transform, replacement_transform, text)
 
 with open('3d-test.html', 'w', encoding='utf-8') as f:
     f.write(text)
-print('Fixed script target and removed banner!')
+print('Fixed JS')
