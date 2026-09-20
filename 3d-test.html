@@ -14781,74 +14781,11 @@ bottomCta.style.pointerEvents = 'auto';
 
          
 
-         let visibleProg = currentProg >= 9.62 ? currentProg - 7.42 : currentProg;
-
-         
-
-         const sections = [];
-
-         for (let i = 0; i < navLinks.length; i++) {
-
-            let rawScroll = parseFloat(navLinks[i].getAttribute('data-scroll'));
-
-            let visScroll = rawScroll >= 9.62 ? rawScroll - 7.42 : rawScroll;
-
-            let rectLeft = navLinks[i].getBoundingClientRect().left - menuRect.left - 2;
-
-            let rectRight = navLinks[i].getBoundingClientRect().right - menuRect.left + 2;
-
-            if (i === 0) rectLeft = lineLeft;
-
-            if (i === navLinks.length - 1) rectRight = lineRight;
-
-            
-
-            let nextScroll = 49.58;
-
-            if (i < navLinks.length - 1) {
-
-                let nextRaw = parseFloat(navLinks[i+1].getAttribute('data-scroll'));
-
-                nextScroll = nextRaw >= 9.62 ? nextRaw - 7.42 : nextRaw;
-
-            }
-
-            
-
-            sections.push({
-
-               startP: visScroll,
-
-               endP: nextScroll,
-
-               startX: rectLeft,
-
-               endX: rectRight
-
-            });
-
-         }
-
-         
-
-         let targetX = lineLeft;
-
-         if (visibleProg >= sections[sections.length - 1].endP) {
-
-             targetX = sections[sections.length - 1].endX;
-
-         } else if (visibleProg <= sections[0].startP) {
-
-             targetX = sections[0].startX;
+         let targetX;
+         if (activeLink === navLinks[navLinks.length - 1]) {
+             targetX = lineRight;
          } else {
-             for (let i = 0; i < sections.length; i++) {
-                if (visibleProg >= sections[i].startP && visibleProg <= sections[i].endP) {
-                   // En lugar de crecer proporcionalmente a lo largo de toda la seccion (lo que hacia que al pinchar se viera corta),
-                   // saltamos directamente a cubrir toda la palabra activa. El lerp de abajo se encargara de animarlo suavemente.
-                   targetX = sections[i].endX;
-                   break;
-                }
-             }
+             targetX = activeLink.getBoundingClientRect().right - menuRect.left + 2;
          }
 
          
