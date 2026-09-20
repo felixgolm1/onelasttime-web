@@ -17659,7 +17659,7 @@ function renderChat() {
             let currentLine = words[0];
             for (let w = 1; w < words.length; w++) {
                 let testLine = currentLine + " " + words[w];
-                if (ctx.measureText(testLine).width < 450) {
+                if (ctx.measureText(testLine).width < 545) {
                     currentLine = testLine;
                 } else {
                     lines.push(currentLine);
