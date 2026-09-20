@@ -24968,13 +24968,24 @@ if (sInd) {
         legalL.style.pointerEvents = scrollIndP > 0.5 ? 'auto' : 'none';
     }
     
-    // Staggered Animation
+    // Staggered Animation (Per-Column Random Offset)
     [1, 2, 3].forEach(function(lineNum) {
         var els = document.querySelectorAll('.stg-line-' + lineNum);
-        var progress = (scrollIndP - (lineNum - 1) * 0.15) / 0.7; 
-        progress = Math.max(0, Math.min(1, progress));
-        var y = 150 * (1 - progress);
         els.forEach(function(el) {
+            // Group elements by their logical column container
+            var container = el.closest('#olt-legal-links, #olt-contact-card > div');
+            if (!container) container = el.parentElement;
+            
+            if (!container.dataset.colOffset) {
+                container.dataset.colOffset = Math.random() * 0.25; // random offset per column
+            }
+            var colOffset = parseFloat(container.dataset.colOffset);
+            
+            // Base progress uses both the vertical lineNum and the horizontal colOffset
+            var progress = (scrollIndP - ((lineNum - 1) * 0.12) - colOffset) / 0.55; 
+            progress = Math.max(0, Math.min(1, progress));
+            var y = 150 * (1 - progress);
+            
             el.style.opacity = progress.toFixed(3);
             el.style.transform = 'translateY(' + y + 'px)';
         });
