@@ -24632,10 +24632,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                       if (packListRow) {
                           packListRow.style.opacity = Math.max(0, packListOp).toFixed(2);
+                          // Los 5 puntos suben durante _p1ReverseP (de 80px a 30px)
+                          var currentPackY = 80 - (_p1ReverseP * 50);
+                          packListRow.style.transform = 'translate(-50%, ' + currentPackY.toFixed(2) + 'px)';
                       }
 
                       if (guaranteeRow) {
                           guaranteeRow.style.opacity = Math.max(0, guaranteeOp).toFixed(2);
+                          // La garantía asume la misma posición elevada que dejaron los 5 puntos (30px)
+                          guaranteeRow.style.transform = 'translate(-50%, 30px)';
                           
                           var leafLeft = document.getElementById('leaf-left');
                           var leafRight = document.getElementById('leaf-right');
