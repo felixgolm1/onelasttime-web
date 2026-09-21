@@ -22573,10 +22573,10 @@ setInterval(function() {
       }
       @media(min-width: 768px) {
         .olt-benefit-pill:nth-child(1) { flex: 1 1 55% !important; }
-        .olt-benefit-pill:nth-child(2) { flex: 1 1 35% !important; }
-        .olt-benefit-pill:nth-child(3) { flex: 1 1 100% !important; text-align: center; }
-        .olt-benefit-pill:nth-child(4) { flex: 1 1 40% !important; }
-        .olt-benefit-pill:nth-child(5) { flex: 1 1 45% !important; }
+        .olt-benefit-pill:nth-child(2) { flex: 1 1 40% !important; }
+        .olt-benefit-pill:nth-child(3) { flex: 1 1 30% !important; }
+        .olt-benefit-pill:nth-child(4) { flex: 1 1 30% !important; }
+        .olt-benefit-pill:nth-child(5) { flex: 1 1 30% !important; }
       }
 
       .olt-benefit-pill::before,
@@ -22646,7 +22646,7 @@ setInterval(function() {
         display: block;
       }
     </style>
-    <div id="p2-pack-list" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 90px); width: 92vw; max-width: 950px; display:flex; flex-wrap:wrap; justify-content:center; align-items:stretch; gap:10px; opacity: 0; will-change: opacity, transform, filter;">
+    <div id="p2-pack-list" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -15px); width: 92vw; max-width: 950px; display:flex; flex-wrap:wrap; justify-content:center; align-items:stretch; gap:10px; opacity: 1; will-change: transform;">
       
       <div class="olt-benefit-pill">
         <div class="olt-benefit-pill-content">
@@ -22692,7 +22692,7 @@ setInterval(function() {
 
     <!-- P2 Guarantee -->
 
-    <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, 90px); width: 100%; display:flex; justify-content:center; align-items:center; gap:0px; opacity: 0; will-change: opacity;">
+    <div id="p2-guarantee" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -15px); width: 100%; display:flex; justify-content:center; align-items:center; gap:0px; opacity: 0; will-change: opacity;">
 
       <div id="leaf-left" style="width:2.5em; height:2.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; opacity:0.15; transition: opacity 0.9s ease;"></div>
 
@@ -24767,7 +24767,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                       if (packListRow) {
                           var finalPackOp = Math.max(0, packListOp);
-                          packListRow.style.opacity = finalPackOp.toFixed(2);
+                          /* removed opacity */
                           
                           // Popcorn effect logic
                           var pills = packListRow.querySelectorAll('.olt-benefit-pill');
@@ -24790,12 +24790,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           }
                           
                           // Efecto Blur: cuanta menos opacidad, más blur (hasta 10px)
-                          var blurPx = (1.0 - finalPackOp) * 10;
-                          packListRow.style.filter = 'blur(' + blurPx.toFixed(1) + 'px)';
+                          /* removed blur */
 
                           // Los 5 puntos suben durante _p1ReverseP (de 90px a -15px)
-                          var currentPackY = 90 - (_p1ReverseP * 105);
-                          packListRow.style.transform = 'translate(-50%, ' + currentPackY.toFixed(2) + 'px)';
+                          /* removed translateY */
                       }
 
                       if (guaranteeRow) {
