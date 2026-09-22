@@ -24781,11 +24781,12 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                   if (pillP > 1) pillP = 1;
                                   if (_p1ReverseP <= 0.01) pillP = 0;
                                   
-                                  // Overshoot (rebote) math
-                                  var pillScale = 0.5 + (pillP * 0.5) + (Math.sin(pillP * Math.PI) * 0.15);
-                                  var pillY = 30 * (1 - pillP);
+                                  // Overshoot (rebote) math real para pop-out
+                                  var pillScale = 0.5 + (pillP * 0.5) + (Math.sin(pillP * Math.PI) * 0.4);
+                                  var pillOp = Math.min(1, pillP * 1.5);
+                                  var pillY = 30 * (1 - Math.sin(pillP * Math.PI * 0.5));
                                   
-                                  pills[i].style.setProperty('--scroll-opacity', pillP.toFixed(2));
+                                  pills[i].style.setProperty('--scroll-opacity', pillOp.toFixed(2));
                                   pills[i].style.setProperty('--scroll-scale', pillScale.toFixed(3));
                                   pills[i].style.setProperty('--scroll-y', pillY.toFixed(1) + 'px');
                               }
