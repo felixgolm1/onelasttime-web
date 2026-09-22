@@ -22590,7 +22590,12 @@ setInterval(function() {
         box-shadow: 0 12px 24px rgba(0,0,0,0.4) !important;
       }
       @media(min-width: 768px) {
-        .olt-benefit-pill { flex: 1 1 30% !important; }
+        .olt-benefit-pill:nth-child(1) { flex: 2 1 25% !important; }
+        .olt-benefit-pill:nth-child(2) { flex: 1 1 25% !important; }
+        .olt-benefit-pill:nth-child(3) { flex: 1.5 1 25% !important; }
+        .olt-benefit-pill:nth-child(4) { flex: 1.2 1 25% !important; }
+        .olt-benefit-pill:nth-child(5) { flex: 1.8 1 25% !important; }
+        .olt-benefit-pill:nth-child(6) { flex: 1 1 25% !important; }
       }
 
       .olt-benefit-pill::before,
@@ -22704,9 +22709,9 @@ setInterval(function() {
 
       <div class="olt-benefit-pill" style="align-items: center; justify-content: center; display: flex;">
         <div class="olt-benefit-pill-content" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:8px; padding-top: 5px;">
-          <span class="olt-benefit-pill-title" style="display:flex; align-items:center; gap:12px; margin-bottom:0;">
+          <span class="olt-benefit-pill-title" style="display:flex; align-items:center; gap:12px; margin-bottom:0; white-space:nowrap;">
             <span style="display:inline-block; width:1.5em; height:1.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel izquierda blanca.png') center/contain no-repeat;"></span>
-            Con nuestra garant&iacute;a
+            Nuestra garant&iacute;a
             <span style="display:inline-block; width:1.5em; height:1.5em; background-color:#ccff00; -webkit-mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat; mask:url('assets/img/hoja laurel derecha blanca.png') center/contain no-repeat;"></span>
           </span>
           <div class="oryzo-scroll-icon">
