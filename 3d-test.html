@@ -24692,8 +24692,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                           
 
-                          // Starts swapping after _p1ReverseP is 1 (localP 25.5 to 27.5)
-                          var swapP = Math.max(0, Math.min(1, (localP - 25.5) / (27.5 - 25.5)));
+                          // Starts swapping after _p1ReverseP is 1 (localP 25.5 to 28.5)
+                          var swapP = Math.max(0, Math.min(1, (localP - 25.5) / 3.0));
                           
                           // Opacity is tied to _p1FadeInP, but fades out during swapP
                           var counterOp = Math.max(0, Math.min(1, _p1FadeInP * 2.0) - swapP);
