@@ -24786,32 +24786,31 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       }
 
                       if (packListRow) {
-                          packListRow.style.opacity = Math.max(0, packListOp).toFixed(2);
+                          if (localP >= 28.5) {
+                              packListRow.style.opacity = '0';
+                          } else {
+                              packListRow.style.opacity = '1';
+                          }
                           
                           var pills = packListRow.querySelectorAll('.olt-benefit-pill');
                           if (pills.length >= 5) {
-                              // Array de orden de aparicin: [Caja0, Caja1, Caja2, Caja3, Caja4]
-                              // Queremos que empiecen las de abajo: Caja2(0), Caja3(1), Caja4(2), Caja0(3), Caja1(4)
                               var popOrder = [3, 4, 0, 1, 2];
+                              var exitOrder = [0, 1, 4, 2, 3];
+                              
                               for (var i = 0; i < pills.length; i++) {
                                   var order = popOrder[i];
                                   var threshold = 0.05 + (order * 0.15);
                                   
-                                  if (_p1ReverseP > threshold) {
+                                  var exitOrd = exitOrder[i];
+                                  var exitThreshold = 0.05 + (exitOrd * 0.15);
+                                  
+                                  if (_p1ReverseP > threshold && swapP < exitThreshold) {
                                       pills[i].classList.add('popped');
                                   } else {
                                       pills[i].classList.remove('popped');
                                   }
-                                  
-                                  // Limpiamos los estilos inline antiguos por si acaso
-                                  pills[i].style.removeProperty('--scroll-opacity');
-                                  pills[i].style.removeProperty('--scroll-scale');
-                                  pills[i].style.removeProperty('--scroll-y');
                               }
                           }
-                          
-                          /* removed blur */
-                          /* removed translateY */
                       }
 
                       if (guaranteeRow) {
