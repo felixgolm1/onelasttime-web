@@ -22558,18 +22558,31 @@ setInterval(function() {
       }
       .olt-benefit-pill.popped:hover { border-color: rgba(204, 255, 0, 0.3); }
       
-            /* Popcorn Animation Threshold-Based */
+            /* Popcorn Animation Threshold-Based & Focus Effect */
       .olt-benefit-pill {
         opacity: 0;
         transform: scale(0.5) translateY(30px);
-        transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out, border-color 0.2s ease;
+        transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out, border-color 0.2s ease, filter 0.4s ease;
       }
       .olt-benefit-pill.popped {
         opacity: 1;
         transform: scale(1) translateY(0px);
+        filter: blur(0px);
       }
       .olt-benefit-pill.popped:hover {
-        transform: scale(1.03) translateY(-2px);
+        transform: scale(1.04) translateY(-3px);
+        border-color: rgba(204, 255, 0, 0.4);
+        z-index: 10;
+        box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+      }
+      
+      /* Apple Vision Pro Focus Effect */
+      @media (hover: hover) {
+        #p2-pack-list:has(.olt-benefit-pill.popped:hover) .olt-benefit-pill.popped:not(:hover) {
+          opacity: 0.35;
+          filter: blur(5px);
+          transform: scale(0.96) translateY(2px);
+        }
       }
       @media(min-width: 768px) {
         .olt-benefit-pill:nth-child(1) { flex: 1 1 55% !important; }
