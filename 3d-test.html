@@ -22558,18 +22558,14 @@ setInterval(function() {
       }
       .olt-benefit-pill.popped:hover { border-color: rgba(204, 255, 0, 0.3); }
       
-            /* Popcorn Animation & Bento Masonry */
+            /* Popcorn Animation Linked to Scroll */
       .olt-benefit-pill {
-        opacity: 0;
-        transform: scale(0.5) translateY(20px);
-        transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s ease;
+        opacity: var(--scroll-opacity, 0);
+        transform: scale(var(--scroll-scale, 0.5)) translateY(var(--scroll-y, 30px));
+        transition: border-color 0.2s ease;
       }
-      .olt-benefit-pill.popped {
-        opacity: 1;
-        transform: scale(1) translateY(0px);
-      }
-      .olt-benefit-pill.popped:hover {
-        transform: scale(1.02) translateY(-2px);
+      .olt-benefit-pill:hover {
+        transform: scale(calc(var(--scroll-scale, 1) + 0.02)) translateY(calc(var(--scroll-y, 0px) - 2px));
       }
       @media(min-width: 768px) {
         .olt-benefit-pill:nth-child(1) { flex: 1 1 55% !important; }
@@ -24766,33 +24762,36 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       }
 
                       if (packListRow) {
-                          var finalPackOp = Math.max(0, packListOp);
-                          /* removed opacity */
+                          packListRow.style.opacity = Math.max(0, packListOp).toFixed(2);
                           
-                          // Popcorn effect logic
                           var pills = packListRow.querySelectorAll('.olt-benefit-pill');
-                          if (finalPackOp > 0.05) {
-                              if (!packListRow.dataset.popped) {
-                                  packListRow.dataset.popped = "true";
-                                  pills.forEach(function(pill, idx) {
-                                      setTimeout(function() {
-                                          pill.classList.add('popped');
-                                      }, idx * 100); // 100ms stagger
-                                  });
-                              }
-                          } else {
-                              if (packListRow.dataset.popped) {
-                                  packListRow.dataset.popped = "";
-                                  pills.forEach(function(pill) {
-                                      pill.classList.remove('popped');
-                                  });
+                          if (pills.length >= 5) {
+                              // Array de orden de aparicin: [Caja0, Caja1, Caja2, Caja3, Caja4]
+                              // Queremos que empiecen las de abajo: Caja2(0), Caja3(1), Caja4(2), Caja0(3), Caja1(4)
+                              var popOrder = [3, 4, 0, 1, 2];
+                              for (var i = 0; i < pills.length; i++) {
+                                  var order = popOrder[i];
+                                  var startP = order * 0.15;
+                                  var endP = startP + 0.40;
+                                  
+                                  var pillP = 0;
+                                  if (_p1ReverseP > startP) {
+                                      pillP = (_p1ReverseP - startP) / (endP - startP);
+                                  }
+                                  if (pillP > 1) pillP = 1;
+                                  if (_p1ReverseP <= 0.01) pillP = 0;
+                                  
+                                  // Overshoot (rebote) math
+                                  var pillScale = 0.5 + (pillP * 0.5) + (Math.sin(pillP * Math.PI) * 0.15);
+                                  var pillY = 30 * (1 - pillP);
+                                  
+                                  pills[i].style.setProperty('--scroll-opacity', pillP.toFixed(2));
+                                  pills[i].style.setProperty('--scroll-scale', pillScale.toFixed(3));
+                                  pills[i].style.setProperty('--scroll-y', pillY.toFixed(1) + 'px');
                               }
                           }
                           
-                          // Efecto Blur: cuanta menos opacidad, más blur (hasta 10px)
                           /* removed blur */
-
-                          // Los 5 puntos suben durante _p1ReverseP (de 90px a -15px)
                           /* removed translateY */
                       }
 
