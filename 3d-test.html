@@ -9122,7 +9122,7 @@ panData.forEach(({ x, y, r }, i) => {
 
     const mainDeck = document.getElementById('mainDeck');
 
-    const maxProg = 61.5;
+    const maxProg = 62.55;
 
     let prog = parseFloat(sessionStorage.getItem('dev_prog')) || 0;
 
@@ -16004,7 +16004,7 @@ requestAnimationFrame(smoothScrollLoop);
 
       // Ajuste pedido: de 42.8 a 48.15 (visual) 3 veces más rápido (fricción / 3.0)
 
-      if (targetProg >= 50.22 && targetProg <= 55.57) {
+      if (targetProg >= 51.27 && targetProg <= 56.62) {
 
         divisor = divisor / 3.0;
 
@@ -16014,7 +16014,7 @@ requestAnimationFrame(smoothScrollLoop);
 
       // Ajuste pedido: de 48.10 al final (visual) un 100% más rápido (fricción / 2.0)
 
-      if (targetProg >= 55.52) {
+      if (targetProg >= 56.57) {
 
         divisor = divisor / 2.0;
 
@@ -16023,7 +16023,7 @@ requestAnimationFrame(smoothScrollLoop);
       
 
       // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61 (luego otro 50% extra = 2.25, luego 30% extra = 2.925)
-      if (targetProg >= 51.86 && targetProg <= 60.03) {
+      if (targetProg >= 52.91 && targetProg <= 61.08) {
         
         divisor = divisor / 2.925;
         
@@ -16267,7 +16267,7 @@ requestAnimationFrame(smoothScrollLoop);
 
       // Ajuste pedido: de 42.8 a 48.15 (visual) 3 veces más rápido (fricción / 3.0)
 
-      if (targetProg >= 50.22 && targetProg <= 55.57) {
+      if (targetProg >= 51.27 && targetProg <= 56.62) {
 
         divisorT = divisorT / 3.0;
 
@@ -16277,7 +16277,7 @@ requestAnimationFrame(smoothScrollLoop);
 
       // Ajuste pedido: de 48.10 al final (visual) un 100% más rápido (fricción / 2.0)
 
-      if (targetProg >= 55.52) {
+      if (targetProg >= 56.57) {
 
         divisorT = divisorT / 2.0;
 
@@ -16286,7 +16286,7 @@ requestAnimationFrame(smoothScrollLoop);
       
 
       // Nuevo ajuste: un 50% más rápido en el tramo específico de p:44.44 a p:52.61 (luego otro 50% extra = 2.25, luego 30% extra = 2.925)
-      if (targetProg >= 51.86 && targetProg <= 60.03) {
+      if (targetProg >= 52.91 && targetProg <= 61.08) {
 
         divisorT = divisorT / 2.925;
 
@@ -23972,7 +23972,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
          // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 21.5 ---
 
-         let localP = p - 21.1;
+         let localP_raw = p - 21.1;
+         let localP = localP_raw;
+         if (localP_raw >= 28.49) {
+             if (localP_raw <= 29.54) {
+                 localP = 28.49; // Pause animation for 1.05 scroll units (35%) to allow reading
+             } else {
+                 localP = localP_raw - 1.05; // Resume normal timeline
+             }
+         }
 
          // Cache card refs: una vez movidas a endCardTable, querySelector devuelve null â€â€ necesitamos la referencia persistente
 
