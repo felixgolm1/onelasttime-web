@@ -14423,7 +14423,7 @@ bottomCta.style.pointerEvents = 'auto';
 
           const debugProg = document.getElementById('debug-scroll-prog');
 
-          if (debugProg) debugProg.innerText = (prog >= 9.62 ? prog - 7.42 : prog).toFixed(2);
+          if (debugProg) debugProg.innerText = prog.toFixed(2);
 
 
 
@@ -14689,7 +14689,7 @@ bottomCta.style.pointerEvents = 'auto';
 
           const debugProg = document.getElementById('debug-scroll-prog');
 
-          if (debugProg) debugProg.innerText = (prog >= 9.62 ? prog - 7.42 : prog).toFixed(2);
+          if (debugProg) debugProg.innerText = prog.toFixed(2);
 
         }
 
@@ -14914,7 +14914,7 @@ bottomCta.style.pointerEvents = 'auto';
 
           const debugProg = document.getElementById('debug-scroll-prog');
 
-          if (debugProg) debugProg.innerText = (prog >= 9.62 ? prog - 7.42 : prog).toFixed(2);
+          if (debugProg) debugProg.innerText = prog.toFixed(2);
 
 
 
@@ -20008,7 +20008,7 @@ function makeCardBackTex(data = '4 PASOS') {
 
   <!-- Debug: Mostrar scroll prog -->
 
-  <div id="debug-scroll-prog" style="display: none; position: fixed; bottom: 20px; left: 20px; color: #00ff00; font-family: monospace; font-size: 24px; font-weight: bold; z-index: 99999999; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">0.00</div>
+  <div id="debug-scroll-prog" style="display: block; position: fixed; bottom: 20px; left: 20px; color: #00ff00; font-family: monospace; font-size: 24px; font-weight: bold; z-index: 99999999; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">0.00</div>
 
   <!-- MAGAZINE BREAKOUT OVERLAY â€â€ body-level para evitar problemas con transforms del carrusel -->
 
@@ -25003,7 +25003,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
 
                   if (debugEl) {
 
-                      debugEl.innerHTML = "p:" + (p >= 9.62 ? p - 7.42 : p).toFixed(2) + " locP:" + localP.toFixed(2) + " clss:" + document.body.classList.contains("hide-all-cards-final-scene") + " isRet:" + ("OK");
+                      debugEl.innerHTML = p.toFixed(2);
 
                   }
 
