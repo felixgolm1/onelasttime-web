@@ -1904,6 +1904,16 @@ window.onerror = function(msg, url, line, col, err) {
         background: #1a1a1a;
         transform: translateY(-4px);
     }
+    .vip-input:-webkit-autofill,
+    .vip-input:-webkit-autofill:hover, 
+    .vip-input:-webkit-autofill:focus, 
+    .vip-input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 1000px #111 inset !important;
+        -webkit-text-fill-color: #ccff00 !important;
+        box-shadow: 0 0 0 1000px #111 inset !important;
+        caret-color: #ccff00 !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
     .vip-btn {
         text-transform: uppercase;
         background: #ccff00;
@@ -1940,7 +1950,7 @@ window.onerror = function(msg, url, line, col, err) {
     </div>
     <div id="vip-form-container" class="vip-anim-2" style="display:flex; flex-direction:column; align-items:center; transition: all 0.5s ease; min-height: 380px;">
         <h2 id="vip-title" style="color:#fff; margin-bottom:30px; font-weight:600; text-align:center; padding: 0 20px; letter-spacing:-0.02em; font-size:24px; max-width: 600px; line-height: 1.4; transition: opacity 0.5s; min-height: 110px; display: flex; align-items: center; justify-content: center;">Introduce el c&oacute;digo de acceso para convertir una cena m&aacute;s con tu pareja (o no...) en un hito de vuestra historia</h2>
-        <input type="text" id="vip-code" class="vip-pill vip-input" placeholder="Código secreto">
+        <input type="text" id="vip-code" class="vip-pill vip-input" placeholder="Código secreto" autocomplete="off" spellcheck="false">
         <button id="vip-submit-btn" onclick="checkVipCode()" class="vip-pill vip-btn" style="padding: 1.2rem 2rem !important; height: auto; width: 300px; box-sizing: border-box; font-family: 'Inter', sans-serif; font-size: 1.125rem; font-weight: 700; position: relative; border: none; cursor: pointer;">
             <span style="position:relative; z-index:2; text-align:center; padding-right:40px;">ENTRAR</span>
             <div class="cta-arrow-pill" style="right: 12px; width: 50px; height: 32px; background: #111; color: #ccff00;">
