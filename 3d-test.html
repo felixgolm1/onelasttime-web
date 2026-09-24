@@ -2158,19 +2158,19 @@ window.onerror = function(msg, url, line, col, err) {
       }
     </style>
     <script>
-      window.toggleGlassModal = function _blockGlassScroll(e) {
-          if (this.classList.contains('glass-modal-mode')) {
-            e.stopPropagation();
-          }
+      function _blockGlassScroll(e) {
+        if (this.classList.contains('glass-modal-mode')) {
+          e.stopPropagation();
         }
-        setTimeout(function() {
-          var w = document.getElementById('glass-who');
-          var o = document.getElementById('glass-objectives');
-          if(w) { w.addEventListener('touchmove', _blockGlassScroll, {passive: false}); w.addEventListener('wheel', _blockGlassScroll, {passive: false}); }
-          if(o) { o.addEventListener('touchmove', _blockGlassScroll, {passive: false}); o.addEventListener('wheel', _blockGlassScroll, {passive: false}); }
-        }, 1000);
+      }
+      setTimeout(function() {
+        var w = document.getElementById('glass-who');
+        var o = document.getElementById('glass-objectives');
+        if(w) { w.addEventListener('touchmove', _blockGlassScroll, {passive: false}); w.addEventListener('wheel', _blockGlassScroll, {passive: false}); }
+        if(o) { o.addEventListener('touchmove', _blockGlassScroll, {passive: false}); o.addEventListener('wheel', _blockGlassScroll, {passive: false}); }
+      }, 1000);
 
-        function toggleGlassModal(glassId) {
+      window.toggleGlassModal = function toggleGlassModal(glassId) {
         const glassEl = document.getElementById(glassId);
         if (!glassEl) return;
         if (glassEl.classList.contains('glass-modal-mode')) {
