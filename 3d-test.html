@@ -13581,5 +13581,10 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   killTextNodes();
   window.addEventListener('load', killTextNodes);
 </script>
+
+  <!-- PHYSICAL EDGE BLOCKERS TO HIDE ANY RENDER ARTIFACTS -->
+  <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 3px; background: #000; z-index: 2147483647; pointer-events: none;"></div>
+  <div style="position: fixed; top: 0; left: 0; width: 3px; height: 100vh; background: #000; z-index: 2147483647; pointer-events: none;"></div>
+
 </html>
 
