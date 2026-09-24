@@ -2117,20 +2117,21 @@ window.onerror = function(msg, url, line, col, err) {
         #glass-who.glass-modal-mode, #glass-objectives.glass-modal-mode {
             position: fixed !important;
             top: 19px !important;
-            bottom: auto !important;
-            height: calc(100vh - 38px) !important;
-            width: calc(100vw - 38px) !important;
-            left: 19px !important;
-            right: auto !important;
-            z-index: 10000060 !important;
-          border-radius: 0 !important;
-          background: rgba(255, 255, 255, 0.05) !important;
-          backdrop-filter: blur(16px) !important;
-          -webkit-backdrop-filter: blur(16px) !important;
-          border: 1px solid rgba(255,255,255,0.25) !important;
-          box-shadow: none !important;
-          padding-top: 4rem !important;
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+              bottom: calc(3% + 5.2rem) !important;
+              height: auto !important;
+              width: calc(100vw - 38px) !important;
+              left: 19px !important;
+              right: auto !important;
+              z-index: 10000060 !important;
+              border-radius: 0 !important;
+              background: rgba(255, 255, 255, 0.05) !important;
+              backdrop-filter: blur(16px) !important;
+              -webkit-backdrop-filter: blur(16px) !important;
+              border: 1px solid rgba(255,255,255,0.25) !important;
+              box-shadow: none !important;
+              padding-top: 15px !important;
+              justify-content: flex-start !important;
+              transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
         .glass-modal-mode .glass-close-btn {
           opacity: 1;
@@ -2157,7 +2158,19 @@ window.onerror = function(msg, url, line, col, err) {
       }
     </style>
     <script>
-      window.toggleGlassModal = function toggleGlassModal(glassId) {
+      window.toggleGlassModal = function _blockGlassScroll(e) {
+          if (this.classList.contains('glass-modal-mode')) {
+            e.stopPropagation();
+          }
+        }
+        setTimeout(function() {
+          var w = document.getElementById('glass-who');
+          var o = document.getElementById('glass-objectives');
+          if(w) { w.addEventListener('touchmove', _blockGlassScroll, {passive: false}); w.addEventListener('wheel', _blockGlassScroll, {passive: false}); }
+          if(o) { o.addEventListener('touchmove', _blockGlassScroll, {passive: false}); o.addEventListener('wheel', _blockGlassScroll, {passive: false}); }
+        }, 1000);
+
+        function toggleGlassModal(glassId) {
         const glassEl = document.getElementById(glassId);
         if (!glassEl) return;
         if (glassEl.classList.contains('glass-modal-mode')) {
@@ -2564,7 +2577,7 @@ window.onerror = function(msg, url, line, col, err) {
     <!-- Recuadro Glassmorphism de Quien (Paso 2) -->
     <div id="glass-who" style="position: fixed; top: 0; right: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-left: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 10vh 2.5vw 0 30px; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: -5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
       <button class="glass-close-btn" onclick="toggleGlassModal('glass-who')" ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-<h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; letter-spacing: 0.05em;">Parejas (y no parejas) que nos hemos encontrado</h3>
+<h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; margin-top: 0; padding-right: 40px; letter-spacing: 0.05em;\">Parejas (y no parejas) que nos hemos encontrado</h3>
       <div class="mobile-expandable-content">
 <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 0; margin: 0; list-style-type: none;" class="dynamic-lines-list">
         <li style="margin-bottom: 16px; display: flex;"><div style="overflow: hidden; flex-shrink: 0; width: 20px;"><div class="glass-bullet" style="color: #ccff00;">&#8226;</div></div><div class="dyn-text">Mi mujer con la que ya hemos compartido 40 a&ntilde;os y 2 hijxs</div></li>
@@ -2591,7 +2604,7 @@ window.onerror = function(msg, url, line, col, err) {
     <!-- Recuadro Glassmorphism de Objetivos (Paso 3) -->
     <div id="glass-objectives" style="position: fixed; top: 0; left: 0; height: 100vh; width: 30vw; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-right: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0; padding: 10vh 30px 0 2.5vw; opacity: 0; pointer-events: none; z-index: 10005; visibility: hidden; box-shadow: 5px 0 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;">
       <button class="glass-close-btn" onclick="toggleGlassModal('glass-objectives')" ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-<h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;">Objetivos m&aacute;s pedidos</h3>
+<h3 style="color: #ccff00; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; margin-top: 0; padding-right: 40px; letter-spacing: 0.05em;\">Objetivos m&aacute;s pedidos</h3>
       <div class="dyn-text" style="color: rgba(255,255,255,0.8); font-family: 'Inter', sans-serif; font-size: 0.85rem; line-height: 1.4; margin-bottom: 24px; padding-right: 10px;">Puede ser literalmente lo que quieras con el nivel de precisi&oacute;n que necesites (excepto conseguir que te paguen la cena, en eso a&uacute;n estamos trabajando).</div>
       <div class="mobile-expandable-content">
 <ul style="color: rgba(255,255,255,0.9); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.5; padding-left: 0; margin: 0; list-style-type: none; margin-bottom: 40px;" class="dynamic-lines-list">
