@@ -3621,11 +3621,11 @@ window.onerror = function(msg, url, line, col, err) {
     // Las sCards empiezan con opacity 0 para que no asomen mientras gira el morphGroup
     gsap.set(sCards,  { xPercent: -50, yPercent: -50, x: 0, y: 0,
                           scale: window._cIsMobile ? 1.0 : 1.2, rotation: 0, opacity: 0, zIndex: 5 });
-    gsap.set(scIntro, { xPercent: -50, yPercent: -50, x: 0, y: window._cIsMobile ? -15 : 0,
+    gsap.set(scIntro, { xPercent: -50, yPercent: -50, x: 0, y: window._cIsMobile ? -40 : 0,
                           scale: window._cIsMobile ? 1.0 : 1.2, rotation: -2.5, opacity: 1, zIndex: 10 });
     // Es crítico "imprimir" los ángulos Euler desde JS para scIntroBack, porque GSAP al parsear rotateY(180) genera una matriz ambivalente
     if (scIntroBack) {
-      gsap.set(scIntroBack, { xPercent: -50, yPercent: -50, x: 0, y: window._cIsMobile ? -15 : 0,
+      gsap.set(scIntroBack, { xPercent: -50, yPercent: -50, x: 0, y: window._cIsMobile ? -40 : 0,
                                 scale: window._cIsMobile ? 1.0 : 1.2, rotation: -2.5, rotationY: 180, rotationX: 0, z: 1 });
     }
     // Ajuste de centro vertical afinado de 34 a 37 para cuadrar al pixel la ilusión
