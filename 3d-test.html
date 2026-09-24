@@ -1625,7 +1625,33 @@ window.onerror = function(msg, url, line, col, err) {
           transform: scale(1.02);
       }
   }
+
+  /* NUCLEAR GLITCH KILLER */
+  @media (max-width: 768px) {
+      /* Destruimos la barra de progreso por completo */
+      #mobile-top-progress { display: none !important; opacity: 0 !important; visibility: hidden !important; width: 0 !important; height: 0 !important; box-shadow: none !important; }
+      
+      /* Destruimos los flashes y fondos que tienen opacity:0 por si el mix-blend-mode deja bordes */
+      #camera-flash, #transition-flash, #fake-bg-fade, #premium-bg { display: none !important; opacity: 0 !important; }
+      
+      /* Canvas 3D: forzamos que se salga de la pantalla por todos lados para evitar antialiasing en los bordes */
+      #c { 
+          width: 102vw !important; 
+          height: 102vh !important; 
+          top: -1vh !important; 
+          left: -1vw !important; 
+          transform: scale(1.02) !important;
+          outline: none !important;
+          border: none !important;
+      }
+      
+      /* Fondo general */
+      html, body {
+          background-color: #000 !important;
+      }
+  }
 </style>
+
 
 <style>
     body.hide-all-cards-final-scene #card-canvas,
