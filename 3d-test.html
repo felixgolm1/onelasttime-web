@@ -1610,7 +1610,15 @@ window.onerror = function(msg, url, line, col, err) {
         display: block;
       }
     }
-</style><style>
+
+  /* KILL CORNER GLITCH BRUTE FORCE */
+  @media (max-width: 768px) {
+      html { background-color: #000 !important; }
+      body { clip-path: inset(2px 0 0 2px) !important; background-color: transparent !important; }
+      #css-container, #c, #pWrap { clip-path: inset(2px 0 0 2px) !important; }
+  }
+</style>
+<style>
     body.hide-all-cards-final-scene #card-canvas,
     body.hide-all-cards-final-scene #oryzo-deck-clone,
     body.hide-all-cards-final-scene #mainDeck,
