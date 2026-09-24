@@ -1650,6 +1650,18 @@ window.onerror = function(msg, url, line, col, err) {
           clip-path: inset(2px 0 0 2px) !important;
       }
       
+      
+      /* MATAR pWrap (EL VERDADERO CULPABLE) SIN ROMPER GSAP */
+      #pWrap {
+          opacity: 0 !important;
+          visibility: hidden !important;
+          clip-path: inset(100%) !important;
+          pointer-events: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          overflow: hidden !important;
+      }
+
       /* Aseguramos que el html no sangre blanco */
       html { background-color: #000 !important; }
   }
