@@ -2159,7 +2159,12 @@ window.onerror = function(msg, url, line, col, err) {
           overflow-y: auto !important;
           padding-bottom: 30px;
         }
-        /* Ocultar el HR original para que no estorbe si hay scroll */
+        .glass-hiding {
+            opacity: 0 !important;
+            transition: opacity 1s ease !important;
+            pointer-events: none !important;
+          }
+          /* Ocultar el HR original para que no estorbe si hay scroll */
         .glass-modal-mode hr {
           display: block;
         }
@@ -12351,6 +12356,8 @@ document.addEventListener('mouseover', e => {
                 e.stopPropagation();
                 if (explosionActive) return;
                 explosionActive = true;
+                  const w = document.getElementById('glass-who'); if(w) w.classList.add('glass-hiding');
+                  const o = document.getElementById('glass-objectives'); if(o) o.classList.add('glass-hiding');
                 window._ctaHoverActive = true; // force opacity to 1
                 // Show overlays
                 document.getElementById('premium-bg').style.opacity = '1';
