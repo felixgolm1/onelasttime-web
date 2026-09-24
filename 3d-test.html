@@ -4258,7 +4258,10 @@ panData.forEach(({ x, y, r }, i) => {
     }
     // Cámara vuelve a la posición central (4 PASOS)
     scrollTl.to('#sc-pan-wrapper', { x: 0, y: 0, rotation: 0, scale: 1,
-        duration: PAN, ease: 'power2.inOut' }, t);
+          duration: PAN, ease: 'power2.inOut' }, t);
+      if (window._cIsMobile) {
+          scrollTl.to([scIntro, scIntroBack], { y: 0, duration: PAN, ease: 'power2.inOut' }, t);
+      }
     // Restaurar opacidad de todas las cartas al volver al overview
     scrollTl.to(focusOrder, { opacity: 1, duration: PAN, ease: 'power2.inOut' }, t);
     let t2 = t + PAN; // Cámara en el centro.
