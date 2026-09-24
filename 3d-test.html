@@ -3728,7 +3728,7 @@ window.onerror = function(msg, url, line, col, err) {
     // Contenedores: invisibles + desplazados (el desliz es del bloque entero)
     // yPercent:-50 = equivalente GSAP al translateY(-50%) del CSS (que GSAP sobreescribiría)
     gsap.set('#flip-left-text',  { autoAlpha: 0, yPercent: -50, x: 0, y: window._cIsMobile ? 0 : -40 });
-    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, x: 0, y: window._cIsMobile ? 0 : 40 });
+    gsap.set('#flip-right-text', { autoAlpha: 0, yPercent: -50, x: 0, y: window._cIsMobile ? -15 : 40 });
     // Chars: solo invisibles â€â€ sin desplazamiento propio
     gsap.set(leftChars,  { opacity: 0 });
     gsap.set(rightChars, { opacity: 0 });
