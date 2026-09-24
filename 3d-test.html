@@ -3771,7 +3771,7 @@ window.onerror = function(msg, url, line, col, err) {
     gsap.set('#heroCta', { clearProps: 'transform,visibility,opacity', transformOrigin: '50% 50%' });
     // Ã¢â€€ Fase 1 (0?0.16): Zoom + oscurecimiento suave Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
     scrollTl.to([mg, visGroup], {
-      x: 0, y: 0, scaleX: 1.22, scaleY: 1.22,
+      x: 0, y: window._cIsMobile ? -15 : 0, scaleX: 1.22, scaleY: 1.22,
       rotation: -2, rotationY: -30,
       duration: 0.08, ease: 'power2.inOut'
     }, 0);
