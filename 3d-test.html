@@ -1626,31 +1626,35 @@ window.onerror = function(msg, url, line, col, err) {
       }
   }
 
-  /* NUCLEAR GLITCH KILLER */
+  
+  /* DEFINITIVE CLIP-PATH FIX PARA TODOS LOS ELEMENTOS FIXED */
   @media (max-width: 768px) {
-      /* Destruimos la barra de progreso por completo */
-      #mobile-top-progress { display: none !important; opacity: 0 !important; visibility: hidden !important; width: 0 !important; height: 0 !important; box-shadow: none !important; }
-      
-      /* Destruimos los flashes y fondos que tienen opacity:0 por si el mix-blend-mode deja bordes */
-      #camera-flash, #transition-flash, #fake-bg-fade, #premium-bg { display: none !important; opacity: 0 !important; }
-      
-      /* Canvas 3D: forzamos que se salga de la pantalla por todos lados para evitar antialiasing en los bordes */
-      #c { 
-          width: 102vw !important; 
-          height: 102vh !important; 
-          top: -1vh !important; 
-          left: -1vw !important; 
-          transform: scale(1.02) !important;
-          outline: none !important;
-          border: none !important;
+      /* Matamos flashes directamente */
+      #mobile-top-progress, #camera-flash, #transition-flash, #fake-bg-fade, #premium-bg { 
+          display: none !important; 
+          opacity: 0 !important; 
       }
       
-      /* Fondo general */
-      html, body {
-          background-color: #000 !important;
+      /* Si la línea viene de CUALQUIER otro contenedor full-screen, le aplicamos el clip-path directamente a ÉL.
+         El body clip-path fallaba porque los position: fixed se escapan. Al ponérselo al hijo, no hay escape. */
+      #css-container, 
+      #c, 
+      #premium-text, 
+      #end-card-table, 
+      #embers-canvas, 
+      #vip-overlay, 
+      #img-strip-wrapper, 
+      #thermal-overlay,
+      #olt-logo-reveal,
+      #end-reviews-container {
+          clip-path: inset(2px 0 0 2px) !important;
       }
+      
+      /* Aseguramos que el html no sangre blanco */
+      html { background-color: #000 !important; }
   }
 </style>
+
 
 
 <style>
