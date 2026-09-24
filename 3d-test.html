@@ -2750,7 +2750,9 @@ window.onerror = function(msg, url, line, col, err) {
   </div><!-- end mainDeck -->
   <script>
     // Guardar un clon puro de la baraja antes de que ningún motor de JS la contamine
-    window._pristineMainDeckClone = document.getElementById('mainDeck').cloneNode(true);
+    const mdSetup = document.getElementById('mainDeck');
+if (mdSetup && window._cIsMobile) mdSetup.style.marginTop = 'calc(-228px - 15px)';
+window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
     window._pristineMainDeckClone.querySelectorAll('.card-n1, .card-n2, .card-n3, .card-n4').forEach(function(c) { c.style.opacity = '0'; });
   </script>
   <!-- Puntero "Coge la carta" Marker (fuera del steps-overlay para que no quede atrapado en su stacking context) -->
@@ -4260,7 +4262,7 @@ panData.forEach(({ x, y, r }, i) => {
     scrollTl.to('#sc-pan-wrapper', { x: 0, y: 0, rotation: 0, scale: 1,
           duration: PAN, ease: 'power2.inOut' }, t);
       if (window._cIsMobile) {
-          scrollTl.to([scIntro, scIntroBack], { y: 0, duration: PAN, ease: 'power2.inOut' }, t);
+          scrollTl.to([scIntro, scIntroBack], { y: -22, duration: PAN, ease: 'power2.inOut' }, t);
       }
     // Restaurar opacidad de todas las cartas al volver al overview
     scrollTl.to(focusOrder, { opacity: 1, duration: PAN, ease: 'power2.inOut' }, t);
