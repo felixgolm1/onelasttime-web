@@ -27312,6 +27312,7 @@ document.addEventListener('mouseover', e => {
   @media (max-width: 768px) {
       html, body {
           overflow-x: hidden !important;
+          background-color: #000 !important; /* Fixes white background showing through stray text nodes */
       }
       /* Previene bordes de canvas o outline fantasma */
       canvas, img, a, div {
