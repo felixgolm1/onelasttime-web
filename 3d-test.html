@@ -1611,7 +1611,22 @@ window.onerror = function(msg, url, line, col, err) {
       }
     }
 
+
+  /* WEBGL EDGE BLEEDING FIX */
+  @media (max-width: 768px) {
+      #c {
+          width: 102vw !important;
+          height: 102vh !important;
+          top: -1vh !important;
+          left: -1vw !important;
+      }
+      /* También estiramos el track de las fotos por si es el object-fit */
+      #img-strip-track img {
+          transform: scale(1.02);
+      }
+  }
 </style>
+
 <style>
     body.hide-all-cards-final-scene #card-canvas,
     body.hide-all-cards-final-scene #oryzo-deck-clone,
