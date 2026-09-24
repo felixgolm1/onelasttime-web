@@ -2115,6 +2115,9 @@ window.onerror = function(msg, url, line, col, err) {
           transition: opacity 0.3s ease;
         }
         #glass-who.glass-modal-mode, #glass-objectives.glass-modal-mode {
+              opacity: 1 !important;
+              visibility: visible !important;
+              transform: none !important;
             position: fixed !important;
             top: 19px !important;
               bottom: calc(3% + 5.2rem) !important;
@@ -2133,7 +2136,16 @@ window.onerror = function(msg, url, line, col, err) {
               justify-content: flex-start !important;
               transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
-        .glass-modal-mode .glass-close-btn {
+        #glass-who.glass-modal-mode .flt-ch, #glass-objectives.glass-modal-mode .flt-ch {
+            opacity: 1 !important;
+          }
+          #glass-who.glass-modal-mode .glass-mask-line, #glass-objectives.glass-modal-mode .glass-mask-line {
+            transform: none !important;
+          }
+          #glass-who.glass-modal-mode .glass-bullet, #glass-objectives.glass-modal-mode .glass-bullet {
+            opacity: 1 !important;
+          }
+          .glass-modal-mode .glass-close-btn {
           opacity: 1;
           pointer-events: auto;
         }
