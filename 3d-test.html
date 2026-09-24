@@ -2041,6 +2041,7 @@ window.onerror = function(msg, url, line, col, err) {
           border-radius: 0 !important;
           overflow-y: auto !important;
             pointer-events: auto !important;
+            z-index: 10000050 !important;
           pointer-events: auto !important;
           justify-content: flex-start !important;
           box-shadow: 0 -10px 30px rgba(0,0,0,0.3) !important;
@@ -2155,7 +2156,7 @@ window.onerror = function(msg, url, line, col, err) {
       }
     </style>
     <script>
-      function toggleGlassModal(glassId) {
+      window.toggleGlassModal = function toggleGlassModal(glassId) {
         const glassEl = document.getElementById(glassId);
         if (!glassEl) return;
         if (glassEl.classList.contains('glass-modal-mode')) {
