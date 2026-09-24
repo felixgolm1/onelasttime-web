@@ -2118,6 +2118,9 @@ window.onerror = function(msg, url, line, col, err) {
               opacity: 1 !important;
               visibility: visible !important;
               transform: none !important;
+              overflow: hidden !important;
+              -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%) !important;
+              mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%) !important;
             position: fixed !important;
             top: 19px !important;
               bottom: calc(3% + 5.2rem) !important;
@@ -2151,8 +2154,8 @@ window.onerror = function(msg, url, line, col, err) {
         }
         .glass-modal-mode .mobile-expandable-content {
           max-height: 60vh !important;
-          -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%) !important;
-            mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%) !important;
+          -webkit-mask-image: none !important;
+            mask-image: none !important;
           overflow-y: auto !important;
           padding-bottom: 30px;
         }
