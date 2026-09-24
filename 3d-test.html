@@ -2123,12 +2123,12 @@ window.onerror = function(msg, url, line, col, err) {
             left: 19px !important;
             right: auto !important;
             z-index: 10000060 !important;
-          border-radius: 20px !important;
-          background: rgba(20, 20, 20, 0.75) !important;
-          backdrop-filter: blur(30px) !important;
-          -webkit-backdrop-filter: blur(30px) !important;
-          border: 1px solid rgba(255,255,255,0.3) !important;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.6) !important;
+          border-radius: 0 !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+          backdrop-filter: blur(16px) !important;
+          -webkit-backdrop-filter: blur(16px) !important;
+          border: 1px solid rgba(255,255,255,0.25) !important;
+          box-shadow: none !important;
           padding-top: 4rem !important;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
@@ -2162,8 +2162,14 @@ window.onerror = function(msg, url, line, col, err) {
         if (!glassEl) return;
         if (glassEl.classList.contains('glass-modal-mode')) {
           glassEl.classList.remove('glass-modal-mode');
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            document.body.style.overscrollBehavior = '';
         } else {
           glassEl.classList.add('glass-modal-mode');
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overscrollBehavior = 'none';
         }
       }
     </script>
