@@ -2114,15 +2114,16 @@ window.onerror = function(msg, url, line, col, err) {
           pointer-events: none;
           transition: opacity 0.3s ease;
         }
-        .glass-modal-mode {
-          position: fixed !important;
-          top: 7.5vh !important;
-          bottom: auto !important;
-          height: 85vh !important;
-          width: 90vw !important;
-          left: 5vw !important;
+        #glass-who.glass-modal-mode, #glass-objectives.glass-modal-mode {
+            position: fixed !important;
+            top: 19px !important;
+            bottom: auto !important;
+            height: calc(100vh - 38px) !important;
+            width: calc(100vw - 38px) !important;
+            left: 19px !important;
+            right: auto !important;
+            z-index: 10000060 !important;
           border-radius: 20px !important;
-          z-index: 9999999 !important;
           background: rgba(20, 20, 20, 0.75) !important;
           backdrop-filter: blur(30px) !important;
           -webkit-backdrop-filter: blur(30px) !important;
@@ -2577,7 +2578,7 @@ window.onerror = function(msg, url, line, col, err) {
   <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-who')" >
     <span class="btn-text-more">Ver ejemplos</span>
     <span class="btn-text-less" style="display:none;">Cerrar</span>
-    <svg style="display:inline-block; vertical-align:middle; margin-left:4px; transition: transform 0.3s;" class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    
   </button>
 </div>
     </div>
@@ -2603,7 +2604,7 @@ window.onerror = function(msg, url, line, col, err) {
   <button class="mobile-see-more-btn" onclick="toggleGlassModal('glass-objectives')" >
     <span class="btn-text-more">Ver ejemplos</span>
     <span class="btn-text-less" style="display:none;">Cerrar</span>
-    <svg style="display:inline-block; vertical-align:middle; margin-left:4px; transition: transform 0.3s;" class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    
   </button>
 </div>
     </div>
