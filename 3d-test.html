@@ -27317,6 +27317,13 @@ document.addEventListener('mouseover', e => {
       canvas, img, a, div {
           outline: none !important;
       }
+      /* ELIMINA LA BARRA DE PROGRESO SUPERIOR FANTASMA (CAUSANTE DEL GLITCH) */
+      #mobile-top-progress {
+          display: none !important;
+          opacity: 0 !important;
+          box-shadow: none !important;
+      }
+
       /* Fuerza a que el contenedor 3D no se desborde visualmente por arriba */
       #css-container {
           overflow: hidden !important;
