@@ -4233,7 +4233,7 @@ panData.forEach(({ x, y, r }, i) => {
           // Animacion de la caja glass-objectives en el Paso 3
           if (i === 2) {
             scrollTl.to('#glass-objectives', { autoAlpha: 1, duration: 0.01, ease: 'none' }, glassT);
-              if (window._cIsMobile) { scrollTl.fromTo('#glass-objectives', { y: '0vh' }, { y: '-42vh', duration: 0.035, ease: 'power2.out' }, glassT); }
+              // if (window._cIsMobile) { scrollTl.fromTo('#glass-objectives', { y: '0vh' }, { y: '-42vh', duration: 0.035, ease: 'power2.out' }, glassT); }
             scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.01, stagger: 0.00108, ease: 'none' }, glassT + 0.01);
             scrollTl.to(glassObjFinalText, { opacity: 1, duration: 0.01, stagger: -0.00029, ease: 'none' }, glassT + 0.01);
             scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 0, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
