@@ -3700,6 +3700,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
     gsap.set(scCta,   { opacity: 0 });
       gsap.set('#glass-who', { opacity: 0, autoAlpha: 0 });
       gsap.set('#glass-objectives', { opacity: 0, autoAlpha: 0 });
+      gsap.set('#glass-who .mobile-see-more-container, #glass-objectives .mobile-see-more-container', { opacity: 0 });
     // Caracteres del título: invisible + blur + desplazados (GSAP sobreescribe el CSS)
     gsap.set(ftChars, { opacity: 0, filter: 'blur(10px)', x: -18 });
     // Ã¢â€€ Split por caracteres para el efecto Oryzo letra a letra Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€Ã¢â€€
@@ -4232,6 +4233,7 @@ panData.forEach(({ x, y, r }, i) => {
             scrollTl.to('#glass-who', { autoAlpha: 1, duration: 0.01, ease: 'none' }, glassT);
             scrollTl.to(glassWhoTitle, { opacity: 1, duration: 0.01, stagger: 0.00069, ease: 'none' }, glassT + 0.01);
             scrollTl.to(glassWhoFinalText, { opacity: 1, duration: 0.01, stagger: -0.00029, ease: 'none' }, glassT + 0.01);
+              scrollTl.to('#glass-who .mobile-see-more-container', { opacity: 1, duration: 0.01, ease: 'none' }, glassT + 0.01);
             scrollTl.to('#glass-who .glass-mask-line', { yPercent: 0, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
             scrollTl.to('#glass-who .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0285);
           } else {
@@ -4240,6 +4242,7 @@ panData.forEach(({ x, y, r }, i) => {
             scrollTl.to('#glass-who', { autoAlpha: 0, duration: 0.0335, ease: 'none' }, glassWhoHideT);
             scrollTl.to(glassWhoTitle, { opacity: 0, duration: 0.01, stagger: -0.00069, ease: 'none' }, glassWhoHideT);
             scrollTl.to(glassWhoFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassWhoHideT);
+              scrollTl.to('#glass-who .mobile-see-more-container', { opacity: 0, duration: 0.01, ease: 'none' }, glassWhoHideT);
             scrollTl.to('#glass-who .glass-mask-line', { yPercent: 110, duration: 0.0335, stagger: 0, ease: 'power2.out' }, glassWhoHideT);
             scrollTl.to('#glass-who .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassWhoHideT);
           }
@@ -4249,6 +4252,7 @@ panData.forEach(({ x, y, r }, i) => {
               // if (window._cIsMobile) { scrollTl.fromTo('#glass-objectives', { y: '0vh' }, { y: '-42vh', duration: 0.035, ease: 'power2.out' }, glassT); }
             scrollTl.to(glassObjTitle, { opacity: 1, duration: 0.01, stagger: 0.00108, ease: 'none' }, glassT + 0.01);
             scrollTl.to(glassObjFinalText, { opacity: 1, duration: 0.01, stagger: -0.00029, ease: 'none' }, glassT + 0.01);
+              scrollTl.to('#glass-objectives .mobile-see-more-container', { opacity: 1, duration: 0.01, ease: 'none' }, glassT + 0.01);
             scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 0, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassT + 0.01);
             scrollTl.to('#glass-objectives .glass-bullet', { opacity: 1, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassT + 0.0277);
           } else {
@@ -4257,6 +4261,7 @@ panData.forEach(({ x, y, r }, i) => {
             scrollTl.to('#glass-objectives', { autoAlpha: 0, duration: 0.0327, ease: 'none' }, glassObjHideT);
             scrollTl.to(glassObjTitle, { opacity: 0, duration: 0.01, stagger: -0.00108, ease: 'none' }, glassObjHideT);
             scrollTl.to(glassObjFinalText, { opacity: 0, duration: 0.01, stagger: 0.00029, ease: 'none' }, glassObjHideT);
+              scrollTl.to('#glass-objectives .mobile-see-more-container', { opacity: 0, duration: 0.01, ease: 'none' }, glassObjHideT);
             scrollTl.to('#glass-objectives .glass-mask-line', { yPercent: 110, duration: 0.0327, stagger: 0, ease: 'power2.out' }, glassObjHideT);
             scrollTl.to('#glass-objectives .glass-bullet', { opacity: 0, duration: 0.015, stagger: 0, ease: 'power2.out' }, glassObjHideT);
           }
