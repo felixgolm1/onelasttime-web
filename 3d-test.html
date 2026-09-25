@@ -2158,6 +2158,19 @@ window.onerror = function(msg, url, line, col, err) {
               padding-top: 16px !important;
           overflow-y: auto !important;
           padding-bottom: 30px;
+            margin-right: -20px;
+            padding-right: 20px;
+          }
+          .glass-modal-mode .mobile-expandable-content::-webkit-scrollbar {
+            width: 4px;
+            background: transparent;
+          }
+          .glass-modal-mode .mobile-expandable-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+          }
+          .glass-modal-mode .mobile-expandable-content::-webkit-scrollbar-track {
+            background: transparent;
         }
         #glass-who.glass-modal-mode.glass-hiding, #glass-objectives.glass-modal-mode.glass-hiding {
             opacity: 0 !important;
