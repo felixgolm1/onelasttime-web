@@ -11209,7 +11209,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
              return outMin + t * (outMax - outMin);
          }
          // tOpen: animacion de apertura SEPARADA de la subida â€ â€  arranca cuando la caja ya es visible
-         var tOpen = clamp01((p - 23.6) / 0.3); // 23.6 a 23.9
+         var tOpen = clamp01((p - 23.6) / 0.3);
+           if (window.innerWidth <= 768 || window._cIsMobile) {
+               tOpen = clamp01((p - 23.8) / 0.3);
+           }
          // tClose: cierra la caja a la misma velocidad en p = 30.79
          var tClose = clamp01((p - 30.79) / 0.3);
          let eOpen = ease(tOpen) * (1 - ease(tClose));
