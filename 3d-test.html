@@ -2343,7 +2343,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 #mag-ciencia h1 { font-size: 6.1rem !important; }
   #oryzo-text-right { text-align: right !important; position: relative !important; left: -67px !important; }
   #oryzo-text-right-gradient { text-align: right !important; width: 100% !important; transform-origin: right center !important; margin-right: 0 !important; }
-  @media (max-width: 768px) { #oryzo-deck-container { margin-top: 63vh !important; } #conecta-transition-text { top: 15vh !important; } }
+  @media (max-width: 768px) { #oryzo-deck-container { margin-top: 63vh !important; } #conecta-transition-text { top: 15vh !important; } #thermal-overlay { height: 95vh !important; } }
 
   #global-brain-label, .nsl p:first-child { font-size: 0.72rem !important; }
   .nsl h3 { font-size: 1.2rem !important; }
@@ -11157,14 +11157,16 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       var tSlide = clamp01((p - 21.7) / 1.6); // Termina en 23.3, justo cuando empieza a abrirse
       // Empieza a bajar (38.6) con el carrusel y termina de desaparecer del todo (40.76)
       var tExitBox = clamp01((p - 38.6) / (40.76 - 38.6)); 
-      var slideY = (1 - ease(tSlide)) * 130; // La pantalla se queda anclada
+      var isMobileLayout = (window.innerWidth <= 768 || window._cIsMobile);
+        var travelDist = isMobileLayout ? 95 : 130;
+        var slideY = (1 - ease(tSlide)) * travelDist;
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       // La baraja de cartas baja independientemente de la pantalla (80vh es suficiente para ocultarla)
       var isMob = window.innerWidth <= 768 || window._cIsMobile;
         var boxEnterY = 0;
         if (isMob) {
             var _tCam = clamp01((p - 21.7) / 3.0);
-              var _txtY = 130 - (ease(_tCam) * 230);
+              var _txtY = travelDist - (ease(_tCam) * (isMobileLayout ? 195 : 230));
               var _cntY = Math.min(0, _txtY - slideY);
               var totalYForBox = slideY + _cntY;
             var boxDelayProg = clamp01(((-5) - totalYForBox) / 30);
@@ -11180,10 +11182,10 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
       oryzoSec.style.visibility = tSlide > 0 ? 'visible' : 'hidden';
       // Sincronizamos el fondo morado 
-      window._scrollUpVh = 130 - slideY;
+      window._scrollUpVh = travelDist - slideY;
       // Fase de salida (la cámara baja continuamente)
       var tCamera = clamp01((p - 21.7) / 3.0);
-      var textY = 130 - (ease(tCamera) * 230);
+      var textY = travelDist - (ease(tCamera) * (isMobileLayout ? 195 : 230));
       var contentY = Math.min(0, textY - slideY);
       var conectaTxt = document.getElementById('conecta-transition-text');
       if (oryzoTxtL) oryzoTxtL.style.transform = 'translateY(' + contentY + 'vh)';
