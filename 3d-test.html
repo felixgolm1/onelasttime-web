@@ -11161,6 +11161,17 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
         var travelDist = isMobileLayout ? 95 : 130;
         var slideY = (1 - ease(tSlide)) * travelDist;
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
+        
+        // CROP THERMAL OVERLAY DYNAMICALLY TO AVOID OVERLAP IN MOBILE
+        var _thOvr = document.getElementById('thermal-overlay');
+        if (_thOvr) {
+            if (isMobileLayout) {
+                var cropVh = tSlide * 35; // gradually crop up to 35vh
+                _thOvr.style.clipPath = 'inset(0 0 ' + cropVh.toFixed(2) + 'vh 0)';
+            } else {
+                _thOvr.style.clipPath = 'none';
+            }
+        }
       // La baraja de cartas baja independientemente de la pantalla (80vh es suficiente para ocultarla)
       var isMob = window.innerWidth <= 768 || window._cIsMobile;
         var boxEnterY = 0;
