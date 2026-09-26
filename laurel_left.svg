@@ -1,0 +1,63 @@
+<svg viewBox="0 0 100 200" width="100%" height="100%" style="overflow: visible;">
+  <path d="M 50 190 Q 20 100 50 10" fill="none" stroke="#ccff00" stroke-width="2" stroke-linecap="round"/>
+  <g class="laurel-leaf" style="transform-origin: 50.0px 190.0px;" data-base-angle="-153.43494882292202" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(50.0, 190.0) rotate(-153.43494882292202) scale(1.0)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 50.0px 190.0px;" data-base-angle="-63.434948822922024" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(50.0, 190.0) rotate(-63.434948822922024) scale(1.0)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 44.07407407407407px 170.0px;" data-base-angle="-149.5344550805401" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(44.07407407407407, 170.0) rotate(-149.5344550805401) scale(0.9444444444444444)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 44.07407407407407px 170.0px;" data-base-angle="-59.53445508054013" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(44.07407407407407, 170.0) rotate(-59.53445508054013) scale(0.9444444444444444)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 39.629629629629626px 150.0px;" data-base-angle="-145.4914770123316" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(39.629629629629626, 150.0) rotate(-145.4914770123316) scale(0.8888888888888888)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 39.629629629629626px 150.0px;" data-base-angle="-55.4914770123316" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(39.629629629629626, 150.0) rotate(-55.4914770123316) scale(0.8888888888888888)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 36.66666666666667px 130.00000000000003px;" data-base-angle="-141.34019174590992" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(36.66666666666667, 130.00000000000003) rotate(-141.34019174590992) scale(0.8333333333333334)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 36.66666666666667px 130.00000000000003px;" data-base-angle="-51.340191745909905" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(36.66666666666667, 130.00000000000003) rotate(-51.340191745909905) scale(0.8333333333333334)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 35.18518518518519px 110.0px;" data-base-angle="-137.12109639666147" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(35.18518518518519, 110.0) rotate(-137.12109639666147) scale(0.7777777777777778)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 35.18518518518519px 110.0px;" data-base-angle="-47.12109639666146" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(35.18518518518519, 110.0) rotate(-47.12109639666146) scale(0.7777777777777778)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 35.18518518518519px 89.99999999999999px;" data-base-angle="-132.87890360333853" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(35.18518518518519, 89.99999999999999) rotate(-132.87890360333853) scale(0.7222222222222222)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 35.18518518518519px 89.99999999999999px;" data-base-angle="-42.87890360333854" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(35.18518518518519, 89.99999999999999) rotate(-42.87890360333854) scale(0.7222222222222222)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 36.66666666666667px 70.00000000000001px;" data-base-angle="-128.65980825409008" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(36.66666666666667, 70.00000000000001) rotate(-128.65980825409008) scale(0.6666666666666667)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 36.66666666666667px 70.00000000000001px;" data-base-angle="-38.659808254090095" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(36.66666666666667, 70.00000000000001) rotate(-38.659808254090095) scale(0.6666666666666667)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 39.62962962962963px 50.0px;" data-base-angle="-124.50852298766841" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(39.62962962962963, 50.0) rotate(-124.50852298766841) scale(0.6111111111111112)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 39.62962962962963px 50.0px;" data-base-angle="-34.508522987668414" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(39.62962962962963, 50.0) rotate(-34.508522987668414) scale(0.6111111111111112)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 44.074074074074076px 30.000000000000007px;" data-base-angle="-120.46554491945989" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(44.074074074074076, 30.000000000000007) rotate(-120.46554491945989) scale(0.5555555555555556)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 44.074074074074076px 30.000000000000007px;" data-base-angle="-30.465544919459887" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(44.074074074074076, 30.000000000000007) rotate(-30.465544919459887) scale(0.5555555555555556)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 50.0px 10.0px;" data-base-angle="-116.56505117707799" data-side="-1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(50.0, 10.0) rotate(-116.56505117707799) scale(0.5)" />
+  </g>
+  <g class="laurel-leaf" style="transform-origin: 50.0px 10.0px;" data-base-angle="-26.56505117707799" data-side="1">
+    <path d="M 0 0 C 10 -5, 20 -5, 25 0 C 20 5, 10 5, 0 0" fill="#ccff00" transform="translate(50.0, 10.0) rotate(-26.56505117707799) scale(0.5)" />
+  </g>
+</svg>
