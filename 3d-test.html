@@ -11218,10 +11218,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
          // tClose: cierra la caja a la misma velocidad en p = 30.79
          var tClose = clamp01((p - 30.79) / 0.3);
          let eOpen = ease(tOpen) * (1 - ease(tClose));
-         let cardsOpen = mapFlap(eOpen, 0.5, 1.0, 0, 1);
-           if (window.innerWidth <= 768 || window._cIsMobile) {
-               cardsOpen = 0; // Evita que asomen durante la apertura de solapas
-           }
+         let cardsOpen = 0; // mapFlap(eOpen, 0.5, 1.0, 0, 1);
          if(deckClone) {
            let iCardsWrap = deckClone.querySelector('.interior-cards');
            if (iCardsWrap) {
@@ -11268,10 +11265,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
             tuckLip.style.transform = 'rotateX(' + lipRot + 'deg)';
          }
          // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 21.5 ---
-         let localP_raw = p - 21.1;
-         if (window.innerWidth <= 768 || window._cIsMobile) {
-             localP_raw = p - 21.60; // Sincroniza el carrusel completo para que arranque exactamente en p=24.10
-         }
+         let localP_raw = p - 21.60;
          let localP = localP_raw;
          if (localP_raw >= 28.49) {
              if (localP_raw <= 29.54) {
