@@ -9811,7 +9811,7 @@ function makeCardBackTex(data = '4 PASOS') {
     // Cargar cerebro COMPLETO (visible al inicio)
     loader.load('assets/models/human_brain.glb', function(gltf) {
       var wrapper = wrapAndCenter(gltf.scene);
-      wrapper.scale.multiplyScalar(1.1); // 10% más grande que el medio cerebro
+      var isMobScale = window.innerWidth <= 768 || window._cIsMobile; wrapper.scale.multiplyScalar(isMobScale ? 1.1 * 0.9 : 1.1); // adaptado a mobile
       applyThermalMat(wrapper);
       setOpacity(wrapper, 1.0);     // empieza visible
       _brainFull = wrapper;
@@ -13870,6 +13870,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
 
 
 
