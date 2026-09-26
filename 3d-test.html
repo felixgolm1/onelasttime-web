@@ -3188,13 +3188,13 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
       }
       .osr-body {
           display: grid !important;
-          grid-template-columns: 60px 1fr !important;
+          grid-template-columns: 75px 1fr !important;
           grid-template-areas:
             "topline topline"
             "stars stars"
             "image quote"
-            "image author" !important;
-          gap: 0 1.25rem !important;
+            "author quote" !important;
+          gap: 0 1rem !important;
           align-items: start !important;
         }
         .review-text-col {
@@ -3204,13 +3204,13 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
           grid-area: image;
           width: 100% !important;
           display: flex !important;
-          justify-content: flex-start !important;
+          justify-content: center !important;
           margin-top: 6px !important;
         }
         .review-img-col img {
-          max-width: 60px !important;
-          width: 60px !important;
-          height: 60px !important;
+          max-width: 75px !important;
+          width: 75px !important;
+          height: 75px !important;
           border-radius: 0px !important;
           object-fit: cover !important;
           margin: 0 !important;
@@ -3218,7 +3218,28 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
         .osr-top-line { grid-area: topline; }
         .osr-stars-small { grid-area: stars; margin-bottom: 0.75rem !important; }
         .review-quote { grid-area: quote; margin-bottom: 0.5rem !important; margin-top: 0 !important; }
-        .review-author { grid-area: author; text-align: left !important; margin-top: 0 !important; }
+        .review-author { 
+          grid-area: author; 
+          text-align: center !important; 
+          margin-top: 8px !important; 
+          font-size: 0.55rem !important; 
+          line-height: 1.1 !important;
+          width: 100% !important;
+          word-wrap: break-word !important;
+        }
+        .review-author span {
+          display: block !important;
+          text-align: center !important;
+          font-size: 0.5rem !important;
+          margin-top: 4px !important;
+          text-transform: none !important;
+          line-height: 1.2 !important;
+        }
+        .review-author svg {
+          width: 10px !important;
+          height: 10px !important;
+          margin-bottom: -2px !important;
+        }
       .review-img-col {
         justify-content: center;
         margin-bottom: 2rem;
