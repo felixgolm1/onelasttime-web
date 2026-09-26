@@ -2336,8 +2336,8 @@ window.addEventListener('DOMContentLoaded', () => {
   #mag-barcode { bottom: 10.5% !important; right: 11.5% !important; }
   #mag-natgeo { padding-left: 9% !important; }
   #mag-ciencia { margin-top: 50px !important; }
-  #mag-model-img { height: 124% !important; }
-  #brain-2d-wrap { width: 22.5vh !important; height: 22.5vh !important; top: 31vh !important; }
+  #mag-model-img { height: 124% !important; top: 15px !important; }
+  #brain-2d-wrap { width: 22.5vh !important; height: 22.5vh !important; top: 33.2vh !important; }
 }
 </style>
 </head>
@@ -6046,7 +6046,7 @@ bottomCta.style.pointerEvents = 'auto';
                   const isMobMod1 = window.innerWidth <= 768 || window._cIsMobile; const modelH = magR.height * (isMobMod1 ? 1.24 : 1.38);
                   const ar     = origImg.naturalWidth / origImg.naturalHeight;
                   const modelW = modelH * ar;
-                  const modelT = magR.top;
+                  const modelT = magR.top + (isMobMod1 ? 15 : 0);
                   const modelL = magR.left + magR.width / 2 - modelW / 2;
                   // Clip inicial = lo que sobresale del viewport (elbows, torso)
                   const iT = 0;
@@ -7167,7 +7167,7 @@ bottomCta.style.pointerEvents = 'auto';
                 if (_origImg && _origImg.naturalHeight) {
                     var _ar = _origImg.naturalWidth / _origImg.naturalHeight;
                     var _modelW = _modelH * _ar;
-                    var _modelT = _magR.top;
+                    var _modelT = _magR.top + (_isMobMod2 ? 15 : 0);
                     var _modelL = _magR.left + _magR.width / 2 - _modelW / 2;
                     _realModel.style.left = _modelL + 'px';
                     _realModel.style.top = _modelT + 'px';
@@ -9847,7 +9847,7 @@ function makeCardBackTex(data = '4 PASOS') {
     var vH   = 2 * Math.tan((42 * Math.PI / 180) / 2) * DIST;
     var vW   = vH * (window._cw / window._ch);
     var posX = -0.008 * vW / 2;
-    var isM = window.innerWidth <= 768 || window._cIsMobile; var posY = (isM ? 0.380 : 0.312) * vH / 2;
+    var isM = window.innerWidth <= 768 || window._cIsMobile; var posY = (isM ? 0.336 : 0.312) * vH / 2;
     // Ã¢â€€Ã¢â€€ Zoom CSS sobre el overlay completo Ã¢â€€Ã¢â€€
     var zoomScale = 1.0 + swapT * 0.4225;
     var overlay = document.getElementById('thermal-overlay');
@@ -9859,7 +9859,7 @@ function makeCardBackTex(data = '4 PASOS') {
     // Ã¢â€€Ã¢â€€ Mapa de calor 2D: fade-in con swapT Ã¢â€€Ã¢â€€
     if (window._drawHeatMap) window._drawHeatMap(swapT);
     var halfPosX = -0.03 * vW / 2;
-    var halfPosY = (isM ? 0.364 : 0.294) * vH / 2;
+    var halfPosY = (isM ? 0.320 : 0.294) * vH / 2;
     // Cerebro COMPLETO: rota hasta perfil lateral completo (~99Â°)
     _brainFull.rotation.y = _rotEase * (-Math.PI * 0.55);
     _brainFull.position.set(posX, posY, -DIST);
@@ -13870,6 +13870,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
 
 
 
