@@ -1,14 +1,16 @@
-﻿import os
-import re
+﻿import sys
 
-filepath = r'c:\Users\Félix Gol\.gemini\antigravity\scratch\sensibles-web\3d-test.html'
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
+def apply_fixes():
+    with open('3d-test.html', 'r', encoding='utf-8') as f:
+        content = f.read()
 
-# Remove the ID_CARD_B64 loading block
-content = re.sub(r'// Carga nuestro prisma/carta local.*?ID_CARD_B64 not found - skipping 3D card mesh\'\);\s*\}', '', content, flags=re.DOTALL)
+    # Change 20vh to -5vh
+    content = content.replace(
+        '@media (max-width: 768px) { #oryzo-deck-container { margin-top: 20vh !important; } }',
+        '@media (max-width: 768px) { #oryzo-deck-container { margin-top: -5vh !important; } }'
+    )
 
-with open(filepath, 'w', encoding='utf-8') as f:
-    f.write(content)
+    with open('3d-test.html', 'w', encoding='utf-8') as f:
+        f.write(content)
 
-print("Python phase 5 done")
+apply_fixes()
