@@ -6043,7 +6043,7 @@ bottomCta.style.pointerEvents = 'auto';
                   const vpr    = carouselVp.getBoundingClientRect();
                   const magR   = magEl.getBoundingClientRect(); // rect real del item (incluyendo borde)
                   // Usar el item real como referencia de tamaño (vpr excluye 7px de borde ? 2% error)
-                  const modelH = magR.height * 1.38;
+                  const isMobMod1 = window.innerWidth <= 768 || window._cIsMobile; const modelH = magR.height * (isMobMod1 ? 1.24 : 1.38);
                   const ar     = origImg.naturalWidth / origImg.naturalHeight;
                   const modelW = modelH * ar;
                   const modelT = magR.top;
@@ -7162,7 +7162,7 @@ bottomCta.style.pointerEvents = 'auto';
             var _magEl = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             if (_realModel && _magScene && _magEl) {
                 var _magR = _magEl.getBoundingClientRect();
-                var _modelH = _magR.height * 1.38;
+                var _isMobMod2 = window.innerWidth <= 768 || window._cIsMobile; var _modelH = _magR.height * (_isMobMod2 ? 1.24 : 1.38);
                 var _origImg = _magEl.querySelector('img[src*="modelo-sin-fondo"]') || _magScene.querySelector('.carousel-track-large img[src*="modelo-sin-fondo"]');
                 if (_origImg && _origImg.naturalHeight) {
                     var _ar = _origImg.naturalWidth / _origImg.naturalHeight;
@@ -13870,6 +13870,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
 
 
 
