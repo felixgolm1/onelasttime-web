@@ -12063,7 +12063,7 @@ if (sInd) {
            var targetIdxR = txtPR * (charsR.length + blurLen) - blurLen;
            // Transición de salida en la misma dirección que entra (de principio a fin)
            // Empieza un poco más tarde (restando 15 a contentY) y es un 50% más rápida (dividido por 40 en lugar de 80)
-           var exitStartR = (window.innerWidth <= 768 || window._cIsMobile) ? 21 : 15;
+           var exitStartR = (window.innerWidth <= 768 || window._cIsMobile) ? 33 : 15;
              var exitProgR = Math.max(0, Math.min(1, (Math.abs(contentY) - exitStartR) / 40));
            var targetExitIdxR = exitProgR * (charsR.length + blurLen) - blurLen;
            for (var j = 0; j < charsR.length; j++) {
