@@ -3189,6 +3189,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
       .osr-body {
           display: grid !important;
           grid-template-columns: 75px 1fr !important;
+          grid-template-rows: auto auto 75px auto !important;
           grid-template-areas:
             "topline topline"
             "stars stars"
@@ -3205,7 +3206,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
           width: 100% !important;
           display: flex !important;
           justify-content: center !important;
-          margin-top: 6px !important;
+          margin-top: 0px !important;
         }
         .review-img-col img {
           max-width: 75px !important;
@@ -3216,12 +3217,12 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
           margin: 0 !important;
         }
         .osr-top-line { grid-area: topline; }
-        .osr-stars-small { grid-area: stars; margin-bottom: 0.35rem !important; }
+        .osr-stars-small { grid-area: stars; margin-bottom: 0px !important; padding-bottom: 0px !important; }
         .review-quote { grid-area: quote; margin-bottom: 0.5rem !important; margin-top: 0 !important; }
         .review-author { 
           grid-area: author; 
           text-align: center !important; 
-          margin-top: 4px !important; 
+          margin-top: 0px !important; 
           font-size: 0.55rem !important; 
           line-height: 1.1 !important;
           width: 100% !important;
@@ -3236,7 +3237,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
         flex-direction: column !important;
         gap: 6px !important;
         grid-area: author;
-        margin-top: 4px !important;
+        margin-top: 0px !important;
         width: 100% !important;
       }
       .mobile-author .ma-name {
@@ -3265,7 +3266,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
           display: block !important;
           text-align: center !important;
           font-size: 0.5rem !important;
-          margin-top: 4px !important;
+          margin-top: 0px !important;
           text-transform: none !important;
           line-height: 1.2 !important;
         }
