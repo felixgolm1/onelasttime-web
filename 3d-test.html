@@ -6608,7 +6608,7 @@ bottomCta.style.pointerEvents = 'auto';
               if (thumbEl) thumbEl.style.left  = pct + '%';
               if (waveEl)  waveEl.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
               if (window.updateEnvejCopy) window.updateEnvejCopy(pct / 100);
-              if (citaEl2 && vDur > 0) { var p2 = vCur/vDur; var n = Math.round(1+p2*9499); citaEl2.innerHTML = n >= 9499 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
+              if (citaEl2 && vDur > 0) { var p2 = pct/100; var n = Math.round(1+p2*9499); citaEl2.innerHTML = n >= 9499 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES'); }
             }
           }
           // --- FINAL FELIZ RESET ---
@@ -13740,6 +13740,7 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
   
 
 </html>
+
 
 
 
