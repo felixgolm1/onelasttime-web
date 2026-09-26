@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
@@ -2341,6 +2341,8 @@ window.addEventListener('DOMContentLoaded', () => {
       #dummy-sens-ov { padding-bottom: 100px !important; }
   .carousel-item div[data-large-only="true"] { bottom: 20px !important; }
                 #mag-ciencia h1 { font-size: 6.1rem !important; }
+  #oryzo-text-right { text-align: right !important; position: relative !important; left: -67px !important; }
+  #oryzo-text-right-gradient { text-align: right !important; width: 100% !important; transform-origin: right center !important; margin-right: 0 !important; }
   #global-brain-label, .nsl p:first-child { font-size: 0.72rem !important; }
   .nsl h3 { font-size: 1.2rem !important; }
   #neuro-card {  
@@ -9539,7 +9541,7 @@ function makeCardBackTex(data = '4 PASOS') {
         <p id="oryzo-text-right-gradient" style="font-family:'Inter',sans-serif; font-size:clamp(1.2rem, 2vw, 1.6rem); color:#fff; line-height:1.5; font-weight:400; max-width:400px; margin-left: 1vw;">
         </p>
         <script>
-          var textR = "No nos creas a nosotros,<br>escúchalxs a ellxs";
+          var textR = "No nos creas a nosotros,<br>esc\u00FAchalxs a ellxs";
           var newHtmlR = "";
           for (var i = 0; i < textR.length; i++) {
             if (textR.substring(i, i+4) === "<br>") {
@@ -13878,6 +13880,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
 
 
 
