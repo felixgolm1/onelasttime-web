@@ -6570,7 +6570,7 @@ bottomCta.style.pointerEvents = 'auto';
                     _fp.style.display = 'flex';
                     _fp.style.position = 'fixed';
                     _fp.style.top    = 'auto';
-                    _fp.style.bottom = (window.innerHeight - _vpr.bottom + 40) + 'px';
+                    var _ffOff = (window.innerWidth <= 768 || window._cIsMobile) ? 25 : 40; _fp.style.bottom = (window.innerHeight - _vpr.bottom + _ffOff) + 'px';
                     _fp.style.left   = _panelLeft + 'px';
                     _fp.style.width  = _panelWidth + 'px';
                     _fp.style.opacity = '1';
@@ -13861,6 +13861,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
 
 
 
