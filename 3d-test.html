@@ -11167,11 +11167,16 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
               var _txtY = 130 - (ease(_tCam) * 230);
               var _cntY = Math.min(0, _txtY - slideY);
               var totalYForBox = slideY + _cntY;
-            var boxDelayProg = clamp01(((-5) - totalYForBox) / 30); 
-            boxEnterY = (1 - boxDelayProg) * 110;
-        }
-        var boxTotalY = boxEnterY + (tExitBox * 80);
-        oryzoDeck.style.transform = 'translateY(' + boxTotalY + 'vh)';
+            var boxDelayProg = clamp01(((-5) - totalYForBox) / 30);
+              // boxEnterY = (1 - boxDelayProg) * 110;
+          }
+          var boxTotalY = (tExitBox * 80);
+          if (isMob) {
+              boxTotalY += Math.max(-81.5, _cntY);
+          } else {
+              boxTotalY += boxEnterY;
+          }
+          oryzoDeck.style.transform = 'translateY(' + boxTotalY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
       oryzoSec.style.visibility = tSlide > 0 ? 'visible' : 'hidden';
       // Sincronizamos el fondo morado 
