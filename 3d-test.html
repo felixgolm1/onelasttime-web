@@ -12081,7 +12081,8 @@ if (sInd) {
            var targetIdx = txtP * (chars.length + blurLen) - blurLen;
            // Transición de salida en la misma dirección que entra (de principio a fin)
            // Empieza un poco más tarde (restando 15 a contentY) y es un 50% más rápida (dividido por 40 en lugar de 80)
-           var exitProg = Math.max(0, Math.min(1, (Math.abs(contentY) - 15) / 40));
+           var exitStartL = (window.innerWidth <= 768 || window._cIsMobile) ? 0 : 15;
+             var exitProg = Math.max(0, Math.min(1, (Math.abs(contentY) - exitStartL) / 40));
            var targetExitIdx = exitProg * (chars.length + blurLen) - blurLen;
            for (var i = 0; i < chars.length; i++) {
               var op = 1 - (i - targetIdx) / blurLen;
