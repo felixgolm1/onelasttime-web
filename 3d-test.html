@@ -11211,7 +11211,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
          // tOpen: animacion de apertura SEPARADA de la subida â€ â€  arranca cuando la caja ya es visible
          var tOpen = clamp01((p - 23.6) / 0.3);
            if (window.innerWidth <= 768 || window._cIsMobile) {
-               tOpen = clamp01((p - 24.0) / 0.2); // Abre muy rapido justo cuando se queda solo
+               tOpen = clamp01((p - 23.89) / 0.25); // Exigencia milimetrica
            }
          // tClose: cierra la caja a la misma velocidad en p = 30.79
          var tClose = clamp01((p - 30.79) / 0.3);
