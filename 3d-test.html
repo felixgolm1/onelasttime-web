@@ -3189,10 +3189,14 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
       .osr-body {
         flex-direction: column-reverse;
       }
-      .review-text-col, .review-img-col {
-        flex: 0 0 auto;
-        width: 100%;
-      }
+      .review-img-col {
+          flex: 0 0 auto;
+          width: 100% !important;
+        }
+        .review-text-col {
+          flex: 0 0 auto;
+          width: 60% !important;
+        }
       .review-img-col {
         justify-content: center;
         margin-bottom: 2rem;
