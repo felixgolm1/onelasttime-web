@@ -1,50 +1,46 @@
-import re
+﻿import re
 
-file = '3d-test.html'
-with open(file, 'r', encoding='utf-8') as f:
+with open('3d-test.html', 'r', encoding='utf-8') as f:
     content = f.read()
 
-# 1. Add CSS for mobile glass boxes
-css_to_add = """
-      @media (max-width: 768px) {
-        #glass-who, #glass-objectives {
-          top: auto !important;
-          bottom: calc(3% + 6.5rem) !important;
-          height: 38vh !important;
-          width: 90vw !important;
-          left: 5vw !important;
-          right: auto !important;
-          padding: 1.5rem !important;
-          border: 1px solid rgba(255,255,255,0.1) !important;
-          border-radius: 16px !important;
-          overflow-y: auto !important;
-          pointer-events: auto !important;
-          justify-content: flex-start !important;
-          box-shadow: 0 -10px 30px rgba(0,0,0,0.3) !important;
-        }
-      }
-    </style>
-"""
-content = content.replace("    </style>\n</head>", css_to_add + "</head>")
+# Replace the current .osr-body grid rule
+pattern_grid = r'\.osr-body \{\s*display: grid !important;\s*grid-template-columns: 75px 1fr !important;\s*grid-template-rows: auto auto 75px auto !important;\s*grid-template-areas:\s*\"topline topline\"\s*\"stars stars\"\s*\"image quote\"\s*\"author quote\" !important;\s*gap: 0 1rem !important;\s*align-items: start !important;\s*\}'
 
-# 2. Update panData for step 2 and 3
-bad_js = """    const panData = [
-      { x: isM ? '31.2vw'  : '26vw',  y: isM ? '28.8vh' : '24vh', r:  16 },
-      { x: isM ? '-40.8vw' : '-34vw', y: isM ? '24vh'   : '20vh', r:  -9 },
-      { x:  '34vw', y: '-34vh', r: -18 },
-      { x: '-26vw', y: '-24vh', r:  12 },
-    ];"""
+replacement_grid = '''.oryzo-review-panel .osr-body {
+            display: grid !important;
+            grid-template-columns: 75px 1fr !important;
+            grid-template-rows: auto auto 75px auto !important;
+            grid-template-areas:
+              "topline topline"
+              "stars stars"
+              "image quote"
+              "author quote" !important;
+            gap: 0 1rem !important;
+            align-items: start !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 12px !important;
+            padding: 24px 20px !important;
+            width: 90vw !important;
+            margin: 0 auto !important;
+            height: auto !important;
+          }'''
 
-good_js = """    const panData = [
-      { x: isM ? '31.2vw'  : '26vw',  y: isM ? '28.8vh' : '24vh', r:  16 },
-      { x: isM ? '-40.8vw' : '-34vw', y: isM ? '8vh'    : '20vh', r:  -9 },
-      { x:  '34vw', y: isM ? '-44vh' : '-34vh', r: -18 },
-      { x: '-26vw', y: '-24vh', r:  12 },
-    ];"""
+if re.search(pattern_grid, content):
+    content = re.sub(pattern_grid, replacement_grid, content)
+    print("Replaced grid rule")
+else:
+    print("Grid rule not found")
 
-content = content.replace(bad_js, good_js)
+# Remove the conflicting #end-reviews-container .osr-body
+pattern_conflict = r'#end-reviews-container \.osr-body \{\s*gap: 2\.5rem !important;\s*flex-direction: column !important;\s*\}'
+if re.search(pattern_conflict, content):
+    content = re.sub(pattern_conflict, '', content)
+    print("Removed conflicting rule")
+else:
+    print("Conflicting rule not found")
 
-with open(file, 'w', encoding='utf-8') as f:
+with open('3d-test.html', 'w', encoding='utf-8') as f:
     f.write(content)
-
-print("done")

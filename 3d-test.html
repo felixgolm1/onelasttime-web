@@ -3186,18 +3186,27 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
         padding: 0 5%;
         background: none;
       }
-      .osr-body {
-          display: grid !important;
-          grid-template-columns: 75px 1fr !important;
-          grid-template-rows: auto auto 75px auto !important;
-          grid-template-areas:
-            "topline topline"
-            "stars stars"
-            "image quote"
-            "author quote" !important;
-          gap: 0 1rem !important;
-          align-items: start !important;
-        }
+      .oryzo-review-panel .osr-body {
+            display: grid !important;
+            grid-template-columns: 75px 1fr !important;
+            grid-template-rows: auto auto 75px auto !important;
+            grid-template-areas:
+              "topline topline"
+              "stars stars"
+              "image quote"
+              "author quote" !important;
+            gap: 0 1rem !important;
+            align-items: start !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 12px !important;
+            padding: 24px 20px !important;
+            width: 90vw !important;
+            margin: 0 auto !important;
+            height: auto !important;
+          }
         .review-text-col {
           display: contents !important;
         }
@@ -3323,10 +3332,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
       .review-right-col .review-img-col {
         justify-content: flex-start !important;
       }
-      #end-reviews-container .osr-body {
-        gap: 2.5rem !important;
-        flex-direction: column !important;
-      }
+      
     }
     @media (max-width: 768px) { #dynamic-pricing-row { font-size: 3.5vw !important; } }
       .cta-arrow-pill {
