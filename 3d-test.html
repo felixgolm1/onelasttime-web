@@ -12038,7 +12038,8 @@ if (sInd) {
       var startL = (window.innerWidth <= 768 || window._cIsMobile) ? 51 : 65;
         var txtP = clamp01((startL - slideY) / 40); 
       var startR = (window.innerWidth <= 768 || window._cIsMobile) ? 10 : 40;
-        var txtPR = clamp01((startR - slideY) / startR); 
+        var durR = (window.innerWidth <= 768 || window._cIsMobile) ? 15 : 40;
+        var txtPR = clamp01((startR - (slideY + contentY)) / durR); 
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       if (textGrad) {
         var chars = textGrad.querySelectorAll('.oryzo-char');
@@ -12062,7 +12063,8 @@ if (sInd) {
            var targetIdxR = txtPR * (charsR.length + blurLen) - blurLen;
            // Transición de salida en la misma dirección que entra (de principio a fin)
            // Empieza un poco más tarde (restando 15 a contentY) y es un 50% más rápida (dividido por 40 en lugar de 80)
-           var exitProgR = Math.max(0, Math.min(1, (Math.abs(contentY) - 15) / 40));
+           var exitStartR = (window.innerWidth <= 768 || window._cIsMobile) ? 21 : 15;
+             var exitProgR = Math.max(0, Math.min(1, (Math.abs(contentY) - exitStartR) / 40));
            var targetExitIdxR = exitProgR * (charsR.length + blurLen) - blurLen;
            for (var j = 0; j < charsR.length; j++) {
               var opR = 1 - (j - targetIdxR) / blurLen;
