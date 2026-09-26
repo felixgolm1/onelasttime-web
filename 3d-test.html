@@ -9847,7 +9847,7 @@ function makeCardBackTex(data = '4 PASOS') {
     var posX = -0.008 * vW / 2;
     var isM = window.innerWidth <= 768 || window._cIsMobile; var posY = (isM ? 0.365 : 0.312) * vH / 2;
     // Ã¢â€€Ã¢â€€ Zoom CSS sobre el overlay completo Ã¢â€€Ã¢â€€
-    var zoomScale = 1.0 + swapT * 0.4225;
+    var zoomScale = 1.02 + swapT * 0.4225;
     var overlay = document.getElementById('thermal-overlay');
     if (overlay) {
       overlay.style.transformOrigin = '50% 30%';
@@ -13868,6 +13868,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
 
 
 
