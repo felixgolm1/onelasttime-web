@@ -1,14 +1,16 @@
-﻿import os
-import re
+﻿import sys
 
-filepath = r'c:\Users\Félix Gol\.gemini\antigravity\scratch\sensibles-web\3d-test.html'
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
+def apply_fixes():
+    with open('3d-test.html', 'r', encoding='utf-8') as f:
+        content = f.read()
 
-# Delete placeIdCard completely
-content = re.sub(r'function placeIdCard\(gltf\) \{.*?\}(?=\s*function placeWineGlass)', '', content, flags=re.DOTALL)
+    # Change -5vh to -8vh
+    content = content.replace(
+        '@media (max-width: 768px) { #oryzo-deck-container { margin-top: -5vh !important; } }',
+        '@media (max-width: 768px) { #oryzo-deck-container { margin-top: -8vh !important; } }'
+    )
 
-with open(filepath, 'w', encoding='utf-8') as f:
-    f.write(content)
+    with open('3d-test.html', 'w', encoding='utf-8') as f:
+        f.write(content)
 
-print("Python phase 8 done")
+apply_fixes()
