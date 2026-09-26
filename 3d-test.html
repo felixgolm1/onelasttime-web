@@ -2266,6 +2266,19 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 2000);
 });
 </script>
+<style>
+/* PRECISE FIX FOR INTERACTIVE PANELS ON MOBILE */
+#envej-panel, #final-feliz-panel {
+    pointer-events: auto !important;
+}
+#envej-range {
+    touch-action: none !important;
+    pointer-events: auto !important;
+}
+.final-feliz-btn {
+    pointer-events: auto !important;
+}
+</style>
 </head>
 <body>
   <!-- Mobile Top Progress Bar (Oryzo style) -->
