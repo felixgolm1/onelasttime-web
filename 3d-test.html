@@ -2343,7 +2343,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 #mag-ciencia h1 { font-size: 6.1rem !important; }
   #oryzo-text-right { text-align: right !important; position: relative !important; left: -67px !important; }
   #oryzo-text-right-gradient { text-align: right !important; width: 100% !important; transform-origin: right center !important; margin-right: 0 !important; }
-  @media (max-width: 768px) { #oryzo-deck-container { margin-top: 60vh !important; } }
+  @media (max-width: 768px) { #oryzo-deck-container { margin-top: 63vh !important; } }
 
   #global-brain-label, .nsl p:first-child { font-size: 0.72rem !important; }
   .nsl h3 { font-size: 1.2rem !important; }
@@ -11172,7 +11172,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
           }
           var boxTotalY = (tExitBox * 80);
           if (isMob) {
-              boxTotalY += Math.max(-66.5, _cntY);
+              boxTotalY += Math.max(-69.5, _cntY);
           } else {
               boxTotalY += boxEnterY;
           }
@@ -11211,7 +11211,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
          // tOpen: animacion de apertura SEPARADA de la subida â€ â€  arranca cuando la caja ya es visible
          var tOpen = clamp01((p - 23.6) / 0.3);
            if (window.innerWidth <= 768 || window._cIsMobile) {
-               tOpen = clamp01((p - 23.8) / 0.3);
+               tOpen = clamp01((p - 24.0) / 0.2); // Abre muy rapido justo cuando se queda solo
            }
          // tClose: cierra la caja a la misma velocidad en p = 30.79
          var tClose = clamp01((p - 30.79) / 0.3);
