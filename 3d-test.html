@@ -2285,6 +2285,24 @@ window.addEventListener('DOMContentLoaded', () => {
     z-index: 10000040 !important;
 }
 </style>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    // PREVENIR QUE GSAP SCROLLTRIGGER ROBE LOS EVENTOS TOUCH EN MOBILE
+    const stopPropagation = (e) => e.stopPropagation();
+    
+    const panelBtns = document.querySelectorAll('.final-feliz-btn');
+    panelBtns.forEach(btn => {
+        btn.addEventListener('pointerdown', stopPropagation);
+        btn.addEventListener('touchstart', stopPropagation);
+    });
+
+    const rangeInput = document.getElementById('envej-range');
+    if (rangeInput) {
+        rangeInput.addEventListener('pointerdown', stopPropagation);
+        rangeInput.addEventListener('touchstart', stopPropagation);
+    }
+});
+</script>
 </head>
 <body>
   <!-- Mobile Top Progress Bar (Oryzo style) -->
