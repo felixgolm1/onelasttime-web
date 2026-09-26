@@ -1,17 +1,19 @@
-﻿# -*- coding: utf-8 -*-
-import re
+﻿import re
 
 with open('3d-test.html', 'r', encoding='utf-8') as f:
-    html = f.read()
+    content = f.read()
 
-pattern = re.compile(r'(#cta-bottom-container\s*\{\s*position:\s*fixed;\s*bottom:\s*3\.7rem;)')
-replacement = r'\1 z-index: 10000020 !important;'
+# Update #sidebar-overlay
+content = re.sub(r'(#sidebar-overlay\s*\{[^}]*z-index:\s*)10000014', r'\g<1>10000090', content)
 
-html = pattern.sub(replacement, html)
+# Update #mobile-sidebar
+content = re.sub(r'(#mobile-sidebar\s*\{[^}]*z-index:\s*)10000015', r'\g<1>10000091', content)
 
-pattern2 = re.compile(r'(#cta-bottom-container\s*\{\s*bottom:\s*3%\s*!important;\s*padding:\s*0\s*0\.4rem\s*!important;)')
-replacement2 = r'\1 z-index: 10000020 !important;'
-html = pattern2.sub(replacement2, html)
+# Update #mobile-menu-pill inline style
+content = re.sub(r'(id="mobile-menu-pill"[^>]*z-index:\s*)10000016', r'\g<1>10000092', content)
+
+# Update nav-menu
+content = re.sub(r'(#nav-menu\s*\{[^}]*z-index:\s*)10000010', r'\g<1>10000095', content)
 
 with open('3d-test.html', 'w', encoding='utf-8') as f:
-    f.write(html)
+    f.write(content)
