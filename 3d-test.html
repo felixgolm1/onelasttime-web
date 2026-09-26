@@ -2240,6 +2240,32 @@ window.onerror = function(msg, url, line, col, err) {
       }
     }
   </style>
+<script>
+console.log('--- ANTIGRAVITY INJECTED SCRIPT ---');
+window.addEventListener('DOMContentLoaded', () => {
+    // FORCE STYLES
+    setInterval(() => {
+        if (window.innerWidth <= 768 || window._cIsMobile) {
+            document.querySelectorAll('div[data-large-only="true"]').forEach(el => {
+                el.style.setProperty('width', '85%', 'important');
+                el.style.setProperty('bottom', '45px', 'important');
+                el.style.setProperty('padding', '12px 14px', 'important');
+                el.style.setProperty('box-sizing', 'border-box', 'important');
+            });
+        }
+    }, 1000);
+
+    // FORCE VIDEOS TO PLAY
+    setTimeout(() => {
+        document.querySelectorAll('video').forEach(v => {
+            if (v.paused) {
+                console.log('Forcing video to play:', v);
+                v.play().catch(e => console.error('Video play error:', e));
+            }
+        });
+    }, 2000);
+});
+</script>
 </head>
 <body>
   <!-- Mobile Top Progress Bar (Oryzo style) -->
