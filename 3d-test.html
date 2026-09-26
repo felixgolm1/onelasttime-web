@@ -11267,6 +11267,9 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
          }
          // --- REPLICA EXACTA DE TESTIMONIOS CON localP = p - 21.5 ---
          let localP_raw = p - 21.1;
+         if (window.innerWidth <= 768 || window._cIsMobile) {
+             localP_raw = p - 21.58; // Sincroniza el carrusel completo para que arranque exactamente en p=24.08
+         }
          let localP = localP_raw;
          if (localP_raw >= 28.49) {
              if (localP_raw <= 29.54) {
