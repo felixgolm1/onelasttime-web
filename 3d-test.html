@@ -11160,7 +11160,15 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
       var slideY = (1 - ease(tSlide)) * 130; // La pantalla se queda anclada
       oryzoSec.style.transform = 'translateY(' + slideY + 'vh)';
       // La baraja de cartas baja independientemente de la pantalla (80vh es suficiente para ocultarla)
-      oryzoDeck.style.transform = 'translateY(' + (tExitBox * 80) + 'vh)';
+      var isMob = window.innerWidth <= 768 || window._cIsMobile;
+        var boxEnterY = 0;
+        if (isMob) {
+            var totalYForBox = slideY + (typeof contentY !== 'undefined' ? contentY : 0);
+            var boxDelayProg = clamp01(((-5) - totalYForBox) / 30); 
+            boxEnterY = (1 - boxDelayProg) * 110;
+        }
+        var boxTotalY = boxEnterY + (tExitBox * 80);
+        oryzoDeck.style.transform = 'translateY(' + boxTotalY + 'vh)';
       oryzoSec.style.pointerEvents = tSlide > 0.5 ? 'auto' : 'none';
       oryzoSec.style.visibility = tSlide > 0 ? 'visible' : 'hidden';
       // Sincronizamos el fondo morado 

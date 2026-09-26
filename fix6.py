@@ -1,12 +1,24 @@
-﻿import os
+﻿import sys
 
-filepath = r'c:\Users\Félix Gol\.gemini\antigravity\scratch\sensibles-web\3d-test.html'
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
+def apply_fixes():
+    with open('3d-test.html', 'r', encoding='utf-8') as f:
+        content = f.read()
 
-content = content.replace('src="assets/img/video elsa.mp4"', 'src="assets/img/video_elsa_kf.mp4"')
+    old_transform = "oryzoDeck.style.transform = 'translateY(' + (tExitBox * 80) + 'vh)';"
+    
+    new_transform = """var isMob = window.innerWidth <= 768 || window._cIsMobile;
+        var boxEnterY = 0;
+        if (isMob) {
+            var totalYForBox = slideY + (typeof contentY !== 'undefined' ? contentY : 0);
+            var boxDelayProg = clamp01(((-5) - totalYForBox) / 30); 
+            boxEnterY = (1 - boxDelayProg) * 110;
+        }
+        var boxTotalY = boxEnterY + (tExitBox * 80);
+        oryzoDeck.style.transform = 'translateY(' + boxTotalY + 'vh)';"""
 
-with open(filepath, 'w', encoding='utf-8') as f:
-    f.write(content)
+    content = content.replace(old_transform, new_transform)
 
-print("Python phase 6 done")
+    with open('3d-test.html', 'w', encoding='utf-8') as f:
+        f.write(content)
+
+apply_fixes()
