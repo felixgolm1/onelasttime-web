@@ -2303,6 +2303,30 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+<style>
+/* HACK: Hacer el thumb nativo gigante para que no falle al agarrarlo en mobile */
+#envej-range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+}
+#envej-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    cursor: grab;
+    border: none;
+}
+#envej-range::-moz-range-thumb {
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    cursor: grab;
+    border: none;
+}
+</style>
 </head>
 <body>
   <!-- Mobile Top Progress Bar (Oryzo style) -->
