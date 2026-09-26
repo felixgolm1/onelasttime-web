@@ -13763,7 +13763,79 @@ document.getElementById('vip-code').addEventListener('keypress', function(e) {
 
   
 
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('envej-bar-track');
+    if (!track) return;
+    
+    let isScrubbing = false;
+    
+    const updateScrubber = (clientX) => {
+        const rect = track.getBoundingClientRect();
+        let pct = (clientX - rect.left) / rect.width;
+        pct = Math.max(0, Math.min(1, pct));
+        
+        // update UI directly
+        const fillEl = document.getElementById('envej-bar-fill');
+        const thumbEl = document.getElementById('envej-bar-thumb');
+        const citaEl2 = document.getElementById('envej-cita-num');
+        const waveEl = document.getElementById('envej-wave-fill');
+        
+        if (fillEl) fillEl.style.width = (pct * 100) + '%';
+        if (thumbEl) thumbEl.style.left = (pct * 100) + '%';
+        if (waveEl) waveEl.style.clipPath = 'inset(0 ' + (100 - (pct * 100)) + '% 0 0)';
+        
+        if (window.updateEnvejCopy) window.updateEnvejCopy(pct);
+        
+        if (citaEl2) {
+            var n = Math.round(1 + pct * 9499);
+            citaEl2.innerHTML = n >= 9499 ? '<span style="font-size:26px; line-height:0; position:relative; top:4px;">&infin;</span>' : n.toLocaleString('es-ES');
+        }
+        
+        // update video
+        const maxR = 9499/9999;
+        var v = window._envejVideoRef;
+        if (v && v.duration) v.currentTime = pct * (v.duration * maxR);
+        var sv = window._envejSmallVid;
+        if (sv && sv.duration) sv.currentTime = pct * (sv.duration * maxR);
+    };
+
+    track.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        isScrubbing = true;
+        document.getElementById('envej-bar-thumb').classList.add('has-interacted');
+        track.setPointerCapture(e.pointerId);
+        updateScrubber(e.clientX);
+    });
+    
+    track.addEventListener('pointermove', (e) => {
+        if (!isScrubbing) return;
+        e.stopPropagation();
+        updateScrubber(e.clientX);
+    });
+    
+    track.addEventListener('pointerup', () => isScrubbing = false);
+    track.addEventListener('pointercancel', () => isScrubbing = false);
+
+    track.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        isScrubbing = true;
+        document.getElementById('envej-bar-thumb').classList.add('has-interacted');
+        updateScrubber(e.touches[0].clientX);
+    }, { passive: false });
+    
+    track.addEventListener('touchmove', (e) => {
+        if (!isScrubbing) return;
+        e.stopPropagation();
+        e.preventDefault();
+        updateScrubber(e.touches[0].clientX);
+    }, { passive: false });
+    
+    track.addEventListener('touchend', () => isScrubbing = false);
+});
+</script>
 </html>
+
 
 
 
