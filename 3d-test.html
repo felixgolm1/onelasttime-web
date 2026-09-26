@@ -6043,11 +6043,7 @@ bottomCta.style.pointerEvents = 'auto';
                   const vpr    = carouselVp.getBoundingClientRect();
                   const magR   = magEl.getBoundingClientRect(); // rect real del item (incluyendo borde)
                   // Usar el item real como referencia de tamaño (vpr excluye 7px de borde ? 2% error)
-                  const isMobMod1 = window.innerWidth <= 768 || window._cIsMobile; const modelH = magR.height * (isMobMod1 ? 1.24 : 1.38);
-                  const ar     = origImg.naturalWidth / origImg.naturalHeight;
-                  const modelW = modelH * ar;
-                  const modelT = magR.top + (isMobMod1 ? 45 : 0);
-                  const modelL = magR.left + magR.width / 2 - modelW / 2;
+                  const origR = origImg.getBoundingClientRect(); const modelH = origR.height; const modelW = origR.width; const modelT = origR.top; const modelL = origR.left;
                   // Clip inicial = lo que sobresale del viewport (elbows, torso)
                   const iT = 0;
                   const iL = Math.max(0, vpr.left  - modelL);
@@ -7162,13 +7158,7 @@ bottomCta.style.pointerEvents = 'auto';
             var _magEl = document.querySelectorAll('.carousel-track-large .carousel-item')[8];
             if (_realModel && _magScene && _magEl) {
                 var _magR = _magEl.getBoundingClientRect();
-                var _isMobMod2 = window.innerWidth <= 768 || window._cIsMobile; var _modelH = _magR.height * (_isMobMod2 ? 1.24 : 1.38);
-                var _origImg = _magEl.querySelector('img[src*="modelo-sin-fondo"]') || _magScene.querySelector('.carousel-track-large img[src*="modelo-sin-fondo"]');
-                if (_origImg && _origImg.naturalHeight) {
-                    var _ar = _origImg.naturalWidth / _origImg.naturalHeight;
-                    var _modelW = _modelH * _ar;
-                    var _modelT = _magR.top + (_isMobMod2 ? 45 : 0);
-                    var _modelL = _magR.left + _magR.width / 2 - _modelW / 2;
+                var _origImg = _magEl.querySelector('img[src*="modelo-sin-fondo"]') || _magScene.querySelector('.carousel-track-large img[src*="modelo-sin-fondo"]'); if (_origImg && _origImg.naturalHeight) { var _origR = _origImg.getBoundingClientRect(); var _modelH = _origR.height; var _modelW = _origR.width; var _modelT = _origR.top; var _modelL = _origR.left;
                     _realModel.style.left = _modelL + 'px';
                     _realModel.style.top = _modelT + 'px';
                     _realModel.style.width = _modelW + 'px';
@@ -13870,6 +13860,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
 
 
 
