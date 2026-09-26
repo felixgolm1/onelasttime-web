@@ -9539,7 +9539,7 @@ function makeCardBackTex(data = '4 PASOS') {
         <p id="oryzo-text-right-gradient" style="font-family:'Inter',sans-serif; font-size:clamp(1.2rem, 2vw, 1.6rem); color:#fff; line-height:1.5; font-weight:400; max-width:400px; margin-left: 1vw;">
         </p>
         <script>
-          var textR = "No nos creas a nosotros,<br>escúchales a ellxs";
+          var textR = "No nos creas a nosotros,<br>escúchalxs a ellxs";
           var newHtmlR = "";
           for (var i = 0; i < textR.length; i++) {
             if (textR.substring(i, i+4) === "<br>") {
@@ -12033,8 +12033,10 @@ if (sInd) {
       var textGrad = document.getElementById('oryzo-text-gradient');
       var textGradR = document.getElementById('oryzo-text-right-gradient');
       // Retrasado un pelín respecto al original, basado en textY para un fundido fluido
-      var txtP = clamp01((65 - slideY) / 40); 
-      var txtPR = clamp01((40 - slideY) / 40); 
+      var startL = (window.innerWidth <= 768 || window._cIsMobile) ? 51 : 65;
+        var txtP = clamp01((startL - slideY) / 40); 
+      var startR = (window.innerWidth <= 768 || window._cIsMobile) ? 18 : 40;
+        var txtPR = clamp01((startR - slideY) / startR); 
       var blurLen = 8; // Difuminado de 8 letras para que sea muy suave
       if (textGrad) {
         var chars = textGrad.querySelectorAll('.oryzo-char');
@@ -12074,7 +12076,7 @@ if (sInd) {
         var scaleVal = 0.5 + (0.5 * baseProg) - (contentY / 60);
         // Límite generoso
         scaleVal = Math.max(0, Math.min(scaleVal, 5.0)); 
-        textGradR.style.transformOrigin = "left center";
+        
         textGradR.style.transform = "scale(" + scaleVal + ")";
       }
       // Reviews manejadas arriba en el bloque localP
@@ -12093,8 +12095,8 @@ if (sInd) {
   var MOVE_END   = 17.3;    // mismo final que el zoom-in del overlay (swapT)
   // Inicio: centrado (top:67%, left:50%, scale:1)
   // Final: derecha junto al cerebro (top:22%, left:72%, scale:0.28)
-  var S_TOP = 48,  E_TOP = 27;
-  var S_LEFT = 50, E_LEFT = 72;
+  var S_TOP = 48,  E_TOP = (window.innerWidth <= 768 || window._cIsMobile) ? 16 : 27;
+  var S_LEFT = 50, E_LEFT = (window.innerWidth <= 768 || window._cIsMobile) ? 67 : 72;
   var S_SCL = 1.0, E_SCL = 0.28;
   // Encadenar con la función ya existente
   var prevFn = window._updateNeuralText || function(){};

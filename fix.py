@@ -1,32 +1,52 @@
-with open('3d-test.html', 'r', encoding='utf-8') as f:
-    text = f.read()
+﻿import sys
 
-import re
+def apply_fixes():
+    with open('3d-test.html', 'r', encoding='utf-8') as f:
+        content = f.read()
 
-# Find the start of sc-board
-start_match = re.search(r'<div class=.sc-board. id=.sc-board.>', text)
-if not start_match:
-    print('Start not found')
-    exit()
+    # 1. E_TOP
+    content = content.replace(
+        'var S_TOP = 48,  E_TOP = 27;',
+        'var S_TOP = 48,  E_TOP = (window.innerWidth <= 768 || window._cIsMobile) ? 16 : 27;'
+    )
 
-end_idx = text.find('<!--  SCENE 3 : 3D CAROUSEL  -->')
+    # 2. E_LEFT
+    content = content.replace(
+        'var S_LEFT = 50, E_LEFT = 72;',
+        'var S_LEFT = 50, E_LEFT = (window.innerWidth <= 768 || window._cIsMobile) ? 67 : 72;'
+    )
 
-if end_idx == -1:
-    print('End not found')
-    exit()
+    # 3. txtP
+    content = content.replace(
+        'var txtP = clamp01((65 - slideY) / 40);',
+        'var startL = (window.innerWidth <= 768 || window._cIsMobile) ? 51 : 65;\n        var txtP = clamp01((startL - slideY) / 40);'
+    )
 
-html_chunk = text[start_match.end():end_idx]
-last_div_idx = html_chunk.rfind('</div>')
+    # 4. txtPR
+    content = content.replace(
+        'var txtPR = clamp01((40 - slideY) / 40);',
+        'var startR = (window.innerWidth <= 768 || window._cIsMobile) ? 18 : 40;\n        var txtPR = clamp01((startR - slideY) / startR);'
+    )
 
-if last_div_idx == -1:
-    print('Last div not found')
-    exit()
+    # 5. Right text alignment & transform
+    content = content.replace(
+        '#oryzo-text-right { text-align: right !important; }',
+        '#oryzo-text-right { text-align: right !important; position: relative !important; left: -67px !important; }\n    #oryzo-text-right-gradient { text-align: right !important; width: 100% !important; transform-origin: right center !important; }'
+    )
 
-new_chunk = '\n<div id="sc-pan-wrapper" style="width:0; height:0; position:absolute; top:0; left:0;">\n' + html_chunk[:last_div_idx] + '\n</div>\n' + html_chunk[last_div_idx:]
+    # Remove the JS overwrite of transformOrigin
+    content = content.replace(
+        'textGradR.style.transformOrigin = "left center";',
+        ''
+    )
 
-new_text = text[:start_match.end()] + new_chunk + text[end_idx:]
+    # 6. Change escuchales to escuchalxs (with correct unicode)
+    content = content.replace(
+        'escúchales a ellxs',
+        'escúchalxs a ellxs'
+    )
 
-with open('3d-test.html', 'w', encoding='utf-8') as f:
-    f.write(new_text)
+    with open('3d-test.html', 'w', encoding='utf-8') as f:
+        f.write(content)
 
-print('Wrapper injected successfully!')
+apply_fixes()
