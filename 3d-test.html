@@ -3228,7 +3228,8 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
           margin: 0 !important;
         }
         .osr-top-line { grid-area: topline; display: none !important; margin: 0 !important; padding: 0 !important; }
-        .osr-stars-small { grid-area: stars; margin-bottom: 0px !important; padding-bottom: 0px !important; margin-top: 0px !important; transform: translateY(-20px) !important; }
+                  .osr-stars-small { grid-area: stars; margin-bottom: 0px !important; padding-bottom: 0px !important; margin-top: 0px !important; transform: translateY(-20px) !important; display: flex !important; width: 100% !important; align-items: center !important; }
+          .osr-stars-small .rating-number { margin-left: auto !important; }
         .review-quote { grid-area: quote; margin-bottom: 0.5rem !important; margin-top: 0 !important; }
         .review-author { 
           grid-area: author; 
@@ -3243,26 +3244,26 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
     .mobile-author { display: none !important; }
     @media (max-width: 768px) {
       .desktop-author { display: none !important; }
-            .mobile-author { 
+                  .mobile-author { 
         display: flex !important; 
         flex-direction: column !important;
         gap: 6px !important;
         grid-area: author;
         margin-top: 19px !important; /* Move down 0.5cm */
         width: 100% !important;
-        align-items: flex-start !important; /* Left align */
+        align-items: flex-end !important; /* Right align */
       }
       .mobile-author .ma-person {
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-start !important;
+        justify-content: flex-end !important;
         gap: 4px !important;
         color: rgba(255,255,255,0.9) !important;
       }
-            .mobile-author .ma-name {
-        font-size: 0.65rem !important;
+      .mobile-author .ma-name {
+        font-size: 0.78rem !important; /* +20% from 0.65 */
         font-weight: 500 !important;
-        text-align: left !important;
+        text-align: right !important;
         line-height: 1.2 !important;
         display: flex !important;
         align-items: center !important;
@@ -3275,15 +3276,15 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
       .mobile-author .ma-ig {
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-start !important;
+        justify-content: flex-end !important;
         gap: 4px !important;
-        font-size: 0.65rem !important;
+        font-size: 0.78rem !important; /* +20% from 0.65 */
         font-weight: 500 !important;
         margin-top: 0px !important;
       }
       .mobile-author svg {
-        width: 12px !important;
-        height: 12px !important;
+        width: 14px !important; /* Scale svg too */
+        height: 14px !important;
         margin-bottom: 0px !important;
       }
     }
@@ -10306,11 +10307,11 @@ setInterval(function() {
 <div class="review-author mobile-author">
   <div class="ma-person">
     <div class="ma-name">MATEO RUIZ</div>
-    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @ruiz.mateo_94</div>
+    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> ruiz.mateo_94</div>
   </div>
   <div class="ma-person">
     <div class="ma-name">CLARA ORTIZ</div>
-    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @clara_ortiz_r</div>
+    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> clara_ortiz_r</div>
   </div>
 </div>
         </div>
@@ -10340,11 +10341,11 @@ setInterval(function() {
 <div class="review-author mobile-author">
   <div class="ma-person">
     <div class="ma-name">MARÍA SÁNCHEZ</div>
-    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @marysanchzz</div>
+    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> marysanchzz</div>
   </div>
   <div class="ma-person">
     <div class="ma-name">SARA VIDAL</div>
-    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @sara.vidal.88</div>
+    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> sara.vidal.88</div>
   </div>
 </div>
         </div>
@@ -10372,7 +10373,7 @@ setInterval(function() {
 <div class="review-author mobile-author">
   <div class="ma-person">
     <div class="ma-name">LUCÍA LIN</div>
-    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @luci.lin__</div>
+    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> luci.lin__</div>
   </div>
 </div>
         </div>
@@ -10402,11 +10403,11 @@ setInterval(function() {
 <div class="review-author mobile-author">
   <div class="ma-person">
     <div class="ma-name">RENAN MACHADO</div>
-    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @renan.mchdo</div>
+    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> renan.mchdo</div>
   </div>
   <div class="ma-person">
     <div class="ma-name">ANDER ZABALA</div>
-    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @ander_zb</div>
+    <div class="ma-ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> ander_zb</div>
   </div>
 </div>
         </div>
