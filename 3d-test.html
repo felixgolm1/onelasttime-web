@@ -10452,6 +10452,8 @@ setInterval(function() {
           left: 0 !important;
           width: 100% !important;
           height: 100% !important;
+          transform: translateZ(0) !important;
+          z-index: 15 !important;
         }
       }
 </style>
@@ -11702,6 +11704,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           var _pf3 = Math.max(0, Math.min(1, (_irisFullStart - rect.left) / _irisScrollDist));
                         var _ease3 = _pf3 * _pf3 * (3 - 2 * _pf3);
                         var _r3 = (rect.left > _irisFullStart) ? _rEntry : (60 + _ease3 * (_maxR3 - 60));
+                          if (window.innerWidth <= 768 && rect.left <= vpW) { _r3 = Math.max(_r3, 250); }
                         _s3.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
                           _s3.style.webkitClipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
                         // Parallax alternado en el texto del slide3
