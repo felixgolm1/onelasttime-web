@@ -10437,7 +10437,7 @@ setInterval(function() {
           margin-top: -1.5cm !important;
         }
           #slide3-wrapper {
-            width: 100vw !important;
+            width: 155vw !important;
           }
           #slide3-wrapper > div {
             height: 68vh !important;
@@ -11697,14 +11697,18 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var _s3 = document.getElementById('slide3-iris-img');
                       if (_s3) {
                         var _irisFullStart = vpW - rect.width;
+                          if (window.innerWidth <= 768) { _irisFullStart = vpW * 0.8; }
                           var _maxR3 = rect.width * 1.4;
+                          if (window.innerWidth <= 768) { _maxR3 = Math.max(rect.width, vpW) * 2; }
                         // Fase entrada: iris 5px -> 60px mientras el slide entra (clip reveal)
                         var _entryWidth = rect.width;
+                          if (window.innerWidth <= 768) { _entryWidth = vpW * 0.2; }
                           var _entryP = Math.max(0, Math.min(1, (vpW - rect.left) / _entryWidth));
                         var _entryEase = _entryP * _entryP * (3 - 2 * _entryP);
                         var _rEntry = 5 + _entryEase * 55;
                         // Fase pan: iris 60px -> maxR mientras el slide se desplaza
                         var _irisScrollDist = _irisFullStart + rect.width;
+                          if (window.innerWidth <= 768) { _irisScrollDist = vpW * 1.5; }
                           var _pf3 = Math.max(0, Math.min(1, (_irisFullStart - rect.left) / _irisScrollDist));
                         var _ease3 = _pf3 * _pf3 * (3 - 2 * _pf3);
                         var _r3 = (rect.left > _irisFullStart) ? _rEntry : (60 + _ease3 * (_maxR3 - 60));
