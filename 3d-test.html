@@ -3190,12 +3190,13 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
       .oryzo-review-panel .osr-body {
             display: grid !important;
             grid-template-columns: 75px 1fr !important;
-            grid-template-rows: auto auto 75px auto !important;
-            grid-template-areas:
-              "topline topline"
-              "stars stars"
-              "image quote"
-              "author quote" !important;
+            grid-template-rows: auto auto 75px auto auto !important;
+              grid-template-areas:
+                "topline topline"
+                "stars stars"
+                "image quote"
+                "empty quote"
+                "empty2 author" !important;
             gap: 0 1rem !important;
             align-items: start !important;
             background: rgba(0, 0, 0, 0.9) !important;
@@ -3242,32 +3243,46 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
     .mobile-author { display: none !important; }
     @media (max-width: 768px) {
       .desktop-author { display: none !important; }
-      .mobile-author { 
+            .mobile-author { 
         display: flex !important; 
         flex-direction: column !important;
         gap: 6px !important;
         grid-area: author;
-        margin-top: 0px !important;
+        margin-top: 19px !important; /* Move down 0.5cm */
         width: 100% !important;
+        align-items: flex-start !important; /* Left align */
+      }
+      .mobile-author .ma-person {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 4px !important;
+        color: rgba(255,255,255,0.9) !important;
       }
       .mobile-author .ma-name {
-        font-size: 0.55rem !important;
-        font-weight: 700 !important;
-        text-align: center !important;
-        line-height: 1.1 !important;
+        font-size: 0.65rem !important;
+        font-weight: 500 !important;
+        text-align: left !important;
+        line-height: 1.2 !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .mobile-author .ma-name::after {
+        content: " - ";
+        white-space: pre;
       }
       .mobile-author .ma-ig {
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
-        gap: 3px !important;
-        font-size: 0.45rem !important;
-        opacity: 0.8 !important;
-        margin-top: 2px !important;
+        justify-content: flex-start !important;
+        gap: 4px !important;
+        font-size: 0.65rem !important;
+        font-weight: 500 !important;
+        margin-top: 0px !important;
       }
       .mobile-author svg {
-        width: 9px !important;
-        height: 9px !important;
+        width: 12px !important;
+        height: 12px !important;
         margin-bottom: 0px !important;
       }
     }
