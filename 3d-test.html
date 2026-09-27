@@ -10434,7 +10434,7 @@ setInterval(function() {
         #img-strip-track > div > div {
           width: auto !important;
           height: 68vh !important;
-          margin-top: -1cm !important;
+          margin-top: -1.5cm !important;
         }
         #img-strip-track img {
           position: relative !important;
@@ -11686,9 +11686,13 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var _s3 = document.getElementById('slide3-iris-img');
                       if (_s3) {
                         var _irisFullStart = vpW - rect.width;
-                        var _maxR3 = rect.width * 1.4;
+                          if (window.innerWidth <= 768) { _irisFullStart = vpW * 0.8; }
+                          var _maxR3 = rect.width * 1.4;
+                          if (window.innerWidth <= 768) { _maxR3 = Math.max(rect.width, vpW) * 1.4; }
                         // Fase entrada: iris 5px -> 60px mientras el slide entra (clip reveal)
-                        var _entryP = Math.max(0, Math.min(1, (vpW - rect.left) / rect.width));
+                        var _entryWidth = rect.width;
+                          if (window.innerWidth <= 768) { _entryWidth = vpW * 0.2; }
+                          var _entryP = Math.max(0, Math.min(1, (vpW - rect.left) / _entryWidth));
                         var _entryEase = _entryP * _entryP * (3 - 2 * _entryP);
                         var _rEntry = 5 + _entryEase * 55;
                         // Fase pan: iris 60px -> maxR mientras el slide se desplaza
