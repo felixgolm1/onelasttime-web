@@ -415,6 +415,7 @@ window.onerror = function(msg, url, line, col, err) {
     #dynamic-pricing-row { display: block !important; text-align: center !important; white-space: normal !important; width: 95vw !important; line-height: 1.3 !important; }
     #dp-left, #dp-right { display: inline !important; max-width: none !important; white-space: normal !important; }
     #p1-counter-container { display: inline-block !important; }
+    #p2-pack-list { transform: translate(-50%, -53px) !important; }
 }
       @media (max-width: 768px) {
       #olt-final-cta { visibility: hidden !important; pointer-events: none !important; }
@@ -11918,7 +11919,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var dpRight = document.getElementById('dp-right');
                       if (dynRow && counterSpan && strikeLine && counterContainer) {
                           // El precio sube hacia arriba durante _p1ReverseP (de 30px a -65px)
-                          var currentDynY = 30 - (_p1ReverseP * (window.innerWidth <= 768 ? 160 : 95)); 
+                          var currentDynY = 30 - (_p1ReverseP * (window.innerWidth <= 768 ? 198 : 95)); 
                           dynRow.style.transform = 'translate(-50%, ' + currentDynY.toFixed(2) + 'px)';
                           // Starts swapping after _p1ReverseP is 1 (localP 25.5 to 28.5)
                           var swapP = Math.max(0, Math.min(1, (localP - 25.5) / 3.0));
