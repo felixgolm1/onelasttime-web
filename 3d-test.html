@@ -11722,11 +11722,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           if (_s2copy && window.innerWidth <= 768) {
                               var _visP2 = Math.max(0, Math.min(1, (vpW - (rect.left + shiftX)) / (vpW + rect.width)));
                                 var _moveR = _visP2 * 20.8;
+                                var _maxVisP2 = (19 + rect.width) / (vpW + rect.width);
+                                var _extraCm = (_visP2 / _maxVisP2) * 0.5;
                                 var _tWidth = _s2copy.offsetWidth;
-                                var _tRightFromSlideLeft = (rect.width / 2) + 94.5 + (_moveR * vpW / 100) + (_tWidth / 2);
-                                var _pushThreshold = rect.width - _tRightFromSlideLeft + 45; // +45px (punto medio exacto) para compensar el espacio en blanco del bounding box
+                                var _extraPx = _extraCm * 37.8;
+                                var _tRightFromSlideLeft = (rect.width / 2) + 94.5 + (_moveR * vpW / 100) + _extraPx + (_tWidth / 2);
+                                var _pushThreshold = rect.width - _tRightFromSlideLeft + 45;
                                 var _pushX = Math.min(0, _pushThreshold - shiftX);
-                                _s2copy.style.transform = 'translate(calc(-50% + 2.5cm + ' + _moveR.toFixed(2) + 'vw + ' + _pushX + 'px), -50%)';
+                                _s2copy.style.transform = 'translate(calc(-50% + 2.5cm + ' + _moveR.toFixed(2) + 'vw + ' + _extraCm.toFixed(3) + 'cm + ' + _pushX + 'px), -50%)';
                           } else if (_s2copy) {
                               _s2copy.style.transform = 'translate(-50%, -50%)';
                           }
