@@ -412,6 +412,11 @@ window.onerror = function(msg, url, line, col, err) {
     .mag-col { width: 30%; line-height: 1.3; color: #ccc; }
     .mag-col strong { color: #f5cf87; font-size: 0.5rem; display: block; margin-bottom: 2px; text-transform: uppercase; }
     @media (max-width: 768px) {
+    #dynamic-pricing-row { display: block !important; text-align: center !important; white-space: normal !important; width: 95vw !important; line-height: 1.3 !important; }
+    #dp-left, #dp-right { display: inline !important; max-width: none !important; white-space: normal !important; }
+    #p1-counter-container { display: inline-block !important; }
+}
+      @media (max-width: 768px) {
       #olt-final-cta { visibility: hidden !important; pointer-events: none !important; }
           #p1-counter { font-size: 1.43rem !important; }
           #olt-phase-dynamic { font-size: 1.43rem !important; }
@@ -1545,7 +1550,7 @@ window.onerror = function(msg, url, line, col, err) {
   background: rgba(163,204,0,1) !important;
   color: #0a0a0a !important;
 }
-    @media (max-width: 768px) { #dynamic-pricing-row { font-size: 4.55vw !important; } }
+    
       .cta-arrow-pill {
         position: absolute;
         top: 50%;
@@ -3365,7 +3370,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
       }
       
     }
-    @media (max-width: 768px) { #dynamic-pricing-row { font-size: 4.55vw !important; } }
+    
       .cta-arrow-pill {
         position: absolute;
         top: 50%;
@@ -10496,7 +10501,7 @@ setInterval(function() {
     50% { stroke-dashoffset: -20; opacity: 0; }
     100% { stroke-dashoffset: -20; opacity: 0; }
   }
-  @media (max-width: 768px) { #dynamic-pricing-row { font-size: 4.55vw !important; } }
+  
       .cta-arrow-pill {
         position: absolute;
         top: 50%;
@@ -11913,7 +11918,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       var dpRight = document.getElementById('dp-right');
                       if (dynRow && counterSpan && strikeLine && counterContainer) {
                           // El precio sube hacia arriba durante _p1ReverseP (de 30px a -65px)
-                          var currentDynY = 30 - (_p1ReverseP * 95); 
+                          var currentDynY = 30 - (_p1ReverseP * (window.innerWidth <= 768 ? 160 : 95)); 
                           dynRow.style.transform = 'translate(-50%, ' + currentDynY.toFixed(2) + 'px)';
                           // Starts swapping after _p1ReverseP is 1 (localP 25.5 to 28.5)
                           var swapP = Math.max(0, Math.min(1, (localP - 25.5) / 3.0));
@@ -11957,13 +11962,27 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           }
                           // Expansión lateral (Centrado)
                           if (dpLeft && dpRight) {
-                              var maxWLeft = 600; 
-                              var maxWRight = 150; // Increased to ensure it fits the whole sentence
-                              dpLeft.style.maxWidth = (_p1ReverseP * maxWLeft) + 'px';
-                              dpLeft.style.opacity = _p1ReverseP.toFixed(2);
-                              dpRight.style.maxWidth = (_p1ReverseP * maxWRight) + 'px';
-                              dpRight.style.opacity = _p1ReverseP.toFixed(2);
-                          }
+                                var isMob = window.innerWidth <= 768;
+                                if (isMob) {
+                                    var fullLeft = "Ahora puedes provocar esta magia desde solo ";
+                                    var fullRight = " y recibir&aacute;s:";
+                                    var cLeft = Math.floor(_p1ReverseP * fullLeft.length);
+                                    var cRight = Math.floor(_p1ReverseP * fullRight.length);
+                                    dpLeft.innerHTML = fullLeft.substring(0, cLeft);
+                                    dpRight.innerHTML = fullRight.substring(0, cRight);
+                                    dpLeft.style.maxWidth = 'none';
+                                    dpRight.style.maxWidth = 'none';
+                                } else {
+                                    dpLeft.innerHTML = "Ahora puedes provocar esta magia desde solo ";
+                                    dpRight.innerHTML = " y recibir&aacute;s:";
+                                    var maxWLeft = 600; 
+                                    var maxWRight = 150; 
+                                    dpLeft.style.maxWidth = (_p1ReverseP * maxWLeft) + 'px';
+                                    dpRight.style.maxWidth = (_p1ReverseP * maxWRight) + 'px';
+                                }
+                                dpLeft.style.opacity = _p1ReverseP.toFixed(2);
+                                dpRight.style.opacity = _p1ReverseP.toFixed(2);
+                            }
                       }
                       // Swap Phase (Pack List -> Guarantee)
                       var guaranteeRow = document.getElementById('p2-guarantee');
