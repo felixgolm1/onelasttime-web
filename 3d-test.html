@@ -11676,8 +11676,8 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       if (window.innerWidth <= 768) {
                         slides[s2].style.clipPath = 'none';
                         var shiftX = 0;
-                        if (rect.right < vpW) {
-                          shiftX = vpW - rect.right;
+                        if (rect.right < vpW - 19) {
+                          shiftX = (vpW - 19) - rect.right;
                         }
                         slides[s2].style.transform = 'translateX(' + shiftX + 'px)';
                       } else {
