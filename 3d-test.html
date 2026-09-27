@@ -3244,46 +3244,50 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
     .mobile-author { display: none !important; }
     @media (max-width: 768px) {
       .desktop-author { display: none !important; }
-                  .mobile-author { 
+                        .mobile-author { 
         display: flex !important; 
         flex-direction: column !important;
         gap: 6px !important;
         grid-area: author;
-        margin-top: 19px !important; /* Move down 0.5cm */
+        margin-top: 19px !important;
         width: 100% !important;
-        align-items: flex-end !important; /* Right align */
+        align-items: stretch !important;
       }
       .mobile-author .ma-person {
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-end !important;
-        gap: 4px !important;
+        justify-content: space-between !important;
+        width: 100% !important;
         color: rgba(255,255,255,0.9) !important;
       }
       .mobile-author .ma-name {
-        font-size: 0.78rem !important; /* +20% from 0.65 */
+        font-size: 0.78rem !important;
         font-weight: 500 !important;
-        text-align: right !important;
+        text-align: left !important;
         line-height: 1.2 !important;
         display: flex !important;
         align-items: center !important;
         white-space: nowrap !important;
+        flex-grow: 1 !important;
       }
       .mobile-author .ma-name::after {
-        content: " - ";
-        white-space: pre;
+        content: "" !important;
+        flex-grow: 1 !important;
+        border-bottom: 1px dashed rgba(255,255,255,0.4) !important;
+        margin: 0 10px !important;
       }
       .mobile-author .ma-ig {
         display: flex !important;
         align-items: center !important;
         justify-content: flex-end !important;
         gap: 4px !important;
-        font-size: 0.78rem !important; /* +20% from 0.65 */
+        font-size: 0.78rem !important;
         font-weight: 500 !important;
         margin-top: 0px !important;
+        white-space: nowrap !important;
       }
       .mobile-author svg {
-        width: 14px !important; /* Scale svg too */
+        width: 14px !important;
         height: 14px !important;
         margin-bottom: 0px !important;
       }
