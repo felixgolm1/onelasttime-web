@@ -11731,6 +11731,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                         var _irisScrollDist = _irisFullStart + rect.width;
                           if (window.innerWidth <= 768) { _irisScrollDist = vpW * 1.5; }
                           var _pf3 = Math.max(0, Math.min(1, (_irisFullStart - rect.left) / _irisScrollDist));
+                          if (window.innerWidth <= 768) { _pf3 = Math.max(0, Math.min(1, (prog - 34.96) / 3.0)); }
                         var _ease3 = _pf3 * _pf3 * (3 - 2 * _pf3);
                         var _r3 = (rect.left > _irisFullStart) ? _rEntry : (60 + _ease3 * (_maxR3 - 60));
                         _s3.style.clipPath = 'circle(' + _r3.toFixed(1) + 'px at 45% 64%)';
