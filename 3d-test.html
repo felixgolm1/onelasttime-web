@@ -11668,14 +11668,19 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                     }
                   // Parallax: textos se mueven al 85% de la velocidad del track (15% de contrarretraso)
                   var effSsp = ssp;
-                    if (window.innerWidth <= 768) {
-                        var s0Rect = slides[0].getBoundingClientRect();
-                        var maxSsp = (38 - window.innerWidth + s0Rect.width) / maxScroll;
-                        effSsp = Math.max(0, Math.min(ssp, maxSsp));
-                    }
-                    var _pxVw = (effSsp * 200 * 0.075).toFixed(2);
-                    var _pxCm = (effSsp * 3.5  * 0.075).toFixed(3);
-                    var _ptx  = 'translateX(calc(-50% + 0.55cm + ' + _pxVw + 'vw + ' + _pxCm + 'cm))';
+                      var _pxVw = 0;
+                      var _pxCm = 0;
+                      if (window.innerWidth <= 768) {
+                          var s0Rect = slides[0].getBoundingClientRect();
+                          var maxSsp = (38 - window.innerWidth + s0Rect.width) / maxScroll;
+                          effSsp = Math.max(0, Math.min(ssp, maxSsp));
+                          var norm = maxSsp > 0 ? (effSsp / maxSsp) : 0;
+                          _pxVw = (norm * 10).toFixed(2); // 10vw para que se note bastante pero sin ser excesivo
+                      } else {
+                          _pxVw = (effSsp * 200 * 0.075).toFixed(2);
+                          _pxCm = (effSsp * 3.5  * 0.075).toFixed(3);
+                      }
+                      var _ptx  = 'translateX(calc(-50% + 0.55cm + ' + _pxVw + 'vw' + (_pxCm !== 0 ? ' + ' + _pxCm + 'cm' : '') + '))';
                     var _ptTop = document.getElementById('parallax-text-top');
                     var _ptBot = document.getElementById('parallax-text-bot');
                     if (_ptTop) _ptTop.style.transform = _ptx;
