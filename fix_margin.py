@@ -1,16 +1,14 @@
-﻿import re
+﻿with open('3d-test.html', 'r', encoding='utf-8') as f:
+    content = f.read()
 
-with open("arbol.html", "r", encoding="utf-8") as f:
-    text = f.read()
+target_fase1 = "isTrack.style.transform = (window.innerWidth <= 768) ? 'translateX(0px)' : 'translateX(0.5cm)';"
+rep_fase1 = "isTrack.style.transform = 'translateX(0.5cm)';"
 
-target = """                <div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">
-                    <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-28">"""
+target_fase2 = "isTrack.style.transform = 'translateX(' + (-ssp * maxScroll) + 'px)';"
+rep_fase2 = "isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * maxScroll) + 'px))';"
 
-replacement = """                <div className="flex-1 py-12 px-6 flex flex-col items-center relative fade-in">
-                    <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-14">"""
-text = text.replace(target, replacement)
+content = content.replace(target_fase1, rep_fase1)
+content = content.replace(target_fase2, rep_fase2)
 
-with open("arbol.html", "w", encoding="utf-8") as f:
-    f.write(text)
-print("Updated margin!")
-
+with open('3d-test.html', 'w', encoding='utf-8') as f:
+    f.write(content)

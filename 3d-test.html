@@ -11639,7 +11639,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   for (var s = 0; s < slides.length; s++) {
                     slides[s].style.clipPath = 'inset(0 ' + clipR + '% 0 0)';
                   }
-                  isTrack.style.transform = (window.innerWidth <= 768) ? 'translateX(0px)' : 'translateX(0.5cm)';
+                  isTrack.style.transform = 'translateX(0.5cm)';
                   // En fase de entrada, resetear parallax a base
                   var _ptTopF1 = document.getElementById('parallax-text-top');
                   var _ptBotF1 = document.getElementById('parallax-text-bot');
@@ -11654,7 +11654,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   // calc: ancho total track 300vw + 2.5cm gap. Meta final para alinear 6a imagen = -200vw - 3cm
                   if (window.innerWidth <= 768) {
                       var maxScroll = isTrack.scrollWidth - window.innerWidth + 30; // 30px padding right
-                      isTrack.style.transform = 'translateX(' + (-ssp * maxScroll) + 'px)';
+                      isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * maxScroll) + 'px))';
                     } else {
                       isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 175) + 'vw - ' + (ssp * 3.5) + 'cm))';
                     }
@@ -12195,7 +12195,7 @@ if (sInd) {
                   }
               } else {
                 isCont.style.opacity = '0';
-                isTrack.style.transform = (window.innerWidth <= 768) ? 'translateX(0px)' : 'translateX(0.5cm)';
+                isTrack.style.transform = 'translateX(0.5cm)';
                 for (var s3 = 0; s3 < slides.length; s3++) {
                   slides[s3].style.clipPath = 'inset(0 100% 0 0)';
                 }
