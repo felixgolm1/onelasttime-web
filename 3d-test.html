@@ -11802,8 +11802,21 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                             _s5copy.style.transform = 'translateX(' + _move5 + 'vw)';
                         } else if (_s5copy) {
                             _s5copy.style.transform = 'none';
+                          }
                         }
-                      }
+                        // Parallax texto en slide 6 (cartas viejas)
+                        if (s2 === 6) {
+                          var _s6copy = document.getElementById('slide6-copy-wrapper');
+                          if (_s6copy && window.innerWidth <= 768) {
+                              var _visP6 = Math.max(0, Math.min(1, (vpW - (rect.left + shiftX)) / (vpW + rect.width)));
+                              var _maxVisP6 = (19 + rect.width) / (vpW + rect.width);
+                              var _norm6 = _maxVisP6 > 0 ? (_visP6 / _maxVisP6) : 0;
+                              var _move6 = (_norm6 * 8).toFixed(2); // 8vw parallax
+                              _s6copy.style.transform = 'translateX(' + _move6 + 'vw)';
+                          } else if (_s6copy) {
+                              _s6copy.style.transform = 'none';
+                          }
+                        }
                     }
                 }
                   // Ã¢â€€Ã¢â€€ EXIT PHASE: img-strip sube por arriba, logo OLT sube desde abajo Ã¢â€€Ã¢â€€
