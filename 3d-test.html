@@ -11719,7 +11719,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                 var _moveR = _visP2 * 20.8;
                                 var _tWidth = _s2copy.offsetWidth;
                                 var _tRightFromSlideLeft = (rect.width / 2) + 94.5 + (_moveR * vpW / 100) + (_tWidth / 2);
-                                var _pushThreshold = rect.width - _tRightFromSlideLeft;
+                                var _pushThreshold = rect.width - _tRightFromSlideLeft + 45; // +45px (punto medio exacto) para compensar el espacio en blanco del bounding box
                                 var _pushX = Math.min(0, _pushThreshold - shiftX);
                                 _s2copy.style.transform = 'translate(calc(-50% + 2.5cm + ' + _moveR.toFixed(2) + 'vw + ' + _pushX + 'px), -50%)';
                           } else if (_s2copy) {
