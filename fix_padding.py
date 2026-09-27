@@ -1,14 +1,13 @@
-import re
+﻿import re
 
-for file in ['terminos.html', 'privacidad.html']:
-    with open(file, 'r', encoding='utf-8') as f:
-        text = f.read()
-    
-    # Remove padding from body
-    text = re.sub(r'padding:\s*50px 20px;', 'padding: 0;', text)
-    
-    # Add horizontal padding to container inline style
-    text = text.replace('<div class="container" style="padding-top: 40px;">', '<div class="container" style="padding: 40px 20px;">')
-    
-    with open(file, 'w', encoding='utf-8') as f:
-        f.write(text)
+with open('3d-test.html', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+content = re.sub(
+    r'padding:\s*24px\s*20px\s*!important;',
+    'padding: 24px 20px 12px 20px !important;',
+    content
+)
+
+with open('3d-test.html', 'w', encoding='utf-8') as f:
+    f.write(content)
