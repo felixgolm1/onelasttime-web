@@ -11675,7 +11675,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           var maxSsp = (38 - window.innerWidth + s0Rect.width) / maxScroll;
                           effSsp = Math.max(0, Math.min(ssp, maxSsp));
                           var norm = maxSsp > 0 ? (effSsp / maxSsp) : 0;
-                          _pxVw = (norm * 10).toFixed(2); // 10vw para que se note bastante pero sin ser excesivo
+                          _pxVw = (norm * 5).toFixed(2); // 5vw (la mitad del desplazamiento) para un efecto mas sutil
                       } else {
                           _pxVw = (effSsp * 200 * 0.075).toFixed(2);
                           _pxCm = (effSsp * 3.5  * 0.075).toFixed(3);
