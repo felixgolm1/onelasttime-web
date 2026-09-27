@@ -12249,9 +12249,7 @@ if (sInd) {
                   var _oltCtaBig = document.getElementById('olt-final-cta');
                   if (localP < 39.0) {
                       // Fase de entrada: de 100vh a 0vh (después del segundo carrusel: IS_END a IS_EXIT_END)
-                      if (_oltLogoBig) {
-                          _oltLogoBig.style.transform = 'translateY(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh)';
-                      }
+                      if (_oltLogoBig) { var logoUp = (window.innerWidth <= 768) ? (_p1ReverseP * 1) : 0; _oltLogoBig.style.transform = 'translateY(calc(' + ((1 - _exitEA) * 100).toFixed(2) + 'vh - ' + logoUp + 'cm))'; }
                       if (_oltCtaBig) {
                           var _ctaP = Math.max(0, Math.min(1, (_exitP - 0.5) / 0.5));
                           _oltCtaBig.style.opacity = _ctaP.toFixed(2);
@@ -12260,9 +12258,7 @@ if (sInd) {
                       }
                   } else {
                       // Fase de convergencia final (en la escena 3D final)
-                      if (_oltLogoBig) {
-                          _oltLogoBig.style.transform = 'translateY(' + (easeConverge * 11) + 'vh)';
-                      }
+                      if (_oltLogoBig) { var logoUp2 = (window.innerWidth <= 768) ? '1cm' : '0cm'; _oltLogoBig.style.transform = 'translateY(calc(' + (easeConverge * 11) + 'vh - ' + logoUp2 + '))'; }
                       if (_oltCtaBig) {
                           _oltCtaBig.style.transform = 'translateY(' + (-easeConverge * 30) + 'vh) translate(var(--mx, 0px), var(--my, 0px))';
                           _oltCtaBig.style.opacity = '1';
