@@ -3196,7 +3196,7 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
                 "stars stars"
                 "image quote"
                 "empty quote"
-                "empty2 author" !important;
+                "author author" !important;
             gap: 0 1rem !important;
             align-items: start !important;
             background: rgba(0, 0, 0, 0.9) !important;
@@ -3259,13 +3259,14 @@ window._pristineMainDeckClone = mdSetup ? mdSetup.cloneNode(true) : null;
         gap: 4px !important;
         color: rgba(255,255,255,0.9) !important;
       }
-      .mobile-author .ma-name {
+            .mobile-author .ma-name {
         font-size: 0.65rem !important;
         font-weight: 500 !important;
         text-align: left !important;
         line-height: 1.2 !important;
         display: flex !important;
         align-items: center !important;
+        white-space: nowrap !important;
       }
       .mobile-author .ma-name::after {
         content: " - ";
