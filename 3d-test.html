@@ -11740,7 +11740,17 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                       }
                     }
                     // Efecto iris en slide 3 (paseo) - crece solo cuando slide esta 100% visible
-                    if (s2 === 3) {
+                      if (s2 === 3) {
+                        var _s3copy = document.getElementById('slide3-copy-wrapper');
+                        if (_s3copy && window.innerWidth <= 768) {
+                            var _visP3 = Math.max(0, Math.min(1, (vpW - (rect.left + shiftX)) / (vpW + rect.width)));
+                            var _maxVisP3 = (19 + rect.width) / (vpW + rect.width);
+                            var _norm3 = _maxVisP3 > 0 ? (_visP3 / _maxVisP3) : 0;
+                            var _move3 = (_norm3 * 8).toFixed(2); // 8vw para un parallax ligero
+                            _s3copy.style.transform = 'translate(' + _move3 + 'vw, -1cm)';
+                        } else if (_s3copy) {
+                            _s3copy.style.transform = 'translateY(-1cm)';
+                        }
                       var _s3 = document.getElementById('slide3-iris-img');
                       if (_s3) {
                         var _irisFullStart = vpW - rect.width;
