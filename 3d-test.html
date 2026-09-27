@@ -10425,6 +10425,27 @@ setInterval(function() {
     </div>
     </div>
 <!-- Ã¢â€€Ã¢â€€ IMG STRIP CAROUSEL (after testimonios) Ã¢â€€Ã¢â€€ -->
+
+<style>
+      @media (max-width: 768px) {
+        #img-strip-track > div {
+          width: auto !important;
+        }
+        #img-strip-track > div > div {
+          width: auto !important;
+        }
+        #img-strip-track img {
+          position: relative !important;
+          width: auto !important;
+          height: 100% !important;
+          max-width: none !important;
+        }
+        #slide2-pan-img {
+          transform: none !important;
+        }
+      }
+</style>
+
 <div id="img-strip-container" style="position:fixed;inset:0;z-index:10000003;overflow:hidden;opacity:0;pointer-events:none;">
   <div id="img-strip-wrapper" style="position:absolute;top:0;left:0;width:100%;height:100%;will-change:transform;">
     <div id="img-strip-track" style="display:flex;flex-direction:row;position:absolute;top:0;left:0;height:100%;gap:0.5cm;will-change:transform;">
@@ -11611,7 +11632,12 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   ssp = Math.max(0, Math.min(1, ssp));
                   ssp = ssp < 0.5 ? 2*ssp*ssp : 1 - Math.pow(-2*ssp+2,2)/2;
                   // calc: ancho total track 300vw + 2.5cm gap. Meta final para alinear 6a imagen = -200vw - 3cm
-                  isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 175) + 'vw - ' + (ssp * 3.5) + 'cm))';
+                  if (window.innerWidth <= 768) {
+                      var maxScroll = isTrack.scrollWidth - window.innerWidth + 30; // 30px padding right
+                      isTrack.style.transform = 'translateX(' + (-ssp * maxScroll) + 'px)';
+                    } else {
+                      isTrack.style.transform = 'translateX(calc(0.5cm - ' + (ssp * 175) + 'vw - ' + (ssp * 3.5) + 'cm))';
+                    }
                   // Parallax: textos se mueven al 85% de la velocidad del track (15% de contrarretraso)
                   var _pxVw = (ssp * 200 * 0.075).toFixed(2);
                   var _pxCm = (ssp * 3.5  * 0.075).toFixed(3);
