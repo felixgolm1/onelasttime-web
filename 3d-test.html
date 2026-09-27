@@ -11965,7 +11965,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                 var isMob = window.innerWidth <= 768;
                                 if (isMob) {
                                     var fullLeft = "Ahora puedes provocar esta magia desde solo ";
-                                    var fullRight = " y recibir&aacute;s:";
+                                    var fullRight = " y recibir\u00E1s:";
                                     var cLeft = Math.floor(_p1ReverseP * fullLeft.length);
                                     var cRight = Math.floor(_p1ReverseP * fullRight.length);
                                     dpLeft.innerHTML = fullLeft.substring(0, cLeft);
@@ -11974,7 +11974,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                     dpRight.style.maxWidth = 'none';
                                 } else {
                                     dpLeft.innerHTML = "Ahora puedes provocar esta magia desde solo ";
-                                    dpRight.innerHTML = " y recibir&aacute;s:";
+                                    dpRight.innerHTML = " y recibir\u00E1s:";
                                     var maxWLeft = 600; 
                                     var maxWRight = 150; 
                                     dpLeft.style.maxWidth = (_p1ReverseP * maxWLeft) + 'px';
