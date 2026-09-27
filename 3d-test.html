@@ -11668,15 +11668,28 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                   if (_ptBot) _ptBot.style.transform = _ptx;
                   var vpW = window.innerWidth;
                   for (var s2 = 0; s2 < slides.length; s2++) {
-                    var rect = slides[s2].getBoundingClientRect();
-                    if (rect.left >= vpW) {
-                      slides[s2].style.clipPath = 'inset(0 100% 0 0)';
-                    } else if (rect.left > 0) {
-                      var visF = Math.max(0, Math.min(1, (vpW - rect.left) / rect.width));
-                      slides[s2].style.clipPath = 'inset(0 ' + ((1 - visF) * 100) + '% 0 0)';
-                    } else {
-                      slides[s2].style.clipPath = 'none';
-                    }
+                      var oldTx = slides[s2].style.transform;
+                      slides[s2].style.transform = 'none';
+                      var rect = slides[s2].getBoundingClientRect();
+                      slides[s2].style.transform = oldTx;
+                      
+                      if (window.innerWidth <= 768) {
+                        slides[s2].style.clipPath = 'none';
+                        var shiftX = 0;
+                        if (rect.right < vpW) {
+                          shiftX = vpW - rect.right;
+                        }
+                        slides[s2].style.transform = 'translateX(' + shiftX + 'px)';
+                      } else {
+                        if (rect.left >= vpW) {
+                          slides[s2].style.clipPath = 'inset(0 100% 0 0)';
+                        } else if (rect.left > 0) {
+                          var visF = Math.max(0, Math.min(1, (vpW - rect.left) / rect.width));
+                          slides[s2].style.clipPath = 'inset(0 ' + ((1 - visF) * 100) + '% 0 0)';
+                        } else {
+                          slides[s2].style.clipPath = 'none';
+                        }
+                      }
                     // Pan imagen slide 2 (pareja sofa) según posición en viewport
                     if (s2 === 2) {
                       var _s2Pan = document.getElementById('slide2-pan-img');
