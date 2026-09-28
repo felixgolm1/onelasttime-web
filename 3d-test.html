@@ -416,6 +416,19 @@ window.onerror = function(msg, url, line, col, err) {
     #dp-left, #dp-right { display: inline !important; max-width: none !important; white-space: normal !important; }
     #p1-counter-container { display: inline-block !important; }
     #p2-pack-list { transform: translate(-50%, -30px) !important; }
+      #p2-pack-list .olt-benefit-pill {
+          width: calc(50% - 5px) !important;
+          flex: 0 0 calc(50% - 5px) !important;
+          padding: 12px !important;
+      }
+      #p2-pack-list .olt-benefit-pill-title {
+          font-size: 0.95rem !important;
+          margin-bottom: 2px !important;
+      }
+      #p2-pack-list .olt-benefit-pill-desc {
+          font-size: 0.78rem !important;
+          line-height: 1.25 !important;
+      }
 }
       @media (max-width: 768px) {
       #olt-final-cta { visibility: hidden !important; pointer-events: none !important; }
