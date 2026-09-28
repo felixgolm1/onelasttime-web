@@ -12014,21 +12014,77 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                               packListRow.style.opacity = '1';
                           }
                           var pills = packListRow.querySelectorAll('.olt-benefit-pill');
-                          if (pills.length >= 5) {
-                              var popOrder = [4, 5, 1, 2, 3, 0];
-                              var exitOrder = [0, 1, 2, 3, 4, 5];
-                              for (var i = 0; i < pills.length; i++) {
-                                  var order = popOrder[i];
-                                  var threshold = 0.05 + (order * 0.15);
-                                  var exitOrd = exitOrder[i];
-                                  var exitThreshold = 0.05 + (exitOrd * 0.15);
-                                  if (_p1ReverseP > threshold && swapP < exitThreshold) {
-                                      pills[i].classList.add('popped');
-                                  } else {
-                                      pills[i].classList.remove('popped');
-                                  }
-                              }
-                          }
+                                                      if (pills.length >= 5) {
+                                var isMob = window.innerWidth <= 768;
+                                if (isMob) {
+                                    var deleteP = Math.max(0, Math.min(1, (localP - 25.0) / 3.0));
+                                    var currentRowFloat = deleteP * 3; 
+                                    var ROW_HEIGHT = 125; 
+                                    
+                                    packListRow.style.transform = 'translate(-50%, calc(-30px - ' + (currentRowFloat * ROW_HEIGHT) + 'px))';
+                                    
+                                    var popOrderMob = [0, 1, 2, 3, 4, 5]; 
+                                    
+                                    for (var i = 0; i < pills.length; i++) {
+                                        var threshold = 0.05 + (popOrderMob[i] * 0.15);
+                                        if (_p1ReverseP > threshold) {
+                                            pills[i].classList.add('popped');
+                                        } else {
+                                            pills[i].classList.remove('popped');
+                                        }
+                                        
+                                        if (deleteP > 0) {
+                                            pills[i].style.transition = 'none'; 
+                                            
+                                            var r = Math.floor(i / 2);
+                                            var fadeP = currentRowFloat - r;
+                                            
+                                            var sc = 1;
+                                            var op = 1;
+                                            var tY = 0;
+                                            
+                                            if (fadeP > 0) {
+                                                op = 1 - (fadeP * 2.5);
+                                                sc = 1 - (fadeP * 0.5); 
+                                                // fadeP * ROW_HEIGHT counteracts the container slide up so it dies in place
+                                                // + (fadeP * 30) gives the "inverse pop" falling effect
+                                                tY = (fadeP * ROW_HEIGHT) + (fadeP * 40); 
+                                            }
+                                            
+                                            op = Math.max(0, Math.min(1, op));
+                                            
+                                            pills[i].style.transform = 'translateY(' + tY + 'px) scale(' + sc + ')';
+                                            pills[i].style.opacity = op.toFixed(2);
+                                            pills[i].style.pointerEvents = (op > 0.5) ? 'auto' : 'none';
+                                        } else {
+                                            pills[i].style.transition = '';
+                                            pills[i].style.transform = '';
+                                            pills[i].style.opacity = '';
+                                            pills[i].style.pointerEvents = '';
+                                        }
+                                    }
+                                } else {
+                                    packListRow.style.transform = '';
+                                    var popOrder = [4, 5, 1, 2, 3, 0];
+                                    var exitOrder = [0, 1, 2, 3, 4, 5];
+                                    for (var i = 0; i < pills.length; i++) {
+                                        pills[i].style.transition = '';
+                                        pills[i].style.transform = '';
+                                        pills[i].style.opacity = '';
+                                        pills[i].style.pointerEvents = '';
+                                        
+                                        var order = popOrder[i];
+                                        var threshold = 0.05 + (order * 0.15);
+                                        var exitOrd = exitOrder[i];
+                                        var exitThreshold = 0.05 + (exitOrd * 0.15);
+                                        if (_p1ReverseP > threshold && swapP < exitThreshold) {
+                                            pills[i].classList.add('popped');
+                                        } else {
+                                            pills[i].classList.remove('popped');
+                                        }
+                                    }
+                                }
+                            }
                       }
                       if (guaranteeRow) {
                           guaranteeRow.style.opacity = Math.max(0, guaranteeOp).toFixed(2);
