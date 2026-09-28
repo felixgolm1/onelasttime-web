@@ -12060,20 +12060,20 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                             var tY = 0;
                                             
                                             if (fadeP > 0) {
-                                                op = 1 - (fadeP * 2.5);
+                                                op = 1 - (fadeP * 1.1); // Fadout slower so the shrink is actually visible
                                                 sc = 1 - (fadeP * 0.5); 
                                                 tY = (fadeP * (yOffsets[r+1] - yOffsets[r])) + (fadeP * 30); 
                                             }
                                             
                                             op = Math.max(0, Math.min(1, op));
                                             
-                                            pills[i].style.transform = 'translateY(' + tY + 'px) scale(' + sc + ')';
-                                            pills[i].style.opacity = op.toFixed(2);
+                                            pills[i].style.setProperty('transform', 'translateY(' + tY + 'px) scale(' + sc + ')', 'important');
+                                            pills[i].style.setProperty('opacity', op.toFixed(2), 'important');
                                             pills[i].style.pointerEvents = (op > 0.5) ? 'auto' : 'none';
                                         } else {
                                             pills[i].style.transition = '';
-                                            pills[i].style.transform = '';
-                                            pills[i].style.opacity = '';
+                                            pills[i].style.removeProperty('transform');
+                                            pills[i].style.removeProperty('opacity');
                                             pills[i].style.pointerEvents = '';
                                         }
                                     }
