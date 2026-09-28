@@ -12014,14 +12014,14 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                               packListRow.style.opacity = '1';
                           }
                           var pills = packListRow.querySelectorAll('.olt-benefit-pill');
-                                                      if (pills.length >= 5) {
+                                                                                  if (pills.length >= 5) {
                                 var isMob = window.innerWidth <= 768;
                                 if (isMob) {
                                     var deleteP = Math.max(0, Math.min(1, (localP - 25.0) / 3.0));
                                     var currentRowFloat = deleteP * 3; 
-                                    var ROW_HEIGHT = 125; 
+                                    var ROW_HEIGHT = pills[0].offsetHeight + 10; 
                                     
-                                    packListRow.style.transform = 'translate(-50%, calc(-30px - ' + (currentRowFloat * ROW_HEIGHT) + 'px))';
+                                    packListRow.style.setProperty('transform', 'translate(-50%, calc(-30px - ' + (currentRowFloat * ROW_HEIGHT) + 'px))', 'important');
                                     
                                     var popOrderMob = [0, 1, 2, 3, 4, 5]; 
                                     
@@ -12046,9 +12046,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                             if (fadeP > 0) {
                                                 op = 1 - (fadeP * 2.5);
                                                 sc = 1 - (fadeP * 0.5); 
-                                                // fadeP * ROW_HEIGHT counteracts the container slide up so it dies in place
-                                                // + (fadeP * 30) gives the "inverse pop" falling effect
-                                                tY = (fadeP * ROW_HEIGHT) + (fadeP * 40); 
+                                                tY = (fadeP * ROW_HEIGHT) + (fadeP * 30); 
                                             }
                                             
                                             op = Math.max(0, Math.min(1, op));
@@ -12064,7 +12062,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                         }
                                     }
                                 } else {
-                                    packListRow.style.transform = '';
+                                    packListRow.style.transform = 'translate(-50%, -15px)';
                                     var popOrder = [4, 5, 1, 2, 3, 0];
                                     var exitOrder = [0, 1, 2, 3, 4, 5];
                                     for (var i = 0; i < pills.length; i++) {
@@ -12084,6 +12082,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                         }
                                     }
                                 }
+                            }
                             }
                       }
                       if (guaranteeRow) {
