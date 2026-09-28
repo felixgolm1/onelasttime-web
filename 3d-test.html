@@ -12019,9 +12019,25 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                 if (isMob) {
                                     var deleteP = Math.max(0, Math.min(1, (localP - 25.0) / 3.0));
                                     var currentRowFloat = deleteP * 3; 
-                                    var ROW_HEIGHT = pills[0].offsetHeight + 10; 
                                     
-                                    packListRow.style.setProperty('transform', 'translate(-50%, calc(-30px - ' + (currentRowFloat * ROW_HEIGHT) + 'px))', 'important');
+                                    var yOffsets = [
+                                        0,
+                                        pills[2].offsetTop - pills[0].offsetTop,
+                                        pills[4].offsetTop - pills[0].offsetTop,
+                                        (pills[4].offsetTop - pills[0].offsetTop) + pills[4].offsetHeight + 10
+                                    ];
+                                    
+                                    var containerSlideUp = 0;
+                                    var intRow = Math.floor(currentRowFloat);
+                                    var fracRow = currentRowFloat - intRow;
+                                    
+                                    if (intRow >= 3) {
+                                        containerSlideUp = yOffsets[3];
+                                    } else {
+                                        containerSlideUp = yOffsets[intRow] + fracRow * (yOffsets[intRow + 1] - yOffsets[intRow]);
+                                    }
+                                    
+                                    packListRow.style.setProperty('transform', 'translate(-50%, calc(-30px - ' + containerSlideUp + 'px))', 'important');
                                     
                                     var popOrderMob = [0, 1, 2, 3, 4, 5]; 
                                     
@@ -12046,7 +12062,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                                             if (fadeP > 0) {
                                                 op = 1 - (fadeP * 2.5);
                                                 sc = 1 - (fadeP * 0.5); 
-                                                tY = (fadeP * ROW_HEIGHT) + (fadeP * 30); 
+                                                tY = (fadeP * (yOffsets[r+1] - yOffsets[r])) + (fadeP * 30); 
                                             }
                                             
                                             op = Math.max(0, Math.min(1, op));
