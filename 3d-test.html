@@ -2385,6 +2385,32 @@ window.addEventListener('DOMContentLoaded', () => {
   #mag-circle > div > span:first-child { font-size: 1.44rem !important; }
   #mag-circle > div > span:last-child { font-size: 1.62rem !important; }
   #mag-barcode { transform: scale(0.9) !important; transform-origin: right bottom !important; }
+      
+      /* Guarantee section mobile styling */
+      #p2-guarantee {
+        display: block !important;
+        width: 100vw !important;
+      }
+      #garantia-text {
+        width: 90% !important;
+        max-width: none !important;
+        margin: 0 auto !important;
+      }
+      #leaf-left, #leaf-right {
+        position: absolute !important;
+        width: 2.8em !important;
+        height: 2.8em !important;
+        top: -8px !important;
+        margin: 0 !important;
+      }
+      #leaf-left {
+        left: 50% !important;
+        transform: translateX(calc(-50% - 105px)) !important;
+      }
+      #leaf-right {
+        left: 50% !important;
+        transform: translateX(calc(-50% + 105px)) !important;
+      }
 }
 </style>
 </head>
