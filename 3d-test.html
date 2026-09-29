@@ -436,7 +436,7 @@ window.onerror = function(msg, url, line, col, err) {
           #olt-phase-dynamic { font-size: 1.43rem !important; }
           #olt-logo-img-big { width: 91vw !important; margin-top: 1cm !important; }
           #slide6-copy-wrapper { margin-left: -3.7cm !important; margin-top: 1.6cm !important; }
-          #slide1-copy-wrapper { margin-left: 0.5cm !important; }
+          #slide1-copy-wrapper { margin-left: 0 !important; left: 20px !important; }
         #slide1-copy-wrapper p { font-size: clamp(1.3rem, 2.6vw, 2.74rem) !important; }
           #magazine-scene { width: 108vw; height: 145vw; }
       #camera-flash-container { width: 108vw; height: 145vw; }
@@ -11816,7 +11816,7 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           if (_s5copy && window.innerWidth <= 768) {
                               var currentX = rect.left + shiftX;
                               var targetTranslateX = 0;
-                                var STICK_THRESHOLD = -22;
+                                var STICK_THRESHOLD = 0;
                                 if (currentX < STICK_THRESHOLD) {
                                     var maxTranslateX = rect.width - _s5copy.offsetWidth - 20; 
                                     targetTranslateX = Math.min(-(currentX - STICK_THRESHOLD), Math.max(0, maxTranslateX));
