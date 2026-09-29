@@ -11816,10 +11816,11 @@ document.querySelectorAll('#olt-final-text p, #p1-question p').forEach(el => { i
                           if (_s5copy && window.innerWidth <= 768) {
                               var currentX = rect.left + shiftX;
                               var targetTranslateX = 0;
-                              if (currentX < 0) {
-                                  var maxTranslateX = rect.width - _s5copy.offsetWidth - 20; // 20px padding derecho
-                                  targetTranslateX = Math.min(-currentX, Math.max(0, maxTranslateX));
-                              }
+                                var STICK_THRESHOLD = -22;
+                                if (currentX < STICK_THRESHOLD) {
+                                    var maxTranslateX = rect.width - _s5copy.offsetWidth - 20; 
+                                    targetTranslateX = Math.min(-(currentX - STICK_THRESHOLD), Math.max(0, maxTranslateX));
+                                }
                               _s5copy.style.transform = 'translateX(' + targetTranslateX + 'px)';
                           } else if (_s5copy) {
                               _s5copy.style.transform = 'none';
