@@ -9124,7 +9124,8 @@ function makeCardBackTex(data = '4 PASOS') {
     // Posicion final
     window.polaroidMesh.position.set(0, 0.117, 0.03); 
     // Escala final
-    window.polaroidMesh.scale.set(0.83, 0.83, 0.83); 
+    var polScale = (window.innerWidth <= 768 || window._cIsMobile) ? (0.83 * 0.85) : 0.83;
+      window.polaroidMesh.scale.set(polScale, polScale, polScale); 
     scene.add(window.polaroidMesh);
     // OCULTAR LA POLAROID BAKEADA EN LA MESA
     if (window.tableMesh) {
