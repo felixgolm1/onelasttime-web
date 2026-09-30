@@ -1657,10 +1657,10 @@ window.onerror = function(msg, url, line, col, err) {
   /* DEFINITIVE CLIP-PATH FIX PARA TODOS LOS ELEMENTOS FIXED */
   @media (max-width: 768px) {
       /* Matamos flashes directamente */
-      #mobile-top-progress, #camera-flash, #transition-flash { 
-          display: none !important; 
-          opacity: 0 !important; 
-      }
+      #mobile-top-progress, #camera-flash { 
+            display: none !important; 
+            opacity: 0 !important; 
+        }
       
       /* Si la línea viene de CUALQUIER otro contenedor full-screen, le aplicamos el clip-path directamente a ÉL.
          El body clip-path fallaba porque los position: fixed se escapan. Al ponérselo al hijo, no hay escape. */
