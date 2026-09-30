@@ -9118,8 +9118,9 @@ function makeCardBackTex(data = '4 PASOS') {
     window.polaroidMesh.visible = false; // Oculta por defecto al cargar la página
     // Rotacion y posicion fijas elegidas por el usuario
     const rx = 0; 
-    const ry = -0.26; 
-    const rz = 0; 
+      // Mobile: Heads North (approx -90 deg from West), slightly tilted West
+      const ry = (window.innerWidth <= 768 || window._cIsMobile) ? -1.75 : -0.26; 
+      const rz = 0; 
     window.polaroidMesh.rotation.set(rx, ry, rz);
     // Posicion final
     window.polaroidMesh.position.set(0, 0.117, 0.03); 
